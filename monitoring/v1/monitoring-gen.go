@@ -2270,7 +2270,7 @@ func (c *LocationsGlobalMetricsScopesGetCall) Header() http.Header {
 
 func (c *LocationsGlobalMetricsScopesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2361,9 +2361,9 @@ func (c *LocationsGlobalMetricsScopesGetCall) Do(opts ...googleapi.CallOption) (
 
 }
 
-// method id "monitoring.locations.global.metricsScopes.listMetricScopesByMonitoredProject":
+// method id "monitoring.locations.global.metricsScopes.listMetricsScopesByMonitoredProject":
 
-type LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall struct {
+type LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall struct {
 	s            *Service
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
@@ -2371,12 +2371,12 @@ type LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall struct {
 	header_      http.Header
 }
 
-// ListMetricScopesByMonitoredProject: Returns a list of every Metrics
+// ListMetricsScopesByMonitoredProject: Returns a list of every Metrics
 // Scope that a specific MonitoredProject has been added to. The metrics
 // scope representing the specified monitored project will always be the
 // first entry in the response.
-func (r *LocationsGlobalMetricsScopesService) ListMetricScopesByMonitoredProject() *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall {
-	c := &LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *LocationsGlobalMetricsScopesService) ListMetricsScopesByMonitoredProject() *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall {
+	c := &LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
@@ -2384,7 +2384,7 @@ func (r *LocationsGlobalMetricsScopesService) ListMetricScopesByMonitoredProject
 // "monitoredResourceContainer": Required. The resource name of the
 // Monitored Project being requested. Example:
 // projects/{MONITORED_PROJECT_ID_OR_NUMBER}
-func (c *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall) MonitoredResourceContainer(monitoredResourceContainer string) *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall {
+func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) MonitoredResourceContainer(monitoredResourceContainer string) *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall {
 	c.urlParams_.Set("monitoredResourceContainer", monitoredResourceContainer)
 	return c
 }
@@ -2392,7 +2392,7 @@ func (c *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall) Mon
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall) Fields(s ...googleapi.Field) *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall {
+func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) Fields(s ...googleapi.Field) *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -2402,7 +2402,7 @@ func (c *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall) Fie
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall) IfNoneMatch(entityTag string) *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall {
+func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) IfNoneMatch(entityTag string) *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -2410,23 +2410,23 @@ func (c *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall) IfN
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall) Context(ctx context.Context) *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall {
+func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) Context(ctx context.Context) *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall) Header() http.Header {
+func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall) doRequest(alt string) (*http.Response, error) {
+func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2437,7 +2437,7 @@ func (c *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall) doR
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/locations/global/metricsScopes:listMetricScopesByMonitoredProject")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/locations/global/metricsScopes:listMetricsScopesByMonitoredProject")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -2447,7 +2447,7 @@ func (c *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall) doR
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "monitoring.locations.global.metricsScopes.listMetricScopesByMonitoredProject" call.
+// Do executes the "monitoring.locations.global.metricsScopes.listMetricsScopesByMonitoredProject" call.
 // Exactly one of *ListMetricsScopesByMonitoredProjectResponse or error
 // will be non-nil. Any non-2xx status code is an error. Response
 // headers are in either
@@ -2456,7 +2456,7 @@ func (c *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall) doR
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall) Do(opts ...googleapi.CallOption) (*ListMetricsScopesByMonitoredProjectResponse, error) {
+func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) Do(opts ...googleapi.CallOption) (*ListMetricsScopesByMonitoredProjectResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2488,9 +2488,9 @@ func (c *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall) Do(
 	return ret, nil
 	// {
 	//   "description": "Returns a list of every Metrics Scope that a specific MonitoredProject has been added to. The metrics scope representing the specified monitored project will always be the first entry in the response.",
-	//   "flatPath": "v1/locations/global/metricsScopes:listMetricScopesByMonitoredProject",
+	//   "flatPath": "v1/locations/global/metricsScopes:listMetricsScopesByMonitoredProject",
 	//   "httpMethod": "GET",
-	//   "id": "monitoring.locations.global.metricsScopes.listMetricScopesByMonitoredProject",
+	//   "id": "monitoring.locations.global.metricsScopes.listMetricsScopesByMonitoredProject",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "monitoredResourceContainer": {
@@ -2499,7 +2499,7 @@ func (c *LocationsGlobalMetricsScopesListMetricScopesByMonitoredProjectCall) Do(
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/locations/global/metricsScopes:listMetricScopesByMonitoredProject",
+	//   "path": "v1/locations/global/metricsScopes:listMetricsScopesByMonitoredProject",
 	//   "response": {
 	//     "$ref": "ListMetricsScopesByMonitoredProjectResponse"
 	//   },
@@ -2563,7 +2563,7 @@ func (c *LocationsGlobalMetricsScopesProjectsCreateCall) Header() http.Header {
 
 func (c *LocationsGlobalMetricsScopesProjectsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2710,7 +2710,7 @@ func (c *LocationsGlobalMetricsScopesProjectsDeleteCall) Header() http.Header {
 
 func (c *LocationsGlobalMetricsScopesProjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2857,7 +2857,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3011,7 +3011,7 @@ func (c *ProjectsDashboardsCreateCall) Header() http.Header {
 
 func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3162,7 +3162,7 @@ func (c *ProjectsDashboardsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3313,7 +3313,7 @@ func (c *ProjectsDashboardsGetCall) Header() http.Header {
 
 func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3482,7 +3482,7 @@ func (c *ProjectsDashboardsListCall) Header() http.Header {
 
 func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3664,7 +3664,7 @@ func (c *ProjectsDashboardsPatchCall) Header() http.Header {
 
 func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

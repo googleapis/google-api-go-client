@@ -138,9 +138,9 @@ type V1Service struct {
 type GoogleIdentityStsV1ExchangeTokenRequest struct {
 	// Audience: The full resource name of the identity provider; for
 	// example:
-	// `//iam.googleapis.com/projects//workloadIdentityPools//providers/`.
-	// Required when exchanging an external credential for a Google access
-	// token.
+	// `//iam.googleapis.com/projects//locations/global/workloadIdentityPools
+	// //providers/`. Required when exchanging an external credential for a
+	// Google access token.
 	Audience string `json:"audience,omitempty"`
 
 	// GrantType: Required. The grant type. Must be
@@ -223,9 +223,9 @@ type GoogleIdentityStsV1ExchangeTokenRequest struct {
 	// prefix. To help ensure data integrity, we recommend including this
 	// header in the `SignedHeaders` field of the signed request. For
 	// example:
-	// //iam.googleapis.com/projects//locations//workloadIdentityPools//provi
-	// ders/
-	// https://iam.googleapis.com/projects//locations//workloadIdentityPools//providers/
+	// //iam.googleapis.com/projects//locations/global/workloadIdentityPools/
+	// /providers/
+	// https://iam.googleapis.com/projects//locations/global/workloadIdentityPools//providers/
 	// If you are using temporary security credentials provided by AWS, you
 	// must also include the header `x-amz-security-token`, with the value
 	// set to the session token. The following example shows a
@@ -234,8 +234,8 @@ type GoogleIdentityStsV1ExchangeTokenRequest struct {
 	// "AWS4-HMAC-SHA256+Credential=$credential,+SignedHeaders=host;x-amz-dat
 	// e;x-goog-cloud-target-resource,+Signature=$signature"}, {"key":
 	// "x-goog-cloud-target-resource", "value":
-	// "//iam.googleapis.com/projects//locations//workloadIdentityPools//prov
-	// iders/"}, {"key": "host", "value": "sts.amazonaws.com"} . ],
+	// "//iam.googleapis.com/projects//locations/global/workloadIdentityPools
+	// //providers/"}, {"key": "host", "value": "sts.amazonaws.com"} . ],
 	// "method": "POST", "url":
 	// "https://sts.amazonaws.com?Action=GetCallerIdentity&Version=2011-06-15
 	// " } ``` You can also use a Google-issued OAuth 2.0 access token with
@@ -399,8 +399,8 @@ type GoogleIdentityStsV1IntrospectTokenResponse struct {
 	// subject. For example, if the provided token is associated with a
 	// workload identity pool, this field contains a value in the following
 	// format:
-	// `principal://iam.googleapis.com/projects//locations//workloadIdentityP
-	// ools//subject/`
+	// `principal://iam.googleapis.com/projects//locations/global/workloadIde
+	// ntityPools//subject/`
 	Username string `json:"username,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -476,7 +476,7 @@ func (c *V1IntrospectCall) Header() http.Header {
 
 func (c *V1IntrospectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -606,7 +606,7 @@ func (c *V1TokenCall) Header() http.Header {
 
 func (c *V1TokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

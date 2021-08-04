@@ -509,6 +509,10 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 
 // BuildDetails: Message encapsulating build provenance details.
 type BuildDetails struct {
+	// IntotoProvenance: In-toto Provenance representation as defined in
+	// spec.
+	IntotoProvenance *InTotoProvenance `json:"intotoProvenance,omitempty"`
+
 	// Provenance: The actual provenance
 	Provenance *BuildProvenance `json:"provenance,omitempty"`
 
@@ -523,7 +527,7 @@ type BuildDetails struct {
 	// to json as well to prevent incompatibilities with future changes.
 	ProvenanceBytes string `json:"provenanceBytes,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Provenance") to
+	// ForceSendFields is a list of field names (e.g. "IntotoProvenance") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -531,12 +535,13 @@ type BuildDetails struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Provenance") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IntotoProvenance") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -711,6 +716,32 @@ func (s *BuildType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type BuilderConfig struct {
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BuilderConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BuilderConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CisBenchmark: A compliance check that is a CIS benchmark.
 type CisBenchmark struct {
 	// ProfileLevel: The profile level of this CIS benchmark check.
@@ -794,6 +825,46 @@ type Command struct {
 
 func (s *Command) MarshalJSON() ([]byte, error) {
 	type NoMethod Command
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Completeness: Indicates that the builder claims certain fields in
+// this message to be complete.
+type Completeness struct {
+	// Arguments: If true, the builder claims that recipe.arguments is
+	// complete, meaning that all external inputs are properly captured in
+	// the recipe.
+	Arguments bool `json:"arguments,omitempty"`
+
+	// Environment: If true, the builder claims that recipe.environment is
+	// claimed to be complete.
+	Environment bool `json:"environment,omitempty"`
+
+	// Materials: If true, the builder claims that materials are complete,
+	// usually through some controls to prevent network access. Sometimes
+	// called "hermetic".
+	Materials bool `json:"materials,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Arguments") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Completeness) MarshalJSON() ([]byte, error) {
+	type NoMethod Completeness
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -944,6 +1015,102 @@ type CreateOperationRequest struct {
 
 func (s *CreateOperationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateOperationRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DSSEAttestationNote: A note describing an attestation
+type DSSEAttestationNote struct {
+	// Hint: DSSEHint hints at the purpose of the attestation authority.
+	Hint *DSSEHint `json:"hint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Hint") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Hint") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DSSEAttestationNote) MarshalJSON() ([]byte, error) {
+	type NoMethod DSSEAttestationNote
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DSSEAttestationOccurrence: An occurrence describing an attestation on
+// a resource
+type DSSEAttestationOccurrence struct {
+	// Envelope: If doing something security critical, make sure to verify
+	// the signatures in this metadata.
+	Envelope *Envelope `json:"envelope,omitempty"`
+
+	Statement *InTotoStatement `json:"statement,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Envelope") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Envelope") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DSSEAttestationOccurrence) MarshalJSON() ([]byte, error) {
+	type NoMethod DSSEAttestationOccurrence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DSSEHint: This submessage provides human-readable hints about the
+// purpose of the authority. Because the name of a note acts as its
+// resource reference, it is important to disambiguate the canonical
+// name of the Note (which might be a UUID for security purposes) from
+// "readable" names more suitable for debug output. Note that these
+// hints should not be used to look up authorities in security sensitive
+// contexts, such as when looking up attestations to verify.
+type DSSEHint struct {
+	// HumanReadableName: Required. The human readable name of this
+	// attestation authority, for example "cloudbuild-prod".
+	HumanReadableName string `json:"humanReadableName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HumanReadableName")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HumanReadableName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DSSEHint) MarshalJSON() ([]byte, error) {
+	type NoMethod DSSEHint
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1228,6 +1395,11 @@ type Discovery struct {
 	//   "UPGRADE" - This represents an available software upgrade.
 	//   "COMPLIANCE" - This represents a compliance check that can be
 	// applied to a resource.
+	//   "SBOM" - This represents a software bill of materials.
+	//   "SPDX_PACKAGE" - This represents an SPDX Package.
+	//   "SPDX_FILE" - This represents an SPDX File.
+	//   "SPDX_RELATIONSHIP" - This represents an SPDX Relationship.
+	//   "DSSE_ATTESTATION" - This represents a DSSE attestation Note
 	AnalysisKind string `json:"analysisKind,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisKind") to
@@ -1308,6 +1480,110 @@ func (s *Distribution) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DocumentNote: DocumentNote represents an SPDX Document Creation
+// Infromation section:
+// https://spdx.github.io/spdx-spec/2-document-creation-information/
+type DocumentNote struct {
+	// DataLicence: Compliance with the SPDX specification includes
+	// populating the SPDX fields therein with data related to such fields
+	// ("SPDX-Metadata")
+	DataLicence string `json:"dataLicence,omitempty"`
+
+	// SpdxVersion: Provide a reference number that can be used to
+	// understand how to parse and interpret the rest of the file
+	SpdxVersion string `json:"spdxVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataLicence") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataLicence") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DocumentNote) MarshalJSON() ([]byte, error) {
+	type NoMethod DocumentNote
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DocumentOccurrence: DocumentOccurrence represents an SPDX Document
+// Creation Information section:
+// https://spdx.github.io/spdx-spec/2-document-creation-information/
+type DocumentOccurrence struct {
+	// CreateTime: Identify when the SPDX file was originally created. The
+	// date is to be specified according to combined date and time in UTC
+	// format as specified in ISO 8601 standard
+	CreateTime string `json:"createTime,omitempty"`
+
+	// CreatorComment: A field for creators of the SPDX file to provide
+	// general comments about the creation of the SPDX file or any other
+	// relevant comment not included in the other fields
+	CreatorComment string `json:"creatorComment,omitempty"`
+
+	// Creators: Identify who (or what, in the case of a tool) created the
+	// SPDX file. If the SPDX file was created by an individual, indicate
+	// the person's name
+	Creators []string `json:"creators,omitempty"`
+
+	// DocumentComment: A field for creators of the SPDX file content to
+	// provide comments to the consumers of the SPDX document
+	DocumentComment string `json:"documentComment,omitempty"`
+
+	// ExternalDocumentRefs: Identify any external SPDX documents referenced
+	// within this SPDX document
+	ExternalDocumentRefs []string `json:"externalDocumentRefs,omitempty"`
+
+	// Id: Identify the current SPDX document which may be referenced in
+	// relationships by other files, packages internally and documents
+	// externally
+	Id string `json:"id,omitempty"`
+
+	// LicenseListVersion: A field for creators of the SPDX file to provide
+	// the version of the SPDX License List used when the SPDX file was
+	// created
+	LicenseListVersion string `json:"licenseListVersion,omitempty"`
+
+	// Namespace: Provide an SPDX document specific namespace as a unique
+	// absolute Uniform Resource Identifier (URI) as specified in RFC-3986,
+	// with the exception of the ‘#’ delimiter
+	Namespace string `json:"namespace,omitempty"`
+
+	// Title: Identify name of this document as designated by creator
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DocumentOccurrence) MarshalJSON() ([]byte, error) {
+	type NoMethod DocumentOccurrence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -1318,6 +1594,73 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// Envelope: MUST match
+// https://github.com/secure-systems-lab/dsse/blob/master/envelope.proto.
+// An authenticated message of arbitrary type.
+type Envelope struct {
+	// Payload: The bytes being signed
+	Payload string `json:"payload,omitempty"`
+
+	// PayloadType: The type of payload being signed
+	PayloadType string `json:"payloadType,omitempty"`
+
+	// Signatures: The signatures over the payload
+	Signatures []*EnvelopeSignature `json:"signatures,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Payload") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Payload") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Envelope) MarshalJSON() ([]byte, error) {
+	type NoMethod Envelope
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnvelopeSignature: A DSSE signature
+type EnvelopeSignature struct {
+	// Keyid: A reference id to the key being used for signing
+	Keyid string `json:"keyid,omitempty"`
+
+	// Sig: The signature itself
+	Sig string `json:"sig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Keyid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Keyid") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnvelopeSignature) MarshalJSON() ([]byte, error) {
+	type NoMethod EnvelopeSignature
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression
@@ -1380,6 +1723,60 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ExternalRef: An External Reference allows a Package to reference an
+// external source of additional information, metadata, enumerations,
+// asset identifiers, or downloadable content believed to be relevant to
+// the Package
+type ExternalRef struct {
+	// Category: An External Reference allows a Package to reference an
+	// external source of additional information, metadata, enumerations,
+	// asset identifiers, or downloadable content believed to be relevant to
+	// the Package
+	//
+	// Possible values:
+	//   "CATEGORY_UNSPECIFIED" - Unspecified
+	//   "SECURITY" - Security (e.g. cpe22Type, cpe23Type)
+	//   "PACKAGE_MANAGER" - Package Manager (e.g. maven-central, npm,
+	// nuget, bower, purl)
+	//   "PERSISTENT_ID" - Persistent-Id (e.g. swh)
+	//   "OTHER" - Other
+	Category string `json:"category,omitempty"`
+
+	// Comment: Human-readable information about the purpose and target of
+	// the reference
+	Comment string `json:"comment,omitempty"`
+
+	// Locator: The unique string with no spaces necessary to access the
+	// package-specific information, metadata, or content within the target
+	// location
+	Locator string `json:"locator,omitempty"`
+
+	// Type: Type of category (e.g. 'npm' for the PACKAGE_MANAGER category)
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Category") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExternalRef) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalRef
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // FileHashes: Container message for hashes of byte content of files,
 // used in Source messages to verify integrity of source input to the
 // build.
@@ -1406,6 +1803,130 @@ type FileHashes struct {
 
 func (s *FileHashes) MarshalJSON() ([]byte, error) {
 	type NoMethod FileHashes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FileNote: FileNote represents an SPDX File Information section:
+// https://spdx.github.io/spdx-spec/4-file-information/
+type FileNote struct {
+	// Checksum: Provide a unique identifier to match analysis information
+	// on each specific file in a package
+	Checksum []string `json:"checksum,omitempty"`
+
+	// FileType: This field provides information about the type of file
+	// identified
+	//
+	// Possible values:
+	//   "FILE_TYPE_UNSPECIFIED" - Unspecified
+	//   "SOURCE" - The file is human readable source code (.c, .html, etc.)
+	//   "BINARY" - The file is a compiled object, target image or binary
+	// executable (.o, .a, etc.)
+	//   "ARCHIVE" - The file represents an archive (.tar, .jar, etc.)
+	//   "APPLICATION" - The file is associated with a specific application
+	// type (MIME type of application/*)
+	//   "AUDIO" - The file is associated with an audio file (MIME type of
+	// audio/* , e.g. .mp3)
+	//   "IMAGE" - The file is associated with an picture image file (MIME
+	// type of image/*, e.g., .jpg, .gif)
+	//   "TEXT" - The file is human readable text file (MIME type of text/*)
+	//   "VIDEO" - The file is associated with a video file type (MIME type
+	// of video/*)
+	//   "DOCUMENTATION" - The file serves as documentation
+	//   "SPDX" - The file is an SPDX document
+	//   "OTHER" - The file doesn't fit into the above categories (generated
+	// artifacts, data files, etc.)
+	FileType string `json:"fileType,omitempty"`
+
+	// Title: Identify the full path and filename that corresponds to the
+	// file information in this section
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Checksum") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Checksum") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FileNote) MarshalJSON() ([]byte, error) {
+	type NoMethod FileNote
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FileOccurrence: FileOccurrence represents an SPDX File Information
+// section: https://spdx.github.io/spdx-spec/4-file-information/
+type FileOccurrence struct {
+	// Attributions: This field provides a place for the SPDX data creator
+	// to record, at the file level, acknowledgements that may be needed to
+	// be communicated in some contexts
+	Attributions []string `json:"attributions,omitempty"`
+
+	// Comment: This field provides a place for the SPDX file creator to
+	// record any general comments about the file
+	Comment string `json:"comment,omitempty"`
+
+	// Contributors: This field provides a place for the SPDX file creator
+	// to record file contributors
+	Contributors []string `json:"contributors,omitempty"`
+
+	// Copyright: Identify the copyright holder of the file, as well as any
+	// dates present
+	Copyright string `json:"copyright,omitempty"`
+
+	// FilesLicenseInfo: This field contains the license information
+	// actually found in the file, if any
+	FilesLicenseInfo []string `json:"filesLicenseInfo,omitempty"`
+
+	// Id: Uniquely identify any element in an SPDX document which may be
+	// referenced by other elements
+	Id string `json:"id,omitempty"`
+
+	// LicenseComments: This field provides a place for the SPDX file
+	// creator to record any relevant background references or analysis that
+	// went in to arriving at the Concluded License for a file
+	LicenseComments string `json:"licenseComments,omitempty"`
+
+	// LicenseConcluded: This field contains the license the SPDX file
+	// creator has concluded as governing the file or alternative values if
+	// the governing license cannot be determined
+	LicenseConcluded string `json:"licenseConcluded,omitempty"`
+
+	// Notice: This field provides a place for the SPDX file creator to
+	// record license notices or other such related notices found in the
+	// file
+	Notice string `json:"notice,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attributions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attributions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FileOccurrence) MarshalJSON() ([]byte, error) {
+	type NoMethod FileOccurrence
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1872,6 +2393,87 @@ func (s *Hash) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type InTotoProvenance struct {
+	// BuilderConfig: required
+	BuilderConfig *BuilderConfig `json:"builderConfig,omitempty"`
+
+	// Materials: The collection of artifacts that influenced the build
+	// including sources, dependencies, build tools, base images, and so on.
+	// This is considered to be incomplete unless
+	// metadata.completeness.materials is true. Unset or null is equivalent
+	// to empty.
+	Materials []string `json:"materials,omitempty"`
+
+	Metadata *Metadata `json:"metadata,omitempty"`
+
+	// Recipe: Identifies the configuration used for the build. When
+	// combined with materials, this SHOULD fully describe the build, such
+	// that re-running this recipe results in bit-for-bit identical output
+	// (if the build is reproducible). required
+	Recipe *Recipe `json:"recipe,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuilderConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuilderConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InTotoProvenance) MarshalJSON() ([]byte, error) {
+	type NoMethod InTotoProvenance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InTotoStatement: Spec defined at
+// https://github.com/in-toto/attestation/tree/main/spec#statement The
+// serialized InTotoStatement will be stored as Envelope.payload.
+// Envelope.payloadType is always "application/vnd.in-toto+json".
+type InTotoStatement struct {
+	// PredicateType: "https://in-toto.io/Provenance/v0.1" for
+	// InTotoProvenance.
+	PredicateType string `json:"predicateType,omitempty"`
+
+	Provenance *InTotoProvenance `json:"provenance,omitempty"`
+
+	Subject []*Subject `json:"subject,omitempty"`
+
+	// Type: Always "https://in-toto.io/Statement/v0.1".
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PredicateType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PredicateType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InTotoStatement) MarshalJSON() ([]byte, error) {
+	type NoMethod InTotoStatement
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Installation: This represents how a particular software package may
 // be installed on a system.
 type Installation struct {
@@ -2144,6 +2746,51 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Metadata: Other properties of the build.
+type Metadata struct {
+	// BuildFinishedOn: The timestamp of when the build completed.
+	BuildFinishedOn string `json:"buildFinishedOn,omitempty"`
+
+	// BuildInvocationId: Identifies the particular build invocation, which
+	// can be useful for finding associated logs or other ad-hoc analysis.
+	// The value SHOULD be globally unique, per in-toto Provenance spec.
+	BuildInvocationId string `json:"buildInvocationId,omitempty"`
+
+	// BuildStartedOn: The timestamp of when the build started.
+	BuildStartedOn string `json:"buildStartedOn,omitempty"`
+
+	// Completeness: Indicates that the builder claims certain fields in
+	// this message to be complete.
+	Completeness *Completeness `json:"completeness,omitempty"`
+
+	// Reproducible: If true, the builder claims that running the recipe on
+	// materials will produce bit-for-bit identical output.
+	Reproducible bool `json:"reproducible,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuildFinishedOn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuildFinishedOn") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Metadata) MarshalJSON() ([]byte, error) {
+	type NoMethod Metadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NonCompliantFile: Details about files that caused a compliance check
 // to fail.
 type NonCompliantFile struct {
@@ -2207,6 +2854,9 @@ type Note struct {
 	// Discovery: A note describing a provider/analysis type.
 	Discovery *Discovery `json:"discovery,omitempty"`
 
+	// DsseAttestation: A note describing a dsse attestation note.
+	DsseAttestation *DSSEAttestationNote `json:"dsseAttestation,omitempty"`
+
 	// ExpirationTime: Time of expiration for this note, null if note does
 	// not expire.
 	ExpirationTime string `json:"expirationTime,omitempty"`
@@ -2230,6 +2880,11 @@ type Note struct {
 	//   "UPGRADE" - This represents an available software upgrade.
 	//   "COMPLIANCE" - This represents a compliance check that can be
 	// applied to a resource.
+	//   "SBOM" - This represents a software bill of materials.
+	//   "SPDX_PACKAGE" - This represents an SPDX Package.
+	//   "SPDX_FILE" - This represents an SPDX File.
+	//   "SPDX_RELATIONSHIP" - This represents an SPDX Relationship.
+	//   "DSSE_ATTESTATION" - This represents a DSSE attestation Note
 	Kind string `json:"kind,omitempty"`
 
 	// LongDescription: A detailed description of this `Note`.
@@ -2246,8 +2901,21 @@ type Note struct {
 	// RelatedUrl: URLs associated with this note
 	RelatedUrl []*RelatedUrl `json:"relatedUrl,omitempty"`
 
+	// Sbom: A note describing a software bill of materials.
+	Sbom *DocumentNote `json:"sbom,omitempty"`
+
 	// ShortDescription: A one sentence description of this `Note`.
 	ShortDescription string `json:"shortDescription,omitempty"`
+
+	// SpdxFile: A note describing an SPDX File.
+	SpdxFile *FileNote `json:"spdxFile,omitempty"`
+
+	// SpdxPackage: A note describing an SPDX Package.
+	SpdxPackage *PackageNote `json:"spdxPackage,omitempty"`
+
+	// SpdxRelationship: A note describing a relationship between SPDX
+	// elements.
+	SpdxRelationship *RelationshipNote `json:"spdxRelationship,omitempty"`
 
 	// UpdateTime: Output only. The time this note was last updated. This
 	// field can be used as a filter in list requests.
@@ -2314,6 +2982,12 @@ type Occurrence struct {
 	// Discovered: Describes the initial scan status for this resource.
 	Discovered *Discovered `json:"discovered,omitempty"`
 
+	// DsseAttestation: This represents a DSSE attestation occurrence
+	DsseAttestation *DSSEAttestationOccurrence `json:"dsseAttestation,omitempty"`
+
+	// Envelope: https://github.com/secure-systems-lab/dsse
+	Envelope *Envelope `json:"envelope,omitempty"`
+
 	// Installation: Describes the installation of a package on the linked
 	// resource.
 	Installation *Installation `json:"installation,omitempty"`
@@ -2338,6 +3012,11 @@ type Occurrence struct {
 	//   "UPGRADE" - This represents an available software upgrade.
 	//   "COMPLIANCE" - This represents a compliance check that can be
 	// applied to a resource.
+	//   "SBOM" - This represents a software bill of materials.
+	//   "SPDX_PACKAGE" - This represents an SPDX Package.
+	//   "SPDX_FILE" - This represents an SPDX File.
+	//   "SPDX_RELATIONSHIP" - This represents an SPDX Relationship.
+	//   "DSSE_ATTESTATION" - This represents a DSSE attestation Note
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Output only. The name of the `Occurrence` in the form
@@ -2361,6 +3040,19 @@ type Occurrence struct {
 	// https://gcr.io/project/image@sha256:foo This field can be used as a
 	// filter in list requests.
 	ResourceUrl string `json:"resourceUrl,omitempty"`
+
+	// Sbom: Describes a specific software bill of materials document.
+	Sbom *DocumentOccurrence `json:"sbom,omitempty"`
+
+	// SpdxFile: Describes a specific SPDX File.
+	SpdxFile *FileOccurrence `json:"spdxFile,omitempty"`
+
+	// SpdxPackage: Describes a specific SPDX Package.
+	SpdxPackage *PackageOccurrence `json:"spdxPackage,omitempty"`
+
+	// SpdxRelationship: Describes a specific relationship between SPDX
+	// elements.
+	SpdxRelationship *RelationshipOccurrence `json:"spdxRelationship,omitempty"`
 
 	// UpdateTime: Output only. The time this `Occurrence` was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -2524,6 +3216,158 @@ type PackageIssue struct {
 
 func (s *PackageIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod PackageIssue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PackageNote: PackageNote represents an SPDX Package Information
+// section: https://spdx.github.io/spdx-spec/3-package-information/
+type PackageNote struct {
+	// Analyzed: Indicates whether the file content of this package has been
+	// available for or subjected to analysis when creating the SPDX
+	// document
+	Analyzed bool `json:"analyzed,omitempty"`
+
+	// Attribution: A place for the SPDX data creator to record, at the
+	// package level, acknowledgements that may be needed to be communicated
+	// in some contexts
+	Attribution string `json:"attribution,omitempty"`
+
+	// Checksum: Provide an independently reproducible mechanism that
+	// permits unique identification of a specific package that correlates
+	// to the data in this SPDX file
+	Checksum string `json:"checksum,omitempty"`
+
+	// Copyright: Identify the copyright holders of the package, as well as
+	// any dates present
+	Copyright string `json:"copyright,omitempty"`
+
+	// DetailedDescription: A more detailed description of the package
+	DetailedDescription string `json:"detailedDescription,omitempty"`
+
+	// DownloadLocation: This section identifies the download Universal
+	// Resource Locator (URL), or a specific location within a version
+	// control system (VCS) for the package at the time that the SPDX file
+	// was created
+	DownloadLocation string `json:"downloadLocation,omitempty"`
+
+	// ExternalRefs: ExternalRef
+	ExternalRefs []*ExternalRef `json:"externalRefs,omitempty"`
+
+	// FilesLicenseInfo: Contain the license the SPDX file creator has
+	// concluded as governing the This field is to contain a list of all
+	// licenses found in the package. The relationship between licenses
+	// (i.e., conjunctive, disjunctive) is not specified in this field –
+	// it is simply a listing of all licenses found
+	FilesLicenseInfo []string `json:"filesLicenseInfo,omitempty"`
+
+	// HomePage: Provide a place for the SPDX file creator to record a web
+	// site that serves as the package's home page
+	HomePage string `json:"homePage,omitempty"`
+
+	// LicenseDeclared: List the licenses that have been declared by the
+	// authors of the package
+	LicenseDeclared string `json:"licenseDeclared,omitempty"`
+
+	// Originator: If the package identified in the SPDX file originated
+	// from a different person or organization than identified as Package
+	// Supplier, this field identifies from where or whom the package
+	// originally came
+	Originator string `json:"originator,omitempty"`
+
+	// SummaryDescription: A short description of the package
+	SummaryDescription string `json:"summaryDescription,omitempty"`
+
+	// Supplier: Identify the actual distribution source for the
+	// package/directory identified in the SPDX file
+	Supplier string `json:"supplier,omitempty"`
+
+	// Title: Identify the full name of the package as given by the Package
+	// Originator
+	Title string `json:"title,omitempty"`
+
+	// VerificationCode: This field provides an independently reproducible
+	// mechanism identifying specific contents of a package based on the
+	// actual files (except the SPDX file itself, if it is included in the
+	// package) that make up each package and that correlates to the data in
+	// this SPDX file
+	VerificationCode string `json:"verificationCode,omitempty"`
+
+	// Version: Identify the version of the package
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Analyzed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Analyzed") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PackageNote) MarshalJSON() ([]byte, error) {
+	type NoMethod PackageNote
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PackageOccurrence: PackageOccurrence represents an SPDX Package
+// Information section:
+// https://spdx.github.io/spdx-spec/3-package-information/
+type PackageOccurrence struct {
+	// Comment: A place for the SPDX file creator to record any general
+	// comments about the package being described
+	Comment string `json:"comment,omitempty"`
+
+	// Filename: Provide the actual file name of the package, or path of the
+	// directory being treated as a package
+	Filename string `json:"filename,omitempty"`
+
+	// Id: Uniquely identify any element in an SPDX document which may be
+	// referenced by other elements
+	Id string `json:"id,omitempty"`
+
+	// LicenseComments: This field provides a place for the SPDX file
+	// creator to record any relevant background information or analysis
+	// that went in to arriving at the Concluded License for a package
+	LicenseComments string `json:"licenseComments,omitempty"`
+
+	// LicenseConcluded: package or alternative values, if the governing
+	// license cannot be determined
+	LicenseConcluded string `json:"licenseConcluded,omitempty"`
+
+	// SourceInfo: Provide a place for the SPDX file creator to record any
+	// relevant background information or additional comments about the
+	// origin of the package
+	SourceInfo string `json:"sourceInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Comment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Comment") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PackageOccurrence) MarshalJSON() ([]byte, error) {
+	type NoMethod PackageOccurrence
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2696,6 +3540,64 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Recipe: Steps taken to build the artifact. For a TaskRun, typically
+// each container corresponds to one step in the recipe.
+type Recipe struct {
+	// Arguments: Collection of all external inputs that influenced the
+	// build on top of recipe.definedInMaterial and recipe.entryPoint. For
+	// example, if the recipe type were "make", then this might be the flags
+	// passed to make aside from the target, which is captured in
+	// recipe.entryPoint.
+	Arguments []string `json:"arguments,omitempty"`
+
+	// DefinedInMaterial: Index in materials containing the recipe steps
+	// that are not implied by recipe.type. For example, if the recipe type
+	// were "make", then this would point to the source containing the
+	// Makefile, not the make program itself. Set to -1 if the recipe
+	// doesn't come from a material, as zero is default unset value for
+	// int64.
+	DefinedInMaterial int64 `json:"definedInMaterial,omitempty,string"`
+
+	// EntryPoint: String identifying the entry point into the build. This
+	// is often a path to a configuration file and/or a target label within
+	// that file. The syntax and meaning are defined by recipe.type. For
+	// example, if the recipe type were "make", then this would reference
+	// the directory in which to run make as well as which target to use.
+	EntryPoint string `json:"entryPoint,omitempty"`
+
+	// Environment: Any other builder-controlled inputs necessary for
+	// correctly evaluating the recipe. Usually only needed for reproducing
+	// the build but not evaluated as part of policy.
+	Environment map[string]string `json:"environment,omitempty"`
+
+	// Type: URI indicating what type of recipe was performed. It determines
+	// the meaning of recipe.entryPoint, recipe.arguments,
+	// recipe.environment, and materials.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Arguments") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Recipe) MarshalJSON() ([]byte, error) {
+	type NoMethod Recipe
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RelatedUrl: Metadata for any related URL information
 type RelatedUrl struct {
 	// Label: Label to describe usage of the URL
@@ -2723,6 +3625,145 @@ type RelatedUrl struct {
 
 func (s *RelatedUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod RelatedUrl
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RelationshipNote: RelationshipNote represents an SPDX Relationship
+// section:
+// https://spdx.github.io/spdx-spec/7-relationships-between-SPDX-elements/
+type RelationshipNote struct {
+}
+
+// RelationshipOccurrence: RelationshipOccurrence represents an SPDX
+// Relationship section:
+// https://spdx.github.io/spdx-spec/7-relationships-between-SPDX-elements/
+type RelationshipOccurrence struct {
+	// Comment: A place for the SPDX file creator to record any general
+	// comments about the relationship
+	Comment string `json:"comment,omitempty"`
+
+	// Source: Also referred to as SPDXRef-A The source SPDX element (file,
+	// package, etc)
+	Source string `json:"source,omitempty"`
+
+	// Target: Also referred to as SPDXRef-B The target SPDC element (file,
+	// package, etc) In cases where there are "known unknowns", the use of
+	// the keyword NOASSERTION can be used The keywords NONE can be used to
+	// indicate that an SPDX element (package/file/snippet) has no other
+	// elements connected by some relationship to it
+	Target string `json:"target,omitempty"`
+
+	// Type: The type of relationship between the source and target SPDX
+	// elements
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified
+	//   "DESCRIBES" - Is to be used when SPDXRef-DOCUMENT describes
+	// SPDXRef-A
+	//   "DESCRIBED_BY" - Is to be used when SPDXRef-A is described by
+	// SPDXREF-Document
+	//   "CONTAINS" - Is to be used when SPDXRef-A contains SPDXRef-B
+	//   "CONTAINED_BY" - Is to be used when SPDXRef-A is contained by
+	// SPDXRef-B
+	//   "DEPENDS_ON" - Is to be used when SPDXRef-A depends on SPDXRef-B
+	//   "DEPENDENCY_OF" - Is to be used when SPDXRef-A is dependency of
+	// SPDXRef-B
+	//   "DEPENDENCY_MANIFEST_OF" - Is to be used when SPDXRef-A is a
+	// manifest file that lists a set of dependencies for SPDXRef-B
+	//   "BUILD_DEPENDENCY_OF" - Is to be used when SPDXRef-A is a build
+	// dependency of SPDXRef-B
+	//   "DEV_DEPENDENCY_OF" - Is to be used when SPDXRef-A is a development
+	// dependency of SPDXRef-B
+	//   "OPTIONAL_DEPENDENCY_OF" - Is to be used when SPDXRef-A is an
+	// optional dependency of SPDXRef-B
+	//   "PROVIDED_DEPENDENCY_OF" - Is to be used when SPDXRef-A is a to be
+	// provided dependency of SPDXRef-B
+	//   "TEST_DEPENDENCY_OF" - Is to be used when SPDXRef-A is a test
+	// dependency of SPDXRef-B
+	//   "RUNTIME_DEPENDENCY_OF" - Is to be used when SPDXRef-A is a
+	// dependency required for the execution of SPDXRef-B
+	//   "EXAMPLE_OF" - Is to be used when SPDXRef-A is an example of
+	// SPDXRef-B
+	//   "GENERATES" - Is to be used when SPDXRef-A generates SPDXRef-B
+	//   "GENERATED_FROM" - Is to be used when SPDXRef-A was generated from
+	// SPDXRef-B
+	//   "ANCESTOR_OF" - Is to be used when SPDXRef-A is an ancestor (same
+	// lineage but pre-dates) SPDXRef-B
+	//   "DESCENDANT_OF" - Is to be used when SPDXRef-A is a descendant of
+	// (same lineage but postdates) SPDXRef-B
+	//   "VARIANT_OF" - Is to be used when SPDXRef-A is a variant of (same
+	// lineage but not clear which came first) SPDXRef-B
+	//   "DISTRIBUTION_ARTIFACT" - Is to be used when distributing SPDXRef-A
+	// requires that SPDXRef-B also be distributed
+	//   "PATCH_FOR" - Is to be used when SPDXRef-A is a patch file for (to
+	// be applied to) SPDXRef-B
+	//   "PATCH_APPLIED" - Is to be used when SPDXRef-A is a patch file that
+	// has been applied to SPDXRef-B
+	//   "COPY_OF" - Is to be used when SPDXRef-A is an exact copy of
+	// SPDXRef-B
+	//   "FILE_ADDED" - Is to be used when SPDXRef-A is a file that was
+	// added to SPDXRef-B
+	//   "FILE_DELETED" - Is to be used when SPDXRef-A is a file that was
+	// deleted from SPDXRef-B
+	//   "FILE_MODIFIED" - Is to be used when SPDXRef-A is a file that was
+	// modified from SPDXRef-B
+	//   "EXPANDED_FROM_ARCHIVE" - Is to be used when SPDXRef-A is expanded
+	// from the archive SPDXRef-B
+	//   "DYNAMIC_LINK" - Is to be used when SPDXRef-A dynamically links to
+	// SPDXRef-B
+	//   "STATIC_LINK" - Is to be used when SPDXRef-A statically links to
+	// SPDXRef-B
+	//   "DATA_FILE_OF" - Is to be used when SPDXRef-A is a data file used
+	// in SPDXRef-B
+	//   "TEST_CASE_OF" - Is to be used when SPDXRef-A is a test case used
+	// in testing SPDXRef-B
+	//   "BUILD_TOOL_OF" - Is to be used when SPDXRef-A is used to build
+	// SPDXRef-B
+	//   "DEV_TOOL_OF" - Is to be used when SPDXRef-A is used as a
+	// development tool for SPDXRef-B
+	//   "TEST_OF" - Is to be used when SPDXRef-A is used for testing
+	// SPDXRef-B
+	//   "TEST_TOOL_OF" - Is to be used when SPDXRef-A is used as a test
+	// tool for SPDXRef-B
+	//   "DOCUMENTATION_OF" - Is to be used when SPDXRef-A provides
+	// documentation of SPDXRef-B
+	//   "OPTIONAL_COMPONENT_OF" - Is to be used when SPDXRef-A is an
+	// optional component of SPDXRef-B
+	//   "METAFILE_OF" - Is to be used when SPDXRef-A is a metafile of
+	// SPDXRef-B
+	//   "PACKAGE_OF" - Is to be used when SPDXRef-A is used as a package as
+	// part of SPDXRef-B
+	//   "AMENDS" - Is to be used when (current) SPDXRef-DOCUMENT amends the
+	// SPDX information in SPDXRef-B
+	//   "PREREQUISITE_FOR" - Is to be used when SPDXRef-A is a prerequisite
+	// for SPDXRef-B
+	//   "HAS_PREREQUISITE" - Is to be used when SPDXRef-A has as a
+	// prerequisite SPDXRef-B
+	//   "OTHER" - Is to be used for a relationship which has not been
+	// defined in the formal SPDX specification. A description of the
+	// relationship should be included in the Relationship comments field
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Comment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Comment") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RelationshipOccurrence) MarshalJSON() ([]byte, error) {
+	type NoMethod RelationshipOccurrence
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3058,6 +4099,35 @@ type StorageSource struct {
 
 func (s *StorageSource) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type Subject struct {
+	// Digest: "": ""
+	Digest map[string]string `json:"digest,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Digest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Digest") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Subject) MarshalJSON() ([]byte, error) {
+	type NoMethod Subject
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3574,7 +4644,7 @@ func (c *ProjectsNotesCreateCall) Header() http.Header {
 
 func (c *ProjectsNotesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3725,7 +4795,7 @@ func (c *ProjectsNotesDeleteCall) Header() http.Header {
 
 func (c *ProjectsNotesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3869,7 +4939,7 @@ func (c *ProjectsNotesGetCall) Header() http.Header {
 
 func (c *ProjectsNotesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4019,7 +5089,7 @@ func (c *ProjectsNotesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsNotesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4198,7 +5268,7 @@ func (c *ProjectsNotesListCall) Header() http.Header {
 
 func (c *ProjectsNotesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4385,7 +5455,7 @@ func (c *ProjectsNotesPatchCall) Header() http.Header {
 
 func (c *ProjectsNotesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4546,7 +5616,7 @@ func (c *ProjectsNotesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsNotesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4698,7 +5768,7 @@ func (c *ProjectsNotesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsNotesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4872,7 +5942,7 @@ func (c *ProjectsNotesOccurrencesListCall) Header() http.Header {
 
 func (c *ProjectsNotesOccurrencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5055,7 +6125,7 @@ func (c *ProjectsOccurrencesCreateCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5202,7 +6272,7 @@ func (c *ProjectsOccurrencesDeleteCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5346,7 +6416,7 @@ func (c *ProjectsOccurrencesGetCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5496,7 +6566,7 @@ func (c *ProjectsOccurrencesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5648,7 +6718,7 @@ func (c *ProjectsOccurrencesGetNotesCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesGetNotesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5802,7 +6872,7 @@ func (c *ProjectsOccurrencesGetVulnerabilitySummaryCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesGetVulnerabilitySummaryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5944,6 +7014,11 @@ func (c *ProjectsOccurrencesListCall) Filter(filter string) *ProjectsOccurrences
 //   "UPGRADE" - This represents an available software upgrade.
 //   "COMPLIANCE" - This represents a compliance check that can be
 // applied to a resource.
+//   "SBOM" - This represents a software bill of materials.
+//   "SPDX_PACKAGE" - This represents an SPDX Package.
+//   "SPDX_FILE" - This represents an SPDX File.
+//   "SPDX_RELATIONSHIP" - This represents an SPDX Relationship.
+//   "DSSE_ATTESTATION" - This represents a DSSE attestation Note
 func (c *ProjectsOccurrencesListCall) Kind(kind string) *ProjectsOccurrencesListCall {
 	c.urlParams_.Set("kind", kind)
 	return c
@@ -6007,7 +7082,7 @@ func (c *ProjectsOccurrencesListCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6094,7 +7169,12 @@ func (c *ProjectsOccurrencesListCall) Do(opts ...googleapi.CallOption) (*ListOcc
 	//         "DISCOVERY",
 	//         "ATTESTATION_AUTHORITY",
 	//         "UPGRADE",
-	//         "COMPLIANCE"
+	//         "COMPLIANCE",
+	//         "SBOM",
+	//         "SPDX_PACKAGE",
+	//         "SPDX_FILE",
+	//         "SPDX_RELATIONSHIP",
+	//         "DSSE_ATTESTATION"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Unknown",
@@ -6106,7 +7186,12 @@ func (c *ProjectsOccurrencesListCall) Do(opts ...googleapi.CallOption) (*ListOcc
 	//         "The note and occurrence track the initial discovery status of a resource.",
 	//         "This represents a logical \"role\" that can attest to artifacts.",
 	//         "This represents an available software upgrade.",
-	//         "This represents a compliance check that can be applied to a resource."
+	//         "This represents a compliance check that can be applied to a resource.",
+	//         "This represents a software bill of materials.",
+	//         "This represents an SPDX Package.",
+	//         "This represents an SPDX File.",
+	//         "This represents an SPDX Relationship.",
+	//         "This represents a DSSE attestation Note"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -6223,7 +7308,7 @@ func (c *ProjectsOccurrencesPatchCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6384,7 +7469,7 @@ func (c *ProjectsOccurrencesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6536,7 +7621,7 @@ func (c *ProjectsOccurrencesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsOccurrencesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6678,7 +7763,7 @@ func (c *ProjectsOperationsCreateCall) Header() http.Header {
 
 func (c *ProjectsOperationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6823,7 +7908,7 @@ func (c *ProjectsOperationsPatchCall) Header() http.Header {
 
 func (c *ProjectsOperationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6975,7 +8060,7 @@ func (c *ProjectsScanConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7141,7 +8226,7 @@ func (c *ProjectsScanConfigsListCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7323,7 +8408,7 @@ func (c *ProjectsScanConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsScanConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7486,7 +8571,7 @@ func (c *ProvidersNotesCreateCall) Header() http.Header {
 
 func (c *ProvidersNotesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7637,7 +8722,7 @@ func (c *ProvidersNotesDeleteCall) Header() http.Header {
 
 func (c *ProvidersNotesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7781,7 +8866,7 @@ func (c *ProvidersNotesGetCall) Header() http.Header {
 
 func (c *ProvidersNotesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7931,7 +9016,7 @@ func (c *ProvidersNotesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProvidersNotesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8110,7 +9195,7 @@ func (c *ProvidersNotesListCall) Header() http.Header {
 
 func (c *ProvidersNotesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8297,7 +9382,7 @@ func (c *ProvidersNotesPatchCall) Header() http.Header {
 
 func (c *ProvidersNotesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8458,7 +9543,7 @@ func (c *ProvidersNotesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProvidersNotesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8610,7 +9695,7 @@ func (c *ProvidersNotesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProvidersNotesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8784,7 +9869,7 @@ func (c *ProvidersNotesOccurrencesListCall) Header() http.Header {
 
 func (c *ProvidersNotesOccurrencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

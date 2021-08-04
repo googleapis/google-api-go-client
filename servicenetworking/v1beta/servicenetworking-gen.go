@@ -2786,7 +2786,11 @@ type MonitoredResourceDescriptor struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: Required. The monitored resource type. For example, the type
-	// "cloudsql_database" represents databases in Google Cloud SQL.
+	// "cloudsql_database" represents databases in Google Cloud SQL. For a
+	// list of types, see Monitoring resource types
+	// (https://cloud.google.com/monitoring/api/resources) and Logging
+	// resource types
+	// (https://cloud.google.com/logging/docs/api/v2/resource-list).
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -4148,7 +4152,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4302,7 +4306,7 @@ func (c *ServicesAddSubnetworkCall) Header() http.Header {
 
 func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4453,7 +4457,7 @@ func (c *ServicesSearchRangeCall) Header() http.Header {
 
 func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4616,7 +4620,7 @@ func (c *ServicesUpdateConnectionsCall) Header() http.Header {
 
 func (c *ServicesUpdateConnectionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4781,7 +4785,7 @@ func (c *ServicesConnectionsCreateCall) Header() http.Header {
 
 func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4951,7 +4955,7 @@ func (c *ServicesConnectionsListCall) Header() http.Header {
 
 func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

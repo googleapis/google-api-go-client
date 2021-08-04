@@ -1461,8 +1461,9 @@ type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
 
 	// Name: Required. Resource name for the Access Level. The `short_name`
 	// component must begin with a letter and only include alphanumeric and
-	// '_'. Format: `accessPolicies/{policy_id}/accessLevels/{short_name}`.
-	// The maximum length of the `short_name` component is 50 characters.
+	// '_'. Format:
+	// `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
+	// maximum length of the `access_level` component is 50 characters.
 	Name string `json:"name,omitempty"`
 
 	// Title: Human readable title. Must be unique within the Policy.
@@ -1507,7 +1508,7 @@ type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 	Etag string `json:"etag,omitempty"`
 
 	// Name: Output only. Resource name of the `AccessPolicy`. Format:
-	// `accessPolicies/{policy_id}`
+	// `accessPolicies/{access_policy}`
 	Name string `json:"name,omitempty"`
 
 	// Parent: Required. The parent of this `AccessPolicy` in the Cloud
@@ -2234,7 +2235,7 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// Name: Required. Resource name for the ServicePerimeter. The
 	// `short_name` component must begin with a letter and only include
 	// alphanumeric and '_'. Format:
-	// `accessPolicies/{policy_id}/servicePerimeters/{short_name}`
+	// `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`
 	Name string `json:"name,omitempty"`
 
 	// PerimeterType: Perimeter type indicator. A single project is allowed
@@ -3128,7 +3129,7 @@ func (c *V1p4beta1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1p4beta1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3338,7 +3339,7 @@ func (c *V1p4beta1ExportIamPolicyAnalysisCall) Header() http.Header {
 
 func (c *V1p4beta1ExportIamPolicyAnalysisCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

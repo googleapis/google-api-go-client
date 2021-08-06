@@ -1194,9 +1194,8 @@ type GoogleCloudRetailV2alphaCompleteQueryResponse struct {
 	CompletionResults []*GoogleCloudRetailV2alphaCompleteQueryResponseCompletionResult `json:"completionResults,omitempty"`
 
 	// RecentSearchResults: Matched recent searches of this user. This field
-	// is a restricted feature. Contact Retail Support
-	// (retail-search-support@google.com) if you are interested in enabling
-	// it. This feature is only available when
+	// is a restricted feature. Contact Retail Search support team if you
+	// are interested in enabling it. This feature is only available when
 	// CompleteQueryRequest.visitor_id field is set and UserEvent is
 	// imported. The recent searches satisfy the follow rules: * They are
 	// ordered from latest to oldest. * They are matched with
@@ -1299,7 +1298,7 @@ func (s *GoogleCloudRetailV2alphaCompleteQueryResponseRecentSearchResult) Marsha
 // source for completion data.
 type GoogleCloudRetailV2alphaCompletionDataInputConfig struct {
 	// BigQuerySource: Required. BigQuery input source. Add the IAM
-	// permission “BigQuery Data Viewer” for
+	// permission "BigQuery Data Viewer" for
 	// cloud-retail-customer-data-access@system.gserviceaccount.com before
 	// using this feature otherwise an error is thrown.
 	BigQuerySource *GoogleCloudRetailV2alphaBigQuerySource `json:"bigQuerySource,omitempty"`
@@ -1918,12 +1917,12 @@ type GoogleCloudRetailV2alphaImportProductsRequest struct {
 	//   "FULL" - Calculates diff and replaces the entire product dataset.
 	// Existing products may be deleted if they are not present in the
 	// source location. Can only be while using BigQuerySource. Add the IAM
-	// permission “BigQuery Data Viewer” for
+	// permission "BigQuery Data Viewer" for
 	// cloud-retail-customer-data-access@system.gserviceaccount.com before
 	// using this feature otherwise an error is thrown. This feature is only
-	// available for users who have Retail Search enabled. Contact Retail
-	// Support (retail-search-support@google.com) if you are interested in
-	// using Retail Search.
+	// available for users who have Retail Search enabled. Please submit a
+	// form [here](https://cloud.google.com/contact) to contact cloud sales
+	// if you are interested in using Retail Search.
 	ReconciliationMode string `json:"reconciliationMode,omitempty"`
 
 	// RequestId: Unique identifier provided by client, within the ancestor
@@ -2227,8 +2226,8 @@ type GoogleCloudRetailV2alphaMerchantCenterLink struct {
 
 	// Destinations: String representing the destination to import for, all
 	// if left empty. List of possible values can be found here.
-	// [https://support.google.com/merchants/answer/7501026?hl=en] List of
-	// allowed string values: "shopping-ads", "buy-on-google-listings",
+	// [https://support.google.com/merchants/answer/7501026] List of allowed
+	// string values: "shopping-ads", "buy-on-google-listings",
 	// "display-ads", "local-inventory -ads", "free-listings",
 	// "free-local-listings" NOTE: The string values are case sensitive.
 	Destinations []string `json:"destinations,omitempty"`
@@ -2830,8 +2829,10 @@ type GoogleCloudRetailV2alphaProduct struct {
 	// Type.PRIMARY and Type.COLLECTION, the following fields are always
 	// returned in SearchResponse by default: * name For Type.VARIANT, the
 	// following fields are always returned in by default: * name *
-	// color_info Maximum number of paths is 20. Otherwise, an
-	// INVALID_ARGUMENT error is returned.
+	// color_info Maximum number of paths is 30. Otherwise, an
+	// INVALID_ARGUMENT error is returned. Note: Returning more fields in
+	// SearchResponse may increase response payload size and serving
+	// latency.
 	RetrievableFields string `json:"retrievableFields,omitempty"`
 
 	// Sizes: The size of the product. To represent different size systems
@@ -2941,9 +2942,13 @@ func (s *GoogleCloudRetailV2alphaProduct) MarshalJSON() ([]byte, error) {
 // GoogleCloudRetailV2alphaProductDetail: Detailed product information
 // associated with a user event.
 type GoogleCloudRetailV2alphaProductDetail struct {
-	// Product: Required. Product information. Only Product.id field is used
-	// when ingesting an event, all other product fields are ignored as we
-	// will look them up from the catalog.
+	// Product: Required. Product information. Required field(s): *
+	// Product.id Optional override field(s): * Product.price_info If any
+	// supported optional fields are provided, we will treat them as a full
+	// override when looking up product information from the catalog. Thus,
+	// it is important to ensure that the overriding fields are accurate and
+	// complete. All other product fields are ignored and instead populated
+	// via catalog lookup after event ingestion.
 	Product *GoogleCloudRetailV2alphaProduct `json:"product,omitempty"`
 
 	// Quantity: Quantity of the product associated with the user event. For
@@ -3513,9 +3518,8 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 
 	// DynamicFacetSpec: The specification for dynamically generated facets.
 	// Notice that only textual facets can be dynamically generated. This
-	// feature requires additional allowlisting. Contact Retail Support
-	// (retail-search-support@google.com) if you are interested in using
-	// dynamic facet feature.
+	// feature requires additional allowlisting. Contact Retail Search
+	// support team if you are interested in using dynamic facet feature.
 	DynamicFacetSpec *GoogleCloudRetailV2alphaSearchRequestDynamicFacetSpec `json:"dynamicFacetSpec,omitempty"`
 
 	// FacetSpecs: Facet specifications for faceted search. If empty, no
@@ -3599,30 +3603,28 @@ type GoogleCloudRetailV2alphaSearchRequest struct {
 	// Products attributes. The attributes from all the matching variant
 	// Products are merged and de-duplicated. Notice that rollup variant
 	// Products attributes will lead to extra query latency. Maximum number
-	// of keys is 10. For Product.fulfillment_info, a fulfillment type and a
+	// of keys is 10. For FulfillmentInfo, a fulfillment type and a
 	// fulfillment ID must be provided in the format of
-	// "fulfillmentType.filfillmentId". E.g., in "pickupInStore.store123",
+	// "fulfillmentType.fulfillmentId". E.g., in "pickupInStore.store123",
 	// "pickupInStore" is fulfillment type and "store123" is the store ID.
 	// Supported keys are: * colorFamilies * price * originalPrice *
 	// discount * attributes.key, where key is any key in the
 	// Product.attributes map. * pickupInStore.id, where id is any
-	// FulfillmentInfo.ids for type FulfillmentInfo.Type.PICKUP_IN_STORE. *
-	// shipToStore.id, where id is any FulfillmentInfo.ids for type
-	// FulfillmentInfo.Type.SHIP_TO_STORE. * sameDayDelivery.id, where id is
-	// any FulfillmentInfo.ids for type
-	// FulfillmentInfo.Type.SAME_DAY_DELIVERY. * nextDayDelivery.id, where
-	// id is any FulfillmentInfo.ids for type
-	// FulfillmentInfo.Type.NEXT_DAY_DELIVERY. * customFulfillment1.id,
-	// where id is any FulfillmentInfo.ids for type
-	// FulfillmentInfo.Type.CUSTOM_TYPE_1. * customFulfillment2.id, where id
-	// is any FulfillmentInfo.ids for type
-	// FulfillmentInfo.Type.CUSTOM_TYPE_2. * customFulfillment3.id, where id
-	// is any FulfillmentInfo.ids for type
-	// FulfillmentInfo.Type.CUSTOM_TYPE_3. * customFulfillment4.id, where id
-	// is any FulfillmentInfo.ids for type
-	// FulfillmentInfo.Type.CUSTOM_TYPE_4. * customFulfillment5.id, where id
-	// is any FulfillmentInfo.ids for type
-	// FulfillmentInfo.Type.CUSTOM_TYPE_5. If this field is set to an
+	// FulfillmentInfo.place_ids for FulfillmentInfo.type "pickup-in-store".
+	// * shipToStore.id, where id is any FulfillmentInfo.place_ids for
+	// FulfillmentInfo.type "ship-to-store". * sameDayDelivery.id, where id
+	// is any FulfillmentInfo.place_ids for FulfillmentInfo.type
+	// "same-day-delivery". * nextDayDelivery.id, where id is any
+	// FulfillmentInfo.place_ids for FulfillmentInfo.type
+	// "next-day-delivery". * customFulfillment1.id, where id is any
+	// FulfillmentInfo.place_ids for FulfillmentInfo.type "custom-type-1". *
+	// customFulfillment2.id, where id is any FulfillmentInfo.place_ids for
+	// FulfillmentInfo.type "custom-type-2". * customFulfillment3.id, where
+	// id is any FulfillmentInfo.place_ids for FulfillmentInfo.type
+	// "custom-type-3". * customFulfillment4.id, where id is any
+	// FulfillmentInfo.place_ids for FulfillmentInfo.type "custom-type-4". *
+	// customFulfillment5.id, where id is any FulfillmentInfo.place_ids for
+	// FulfillmentInfo.type "custom-type-5". If this field is set to an
 	// invalid value other than these, an INVALID_ARGUMENT error is
 	// returned.
 	VariantRollupKeys []string `json:"variantRollupKeys,omitempty"`
@@ -3880,9 +3882,9 @@ type GoogleCloudRetailV2alphaSearchRequestFacetSpecFacetKey struct {
 	// Key: Required. Supported textual and numerical facet keys in Product
 	// object, over which the facet values are computed. Facet key is
 	// case-sensitive. Allowed facet keys when FacetKey.query is not
-	// specified: * textual_field = *# The Product.brands. * "brands"; *#
-	// The Product.categories. * "categories"; *# The Audience.genders. * |
-	// "genders"; *# The Audience.age_groups. * | "ageGroups"; *# The
+	// specified: * textual_field = *# The Product.brands. * | "brands"; *#
+	// The Product.categories. * | "categories"; *# The Audience.genders. *
+	// | "genders"; *# The Audience.age_groups. * | "ageGroups"; *# The
 	// Product.availability. Value is one of * *# "IN_STOCK",
 	// "OUT_OF_STOCK", PREORDER", "BACKORDER". * | "availability"; *# The
 	// ColorInfo.color_families. * | "colorFamilies"; *# The
@@ -3891,28 +3893,29 @@ type GoogleCloudRetailV2alphaSearchRequestFacetSpecFacetKey struct {
 	// "patterns"; *# The Product.conditions. * | "conditions"; *# The
 	// textual custom attribute in Product object. Key can * *# be any key
 	// in the Product.attributes map * *# if the attribute values are
-	// textual. * *# map. * | "attributes.key"; *# The FulfillmentInfo.ids
-	// for type *# FulfillmentInfo.Type.PICKUP_IN_STORE. * |
-	// "pickupInStore"; *# The FulfillmentInfo.ids for type *#
-	// FulfillmentInfo.Type.SHIP_TO_STORE. * | "shipToStore"; *# The
-	// FulfillmentInfo.ids for type *#
-	// FulfillmentInfo.Type.SAME_DAY_DELIVERY. * | "sameDayDelivery"; *# The
-	// FulfillmentInfo.ids for type *#
-	// FulfillmentInfo.Type.NEXT_DAY_DELIVERY. * | "nextDayDelivery"; *# The
-	// FulfillmentInfo.ids for type *# FulfillmentInfo.Type.CUSTOM_TYPE_1. *
-	// | "customFulfillment1"; *# The FulfillmentInfo.ids for type *#
-	// FulfillmentInfo.Type.CUSTOM_TYPE_2. * | "customFulfillment2"; *# The
-	// FulfillmentInfo.ids for type *# FulfillmentInfo.Type.CUSTOM_TYPE_3. *
-	// | "customFulfillment3"; *# The FulfillmentInfo.ids for type *#
-	// FulfillmentInfo.Type.CUSTOM_TYPE_4. * | "customFulfillment4"; *# The
-	// FulfillmentInfo.ids for type *# FulfillmentInfo.Type.CUSTOM_TYPE_5. *
-	// | "customFulfillment5"; * numerical_field = *# The PriceInfo.price. *
-	// "price"; *# The discount. Computed by (original_price-price)/price *
-	// "discount"; *# The Rating.average_rating. * "rating"; *# The
-	// Rating.rating_count. * "ratingCount"; *# The numerical custom
-	// attribute in Product object. Key can * *# be any key in the
-	// Product.attributes map * *# if the attribute values are numerical. *
-	// | "attributes.key";
+	// textual. * | "attributes.key"; *# The FulfillmentInfo.place_ids for
+	// FulfillmentInfo.type * *# "pickup-in-store". * | "pickupInStore"; *#
+	// The FulfillmentInfo.place_ids for FulfillmentInfo.type * *#
+	// "ship-to-store". * | "shipToStore"; *# The FulfillmentInfo.place_ids
+	// for FulfillmentInfo.type * *# "same-day-delivery". * |
+	// "sameDayDelivery"; *# The FulfillmentInfo.place_ids for
+	// FulfillmentInfo.type * *# "next-day-delivery". * | "nextDayDelivery";
+	// *# The FulfillmentInfo.place_ids for FulfillmentInfo.type * *#
+	// "custom-type-1". * | "customFulfillment1"; *# The
+	// FulfillmentInfo.place_ids for FulfillmentInfo.type * *#
+	// "custom-type-2". * | "customFulfillment2"; *# The
+	// FulfillmentInfo.place_ids for FulfillmentInfo.type * *#
+	// "custom-type-3". * | "customFulfillment3"; *# The
+	// FulfillmentInfo.place_ids for FulfillmentInfo.type * *#
+	// "custom-type-4". * | "customFulfillment4"; *# The
+	// FulfillmentInfo.place_ids for FulfillmentInfo.type * *#
+	// "custom-type-5". * | "customFulfillment5"; * numerical_field = *# The
+	// PriceInfo.price. * | "price"; *# The discount. Computed by
+	// (original_price-price)/price * | "discount"; *# The
+	// Rating.average_rating. * | "rating"; *# The Rating.rating_count. * |
+	// "ratingCount"; *# The numerical custom attribute in Product object.
+	// Key can * *# be any key in the Product.attributes map * *# if the
+	// attribute values are numerical. * | "attributes.key";
 	Key string `json:"key,omitempty"`
 
 	// OrderBy: The order in which Facet.values are returned. Allowed values
@@ -3922,8 +3925,8 @@ type GoogleCloudRetailV2alphaSearchRequestFacetSpecFacetKey struct {
 	// not set, textual values are sorted in natural order
 	// (https://en.wikipedia.org/wiki/Natural_sort_order); numerical
 	// intervals are sorted in the order given by
-	// FacetSpec.FacetKey.intervals; FulfillmentInfo.ids are sorted in the
-	// order given by FacetSpec.FacetKey.restricted_values.
+	// FacetSpec.FacetKey.intervals; FulfillmentInfo.place_ids are sorted in
+	// the order given by FacetSpec.FacetKey.restricted_values.
 	OrderBy string `json:"orderBy,omitempty"`
 
 	// Prefixes: Only get facet values that start with the given string
@@ -4223,9 +4226,9 @@ type GoogleCloudRetailV2alphaSearchResponseSearchResult struct {
 	// google.protobuf.ListValue. For example, if there are two variants
 	// with colors "red" and "blue", the rollup values are { key:
 	// "colorFamilies" value { list_value { values { string_value: "red" }
-	// values { string_value: "blue" } } } } For Product.fulfillment_info,
-	// the rollup values is a double value with type google.protobuf.Value.
-	// For example, {key: "pickupInStore.store1" value { number_value: 10 }}
+	// values { string_value: "blue" } } } } For FulfillmentInfo, the rollup
+	// values is a double value with type google.protobuf.Value. For
+	// example, {key: "pickupInStore.store1" value { number_value: 10 }}
 	// means a there are 10 variants in this product are available in the
 	// store "store1".
 	VariantRollupValues googleapi.RawMessage `json:"variantRollupValues,omitempty"`
@@ -5425,9 +5428,9 @@ type ProjectsLocationsCatalogsCompleteQueryCall struct {
 
 // CompleteQuery: Completes the specified prefix with keyword
 // suggestions. This feature is only available for users who have Retail
-// Search enabled. Contact Retail Support
-// (retail-search-support@google.com) if you are interested in using
-// Retail Search.
+// Search enabled. Please submit a form here
+// (https://cloud.google.com/contact) to contact cloud sales if you are
+// interested in using Retail Search.
 //
 // - catalog: Catalog for which the completion is performed. Full
 //   resource name of catalog, such as
@@ -5440,12 +5443,12 @@ func (r *ProjectsLocationsCatalogsService) CompleteQuery(catalog string) *Projec
 
 // Dataset sets the optional parameter "dataset": Determines which
 // dataset to use for fetching completion. "user-data" will use the
-// imported dataset through ImportCompletionData. "cloud-retail" will
-// use the dataset generated by cloud retail based on user events. If
-// leave empty, it will use the "user-data". Current supported values: *
-// user-data * cloud-retail This option is not automatically enabled.
-// Before using cloud-retail, contact retail-search-support@google.com
-// first.
+// imported dataset through CompletionService.ImportCompletionData.
+// "cloud-retail" will use the dataset generated by cloud retail based
+// on user events. If leave empty, it will use the "user-data". Current
+// supported values: * user-data * cloud-retail This option requires
+// additional allowlisting. Before using cloud-retail, contact Cloud
+// Retail support team first.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) Dataset(dataset string) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.Set("dataset", dataset)
 	return c
@@ -5473,8 +5476,10 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) LanguageCodes(languageCodes
 }
 
 // MaxSuggestions sets the optional parameter "maxSuggestions":
-// Completion max suggestions. The maximum allowed max suggestions is
-// 20. The default value is 20.
+// Completion max suggestions. If left unset or set to 0, then will
+// fallback to the configured value CompletionConfig.max_suggestions.
+// The maximum allowed max suggestions is 20. If it is set higher, it
+// will be capped by 20.
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) MaxSuggestions(maxSuggestions int64) *ProjectsLocationsCatalogsCompleteQueryCall {
 	c.urlParams_.Set("maxSuggestions", fmt.Sprint(maxSuggestions))
 	return c
@@ -5537,7 +5542,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5601,7 +5606,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Completes the specified prefix with keyword suggestions. This feature is only available for users who have Retail Search enabled. Contact Retail Support (retail-search-support@google.com) if you are interested in using Retail Search.",
+	//   "description": "Completes the specified prefix with keyword suggestions. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}:completeQuery",
 	//   "httpMethod": "GET",
 	//   "id": "retail.projects.locations.catalogs.completeQuery",
@@ -5617,7 +5622,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "dataset": {
-	//       "description": "Determines which dataset to use for fetching completion. \"user-data\" will use the imported dataset through ImportCompletionData. \"cloud-retail\" will use the dataset generated by cloud retail based on user events. If leave empty, it will use the \"user-data\". Current supported values: * user-data * cloud-retail This option is not automatically enabled. Before using cloud-retail, contact retail-search-support@google.com first.",
+	//       "description": "Determines which dataset to use for fetching completion. \"user-data\" will use the imported dataset through CompletionService.ImportCompletionData. \"cloud-retail\" will use the dataset generated by cloud retail based on user events. If leave empty, it will use the \"user-data\". Current supported values: * user-data * cloud-retail This option requires additional allowlisting. Before using cloud-retail, contact Cloud Retail support team first.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5633,7 +5638,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "maxSuggestions": {
-	//       "description": "Completion max suggestions. The maximum allowed max suggestions is 20. The default value is 20.",
+	//       "description": "Completion max suggestions. If left unset or set to 0, then will fallback to the configured value CompletionConfig.max_suggestions. The maximum allowed max suggestions is 20. If it is set higher, it will be capped by 20.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5674,9 +5679,9 @@ type ProjectsLocationsCatalogsGetDefaultBranchCall struct {
 // GetDefaultBranch: Get which branch is currently default branch set by
 // CatalogService.SetDefaultBranch method under a specified parent
 // catalog. This feature is only available for users who have Retail
-// Search enabled. Contact Retail Support
-// (retail-search-support@google.com) if you are interested in using
-// Retail Search.
+// Search enabled. Please submit a form here
+// (https://cloud.google.com/contact) to contact cloud sales if you are
+// interested in using Retail Search.
 //
 // - catalog: The parent catalog resource name, such as
 //   `projects/*/locations/global/catalogs/default_catalog`.
@@ -5723,7 +5728,7 @@ func (c *ProjectsLocationsCatalogsGetDefaultBranchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsGetDefaultBranchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5787,7 +5792,7 @@ func (c *ProjectsLocationsCatalogsGetDefaultBranchCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Get which branch is currently default branch set by CatalogService.SetDefaultBranch method under a specified parent catalog. This feature is only available for users who have Retail Search enabled. Contact Retail Support (retail-search-support@google.com) if you are interested in using Retail Search.",
+	//   "description": "Get which branch is currently default branch set by CatalogService.SetDefaultBranch method under a specified parent catalog. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}:getDefaultBranch",
 	//   "httpMethod": "GET",
 	//   "id": "retail.projects.locations.catalogs.getDefaultBranch",
@@ -5894,7 +5899,7 @@ func (c *ProjectsLocationsCatalogsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6073,7 +6078,7 @@ func (c *ProjectsLocationsCatalogsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6206,8 +6211,8 @@ type ProjectsLocationsCatalogsSetDefaultBranchCall struct {
 // {newBranch} (if branch is not explicitly set). * UserEventService
 // will only join events with products from branch {newBranch}. This
 // feature is only available for users who have Retail Search enabled.
-// Contact Retail Support (retail-search-support@google.com) if you are
-// interested in using Retail Search.
+// Please submit a form here (https://cloud.google.com/contact) to
+// contact cloud sales if you are interested in using Retail Search.
 //
 // - catalog: Full resource name of the catalog, such as
 //   `projects/*/locations/global/catalogs/default_catalog`.
@@ -6245,7 +6250,7 @@ func (c *ProjectsLocationsCatalogsSetDefaultBranchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsSetDefaultBranchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6309,7 +6314,7 @@ func (c *ProjectsLocationsCatalogsSetDefaultBranchCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Set a specified branch id as default branch. API methods such as SearchService.Search, ProductService.GetProduct, ProductService.ListProducts will treat requests using \"default_branch\" to the actual branch id set as default. For example, if `projects/*/locations/*/catalogs/*/branches/1` is set as default, setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/default_branch` is equivalent to setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/1`. Using multiple branches can be useful when developers would like to have a staging branch to test and verify for future usage. When it becomes ready, developers switch on the staging branch using this API while keeping using `projects/*/locations/*/catalogs/*/branches/default_branch` as SearchRequest.branch to route the traffic to this staging branch. CAUTION: If you have live predict/search traffic, switching the default branch could potentially cause outages if the ID space of the new branch is very different from the old one. More specifically: * PredictionService will only return product IDs from branch {newBranch}. * SearchService will only return product IDs from branch {newBranch} (if branch is not explicitly set). * UserEventService will only join events with products from branch {newBranch}. This feature is only available for users who have Retail Search enabled. Contact Retail Support (retail-search-support@google.com) if you are interested in using Retail Search.",
+	//   "description": "Set a specified branch id as default branch. API methods such as SearchService.Search, ProductService.GetProduct, ProductService.ListProducts will treat requests using \"default_branch\" to the actual branch id set as default. For example, if `projects/*/locations/*/catalogs/*/branches/1` is set as default, setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/default_branch` is equivalent to setting SearchRequest.branch to `projects/*/locations/*/catalogs/*/branches/1`. Using multiple branches can be useful when developers would like to have a staging branch to test and verify for future usage. When it becomes ready, developers switch on the staging branch using this API while keeping using `projects/*/locations/*/catalogs/*/branches/default_branch` as SearchRequest.branch to route the traffic to this staging branch. CAUTION: If you have live predict/search traffic, switching the default branch could potentially cause outages if the ID space of the new branch is very different from the old one. More specifically: * PredictionService will only return product IDs from branch {newBranch}. * SearchService will only return product IDs from branch {newBranch} (if branch is not explicitly set). * UserEventService will only join events with products from branch {newBranch}. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}:setDefaultBranch",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.setDefaultBranch",
@@ -6398,7 +6403,7 @@ func (c *ProjectsLocationsCatalogsBranchesOperationsGetCall) Header() http.Heade
 
 func (c *ProjectsLocationsCatalogsBranchesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6505,9 +6510,9 @@ type ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall struct {
 // processed downstream. As a consequence, when a response is returned,
 // the added place IDs are not immediately manifested in the Product
 // queried by GetProduct or ListProducts. This feature is only available
-// for users who have Retail Search enabled. Contact Retail Support
-// (retail-search-support@google.com) if you are interested in using
-// Retail Search.
+// for users who have Retail Search enabled. Please submit a form here
+// (https://cloud.google.com/contact) to contact cloud sales if you are
+// interested in using Retail Search.
 //
 // - product: Full resource name of Product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -6548,7 +6553,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6612,7 +6617,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) Do(o
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Contact Retail Support (retail-search-support@google.com) if you are interested in using Retail Search.",
+	//   "description": "Incrementally adds place IDs to Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the added place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:addFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.addFulfillmentPlaces",
@@ -6705,7 +6710,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6859,7 +6864,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7007,7 +7012,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsCatalogsBranchesProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7151,7 +7156,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsImportCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7366,7 +7371,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsListCall) Header() http.Header
 
 func (c *ProjectsLocationsCatalogsBranchesProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7575,7 +7580,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7698,9 +7703,9 @@ type ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall struct
 // processed downstream. As a consequence, when a response is returned,
 // the removed place IDs are not immediately manifested in the Product
 // queried by GetProduct or ListProducts. This feature is only available
-// for users who have Retail Search enabled. Contact Retail Support
-// (retail-search-support@google.com) if you are interested in using
-// Retail Search.
+// for users who have Retail Search enabled. Please submit a form here
+// (https://cloud.google.com/contact) to contact cloud sales if you are
+// interested in using Retail Search.
 //
 // - product: Full resource name of Product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -7741,7 +7746,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) H
 
 func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7805,7 +7810,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Contact Retail Support (retail-search-support@google.com) if you are interested in using Retail Search.",
+	//   "description": "Incrementally removes place IDs from a Product.fulfillment_info.place_ids. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, the removed place IDs are not immediately manifested in the Product queried by GetProduct or ListProducts. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:removeFulfillmentPlaces",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.removeFulfillmentPlaces",
@@ -7864,9 +7869,9 @@ type ProjectsLocationsCatalogsBranchesProductsSetInventoryCall struct {
 // any existing inventory information will be preserved. Pre-existing
 // inventory information can only be updated with SetInventory,
 // AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is
-// only available for users who have Retail Search enabled. Contact
-// Retail Support (retail-search-support@google.com) if you are
-// interested in using Retail Search.
+// only available for users who have Retail Search enabled. Please
+// submit a form here (https://cloud.google.com/contact) to contact
+// cloud sales if you are interested in using Retail Search.
 //
 // - name: Immutable. Full resource name of the product, such as
 //   `projects/*/locations/global/catalogs/default_catalog/branches/defau
@@ -7906,7 +7911,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) Header() htt
 
 func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7970,7 +7975,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. When inventory is updated with CreateProduct and UpdateProduct, the specified inventory field value(s) will overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update time for the specified inventory fields will be overwritten to the time of the CreateProduct or UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product will be used. If no inventory fields are set in UpdateProductRequest.set_mask, then any existing inventory information will be preserved. Pre-existing inventory information can only be updated with SetInventory, AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is only available for users who have Retail Search enabled. Contact Retail Support (retail-search-support@google.com) if you are interested in using Retail Search.",
+	//   "description": "Updates inventory information for a Product while respecting the last update timestamps of each inventory field. This process is asynchronous and does not require the Product to exist before updating fulfillment information. If the request is valid, the update will be enqueued and processed downstream. As a consequence, when a response is returned, updates are not immediately manifested in the Product queried by GetProduct or ListProducts. When inventory is updated with CreateProduct and UpdateProduct, the specified inventory field value(s) will overwrite any existing value(s) while ignoring the last update time for this field. Furthermore, the last update time for the specified inventory fields will be overwritten to the time of the CreateProduct or UpdateProduct request. If no inventory fields are set in CreateProductRequest.product, then any pre-existing inventory information for this product will be used. If no inventory fields are set in UpdateProductRequest.set_mask, then any existing inventory information will be preserved. Pre-existing inventory information can only be updated with SetInventory, AddFulfillmentPlaces, and RemoveFulfillmentPlaces. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/branches/{branchesId}/products/{productsId}:setInventory",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.branches.products.setInventory",
@@ -8014,8 +8019,8 @@ type ProjectsLocationsCatalogsCompletionDataImportCall struct {
 // Import: Bulk import of processed completion dataset. Request
 // processing may be synchronous. Partial updating is not supported.
 // This feature is only available for users who have Retail Search
-// enabled. Contact Retail Support (retail-search-support@google.com) if
-// you are interested in using Retail Search.
+// enabled. Please submit a form here (https://cloud.google.com/contact)
+// to contact cloud sales if you are interested in using Retail Search.
 //
 // - parent: The catalog which the suggestions dataset belongs to.
 //   Format: `projects/1234/locations/global/catalogs/default_catalog`.
@@ -8053,7 +8058,7 @@ func (c *ProjectsLocationsCatalogsCompletionDataImportCall) Header() http.Header
 
 func (c *ProjectsLocationsCatalogsCompletionDataImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8117,7 +8122,7 @@ func (c *ProjectsLocationsCatalogsCompletionDataImportCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk import of processed completion dataset. Request processing may be synchronous. Partial updating is not supported. This feature is only available for users who have Retail Search enabled. Contact Retail Support (retail-search-support@google.com) if you are interested in using Retail Search.",
+	//   "description": "Bulk import of processed completion dataset. Request processing may be synchronous. Partial updating is not supported. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/completionData:import",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.completionData.import",
@@ -8206,7 +8211,7 @@ func (c *ProjectsLocationsCatalogsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8382,7 +8387,7 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8564,7 +8569,7 @@ func (c *ProjectsLocationsCatalogsPlacementsPredictCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPlacementsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8671,9 +8676,9 @@ type ProjectsLocationsCatalogsPlacementsSearchCall struct {
 }
 
 // Search: Performs a search. This feature is only available for users
-// who have Retail Search enabled. Contact Retail Support
-// (retail-search-support@google.com) if you are interested in using
-// Retail Search.
+// who have Retail Search enabled. Please submit a form here
+// (https://cloud.google.com/contact) to contact cloud sales if you are
+// interested in using Retail Search.
 //
 // - placement: The resource name of the search engine placement, such
 //   as
@@ -8715,7 +8720,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPlacementsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8780,7 +8785,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Performs a search. This feature is only available for users who have Retail Search enabled. Contact Retail Support (retail-search-support@google.com) if you are interested in using Retail Search.",
+	//   "description": "Performs a search. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search.",
 	//   "flatPath": "v2alpha/projects/{projectsId}/locations/{locationsId}/catalogs/{catalogsId}/placements/{placementsId}:search",
 	//   "httpMethod": "POST",
 	//   "id": "retail.projects.locations.catalogs.placements.search",
@@ -8916,7 +8921,7 @@ func (c *ProjectsLocationsCatalogsUserEventsCollectCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsCollectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9074,7 +9079,7 @@ func (c *ProjectsLocationsCatalogsUserEventsImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9221,7 +9226,7 @@ func (c *ProjectsLocationsCatalogsUserEventsPurgeCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsPurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9371,7 +9376,7 @@ func (c *ProjectsLocationsCatalogsUserEventsRejoinCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsRejoinCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9514,7 +9519,7 @@ func (c *ProjectsLocationsCatalogsUserEventsWriteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9668,7 +9673,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9844,7 +9849,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210804")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

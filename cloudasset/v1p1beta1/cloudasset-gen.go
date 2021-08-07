@@ -156,6 +156,35 @@ type ResourcesService struct {
 	s *Service
 }
 
+// AnalyzeIamPolicyLongrunningMetadata: Represents the metadata of the
+// longrunning operation for the AnalyzeIamPolicyLongrunning rpc.
+type AnalyzeIamPolicyLongrunningMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzeIamPolicyLongrunningMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzeIamPolicyLongrunningMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AnalyzeIamPolicyLongrunningResponse: A response message for
 // AssetService.AnalyzeIamPolicyLongrunning.
 type AnalyzeIamPolicyLongrunningResponse struct {
@@ -2369,7 +2398,7 @@ func (c *IamPoliciesSearchAllCall) Header() http.Header {
 
 func (c *IamPoliciesSearchAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2607,7 +2636,7 @@ func (c *ResourcesSearchAllCall) Header() http.Header {
 
 func (c *ResourcesSearchAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210805")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210806")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

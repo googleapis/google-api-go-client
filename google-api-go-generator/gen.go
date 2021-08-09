@@ -1424,7 +1424,7 @@ func (s *Schema) writeSchemaStruct(api *API) {
 
 	commentFmtStr := "%s is a list of field names (e.g. %q) to " +
 		"unconditionally include in API requests. By default, fields " +
-		"with empty values are omitted from API requests. However, " +
+		"with empty or default values are omitted from API requests. However, " +
 		"any non-pointer, non-interface field appearing in %s will " +
 		"be sent to the server regardless of whether the field is " +
 		"empty or not. This may be used to include empty fields in " +

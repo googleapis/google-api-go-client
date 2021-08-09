@@ -215,6 +215,35 @@ func (s *AccessSelector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AnalyzeIamPolicyLongrunningMetadata: Represents the metadata of the
+// longrunning operation for the AnalyzeIamPolicyLongrunning rpc.
+type AnalyzeIamPolicyLongrunningMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzeIamPolicyLongrunningMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzeIamPolicyLongrunningMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AnalyzeIamPolicyLongrunningRequest: A request message for
 // AssetService.AnalyzeIamPolicyLongrunning.
 type AnalyzeIamPolicyLongrunningRequest struct {
@@ -394,6 +423,10 @@ type Asset struct {
 	// (https://cloud.google.com/compute/docs/instances/os-inventory-management)
 	// for more information.
 	OsInventory *Inventory `json:"osInventory,omitempty"`
+
+	// RelatedAssets: The related assets of the asset of one relationship
+	// type. One asset only represents one type of relationship.
+	RelatedAssets *RelatedAssets `json:"relatedAssets,omitempty"`
 
 	// Resource: A representation of the resource.
 	Resource *Resource `json:"resource,omitempty"`
@@ -938,6 +971,7 @@ type ExportAssetsRequest struct {
 	//   "ACCESS_POLICY" - The Cloud Access context manager Policy set on an
 	// asset.
 	//   "OS_INVENTORY" - The runtime OS Inventory information.
+	//   "RELATIONSHIP" - The related resources.
 	ContentType string `json:"contentType,omitempty"`
 
 	// OutputConfig: Required. Output configuration indicating where the
@@ -951,6 +985,21 @@ type ExportAssetsRequest struct {
 	// volatile window during which running the same query may get different
 	// results.
 	ReadTime string `json:"readTime,omitempty"`
+
+	// RelationshipTypes: A list of relationship types to export, for
+	// example: `INSTANCE_TO_INSTANCEGROUP`. This field should only be
+	// specified if content_type=RELATIONSHIP. * If specified: it snapshots
+	// specified relationships. It returns an error if any of the
+	// [relationship_types] doesn't belong to the supported relationship
+	// types of the [asset_types] or if any of the [asset_types] doesn't
+	// belong to the source types of the [relationship_types]. * Otherwise:
+	// it snapshots the supported relationships for all [asset_types] or
+	// returns an error if any of the [asset_types] has no relationship
+	// support. An unspecified asset types field means all supported
+	// asset_types. See Introduction to Cloud Asset Inventory
+	// (https://cloud.google.com/asset-inventory/docs/overview) for all
+	// supported asset types and relationship types.
+	RelationshipTypes []string `json:"relationshipTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AssetTypes") to
 	// unconditionally include in API requests. By default, fields with
@@ -1082,6 +1131,7 @@ type Feed struct {
 	//   "ACCESS_POLICY" - The Cloud Access context manager Policy set on an
 	// asset.
 	//   "OS_INVENTORY" - The runtime OS Inventory information.
+	//   "RELATIONSHIP" - The related resources.
 	ContentType string `json:"contentType,omitempty"`
 
 	// FeedOutputConfig: Required. Feed output configuration defining where
@@ -1095,6 +1145,22 @@ type Feed struct {
 	// fier} The client-assigned feed identifier must be unique within the
 	// parent project/folder/organization.
 	Name string `json:"name,omitempty"`
+
+	// RelationshipTypes: A list of relationship types to output, for
+	// example: `INSTANCE_TO_INSTANCEGROUP`. This field should only be
+	// specified if content_type=RELATIONSHIP. * If specified: it outputs
+	// specified relationship updates on the [asset_names] or the
+	// [asset_types]. It returns an error if any of the [relationship_types]
+	// doesn't belong to the supported relationship types of the
+	// [asset_names] or [asset_types], or any of the [asset_names] or the
+	// [asset_types] doesn't belong to the source types of the
+	// [relationship_types]. * Otherwise: it outputs the supported
+	// relationships of the types of [asset_names] and [asset_types] or
+	// returns an error if any of the [asset_names] or the [asset_types] has
+	// no replationship support. See Introduction to Cloud Asset Inventory
+	// (https://cloud.google.com/asset-inventory/docs/overview) for all
+	// supported asset types and relationship types.
+	RelationshipTypes []string `json:"relationshipTypes,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -3469,7 +3535,12 @@ func (s *IdentitySelector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Inventory: The inventory details of a VM.
+// Inventory: This API resource represents the available inventory data
+// for a Compute Engine virtual machine (VM) instance at a given point
+// in time. You can use this API resource to determine the inventory
+// data of your VM. For more information, see Information provided by OS
+// inventory management
+// (https://cloud.google.com/compute/docs/instances/os-inventory-management#data-collected).
 type Inventory struct {
 	// Items: Inventory items related to the VM keyed by an opaque unique
 	// identifier for each inventory item. The identifier is unique to each
@@ -3477,8 +3548,17 @@ type Inventory struct {
 	// is a new package version.
 	Items map[string]Item `json:"items,omitempty"`
 
+	// Name: Output only. The `Inventory` API resource name. Format:
+	// `projects/{project_number}/locations/{location}/instances/{instance_id
+	// }/inventory`
+	Name string `json:"name,omitempty"`
+
 	// OsInfo: Base level operating system information for the VM.
 	OsInfo *OsInfo `json:"osInfo,omitempty"`
+
+	// UpdateTime: Output only. Timestamp of the last reported inventory for
+	// the VM.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
@@ -4171,6 +4251,134 @@ type PubsubDestination struct {
 
 func (s *PubsubDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod PubsubDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RelatedAsset: An asset identify in Google Cloud which contains its
+// name, type and ancestors. An asset can be any resource in the Google
+// Cloud resource hierarchy
+// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+// a resource outside the Google Cloud resource hierarchy (such as
+// Google Kubernetes Engine clusters and objects), or a policy (e.g.
+// Cloud IAM policy). See Supported asset types
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+// for more information.
+type RelatedAsset struct {
+	// Ancestors: The ancestors of an asset in Google Cloud resource
+	// hierarchy
+	// (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
+	// represented as a list of relative resource names. An ancestry path
+	// starts with the closest ancestor in the hierarchy and ends at root.
+	// Example: `["projects/123456789", "folders/5432",
+	// "organizations/1234"]`
+	Ancestors []string `json:"ancestors,omitempty"`
+
+	// Asset: The full name of the asset. Example:
+	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
+	// s/instance1` See Resource names
+	// (https://cloud.google.com/apis/design/resource_names#full_resource_name)
+	// for more information.
+	Asset string `json:"asset,omitempty"`
+
+	// AssetType: The type of the asset. Example:
+	// `compute.googleapis.com/Disk` See Supported asset types
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+	// for more information.
+	AssetType string `json:"assetType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ancestors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Ancestors") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RelatedAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod RelatedAsset
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RelatedAssets: The detailed related assets with the
+// `relationship_type`.
+type RelatedAssets struct {
+	// Assets: The peer resources of the relationship.
+	Assets []*RelatedAsset `json:"assets,omitempty"`
+
+	// RelationshipAttributes: The detailed relationship attributes.
+	RelationshipAttributes *RelationshipAttributes `json:"relationshipAttributes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Assets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Assets") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RelatedAssets) MarshalJSON() ([]byte, error) {
+	type NoMethod RelatedAssets
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RelationshipAttributes: The relationship attributes which include
+// `type`, `source_resource_type`, `target_resource_type` and `action`.
+type RelationshipAttributes struct {
+	// Action: The detail of the relationship, e.g. `contains`, `attaches`
+	Action string `json:"action,omitempty"`
+
+	// SourceResourceType: The source asset type. Example:
+	// `compute.googleapis.com/Instance`
+	SourceResourceType string `json:"sourceResourceType,omitempty"`
+
+	// TargetResourceType: The target asset type. Example:
+	// `compute.googleapis.com/Disk`
+	TargetResourceType string `json:"targetResourceType,omitempty"`
+
+	// Type: The unique identifier of the relationship type. Example:
+	// `INSTANCE_TO_INSTANCEGROUP`
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RelationshipAttributes) MarshalJSON() ([]byte, error) {
+	type NoMethod RelationshipAttributes
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5093,6 +5301,7 @@ func (c *AssetsListCall) AssetTypes(assetTypes ...string) *AssetsListCall {
 //   "ACCESS_POLICY" - The Cloud Access context manager Policy set on an
 // asset.
 //   "OS_INVENTORY" - The runtime OS Inventory information.
+//   "RELATIONSHIP" - The related resources.
 func (c *AssetsListCall) ContentType(contentType string) *AssetsListCall {
 	c.urlParams_.Set("contentType", contentType)
 	return c
@@ -5124,6 +5333,25 @@ func (c *AssetsListCall) PageToken(pageToken string) *AssetsListCall {
 // running the same query may get different results.
 func (c *AssetsListCall) ReadTime(readTime string) *AssetsListCall {
 	c.urlParams_.Set("readTime", readTime)
+	return c
+}
+
+// RelationshipTypes sets the optional parameter "relationshipTypes": A
+// list of relationship types to output, for example:
+// `INSTANCE_TO_INSTANCEGROUP`. This field should only be specified if
+// content_type=RELATIONSHIP. * If specified: it snapshots specified
+// relationships. It returns an error if any of the [relationship_types]
+// doesn't belong to the supported relationship types of the
+// [asset_types] or if any of the [asset_types] doesn't belong to the
+// source types of the [relationship_types]. * Otherwise: it snapshots
+// the supported relationships for all [asset_types] or returns an error
+// if any of the [asset_types] has no relationship support. An
+// unspecified asset types field means all supported asset_types. See
+// Introduction to Cloud Asset Inventory
+// (https://cloud.google.com/asset-inventory/docs/overview) for all
+// supported asset types and relationship types.
+func (c *AssetsListCall) RelationshipTypes(relationshipTypes ...string) *AssetsListCall {
+	c.urlParams_.SetMulti("relationshipTypes", append([]string{}, relationshipTypes...))
 	return c
 }
 
@@ -5164,7 +5392,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5248,7 +5476,8 @@ func (c *AssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsResponse, 
 	//         "IAM_POLICY",
 	//         "ORG_POLICY",
 	//         "ACCESS_POLICY",
-	//         "OS_INVENTORY"
+	//         "OS_INVENTORY",
+	//         "RELATIONSHIP"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Unspecified content type.",
@@ -5256,7 +5485,8 @@ func (c *AssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsResponse, 
 	//         "The actual IAM policy set on a resource.",
 	//         "The Cloud Organization Policy set on an asset.",
 	//         "The Cloud Access context manager Policy set on an asset.",
-	//         "The runtime OS Inventory information."
+	//         "The runtime OS Inventory information.",
+	//         "The related resources."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -5283,6 +5513,12 @@ func (c *AssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsResponse, 
 	//       "description": "Timestamp to take an asset snapshot. This can only be set to a timestamp between the current time and the current time minus 35 days (inclusive). If not specified, the current time will be used. Due to delays in resource data collection and indexing, there is a volatile window during which running the same query may get different results.",
 	//       "format": "google-datetime",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "relationshipTypes": {
+	//       "description": "A list of relationship types to output, for example: `INSTANCE_TO_INSTANCEGROUP`. This field should only be specified if content_type=RELATIONSHIP. * If specified: it snapshots specified relationships. It returns an error if any of the [relationship_types] doesn't belong to the supported relationship types of the [asset_types] or if any of the [asset_types] doesn't belong to the source types of the [relationship_types]. * Otherwise: it snapshots the supported relationships for all [asset_types] or returns an error if any of the [asset_types] has no relationship support. An unspecified asset types field means all supported asset_types. See [Introduction to Cloud Asset Inventory](https://cloud.google.com/asset-inventory/docs/overview) for all supported asset types and relationship types.",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -5371,7 +5607,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5514,7 +5750,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5660,7 +5896,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5809,7 +6045,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5952,7 +6188,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6105,7 +6341,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6415,7 +6651,7 @@ func (c *V1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6632,7 +6868,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyLongrunningCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6817,7 +7053,7 @@ func (c *V1AnalyzeMoveCall) Header() http.Header {
 
 func (c *V1AnalyzeMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6978,6 +7214,7 @@ func (c *V1BatchGetAssetsHistoryCall) AssetNames(assetNames ...string) *V1BatchG
 //   "ACCESS_POLICY" - The Cloud Access context manager Policy set on an
 // asset.
 //   "OS_INVENTORY" - The runtime OS Inventory information.
+//   "RELATIONSHIP" - The related resources.
 func (c *V1BatchGetAssetsHistoryCall) ContentType(contentType string) *V1BatchGetAssetsHistoryCall {
 	c.urlParams_.Set("contentType", contentType)
 	return c
@@ -6996,6 +7233,25 @@ func (c *V1BatchGetAssetsHistoryCall) ReadTimeWindowEndTime(readTimeWindowEndTim
 // (exclusive).
 func (c *V1BatchGetAssetsHistoryCall) ReadTimeWindowStartTime(readTimeWindowStartTime string) *V1BatchGetAssetsHistoryCall {
 	c.urlParams_.Set("readTimeWindow.startTime", readTimeWindowStartTime)
+	return c
+}
+
+// RelationshipTypes sets the optional parameter "relationshipTypes": A
+// list of relationship types to output, for example:
+// `INSTANCE_TO_INSTANCEGROUP`. This field should only be specified if
+// content_type=RELATIONSHIP. * If specified: it outputs specified
+// relationships' history on the [asset_names]. It returns an error if
+// any of the [relationship_types] doesn't belong to the supported
+// relationship types of the [asset_names] or if any of the
+// [asset_names]'s types doesn't belong to the source types of the
+// [relationship_types]. * Otherwise: it outputs the supported
+// relationships' history on the [asset_names] or returns an error if
+// any of the [asset_names]'s types has no relationship support. See
+// Introduction to Cloud Asset Inventory
+// (https://cloud.google.com/asset-inventory/docs/overview) for all
+// supported asset types and relationship types.
+func (c *V1BatchGetAssetsHistoryCall) RelationshipTypes(relationshipTypes ...string) *V1BatchGetAssetsHistoryCall {
+	c.urlParams_.SetMulti("relationshipTypes", append([]string{}, relationshipTypes...))
 	return c
 }
 
@@ -7036,7 +7292,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7120,7 +7376,8 @@ func (c *V1BatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption) (*BatchGe
 	//         "IAM_POLICY",
 	//         "ORG_POLICY",
 	//         "ACCESS_POLICY",
-	//         "OS_INVENTORY"
+	//         "OS_INVENTORY",
+	//         "RELATIONSHIP"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Unspecified content type.",
@@ -7128,7 +7385,8 @@ func (c *V1BatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption) (*BatchGe
 	//         "The actual IAM policy set on a resource.",
 	//         "The Cloud Organization Policy set on an asset.",
 	//         "The Cloud Access context manager Policy set on an asset.",
-	//         "The runtime OS Inventory information."
+	//         "The runtime OS Inventory information.",
+	//         "The related resources."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -7150,6 +7408,12 @@ func (c *V1BatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption) (*BatchGe
 	//       "description": "Start time of the time window (exclusive).",
 	//       "format": "google-datetime",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "relationshipTypes": {
+	//       "description": "Optional. A list of relationship types to output, for example: `INSTANCE_TO_INSTANCEGROUP`. This field should only be specified if content_type=RELATIONSHIP. * If specified: it outputs specified relationships' history on the [asset_names]. It returns an error if any of the [relationship_types] doesn't belong to the supported relationship types of the [asset_names] or if any of the [asset_names]'s types doesn't belong to the source types of the [relationship_types]. * Otherwise: it outputs the supported relationships' history on the [asset_names] or returns an error if any of the [asset_names]'s types has no relationship support. See [Introduction to Cloud Asset Inventory](https://cloud.google.com/asset-inventory/docs/overview) for all supported asset types and relationship types.",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },
@@ -7225,7 +7489,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7480,7 +7744,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7793,7 +8057,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

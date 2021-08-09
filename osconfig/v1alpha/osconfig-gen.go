@@ -1404,6 +1404,10 @@ type OSPolicyAssignment struct {
 	// description is limited to 1024 characters.
 	Description string `json:"description,omitempty"`
 
+	// Etag: The etag for this OS policy assignment. If this is provided on
+	// update, it must match the server's etag.
+	Etag string `json:"etag,omitempty"`
+
 	// InstanceFilter: Required. Filter to select VMs.
 	InstanceFilter *OSPolicyAssignmentInstanceFilter `json:"instanceFilter,omitempty"`
 
@@ -1477,8 +1481,9 @@ func (s *OSPolicyAssignment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OSPolicyAssignmentInstanceFilter: Message to represent the filters to
-// select VMs for an assignment
+// OSPolicyAssignmentInstanceFilter: Filters to select target VMs for an
+// assignment. If more than one filter criteria is specified below, a VM
+// will be selected if and only if it satisfies all of them.
 type OSPolicyAssignmentInstanceFilter struct {
 	// All: Target all VMs in the project. If true, no other criteria is
 	// permitted.
@@ -1486,9 +1491,7 @@ type OSPolicyAssignmentInstanceFilter struct {
 
 	// ExclusionLabels: List of label sets used for VM exclusion. If the
 	// list has more than one label set, the VM is excluded if any of the
-	// label sets are applicable for the VM. This filter is applied last in
-	// the filtering chain and therefore a VM is guaranteed to be excluded
-	// if it satisfies one of the below label sets.
+	// label sets are applicable for the VM.
 	ExclusionLabels []*OSPolicyAssignmentLabelSet `json:"exclusionLabels,omitempty"`
 
 	// InclusionLabels: List of label sets used for VM inclusion. If the
@@ -1496,7 +1499,11 @@ type OSPolicyAssignmentInstanceFilter struct {
 	// label sets are applicable for the VM.
 	InclusionLabels []*OSPolicyAssignmentLabelSet `json:"inclusionLabels,omitempty"`
 
-	// OsShortNames: A VM is included if it's OS short name matches with any
+	// Inventories: List of inventories to select VMs. A VM is selected if
+	// its inventory data matches at least one of the following inventories.
+	Inventories []*OSPolicyAssignmentInstanceFilterInventory `json:"inventories,omitempty"`
+
+	// OsShortNames: A VM is selected if it's OS short name matches with any
 	// of the values provided in this list.
 	OsShortNames []string `json:"osShortNames,omitempty"`
 
@@ -1519,6 +1526,40 @@ type OSPolicyAssignmentInstanceFilter struct {
 
 func (s *OSPolicyAssignmentInstanceFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod OSPolicyAssignmentInstanceFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyAssignmentInstanceFilterInventory: VM inventory details.
+type OSPolicyAssignmentInstanceFilterInventory struct {
+	// OsShortName: Required. The OS short name
+	OsShortName string `json:"osShortName,omitempty"`
+
+	// OsVersion: The OS version Prefix matches are supported if asterisk(*)
+	// is provided as the last character. For example, to match all versions
+	// with a major version of `7`, specify the following value for this
+	// field `7.*` An empty string matches all OS versions.
+	OsVersion string `json:"osVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OsShortName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OsShortName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OSPolicyAssignmentInstanceFilterInventory) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyAssignmentInstanceFilterInventory
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1655,8 +1696,43 @@ func (s *OSPolicyAssignmentRollout) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OSPolicyOSFilter: The `OSFilter` is used to specify the OS filtering
-// criteria for the resource group.
+// OSPolicyInventoryFilter: Filtering criteria to select VMs based on
+// inventory details.
+type OSPolicyInventoryFilter struct {
+	// OsShortName: Required. The OS short name
+	OsShortName string `json:"osShortName,omitempty"`
+
+	// OsVersion: The OS version Prefix matches are supported if asterisk(*)
+	// is provided as the last character. For example, to match all versions
+	// with a major version of `7`, specify the following value for this
+	// field `7.*` An empty string matches all OS versions.
+	OsVersion string `json:"osVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OsShortName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OsShortName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OSPolicyInventoryFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod OSPolicyInventoryFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OSPolicyOSFilter: Filtering criteria to select VMs based on OS
+// details.
 type OSPolicyOSFilter struct {
 	// OsShortName: This should match OS short name emitted by the OS
 	// inventory agent. An empty value matches any OS.
@@ -2159,6 +2235,16 @@ func (s *OSPolicyResourceFileResource) MarshalJSON() ([]byte, error) {
 // appropriate resource group within the OS policy is selected based on
 // the `OSFilter` specified within the resource group.
 type OSPolicyResourceGroup struct {
+	// InventoryFilters: List of inventory filters for the resource group.
+	// The resources in this resource group are applied to the target VM if
+	// it satisfies at least one of the following inventory filters. For
+	// example, to apply this resource group to VMs running either `RHEL` or
+	// `CentOS` operating systems, specify 2 items for the list with
+	// following values: inventory_filters[0].os_short_name='rhel' and
+	// inventory_filters[1].os_short_name='centos' If the list is empty,
+	// this resource group will be applied to the target VM unconditionally.
+	InventoryFilters []*OSPolicyInventoryFilter `json:"inventoryFilters,omitempty"`
+
 	// OsFilter: Used to specify the OS filter for a resource group
 	OsFilter *OSPolicyOSFilter `json:"osFilter,omitempty"`
 
@@ -2166,7 +2252,7 @@ type OSPolicyResourceGroup struct {
 	// group. The resources are executed in the exact order specified here.
 	Resources []*OSPolicyResource `json:"resources,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "OsFilter") to
+	// ForceSendFields is a list of field names (e.g. "InventoryFilters") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2174,12 +2260,13 @@ type OSPolicyResourceGroup struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OsFilter") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "InventoryFilters") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2947,10 +3034,13 @@ func (s *VulnerabilityReportVulnerabilityDetails) UnmarshalJSON(data []byte) err
 // VulnerabilityReportVulnerabilityDetailsReference: A reference for
 // this vulnerability.
 type VulnerabilityReportVulnerabilityDetailsReference struct {
+	// Source: The source of the reference e.g. NVD.
+	Source string `json:"source,omitempty"`
+
 	// Url: The url of the reference.
 	Url string `json:"url,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Url") to
+	// ForceSendFields is a list of field names (e.g. "Source") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2958,7 +3048,7 @@ type VulnerabilityReportVulnerabilityDetailsReference struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Url") to include in API
+	// NullFields is a list of field names (e.g. "Source") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3037,7 +3127,7 @@ func (c *ProjectsLocationsInstanceOSPoliciesCompliancesGetCall) Header() http.He
 
 func (c *ProjectsLocationsInstanceOSPoliciesCompliancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3210,7 +3300,7 @@ func (c *ProjectsLocationsInstanceOSPoliciesCompliancesListCall) Header() http.H
 
 func (c *ProjectsLocationsInstanceOSPoliciesCompliancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3415,7 +3505,7 @@ func (c *ProjectsLocationsInstancesInventoriesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesInventoriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3533,10 +3623,9 @@ type ProjectsLocationsInstancesInventoriesListCall struct {
 // List: List inventory data for all VM instances in the specified zone.
 //
 // - parent: The parent resource name. Format:
-//   `projects/{project}/locations/{location}/instances/{instance}` For
+//   `projects/{project}/locations/{location}/instances/-` For
 //   `{project}`, either `project-number` or `project-id` can be
-//   provided. For `{instance}`, only hyphen or dash character is
-//   supported to list inventories across VMs.
+//   provided.
 func (r *ProjectsLocationsInstancesInventoriesService) List(parent string) *ProjectsLocationsInstancesInventoriesListCall {
 	c := &ProjectsLocationsInstancesInventoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3618,7 +3707,7 @@ func (c *ProjectsLocationsInstancesInventoriesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesInventoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3705,7 +3794,7 @@ func (c *ProjectsLocationsInstancesInventoriesListCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name. Format: `projects/{project}/locations/{location}/instances/{instance}` For `{project}`, either `project-number` or `project-id` can be provided. For `{instance}`, only hyphen or dash character is supported to list inventories across VMs.",
+	//       "description": "Required. The parent resource name. Format: `projects/{project}/locations/{location}/instances/-` For `{project}`, either `project-number` or `project-id` can be provided.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -3822,7 +3911,7 @@ func (c *ProjectsLocationsInstancesVulnerabilityReportsGetCall) Header() http.He
 
 func (c *ProjectsLocationsInstancesVulnerabilityReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3926,10 +4015,9 @@ type ProjectsLocationsInstancesVulnerabilityReportsListCall struct {
 // specified zone.
 //
 // - parent: The parent resource name. Format:
-//   `projects/{project}/locations/{location}/instances/{instance}` For
+//   `projects/{project}/locations/{location}/instances/-` For
 //   `{project}`, either `project-number` or `project-id` can be
-//   provided. For `{instance}`, only `-` character is supported to list
-//   vulnerability reports across VMs.
+//   provided.
 func (r *ProjectsLocationsInstancesVulnerabilityReportsService) List(parent string) *ProjectsLocationsInstancesVulnerabilityReportsListCall {
 	c := &ProjectsLocationsInstancesVulnerabilityReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3996,7 +4084,7 @@ func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) Header() http.H
 
 func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4083,7 +4171,7 @@ func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) Do(opts ...goog
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource name. Format: `projects/{project}/locations/{location}/instances/{instance}` For `{project}`, either `project-number` or `project-id` can be provided. For `{instance}`, only `-` character is supported to list vulnerability reports across VMs.",
+	//       "description": "Required. The parent resource name. Format: `projects/{project}/locations/{location}/instances/-` For `{project}`, either `project-number` or `project-id` can be provided.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -4187,7 +4275,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsOsPolicyAssignmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4339,7 +4427,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOsPolicyAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4487,7 +4575,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOsPolicyAssignmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4649,7 +4737,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOsPolicyAssignmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4843,7 +4931,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsListRevisionsCall) Header() http.He
 
 func (c *ProjectsLocationsOsPolicyAssignmentsListRevisionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5028,7 +5116,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsOsPolicyAssignmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5185,7 +5273,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsOperationsCancelCall) Header() http
 
 func (c *ProjectsLocationsOsPolicyAssignmentsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5338,7 +5426,7 @@ func (c *ProjectsLocationsOsPolicyAssignmentsOperationsGetCall) Header() http.He
 
 func (c *ProjectsLocationsOsPolicyAssignmentsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210803")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

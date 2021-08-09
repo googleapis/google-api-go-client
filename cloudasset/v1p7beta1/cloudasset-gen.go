@@ -156,6 +156,35 @@ type V1p7beta1Service struct {
 	s *Service
 }
 
+// AnalyzeIamPolicyLongrunningMetadata: Represents the metadata of the
+// longrunning operation for the AnalyzeIamPolicyLongrunning rpc.
+type AnalyzeIamPolicyLongrunningMetadata struct {
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AnalyzeIamPolicyLongrunningMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AnalyzeIamPolicyLongrunningMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AnalyzeIamPolicyLongrunningResponse: A response message for
 // AssetService.AnalyzeIamPolicyLongrunning.
 type AnalyzeIamPolicyLongrunningResponse struct {
@@ -1256,8 +1285,9 @@ type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
 
 	// Name: Required. Resource name for the Access Level. The `short_name`
 	// component must begin with a letter and only include alphanumeric and
-	// '_'. Format: `accessPolicies/{policy_id}/accessLevels/{short_name}`.
-	// The maximum length of the `short_name` component is 50 characters.
+	// '_'. Format:
+	// `accessPolicies/{access_policy}/accessLevels/{access_level}`. The
+	// maximum length of the `access_level` component is 50 characters.
 	Name string `json:"name,omitempty"`
 
 	// Title: Human readable title. Must be unique within the Policy.
@@ -1302,7 +1332,7 @@ type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 	Etag string `json:"etag,omitempty"`
 
 	// Name: Output only. Resource name of the `AccessPolicy`. Format:
-	// `accessPolicies/{policy_id}`
+	// `accessPolicies/{access_policy}`
 	Name string `json:"name,omitempty"`
 
 	// Parent: Required. The parent of this `AccessPolicy` in the Cloud
@@ -2029,7 +2059,7 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// Name: Required. Resource name for the ServicePerimeter. The
 	// `short_name` component must begin with a letter and only include
 	// alphanumeric and '_'. Format:
-	// `accessPolicies/{policy_id}/servicePerimeters/{short_name}`
+	// `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`
 	Name string `json:"name,omitempty"`
 
 	// PerimeterType: Perimeter type indicator. A single project is allowed
@@ -2462,7 +2492,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2612,7 +2642,7 @@ func (c *V1p7beta1ExportAssetsCall) Header() http.Header {
 
 func (c *V1p7beta1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

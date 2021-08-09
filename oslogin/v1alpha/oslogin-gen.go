@@ -243,6 +243,9 @@ type LoginProfile struct {
 	// PosixAccounts: The list of POSIX accounts associated with the user.
 	PosixAccounts []*PosixAccount `json:"posixAccounts,omitempty"`
 
+	// SecurityKeys: The registered security key credentials for a user.
+	SecurityKeys []*SecurityKey `json:"securityKeys,omitempty"`
+
 	// SshPublicKeys: A map from SSH public key fingerprint to the
 	// associated key object.
 	SshPublicKeys map[string]SshPublicKey `json:"sshPublicKeys,omitempty"`
@@ -341,6 +344,45 @@ func (s *PosixAccount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SecurityKey: The credential information for a Google registered
+// security key.
+type SecurityKey struct {
+	// PrivateKey: Hardware-backed private key text in SSH format.
+	PrivateKey string `json:"privateKey,omitempty"`
+
+	// PublicKey: Public key text in SSH format, defined by RFC4253
+	// ("https://www.ietf.org/rfc/rfc4253.txt") section 6.6.
+	PublicKey string `json:"publicKey,omitempty"`
+
+	// UniversalTwoFactor: The U2F protocol type.
+	UniversalTwoFactor *UniversalTwoFactor `json:"universalTwoFactor,omitempty"`
+
+	// WebAuthn: The Web Authentication protocol type.
+	WebAuthn *WebAuthn `json:"webAuthn,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrivateKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrivateKey") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecurityKey) MarshalJSON() ([]byte, error) {
+	type NoMethod SecurityKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SshPublicKey: The SSH public key information associated with a Google
 // account.
 type SshPublicKey struct {
@@ -381,6 +423,64 @@ type SshPublicKey struct {
 
 func (s *SshPublicKey) MarshalJSON() ([]byte, error) {
 	type NoMethod SshPublicKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UniversalTwoFactor: Security key information specific to the U2F
+// protocol.
+type UniversalTwoFactor struct {
+	// AppId: Application ID for the U2F protocol.
+	AppId string `json:"appId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UniversalTwoFactor) MarshalJSON() ([]byte, error) {
+	type NoMethod UniversalTwoFactor
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WebAuthn: Security key information specific to the Web Authentication
+// protocol.
+type WebAuthn struct {
+	// RpId: Relying party ID for Web Authentication.
+	RpId string `json:"rpId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RpId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RpId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WebAuthn) MarshalJSON() ([]byte, error) {
+	type NoMethod WebAuthn
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -484,7 +584,7 @@ func (c *UsersGetLoginProfileCall) Header() http.Header {
 
 func (c *UsersGetLoginProfileCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -686,7 +786,7 @@ func (c *UsersImportSshPublicKeyCall) Header() http.Header {
 
 func (c *UsersImportSshPublicKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -864,7 +964,7 @@ func (c *UsersProjectsDeleteCall) Header() http.Header {
 
 func (c *UsersProjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1014,7 +1114,7 @@ func (c *UsersSshPublicKeysDeleteCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1160,7 +1260,7 @@ func (c *UsersSshPublicKeysGetCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1308,7 +1408,7 @@ func (c *UsersSshPublicKeysPatchCall) Header() http.Header {
 
 func (c *UsersSshPublicKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

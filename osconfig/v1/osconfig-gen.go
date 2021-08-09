@@ -149,6 +149,7 @@ type OperationsService struct {
 
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
+	rs.Locations = NewProjectsLocationsService(s)
 	rs.PatchDeployments = NewProjectsPatchDeploymentsService(s)
 	rs.PatchJobs = NewProjectsPatchJobsService(s)
 	return rs
@@ -157,9 +158,56 @@ func NewProjectsService(s *Service) *ProjectsService {
 type ProjectsService struct {
 	s *Service
 
+	Locations *ProjectsLocationsService
+
 	PatchDeployments *ProjectsPatchDeploymentsService
 
 	PatchJobs *ProjectsPatchJobsService
+}
+
+func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
+	rs := &ProjectsLocationsService{s: s}
+	rs.Instances = NewProjectsLocationsInstancesService(s)
+	return rs
+}
+
+type ProjectsLocationsService struct {
+	s *Service
+
+	Instances *ProjectsLocationsInstancesService
+}
+
+func NewProjectsLocationsInstancesService(s *Service) *ProjectsLocationsInstancesService {
+	rs := &ProjectsLocationsInstancesService{s: s}
+	rs.Inventories = NewProjectsLocationsInstancesInventoriesService(s)
+	rs.VulnerabilityReports = NewProjectsLocationsInstancesVulnerabilityReportsService(s)
+	return rs
+}
+
+type ProjectsLocationsInstancesService struct {
+	s *Service
+
+	Inventories *ProjectsLocationsInstancesInventoriesService
+
+	VulnerabilityReports *ProjectsLocationsInstancesVulnerabilityReportsService
+}
+
+func NewProjectsLocationsInstancesInventoriesService(s *Service) *ProjectsLocationsInstancesInventoriesService {
+	rs := &ProjectsLocationsInstancesInventoriesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsInstancesInventoriesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsInstancesVulnerabilityReportsService(s *Service) *ProjectsLocationsInstancesVulnerabilityReportsService {
+	rs := &ProjectsLocationsInstancesVulnerabilityReportsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsInstancesVulnerabilityReportsService struct {
+	s *Service
 }
 
 func NewProjectsPatchDeploymentsService(s *Service) *ProjectsPatchDeploymentsService {
@@ -236,6 +284,177 @@ func (s *AptSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod AptSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CVSSv3: Common Vulnerability Scoring System version 3. For details,
+// see https://www.first.org/cvss/specification-document
+type CVSSv3 struct {
+	// AttackComplexity: This metric describes the conditions beyond the
+	// attacker's control that must exist in order to exploit the
+	// vulnerability.
+	//
+	// Possible values:
+	//   "ATTACK_COMPLEXITY_UNSPECIFIED" - Invalid value.
+	//   "ATTACK_COMPLEXITY_LOW" - Specialized access conditions or
+	// extenuating circumstances do not exist. An attacker can expect
+	// repeatable success when attacking the vulnerable component.
+	//   "ATTACK_COMPLEXITY_HIGH" - A successful attack depends on
+	// conditions beyond the attacker's control. That is, a successful
+	// attack cannot be accomplished at will, but requires the attacker to
+	// invest in some measurable amount of effort in preparation or
+	// execution against the vulnerable component before a successful attack
+	// can be expected.
+	AttackComplexity string `json:"attackComplexity,omitempty"`
+
+	// AttackVector: This metric reflects the context by which vulnerability
+	// exploitation is possible.
+	//
+	// Possible values:
+	//   "ATTACK_VECTOR_UNSPECIFIED" - Invalid value.
+	//   "ATTACK_VECTOR_NETWORK" - The vulnerable component is bound to the
+	// network stack and the set of possible attackers extends beyond the
+	// other options listed below, up to and including the entire Internet.
+	//   "ATTACK_VECTOR_ADJACENT" - The vulnerable component is bound to the
+	// network stack, but the attack is limited at the protocol level to a
+	// logically adjacent topology.
+	//   "ATTACK_VECTOR_LOCAL" - The vulnerable component is not bound to
+	// the network stack and the attacker's path is via read/write/execute
+	// capabilities.
+	//   "ATTACK_VECTOR_PHYSICAL" - The attack requires the attacker to
+	// physically touch or manipulate the vulnerable component.
+	AttackVector string `json:"attackVector,omitempty"`
+
+	// AvailabilityImpact: This metric measures the impact to the
+	// availability of the impacted component resulting from a successfully
+	// exploited vulnerability.
+	//
+	// Possible values:
+	//   "IMPACT_UNSPECIFIED" - Invalid value.
+	//   "IMPACT_HIGH" - High impact.
+	//   "IMPACT_LOW" - Low impact.
+	//   "IMPACT_NONE" - No impact.
+	AvailabilityImpact string `json:"availabilityImpact,omitempty"`
+
+	// BaseScore: The base score is a function of the base metric scores.
+	// https://www.first.org/cvss/specification-document#Base-Metrics
+	BaseScore float64 `json:"baseScore,omitempty"`
+
+	// ConfidentialityImpact: This metric measures the impact to the
+	// confidentiality of the information resources managed by a software
+	// component due to a successfully exploited vulnerability.
+	//
+	// Possible values:
+	//   "IMPACT_UNSPECIFIED" - Invalid value.
+	//   "IMPACT_HIGH" - High impact.
+	//   "IMPACT_LOW" - Low impact.
+	//   "IMPACT_NONE" - No impact.
+	ConfidentialityImpact string `json:"confidentialityImpact,omitempty"`
+
+	// ExploitabilityScore: The Exploitability sub-score equation is derived
+	// from the Base Exploitability metrics.
+	// https://www.first.org/cvss/specification-document#2-1-Exploitability-Metrics
+	ExploitabilityScore float64 `json:"exploitabilityScore,omitempty"`
+
+	// ImpactScore: The Impact sub-score equation is derived from the Base
+	// Impact metrics.
+	ImpactScore float64 `json:"impactScore,omitempty"`
+
+	// IntegrityImpact: This metric measures the impact to integrity of a
+	// successfully exploited vulnerability.
+	//
+	// Possible values:
+	//   "IMPACT_UNSPECIFIED" - Invalid value.
+	//   "IMPACT_HIGH" - High impact.
+	//   "IMPACT_LOW" - Low impact.
+	//   "IMPACT_NONE" - No impact.
+	IntegrityImpact string `json:"integrityImpact,omitempty"`
+
+	// PrivilegesRequired: This metric describes the level of privileges an
+	// attacker must possess before successfully exploiting the
+	// vulnerability.
+	//
+	// Possible values:
+	//   "PRIVILEGES_REQUIRED_UNSPECIFIED" - Invalid value.
+	//   "PRIVILEGES_REQUIRED_NONE" - The attacker is unauthorized prior to
+	// attack, and therefore does not require any access to settings or
+	// files of the vulnerable system to carry out an attack.
+	//   "PRIVILEGES_REQUIRED_LOW" - The attacker requires privileges that
+	// provide basic user capabilities that could normally affect only
+	// settings and files owned by a user. Alternatively, an attacker with
+	// Low privileges has the ability to access only non-sensitive
+	// resources.
+	//   "PRIVILEGES_REQUIRED_HIGH" - The attacker requires privileges that
+	// provide significant (e.g., administrative) control over the
+	// vulnerable component allowing access to component-wide settings and
+	// files.
+	PrivilegesRequired string `json:"privilegesRequired,omitempty"`
+
+	// Scope: The Scope metric captures whether a vulnerability in one
+	// vulnerable component impacts resources in components beyond its
+	// security scope.
+	//
+	// Possible values:
+	//   "SCOPE_UNSPECIFIED" - Invalid value.
+	//   "SCOPE_UNCHANGED" - An exploited vulnerability can only affect
+	// resources managed by the same security authority.
+	//   "SCOPE_CHANGED" - An exploited vulnerability can affect resources
+	// beyond the security scope managed by the security authority of the
+	// vulnerable component.
+	Scope string `json:"scope,omitempty"`
+
+	// UserInteraction: This metric captures the requirement for a human
+	// user, other than the attacker, to participate in the successful
+	// compromise of the vulnerable component.
+	//
+	// Possible values:
+	//   "USER_INTERACTION_UNSPECIFIED" - Invalid value.
+	//   "USER_INTERACTION_NONE" - The vulnerable system can be exploited
+	// without interaction from any user.
+	//   "USER_INTERACTION_REQUIRED" - Successful exploitation of this
+	// vulnerability requires a user to take some action before the
+	// vulnerability can be exploited.
+	UserInteraction string `json:"userInteraction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttackComplexity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttackComplexity") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CVSSv3) MarshalJSON() ([]byte, error) {
+	type NoMethod CVSSv3
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *CVSSv3) UnmarshalJSON(data []byte) error {
+	type NoMethod CVSSv3
+	var s1 struct {
+		BaseScore           gensupport.JSONFloat64 `json:"baseScore"`
+		ExploitabilityScore gensupport.JSONFloat64 `json:"exploitabilityScore"`
+		ImpactScore         gensupport.JSONFloat64 `json:"impactScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BaseScore = float64(s1.BaseScore)
+	s.ExploitabilityScore = float64(s1.ExploitabilityScore)
+	s.ImpactScore = float64(s1.ImpactScore)
+	return nil
 }
 
 // CancelPatchJobRequest: Message for canceling a patch job.
@@ -465,7 +684,12 @@ func (s *GcsObject) MarshalJSON() ([]byte, error) {
 type GooSettings struct {
 }
 
-// Inventory: The inventory details of a VM.
+// Inventory: This API resource represents the available inventory data
+// for a Compute Engine virtual machine (VM) instance at a given point
+// in time. You can use this API resource to determine the inventory
+// data of your VM. For more information, see Information provided by OS
+// inventory management
+// (https://cloud.google.com/compute/docs/instances/os-inventory-management#data-collected).
 type Inventory struct {
 	// Items: Inventory items related to the VM keyed by an opaque unique
 	// identifier for each inventory item. The identifier is unique to each
@@ -473,8 +697,21 @@ type Inventory struct {
 	// is a new package version.
 	Items map[string]InventoryItem `json:"items,omitempty"`
 
+	// Name: Output only. The `Inventory` API resource name. Format:
+	// `projects/{project_number}/locations/{location}/instances/{instance_id
+	// }/inventory`
+	Name string `json:"name,omitempty"`
+
 	// OsInfo: Base level operating system information for the VM.
 	OsInfo *InventoryOsInfo `json:"osInfo,omitempty"`
+
+	// UpdateTime: Output only. Timestamp of the last reported inventory for
+	// the VM.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
@@ -883,6 +1120,43 @@ func (s *InventoryZypperPatch) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListInventoriesResponse: A response message for listing inventory
+// data for all VMs in a specified location.
+type ListInventoriesResponse struct {
+	// Inventories: List of inventory objects.
+	Inventories []*Inventory `json:"inventories,omitempty"`
+
+	// NextPageToken: The pagination token to retrieve the next page of
+	// inventory objects.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Inventories") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Inventories") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListInventoriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListInventoriesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListOperationsResponse: The response message for
 // Operations.ListOperations.
 type ListOperationsResponse struct {
@@ -1026,6 +1300,43 @@ type ListPatchJobsResponse struct {
 
 func (s *ListPatchJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPatchJobsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListVulnerabilityReportsResponse: A response message for listing
+// vulnerability reports for all VM instances in the specified location.
+type ListVulnerabilityReportsResponse struct {
+	// NextPageToken: The pagination token to retrieve the next page of
+	// vulnerabilityReports object.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// VulnerabilityReports: List of vulnerabilityReport objects.
+	VulnerabilityReports []*VulnerabilityReport `json:"vulnerabilityReports,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListVulnerabilityReportsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListVulnerabilityReportsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1962,6 +2273,205 @@ func (s *TimeZone) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VulnerabilityReport: This API resource represents the vulnerability
+// report for a specified Compute Engine virtual machine (VM) instance
+// at a given point in time. For more information, see Vulnerability
+// reports
+// (https://cloud.google.com/compute/docs/instances/os-inventory-management#vulnerability-reports).
+type VulnerabilityReport struct {
+	// Name: Output only. The `vulnerabilityReport` API resource name.
+	// Format:
+	// `projects/{project_number}/locations/{location}/instances/{instance_id
+	// }/vulnerabilityReport`
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. The timestamp for when the last
+	// vulnerability report was generated for the VM.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Vulnerabilities: Output only. List of vulnerabilities affecting the
+	// VM.
+	Vulnerabilities []*VulnerabilityReportVulnerability `json:"vulnerabilities,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VulnerabilityReport) MarshalJSON() ([]byte, error) {
+	type NoMethod VulnerabilityReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VulnerabilityReportVulnerability: A vulnerability affecting the VM
+// instance.
+type VulnerabilityReportVulnerability struct {
+	// AvailableInventoryItemIds: Corresponds to the `AVAILABLE_PACKAGE`
+	// inventory item on the VM. If the vulnerability report was not updated
+	// after the VM inventory update, these values might not display in VM
+	// inventory. If there is no available fix, the field is empty. The
+	// `inventory_item` value specifies the latest `SoftwarePackage`
+	// available to the VM that fixes the vulnerability.
+	AvailableInventoryItemIds []string `json:"availableInventoryItemIds,omitempty"`
+
+	// CreateTime: The timestamp for when the vulnerability was first
+	// detected.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Details: Contains metadata as per the upstream feed of the operating
+	// system and NVD.
+	Details *VulnerabilityReportVulnerabilityDetails `json:"details,omitempty"`
+
+	// InstalledInventoryItemIds: Corresponds to the `INSTALLED_PACKAGE`
+	// inventory item on the VM. This field displays the inventory items
+	// affected by this vulnerability. If the vulnerability report was not
+	// updated after the VM inventory update, these values might not display
+	// in VM inventory. For some distros, this field may be empty.
+	InstalledInventoryItemIds []string `json:"installedInventoryItemIds,omitempty"`
+
+	// UpdateTime: The timestamp for when the vulnerability was last
+	// modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AvailableInventoryItemIds") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AvailableInventoryItemIds") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VulnerabilityReportVulnerability) MarshalJSON() ([]byte, error) {
+	type NoMethod VulnerabilityReportVulnerability
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VulnerabilityReportVulnerabilityDetails: Contains metadata
+// information for the vulnerability. This information is collected from
+// the upstream feed of the operating system.
+type VulnerabilityReportVulnerabilityDetails struct {
+	// Cve: The CVE of the vulnerability. CVE cannot be empty and the
+	// combination of should be unique across vulnerabilities for a VM.
+	Cve string `json:"cve,omitempty"`
+
+	// CvssV2Score: The CVSS V2 score of this vulnerability. CVSS V2 score
+	// is on a scale of 0 - 10 where 0 indicates low severity and 10
+	// indicates high severity.
+	CvssV2Score float64 `json:"cvssV2Score,omitempty"`
+
+	// CvssV3: The full description of the CVSSv3 for this vulnerability
+	// from NVD.
+	CvssV3 *CVSSv3 `json:"cvssV3,omitempty"`
+
+	// Description: The note or description describing the vulnerability
+	// from the distro.
+	Description string `json:"description,omitempty"`
+
+	// References: Corresponds to the references attached to the
+	// `VulnerabilityDetails`.
+	References []*VulnerabilityReportVulnerabilityDetailsReference `json:"references,omitempty"`
+
+	// Severity: Assigned severity/impact ranking from the distro.
+	Severity string `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cve") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cve") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VulnerabilityReportVulnerabilityDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod VulnerabilityReportVulnerabilityDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *VulnerabilityReportVulnerabilityDetails) UnmarshalJSON(data []byte) error {
+	type NoMethod VulnerabilityReportVulnerabilityDetails
+	var s1 struct {
+		CvssV2Score gensupport.JSONFloat64 `json:"cvssV2Score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CvssV2Score = float64(s1.CvssV2Score)
+	return nil
+}
+
+// VulnerabilityReportVulnerabilityDetailsReference: A reference for
+// this vulnerability.
+type VulnerabilityReportVulnerabilityDetailsReference struct {
+	// Source: The source of the reference e.g. NVD.
+	Source string `json:"source,omitempty"`
+
+	// Url: The url of the reference.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Source") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Source") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VulnerabilityReportVulnerabilityDetailsReference) MarshalJSON() ([]byte, error) {
+	type NoMethod VulnerabilityReportVulnerabilityDetailsReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // WeekDayOfMonth: Represents one week day in a month. An example is
 // "the 4th Sunday".
 type WeekDayOfMonth struct {
@@ -2259,7 +2769,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2432,7 +2942,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2558,6 +3068,788 @@ func (c *OperationsListCall) Pages(ctx context.Context, f func(*ListOperationsRe
 	}
 }
 
+// method id "osconfig.projects.locations.instances.inventories.get":
+
+type ProjectsLocationsInstancesInventoriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get inventory data for the specified VM instance. If the VM has
+// no associated inventory, the message `NOT_FOUND` is returned.
+//
+// - name: API resource name for inventory resource. Format:
+//   `projects/{project}/locations/{location}/instances/{instance}/invent
+//   ory` For `{project}`, either `project-number` or `project-id` can
+//   be provided. For `{instance}`, either Compute Engine `instance-id`
+//   or `instance-name` can be provided.
+func (r *ProjectsLocationsInstancesInventoriesService) Get(name string) *ProjectsLocationsInstancesInventoriesGetCall {
+	c := &ProjectsLocationsInstancesInventoriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": Inventory view indicating
+// what information should be included in the inventory resource. If
+// unspecified, the default view is BASIC.
+//
+// Possible values:
+//   "INVENTORY_VIEW_UNSPECIFIED" - The default value. The API defaults
+// to the BASIC view.
+//   "BASIC" - Returns the basic inventory information that includes
+// `os_info`.
+//   "FULL" - Returns all fields.
+func (c *ProjectsLocationsInstancesInventoriesGetCall) View(view string) *ProjectsLocationsInstancesInventoriesGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInstancesInventoriesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesInventoriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsInstancesInventoriesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsInstancesInventoriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInstancesInventoriesGetCall) Context(ctx context.Context) *ProjectsLocationsInstancesInventoriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInstancesInventoriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesInventoriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.locations.instances.inventories.get" call.
+// Exactly one of *Inventory or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Inventory.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesInventoriesGetCall) Do(opts ...googleapi.CallOption) (*Inventory, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Inventory{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get inventory data for the specified VM instance. If the VM has no associated inventory, the message `NOT_FOUND` is returned.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/inventory",
+	//   "httpMethod": "GET",
+	//   "id": "osconfig.projects.locations.instances.inventories.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. API resource name for inventory resource. Format: `projects/{project}/locations/{location}/instances/{instance}/inventory` For `{project}`, either `project-number` or `project-id` can be provided. For `{instance}`, either Compute Engine `instance-id` or `instance-name` can be provided.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+/inventory$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Inventory view indicating what information should be included in the inventory resource. If unspecified, the default view is BASIC.",
+	//       "enum": [
+	//         "INVENTORY_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default value. The API defaults to the BASIC view.",
+	//         "Returns the basic inventory information that includes `os_info`.",
+	//         "Returns all fields."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Inventory"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "osconfig.projects.locations.instances.inventories.list":
+
+type ProjectsLocationsInstancesInventoriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List inventory data for all VM instances in the specified zone.
+//
+// - parent: The parent resource name. Format:
+//   `projects/{project}/locations/{location}/instances/-` For
+//   `{project}`, either `project-number` or `project-id` can be
+//   provided.
+func (r *ProjectsLocationsInstancesInventoriesService) List(parent string) *ProjectsLocationsInstancesInventoriesListCall {
+	c := &ProjectsLocationsInstancesInventoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": If provided, this field
+// specifies the criteria that must be met by a `Inventory` API resource
+// to be included in the response.
+func (c *ProjectsLocationsInstancesInventoriesListCall) Filter(filter string) *ProjectsLocationsInstancesInventoriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return.
+func (c *ProjectsLocationsInstancesInventoriesListCall) PageSize(pageSize int64) *ProjectsLocationsInstancesInventoriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A pagination token
+// returned from a previous call to `ListInventories` that indicates
+// where this listing should continue from.
+func (c *ProjectsLocationsInstancesInventoriesListCall) PageToken(pageToken string) *ProjectsLocationsInstancesInventoriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Inventory view indicating
+// what information should be included in the inventory resource. If
+// unspecified, the default view is BASIC.
+//
+// Possible values:
+//   "INVENTORY_VIEW_UNSPECIFIED" - The default value. The API defaults
+// to the BASIC view.
+//   "BASIC" - Returns the basic inventory information that includes
+// `os_info`.
+//   "FULL" - Returns all fields.
+func (c *ProjectsLocationsInstancesInventoriesListCall) View(view string) *ProjectsLocationsInstancesInventoriesListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInstancesInventoriesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesInventoriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsInstancesInventoriesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsInstancesInventoriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInstancesInventoriesListCall) Context(ctx context.Context) *ProjectsLocationsInstancesInventoriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInstancesInventoriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesInventoriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/inventories")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.locations.instances.inventories.list" call.
+// Exactly one of *ListInventoriesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListInventoriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesInventoriesListCall) Do(opts ...googleapi.CallOption) (*ListInventoriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListInventoriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List inventory data for all VM instances in the specified zone.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/inventories",
+	//   "httpMethod": "GET",
+	//   "id": "osconfig.projects.locations.instances.inventories.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "If provided, this field specifies the criteria that must be met by a `Inventory` API resource to be included in the response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A pagination token returned from a previous call to `ListInventories` that indicates where this listing should continue from.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent resource name. Format: `projects/{project}/locations/{location}/instances/-` For `{project}`, either `project-number` or `project-id` can be provided.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Inventory view indicating what information should be included in the inventory resource. If unspecified, the default view is BASIC.",
+	//       "enum": [
+	//         "INVENTORY_VIEW_UNSPECIFIED",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default value. The API defaults to the BASIC view.",
+	//         "Returns the basic inventory information that includes `os_info`.",
+	//         "Returns all fields."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/inventories",
+	//   "response": {
+	//     "$ref": "ListInventoriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsInstancesInventoriesListCall) Pages(ctx context.Context, f func(*ListInventoriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "osconfig.projects.locations.instances.vulnerabilityReports.get":
+
+type ProjectsLocationsInstancesVulnerabilityReportsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the vulnerability report for the specified VM instance.
+// Only VMs with inventory data have vulnerability reports associated
+// with them.
+//
+// - name: API resource name for vulnerability resource. Format:
+//   `projects/{project}/locations/{location}/instances/{instance}/vulner
+//   abilityReport` For `{project}`, either `project-number` or
+//   `project-id` can be provided. For `{instance}`, either Compute
+//   Engine `instance-id` or `instance-name` can be provided.
+func (r *ProjectsLocationsInstancesVulnerabilityReportsService) Get(name string) *ProjectsLocationsInstancesVulnerabilityReportsGetCall {
+	c := &ProjectsLocationsInstancesVulnerabilityReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInstancesVulnerabilityReportsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesVulnerabilityReportsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsInstancesVulnerabilityReportsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsInstancesVulnerabilityReportsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInstancesVulnerabilityReportsGetCall) Context(ctx context.Context) *ProjectsLocationsInstancesVulnerabilityReportsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInstancesVulnerabilityReportsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesVulnerabilityReportsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.locations.instances.vulnerabilityReports.get" call.
+// Exactly one of *VulnerabilityReport or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *VulnerabilityReport.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesVulnerabilityReportsGetCall) Do(opts ...googleapi.CallOption) (*VulnerabilityReport, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &VulnerabilityReport{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the vulnerability report for the specified VM instance. Only VMs with inventory data have vulnerability reports associated with them.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/vulnerabilityReport",
+	//   "httpMethod": "GET",
+	//   "id": "osconfig.projects.locations.instances.vulnerabilityReports.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. API resource name for vulnerability resource. Format: `projects/{project}/locations/{location}/instances/{instance}/vulnerabilityReport` For `{project}`, either `project-number` or `project-id` can be provided. For `{instance}`, either Compute Engine `instance-id` or `instance-name` can be provided.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+/vulnerabilityReport$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "VulnerabilityReport"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "osconfig.projects.locations.instances.vulnerabilityReports.list":
+
+type ProjectsLocationsInstancesVulnerabilityReportsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List vulnerability reports for all VM instances in the
+// specified zone.
+//
+// - parent: The parent resource name. Format:
+//   `projects/{project}/locations/{location}/instances/-` For
+//   `{project}`, either `project-number` or `project-id` can be
+//   provided.
+func (r *ProjectsLocationsInstancesVulnerabilityReportsService) List(parent string) *ProjectsLocationsInstancesVulnerabilityReportsListCall {
+	c := &ProjectsLocationsInstancesVulnerabilityReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": If provided, this field
+// specifies the criteria that must be met by a `vulnerabilityReport`
+// API resource to be included in the response.
+func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) Filter(filter string) *ProjectsLocationsInstancesVulnerabilityReportsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return.
+func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) PageSize(pageSize int64) *ProjectsLocationsInstancesVulnerabilityReportsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A pagination token
+// returned from a previous call to `ListVulnerabilityReports` that
+// indicates where this listing should continue from.
+func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) PageToken(pageToken string) *ProjectsLocationsInstancesVulnerabilityReportsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesVulnerabilityReportsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsInstancesVulnerabilityReportsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) Context(ctx context.Context) *ProjectsLocationsInstancesVulnerabilityReportsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/vulnerabilityReports")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.locations.instances.vulnerabilityReports.list" call.
+// Exactly one of *ListVulnerabilityReportsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListVulnerabilityReportsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) Do(opts ...googleapi.CallOption) (*ListVulnerabilityReportsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListVulnerabilityReportsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List vulnerability reports for all VM instances in the specified zone.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}/vulnerabilityReports",
+	//   "httpMethod": "GET",
+	//   "id": "osconfig.projects.locations.instances.vulnerabilityReports.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "If provided, this field specifies the criteria that must be met by a `vulnerabilityReport` API resource to be included in the response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A pagination token returned from a previous call to `ListVulnerabilityReports` that indicates where this listing should continue from.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent resource name. Format: `projects/{project}/locations/{location}/instances/-` For `{project}`, either `project-number` or `project-id` can be provided.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/vulnerabilityReports",
+	//   "response": {
+	//     "$ref": "ListVulnerabilityReportsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsInstancesVulnerabilityReportsListCall) Pages(ctx context.Context, f func(*ListVulnerabilityReportsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "osconfig.projects.patchDeployments.create":
 
 type ProjectsPatchDeploymentsCreateCall struct {
@@ -2618,7 +3910,7 @@ func (c *ProjectsPatchDeploymentsCreateCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2764,7 +4056,7 @@ func (c *ProjectsPatchDeploymentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2908,7 +4200,7 @@ func (c *ProjectsPatchDeploymentsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3069,7 +4361,7 @@ func (c *ProjectsPatchDeploymentsListCall) Header() http.Header {
 
 func (c *ProjectsPatchDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3239,7 +4531,7 @@ func (c *ProjectsPatchJobsCancelCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3382,7 +4674,7 @@ func (c *ProjectsPatchJobsExecuteCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsExecuteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3534,7 +4826,7 @@ func (c *ProjectsPatchJobsGetCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3704,7 +4996,7 @@ func (c *ProjectsPatchJobsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3911,7 +5203,7 @@ func (c *ProjectsPatchJobsInstanceDetailsListCall) Header() http.Header {
 
 func (c *ProjectsPatchJobsInstanceDetailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

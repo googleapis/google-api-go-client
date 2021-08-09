@@ -225,9 +225,9 @@ type AwsS3Data struct {
 	// prefix. As such, it should generally not begin with a '/'.
 	Path string `json:"path,omitempty"`
 
-	// RoleArn: Input only. The Amazon Resource Name (ARN) of the role to
-	// support temporary credentials via `AssumeRoleWithWebIdentity`. For
-	// more information about ARNs, see IAM ARNs
+	// RoleArn: The Amazon Resource Name (ARN) of the role to support
+	// temporary credentials via `AssumeRoleWithWebIdentity`. For more
+	// information about ARNs, see IAM ARNs
 	// (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-arns).
 	// When a role ARN is provided, Transfer Service fetches temporary
 	// credentials for the session using a `AssumeRoleWithWebIdentity` call
@@ -765,6 +765,39 @@ func (s *ListTransferJobsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LoggingConfig: Logging configure.
+type LoggingConfig struct {
+	// EnableOnpremGcsTransferLogs: Enables the Cloud Storage transfer logs
+	// for this transfer. This is only supported for transfer jobs with
+	// PosixFilesystem sources. The default is that logs are not generated
+	// for this transfer.
+	EnableOnpremGcsTransferLogs bool `json:"enableOnpremGcsTransferLogs,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableOnpremGcsTransferLogs") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EnableOnpremGcsTransferLogs") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LoggingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod LoggingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NotificationConfig: Specification to configure notifications
 // published to Pub/Sub. Notifications are published to the
 // customer-provided topic using the following
@@ -1001,6 +1034,34 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 type PauseTransferOperationRequest struct {
 }
 
+// PosixFilesystem: A POSIX filesystem data source or sink.
+type PosixFilesystem struct {
+	// RootDirectory: Root directory path to the filesystem.
+	RootDirectory string `json:"rootDirectory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RootDirectory") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RootDirectory") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PosixFilesystem) MarshalJSON() ([]byte, error) {
+	type NoMethod PosixFilesystem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ResumeTransferOperationRequest: Request passed to
 // ResumeTransferOperation.
 type ResumeTransferOperationRequest struct {
@@ -1231,6 +1292,25 @@ type TransferCounters struct {
 	// transferred because they already exist in the data sink.
 	BytesFromSourceSkippedBySync int64 `json:"bytesFromSourceSkippedBySync,omitempty,string"`
 
+	// DirectoriesFailedToListFromSource: For transfers involving
+	// PosixFilesystem only. Number of listing failures for each directory
+	// found at the source. Potential failures when listing a directory
+	// include permission failure or block failure. If listing a directory
+	// fails, no files in the directory are transferred.
+	DirectoriesFailedToListFromSource int64 `json:"directoriesFailedToListFromSource,omitempty,string"`
+
+	// DirectoriesFoundFromSource: For transfers involving PosixFilesystem
+	// only. Number of directories found while listing. For example, if the
+	// root directory of the transfer is `base/` and there are two other
+	// directories, `a/` and `b/` under this directory, the count after
+	// listing `base/`, `base/a/` and `base/b/` is 3.
+	DirectoriesFoundFromSource int64 `json:"directoriesFoundFromSource,omitempty,string"`
+
+	// DirectoriesSuccessfullyListedFromSource: For transfers involving
+	// PosixFilesystem only. Number of successful listings for each
+	// directory found at the source.
+	DirectoriesSuccessfullyListedFromSource int64 `json:"directoriesSuccessfullyListedFromSource,omitempty,string"`
+
 	// ObjectsCopiedToSink: Objects that are copied to the data sink.
 	ObjectsCopiedToSink int64 `json:"objectsCopiedToSink,omitempty,string"`
 
@@ -1309,6 +1389,9 @@ type TransferJob struct {
 	// TransferOperation of this JobConfig. Present if a TransferOperation
 	// has been created for this JobConfig.
 	LatestOperationName string `json:"latestOperationName,omitempty"`
+
+	// LoggingConfig: Logging configuration.
+	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
 
 	// Name: A unique name (within the transfer project) assigned when the
 	// job is created. If this field is empty in a CreateTransferJobRequest,
@@ -1526,6 +1609,9 @@ type TransferSpec struct {
 	// objects in a data sink.
 	ObjectConditions *ObjectConditions `json:"objectConditions,omitempty"`
 
+	// PosixDataSource: A POSIX Filesystem data source.
+	PosixDataSource *PosixFilesystem `json:"posixDataSource,omitempty"`
+
 	// TransferOptions: If the option delete_objects_unique_in_sink is
 	// `true` and time-based object conditions such as 'last modification
 	// time' are specified, the request fails with an INVALID_ARGUMENT
@@ -1667,7 +1753,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1799,7 +1885,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1893,7 +1979,7 @@ type TransferJobsGetCall struct {
 
 // Get: Gets a transfer job.
 //
-// - jobName: " The job to get.
+// - jobName: The job to get.
 // - projectId: The ID of the Google Cloud Platform Console project that
 //   owns the job.
 func (r *TransferJobsService) Get(jobName string, projectId string) *TransferJobsGetCall {
@@ -1940,7 +2026,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2012,7 +2098,7 @@ func (c *TransferJobsGetCall) Do(opts ...googleapi.CallOption) (*TransferJob, er
 	//   ],
 	//   "parameters": {
 	//     "jobName": {
-	//       "description": "Required. \" The job to get.",
+	//       "description": "Required. The job to get.",
 	//       "location": "path",
 	//       "pattern": "^transferJobs/.*$",
 	//       "required": true,
@@ -2113,7 +2199,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2281,7 +2367,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2426,7 +2512,7 @@ func (c *TransferJobsRunCall) Header() http.Header {
 
 func (c *TransferJobsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2586,7 +2672,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2739,7 +2825,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2912,7 +2998,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3088,7 +3174,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3230,7 +3316,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

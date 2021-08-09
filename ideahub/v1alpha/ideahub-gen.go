@@ -288,16 +288,16 @@ func (s *GoogleSearchIdeahubV1alphaIdea) MarshalJSON() ([]byte, error) {
 
 // GoogleSearchIdeahubV1alphaIdeaActivity: An idea activity entry.
 type GoogleSearchIdeahubV1alphaIdeaActivity struct {
-	// IdeaIds: The Idea IDs for this entry.
-	IdeaIds []string `json:"ideaIds,omitempty"`
+	// Ideas: The Idea IDs for this entry.
+	Ideas []string `json:"ideas,omitempty"`
 
 	// Name: Unique identifier for the idea activity. Format:
 	// platforms/{platform}/properties/{property}/ideaActivities/{idea_activi
 	// ty}
 	Name string `json:"name,omitempty"`
 
-	// TopicIds: The Topic IDs for this entry.
-	TopicIds []string `json:"topicIds,omitempty"`
+	// Topics: The Topic IDs for this entry.
+	Topics []string `json:"topics,omitempty"`
 
 	// Type: The type of activity performed.
 	//
@@ -318,7 +318,7 @@ type GoogleSearchIdeahubV1alphaIdeaActivity struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "IdeaIds") to
+	// ForceSendFields is a list of field names (e.g. "Ideas") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -326,8 +326,8 @@ type GoogleSearchIdeahubV1alphaIdeaActivity struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IdeaIds") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Ideas") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -465,6 +465,9 @@ type GoogleSearchIdeahubV1alphaTopic struct {
 
 	// Mid: The mID of the topic.
 	Mid string `json:"mid,omitempty"`
+
+	// Name: Unique identifier for the topic. Format: topics/{topic}
+	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
@@ -648,7 +651,7 @@ func (c *IdeasListCall) Header() http.Header {
 
 func (c *IdeasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -840,7 +843,7 @@ func (c *PlatformsPropertiesIdeaActivitiesCreateCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeaActivitiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -988,7 +991,7 @@ func (c *PlatformsPropertiesIdeaStatesPatchCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeaStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1202,7 +1205,7 @@ func (c *PlatformsPropertiesIdeasListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1430,7 +1433,7 @@ func (c *PlatformsPropertiesLocalesListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesLocalesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1607,7 +1610,7 @@ func (c *PlatformsPropertiesTopicStatesPatchCall) Header() http.Header {
 
 func (c *PlatformsPropertiesTopicStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

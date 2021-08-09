@@ -138,9 +138,9 @@ type V1betaService struct {
 type GoogleIdentityStsV1betaExchangeTokenRequest struct {
 	// Audience: The full resource name of the identity provider. For
 	// example,
-	// `//iam.googleapis.com/projects//workloadIdentityPools//providers/`.
-	// Required when exchanging an external credential for a Google access
-	// token.
+	// `//iam.googleapis.com/projects//locations/global/workloadIdentityPools
+	// //providers/`. Required when exchanging an external credential for a
+	// Google access token.
 	Audience string `json:"audience,omitempty"`
 
 	// GrantType: Required. The grant type. Must be
@@ -223,9 +223,9 @@ type GoogleIdentityStsV1betaExchangeTokenRequest struct {
 	// prefix. To help ensure data integrity, we recommend including this
 	// header in the `SignedHeaders` field of the signed request. For
 	// example:
-	// //iam.googleapis.com/projects//locations//workloadIdentityPools//provi
-	// ders/
-	// https://iam.googleapis.com/projects//locations//workloadIdentityPools//providers/
+	// //iam.googleapis.com/projects//locations/global/workloadIdentityPools/
+	// /providers/
+	// https://iam.googleapis.com/projects//locations/global/workloadIdentityPools//providers/
 	// If you are using temporary security credentials provided by AWS, you
 	// must also include the header `x-amz-security-token`, with the value
 	// set to the session token. The following example shows a
@@ -234,8 +234,8 @@ type GoogleIdentityStsV1betaExchangeTokenRequest struct {
 	// "AWS4-HMAC-SHA256+Credential=$credential,+SignedHeaders=host;x-amz-dat
 	// e;x-goog-cloud-target-resource,+Signature=$signature"}, {"key":
 	// "x-goog-cloud-target-resource", "value":
-	// "//iam.googleapis.com/projects//locations//workloadIdentityPools//prov
-	// iders/"}, {"key": "host", "value": "sts.amazonaws.com"} . ],
+	// "//iam.googleapis.com/projects//locations/global/workloadIdentityPools
+	// //providers/"}, {"key": "host", "value": "sts.amazonaws.com"} . ],
 	// "method": "POST", "url":
 	// "https://sts.amazonaws.com?Action=GetCallerIdentity&Version=2011-06-15
 	// " } ``` You can also use a Google-issued OAuth 2.0 access token with
@@ -379,7 +379,7 @@ func (c *V1betaTokenCall) Header() http.Header {
 
 func (c *V1betaTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

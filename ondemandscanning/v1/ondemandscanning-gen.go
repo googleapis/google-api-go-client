@@ -482,6 +482,10 @@ func (s *AttestationOccurrence) MarshalJSON() ([]byte, error) {
 
 // BuildOccurrence: Details of a build occurrence.
 type BuildOccurrence struct {
+	// IntotoProvenance: In-toto Provenance representation as defined in
+	// spec.
+	IntotoProvenance *InTotoProvenance `json:"intotoProvenance,omitempty"`
+
 	// Provenance: Required. The actual provenance for the build.
 	Provenance *BuildProvenance `json:"provenance,omitempty"`
 
@@ -497,7 +501,7 @@ type BuildOccurrence struct {
 	// changes.
 	ProvenanceBytes string `json:"provenanceBytes,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Provenance") to
+	// ForceSendFields is a list of field names (e.g. "IntotoProvenance") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -505,12 +509,13 @@ type BuildOccurrence struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Provenance") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IntotoProvenance") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -589,6 +594,32 @@ type BuildProvenance struct {
 
 func (s *BuildProvenance) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildProvenance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type BuilderConfig struct {
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BuilderConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BuilderConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -707,6 +738,46 @@ func (s *Command) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Completeness: Indicates that the builder claims certain fields in
+// this message to be complete.
+type Completeness struct {
+	// Arguments: If true, the builder claims that recipe.arguments is
+	// complete, meaning that all external inputs are properly captured in
+	// the recipe.
+	Arguments bool `json:"arguments,omitempty"`
+
+	// Environment: If true, the builder claims that recipe.environment is
+	// claimed to be complete.
+	Environment bool `json:"environment,omitempty"`
+
+	// Materials: If true, the builder claims that materials are complete,
+	// usually through some controls to prevent network access. Sometimes
+	// called "hermetic".
+	Materials bool `json:"materials,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Arguments") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Completeness) MarshalJSON() ([]byte, error) {
+	type NoMethod Completeness
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ComplianceOccurrence: An indication that the compliance checks in the
 // associated ComplianceNote were not satisfied for particular resources
 // or a specified reason.
@@ -735,6 +806,36 @@ type ComplianceOccurrence struct {
 
 func (s *ComplianceOccurrence) MarshalJSON() ([]byte, error) {
 	type NoMethod ComplianceOccurrence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type DSSEAttestationOccurrence struct {
+	// Envelope: If doing something security critical, make sure to verify
+	// the signatures in this metadata.
+	Envelope *Envelope `json:"envelope,omitempty"`
+
+	Statement *InTotoStatement `json:"statement,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Envelope") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Envelope") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DSSEAttestationOccurrence) MarshalJSON() ([]byte, error) {
+	type NoMethod DSSEAttestationOccurrence
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -861,6 +962,67 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// Envelope: MUST match
+// https://github.com/secure-systems-lab/dsse/blob/master/envelope.proto.
+// An authenticated message of arbitrary type.
+type Envelope struct {
+	Payload string `json:"payload,omitempty"`
+
+	PayloadType string `json:"payloadType,omitempty"`
+
+	Signatures []*EnvelopeSignature `json:"signatures,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Payload") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Payload") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Envelope) MarshalJSON() ([]byte, error) {
+	type NoMethod Envelope
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type EnvelopeSignature struct {
+	Keyid string `json:"keyid,omitempty"`
+
+	Sig string `json:"sig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Keyid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Keyid") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnvelopeSignature) MarshalJSON() ([]byte, error) {
+	type NoMethod EnvelopeSignature
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // FileHashes: Container message for hashes of byte content of files,
@@ -1109,6 +1271,87 @@ func (s *ImageOccurrence) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type InTotoProvenance struct {
+	// BuilderConfig: required
+	BuilderConfig *BuilderConfig `json:"builderConfig,omitempty"`
+
+	// Materials: The collection of artifacts that influenced the build
+	// including sources, dependencies, build tools, base images, and so on.
+	// This is considered to be incomplete unless
+	// metadata.completeness.materials is true. Unset or null is equivalent
+	// to empty.
+	Materials []string `json:"materials,omitempty"`
+
+	Metadata *Metadata `json:"metadata,omitempty"`
+
+	// Recipe: Identifies the configuration used for the build. When
+	// combined with materials, this SHOULD fully describe the build, such
+	// that re-running this recipe results in bit-for-bit identical output
+	// (if the build is reproducible). required
+	Recipe *Recipe `json:"recipe,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuilderConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuilderConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InTotoProvenance) MarshalJSON() ([]byte, error) {
+	type NoMethod InTotoProvenance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InTotoStatement: Spec defined at
+// https://github.com/in-toto/attestation/tree/main/spec#statement The
+// serialized InTotoStatement will be stored as Envelope.payload.
+// Envelope.payloadType is always "application/vnd.in-toto+json".
+type InTotoStatement struct {
+	// PredicateType: "https://in-toto.io/Provenance/v0.1" for
+	// InTotoProvenance.
+	PredicateType string `json:"predicateType,omitempty"`
+
+	Provenance *InTotoProvenance `json:"provenance,omitempty"`
+
+	Subject []*Subject `json:"subject,omitempty"`
+
+	// Type: Always "https://in-toto.io/Statement/v0.1".
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PredicateType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PredicateType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InTotoStatement) MarshalJSON() ([]byte, error) {
+	type NoMethod InTotoStatement
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Jwt struct {
 	// CompactJwt: The compact encoding of a JWS, which is always three
 	// base64 encoded strings joined by periods. For details, see:
@@ -1286,6 +1529,51 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Metadata: Other properties of the build.
+type Metadata struct {
+	// BuildFinishedOn: The timestamp of when the build completed.
+	BuildFinishedOn string `json:"buildFinishedOn,omitempty"`
+
+	// BuildInvocationId: Identifies the particular build invocation, which
+	// can be useful for finding associated logs or other ad-hoc analysis.
+	// The value SHOULD be globally unique, per in-toto Provenance spec.
+	BuildInvocationId string `json:"buildInvocationId,omitempty"`
+
+	// BuildStartedOn: The timestamp of when the build started.
+	BuildStartedOn string `json:"buildStartedOn,omitempty"`
+
+	// Completeness: Indicates that the builder claims certain fields in
+	// this message to be complete.
+	Completeness *Completeness `json:"completeness,omitempty"`
+
+	// Reproducible: If true, the builder claims that running the recipe on
+	// materials will produce bit-for-bit identical output.
+	Reproducible bool `json:"reproducible,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuildFinishedOn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuildFinishedOn") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Metadata) MarshalJSON() ([]byte, error) {
+	type NoMethod Metadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NonCompliantFile: Details about files that caused a compliance check
 // to fail.
 type NonCompliantFile struct {
@@ -1346,6 +1634,12 @@ type Occurrence struct {
 	// Discovery: Describes when a resource was discovered.
 	Discovery *DiscoveryOccurrence `json:"discovery,omitempty"`
 
+	// DsseAttestation: Describes an attestation of an artifact using dsse.
+	DsseAttestation *DSSEAttestationOccurrence `json:"dsseAttestation,omitempty"`
+
+	// Envelope: https://github.com/secure-systems-lab/dsse
+	Envelope *Envelope `json:"envelope,omitempty"`
+
 	// Image: Describes how this resource derives from the basis in the
 	// associated note.
 	Image *ImageOccurrence `json:"image,omitempty"`
@@ -1369,6 +1663,7 @@ type Occurrence struct {
 	// artifacts.
 	//   "UPGRADE" - This represents an available package upgrade.
 	//   "COMPLIANCE" - This represents a Compliance Note
+	//   "DSSE_ATTESTATION" - This represents a DSSE attestation Note
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Output only. The name of the occurrence in the form of
@@ -1667,6 +1962,64 @@ func (s *ProjectRepoId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Recipe: Steps taken to build the artifact. For a TaskRun, typically
+// each container corresponds to one step in the recipe.
+type Recipe struct {
+	// Arguments: Collection of all external inputs that influenced the
+	// build on top of recipe.definedInMaterial and recipe.entryPoint. For
+	// example, if the recipe type were "make", then this might be the flags
+	// passed to make aside from the target, which is captured in
+	// recipe.entryPoint.
+	Arguments []string `json:"arguments,omitempty"`
+
+	// DefinedInMaterial: Index in materials containing the recipe steps
+	// that are not implied by recipe.type. For example, if the recipe type
+	// were "make", then this would point to the source containing the
+	// Makefile, not the make program itself. Set to -1 if the recipe
+	// doesn't come from a material, as zero is default unset value for
+	// int64.
+	DefinedInMaterial int64 `json:"definedInMaterial,omitempty,string"`
+
+	// EntryPoint: String identifying the entry point into the build. This
+	// is often a path to a configuration file and/or a target label within
+	// that file. The syntax and meaning are defined by recipe.type. For
+	// example, if the recipe type were "make", then this would reference
+	// the directory in which to run make as well as which target to use.
+	EntryPoint string `json:"entryPoint,omitempty"`
+
+	// Environment: Any other builder-controlled inputs necessary for
+	// correctly evaluating the recipe. Usually only needed for reproducing
+	// the build but not evaluated as part of policy.
+	Environment map[string]string `json:"environment,omitempty"`
+
+	// Type: URI indicating what type of recipe was performed. It determines
+	// the meaning of recipe.entryPoint, recipe.arguments,
+	// recipe.environment, and materials.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Arguments") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Recipe) MarshalJSON() ([]byte, error) {
+	type NoMethod Recipe
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RelatedUrl: Metadata for any related URL information.
 type RelatedUrl struct {
 	// Label: Label to describe usage of the URL.
@@ -1926,6 +2279,35 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type Subject struct {
+	// Digest: "": ""
+	Digest map[string]string `json:"digest,omitempty"`
+
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Digest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Digest") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Subject) MarshalJSON() ([]byte, error) {
+	type NoMethod Subject
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2279,7 +2661,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2414,7 +2796,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2559,7 +2941,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2735,7 +3117,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2925,7 +3307,7 @@ func (c *ProjectsLocationsOperationsWaitCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3066,7 +3448,7 @@ func (c *ProjectsLocationsScansAnalyzePackagesCall) Header() http.Header {
 
 func (c *ProjectsLocationsScansAnalyzePackagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3234,7 +3616,7 @@ func (c *ProjectsLocationsScansVulnerabilitiesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsScansVulnerabilitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

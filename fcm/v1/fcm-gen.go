@@ -23,6 +23,10 @@
 //
 // Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//   fcmService, err := fcm.NewService(ctx, option.WithScopes(fcm.FirebaseMessagingScope))
+//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //   fcmService, err := fcm.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -79,14 +83,20 @@ const mtlsBasePath = "https://fcm.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud Platform data
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// Send messages and manage messaging subscriptions for your Firebase
+	// applications
+	FirebaseMessagingScope = "https://www.googleapis.com/auth/firebase.messaging"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/firebase.messaging",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -1039,7 +1049,7 @@ func (c *ProjectsMessagesSendCall) Header() http.Header {
 
 func (c *ProjectsMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210726")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1127,7 +1137,8 @@ func (c *ProjectsMessagesSendCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//     "$ref": "Message"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/firebase.messaging"
 	//   ]
 	// }
 

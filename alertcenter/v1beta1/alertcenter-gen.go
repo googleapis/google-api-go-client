@@ -168,6 +168,106 @@ type V1beta1Service struct {
 	s *Service
 }
 
+// AccountSuspensionDetails: Details about why an account is receiving
+// an account suspension warning.
+type AccountSuspensionDetails struct {
+	// AbuseReason: The reason why this account is receiving an account
+	// suspension warning.
+	//
+	// Possible values:
+	//   "ACCOUNT_SUSPENSION_ABUSE_REASON_UNSPECIFIED" - Abuse reason is
+	// unspecified.
+	//   "TOS_VIOLATION" - This account is being suspended for a Terms of
+	// Service violation.
+	//   "SPAM" - This account is being suspended for spam.
+	//   "PHISHING" - This account is being suspended for phishing.
+	//   "TRAFFIC_PUMPING" - This account is being suspended for
+	// artificially boosting traffic to a website.
+	//   "FRAUD" - This account is being suspended for fraud.
+	//   "NUMBER_HARVESTING" - This account is being suspended for number
+	// harvesting.
+	//   "PAYMENTS_FRAUD" - This account is being suspended for payments
+	// fraud.
+	AbuseReason string `json:"abuseReason,omitempty"`
+
+	// ProductName: The name of the product being abused. This is restricted
+	// to only the following values: "Gmail" "Payments" "Voice" "Workspace"
+	// "Other"
+	ProductName string `json:"productName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AbuseReason") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AbuseReason") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccountSuspensionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AccountSuspensionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AccountSuspensionWarning: A warning that the customer's account is
+// about to be suspended.
+type AccountSuspensionWarning struct {
+	// AppealWindow: The amount of time remaining to appeal an imminent
+	// suspension. After this window has elapsed, the account will be
+	// suspended. Only populated if the account suspension is in WARNING
+	// state.
+	AppealWindow string `json:"appealWindow,omitempty"`
+
+	// State: Account suspension warning state.
+	//
+	// Possible values:
+	//   "ACCOUNT_SUSPENSION_WARNING_STATE_UNSPECIFIED" - State is
+	// unspecified.
+	//   "WARNING" - Customer is receiving a warning about imminent
+	// suspension.
+	//   "SUSPENDED" - Customer is being notified that their account has
+	// been suspended.
+	//   "APPEAL_APPROVED" - Customer is being notified that their
+	// suspension appeal was approved.
+	//   "APPEAL_SUBMITTED" - Customer has submitted their appeal, which is
+	// pending review.
+	State string `json:"state,omitempty"`
+
+	// SuspensionDetails: Details about why an account is being suspended.
+	SuspensionDetails []*AccountSuspensionDetails `json:"suspensionDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppealWindow") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppealWindow") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccountSuspensionWarning) MarshalJSON() ([]byte, error) {
+	type NoMethod AccountSuspensionWarning
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AccountWarning: Alerts for user account warning events.
 type AccountWarning struct {
 	// Email: Required. The email of the user that this event belongs to.
@@ -322,7 +422,7 @@ type Alert struct {
 	// the alert. This is output only after alert is created. Supported
 	// sources are any of the following: * Google Operations * Mobile device
 	// management * Gmail phishing * Data Loss Prevention * Domain wide
-	// takeout * State sponsored attack * Google identity
+	// takeout * State sponsored attack * Google identity * Apps outage
 	Source string `json:"source,omitempty"`
 
 	// StartTime: Required. The time the event that caused this alert was
@@ -549,21 +649,22 @@ func (s *AppSettingsChanged) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppsOutage: An outage incident reported by Google for a Google
-// Workspace (formerly G Suite) application.
+// AppsOutage: An outage incident reported for a Google Workspace
+// service.
 type AppsOutage struct {
 	// DashboardUri: Link to the outage event in Google Workspace Status
 	// Dashboard
 	DashboardUri string `json:"dashboardUri,omitempty"`
 
-	// NextUpdateTime: Timestamp by which the next update shall be provided.
+	// NextUpdateTime: Timestamp by which the next update is expected to
+	// arrive.
 	NextUpdateTime string `json:"nextUpdateTime,omitempty"`
 
 	// Products: List of products impacted by the outage.
 	Products []string `json:"products,omitempty"`
 
-	// ResolutionTime: Timestamp of the outage expected or confirmed
-	// resolution. (Used only when known).
+	// ResolutionTime: Timestamp when the outage is expected to be resolved,
+	// or has confirmed resolution. Provided only when known.
 	ResolutionTime string `json:"resolutionTime,omitempty"`
 
 	// Status: Current outage status.
@@ -571,7 +672,7 @@ type AppsOutage struct {
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Status is unspecified.
 	//   "NEW" - The incident has just been reported.
-	//   "ONGOING" - The incidnet is ongoing.
+	//   "ONGOING" - The incident is ongoing.
 	//   "RESOLVED" - The incident has been resolved.
 	Status string `json:"status,omitempty"`
 
@@ -2115,7 +2216,7 @@ func (c *AlertsBatchDeleteCall) Header() http.Header {
 
 func (c *AlertsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2240,7 +2341,7 @@ func (c *AlertsBatchUndeleteCall) Header() http.Header {
 
 func (c *AlertsBatchUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2380,7 +2481,7 @@ func (c *AlertsDeleteCall) Header() http.Header {
 
 func (c *AlertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2537,7 +2638,7 @@ func (c *AlertsGetCall) Header() http.Header {
 
 func (c *AlertsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2697,7 +2798,7 @@ func (c *AlertsGetMetadataCall) Header() http.Header {
 
 func (c *AlertsGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2890,7 +2991,7 @@ func (c *AlertsListCall) Header() http.Header {
 
 func (c *AlertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3067,7 +3168,7 @@ func (c *AlertsUndeleteCall) Header() http.Header {
 
 func (c *AlertsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3220,7 +3321,7 @@ func (c *AlertsFeedbackCreateCall) Header() http.Header {
 
 func (c *AlertsFeedbackCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3396,7 +3497,7 @@ func (c *AlertsFeedbackListCall) Header() http.Header {
 
 func (c *AlertsFeedbackListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3556,7 +3657,7 @@ func (c *V1beta1GetSettingsCall) Header() http.Header {
 
 func (c *V1beta1GetSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3691,7 +3792,7 @@ func (c *V1beta1UpdateSettingsCall) Header() http.Header {
 
 func (c *V1beta1UpdateSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210808")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

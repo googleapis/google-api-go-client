@@ -79,7 +79,8 @@ const mtlsBasePath = "https://policyanalyzer.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud Platform data
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -198,10 +199,10 @@ type GoogleCloudPolicyanalyzerV1Activity struct {
 
 	// ForceSendFields is a list of field names (e.g. "Activity") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Activity") to include in
@@ -222,18 +223,20 @@ func (s *GoogleCloudPolicyanalyzerV1Activity) MarshalJSON() ([]byte, error) {
 // GoogleCloudPolicyanalyzerV1ObservationPeriod: Represents data
 // observation period.
 type GoogleCloudPolicyanalyzerV1ObservationPeriod struct {
-	// EndTime: The observation end time.
+	// EndTime: The observation end time. The time in this timestamp is
+	// always `07:00:00Z`.
 	EndTime string `json:"endTime,omitempty"`
 
-	// StartTime: The observation start time.
+	// StartTime: The observation start time. The time in this timestamp is
+	// always `07:00:00Z`.
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -270,10 +273,10 @@ type GoogleCloudPolicyanalyzerV1QueryActivityResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Activities") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Activities") to include in
@@ -302,23 +305,23 @@ type ProjectsLocationsActivityTypesActivitiesQueryCall struct {
 	header_      http.Header
 }
 
-// Query: Queries policy activities on GCP resources.
+// Query: Queries policy activities on Google Cloud resources.
 //
 // - parent: The container resource on which to execute the request.
 //   Acceptable formats:
 //   `projects/[PROJECT_ID|PROJECT_NUMBER]/locations/[LOCATION]/activityT
-//   ypes/[ACTIVITY_TYPE]` LOCATION here refers to GCP Locations:
-//   https://cloud.google.com/about/locations/.
+//   ypes/[ACTIVITY_TYPE]` LOCATION here refers to Google Cloud
+//   Locations: https://cloud.google.com/about/locations/.
 func (r *ProjectsLocationsActivityTypesActivitiesService) Query(parent string) *ProjectsLocationsActivityTypesActivitiesQueryCall {
 	c := &ProjectsLocationsActivityTypesActivitiesQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Optional filter
-// expression to restrict the activities returned. Supported filters
-// are: - service_account_last_authn.full_resource_name {=} -
-// service_account_key_last_authn.full_resource_name {=}
+// Filter sets the optional parameter "filter": Filter expression to
+// restrict the activities returned. Supported filters are: -
+// service_account_last_authn.full_resource_name {=} [STRING] -
+// service_account_key_last_authn.full_resource_name {=} [STRING]
 func (c *ProjectsLocationsActivityTypesActivitiesQueryCall) Filter(filter string) *ProjectsLocationsActivityTypesActivitiesQueryCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -380,7 +383,7 @@ func (c *ProjectsLocationsActivityTypesActivitiesQueryCall) Header() http.Header
 
 func (c *ProjectsLocationsActivityTypesActivitiesQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -444,7 +447,7 @@ func (c *ProjectsLocationsActivityTypesActivitiesQueryCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Queries policy activities on GCP resources.",
+	//   "description": "Queries policy activities on Google Cloud resources.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/activityTypes/{activityTypesId}/activities:query",
 	//   "httpMethod": "GET",
 	//   "id": "policyanalyzer.projects.locations.activityTypes.activities.query",
@@ -453,7 +456,7 @@ func (c *ProjectsLocationsActivityTypesActivitiesQueryCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Optional filter expression to restrict the activities returned. Supported filters are: - service_account_last_authn.full_resource_name {=} - service_account_key_last_authn.full_resource_name {=} ",
+	//       "description": "Optional. Filter expression to restrict the activities returned. Supported filters are: - service_account_last_authn.full_resource_name {=} [STRING] - service_account_key_last_authn.full_resource_name {=} [STRING]",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -469,7 +472,7 @@ func (c *ProjectsLocationsActivityTypesActivitiesQueryCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: `projects/[PROJECT_ID|PROJECT_NUMBER]/locations/[LOCATION]/activityTypes/[ACTIVITY_TYPE]` LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/",
+	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: `projects/[PROJECT_ID|PROJECT_NUMBER]/locations/[LOCATION]/activityTypes/[ACTIVITY_TYPE]` LOCATION here refers to Google Cloud Locations: https://cloud.google.com/about/locations/",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/activityTypes/[^/]+$",
 	//       "required": true,

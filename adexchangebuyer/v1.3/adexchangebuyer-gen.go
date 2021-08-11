@@ -254,10 +254,10 @@ type Account struct {
 
 	// ForceSendFields is a list of field names (e.g. "BidderLocation") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BidderLocation") to
@@ -294,10 +294,10 @@ type AccountBidderLocation struct {
 
 	// ForceSendFields is a list of field names (e.g. "MaximumQps") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MaximumQps") to include in
@@ -331,10 +331,10 @@ type AccountsList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -374,10 +374,10 @@ type BillingInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -411,10 +411,10 @@ type BillingInfoList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -463,10 +463,10 @@ type Budget struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -590,10 +590,10 @@ type Creative struct {
 
 	// ForceSendFields is a list of field names (e.g. "HTMLSnippet") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HTMLSnippet") to include
@@ -637,10 +637,10 @@ type CreativeAdTechnologyProviders struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedProviderIds")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedProviderIds") to
@@ -668,10 +668,10 @@ type CreativeCorrections struct {
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Details") to include in
@@ -698,10 +698,10 @@ type CreativeDisapprovalReasons struct {
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Details") to include in
@@ -731,10 +731,10 @@ type CreativeFilteringReasons struct {
 
 	// ForceSendFields is a list of field names (e.g. "Date") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Date") to include in API
@@ -764,10 +764,10 @@ type CreativeFilteringReasonsReasons struct {
 
 	// ForceSendFields is a list of field names (e.g. "FilteringCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FilteringCount") to
@@ -826,10 +826,10 @@ type CreativeNativeAd struct {
 
 	// ForceSendFields is a list of field names (e.g. "Advertiser") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Advertiser") to include in
@@ -871,10 +871,10 @@ type CreativeNativeAdAppIcon struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -902,10 +902,10 @@ type CreativeNativeAdImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -933,10 +933,10 @@ type CreativeNativeAdLogo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -975,10 +975,10 @@ type CreativesList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1065,10 +1065,10 @@ type DirectDeal struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -1102,10 +1102,10 @@ type DirectDealsList struct {
 
 	// ForceSendFields is a list of field names (e.g. "DirectDeals") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DirectDeals") to include
@@ -1211,10 +1211,10 @@ type PerformanceReport struct {
 
 	// ForceSendFields is a list of field names (e.g. "BidRate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BidRate") to include in
@@ -1290,10 +1290,10 @@ type PerformanceReportList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -1422,10 +1422,10 @@ type PretargetingConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "BillingId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BillingId") to include in
@@ -1452,10 +1452,10 @@ type PretargetingConfigDimensions struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -1484,10 +1484,10 @@ type PretargetingConfigExcludedPlacements struct {
 
 	// ForceSendFields is a list of field names (e.g. "Token") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Token") to include in API
@@ -1516,10 +1516,10 @@ type PretargetingConfigPlacements struct {
 
 	// ForceSendFields is a list of field names (e.g. "Token") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Token") to include in API
@@ -1550,10 +1550,10 @@ type PretargetingConfigList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1628,7 +1628,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1769,7 +1769,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1891,7 +1891,7 @@ func (c *AccountsPatchCall) Header() http.Header {
 
 func (c *AccountsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2032,7 +2032,7 @@ func (c *AccountsUpdateCall) Header() http.Header {
 
 func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2183,7 +2183,7 @@ func (c *BillingInfoGetCall) Header() http.Header {
 
 func (c *BillingInfoGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2325,7 +2325,7 @@ func (c *BillingInfoListCall) Header() http.Header {
 
 func (c *BillingInfoListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2459,7 +2459,7 @@ func (c *BudgetGetCall) Header() http.Header {
 
 func (c *BudgetGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2609,7 +2609,7 @@ func (c *BudgetPatchCall) Header() http.Header {
 
 func (c *BudgetPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2764,7 +2764,7 @@ func (c *BudgetUpdateCall) Header() http.Header {
 
 func (c *BudgetUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2927,7 +2927,7 @@ func (c *CreativesGetCall) Header() http.Header {
 
 func (c *CreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3067,7 +3067,7 @@ func (c *CreativesInsertCall) Header() http.Header {
 
 func (c *CreativesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3247,7 +3247,7 @@ func (c *CreativesListCall) Header() http.Header {
 
 func (c *CreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3441,7 +3441,7 @@ func (c *DirectDealsGetCall) Header() http.Header {
 
 func (c *DirectDealsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3582,7 +3582,7 @@ func (c *DirectDealsListCall) Header() http.Header {
 
 func (c *DirectDealsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3734,7 +3734,7 @@ func (c *PerformanceReportListCall) Header() http.Header {
 
 func (c *PerformanceReportListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3895,7 +3895,7 @@ func (c *PretargetingConfigDeleteCall) Header() http.Header {
 
 func (c *PretargetingConfigDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4021,7 +4021,7 @@ func (c *PretargetingConfigGetCall) Header() http.Header {
 
 func (c *PretargetingConfigGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4166,7 +4166,7 @@ func (c *PretargetingConfigInsertCall) Header() http.Header {
 
 func (c *PretargetingConfigInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4317,7 +4317,7 @@ func (c *PretargetingConfigListCall) Header() http.Header {
 
 func (c *PretargetingConfigListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4457,7 +4457,7 @@ func (c *PretargetingConfigPatchCall) Header() http.Header {
 
 func (c *PretargetingConfigPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4610,7 +4610,7 @@ func (c *PretargetingConfigUpdateCall) Header() http.Header {
 
 func (c *PretargetingConfigUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

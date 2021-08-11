@@ -230,10 +230,10 @@ type GoogleSearchIdeahubV1alphaAvailableLocale struct {
 
 	// ForceSendFields is a list of field names (e.g. "Locale") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Locale") to include in API
@@ -265,10 +265,10 @@ type GoogleSearchIdeahubV1alphaIdea struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -320,10 +320,10 @@ type GoogleSearchIdeahubV1alphaIdeaActivity struct {
 
 	// ForceSendFields is a list of field names (e.g. "Ideas") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Ideas") to include in API
@@ -360,10 +360,10 @@ type GoogleSearchIdeahubV1alphaIdeaState struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dismissed") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dismissed") to include in
@@ -400,10 +400,10 @@ type GoogleSearchIdeahubV1alphaListAvailableLocalesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AvailableLocales") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AvailableLocales") to
@@ -435,10 +435,10 @@ type GoogleSearchIdeahubV1alphaListIdeasResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Ideas") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Ideas") to include in API
@@ -471,10 +471,10 @@ type GoogleSearchIdeahubV1alphaTopic struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -511,10 +511,10 @@ type GoogleSearchIdeahubV1alphaTopicState struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dismissed") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dismissed") to include in
@@ -651,7 +651,7 @@ func (c *IdeasListCall) Header() http.Header {
 
 func (c *IdeasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -843,7 +843,7 @@ func (c *PlatformsPropertiesIdeaActivitiesCreateCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeaActivitiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -991,7 +991,7 @@ func (c *PlatformsPropertiesIdeaStatesPatchCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeaStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1205,7 +1205,7 @@ func (c *PlatformsPropertiesIdeasListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1433,7 +1433,7 @@ func (c *PlatformsPropertiesLocalesListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesLocalesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1610,7 +1610,7 @@ func (c *PlatformsPropertiesTopicStatesPatchCall) Header() http.Header {
 
 func (c *PlatformsPropertiesTopicStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210809")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

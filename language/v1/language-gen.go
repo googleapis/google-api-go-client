@@ -89,7 +89,8 @@ const (
 	// text
 	CloudLanguageScope = "https://www.googleapis.com/auth/cloud-language"
 
-	// See, edit, configure, and delete your Google Cloud Platform data
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -1506,7 +1507,7 @@ func (c *DocumentsAnalyzeEntitiesCall) Header() http.Header {
 
 func (c *DocumentsAnalyzeEntitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1634,7 +1635,7 @@ func (c *DocumentsAnalyzeEntitySentimentCall) Header() http.Header {
 
 func (c *DocumentsAnalyzeEntitySentimentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1760,7 +1761,7 @@ func (c *DocumentsAnalyzeSentimentCall) Header() http.Header {
 
 func (c *DocumentsAnalyzeSentimentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1888,7 +1889,7 @@ func (c *DocumentsAnalyzeSyntaxCall) Header() http.Header {
 
 func (c *DocumentsAnalyzeSyntaxCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2016,7 +2017,7 @@ func (c *DocumentsAnnotateTextCall) Header() http.Header {
 
 func (c *DocumentsAnnotateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2142,7 +2143,7 @@ func (c *DocumentsClassifyTextCall) Header() http.Header {
 
 func (c *DocumentsClassifyTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210810")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

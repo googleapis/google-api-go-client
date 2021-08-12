@@ -45,6 +45,7 @@ type DialSettings struct {
 	SkipValidation      bool
 	ImpersonationConfig *impersonate.Config
 	EnableDirectPath    bool
+	InternalCredentials *google.Credentials
 
 	// Google API system parameters. For more information please read:
 	// https://cloud.google.com/apis/docs/system-parameters

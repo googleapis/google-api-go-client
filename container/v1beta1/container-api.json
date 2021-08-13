@@ -2484,7 +2484,7 @@
       }
     }
   },
-  "revision": "20210722",
+  "revision": "20210731",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -4350,6 +4350,10 @@
           "$ref": "EphemeralStorageConfig",
           "description": "Parameters for the ephemeral storage filesystem. If unspecified, ephemeral storage is backed by the boot disk."
         },
+        "gvnic": {
+          "$ref": "VirtualNIC",
+          "description": "Enable or disable gvnic on the node pool."
+        },
         "imageType": {
           "description": "The image type to use for this node. Note that for a given image type, the latest version of it will be used.",
           "type": "string"
@@ -5832,6 +5836,10 @@
           "description": "Required. Deprecated. The name of the cluster to upgrade. This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
+        "gvnic": {
+          "$ref": "VirtualNIC",
+          "description": "Enable or disable gvnic on the node pool."
+        },
         "imageType": {
           "description": "Required. The desired image type for the node pool.",
           "type": "string"
@@ -5923,6 +5931,10 @@
         "version": {
           "description": "The release version available for upgrade.",
           "type": "string"
+        },
+        "windowsVersions": {
+          "$ref": "WindowsVersions",
+          "description": "Windows node versions info."
         }
       },
       "type": "object"
@@ -6054,6 +6066,17 @@
       "properties": {
         "enabled": {
           "description": "Enables vertical pod autoscaling.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "VirtualNIC": {
+      "description": "Configuration of gVNIC feature.",
+      "id": "VirtualNIC",
+      "properties": {
+        "enabled": {
+          "description": "Whether gVNIC features are enabled in the node pool.",
           "type": "boolean"
         }
       },

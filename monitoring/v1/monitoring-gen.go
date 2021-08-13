@@ -83,7 +83,8 @@ const mtlsBasePath = "https://monitoring.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud Platform data
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and write monitoring data for all of your Google and third-party
@@ -772,6 +773,15 @@ type DataSet struct {
 	// in the distribution is displayed as a color. This type is not
 	// currently available in the Stackdriver Monitoring application.
 	PlotType string `json:"plotType,omitempty"`
+
+	// TargetAxis: Optional. The target axis to use for plotting the metric.
+	//
+	// Possible values:
+	//   "TARGET_AXIS_UNSPECIFIED" - The target axis was not specified.
+	// Defaults to Y1.
+	//   "Y1" - The y_axis (the right axis of chart).
+	//   "Y2" - The y2_axis (the left axis of chart).
+	TargetAxis string `json:"targetAxis,omitempty"`
 
 	// TimeSeriesQuery: Required. Fields for querying time series data from
 	// the Stackdriver metrics API.
@@ -1845,6 +1855,16 @@ type Threshold struct {
 	// Label: A label for the threshold.
 	Label string `json:"label,omitempty"`
 
+	// TargetAxis: The target axis to use for plotting the threshold. Target
+	// axis is not allowed in a Scorecard.
+	//
+	// Possible values:
+	//   "TARGET_AXIS_UNSPECIFIED" - The target axis was not specified.
+	// Defaults to Y1.
+	//   "Y1" - The y_axis (the right axis of chart).
+	//   "Y2" - The y2_axis (the left axis of chart).
+	TargetAxis string `json:"targetAxis,omitempty"`
+
 	// Value: The value of the threshold. The value should be defined in the
 	// native scale of the metric.
 	Value float64 `json:"value,omitempty"`
@@ -2186,6 +2206,9 @@ type XyChart struct {
 	// XAxis: The properties applied to the X axis.
 	XAxis *Axis `json:"xAxis,omitempty"`
 
+	// Y2Axis: The properties applied to the Y2 axis.
+	Y2Axis *Axis `json:"y2Axis,omitempty"`
+
 	// YAxis: The properties applied to the Y axis.
 	YAxis *Axis `json:"yAxis,omitempty"`
 
@@ -2223,7 +2246,8 @@ type LocationsGlobalMetricsScopesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a specific Metrics Scope.
+// Get: Returns a specific Metrics Scope, including the list of projects
+// monitored by the specified Metrics Scope.
 //
 // - name: The resource name of the Metrics Scope. Example:
 //   locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}.
@@ -2270,7 +2294,7 @@ func (c *LocationsGlobalMetricsScopesGetCall) Header() http.Header {
 
 func (c *LocationsGlobalMetricsScopesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2332,7 +2356,7 @@ func (c *LocationsGlobalMetricsScopesGetCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a specific Metrics Scope.",
+	//   "description": "Returns a specific Metrics Scope, including the list of projects monitored by the specified Metrics Scope.",
 	//   "flatPath": "v1/locations/global/metricsScopes/{metricsScopesId}",
 	//   "httpMethod": "GET",
 	//   "id": "monitoring.locations.global.metricsScopes.get",
@@ -2426,7 +2450,7 @@ func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) He
 
 func (c *LocationsGlobalMetricsScopesListMetricsScopesByMonitoredProjectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2563,7 +2587,7 @@ func (c *LocationsGlobalMetricsScopesProjectsCreateCall) Header() http.Header {
 
 func (c *LocationsGlobalMetricsScopesProjectsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2710,7 +2734,7 @@ func (c *LocationsGlobalMetricsScopesProjectsDeleteCall) Header() http.Header {
 
 func (c *LocationsGlobalMetricsScopesProjectsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2857,7 +2881,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3011,7 +3035,7 @@ func (c *ProjectsDashboardsCreateCall) Header() http.Header {
 
 func (c *ProjectsDashboardsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3162,7 +3186,7 @@ func (c *ProjectsDashboardsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDashboardsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3313,7 +3337,7 @@ func (c *ProjectsDashboardsGetCall) Header() http.Header {
 
 func (c *ProjectsDashboardsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3482,7 +3506,7 @@ func (c *ProjectsDashboardsListCall) Header() http.Header {
 
 func (c *ProjectsDashboardsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3664,7 +3688,7 @@ func (c *ProjectsDashboardsPatchCall) Header() http.Header {
 
 func (c *ProjectsDashboardsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210811")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210812")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

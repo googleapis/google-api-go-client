@@ -2699,7 +2699,7 @@
       "id": "gkehub:v1alpha",
       "name": "gkehub",
       "version": "v1alpha",
-      "title": "GKE Hub",
+      "title": "GKE Hub API",
       "description": "",
       "discoveryRestUrl": "https://gkehub.googleapis.com/$discovery/rest?version=v1alpha",
       "icons": {
@@ -2714,7 +2714,7 @@
       "id": "gkehub:v1alpha2",
       "name": "gkehub",
       "version": "v1alpha2",
-      "title": "GKE Hub",
+      "title": "GKE Hub API",
       "description": "",
       "discoveryRestUrl": "https://gkehub.googleapis.com/$discovery/rest?version=v1alpha2",
       "icons": {
@@ -2729,7 +2729,7 @@
       "id": "gkehub:v1beta",
       "name": "gkehub",
       "version": "v1beta",
-      "title": "GKE Hub",
+      "title": "GKE Hub API",
       "description": "",
       "discoveryRestUrl": "https://gkehub.googleapis.com/$discovery/rest?version=v1beta",
       "icons": {
@@ -2744,7 +2744,7 @@
       "id": "gkehub:v1beta1",
       "name": "gkehub",
       "version": "v1beta1",
-      "title": "GKE Hub",
+      "title": "GKE Hub API",
       "description": "",
       "discoveryRestUrl": "https://gkehub.googleapis.com/$discovery/rest?version=v1beta1",
       "icons": {
@@ -2759,7 +2759,7 @@
       "id": "gkehub:v1",
       "name": "gkehub",
       "version": "v1",
-      "title": "GKE Hub",
+      "title": "GKE Hub API",
       "description": "",
       "discoveryRestUrl": "https://gkehub.googleapis.com/$discovery/rest?version=v1",
       "icons": {

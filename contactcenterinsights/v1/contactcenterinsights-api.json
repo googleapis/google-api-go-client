@@ -1089,7 +1089,7 @@
       }
     }
   },
-  "revision": "20210806",
+  "revision": "20210813",
   "rootUrl": "https://contactcenterinsights.googleapis.com/",
   "schemas": {
     "GoogleCloudContactcenterinsightsV1Analysis": {
@@ -1576,7 +1576,7 @@
       "id": "GoogleCloudContactcenterinsightsV1ConversationParticipant",
       "properties": {
         "dialogflowParticipant": {
-          "description": "The name of the Dialogflow participant. Format: projects/{project}/locations/{location}/conversations/{conversation}/participants/{participant}",
+          "description": "Deprecated. Use `dialogflow_participant_name` instead. The name of the Dialogflow participant. Format: projects/{project}/locations/{location}/conversations/{conversation}/participants/{participant}",
           "type": "string"
         },
         "dialogflowParticipantName": {

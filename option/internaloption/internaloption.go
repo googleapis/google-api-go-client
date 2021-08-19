@@ -108,7 +108,7 @@ func (w enableJwtWithScope) Apply(o *internal.DialSettings) {
 	o.EnableJwtWithScope = bool(w)
 }
 
-// WithCredentials returns a client option to specify authenticates API calls.
+// WithCredentials returns a client option to specify credentials which will be used to authenticate API calls.
 // This credential takes precedence over all other credential options.
 func WithCredentials(creds *google.Credentials) option.ClientOption {
 	return (*withCreds)(creds)

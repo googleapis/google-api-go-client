@@ -83,10 +83,12 @@ const mtlsBasePath = "https://testing.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud Platform data
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// View your data across Google Cloud Platform services
+	// View your data across Google Cloud services and see the email address
+	// of your Google Account
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 )
 
@@ -562,7 +564,7 @@ func (s *AndroidModel) MarshalJSON() ([]byte, error) {
 
 // AndroidRoboTest: A test of an android application that explores the
 // application on a virtual or physical Android Device, finding culprits
-// and crashes as it goes. Next tag: 30
+// and crashes as it goes.
 type AndroidRoboTest struct {
 	// AppApk: The APK for the application under test.
 	AppApk *FileReference `json:"appApk,omitempty"`
@@ -596,8 +598,8 @@ type AndroidRoboTest struct {
 	// allow the server to populate this field automatically.
 	//
 	// Possible values:
-	//   "ROBO_MODE_UNSPECIFIED" - LINT.IfChange This means that the server
-	// should choose the mode. Recommended.
+	//   "ROBO_MODE_UNSPECIFIED" - This means that the server should choose
+	// the mode. Recommended.
 	//   "ROBO_VERSION_1" - Runs Robo in UIAutomator-only mode without app
 	// resigning
 	//   "ROBO_VERSION_2" - Runs Robo in standard Espresso with UIAutomator
@@ -1778,9 +1780,9 @@ type IosTestSetup struct {
 
 	// PullDirectories: List of directories on the device to upload to Cloud
 	// Storage at the end of the test. Directories should either be in a
-	// shared directory (e.g. /private/var/mobile/Media) or within an
-	// accessible directory inside the app's filesystem (e.g. /Documents) by
-	// specifying the bundle id.
+	// shared directory (such as /private/var/mobile/Media) or within an
+	// accessible directory inside the app's filesystem (such as /Documents)
+	// by specifying the bundle ID.
 	PullDirectories []*IosDeviceFile `json:"pullDirectories,omitempty"`
 
 	// PushFiles: List of files to push to the device before starting the
@@ -3292,7 +3294,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Header() http.Header {
 
 func (c *ApplicationDetailServiceGetApkDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210816")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3428,7 +3430,7 @@ func (c *ProjectsTestMatricesCancelCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210816")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3584,7 +3586,7 @@ func (c *ProjectsTestMatricesCreateCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210816")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3746,7 +3748,7 @@ func (c *ProjectsTestMatricesGetCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210816")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3910,7 +3912,7 @@ func (c *TestEnvironmentCatalogGetCall) Header() http.Header {
 
 func (c *TestEnvironmentCatalogGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210816")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

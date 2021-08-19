@@ -1856,6 +1856,19 @@ type PackageIssue struct {
 	// installed on the resource affected by this vulnerability.
 	AffectedVersion *Version `json:"affectedVersion,omitempty"`
 
+	// EffectiveSeverity: Output only. The distro or language system
+	// assigned severity for this vulnerability when that is available and
+	// note provider assigned severity when it is not available.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unknown.
+	//   "MINIMAL" - Minimal severity.
+	//   "LOW" - Low severity.
+	//   "MEDIUM" - Medium severity.
+	//   "HIGH" - High severity.
+	//   "CRITICAL" - Critical severity.
+	EffectiveSeverity string `json:"effectiveSeverity,omitempty"`
+
 	// FixAvailable: Output only. Whether a fix is available for this
 	// package.
 	FixAvailable bool `json:"fixAvailable,omitempty"`
@@ -1873,6 +1886,9 @@ type PackageIssue struct {
 	// was fixed in. Setting this to VersionKind.MAXIMUM means no fix is yet
 	// available.
 	FixedVersion *Version `json:"fixedVersion,omitempty"`
+
+	// PackageType: The type of package (e.g. OS, MAVEN, GO).
+	PackageType string `json:"packageType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AffectedCpeUri") to
 	// unconditionally include in API requests. By default, fields with
@@ -2474,7 +2490,14 @@ type VulnerabilityOccurrence struct {
 
 	// EffectiveSeverity: The distro assigned severity for this
 	// vulnerability when it is available, otherwise this is the note
-	// provider assigned severity.
+	// provider assigned severity. When there are multiple PackageIssues for
+	// this vulnerability, they can have different effective severities
+	// because some might be provided by the distro while others are
+	// provided by the language ecosystem for a language pack. For this
+	// reason, it is advised to use the effective severity on the
+	// PackageIssue level. In the case where multiple PackageIssues have
+	// differing effective severities, this field should be the highest
+	// severity for any of the PackageIssues.
 	//
 	// Possible values:
 	//   "SEVERITY_UNSPECIFIED" - Unknown.
@@ -2662,7 +2685,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210816")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2797,7 +2820,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210816")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2942,7 +2965,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210816")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3118,7 +3141,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210816")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3308,7 +3331,7 @@ func (c *ProjectsLocationsOperationsWaitCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210816")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3449,7 +3472,7 @@ func (c *ProjectsLocationsScansAnalyzePackagesCall) Header() http.Header {
 
 func (c *ProjectsLocationsScansAnalyzePackagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210816")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3617,7 +3640,7 @@ func (c *ProjectsLocationsScansVulnerabilitiesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsScansVulnerabilitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210816")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

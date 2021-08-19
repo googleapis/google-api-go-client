@@ -548,26 +548,6 @@ func (r *IdeasService) List() *IdeasListCall {
 	return c
 }
 
-// CreatorPlatform sets the optional parameter "creator.platform":
-// Identifies the platform from which this user is accessing Idea Hub.
-//
-// Possible values:
-//   "UNKNOWN"
-//   "BLOGGER"
-//   "SITEKIT"
-func (c *IdeasListCall) CreatorPlatform(creatorPlatform string) *IdeasListCall {
-	c.urlParams_.Set("creator.platform", creatorPlatform)
-	return c
-}
-
-// CreatorPlatformId sets the optional parameter "creator.platformId":
-// Identifies the platform account (blog/site/etc.) for which to fetch
-// Ideas.
-func (c *IdeasListCall) CreatorPlatformId(creatorPlatformId string) *IdeasListCall {
-	c.urlParams_.Set("creator.platformId", creatorPlatformId)
-	return c
-}
-
 // Filter sets the optional parameter "filter": Allows filtering.
 // Supported syntax: * Filter expressions are made up of one or more
 // restrictions. * Restrictions are implicitly combined, as if the `AND`
@@ -651,7 +631,7 @@ func (c *IdeasListCall) Header() http.Header {
 
 func (c *IdeasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -718,26 +698,6 @@ func (c *IdeasListCall) Do(opts ...googleapi.CallOption) (*GoogleSearchIdeahubV1
 	//   "id": "ideahub.ideas.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
-	//     "creator.platform": {
-	//       "description": "Identifies the platform from which this user is accessing Idea Hub.",
-	//       "enum": [
-	//         "UNKNOWN",
-	//         "BLOGGER",
-	//         "SITEKIT"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "creator.platformId": {
-	//       "description": "Identifies the platform account (blog/site/etc.) for which to fetch Ideas.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "filter": {
 	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions are implicitly combined, as if the `AND` operator was always used. The `OR` operator is currently unsupported. * Supported functions: - `saved(bool)`: If set to true, fetches only saved ideas. If set to false, fetches all except saved ideas. Can't be simultaneously used with `dismissed(bool)`. - `dismissed(bool)`: If set to true, fetches only dismissed ideas. Can't be simultaneously used with `saved(bool)`. The `false` value is currently unsupported. Examples: * `saved(true)` * `saved(false)` * `dismissed(true)` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
@@ -843,7 +803,7 @@ func (c *PlatformsPropertiesIdeaActivitiesCreateCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeaActivitiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -991,7 +951,7 @@ func (c *PlatformsPropertiesIdeaStatesPatchCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeaStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1110,26 +1070,6 @@ func (r *PlatformsPropertiesIdeasService) List(parent string) *PlatformsProperti
 	return c
 }
 
-// CreatorPlatform sets the optional parameter "creator.platform":
-// Identifies the platform from which this user is accessing Idea Hub.
-//
-// Possible values:
-//   "UNKNOWN"
-//   "BLOGGER"
-//   "SITEKIT"
-func (c *PlatformsPropertiesIdeasListCall) CreatorPlatform(creatorPlatform string) *PlatformsPropertiesIdeasListCall {
-	c.urlParams_.Set("creator.platform", creatorPlatform)
-	return c
-}
-
-// CreatorPlatformId sets the optional parameter "creator.platformId":
-// Identifies the platform account (blog/site/etc.) for which to fetch
-// Ideas.
-func (c *PlatformsPropertiesIdeasListCall) CreatorPlatformId(creatorPlatformId string) *PlatformsPropertiesIdeasListCall {
-	c.urlParams_.Set("creator.platformId", creatorPlatformId)
-	return c
-}
-
 // Filter sets the optional parameter "filter": Allows filtering.
 // Supported syntax: * Filter expressions are made up of one or more
 // restrictions. * Restrictions are implicitly combined, as if the `AND`
@@ -1205,7 +1145,7 @@ func (c *PlatformsPropertiesIdeasListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1277,26 +1217,6 @@ func (c *PlatformsPropertiesIdeasListCall) Do(opts ...googleapi.CallOption) (*Go
 	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "creator.platform": {
-	//       "description": "Identifies the platform from which this user is accessing Idea Hub.",
-	//       "enum": [
-	//         "UNKNOWN",
-	//         "BLOGGER",
-	//         "SITEKIT"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         ""
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "creator.platformId": {
-	//       "description": "Identifies the platform account (blog/site/etc.) for which to fetch Ideas.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "filter": {
 	//       "description": "Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions are implicitly combined, as if the `AND` operator was always used. The `OR` operator is currently unsupported. * Supported functions: - `saved(bool)`: If set to true, fetches only saved ideas. If set to false, fetches all except saved ideas. Can't be simultaneously used with `dismissed(bool)`. - `dismissed(bool)`: If set to true, fetches only dismissed ideas. Can't be simultaneously used with `saved(bool)`. The `false` value is currently unsupported. Examples: * `saved(true)` * `saved(false)` * `dismissed(true)` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
@@ -1433,7 +1353,7 @@ func (c *PlatformsPropertiesLocalesListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesLocalesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1610,7 +1530,7 @@ func (c *PlatformsPropertiesTopicStatesPatchCall) Header() http.Header {
 
 func (c *PlatformsPropertiesTopicStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

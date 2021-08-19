@@ -79,7 +79,8 @@ const mtlsBasePath = "https://file.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud Platform data
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -214,7 +215,8 @@ type Backup struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. The resource name of the backup, in the format
-	// projects/{project_number}/locations/{location_id}/backups/{backup_id}.
+	// `projects/{project_number}/locations/{location_id}/backups/{backup_id}
+	// `.
 	Name string `json:"name,omitempty"`
 
 	// SatisfiesPzs: Output only. Reserved for future use.
@@ -226,8 +228,8 @@ type Backup struct {
 
 	// SourceInstance: The resource name of the source Cloud Filestore
 	// instance, in the format
-	// projects/{project_number}/locations/{location_id}/instances/{instance_
-	// id}, used to create this backup.
+	// `projects/{project_number}/locations/{location_id}/instances/{instance
+	// _id}`, used to create this backup.
 	SourceInstance string `json:"sourceInstance,omitempty"`
 
 	// SourceInstanceTier: Output only. The service tier of the source Cloud
@@ -444,8 +446,8 @@ type FileShareConfig struct {
 	NfsExportOptions []*NfsExportOptions `json:"nfsExportOptions,omitempty"`
 
 	// SourceBackup: The resource name of the backup, in the format
-	// projects/{project_number}/locations/{location_id}/backups/{backup_id},
-	//  that this file share has been restored from.
+	// `projects/{project_number}/locations/{location_id}/backups/{backup_id}
+	// `, that this file share has been restored from.
 	SourceBackup string `json:"sourceBackup,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CapacityGb") to
@@ -973,7 +975,7 @@ type Instance struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. The resource name of the instance, in the format
-	// projects/{project}/locations/{location}/instances/{instance}.
+	// `projects/{project}/locations/{location}/instances/{instance}`.
 	Name string `json:"name,omitempty"`
 
 	// Networks: VPC networks to which the instance is connected. For this
@@ -1051,11 +1053,11 @@ func (s *Instance) MarshalJSON() ([]byte, error) {
 // ListBackupsRequest.
 type ListBackupsResponse struct {
 	// Backups: A list of backups in the project for the specified location.
-	// If the {location} value in the request is "-", the response contains
-	// a list of backups from all locations. If any location is unreachable,
-	// the response will only return backups in reachable locations and the
-	// "unreachable" field will be populated with a list of unreachable
-	// locations.
+	// If the `{location}` value in the request is "-", the response
+	// contains a list of backups from all locations. If any location is
+	// unreachable, the response will only return backups in reachable
+	// locations and the "unreachable" field will be populated with a list
+	// of unreachable locations.
 	Backups []*Backup `json:"backups,omitempty"`
 
 	// NextPageToken: The token you can use to retrieve the next page of
@@ -1096,11 +1098,11 @@ func (s *ListBackupsResponse) MarshalJSON() ([]byte, error) {
 // ListInstancesRequest.
 type ListInstancesResponse struct {
 	// Instances: A list of instances in the project for the specified
-	// location. If the {location} value in the request is "-", the response
-	// contains a list of instances from all locations. If any location is
-	// unreachable, the response will only return instances in reachable
-	// locations and the "unreachable" field will be populated with a list
-	// of unreachable locations.
+	// location. If the `{location}` value in the request is "-", the
+	// response contains a list of instances from all locations. If any
+	// location is unreachable, the response will only return instances in
+	// reachable locations and the "unreachable" field will be populated
+	// with a list of unreachable locations.
 	Instances []*Instance `json:"instances,omitempty"`
 
 	// NextPageToken: The token you can use to retrieve the next page of
@@ -1355,10 +1357,10 @@ func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
 
 // NetworkConfig: Network configuration for the instance.
 type NetworkConfig struct {
-	// IpAddresses: Output only. IPv4 addresses in the format {octet
-	// 1}.{octet 2}.{octet 3}.{octet 4} or IPv6 addresses in the format
-	// {block 1}:{block 2}:{block 3}:{block 4}:{block 5}:{block 6}:{block
-	// 7}:{block 8}.
+	// IpAddresses: Output only. IPv4 addresses in the format
+	// `{octet1}.{octet2}.{octet3}.{octet4}` or IPv6 addresses in the format
+	// `{block1}:{block2}:{block3}:{block4}:{block5}:{block6}:{block7}:{block
+	// 8}`.
 	IpAddresses []string `json:"ipAddresses,omitempty"`
 
 	// Modes: Internet protocol versions for which the instance has IP
@@ -1370,16 +1372,18 @@ type NetworkConfig struct {
 	Modes []string `json:"modes,omitempty"`
 
 	// Network: The name of the Google Compute Engine VPC network
-	// (/compute/docs/networks-and-firewalls#networks) to which the instance
-	// is connected.
+	// (https://cloud.google.com/vpc/docs/vpc) to which the instance is
+	// connected.
 	Network string `json:"network,omitempty"`
 
 	// ReservedIpRange: A /29 CIDR block in one of the internal IP address
-	// ranges (https://www.arin.net/knowledge/address_filters.html) that
-	// identifies the range of IP addresses reserved for this instance. For
-	// example, 10.0.0.0/29 or 192.168.0.0/29. The range you specify can't
-	// overlap with either existing subnets or assigned IP address ranges
-	// for other Cloud Filestore instances in the selected VPC network.
+	// ranges
+	// (https://www.arin.net/reference/research/statistics/address_filters/)
+	// that identifies the range of IP addresses reserved for this instance.
+	// For example, 10.0.0.0/29 or 192.168.0.0/29. The range you specify
+	// can't overlap with either existing subnets or assigned IP address
+	// ranges for other Cloud Filestore instances in the selected VPC
+	// network.
 	ReservedIpRange string `json:"reservedIpRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IpAddresses") to
@@ -1430,12 +1434,13 @@ type NfsExportOptions struct {
 	// other squash_mode settings.
 	AnonUid int64 `json:"anonUid,omitempty,string"`
 
-	// IpRanges: List of either an IPv4 addresses in the format {octet
-	// 1}.{octet 2}.{octet 3}.{octet 4} or CIDR ranges in the format {octet
-	// 1}.{octet 2}.{octet 3}.{octet 4}/{mask size} which may mount the file
-	// share. Overlapping IP ranges are not allowed, both within and across
-	// NfsExportOptions. An error will be returned. The limit is 64 IP
-	// ranges/addresses for each FileShareConfig among all NfsExportOptions.
+	// IpRanges: List of either an IPv4 addresses in the format
+	// `{octet1}.{octet2}.{octet3}.{octet4}` or CIDR ranges in the format
+	// `{octet1}.{octet2}.{octet3}.{octet4}/{mask size}` which may mount the
+	// file share. Overlapping IP ranges are not allowed, both within and
+	// across NfsExportOptions. An error will be returned. The limit is 64
+	// IP ranges/addresses for each FileShareConfig among all
+	// NfsExportOptions.
 	IpRanges []string `json:"ipRanges,omitempty"`
 
 	// SquashMode: Either NO_ROOT_SQUASH, for allowing root access on the
@@ -1542,8 +1547,8 @@ type OperationMetadata struct {
 	ApiVersion string `json:"apiVersion,omitempty"`
 
 	// CancelRequested: Output only. Identifies whether the user has
-	// requested cancellation of the operation. Operations that have
-	// successfully been cancelled have Operation.error value with a
+	// requested cancellation of the operation. Operations that have been
+	// cancelled successfully have Operation.error value with a
 	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
 	CancelRequested bool `json:"cancelRequested,omitempty"`
 
@@ -1595,7 +1600,8 @@ type RestoreInstanceRequest struct {
 	FileShare string `json:"fileShare,omitempty"`
 
 	// SourceBackup: The resource name of the backup, in the format
-	// projects/{project_number}/locations/{location_id}/backups/{backup_id}.
+	// `projects/{project_number}/locations/{location_id}/backups/{backup_id}
+	// `.
 	SourceBackup string `json:"sourceBackup,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FileShare") to
@@ -1883,7 +1889,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2063,7 +2069,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2208,8 +2214,9 @@ type ProjectsLocationsBackupsCreateCall struct {
 // Create: Creates a backup.
 //
 // - parent: The backup's project and location, in the format
-//   projects/{project_number}/locations/{location}. In Cloud Filestore,
-//   backup locations map to GCP regions, for example **us-west1**.
+//   `projects/{project_number}/locations/{location}`. In Cloud
+//   Filestore, backup locations map to GCP regions, for example
+//   **us-west1**.
 func (r *ProjectsLocationsBackupsService) Create(parent string, backup *Backup) *ProjectsLocationsBackupsCreateCall {
 	c := &ProjectsLocationsBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2255,7 +2262,7 @@ func (c *ProjectsLocationsBackupsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsBackupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2333,7 +2340,7 @@ func (c *ProjectsLocationsBackupsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The backup's project and location, in the format projects/{project_number}/locations/{location}. In Cloud Filestore, backup locations map to GCP regions, for example **us-west1**.",
+	//       "description": "Required. The backup's project and location, in the format `projects/{project_number}/locations/{location}`. In Cloud Filestore, backup locations map to GCP regions, for example **us-west1**.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2367,7 +2374,7 @@ type ProjectsLocationsBackupsDeleteCall struct {
 // Delete: Deletes a backup.
 //
 // - name: The backup resource name, in the format
-//   projects/{project_number}/locations/{location}/backups/{backup_id}.
+//   `projects/{project_number}/locations/{location}/backups/{backup_id}`.
 func (r *ProjectsLocationsBackupsService) Delete(name string) *ProjectsLocationsBackupsDeleteCall {
 	c := &ProjectsLocationsBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2401,7 +2408,7 @@ func (c *ProjectsLocationsBackupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsBackupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2469,7 +2476,7 @@ func (c *ProjectsLocationsBackupsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The backup resource name, in the format projects/{project_number}/locations/{location}/backups/{backup_id}",
+	//       "description": "Required. The backup resource name, in the format `projects/{project_number}/locations/{location}/backups/{backup_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -2501,7 +2508,8 @@ type ProjectsLocationsBackupsGetCall struct {
 // Get: Gets the details of a specific backup.
 //
 // - name: The backup resource name, in the format
-//   projects/{project_number}/locations/{location}/backups/{backup_id}.
+//   `projects/{project_number}/locations/{location}/backups/{backup_id}`
+//   .
 func (r *ProjectsLocationsBackupsService) Get(name string) *ProjectsLocationsBackupsGetCall {
 	c := &ProjectsLocationsBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2545,7 +2553,7 @@ func (c *ProjectsLocationsBackupsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsBackupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2616,7 +2624,7 @@ func (c *ProjectsLocationsBackupsGetCall) Do(opts ...googleapi.CallOption) (*Bac
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The backup resource name, in the format projects/{project_number}/locations/{location}/backups/{backup_id}.",
+	//       "description": "Required. The backup resource name, in the format `projects/{project_number}/locations/{location}/backups/{backup_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -2650,10 +2658,10 @@ type ProjectsLocationsBackupsListCall struct {
 //
 // - parent: The project and location for which to retrieve backup
 //   information, in the format
-//   projects/{project_number}/locations/{location}. In Cloud Filestore,
-//   backup locations map to GCP regions, for example **us-west1**. To
-//   retrieve backup information for all locations, use "-" for the
-//   {location} value.
+//   `projects/{project_number}/locations/{location}`. In Cloud
+//   Filestore, backup locations map to GCP regions, for example
+//   **us-west1**. To retrieve backup information for all locations, use
+//   "-" for the `{location}` value.
 func (r *ProjectsLocationsBackupsService) List(parent string) *ProjectsLocationsBackupsListCall {
 	c := &ProjectsLocationsBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2725,7 +2733,7 @@ func (c *ProjectsLocationsBackupsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsBackupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2817,7 +2825,7 @@ func (c *ProjectsLocationsBackupsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project and location for which to retrieve backup information, in the format projects/{project_number}/locations/{location}. In Cloud Filestore, backup locations map to GCP regions, for example **us-west1**. To retrieve backup information for all locations, use \"-\" for the {location} value.",
+	//       "description": "Required. The project and location for which to retrieve backup information, in the format `projects/{project_number}/locations/{location}`. In Cloud Filestore, backup locations map to GCP regions, for example **us-west1**. To retrieve backup information for all locations, use \"-\" for the `{location}` value.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2870,8 +2878,8 @@ type ProjectsLocationsBackupsPatchCall struct {
 // Patch: Updates the settings of a specific backup.
 //
 // - name: Output only. The resource name of the backup, in the format
-//   projects/{project_number}/locations/{location_id}/backups/{backup_id
-//   }.
+//   `projects/{project_number}/locations/{location_id}/backups/{backup_i
+//   d}`.
 func (r *ProjectsLocationsBackupsService) Patch(name string, backup *Backup) *ProjectsLocationsBackupsPatchCall {
 	c := &ProjectsLocationsBackupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2914,7 +2922,7 @@ func (c *ProjectsLocationsBackupsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsBackupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2987,7 +2995,7 @@ func (c *ProjectsLocationsBackupsPatchCall) Do(opts ...googleapi.CallOption) (*O
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The resource name of the backup, in the format projects/{project_number}/locations/{location_id}/backups/{backup_id}.",
+	//       "description": "Output only. The resource name of the backup, in the format `projects/{project_number}/locations/{location_id}/backups/{backup_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/backups/[^/]+$",
 	//       "required": true,
@@ -3031,7 +3039,7 @@ type ProjectsLocationsInstancesCreateCall struct {
 // capacity of the tier).
 //
 // - parent: The instance's project and location, in the format
-//   projects/{project_id}/locations/{location}. In Cloud Filestore,
+//   `projects/{project_id}/locations/{location}`. In Cloud Filestore,
 //   locations map to GCP zones, for example **us-west1-b**.
 func (r *ProjectsLocationsInstancesService) Create(parent string, instance *Instance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3075,7 +3083,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3153,7 +3161,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The instance's project and location, in the format projects/{project_id}/locations/{location}. In Cloud Filestore, locations map to GCP zones, for example **us-west1-b**.",
+	//       "description": "Required. The instance's project and location, in the format `projects/{project_id}/locations/{location}`. In Cloud Filestore, locations map to GCP zones, for example **us-west1-b**.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3187,7 +3195,7 @@ type ProjectsLocationsInstancesDeleteCall struct {
 // Delete: Deletes an instance.
 //
 // - name: The instance resource name, in the format
-//   projects/{project_id}/locations/{location}/instances/{instance_id}.
+//   `projects/{project_id}/locations/{location}/instances/{instance_id}`.
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3221,7 +3229,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3289,7 +3297,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The instance resource name, in the format projects/{project_id}/locations/{location}/instances/{instance_id}",
+	//       "description": "Required. The instance resource name, in the format `projects/{project_id}/locations/{location}/instances/{instance_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -3321,7 +3329,8 @@ type ProjectsLocationsInstancesGetCall struct {
 // Get: Gets the details of a specific instance.
 //
 // - name: The instance resource name, in the format
-//   projects/{project_id}/locations/{location}/instances/{instance_id}.
+//   `projects/{project_id}/locations/{location}/instances/{instance_id}`
+//   .
 func (r *ProjectsLocationsInstancesService) Get(name string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3365,7 +3374,7 @@ func (c *ProjectsLocationsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3436,7 +3445,7 @@ func (c *ProjectsLocationsInstancesGetCall) Do(opts ...googleapi.CallOption) (*I
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The instance resource name, in the format projects/{project_id}/locations/{location}/instances/{instance_id}.",
+	//       "description": "Required. The instance resource name, in the format `projects/{project_id}/locations/{location}/instances/{instance_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -3470,10 +3479,10 @@ type ProjectsLocationsInstancesListCall struct {
 //
 // - parent: The project and location for which to retrieve instance
 //   information, in the format
-//   projects/{project_id}/locations/{location}. In Cloud Filestore,
+//   `projects/{project_id}/locations/{location}`. In Cloud Filestore,
 //   locations map to GCP zones, for example **us-west1-b**. To retrieve
-//   instance information for all locations, use "-" for the {location}
-//   value.
+//   instance information for all locations, use "-" for the
+//   `{location}` value.
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3545,7 +3554,7 @@ func (c *ProjectsLocationsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3637,7 +3646,7 @@ func (c *ProjectsLocationsInstancesListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project and location for which to retrieve instance information, in the format projects/{project_id}/locations/{location}. In Cloud Filestore, locations map to GCP zones, for example **us-west1-b**. To retrieve instance information for all locations, use \"-\" for the {location} value.",
+	//       "description": "Required. The project and location for which to retrieve instance information, in the format `projects/{project_id}/locations/{location}`. In Cloud Filestore, locations map to GCP zones, for example **us-west1-b**. To retrieve instance information for all locations, use \"-\" for the `{location}` value.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3690,7 +3699,7 @@ type ProjectsLocationsInstancesPatchCall struct {
 // Patch: Updates the settings of a specific instance.
 //
 // - name: Output only. The resource name of the instance, in the format
-//   projects/{project}/locations/{location}/instances/{instance}.
+//   `projects/{project}/locations/{location}/instances/{instance}`.
 func (r *ProjectsLocationsInstancesService) Patch(name string, instance *Instance) *ProjectsLocationsInstancesPatchCall {
 	c := &ProjectsLocationsInstancesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3734,7 +3743,7 @@ func (c *ProjectsLocationsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3807,7 +3816,7 @@ func (c *ProjectsLocationsInstancesPatchCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The resource name of the instance, in the format projects/{project}/locations/{location}/instances/{instance}.",
+	//       "description": "Output only. The resource name of the instance, in the format `projects/{project}/locations/{location}/instances/{instance}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -3851,8 +3860,8 @@ type ProjectsLocationsInstancesRestoreCall struct {
 // capacity of the tier).
 //
 // - name: The resource name of the instance, in the format
-//   projects/{project_number}/locations/{location_id}/instances/{instanc
-//   e_id}.
+//   `projects/{project_number}/locations/{location_id}/instances/{instan
+//   ce_id}`.
 func (r *ProjectsLocationsInstancesService) Restore(name string, restoreinstancerequest *RestoreInstanceRequest) *ProjectsLocationsInstancesRestoreCall {
 	c := &ProjectsLocationsInstancesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3887,7 +3896,7 @@ func (c *ProjectsLocationsInstancesRestoreCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3960,7 +3969,7 @@ func (c *ProjectsLocationsInstancesRestoreCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the instance, in the format projects/{project_number}/locations/{location_id}/instances/{instance_id}.",
+	//       "description": "Required. The resource name of the instance, in the format `projects/{project_number}/locations/{location_id}/instances/{instance_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -4038,7 +4047,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4181,7 +4190,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4326,7 +4335,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4502,7 +4511,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

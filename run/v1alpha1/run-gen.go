@@ -1837,12 +1837,12 @@ func (s *TCPSocketAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Volume: Not supported by Cloud Run Volume represents a named volume
-// in a container.
+// Volume: Volume represents a named volume in a container.
 type Volume struct {
 	ConfigMap *ConfigMapVolumeSource `json:"configMap,omitempty"`
 
-	// Name: Volume's name.
+	// Name: Volume's name. In Cloud Run Fully Managed, the name 'cloudsql'
+	// is reserved.
 	Name string `json:"name,omitempty"`
 
 	Secret *SecretVolumeSource `json:"secret,omitempty"`
@@ -1870,14 +1870,15 @@ func (s *Volume) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// VolumeMount: Not supported by Cloud Run VolumeMount describes a
-// mounting of a Volume within a container.
+// VolumeMount: VolumeMount describes a mounting of a Volume within a
+// container.
 type VolumeMount struct {
 	// MountPath: Path within the container at which the volume should be
 	// mounted. Must not contain ':'.
 	MountPath string `json:"mountPath,omitempty"`
 
-	// Name: This must match the Name of a Volume.
+	// Name: The name of the volume. There must be a corresponding Volume
+	// with the same name.
 	Name string `json:"name,omitempty"`
 
 	// ReadOnly: (Optional) Only true is accepted. Defaults to true.
@@ -1959,7 +1960,7 @@ func (c *NamespacesJobsCreateCall) Header() http.Header {
 
 func (c *NamespacesJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2124,7 +2125,7 @@ func (c *NamespacesJobsDeleteCall) Header() http.Header {
 
 func (c *NamespacesJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2283,7 +2284,7 @@ func (c *NamespacesJobsGetCall) Header() http.Header {
 
 func (c *NamespacesJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2484,7 +2485,7 @@ func (c *NamespacesJobsListCall) Header() http.Header {
 
 func (c *NamespacesJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210817")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

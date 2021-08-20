@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "See, edit, configure, and delete your Google Cloud Platform data"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -14,7 +14,7 @@
   "canonicalName": "Access Approval",
   "description": "An API for controlling access to data by Google personnel.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://cloud.google.com/access-approval/docs",
+  "documentationLink": "https://cloud.google.com/cloud-provider-access-management/access-approval/docs",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -754,7 +754,7 @@
       }
     }
   },
-  "revision": "20210625",
+  "revision": "20210813",
   "rootUrl": "https://accessapproval.googleapis.com/",
   "schemas": {
     "AccessApprovalSettings": {

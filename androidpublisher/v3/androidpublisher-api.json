@@ -1873,6 +1873,11 @@
             "sku"
           ],
           "parameters": {
+            "allowMissing": {
+              "description": "If set to true, and the in-app product with the given package_name and sku doesn't exist, the in-app product will be created.",
+              "location": "query",
+              "type": "boolean"
+            },
             "autoConvertMissingPrices": {
               "description": "If true the prices for all regions targeted by the parent app that don't have a price specified for this in-app product will be auto converted to the target currency based on the default price. Defaults to false.",
               "location": "query",
@@ -1994,7 +1999,7 @@
     "orders": {
       "methods": {
         "refund": {
-          "description": "Refund a user's subscription or in-app purchase order.",
+          "description": "Refunds a user's subscription or in-app purchase order. Orders older than 1 year cannot be refunded.",
           "flatPath": "androidpublisher/v3/applications/{packageName}/orders/{orderId}:refund",
           "httpMethod": "POST",
           "id": "androidpublisher.orders.refund",
@@ -2676,7 +2681,7 @@
       }
     }
   },
-  "revision": "20210721",
+  "revision": "20210810",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Apk": {

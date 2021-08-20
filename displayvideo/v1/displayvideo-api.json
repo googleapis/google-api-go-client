@@ -754,7 +754,8 @@
                             "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                             "TARGETING_TYPE_EXCHANGE",
                             "TARGETING_TYPE_SUB_EXCHANGE",
-                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                            "TARGETING_TYPE_OMID"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -795,7 +796,8 @@
                             "Purchase impressions from a group of deals and auction packages.",
                             "Purchase impressions from specific exchanges.",
                             "Purchase impressions from specific sub-exchanges.",
-                            "Target ads to a specific native content position."
+                            "Target ads to a specific native content position.",
+                            "Target ads in an Open Measurement enabled inventory."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -900,7 +902,8 @@
                             "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                             "TARGETING_TYPE_EXCHANGE",
                             "TARGETING_TYPE_SUB_EXCHANGE",
-                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                            "TARGETING_TYPE_OMID"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -941,7 +944,8 @@
                             "Purchase impressions from a group of deals and auction packages.",
                             "Purchase impressions from specific exchanges.",
                             "Purchase impressions from specific sub-exchanges.",
-                            "Target ads to a specific native content position."
+                            "Target ads to a specific native content position.",
+                            "Target ads in an Open Measurement enabled inventory."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -1902,7 +1906,8 @@
                             "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                             "TARGETING_TYPE_EXCHANGE",
                             "TARGETING_TYPE_SUB_EXCHANGE",
-                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                            "TARGETING_TYPE_OMID"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -1943,7 +1948,8 @@
                             "Purchase impressions from a group of deals and auction packages.",
                             "Purchase impressions from specific exchanges.",
                             "Purchase impressions from specific sub-exchanges.",
-                            "Target ads to a specific native content position."
+                            "Target ads to a specific native content position.",
+                            "Target ads in an Open Measurement enabled inventory."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -2048,7 +2054,8 @@
                             "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                             "TARGETING_TYPE_EXCHANGE",
                             "TARGETING_TYPE_SUB_EXCHANGE",
-                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                            "TARGETING_TYPE_OMID"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -2089,7 +2096,8 @@
                             "Purchase impressions from a group of deals and auction packages.",
                             "Purchase impressions from specific exchanges.",
                             "Purchase impressions from specific sub-exchanges.",
-                            "Target ads to a specific native content position."
+                            "Target ads to a specific native content position.",
+                            "Target ads in an Open Measurement enabled inventory."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -2594,7 +2602,8 @@
                             "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                             "TARGETING_TYPE_EXCHANGE",
                             "TARGETING_TYPE_SUB_EXCHANGE",
-                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                            "TARGETING_TYPE_OMID"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -2635,7 +2644,8 @@
                             "Purchase impressions from a group of deals and auction packages.",
                             "Purchase impressions from specific exchanges.",
                             "Purchase impressions from specific sub-exchanges.",
-                            "Target ads to a specific native content position."
+                            "Target ads to a specific native content position.",
+                            "Target ads in an Open Measurement enabled inventory."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -2730,7 +2740,8 @@
                             "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                             "TARGETING_TYPE_EXCHANGE",
                             "TARGETING_TYPE_SUB_EXCHANGE",
-                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                            "TARGETING_TYPE_OMID"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -2771,7 +2782,8 @@
                             "Purchase impressions from a group of deals and auction packages.",
                             "Purchase impressions from specific exchanges.",
                             "Purchase impressions from specific sub-exchanges.",
-                            "Target ads to a specific native content position."
+                            "Target ads to a specific native content position.",
+                            "Target ads in an Open Measurement enabled inventory."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -2863,7 +2875,8 @@
                             "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                             "TARGETING_TYPE_EXCHANGE",
                             "TARGETING_TYPE_SUB_EXCHANGE",
-                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                            "TARGETING_TYPE_OMID"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -2904,7 +2917,8 @@
                             "Purchase impressions from a group of deals and auction packages.",
                             "Purchase impressions from specific exchanges.",
                             "Purchase impressions from specific sub-exchanges.",
-                            "Target ads to a specific native content position."
+                            "Target ads to a specific native content position.",
+                            "Target ads in an Open Measurement enabled inventory."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -3009,7 +3023,8 @@
                             "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                             "TARGETING_TYPE_EXCHANGE",
                             "TARGETING_TYPE_SUB_EXCHANGE",
-                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                            "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                            "TARGETING_TYPE_OMID"
                           ],
                           "enumDescriptions": [
                             "Default value when type is not specified or is unknown in this version.",
@@ -3050,7 +3065,8 @@
                             "Purchase impressions from a group of deals and auction packages.",
                             "Purchase impressions from specific exchanges.",
                             "Purchase impressions from specific sub-exchanges.",
-                            "Target ads to a specific native content position."
+                            "Target ads to a specific native content position.",
+                            "Target ads in an Open Measurement enabled inventory."
                           ],
                           "location": "path",
                           "pattern": "^[^/]+$",
@@ -4061,7 +4077,7 @@
                       "type": "string"
                     },
                     "targetingType": {
-                      "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+                      "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
                       "enum": [
                         "TARGETING_TYPE_UNSPECIFIED",
                         "TARGETING_TYPE_CHANNEL",
@@ -4101,7 +4117,8 @@
                         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                         "TARGETING_TYPE_EXCHANGE",
                         "TARGETING_TYPE_SUB_EXCHANGE",
-                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                        "TARGETING_TYPE_OMID"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -4142,7 +4159,8 @@
                         "Purchase impressions from a group of deals and auction packages.",
                         "Purchase impressions from specific exchanges.",
                         "Purchase impressions from specific sub-exchanges.",
-                        "Target ads to a specific native content position."
+                        "Target ads to a specific native content position.",
+                        "Target ads in an Open Measurement enabled inventory."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -4188,7 +4206,7 @@
                       "type": "string"
                     },
                     "targetingType": {
-                      "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+                      "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
                       "enum": [
                         "TARGETING_TYPE_UNSPECIFIED",
                         "TARGETING_TYPE_CHANNEL",
@@ -4228,7 +4246,8 @@
                         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                         "TARGETING_TYPE_EXCHANGE",
                         "TARGETING_TYPE_SUB_EXCHANGE",
-                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                        "TARGETING_TYPE_OMID"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -4269,7 +4288,8 @@
                         "Purchase impressions from a group of deals and auction packages.",
                         "Purchase impressions from specific exchanges.",
                         "Purchase impressions from specific sub-exchanges.",
-                        "Target ads to a specific native content position."
+                        "Target ads to a specific native content position.",
+                        "Target ads in an Open Measurement enabled inventory."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -4312,7 +4332,7 @@
                       "type": "string"
                     },
                     "targetingType": {
-                      "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+                      "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
                       "enum": [
                         "TARGETING_TYPE_UNSPECIFIED",
                         "TARGETING_TYPE_CHANNEL",
@@ -4352,7 +4372,8 @@
                         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                         "TARGETING_TYPE_EXCHANGE",
                         "TARGETING_TYPE_SUB_EXCHANGE",
-                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                        "TARGETING_TYPE_OMID"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -4393,7 +4414,8 @@
                         "Purchase impressions from a group of deals and auction packages.",
                         "Purchase impressions from specific exchanges.",
                         "Purchase impressions from specific sub-exchanges.",
-                        "Target ads to a specific native content position."
+                        "Target ads to a specific native content position.",
+                        "Target ads in an Open Measurement enabled inventory."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -4449,7 +4471,7 @@
                       "type": "string"
                     },
                     "targetingType": {
-                      "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+                      "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
                       "enum": [
                         "TARGETING_TYPE_UNSPECIFIED",
                         "TARGETING_TYPE_CHANNEL",
@@ -4489,7 +4511,8 @@
                         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                         "TARGETING_TYPE_EXCHANGE",
                         "TARGETING_TYPE_SUB_EXCHANGE",
-                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                        "TARGETING_TYPE_OMID"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -4530,7 +4553,8 @@
                         "Purchase impressions from a group of deals and auction packages.",
                         "Purchase impressions from specific exchanges.",
                         "Purchase impressions from specific sub-exchanges.",
-                        "Target ads to a specific native content position."
+                        "Target ads to a specific native content position.",
+                        "Target ads in an Open Measurement enabled inventory."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -6149,7 +6173,8 @@
                         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                         "TARGETING_TYPE_EXCHANGE",
                         "TARGETING_TYPE_SUB_EXCHANGE",
-                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                        "TARGETING_TYPE_OMID"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -6190,7 +6215,8 @@
                         "Purchase impressions from a group of deals and auction packages.",
                         "Purchase impressions from specific exchanges.",
                         "Purchase impressions from specific sub-exchanges.",
-                        "Target ads to a specific native content position."
+                        "Target ads to a specific native content position.",
+                        "Target ads in an Open Measurement enabled inventory."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -6276,7 +6302,8 @@
                         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                         "TARGETING_TYPE_EXCHANGE",
                         "TARGETING_TYPE_SUB_EXCHANGE",
-                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                        "TARGETING_TYPE_OMID"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -6317,7 +6344,8 @@
                         "Purchase impressions from a group of deals and auction packages.",
                         "Purchase impressions from specific exchanges.",
                         "Purchase impressions from specific sub-exchanges.",
-                        "Target ads to a specific native content position."
+                        "Target ads to a specific native content position.",
+                        "Target ads in an Open Measurement enabled inventory."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -6400,7 +6428,8 @@
                         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                         "TARGETING_TYPE_EXCHANGE",
                         "TARGETING_TYPE_SUB_EXCHANGE",
-                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                        "TARGETING_TYPE_OMID"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -6441,7 +6470,8 @@
                         "Purchase impressions from a group of deals and auction packages.",
                         "Purchase impressions from specific exchanges.",
                         "Purchase impressions from specific sub-exchanges.",
-                        "Target ads to a specific native content position."
+                        "Target ads to a specific native content position.",
+                        "Target ads in an Open Measurement enabled inventory."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -6537,7 +6567,8 @@
                         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                         "TARGETING_TYPE_EXCHANGE",
                         "TARGETING_TYPE_SUB_EXCHANGE",
-                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                        "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                        "TARGETING_TYPE_OMID"
                       ],
                       "enumDescriptions": [
                         "Default value when type is not specified or is unknown in this version.",
@@ -6578,7 +6609,8 @@
                         "Purchase impressions from a group of deals and auction packages.",
                         "Purchase impressions from specific exchanges.",
                         "Purchase impressions from specific sub-exchanges.",
-                        "Target ads to a specific native content position."
+                        "Target ads to a specific native content position.",
+                        "Target ads in an Open Measurement enabled inventory."
                       ],
                       "location": "path",
                       "pattern": "^[^/]+$",
@@ -6722,7 +6754,8 @@
                     "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                     "TARGETING_TYPE_EXCHANGE",
                     "TARGETING_TYPE_SUB_EXCHANGE",
-                    "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                    "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                    "TARGETING_TYPE_OMID"
                   ],
                   "enumDescriptions": [
                     "Default value when type is not specified or is unknown in this version.",
@@ -6763,7 +6796,8 @@
                     "Purchase impressions from a group of deals and auction packages.",
                     "Purchase impressions from specific exchanges.",
                     "Purchase impressions from specific sub-exchanges.",
-                    "Target ads to a specific native content position."
+                    "Target ads to a specific native content position.",
+                    "Target ads in an Open Measurement enabled inventory."
                   ],
                   "location": "path",
                   "pattern": "^[^/]+$",
@@ -6856,7 +6890,8 @@
                     "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                     "TARGETING_TYPE_EXCHANGE",
                     "TARGETING_TYPE_SUB_EXCHANGE",
-                    "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                    "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                    "TARGETING_TYPE_OMID"
                   ],
                   "enumDescriptions": [
                     "Default value when type is not specified or is unknown in this version.",
@@ -6897,7 +6932,8 @@
                     "Purchase impressions from a group of deals and auction packages.",
                     "Purchase impressions from specific exchanges.",
                     "Purchase impressions from specific sub-exchanges.",
-                    "Target ads to a specific native content position."
+                    "Target ads to a specific native content position.",
+                    "Target ads in an Open Measurement enabled inventory."
                   ],
                   "location": "path",
                   "pattern": "^[^/]+$",
@@ -6963,7 +6999,8 @@
                     "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
                     "TARGETING_TYPE_EXCHANGE",
                     "TARGETING_TYPE_SUB_EXCHANGE",
-                    "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+                    "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+                    "TARGETING_TYPE_OMID"
                   ],
                   "enumDescriptions": [
                     "Default value when type is not specified or is unknown in this version.",
@@ -7004,7 +7041,8 @@
                     "Purchase impressions from a group of deals and auction packages.",
                     "Purchase impressions from specific exchanges.",
                     "Purchase impressions from specific sub-exchanges.",
-                    "Target ads to a specific native content position."
+                    "Target ads to a specific native content position.",
+                    "Target ads in an Open Measurement enabled inventory."
                   ],
                   "location": "path",
                   "pattern": "^[^/]+$",
@@ -7203,7 +7241,7 @@
       }
     }
   },
-  "revision": "20210708",
+  "revision": "20210809",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActivateManualTriggerRequest": {
@@ -7938,6 +7976,10 @@
           "$ref": "NegativeKeywordListAssignedTargetingOptionDetails",
           "description": "Keyword details. This field will be populated when the targeting_type is `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST`. A maximum of 4 negative keyword lists can be assigned to a resource."
         },
+        "omidDetails": {
+          "$ref": "OmidAssignedTargetingOptionDetails",
+          "description": "Open Measurement enabled inventory details. This field will be populated when the targeting_type is `TARGETING_TYPE_OMID`."
+        },
         "onScreenPositionDetails": {
           "$ref": "OnScreenPositionAssignedTargetingOptionDetails",
           "description": "On screen position details. This field will be populated when the targeting_type is `TARGETING_TYPE_ON_SCREEN_POSITION`."
@@ -8007,7 +8049,8 @@
             "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
             "TARGETING_TYPE_EXCHANGE",
             "TARGETING_TYPE_SUB_EXCHANGE",
-            "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+            "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+            "TARGETING_TYPE_OMID"
           ],
           "enumDescriptions": [
             "Default value when type is not specified or is unknown in this version.",
@@ -8048,7 +8091,8 @@
             "Purchase impressions from a group of deals and auction packages.",
             "Purchase impressions from specific exchanges.",
             "Purchase impressions from specific sub-exchanges.",
-            "Target ads to a specific native content position."
+            "Target ads to a specific native content position.",
+            "Target ads in an Open Measurement enabled inventory."
           ],
           "readOnly": true,
           "type": "string"
@@ -8362,14 +8406,14 @@
       "id": "BulkEditAdvertiserAssignedTargetingOptionsRequest",
       "properties": {
         "createRequests": {
-          "description": "The assigned targeting options to create in batch, specified as a list of `CreateAssignedTargetingOptionsRequest`. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+          "description": "The assigned targeting options to create in batch, specified as a list of `CreateAssignedTargetingOptionsRequest`. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
           "items": {
             "$ref": "CreateAssignedTargetingOptionsRequest"
           },
           "type": "array"
         },
         "deleteRequests": {
-          "description": "The assigned targeting options to delete in batch, specified as a list of `DeleteAssignedTargetingOptionsRequest`. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+          "description": "The assigned targeting options to delete in batch, specified as a list of `DeleteAssignedTargetingOptionsRequest`. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
           "items": {
             "$ref": "DeleteAssignedTargetingOptionsRequest"
           },
@@ -9413,7 +9457,8 @@
             "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
             "TARGETING_TYPE_EXCHANGE",
             "TARGETING_TYPE_SUB_EXCHANGE",
-            "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+            "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+            "TARGETING_TYPE_OMID"
           ],
           "enumDescriptions": [
             "Default value when type is not specified or is unknown in this version.",
@@ -9454,7 +9499,8 @@
             "Purchase impressions from a group of deals and auction packages.",
             "Purchase impressions from specific exchanges.",
             "Purchase impressions from specific sub-exchanges.",
-            "Target ads to a specific native content position."
+            "Target ads to a specific native content position.",
+            "Target ads in an Open Measurement enabled inventory."
           ],
           "type": "string"
         }
@@ -10192,7 +10238,8 @@
             "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
             "TARGETING_TYPE_EXCHANGE",
             "TARGETING_TYPE_SUB_EXCHANGE",
-            "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+            "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+            "TARGETING_TYPE_OMID"
           ],
           "enumDescriptions": [
             "Default value when type is not specified or is unknown in this version.",
@@ -10233,7 +10280,8 @@
             "Purchase impressions from a group of deals and auction packages.",
             "Purchase impressions from specific exchanges.",
             "Purchase impressions from specific sub-exchanges.",
-            "Target ads to a specific native content position."
+            "Target ads to a specific native content position.",
+            "Target ads in an Open Measurement enabled inventory."
           ],
           "type": "string"
         }
@@ -14276,6 +14324,50 @@
       },
       "type": "object"
     },
+    "OmidAssignedTargetingOptionDetails": {
+      "description": "Represents a targetable Open Measurement enabled inventory type. This will be populated in the details field of an AssignedTargetingOption when targeting_type is `TARGETING_TYPE_OMID`.",
+      "id": "OmidAssignedTargetingOptionDetails",
+      "properties": {
+        "omid": {
+          "description": "Output only. The type of Open Measurement enabled inventory.",
+          "enum": [
+            "OMID_UNSPECIFIED",
+            "OMID_FOR_MOBILE_DISPLAY_ADS"
+          ],
+          "enumDescriptions": [
+            "Default value when omid targeting is not specified in this version.",
+            "Open Measurement enabled mobile display inventory."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "targetingOptionId": {
+          "description": "Required. The targeting_option_id of a TargetingOption of type `TARGETING_TYPE_OMID`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OmidTargetingOptionDetails": {
+      "description": "Represents a targetable Open Measurement enabled inventory type. This will be populated in the omid_details field when targeting_type is `TARGETING_TYPE_OMID`.",
+      "id": "OmidTargetingOptionDetails",
+      "properties": {
+        "omid": {
+          "description": "Output only. The type of Open Measurement enabled inventory.",
+          "enum": [
+            "OMID_UNSPECIFIED",
+            "OMID_FOR_MOBILE_DISPLAY_ADS"
+          ],
+          "enumDescriptions": [
+            "Default value when omid targeting is not specified in this version.",
+            "Open Measurement enabled mobile display inventory."
+          ],
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "OnScreenPositionAssignedTargetingOptionDetails": {
       "description": "On screen position targeting option details. This will be populated in the on_screen_position_details field when targeting_type is `TARGETING_TYPE_ON_SCREEN_POSITION`.",
       "id": "OnScreenPositionAssignedTargetingOptionDetails",
@@ -15341,7 +15433,7 @@
       "type": "object"
     },
     "SearchTargetingOptionsResponse": {
-      "description": "Response message for SearchTargetingOptionsResponse.",
+      "description": "Response message for SearchTargetingOptions.",
       "id": "SearchTargetingOptionsResponse",
       "properties": {
         "nextPageToken": {
@@ -15646,6 +15738,10 @@
           "$ref": "NativeContentPositionTargetingOptionDetails",
           "description": "Native content position details."
         },
+        "omidDetails": {
+          "$ref": "OmidTargetingOptionDetails",
+          "description": "Open Measurement enabled inventory details."
+        },
         "onScreenPositionDetails": {
           "$ref": "OnScreenPositionTargetingOptionDetails",
           "description": "On screen position details."
@@ -15712,7 +15808,8 @@
             "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
             "TARGETING_TYPE_EXCHANGE",
             "TARGETING_TYPE_SUB_EXCHANGE",
-            "TARGETING_TYPE_NATIVE_CONTENT_POSITION"
+            "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+            "TARGETING_TYPE_OMID"
           ],
           "enumDescriptions": [
             "Default value when type is not specified or is unknown in this version.",
@@ -15753,7 +15850,8 @@
             "Purchase impressions from a group of deals and auction packages.",
             "Purchase impressions from specific exchanges.",
             "Purchase impressions from specific sub-exchanges.",
-            "Target ads to a specific native content position."
+            "Target ads to a specific native content position.",
+            "Target ads in an Open Measurement enabled inventory."
           ],
           "readOnly": true,
           "type": "string"

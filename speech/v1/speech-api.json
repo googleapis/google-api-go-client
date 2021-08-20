@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "See, edit, configure, and delete your Google Cloud Platform data"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -212,7 +212,7 @@
       }
     }
   },
-  "revision": "20210407",
+  "revision": "20210810",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ListOperationsResponse": {
@@ -285,6 +285,11 @@
             "$ref": "SpeechRecognitionResult"
           },
           "type": "array"
+        },
+        "totalBilledTime": {
+          "description": "When available, billed audio seconds for the corresponding request.",
+          "format": "google-duration",
+          "type": "string"
         }
       },
       "type": "object"
@@ -556,6 +561,11 @@
             "$ref": "SpeechRecognitionResult"
           },
           "type": "array"
+        },
+        "totalBilledTime": {
+          "description": "When available, billed audio seconds for the corresponding request.",
+          "format": "google-duration",
+          "type": "string"
         }
       },
       "type": "object"

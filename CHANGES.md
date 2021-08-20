@@ -1,5 +1,27 @@
 # Changes
 
+## [0.54.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.53.0...v0.54.0) (2021-08-13)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1163](https://www.github.com/googleapis/google-api-go-client/issues/1163) [#1160](https://www.github.com/googleapis/google-api-go-client/issues/1160)
+
+## [0.53.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.52.0...v0.53.0) (2021-08-11)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1159](https://www.github.com/googleapis/google-api-go-client/issues/1159) [#1157](https://www.github.com/googleapis/google-api-go-client/issues/1157) [#1154](https://www.github.com/googleapis/google-api-go-client/issues/1154) [#1152](https://www.github.com/googleapis/google-api-go-client/issues/1152) [#1151](https://www.github.com/googleapis/google-api-go-client/issues/1151) [#1150](https://www.github.com/googleapis/google-api-go-client/issues/1150) [#1149](https://www.github.com/googleapis/google-api-go-client/issues/1149) [#1147](https://www.github.com/googleapis/google-api-go-client/issues/1147) [#1146](https://www.github.com/googleapis/google-api-go-client/issues/1146) [#1145](https://www.github.com/googleapis/google-api-go-client/issues/1145) [#1142](https://www.github.com/googleapis/google-api-go-client/issues/1142) [#1140](https://www.github.com/googleapis/google-api-go-client/issues/1140) [#1138](https://www.github.com/googleapis/google-api-go-client/issues/1138)
+* **googleapi:** support setting arbitrary query parameters ([#1123](https://www.github.com/googleapis/google-api-go-client/issues/1123)) ([8085c66](https://www.github.com/googleapis/google-api-go-client/commit/8085c66486a521065a7e56a2e326c8de241930f5)), refs [#550](https://www.github.com/googleapis/google-api-go-client/issues/550)
+
+## [0.52.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.51.0...v0.52.0) (2021-07-29)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1137](https://www.github.com/googleapis/google-api-go-client/issues/1137) [#1135](https://www.github.com/googleapis/google-api-go-client/issues/1135) [#1134](https://www.github.com/googleapis/google-api-go-client/issues/1134) [#1133](https://www.github.com/googleapis/google-api-go-client/issues/1133) [#1131](https://www.github.com/googleapis/google-api-go-client/issues/1131) [#1130](https://www.github.com/googleapis/google-api-go-client/issues/1130) [#1128](https://www.github.com/googleapis/google-api-go-client/issues/1128)
+
 ## [0.51.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.50.0...v0.51.0) (2021-07-22)
 
 

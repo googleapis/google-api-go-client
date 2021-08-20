@@ -233,10 +233,10 @@ type Area struct {
 
 	// ForceSendFields is a list of field names (e.g. "BasemapZOrder") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasemapZOrder") to include
@@ -272,10 +272,10 @@ type BasemapZOrder struct {
 
 	// ForceSendFields is a list of field names (e.g. "ZGrade") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ZGrade") to include in API
@@ -315,10 +315,10 @@ type ExtrudedArea struct {
 
 	// ForceSendFields is a list of field names (e.g. "Area") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Area") to include in API
@@ -408,10 +408,10 @@ type Feature struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -480,10 +480,10 @@ type FeatureTile struct {
 
 	// ForceSendFields is a list of field names (e.g. "Coordinates") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Coordinates") to include
@@ -514,7 +514,9 @@ func (s *FeatureTile) MarshalJSON() ([]byte, error) {
 // between them as integers at some requested level of precision to take
 // advantage of integer packing. The actual altitude values a[] can be
 // reconstructed using the scale and each row's first_altitude and
-// altitude_diff fields.
+// altitude_diff fields. More details in
+// go/elevation-encoding-options-for-enduro under "Recommended
+// implementation".
 type FirstDerivativeElevationGrid struct {
 	// AltitudeMultiplier: A multiplier applied to the altitude fields below
 	// to extract the actual altitudes in meters from the elevation grid.
@@ -528,10 +530,10 @@ type FirstDerivativeElevationGrid struct {
 
 	// ForceSendFields is a list of field names (e.g. "AltitudeMultiplier")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AltitudeMultiplier") to
@@ -594,10 +596,10 @@ type Geometry struct {
 
 	// ForceSendFields is a list of field names (e.g. "Areas") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Areas") to include in API
@@ -643,10 +645,10 @@ type Line struct {
 
 	// ForceSendFields is a list of field names (e.g. "BasemapZOrder") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasemapZOrder") to include
@@ -676,10 +678,10 @@ type ModeledVolume struct {
 
 	// ForceSendFields is a list of field names (e.g. "Strips") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Strips") to include in API
@@ -706,10 +708,10 @@ type ProviderInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -748,10 +750,10 @@ type Relation struct {
 
 	// ForceSendFields is a list of field names (e.g. "RelatedFeatureIndex")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "RelatedFeatureIndex") to
@@ -779,10 +781,10 @@ type RoadInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "IsPrivate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IsPrivate") to include in
@@ -815,10 +817,10 @@ type Row struct {
 
 	// ForceSendFields is a list of field names (e.g. "AltitudeDiffs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AltitudeDiffs") to include
@@ -890,10 +892,10 @@ type SecondDerivativeElevationGrid struct {
 
 	// ForceSendFields is a list of field names (e.g. "AltitudeMultiplier")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AltitudeMultiplier") to
@@ -933,10 +935,10 @@ type SegmentInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "RoadInfo") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "RoadInfo") to include in
@@ -962,7 +964,7 @@ type TerrainTile struct {
 	Coordinates *TileCoordinates `json:"coordinates,omitempty"`
 
 	// FirstDerivative: Terrain elevation data encoded as a
-	// FirstDerivativeElevationGrid.
+	// FirstDerivativeElevationGrid. cs/symbol:FirstDerivativeElevationGrid.
 	FirstDerivative *FirstDerivativeElevationGrid `json:"firstDerivative,omitempty"`
 
 	// Name: Resource name of the tile. The tile resource name is prefixed
@@ -972,7 +974,9 @@ type TerrainTile struct {
 	Name string `json:"name,omitempty"`
 
 	// SecondDerivative: Terrain elevation data encoded as a
-	// SecondDerivativeElevationGrid. .
+	// SecondDerivativeElevationGrid.
+	// cs/symbol:SecondDerivativeElevationGrid. See go/byte-encoded-terrain
+	// for more details.
 	SecondDerivative *SecondDerivativeElevationGrid `json:"secondDerivative,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -981,10 +985,10 @@ type TerrainTile struct {
 
 	// ForceSendFields is a list of field names (e.g. "Coordinates") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Coordinates") to include
@@ -1030,10 +1034,10 @@ type TileCoordinates struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -1064,10 +1068,10 @@ type TriangleStrip struct {
 
 	// ForceSendFields is a list of field names (e.g. "VertexIndices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "VertexIndices") to include
@@ -1099,10 +1103,10 @@ type Vertex2DList struct {
 
 	// ForceSendFields is a list of field names (e.g. "XOffsets") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "XOffsets") to include in
@@ -1135,10 +1139,10 @@ type Vertex3DList struct {
 
 	// ForceSendFields is a list of field names (e.g. "XOffsets") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "XOffsets") to include in
@@ -1384,7 +1388,7 @@ func (c *FeaturetilesGetCall) Header() http.Header {
 
 func (c *FeaturetilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1691,13 +1695,16 @@ func (c *TerraintilesGetCall) MaxElevationResolutionCells(maxElevationResolution
 }
 
 // MinElevationResolutionCells sets the optional parameter
-// "minElevationResolutionCells": The minimum allowed resolution for the
-// returned elevation heightmap. Possible values: between 0 and 1024
-// (and not more than max_elevation_resolution_cells). Zero is supported
-// for backward compatibility. Under-sized heightmaps will be
-// non-uniformly up-sampled such that each edge is no shorter than this
-// value. Non-uniformity is chosen to maximise the amount of preserved
-// data. For example: Original resolution: 30px (width) * 10px (height)
+// "minElevationResolutionCells": api-linter:
+// core::0131::request-unknown-fields=disabled aip.dev/not-precedent:
+// Maintaining existing request parameter pattern. The minimum allowed
+// resolution for the returned elevation heightmap. Possible values:
+// between 0 and 1024 (and not more than
+// max_elevation_resolution_cells). Zero is supported for backward
+// compatibility. Under-sized heightmaps will be non-uniformly
+// up-sampled such that each edge is no shorter than this value.
+// Non-uniformity is chosen to maximise the amount of preserved data.
+// For example: Original resolution: 30px (width) * 10px (height)
 // min_elevation_resolution: 30 New resolution: 30px (width) * 30px
 // (height)
 func (c *TerraintilesGetCall) MinElevationResolutionCells(minElevationResolutionCells int64) *TerraintilesGetCall {
@@ -1757,7 +1764,7 @@ func (c *TerraintilesGetCall) Header() http.Header {
 
 func (c *TerraintilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1895,7 +1902,7 @@ func (c *TerraintilesGetCall) Do(opts ...googleapi.CallOption) (*TerrainTile, er
 	//       "type": "integer"
 	//     },
 	//     "minElevationResolutionCells": {
-	//       "description": "The minimum allowed resolution for the returned elevation heightmap. Possible values: between 0 and 1024 (and not more than max_elevation_resolution_cells). Zero is supported for backward compatibility. Under-sized heightmaps will be non-uniformly up-sampled such that each edge is no shorter than this value. Non-uniformity is chosen to maximise the amount of preserved data. For example: Original resolution: 30px (width) * 10px (height) min_elevation_resolution: 30 New resolution: 30px (width) * 30px (height)",
+	//       "description": " api-linter: core::0131::request-unknown-fields=disabled aip.dev/not-precedent: Maintaining existing request parameter pattern. The minimum allowed resolution for the returned elevation heightmap. Possible values: between 0 and 1024 (and not more than max_elevation_resolution_cells). Zero is supported for backward compatibility. Under-sized heightmaps will be non-uniformly up-sampled such that each edge is no shorter than this value. Non-uniformity is chosen to maximise the amount of preserved data. For example: Original resolution: 30px (width) * 10px (height) min_elevation_resolution: 30 New resolution: 30px (width) * 30px (height)",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

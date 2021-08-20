@@ -138,7 +138,7 @@ type AccountsService struct {
 // will be only one notification setting resource per-account.
 type NotificationSetting struct {
 	// Name: Required. The resource name this setting is for. This is of the
-	// form `accounts/{account_id}/notifications/setting`.
+	// form `accounts/{account_id}/notificationSetting`.
 	Name string `json:"name,omitempty"`
 
 	// NotificationTypes: The types of notifications that will be sent to
@@ -173,6 +173,9 @@ type NotificationSetting struct {
 	// notification will provide the resource name of question and answer.
 	//   "DUPLICATE_LOCATION" - Indicates whether there is a change in
 	// location metadata's duplicate location field.
+	//   "LOSS_OF_VOICE_OF_MERCHANT" - Indicates whether the location has a
+	// loss in voice of merchant status. Call GetVoiceOfMerchantState rpc
+	// for more details
 	NotificationTypes []string `json:"notificationTypes,omitempty"`
 
 	// PubsubTopic: Optional. The Google Pub/Sub topic that will receive
@@ -188,10 +191,10 @@ type NotificationSetting struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -268,7 +271,7 @@ func (c *AccountsGetNotificationSettingCall) Header() http.Header {
 
 func (c *AccountsGetNotificationSettingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -374,7 +377,7 @@ type AccountsUpdateNotificationSettingCall struct {
 // notification_types
 //
 // - name: The resource name this setting is for. This is of the form
-//   `accounts/{account_id}/notifications/setting`.
+//   `accounts/{account_id}/notificationSetting`.
 func (r *AccountsService) UpdateNotificationSetting(name string, notificationsetting *NotificationSetting) *AccountsUpdateNotificationSettingCall {
 	c := &AccountsUpdateNotificationSettingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -417,7 +420,7 @@ func (c *AccountsUpdateNotificationSettingCall) Header() http.Header {
 
 func (c *AccountsUpdateNotificationSettingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210721")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -490,7 +493,7 @@ func (c *AccountsUpdateNotificationSettingCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name this setting is for. This is of the form `accounts/{account_id}/notifications/setting`.",
+	//       "description": "Required. The resource name this setting is for. This is of the form `accounts/{account_id}/notificationSetting`.",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+/notificationSetting$",
 	//       "required": true,

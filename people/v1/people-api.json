@@ -413,7 +413,7 @@
               "type": "string"
             },
             "readMask": {
-              "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * emailAddresses * metadata * names * phoneNumbers * photos",
+              "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. What values are valid depend on what ReadSourceType is used. If READ_SOURCE_TYPE_CONTACT is used, valid values are: * emailAddresses * metadata * names * phoneNumbers * photos If READ_SOURCE_TYPE_PROFILE is used, valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -1172,7 +1172,7 @@
       }
     }
   },
-  "revision": "20210720",
+  "revision": "20210815",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {
@@ -1297,7 +1297,7 @@
       "type": "object"
     },
     "BatchCreateContactsResponse": {
-      "description": "The response to a request to create a batch of contacts.",
+      "description": "If not successful, returns BatchCreateContactsErrorDetails which contains a list of errors for each invalid contact. The response to a request to create a batch of contacts.",
       "id": "BatchCreateContactsResponse",
       "properties": {
         "createdPeople": {
@@ -1382,7 +1382,7 @@
       "type": "object"
     },
     "BatchUpdateContactsResponse": {
-      "description": "The response to a request to create a batch of contacts.",
+      "description": "If not successful, returns BatchUpdateContactsErrorDetails, a list of errors corresponding to each contact. The response to a request to update a batch of contacts.",
       "id": "BatchUpdateContactsResponse",
       "properties": {
         "updateResult": {
@@ -1832,7 +1832,8 @@
       "id": "FieldMetadata",
       "properties": {
         "primary": {
-          "description": "True if the field is the primary field for the person.",
+          "description": "Output only. True if the field is the primary field for all sources in the person. Each person will have at most one field with `primary` set to true.",
+          "readOnly": true,
           "type": "boolean"
         },
         "source": {
@@ -1840,7 +1841,7 @@
           "description": "The source of the field."
         },
         "sourcePrimary": {
-          "description": "True if the field is the primary field for the source.",
+          "description": "True if the field is the primary field for the source. Each source must have at most one field with `source_primary` set to true.",
           "type": "boolean"
         },
         "verified": {

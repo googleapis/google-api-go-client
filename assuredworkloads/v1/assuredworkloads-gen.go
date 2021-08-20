@@ -79,7 +79,8 @@ const mtlsBasePath = "https://assuredworkloads.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud Platform data
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -522,6 +523,8 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	//   "HITRUST" - Health Information Trust Alliance controls
 	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and
 	// Support controls
+	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
+	// Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -593,6 +596,8 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// controls
 	//   "HITRUST" - Health Information Trust Alliance controls
 	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and
+	// Support controls
+	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
 	// Support controls
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
@@ -1143,7 +1148,7 @@ func (c *OrganizationsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1319,7 +1324,7 @@ func (c *OrganizationsLocationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1505,7 +1510,7 @@ func (c *OrganizationsLocationsWorkloadsCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1661,7 +1666,7 @@ func (c *OrganizationsLocationsWorkloadsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1813,7 +1818,7 @@ func (c *OrganizationsLocationsWorkloadsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1984,7 +1989,7 @@ func (c *OrganizationsLocationsWorkloadsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2172,7 +2177,7 @@ func (c *OrganizationsLocationsWorkloadsPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210818")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210819")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

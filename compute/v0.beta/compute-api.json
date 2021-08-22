@@ -55437,7 +55437,7 @@
       "id": "ResourcePolicyDailyCycle",
       "properties": {
         "daysInCycle": {
-          "description": "Defines a schedule with units measured in months. The value determines how many months pass between the start of each cycle.",
+          "description": "Defines a schedule with units measured in days. The value determines how many days pass between the start of each cycle. The only supported value is 1.",
           "format": "int32",
           "type": "integer"
         },

@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "See, edit, configure, and delete your Google Cloud Platform data"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -460,13 +460,88 @@
                   ]
                 }
               }
+            },
+            "volumes": {
+              "methods": {
+                "get": {
+                  "description": "Gets details of a single Volume.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/volumes/{volumesId}",
+                  "httpMethod": "GET",
+                  "id": "baremetalsolution.projects.locations.volumes.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the resource.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/volumes/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "response": {
+                    "$ref": "Volume"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists Volumes in a given project and location.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/volumes",
+                  "httpMethod": "GET",
+                  "id": "baremetalsolution.projects.locations.volumes.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "Filtering results.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "orderBy": {
+                      "description": "Hint for how to order the results.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "A token identifying a page of results the server should return.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. Parent value for ListVolumesRequest.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}/volumes",
+                  "response": {
+                    "$ref": "ListVolumesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
             }
           }
         }
       }
     }
   },
-  "revision": "20210706",
+  "revision": "20210802",
   "rootUrl": "https://baremetalsolution.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -656,6 +731,31 @@
       },
       "type": "object"
     },
+    "ListVolumesResponse": {
+      "description": "Message for response to listing Volumes.",
+      "id": "ListVolumesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "A token identifying a page of results the server should return.",
+          "type": "string"
+        },
+        "unreachable": {
+          "description": "Locations that could not be reached.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "volumes": {
+          "description": "The list of Volume.",
+          "items": {
+            "$ref": "Volume"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "Location": {
       "description": "A resource that represents Google Cloud Platform location.",
       "id": "Location",
@@ -743,6 +843,20 @@
             "The Lun is being updated.",
             "The Lun is ready for consumption.",
             "The Lun has been requested to be deleted."
+          ],
+          "type": "string"
+        },
+        "storageType": {
+          "description": "The storage type of this Lun.",
+          "enum": [
+            "STORAGE_TYPE_UNSPECIFIED",
+            "SSD",
+            "HDD"
+          ],
+          "enumDescriptions": [
+            "The unspecified type.",
+            "This Lun storage type is SSD.",
+            "This Lun storage type is HDD."
           ],
           "type": "string"
         },
@@ -903,6 +1017,28 @@
       },
       "type": "object"
     },
+    "SnapshotReservationDetail": {
+      "description": "Details about snapshot space reservation and usage on the Volume.",
+      "id": "SnapshotReservationDetail",
+      "properties": {
+        "reservedSpaceGib": {
+          "description": "The space on this Volume reserved for snapshotsk, provided in GiB.",
+          "format": "int64",
+          "type": "string"
+        },
+        "reservedSpaceRemainingGib": {
+          "description": "The amount, in GiB, of space available in this Volume's reserved snapshot space.",
+          "format": "int64",
+          "type": "string"
+        },
+        "reservedSpaceUsedPercent": {
+          "description": "The percent of reserved snapshot space on this Volume that is actually used by snapshot copies. This may be higher than 100% if snapshot copies are occupying more space than has been reserved on the Volume.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "Status": {
       "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
       "id": "Status",
@@ -954,6 +1090,72 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Volume": {
+      "description": "A storage Volume.",
+      "id": "Volume",
+      "properties": {
+        "autoGrownSizeGib": {
+          "description": "The size, in GiB, that this Volume has expanded as a result of an auto grow policy. In the absence of auto-grow, the value is 0.",
+          "format": "int64",
+          "type": "string"
+        },
+        "currentSizeGib": {
+          "description": "The current size of this Volume, in GiB, including space reserved for snapshots. This size may be different than the requested size if the Volume has been configured with auto grow or auto shrink.",
+          "format": "int64",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. The resource name of this `Volume`. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. Format: `projects/{project}/locations/{location}/volumes/{volume}`",
+          "readOnly": true,
+          "type": "string"
+        },
+        "remainingSpaceGib": {
+          "description": "The space remaining in the Volume for new LUNs, in GiB, excluding space reserved for snapshots.",
+          "format": "int64",
+          "type": "string"
+        },
+        "requestedSizeGib": {
+          "description": "The requested size of this Volume, in GiB.",
+          "format": "int64",
+          "type": "string"
+        },
+        "snapshotReservationDetail": {
+          "$ref": "SnapshotReservationDetail",
+          "description": "Details about snapshot space reservation and usage on the Volume."
+        },
+        "state": {
+          "description": "The state of this Volume.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "CREATING",
+            "READY",
+            "DELETING"
+          ],
+          "enumDescriptions": [
+            "The unspecified state.",
+            "The Volume is being created.",
+            "The Volume is ready for consumption.",
+            "The Volume has been requested to be deleted."
+          ],
+          "type": "string"
+        },
+        "storageType": {
+          "description": "The storage type of this Volume.",
+          "enum": [
+            "STORAGE_TYPE_UNSPECIFIED",
+            "SSD",
+            "HDD"
+          ],
+          "enumDescriptions": [
+            "The unspecified type.",
+            "This Volume storage type is SSD.",
+            "This Volume storage type is HDD."
+          ],
+          "type": "string"
         }
       },
       "type": "object"

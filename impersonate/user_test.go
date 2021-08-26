@@ -40,7 +40,7 @@ func TestTokenSource_user(t *testing.T) {
 			name:            "lifetime over max",
 			targetPrincipal: "foo@project-id.iam.gserviceaccount.com",
 			scopes:          []string{"scope"},
-			lifetime:        3601 * time.Second,
+			lifetime:        13 * time.Hour,
 			wantErr:         true,
 		},
 		{

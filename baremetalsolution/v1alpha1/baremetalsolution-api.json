@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "See, edit, configure, and delete your Google Cloud Platform data"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -471,7 +471,7 @@
                       "type": "string"
                     },
                     "updateMask": {
-                      "description": "The list of fields to update. The only currently supported field is `snapshot_reserved_space_percent`.",
+                      "description": "The list of fields to update. The only currently supported field is `snapshot_auto_delete_behavior`.",
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
@@ -725,6 +725,11 @@
                   "pattern": "^projects/[^/]+$",
                   "required": true,
                   "type": "string"
+                },
+                "snapshotSchedulePolicyId": {
+                  "description": "Required. Snapshot policy ID",
+                  "location": "query",
+                  "type": "string"
                 }
               },
               "path": "v1alpha1/{+parent}/snapshotSchedulePolicies",
@@ -961,7 +966,7 @@
       }
     }
   },
-  "revision": "20210701",
+  "revision": "20210802",
   "rootUrl": "https://baremetalsolution.googleapis.com/",
   "schemas": {
     "DisableInteractiveSerialConsoleRequest": {
@@ -1079,6 +1084,10 @@
         "privateNetwork": {
           "$ref": "NetworkAddress",
           "description": "Private network address, if any."
+        },
+        "userNote": {
+          "description": "User note field, it can be used by customers to add additional information for the BMS Ops team (b/194021617).",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1250,6 +1259,10 @@
           "$ref": "Volume",
           "description": "The storage volume that this Lun is attached to."
         },
+        "serialNumber": {
+          "description": "The serial number of this Lun",
+          "type": "string"
+        },
         "shareable": {
           "description": "Whether this Lun is allowed to be shared between multiple physical servers.",
           "type": "boolean"
@@ -1279,6 +1292,10 @@
             "The Lun has been deprovisioned.",
             "The Lun is being updated."
           ],
+          "type": "string"
+        },
+        "wwid": {
+          "description": "World Wide IDentifier of this Lun",
           "type": "string"
         }
       },
@@ -1380,6 +1397,10 @@
             "Client network, that is a network peered to a GCP VPC.",
             "Private network, that is a network local to the BMS POD."
           ],
+          "type": "string"
+        },
+        "userNote": {
+          "description": "User note field, it can be used by customers to add additional information for the BMS Ops team (b/194021617).",
           "type": "string"
         },
         "vlanAttachments": {
@@ -1657,6 +1678,22 @@
           "format": "int64",
           "type": "string"
         },
+        "snapshotAutoDeleteBehavior": {
+          "description": "The behavior to use when snapshot reserved space is full.",
+          "enum": [
+            "SNAPSHOT_AUTO_DELETE_BEHAVIOR_UNSPECIFIED",
+            "DISABLE",
+            "OLDEST",
+            "NEWEST"
+          ],
+          "enumDescriptions": [
+            "The unspecified behavior.",
+            "Don't delete any snapshots. This disables new snapshot creation, as long as the snapshot reserved space is full.",
+            "Delete the oldest snapshots first.",
+            "Delete the newest snapshots first."
+          ],
+          "type": "string"
+        },
         "snapshotReservedSpacePercent": {
           "description": "The percent of space on this Volume reserved for snapshots.",
           "format": "int32",
@@ -1774,6 +1811,10 @@
             "This Volume is on disk."
           ],
           "type": "string"
+        },
+        "userNote": {
+          "description": "User note field, it can be used by customers to add additional information for the BMS Ops team (b/194021617).",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1782,6 +1823,11 @@
       "description": "VolumeSnapshot registered for given Volume",
       "id": "VolumeSnapshot",
       "properties": {
+        "creationTime": {
+          "description": "The creation time of this Snapshot.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "description": {
           "description": "The description of this Snapshot.",
           "type": "string"

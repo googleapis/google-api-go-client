@@ -39,7 +39,9 @@ type CredentialsConfig struct {
 	// Lifetime is the amount of time until the impersonated token expires. If
 	// unset the token's lifetime will be one hour and be automatically
 	// refreshed. If set the token may have a max lifetime of one hour and will
-	// not be refreshed. Optional.
+	// not be refreshed. Service accounts that have been added to an org policy
+	// with constraints/iam.allowServiceAccountCredentialLifetimeExtension may
+	// request a token lifetime of up to 12 hours. Optional.
 	Lifetime time.Duration
 	// Subject is the sub field of a JWT. This field should only be set if you
 	// wish to impersonate as a user. This feature is useful when using domain
@@ -66,8 +68,8 @@ func CredentialsTokenSource(ctx context.Context, config CredentialsConfig, opts 
 	if len(config.Scopes) == 0 {
 		return nil, fmt.Errorf("impersonate: scopes must be provided")
 	}
-	if config.Lifetime.Seconds() > 3600 {
-		return nil, fmt.Errorf("impersonate: max lifetime is 3600s")
+	if config.Lifetime.Hours() > 12 {
+		return nil, fmt.Errorf("impersonate: max lifetime is 12 hours")
 	}
 
 	var isStaticToken bool

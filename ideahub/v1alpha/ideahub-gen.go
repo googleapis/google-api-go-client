@@ -288,7 +288,7 @@ func (s *GoogleSearchIdeahubV1alphaIdea) MarshalJSON() ([]byte, error) {
 
 // GoogleSearchIdeahubV1alphaIdeaActivity: An idea activity entry.
 type GoogleSearchIdeahubV1alphaIdeaActivity struct {
-	// Ideas: The Idea IDs for this entry.
+	// Ideas: The Idea IDs for this entry. If empty, topics should be set.
 	Ideas []string `json:"ideas,omitempty"`
 
 	// Name: Unique identifier for the idea activity. Format:
@@ -296,7 +296,7 @@ type GoogleSearchIdeahubV1alphaIdeaActivity struct {
 	// ty}
 	Name string `json:"name,omitempty"`
 
-	// Topics: The Topic IDs for this entry.
+	// Topics: The Topic IDs for this entry. If empty, ideas should be set.
 	Topics []string `json:"topics,omitempty"`
 
 	// Type: The type of activity performed.
@@ -309,6 +309,8 @@ type GoogleSearchIdeahubV1alphaIdeaActivity struct {
 	// published.
 	//   "POST_DELETED" - An idea activity type indicating a post has been
 	// deleted.
+	//   "POST_UNPUBLISHED" - An idea activity type indicating a post has
+	// been unpublished.
 	Type string `json:"type,omitempty"`
 
 	// Uri: The uri the activity relates to.
@@ -631,7 +633,7 @@ func (c *IdeasListCall) Header() http.Header {
 
 func (c *IdeasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210826")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -803,7 +805,7 @@ func (c *PlatformsPropertiesIdeaActivitiesCreateCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeaActivitiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210826")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -951,7 +953,7 @@ func (c *PlatformsPropertiesIdeaStatesPatchCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeaStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210826")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1145,7 +1147,7 @@ func (c *PlatformsPropertiesIdeasListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210826")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1353,7 +1355,7 @@ func (c *PlatformsPropertiesLocalesListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesLocalesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210826")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1530,7 +1532,7 @@ func (c *PlatformsPropertiesTopicStatesPatchCall) Header() http.Header {
 
 func (c *PlatformsPropertiesTopicStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210825")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210826")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

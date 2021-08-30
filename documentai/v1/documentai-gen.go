@@ -277,6 +277,72 @@ type Uiv1beta3ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+type GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsResponse: Response
+// of the delete documents operation.
+type GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsResponse struct {
+}
+
+type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsResponse: Response of
+// the batch move documents operation.
+type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsResponse struct {
+}
+
 // GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata: The common
 // metadata for long running operations.
 type GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata struct {
@@ -671,6 +737,41 @@ func (s *GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse) MarshalJS
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata: Metadata of
+// the import document operation.
+type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3ImportDocumentsResponse: Response of
+// the import document operation.
+type GoogleCloudDocumentaiUiv1beta3ImportDocumentsResponse struct {
+}
+
 // GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata: The
 // long running operation metadata for set default processor version
 // method.
@@ -853,6 +954,34 @@ func (s *GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionMetadata) Marshal
 // GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionResponse:
 // Response message for the undeploy processor version method.
 type GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionResponse struct {
+}
+
+type GoogleCloudDocumentaiUiv1beta3UpdateDatasetOperationMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3UpdateDatasetOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3UpdateDatasetOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3UpdateHumanReviewConfigMetadata: The
@@ -1251,7 +1380,8 @@ func (s *GoogleCloudDocumentaiV1Document) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1DocumentEntity: A phrase in the text that is a
+// GoogleCloudDocumentaiV1DocumentEntity: An entity that could be a
+// phrase in the text or a property belongs to the document. It is a
 // known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1DocumentEntity struct {
 	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
@@ -1266,7 +1396,8 @@ type GoogleCloudDocumentaiV1DocumentEntity struct {
 	MentionId string `json:"mentionId,omitempty"`
 
 	// MentionText: Optional. Text value in the document e.g. `1600
-	// Amphitheatre Pkwy`.
+	// Amphitheatre Pkwy`. If the entity is not present in the document,
+	// this field will be empty.
 	MentionText string `json:"mentionText,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
@@ -1354,14 +1485,22 @@ type GoogleCloudDocumentaiV1DocumentEntityNormalizedValue struct {
 	// https://github.com/googleapis/googleapis/blob/master/google/type/datetime.proto
 	DatetimeValue *GoogleTypeDateTime `json:"datetimeValue,omitempty"`
 
+	// FloatValue: Float value.
+	FloatValue float64 `json:"floatValue,omitempty"`
+
+	// IntegerValue: Integer value.
+	IntegerValue int64 `json:"integerValue,omitempty"`
+
 	// MoneyValue: Money value. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/money.proto
 	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
 
-	// Text: Required. Normalized entity value stored as a string. This
-	// field is populated for supported document type (e.g. Invoice). For
+	// Text: Optional. An optional field to store a normalized string. For
 	// some entity types, one of respective 'structured_value' fields may
-	// also be populated. - Money/Currency type (`money_value`) is in the
+	// also be populated. Also not all the types of 'structured_value' will
+	// be normalized. For example, some processors may not generate float or
+	// int normalized text by default. Below are sample formats mapped to
+	// structured values. - Money/Currency type (`money_value`) is in the
 	// ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601
 	// text format. - Datetime type (`datetime_value`) is in the ISO 8601
 	// text format.
@@ -1388,6 +1527,20 @@ func (s *GoogleCloudDocumentaiV1DocumentEntityNormalizedValue) MarshalJSON() ([]
 	type NoMethod GoogleCloudDocumentaiV1DocumentEntityNormalizedValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1DocumentEntityNormalizedValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1DocumentEntityNormalizedValue
+	var s1 struct {
+		FloatValue gensupport.JSONFloat64 `json:"floatValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FloatValue = float64(s1.FloatValue)
+	return nil
 }
 
 // GoogleCloudDocumentaiV1DocumentEntityRelation: Relationship between
@@ -3282,9 +3435,9 @@ func (s *GoogleCloudDocumentaiV1beta1Document) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta1DocumentEntity: A phrase in the text that
-// is a known entity type, such as a person, an organization, or
-// location.
+// GoogleCloudDocumentaiV1beta1DocumentEntity: An entity that could be a
+// phrase in the text or a property belongs to the document. It is a
+// known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
 	// 1].
@@ -3298,7 +3451,8 @@ type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	MentionId string `json:"mentionId,omitempty"`
 
 	// MentionText: Optional. Text value in the document e.g. `1600
-	// Amphitheatre Pkwy`.
+	// Amphitheatre Pkwy`. If the entity is not present in the document,
+	// this field will be empty.
 	MentionText string `json:"mentionText,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
@@ -3386,14 +3540,22 @@ type GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue struct {
 	// https://github.com/googleapis/googleapis/blob/master/google/type/datetime.proto
 	DatetimeValue *GoogleTypeDateTime `json:"datetimeValue,omitempty"`
 
+	// FloatValue: Float value.
+	FloatValue float64 `json:"floatValue,omitempty"`
+
+	// IntegerValue: Integer value.
+	IntegerValue int64 `json:"integerValue,omitempty"`
+
 	// MoneyValue: Money value. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/money.proto
 	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
 
-	// Text: Required. Normalized entity value stored as a string. This
-	// field is populated for supported document type (e.g. Invoice). For
+	// Text: Optional. An optional field to store a normalized string. For
 	// some entity types, one of respective 'structured_value' fields may
-	// also be populated. - Money/Currency type (`money_value`) is in the
+	// also be populated. Also not all the types of 'structured_value' will
+	// be normalized. For example, some processors may not generate float or
+	// int normalized text by default. Below are sample formats mapped to
+	// structured values. - Money/Currency type (`money_value`) is in the
 	// ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601
 	// text format. - Datetime type (`datetime_value`) is in the ISO 8601
 	// text format.
@@ -3420,6 +3582,20 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue) MarshalJSON(
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue
+	var s1 struct {
+		FloatValue gensupport.JSONFloat64 `json:"floatValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FloatValue = float64(s1.FloatValue)
+	return nil
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentEntityRelation: Relationship
@@ -5122,9 +5298,9 @@ func (s *GoogleCloudDocumentaiV1beta2Document) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta2DocumentEntity: A phrase in the text that
-// is a known entity type, such as a person, an organization, or
-// location.
+// GoogleCloudDocumentaiV1beta2DocumentEntity: An entity that could be a
+// phrase in the text or a property belongs to the document. It is a
+// known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
 	// 1].
@@ -5138,7 +5314,8 @@ type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	MentionId string `json:"mentionId,omitempty"`
 
 	// MentionText: Optional. Text value in the document e.g. `1600
-	// Amphitheatre Pkwy`.
+	// Amphitheatre Pkwy`. If the entity is not present in the document,
+	// this field will be empty.
 	MentionText string `json:"mentionText,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
@@ -5226,14 +5403,22 @@ type GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue struct {
 	// https://github.com/googleapis/googleapis/blob/master/google/type/datetime.proto
 	DatetimeValue *GoogleTypeDateTime `json:"datetimeValue,omitempty"`
 
+	// FloatValue: Float value.
+	FloatValue float64 `json:"floatValue,omitempty"`
+
+	// IntegerValue: Integer value.
+	IntegerValue int64 `json:"integerValue,omitempty"`
+
 	// MoneyValue: Money value. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/money.proto
 	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
 
-	// Text: Required. Normalized entity value stored as a string. This
-	// field is populated for supported document type (e.g. Invoice). For
+	// Text: Optional. An optional field to store a normalized string. For
 	// some entity types, one of respective 'structured_value' fields may
-	// also be populated. - Money/Currency type (`money_value`) is in the
+	// also be populated. Also not all the types of 'structured_value' will
+	// be normalized. For example, some processors may not generate float or
+	// int normalized text by default. Below are sample formats mapped to
+	// structured values. - Money/Currency type (`money_value`) is in the
 	// ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601
 	// text format. - Datetime type (`datetime_value`) is in the ISO 8601
 	// text format.
@@ -5260,6 +5445,20 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue) MarshalJSON(
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue
+	var s1 struct {
+		FloatValue gensupport.JSONFloat64 `json:"floatValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FloatValue = float64(s1.FloatValue)
+	return nil
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentEntityRelation: Relationship
@@ -8008,7 +8207,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8151,7 +8350,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8323,7 +8522,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8506,7 +8705,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8651,7 +8850,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8827,7 +9026,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9006,7 +9205,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9153,7 +9352,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9298,7 +9497,7 @@ func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) Header(
 
 func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9444,7 +9643,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Header() 
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9591,7 +9790,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Header() http.
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9745,7 +9944,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9891,7 +10090,7 @@ func (c *Uiv1beta3ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10063,7 +10262,7 @@ func (c *Uiv1beta3ProjectsLocationsListCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10246,7 +10445,7 @@ func (c *Uiv1beta3ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10391,7 +10590,7 @@ func (c *Uiv1beta3ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10567,7 +10766,7 @@ func (c *Uiv1beta3ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210824")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

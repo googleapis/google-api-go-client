@@ -5,7 +5,7 @@ go 1.11
 require (
 	cloud.google.com/go v0.93.3
 	github.com/google/go-cmp v0.5.6
-	github.com/googleapis/gax-go/v2 v2.0.5
+	github.com/googleapis/gax-go/v2 v2.1.0
 	go.opencensus.io v0.23.0
 	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616
 	// TODO(codyoss): unfreeze after min version of 1.14
@@ -15,6 +15,6 @@ require (
 	golang.org/x/sys v0.0.0-20210823070655-63515b42dcdf
 	golang.org/x/tools v0.1.5
 	google.golang.org/appengine v1.6.7
-	google.golang.org/genproto v0.0.0-20210821163610-241b8fcbd6c8
+	google.golang.org/genproto v0.0.0-20210828152312-66f60bf46e71
 	google.golang.org/grpc v1.40.0
 )

@@ -291,7 +291,8 @@ type GoogleSearchIdeahubV1alphaIdeaActivity struct {
 	// Ideas: The Idea IDs for this entry. If empty, topics should be set.
 	Ideas []string `json:"ideas,omitempty"`
 
-	// Name: Unique identifier for the idea activity. Format:
+	// Name: Unique identifier for the idea activity. The name is ignored
+	// when creating an idea activity. Format:
 	// platforms/{platform}/properties/{property}/ideaActivities/{idea_activi
 	// ty}
 	Name string `json:"name,omitempty"`
@@ -633,7 +634,7 @@ func (c *IdeasListCall) Header() http.Header {
 
 func (c *IdeasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210828")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -805,7 +806,7 @@ func (c *PlatformsPropertiesIdeaActivitiesCreateCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeaActivitiesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210828")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -953,7 +954,7 @@ func (c *PlatformsPropertiesIdeaStatesPatchCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeaStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210828")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1147,7 +1148,7 @@ func (c *PlatformsPropertiesIdeasListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210828")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1355,7 +1356,7 @@ func (c *PlatformsPropertiesLocalesListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesLocalesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210828")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1532,7 +1533,7 @@ func (c *PlatformsPropertiesTopicStatesPatchCall) Header() http.Header {
 
 func (c *PlatformsPropertiesTopicStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210828")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

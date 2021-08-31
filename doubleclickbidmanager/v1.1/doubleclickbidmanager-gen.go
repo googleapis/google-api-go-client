@@ -539,6 +539,7 @@ type FilterPair struct {
 	//   "FILTER_INSERTION_ORDER_GOAL_VALUE"
 	//   "FILTER_OMID_CAPABLE"
 	//   "FILTER_VENDOR_MEASUREMENT_MODE"
+	//   "FILTER_IMPRESSION_LOSS_REJECTION_REASON"
 	Type string `json:"type,omitempty"`
 
 	// Value: Filter value.
@@ -970,6 +971,7 @@ type Parameters struct {
 	//   "FILTER_INSERTION_ORDER_GOAL_VALUE"
 	//   "FILTER_OMID_CAPABLE"
 	//   "FILTER_VENDOR_MEASUREMENT_MODE"
+	//   "FILTER_IMPRESSION_LOSS_REJECTION_REASON"
 	GroupBys []string `json:"groupBys,omitempty"`
 
 	// IncludeInviteData: Deprecated. This field is no longer in use.
@@ -1465,6 +1467,13 @@ type Parameters struct {
 	//   "METRIC_COOKIE_CONSENTED_FLOODLIGHT_IMPRESSIONS"
 	//   "METRIC_COOKIE_UNCONSENTED_FLOODLIGHT_IMPRESSIONS"
 	//   "METRIC_TRACKING_UNCONSENTED_CLICKS"
+	//   "METRIC_IMPRESSION_LOSS_TARGETED_IMPRESSIONS"
+	//   "METRIC_LINEITEM_BID_RESPONSE_COUNT"
+	//   "METRIC_WIN_LOSS_RATE"
+	//   "METRIC_WIN_LOSS_DEAL_AVAILABLE_REQUESTS"
+	//   "METRIC_WIN_LOSS_LINEITEM_AVAILABLE_REQUESTS"
+	//   "METRIC_WIN_LOSS_DEAL_TARGETED_IMPRESSIONS"
+	//   "METRIC_WIN_LOSS_LINEITEM_TARGETED_IMPRESSIONS"
 	Metrics []string `json:"metrics,omitempty"`
 
 	// Options: Additional query options.
@@ -1893,6 +1902,7 @@ type PathQueryOptionsFilter struct {
 	//   "FILTER_INSERTION_ORDER_GOAL_VALUE"
 	//   "FILTER_OMID_CAPABLE"
 	//   "FILTER_VENDOR_MEASUREMENT_MODE"
+	//   "FILTER_IMPRESSION_LOSS_REJECTION_REASON"
 	Filter string `json:"filter,omitempty"`
 
 	// Match: Indicates how the filter should be matched to the value.
@@ -2495,7 +2505,7 @@ func (c *QueriesCreatequeryCall) Header() http.Header {
 
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2630,7 +2640,7 @@ func (c *QueriesDeletequeryCall) Header() http.Header {
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2745,7 +2755,7 @@ func (c *QueriesGetqueryCall) Header() http.Header {
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2902,7 +2912,7 @@ func (c *QueriesListqueriesCall) Header() http.Header {
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3066,7 +3076,7 @@ func (c *QueriesRunqueryCall) Header() http.Header {
 
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3210,7 +3220,7 @@ func (c *ReportsListreportsCall) Header() http.Header {
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

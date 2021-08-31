@@ -1952,27 +1952,43 @@ func (s *QuotaStatus) MarshalJSON() ([]byte, error) {
 // ResponseMetaData: Response's metadata carrying additional information
 // about the report content.
 type ResponseMetaData struct {
+	// CurrencyCode: The currency code used in this report. Intended to be
+	// used in formatting currency metrics like `purchaseRevenue` for
+	// visualization. If currency_code was specified in the request, this
+	// response parameter will echo the request parameter; otherwise, this
+	// response parameter is the property's current currency_code. Currency
+	// codes are string encodings of currency types from the ISO 4217
+	// standard (https://en.wikipedia.org/wiki/ISO_4217); for example "USD",
+	// "EUR", "JPY". To learn more, see
+	// https://support.google.com/analytics/answer/9796179.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
 	// DataLossFromOtherRow: If true, indicates some buckets of dimension
 	// combinations are rolled into "(other)" row. This can happen for high
 	// cardinality reports.
 	DataLossFromOtherRow bool `json:"dataLossFromOtherRow,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "DataLossFromOtherRow") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// TimeZone: The property's current timezone. Intended to be used to
+	// interpret time-based dimensions like `hour` and `minute`. Formatted
+	// as strings from the IANA Time Zone database
+	// (https://www.iana.org/time-zones); for example "America/New_York" or
+	// "Asia/Tokyo".
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DataLossFromOtherRow") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2621,7 +2637,7 @@ func (c *PropertiesBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *PropertiesBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2771,7 +2787,7 @@ func (c *PropertiesBatchRunReportsCall) Header() http.Header {
 
 func (c *PropertiesBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2929,7 +2945,7 @@ func (c *PropertiesCheckCompatibilityCall) Header() http.Header {
 
 func (c *PropertiesCheckCompatibilityCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3097,7 +3113,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3245,7 +3261,7 @@ func (c *PropertiesRunPivotReportCall) Header() http.Header {
 
 func (c *PropertiesRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3394,7 +3410,7 @@ func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 
 func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3549,7 +3565,7 @@ func (c *PropertiesRunReportCall) Header() http.Header {
 
 func (c *PropertiesRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210829")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

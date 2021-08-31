@@ -1,5 +1,13 @@
 # Changes
 
+## [0.56.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.55.0...v0.56.0) (2021-08-31)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1199](https://www.github.com/googleapis/google-api-go-client/issues/1199)
+* **option:** add internaloption to force use of certain credential ([#1162](https://www.github.com/googleapis/google-api-go-client/issues/1162)) ([62f4bc9](https://www.github.com/googleapis/google-api-go-client/commit/62f4bc9cc6c081a5e30c360dce098e5d8f55050f))
+
 ## [0.55.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.54.0...v0.55.0) (2021-08-30)
 
 

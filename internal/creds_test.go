@@ -236,3 +236,62 @@ func TestQuotaProjectFromCreds(t *testing.T) {
 		t.Errorf("QuotaProjectFromCreds(quotaProjectJSON): want %q, got %q", want, got)
 	}
 }
+
+func TestCredsWithCredentials(t *testing.T) {
+	tests := []struct {
+		name string
+		ds   *DialSettings
+		want string
+	}{
+		{
+			name: "only normal opt",
+			ds: &DialSettings{
+				Credentials: &google.Credentials{
+					TokenSource: oauth2.StaticTokenSource(&oauth2.Token{
+						AccessToken: "normal",
+					}),
+				},
+			},
+			want: "normal",
+		},
+		{
+			name: "normal and internal creds opt",
+			ds: &DialSettings{
+				Credentials: &google.Credentials{
+					TokenSource: oauth2.StaticTokenSource(&oauth2.Token{
+						AccessToken: "normal",
+					}),
+				},
+				InternalCredentials: &google.Credentials{
+					TokenSource: oauth2.StaticTokenSource(&oauth2.Token{
+						AccessToken: "internal",
+					}),
+				},
+			},
+			want: "internal",
+		},
+		{
+			name: "only internal creds opt",
+			ds: &DialSettings{
+				InternalCredentials: &google.Credentials{
+					TokenSource: oauth2.StaticTokenSource(&oauth2.Token{
+						AccessToken: "internal",
+					}),
+				},
+			},
+			want: "internal",
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			creds, err := Creds(context.Background(), tc.ds)
+			if err != nil {
+				t.Fatalf("got %v, want nil error", err)
+			}
+			if tok, _ := creds.TokenSource.Token(); tok.AccessToken != tc.want {
+				t.Fatalf("tok.AccessToken = %q, want %q", tok.AccessToken, tc.want)
+			}
+		})
+	}
+}

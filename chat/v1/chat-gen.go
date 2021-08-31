@@ -854,6 +854,134 @@ func (s *Color) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// CommonEventObject: Next available ID = 8
+type CommonEventObject struct {
+	// FormInputs: The keys are the string IDs associated with the widget
+	// and the values are inputs with a widget in the card.
+	FormInputs map[string]Inputs `json:"formInputs,omitempty"`
+
+	// HostApp: The hostApp enum which indicates the app the add-on is
+	// invoked from
+	//
+	// Possible values:
+	//   "UNSPECIFIED_HOST_APP"
+	//   "GMAIL"
+	//   "CALENDAR"
+	//   "DRIVE"
+	//   "DEMO"
+	//   "DOCS"
+	//   "SHEETS"
+	//   "SLIDES"
+	//   "DRAWINGS"
+	//   "CHAT"
+	//   "ALL_HOST_APPS" - This is only used for aggregating logs on the
+	// server. Clients should never send these values directly.
+	HostApp string `json:"hostApp,omitempty"`
+
+	// InvokedFunction: Name of the invoked function associated with the
+	// widget. This field is currently only set for chat.
+	InvokedFunction string `json:"invokedFunction,omitempty"`
+
+	// Parameters: Any additional parameters.
+	Parameters map[string]string `json:"parameters,omitempty"`
+
+	// Platform: The platform enum which indicates the platform where the
+	// add-on is running.
+	//
+	// Possible values:
+	//   "UNKNOWN_PLATFORM"
+	//   "WEB"
+	//   "IOS"
+	//   "ANDROID"
+	Platform string `json:"platform,omitempty"`
+
+	TimeZone *TimeZone `json:"timeZone,omitempty"`
+
+	// UserLocale: The full locale.displayName in the format of [ISO 639
+	// language code]-[ISO 3166 country/region code] such as "en-US"
+	UserLocale string `json:"userLocale,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FormInputs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FormInputs") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CommonEventObject) MarshalJSON() ([]byte, error) {
+	type NoMethod CommonEventObject
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DateInput: Input Parameter for Date Picker widget.
+type DateInput struct {
+	MsSinceEpoch int64 `json:"msSinceEpoch,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "MsSinceEpoch") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MsSinceEpoch") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DateInput) MarshalJSON() ([]byte, error) {
+	type NoMethod DateInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DateTimeInput: Input Parameter for Date and Time Picker widget.
+type DateTimeInput struct {
+	HasDate bool `json:"hasDate,omitempty"`
+
+	HasTime bool `json:"hasTime,omitempty"`
+
+	MsSinceEpoch int64 `json:"msSinceEpoch,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "HasDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HasDate") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DateTimeInput) MarshalJSON() ([]byte, error) {
+	type NoMethod DateTimeInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DeprecatedEvent: Google Chat events.
 type DeprecatedEvent struct {
 	// Action: The form action data associated with an interactive card that
@@ -862,14 +990,34 @@ type DeprecatedEvent struct {
 	// information.
 	Action *FormAction `json:"action,omitempty"`
 
+	// Common: This will include form information for dialogs such as form
+	// inputs, action parameters.
+	Common *CommonEventObject `json:"common,omitempty"`
+
 	// ConfigCompleteRedirectUrl: The URL the bot should redirect the user
 	// to after they have completed an authorization or configuration flow
 	// outside of Google Chat. See the Authorizing access to 3p services
 	// guide (/chat/how-tos/auth-3p) for more information.
 	ConfigCompleteRedirectUrl string `json:"configCompleteRedirectUrl,omitempty"`
 
+	// DialogEventType: The type of dialog event we have received.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - This could be used when the corresponding
+	// event is not dialog related. For example an @mention.
+	//   "REQUEST_DIALOG" - For any user action that would result in a
+	// dialog opening.
+	//   "SUBMIT_DIALOG" - For card click events from any dialog.
+	//   "CANCEL_DIALOG" - For native cancellation button.
+	DialogEventType string `json:"dialogEventType,omitempty"`
+
 	// EventTime: The timestamp indicating when the event was dispatched.
 	EventTime string `json:"eventTime,omitempty"`
+
+	// IsDialogEvent: Whether or not this event is related to dialogs
+	// request, submit or cancel. This will be set to true when we want a
+	// request/submit/cancel event.
+	IsDialogEvent bool `json:"isDialogEvent,omitempty"`
 
 	// Message: The message that triggered the event, if applicable.
 	Message *Message `json:"message,omitempty"`
@@ -2515,6 +2663,39 @@ func (s *ImageButton) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Inputs: The inputs with widgets.
+type Inputs struct {
+	DateInput *DateInput `json:"dateInput,omitempty"`
+
+	DateTimeInput *DateTimeInput `json:"dateTimeInput,omitempty"`
+
+	StringInputs *StringInputs `json:"stringInputs,omitempty"`
+
+	TimeInput *TimeInput `json:"timeInput,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DateInput") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DateInput") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Inputs) MarshalJSON() ([]byte, error) {
+	type NoMethod Inputs
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // KeyValue: A UI element contains a key (label) and a value (content).
 // And this element may also contain some actions such as onclick
 // button.
@@ -3062,6 +3243,35 @@ func (s *Space) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StringInputs: Input parameter for regular widgets. For single-valued
+// widgets, it will be a single value list; for multi-valued widgets,
+// such as checkbox, all the values are presented.
+type StringInputs struct {
+	Value []string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Value") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StringInputs) MarshalJSON() ([]byte, error) {
+	type NoMethod StringInputs
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TextButton: A button with text and onclick action.
 type TextButton struct {
 	// OnClick: The onclick action of the button.
@@ -3145,6 +3355,66 @@ type Thread struct {
 
 func (s *Thread) MarshalJSON() ([]byte, error) {
 	type NoMethod Thread
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TimeInput: Input Parameter for Time Picker widget.
+type TimeInput struct {
+	Hours int64 `json:"hours,omitempty"`
+
+	Minutes int64 `json:"minutes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Hours") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Hours") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeInput) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TimeZone: The timezone id and offset. The id is the tz database time
+// zones such as "America/Toronto". The user timezone offset, in
+// milliseconds, from Coordinated Universal Time (UTC).
+type TimeZone struct {
+	Id string `json:"id,omitempty"`
+
+	Offset int64 `json:"offset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeZone) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeZone
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3334,7 +3604,7 @@ func (c *DmsMessagesCall) Header() http.Header {
 
 func (c *DmsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3494,7 +3764,7 @@ func (c *DmsWebhooksCall) Header() http.Header {
 
 func (c *DmsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3654,7 +3924,7 @@ func (c *DmsConversationsMessagesCall) Header() http.Header {
 
 func (c *DmsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3809,7 +4079,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3976,7 +4246,7 @@ func (c *RoomsMessagesCall) Header() http.Header {
 
 func (c *RoomsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4136,7 +4406,7 @@ func (c *RoomsWebhooksCall) Header() http.Header {
 
 func (c *RoomsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4296,7 +4566,7 @@ func (c *RoomsConversationsMessagesCall) Header() http.Header {
 
 func (c *RoomsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4450,7 +4720,7 @@ func (c *SpacesGetCall) Header() http.Header {
 
 func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4604,7 +4874,7 @@ func (c *SpacesListCall) Header() http.Header {
 
 func (c *SpacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4774,7 +5044,7 @@ func (c *SpacesWebhooksCall) Header() http.Header {
 
 func (c *SpacesWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4929,7 +5199,7 @@ func (c *SpacesMembersGetCall) Header() http.Header {
 
 func (c *SpacesMembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5088,7 +5358,7 @@ func (c *SpacesMembersListCall) Header() http.Header {
 
 func (c *SpacesMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5269,7 +5539,7 @@ func (c *SpacesMessagesCreateCall) Header() http.Header {
 
 func (c *SpacesMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5413,7 +5683,7 @@ func (c *SpacesMessagesDeleteCall) Header() http.Header {
 
 func (c *SpacesMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5555,7 +5825,7 @@ func (c *SpacesMessagesGetCall) Header() http.Header {
 
 func (c *SpacesMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5697,7 +5967,7 @@ func (c *SpacesMessagesUpdateCall) Header() http.Header {
 
 func (c *SpacesMessagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5852,7 +6122,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Header() http.Header {
 
 func (c *SpacesMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

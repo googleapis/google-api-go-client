@@ -19,6 +19,7 @@ import (
 	"strings"
 	"time"
 
+	"google.golang.org/api/option/internaloption"
 	htransport "google.golang.org/api/transport/http"
 )
 
@@ -33,6 +34,10 @@ var (
 	// now aliases time.Now for testing.
 	now = time.Now
 )
+
+func defaultValidatorOpts() []ClientOption {
+	return []ClientOption{internaloption.WithDefaultScopes("https://www.googleapis.com/auth/cloud-platform")}
+}
 
 // Payload represents a decoded payload of an ID Token.
 type Payload struct {
@@ -88,6 +93,7 @@ type Validator struct {
 // NewValidator creates a Validator that uses the options provided to configure
 // a the internal http.Client that will be used to make requests to fetch JWKs.
 func NewValidator(ctx context.Context, opts ...ClientOption) (*Validator, error) {
+	opts = append(defaultValidatorOpts(), opts...)
 	client, _, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err

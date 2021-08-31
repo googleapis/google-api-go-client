@@ -231,6 +231,16 @@ type Execution struct {
 	// `'{"argument":"{\"firstName\":\"FIRST\",\"lastName\":\"LAST\"}"}'`
 	Argument string `json:"argument,omitempty"`
 
+	// CallLogLevel: The call logging level associated to this execution.
+	//
+	// Possible values:
+	//   "CALL_LOG_LEVEL_UNSPECIFIED" - No call logging specified.
+	//   "LOG_ALL_CALLS" - Log all call steps within workflows, all call
+	// returns, and all exceptions raised.
+	//   "LOG_ERRORS_ONLY" - Log only exceptions that are raised from call
+	// steps within workflows.
+	CallLogLevel string `json:"callLogLevel,omitempty"`
+
 	// EndTime: Output only. Marks the end of execution, successful or not.
 	EndTime string `json:"endTime,omitempty"`
 
@@ -484,7 +494,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -630,7 +640,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -798,7 +808,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1000,7 +1010,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210823")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210830")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

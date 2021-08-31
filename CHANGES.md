@@ -1,5 +1,19 @@
 # Changes
 
+## [0.55.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.54.0...v0.55.0) (2021-08-30)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1195](https://www.github.com/googleapis/google-api-go-client/issues/1195) [#1191](https://www.github.com/googleapis/google-api-go-client/issues/1191) [#1190](https://www.github.com/googleapis/google-api-go-client/issues/1190) [#1189](https://www.github.com/googleapis/google-api-go-client/issues/1189) [#1188](https://www.github.com/googleapis/google-api-go-client/issues/1188) [#1183](https://www.github.com/googleapis/google-api-go-client/issues/1183) [#1181](https://www.github.com/googleapis/google-api-go-client/issues/1181) [#1180](https://www.github.com/googleapis/google-api-go-client/issues/1180) [#1175](https://www.github.com/googleapis/google-api-go-client/issues/1175) [#1174](https://www.github.com/googleapis/google-api-go-client/issues/1174) [#1173](https://www.github.com/googleapis/google-api-go-client/issues/1173) [#1172](https://www.github.com/googleapis/google-api-go-client/issues/1172) [#1171](https://www.github.com/googleapis/google-api-go-client/issues/1171) [#1169](https://www.github.com/googleapis/google-api-go-client/issues/1169) [#1168](https://www.github.com/googleapis/google-api-go-client/issues/1168) [#1166](https://www.github.com/googleapis/google-api-go-client/issues/1166) [#1164](https://www.github.com/googleapis/google-api-go-client/issues/1164)
+* **internaloption:** add AllowNonDefaultServiceAccount internaloption ([#1127](https://www.github.com/googleapis/google-api-go-client/issues/1127)) ([d713001](https://www.github.com/googleapis/google-api-go-client/commit/d71300120fdeff12fa2ecca866567989a67db946))
+
+
+### Bug Fixes
+
+* **idtoken:** provide default scope for cert endpoint ([#1198](https://www.github.com/googleapis/google-api-go-client/issues/1198)) ([7019080](https://www.github.com/googleapis/google-api-go-client/commit/701908002bf1b34e9bf88ca0c3d2191a39bed0d1)), refs [#1187](https://www.github.com/googleapis/google-api-go-client/issues/1187)
+* **impersonate:** allow lifetimes up to 12 hours ([#1186](https://www.github.com/googleapis/google-api-go-client/issues/1186)) ([569c56b](https://www.github.com/googleapis/google-api-go-client/commit/569c56bc622d1256ef3d3c0bb9d76d69721ec981)), refs [#1185](https://www.github.com/googleapis/google-api-go-client/issues/1185)
+
 ## [0.54.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.53.0...v0.54.0) (2021-08-13)
 
 

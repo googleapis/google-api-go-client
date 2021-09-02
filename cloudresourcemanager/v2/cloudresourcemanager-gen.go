@@ -1146,7 +1146,8 @@ func (s *ProjectCreationStatus) MarshalJSON() ([]byte, error) {
 // SearchFoldersRequest: The request message for searching folders.
 type SearchFoldersRequest struct {
 	// PageSize: Optional. The maximum number of folders to return in the
-	// response.
+	// response. The server can return fewer folders than requested. If
+	// unspecified, server picks an appropriate default.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: Optional. A pagination token returned from a previous call
@@ -1488,7 +1489,7 @@ func (c *FoldersCreateCall) Header() http.Header {
 
 func (c *FoldersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210831")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1627,7 +1628,7 @@ func (c *FoldersDeleteCall) Header() http.Header {
 
 func (c *FoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210831")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1774,7 +1775,7 @@ func (c *FoldersGetCall) Header() http.Header {
 
 func (c *FoldersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210831")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1919,7 +1920,7 @@ func (c *FoldersGetIamPolicyCall) Header() http.Header {
 
 func (c *FoldersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210831")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2036,7 +2037,9 @@ func (r *FoldersService) List() *FoldersListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of Folders to return in the response.
+// of Folders to return in the response. The server can return fewer
+// folders than requested. If unspecified, server picks an appropriate
+// default.
 func (c *FoldersListCall) PageSize(pageSize int64) *FoldersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2106,7 +2109,7 @@ func (c *FoldersListCall) Header() http.Header {
 
 func (c *FoldersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210831")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2172,7 +2175,7 @@ func (c *FoldersListCall) Do(opts ...googleapi.CallOption) (*ListFoldersResponse
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of Folders to return in the response.",
+	//       "description": "Optional. The maximum number of Folders to return in the response. The server can return fewer folders than requested. If unspecified, server picks an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2288,7 +2291,7 @@ func (c *FoldersMoveCall) Header() http.Header {
 
 func (c *FoldersMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210831")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2449,7 +2452,7 @@ func (c *FoldersPatchCall) Header() http.Header {
 
 func (c *FoldersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210831")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2597,7 +2600,7 @@ func (c *FoldersSearchCall) Header() http.Header {
 
 func (c *FoldersSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210831")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2754,7 +2757,7 @@ func (c *FoldersSetIamPolicyCall) Header() http.Header {
 
 func (c *FoldersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210831")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2901,7 +2904,7 @@ func (c *FoldersTestIamPermissionsCall) Header() http.Header {
 
 func (c *FoldersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210831")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3051,7 +3054,7 @@ func (c *FoldersUndeleteCall) Header() http.Header {
 
 func (c *FoldersUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210831")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3204,7 +3207,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210831")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

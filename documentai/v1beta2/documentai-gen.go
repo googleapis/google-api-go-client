@@ -1900,6 +1900,16 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageDimension) UnmarshalJSON(data [
 // GoogleCloudDocumentaiV1beta1DocumentPageFormField: A form field
 // detected on the page.
 type GoogleCloudDocumentaiV1beta1DocumentPageFormField struct {
+	// CorrectedKeyText: Created for Labeling UI to export key text. If
+	// corrections were made to the text identified by the
+	// `field_name.text_anchor`, this field will contain the correction.
+	CorrectedKeyText string `json:"correctedKeyText,omitempty"`
+
+	// CorrectedValueText: Created for Labeling UI to export value text. If
+	// corrections were made to the text identified by the
+	// `field_value.text_anchor`, this field will contain the correction.
+	CorrectedValueText string `json:"correctedValueText,omitempty"`
+
 	// FieldName: Layout for the FormField name. e.g. `Address`, `Email`,
 	// `Grand total`, `Phone number`, etc.
 	FieldName *GoogleCloudDocumentaiV1beta1DocumentPageLayout `json:"fieldName,omitempty"`
@@ -1923,7 +1933,7 @@ type GoogleCloudDocumentaiV1beta1DocumentPageFormField struct {
 	// field_value is normal text) - "unfilled_checkbox" - "filled_checkbox"
 	ValueType string `json:"valueType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FieldName") to
+	// ForceSendFields is a list of field names (e.g. "CorrectedKeyText") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1931,12 +1941,13 @@ type GoogleCloudDocumentaiV1beta1DocumentPageFormField struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FieldName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CorrectedKeyText") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3882,6 +3893,16 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageDimension) UnmarshalJSON(data [
 // GoogleCloudDocumentaiV1beta2DocumentPageFormField: A form field
 // detected on the page.
 type GoogleCloudDocumentaiV1beta2DocumentPageFormField struct {
+	// CorrectedKeyText: Created for Labeling UI to export key text. If
+	// corrections were made to the text identified by the
+	// `field_name.text_anchor`, this field will contain the correction.
+	CorrectedKeyText string `json:"correctedKeyText,omitempty"`
+
+	// CorrectedValueText: Created for Labeling UI to export value text. If
+	// corrections were made to the text identified by the
+	// `field_value.text_anchor`, this field will contain the correction.
+	CorrectedValueText string `json:"correctedValueText,omitempty"`
+
 	// FieldName: Layout for the FormField name. e.g. `Address`, `Email`,
 	// `Grand total`, `Phone number`, etc.
 	FieldName *GoogleCloudDocumentaiV1beta2DocumentPageLayout `json:"fieldName,omitempty"`
@@ -3905,7 +3926,7 @@ type GoogleCloudDocumentaiV1beta2DocumentPageFormField struct {
 	// field_value is normal text) - "unfilled_checkbox" - "filled_checkbox"
 	ValueType string `json:"valueType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FieldName") to
+	// ForceSendFields is a list of field names (e.g. "CorrectedKeyText") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3913,12 +3934,13 @@ type GoogleCloudDocumentaiV1beta2DocumentPageFormField struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FieldName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CorrectedKeyText") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -6379,7 +6401,7 @@ func (c *ProjectsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6524,7 +6546,7 @@ func (c *ProjectsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6670,7 +6692,7 @@ func (c *ProjectsLocationsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6815,7 +6837,7 @@ func (c *ProjectsLocationsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6969,7 +6991,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7117,7 +7139,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210901")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

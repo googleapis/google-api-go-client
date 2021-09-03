@@ -675,6 +675,10 @@ func (s *Frame) MarshalJSON() ([]byte, error) {
 // serve them. All tables in an instance are served from all Clusters in
 // the instance.
 type Instance struct {
+	// CreateTime: Output only. A server-assigned timestamp representing
+	// when this Instance was created.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// DisplayName: Required. The descriptive name for this instance as it
 	// appears in UIs. Can be changed at any time, but should be kept
 	// globally unique to avoid confusion.
@@ -720,7 +724,7 @@ type Instance struct {
 	// it no longer enforces a higher minimum node count than DEVELOPMENT.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -728,10 +732,10 @@ type Instance struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

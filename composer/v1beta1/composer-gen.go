@@ -79,7 +79,8 @@ const mtlsBasePath = "https://composer.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud Platform data
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -209,10 +210,10 @@ type AllowedIpRange struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -255,10 +256,10 @@ type CheckUpgradeRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ImageVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ImageVersion") to include
@@ -293,16 +294,23 @@ type CheckUpgradeResponse struct {
 	//   "NO_CONFLICT" - There were no python packages conflicts.
 	ContainsPypiModulesConflict string `json:"containsPypiModulesConflict,omitempty"`
 
+	// ImageVersion: Composer image for which the build was happening.
+	ImageVersion string `json:"imageVersion,omitempty"`
+
 	// PypiConflictBuildLogExtract: Output only. Extract from a docker image
 	// build log containing information about pypi modules conflicts.
 	PypiConflictBuildLogExtract string `json:"pypiConflictBuildLogExtract,omitempty"`
 
+	// PypiDependencies: Pypi dependencies specified in the environment
+	// configuration, at the time when the build was triggered.
+	PypiDependencies map[string]string `json:"pypiDependencies,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "BuildLogUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BuildLogUri") to include
@@ -321,7 +329,8 @@ func (s *CheckUpgradeResponse) MarshalJSON() ([]byte, error) {
 }
 
 // DatabaseConfig: The configuration of Cloud SQL instance that is used
-// by the Apache Airflow software.
+// by the Apache Airflow software. Supported for Cloud Composer
+// environments in versions composer-1.*.*-airflow-*.*.*.
 type DatabaseConfig struct {
 	// MachineType: Optional. Cloud SQL machine type used by Airflow
 	// database. It has to be one of: db-n1-standard-2, db-n1-standard-4,
@@ -331,10 +340,10 @@ type DatabaseConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "MachineType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MachineType") to include
@@ -377,10 +386,10 @@ type Date struct {
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Day") to include in API
@@ -411,7 +420,8 @@ type Empty struct {
 }
 
 // EncryptionConfig: The encryption options for the Cloud Composer
-// environment and its dependencies.
+// environment and its dependencies. Supported for Cloud Composer
+// environments in versions composer-1.*.*-airflow-*.*.*.
 type EncryptionConfig struct {
 	// KmsKeyName: Optional. Customer-managed Encryption Key available
 	// through Google's Key Management Service. Cannot be updated. If not
@@ -420,10 +430,10 @@ type EncryptionConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
@@ -496,10 +506,10 @@ type Environment struct {
 
 	// ForceSendFields is a list of field names (e.g. "Config") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Config") to include in API
@@ -532,12 +542,28 @@ type EnvironmentConfig struct {
 	DagGcsPrefix string `json:"dagGcsPrefix,omitempty"`
 
 	// DatabaseConfig: Optional. The configuration settings for Cloud SQL
-	// instance used internally by Apache Airflow software.
+	// instance used internally by Apache Airflow software. This field is
+	// supported for Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*.
 	DatabaseConfig *DatabaseConfig `json:"databaseConfig,omitempty"`
 
 	// EncryptionConfig: Optional. The encryption options for the Cloud
-	// Composer environment and its dependencies. Cannot be updated.
+	// Composer environment and its dependencies. Cannot be updated. This
+	// field is supported for Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*.
 	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
+
+	// EnvironmentSize: Optional. The size of the Cloud Composer
+	// environment. This field is supported for Cloud Composer environments
+	// in versions composer-2.*.*-airflow-*.*.* and newer.
+	//
+	// Possible values:
+	//   "ENVIRONMENT_SIZE_UNSPECIFIED" - The size of the environment is
+	// unspecified.
+	//   "ENVIRONMENT_SIZE_SMALL" - The environment size is small.
+	//   "ENVIRONMENT_SIZE_MEDIUM" - The environment size is medium.
+	//   "ENVIRONMENT_SIZE_LARGE" - The environment size is large.
+	EnvironmentSize string `json:"environmentSize,omitempty"`
 
 	// GkeCluster: Output only. The Kubernetes Engine cluster used to run
 	// this environment.
@@ -559,7 +585,8 @@ type EnvironmentConfig struct {
 	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
 
 	// NodeCount: The number of nodes in the Kubernetes Engine cluster that
-	// will be used to run this environment.
+	// will be used to run this environment. This field is supported for
+	// Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 
 	// PrivateEnvironmentConfig: The configuration used for the Private IP
@@ -571,20 +598,30 @@ type EnvironmentConfig struct {
 	SoftwareConfig *SoftwareConfig `json:"softwareConfig,omitempty"`
 
 	// WebServerConfig: Optional. The configuration settings for the Airflow
-	// web server App Engine instance.
+	// web server App Engine instance. This field is supported for Cloud
+	// Composer environments in versions composer-1.*.*-airflow-*.*.*.
 	WebServerConfig *WebServerConfig `json:"webServerConfig,omitempty"`
 
 	// WebServerNetworkAccessControl: Optional. The network-level access
 	// control policy for the Airflow web server. If unspecified, no
-	// network-level access restrictions will be applied.
+	// network-level access restrictions will be applied. This field is
+	// supported for Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*.
 	WebServerNetworkAccessControl *WebServerNetworkAccessControl `json:"webServerNetworkAccessControl,omitempty"`
+
+	// WorkloadsConfig: Optional. The workloads configuration settings for
+	// the GKE cluster associated with the Cloud Composer environment. The
+	// GKE cluster runs Airflow scheduler, web server and workers workloads.
+	// This field is supported for Cloud Composer environments in versions
+	// composer-2.*.*-airflow-*.*.* and newer.
+	WorkloadsConfig *WorkloadsConfig `json:"workloadsConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AirflowUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AirflowUri") to include in
@@ -607,10 +644,12 @@ func (s *EnvironmentConfig) MarshalJSON() ([]byte, error) {
 type IPAllocationPolicy struct {
 	// ClusterIpv4CidrBlock: Optional. The IP address range used to allocate
 	// IP addresses to pods in the cluster. This field is applicable only
+	// when `use_ip_aliases` is true. For Cloud Composer environments in
+	// versions composer-1.*.*-airflow-*.*.*, this field is applicable only
 	// when `use_ip_aliases` is true. Set to blank to have GKE choose a
 	// range with the default size. Set to /netmask (e.g. `/14`) to have GKE
 	// choose a range with a specific netmask. Set to a CIDR
-	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
+	// (https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
 	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
 	// (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a
 	// specific range to use. Specify `cluster_secondary_range_name` or
@@ -621,14 +660,19 @@ type IPAllocationPolicy struct {
 	// secondary range used to allocate IP addresses to pods. Specify either
 	// `cluster_secondary_range_name` or `cluster_ipv4_cidr_block` but not
 	// both. This field is applicable only when `use_ip_aliases` is true.
+	// For Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*, this field is applicable only when
+	// `use_ip_aliases` is true.
 	ClusterSecondaryRangeName string `json:"clusterSecondaryRangeName,omitempty"`
 
 	// ServicesIpv4CidrBlock: Optional. The IP address range of the services
 	// IP addresses in this cluster. This field is applicable only when
+	// `use_ip_aliases` is true. For Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*, this field is applicable only when
 	// `use_ip_aliases` is true. Set to blank to have GKE choose a range
 	// with the default size. Set to /netmask (e.g. `/14`) to have GKE
 	// choose a range with a specific netmask. Set to a CIDR
-	// (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
+	// (https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
 	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
 	// (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a
 	// specific range to use. Specify `services_secondary_range_name` or
@@ -639,17 +683,22 @@ type IPAllocationPolicy struct {
 	// secondary range used to allocate IP addresses to the cluster. Specify
 	// either `services_secondary_range_name` or `services_ipv4_cidr_block`
 	// but not both. This field is applicable only when `use_ip_aliases` is
-	// true.
+	// true. For Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*, this field is applicable only when
+	// `use_ip_aliases` is true.
 	ServicesSecondaryRangeName string `json:"servicesSecondaryRangeName,omitempty"`
 
 	// UseIpAliases: Optional. Whether or not to enable Alias IPs in the GKE
-	// cluster. If `true`, a VPC-native cluster is created.
+	// cluster. If `true`, a VPC-native cluster is created. This field is
+	// only supported for Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*. Environments in newer versions always
+	// use VPC-native GKE clusters.
 	UseIpAliases bool `json:"useIpAliases,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ClusterIpv4CidrBlock") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -697,10 +746,10 @@ type ImageVersion struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreationDisabled") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreationDisabled") to
@@ -735,10 +784,10 @@ type ListEnvironmentsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Environments") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Environments") to include
@@ -772,10 +821,10 @@ type ListImageVersionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ImageVersions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ImageVersions") to include
@@ -809,10 +858,10 @@ type ListOperationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -854,10 +903,10 @@ type MaintenanceWindow struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -880,7 +929,16 @@ func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
 type NodeConfig struct {
 	// DiskSizeGb: Optional. The disk size in GB used for node VMs. Minimum
 	// size is 20GB. If unspecified, defaults to 100GB. Cannot be updated.
+	// This field is supported for Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
+
+	// EnableIpMasqAgent: Optional. Deploys 'ip-masq-agent' daemon set in
+	// the GKE cluster and defines nonMasqueradeCIDRs equals to pod IP range
+	// so IP masquerading is used for all destination addresses, except
+	// between pods traffic. See:
+	// https://cloud.google.com/kubernetes-engine/docs/how-to/ip-masquerade-agent
+	EnableIpMasqAgent bool `json:"enableIpMasqAgent,omitempty"`
 
 	// IpAllocationPolicy: Optional. The IPAllocationPolicy fields for the
 	// GKE cluster.
@@ -898,7 +956,8 @@ type NodeConfig struct {
 	// Cloud Composer location, and propagate that choice to both fields. If
 	// only one field (`location` or `nodeConfig.machineType`) is specified,
 	// the location information from the specified field will be propagated
-	// to the unspecified field.
+	// to the unspecified field. This field is supported for Cloud Composer
+	// environments in versions composer-1.*.*-airflow-*.*.*.
 	Location string `json:"location,omitempty"`
 
 	// MachineType: Optional. The Compute Engine machine type
@@ -916,7 +975,9 @@ type NodeConfig struct {
 	// location information from the specified field will be propagated to
 	// the unspecified field. The `machineTypeId` must not be a shared-core
 	// machine type (/compute/docs/machine-types#sharedcore). If this field
-	// is unspecified, the `machineTypeId` defaults to "n1-standard-1".
+	// is unspecified, the `machineTypeId` defaults to "n1-standard-1". This
+	// field is supported for Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*.
 	MachineType string `json:"machineType,omitempty"`
 
 	// MaxPodsPerNode: Optional. The maximum number of pods per node in the
@@ -929,7 +990,8 @@ type NodeConfig struct {
 	// creation. For more information, see [Optimizing IP address
 	// allocation]
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/flexible-pod-cidr).
-	// Cannot be updated.
+	// Cannot be updated. This field is supported for Cloud Composer
+	// environments in versions composer-1.*.*-airflow-*.*.*.
 	MaxPodsPerNode int64 `json:"maxPodsPerNode,omitempty"`
 
 	// Network: Optional. The Compute Engine network to be used for machine
@@ -946,13 +1008,14 @@ type NodeConfig struct {
 	// OauthScopes: Optional. The set of Google API scopes to be made
 	// available on all node VMs. If `oauth_scopes` is empty, defaults to
 	// ["https://www.googleapis.com/auth/cloud-platform"]. Cannot be
-	// updated.
+	// updated. This field is supported for Cloud Composer environments in
+	// versions composer-1.*.*-airflow-*.*.*.
 	OauthScopes []string `json:"oauthScopes,omitempty"`
 
 	// ServiceAccount: Optional. The Google Cloud Platform Service Account
 	// to be used by the workloads. If a service account is not specified,
 	// the "default" Compute Engine service account is used. Cannot be
-	// updated .
+	// updated.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// Subnetwork: Optional. The Compute Engine subnetwork to be used for
@@ -967,15 +1030,17 @@ type NodeConfig struct {
 	// Tags: Optional. The list of instance tags applied to all node VMs.
 	// Tags are used to identify valid sources or targets for network
 	// firewalls. Each tag within the list must comply with RFC1035
-	// (https://www.ietf.org/rfc/rfc1035.txt). Cannot be updated.
+	// (https://www.ietf.org/rfc/rfc1035.txt). Cannot be updated. This field
+	// is supported for Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*.
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DiskSizeGb") to include in
@@ -1034,10 +1099,10 @@ type Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -1096,10 +1161,10 @@ type OperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -1139,8 +1204,8 @@ type PrivateClusterConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "EnablePrivateEndpoint") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1165,6 +1230,20 @@ func (s *PrivateClusterConfig) MarshalJSON() ([]byte, error) {
 // PrivateEnvironmentConfig: The configuration information for
 // configuring a Private IP Cloud Composer environment.
 type PrivateEnvironmentConfig struct {
+	// CloudComposerNetworkIpv4CidrBlock: Optional. The CIDR block from
+	// which IP range for Cloud Composer Network in tenant project will be
+	// reserved. Needs to be disjoint from
+	// private_cluster_config.master_ipv4_cidr_block and
+	// cloud_sql_ipv4_cidr_block. This field is supported for Cloud Composer
+	// environments in versions composer-2.*.*-airflow-*.*.* and newer.
+	CloudComposerNetworkIpv4CidrBlock string `json:"cloudComposerNetworkIpv4CidrBlock,omitempty"`
+
+	// CloudComposerNetworkIpv4ReservedRange: Output only. The IP range
+	// reserved for the tenant project's Cloud Composer network. This field
+	// is supported for Cloud Composer environments in versions
+	// composer-2.*.*-airflow-*.*.* and newer.
+	CloudComposerNetworkIpv4ReservedRange string `json:"cloudComposerNetworkIpv4ReservedRange,omitempty"`
+
 	// CloudSqlIpv4CidrBlock: Optional. The CIDR block from which IP range
 	// in tenant project will be reserved for Cloud SQL. Needs to be
 	// disjoint from web_server_ipv4_cidr_block
@@ -1172,8 +1251,15 @@ type PrivateEnvironmentConfig struct {
 
 	// EnablePrivateEnvironment: Optional. If `true`, a Private IP Cloud
 	// Composer environment is created. If this field is set to true,
-	// `IPAllocationPolicy.use_ip_aliases` must be set to true .
+	// `IPAllocationPolicy.use_ip_aliases` must be set to true for Cloud
+	// Composer environments in versions composer-1.*.*-airflow-*.*.*.
 	EnablePrivateEnvironment bool `json:"enablePrivateEnvironment,omitempty"`
+
+	// EnablePrivatelyUsedPublicIps: Optional. When enabled, IPs from public
+	// (non-RFC1918) ranges can be used for
+	// `IPAllocationPolicy.cluster_ipv4_cidr_block` and
+	// `IPAllocationPolicy.service_ipv4_cidr_block`.
+	EnablePrivatelyUsedPublicIps bool `json:"enablePrivatelyUsedPublicIps,omitempty"`
 
 	// PrivateClusterConfig: Optional. Configuration for the private GKE
 	// cluster for a Private IP Cloud Composer environment.
@@ -1182,29 +1268,31 @@ type PrivateEnvironmentConfig struct {
 	// WebServerIpv4CidrBlock: Optional. The CIDR block from which IP range
 	// for web server will be reserved. Needs to be disjoint from
 	// private_cluster_config.master_ipv4_cidr_block and
-	// cloud_sql_ipv4_cidr_block.
+	// cloud_sql_ipv4_cidr_block. This field is supported for Cloud Composer
+	// environments in versions composer-1.*.*-airflow-*.*.*.
 	WebServerIpv4CidrBlock string `json:"webServerIpv4CidrBlock,omitempty"`
 
 	// WebServerIpv4ReservedRange: Output only. The IP range reserved for
-	// the tenant project's App Engine VMs.
+	// the tenant project's App Engine VMs. This field is supported for
+	// Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
 	WebServerIpv4ReservedRange string `json:"webServerIpv4ReservedRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "CloudSqlIpv4CidrBlock") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// "CloudComposerNetworkIpv4CidrBlock") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CloudSqlIpv4CidrBlock") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "CloudComposerNetworkIpv4CidrBlock") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1216,6 +1304,65 @@ func (s *PrivateEnvironmentConfig) MarshalJSON() ([]byte, error) {
 
 // RestartWebServerRequest: Restart Airflow web server.
 type RestartWebServerRequest struct {
+}
+
+// SchedulerResource: Configuration for resources used by Airflow
+// schedulers.
+type SchedulerResource struct {
+	// Count: Optional. The number of schedulers.
+	Count int64 `json:"count,omitempty"`
+
+	// Cpu: Optional. CPU request and limit for a single Airflow scheduler
+	// replica.
+	Cpu float64 `json:"cpu,omitempty"`
+
+	// MemoryGb: Optional. Memory (GB) request and limit for a single
+	// Airflow scheduler replica.
+	MemoryGb float64 `json:"memoryGb,omitempty"`
+
+	// StorageGb: Optional. Storage (GB) request and limit for a single
+	// Airflow scheduler replica.
+	StorageGb float64 `json:"storageGb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SchedulerResource) MarshalJSON() ([]byte, error) {
+	type NoMethod SchedulerResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *SchedulerResource) UnmarshalJSON(data []byte) error {
+	type NoMethod SchedulerResource
+	var s1 struct {
+		Cpu       gensupport.JSONFloat64 `json:"cpu"`
+		MemoryGb  gensupport.JSONFloat64 `json:"memoryGb"`
+		StorageGb gensupport.JSONFloat64 `json:"storageGb"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Cpu = float64(s1.Cpu)
+	s.MemoryGb = float64(s1.MemoryGb)
+	s.StorageGb = float64(s1.StorageGb)
+	return nil
 }
 
 // SoftwareConfig: Specifies the selection and configuration of software
@@ -1279,13 +1426,20 @@ type SoftwareConfig struct {
 	// PythonVersion: Optional. The major version of Python used to run the
 	// Apache Airflow scheduler, worker, and webserver processes. Can be set
 	// to '2' or '3'. If not specified, the default is '3'. Cannot be
-	// updated.
+	// updated. This field is only supported for Cloud Composer environments
+	// in versions composer-1.*.*-airflow-*.*.*. Environments in newer
+	// versions always use Python major version 3.
 	PythonVersion string `json:"pythonVersion,omitempty"`
+
+	// SchedulerCount: Optional. The number of schedulers for Airflow. This
+	// field is supported for Cloud Composer environments in versions
+	// composer-1.*.*-airflow-2.*.*.
+	SchedulerCount int64 `json:"schedulerCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AirflowConfigOverrides") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1330,10 +1484,10 @@ type Status struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -1352,7 +1506,8 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 }
 
 // WebServerConfig: The configuration settings for the Airflow web
-// server App Engine instance.
+// server App Engine instance. Supported for Cloud Composer environments
+// in versions composer-1.*.*-airflow-*.*.*.
 type WebServerConfig struct {
 	// MachineType: Optional. Machine type on which Airflow web server is
 	// running. It has to be one of: composer-n1-webserver-2,
@@ -1364,10 +1519,10 @@ type WebServerConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "MachineType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MachineType") to include
@@ -1386,17 +1541,18 @@ func (s *WebServerConfig) MarshalJSON() ([]byte, error) {
 }
 
 // WebServerNetworkAccessControl: Network-level access control policy
-// for the Airflow web server.
+// for the Airflow web server. Supported for Cloud Composer environments
+// in versions composer-1.*.*-airflow-*.*.*.
 type WebServerNetworkAccessControl struct {
 	// AllowedIpRanges: A collection of allowed IP ranges with descriptions.
 	AllowedIpRanges []*AllowedIpRange `json:"allowedIpRanges,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowedIpRanges") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllowedIpRanges") to
@@ -1411,6 +1567,159 @@ type WebServerNetworkAccessControl struct {
 
 func (s *WebServerNetworkAccessControl) MarshalJSON() ([]byte, error) {
 	type NoMethod WebServerNetworkAccessControl
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WebServerResource: Configuration for resources used by Airflow web
+// server.
+type WebServerResource struct {
+	// Cpu: Optional. CPU request and limit for Airflow web server.
+	Cpu float64 `json:"cpu,omitempty"`
+
+	// MemoryGb: Optional. Memory (GB) request and limit for Airflow web
+	// server.
+	MemoryGb float64 `json:"memoryGb,omitempty"`
+
+	// StorageGb: Optional. Storage (GB) request and limit for Airflow web
+	// server.
+	StorageGb float64 `json:"storageGb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cpu") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cpu") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WebServerResource) MarshalJSON() ([]byte, error) {
+	type NoMethod WebServerResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *WebServerResource) UnmarshalJSON(data []byte) error {
+	type NoMethod WebServerResource
+	var s1 struct {
+		Cpu       gensupport.JSONFloat64 `json:"cpu"`
+		MemoryGb  gensupport.JSONFloat64 `json:"memoryGb"`
+		StorageGb gensupport.JSONFloat64 `json:"storageGb"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Cpu = float64(s1.Cpu)
+	s.MemoryGb = float64(s1.MemoryGb)
+	s.StorageGb = float64(s1.StorageGb)
+	return nil
+}
+
+// WorkerResource: Configuration for resources used by Airflow workers.
+type WorkerResource struct {
+	// Cpu: Optional. CPU request and limit for a single Airflow worker
+	// replica.
+	Cpu float64 `json:"cpu,omitempty"`
+
+	// MaxCount: Optional. Maximum number of workers for autoscaling.
+	MaxCount int64 `json:"maxCount,omitempty"`
+
+	// MemoryGb: Optional. Memory (GB) request and limit for a single
+	// Airflow worker replica.
+	MemoryGb float64 `json:"memoryGb,omitempty"`
+
+	// MinCount: Optional. Minimum number of workers for autoscaling.
+	MinCount int64 `json:"minCount,omitempty"`
+
+	// StorageGb: Optional. Storage (GB) request and limit for a single
+	// Airflow worker replica.
+	StorageGb float64 `json:"storageGb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cpu") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cpu") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkerResource) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkerResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *WorkerResource) UnmarshalJSON(data []byte) error {
+	type NoMethod WorkerResource
+	var s1 struct {
+		Cpu       gensupport.JSONFloat64 `json:"cpu"`
+		MemoryGb  gensupport.JSONFloat64 `json:"memoryGb"`
+		StorageGb gensupport.JSONFloat64 `json:"storageGb"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Cpu = float64(s1.Cpu)
+	s.MemoryGb = float64(s1.MemoryGb)
+	s.StorageGb = float64(s1.StorageGb)
+	return nil
+}
+
+// WorkloadsConfig: The Kubernetes workloads configuration for GKE
+// cluster associated with the Cloud Composer environment. Supported for
+// Cloud Composer environments in versions composer-2.*.*-airflow-*.*.*
+// and newer.
+type WorkloadsConfig struct {
+	// Scheduler: Optional. Resources used by Airflow schedulers.
+	Scheduler *SchedulerResource `json:"scheduler,omitempty"`
+
+	// WebServer: Optional. Resources used by Airflow web server.
+	WebServer *WebServerResource `json:"webServer,omitempty"`
+
+	// Worker: Optional. Resources used by Airflow workers.
+	Worker *WorkerResource `json:"worker,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Scheduler") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Scheduler") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkloadsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadsConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1468,7 +1777,7 @@ func (c *ProjectsLocationsEnvironmentsCheckUpgradeCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCheckUpgradeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1611,7 +1920,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1753,7 +2062,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1898,7 +2207,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2059,7 +2368,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2233,59 +2542,78 @@ func (r *ProjectsLocationsEnvironmentsService) Patch(name string, environment *E
 // version 1.7.14, the `updateMask` would contain the path
 // "config.softwareConfig.pypiPackages", and the patch environment would
 // be the following: { "config":{ "softwareConfig":{ "pypiPackages":{
-// "botocore":"==1.7.14" } } } } *Note:* Only the following fields can
-// be updated: * config.softwareConfig.pypiPackages * Replace all custom
-// custom PyPI packages. If a replacement package map is not included in
-// `environment`, all custom PyPI packages are cleared. It is an error
-// to provide both this mask and a mask specifying an individual
-// package. * config.softwareConfig.pypiPackages.packagename * Update
-// the custom PyPI package packagename, preserving other packages. To
-// delete the package, include it in `updateMask`, and omit the mapping
-// for it in `environment.config.softwareConfig.pypiPackages`. It is an
-// error to provide both a mask of this form and the
-// "config.softwareConfig.pypiPackages" mask. * labels * Replace all
+// "botocore":"==1.7.14" } } } } **Note:** Only the following fields can
+// be updated: * `config.softwareConfig.pypiPackages` * Replace all
+// custom custom PyPI packages. If a replacement package map is not
+// included in `environment`, all custom PyPI packages are cleared. It
+// is an error to provide both this mask and a mask specifying an
+// individual package. *
+// `config.softwareConfig.pypiPackages.`packagename * Update the custom
+// PyPI package *packagename*, preserving other packages. To delete the
+// package, include it in `updateMask`, and omit the mapping for it in
+// `environment.config.softwareConfig.pypiPackages`. It is an error to
+// provide both a mask of this form and the
+// `config.softwareConfig.pypiPackages` mask. * `labels` * Replace all
 // environment labels. If a replacement labels map is not included in
 // `environment`, all labels are cleared. It is an error to provide both
 // this mask and a mask specifying one or more individual labels. *
-// labels.labelName * Set the label named labelName, while preserving
-// other labels. To delete the label, include it in `updateMask` and
-// omit its mapping in `environment.labels`. It is an error to provide
-// both a mask of this form and the "labels" mask. * config.nodeCount *
-// Horizontally scale the number of nodes in the environment. An integer
-// greater than or equal to 3 must be provided in the `config.nodeCount`
-// field. * config.webServerNetworkAccessControl * Replace the
-// environment's current WebServerNetworkAccessControl. *
-// config.softwareConfig.airflowConfigOverrides * Replace all Apache
+// `labels.`labelName * Set the label named *labelName*, while
+// preserving other labels. To delete the label, include it in
+// `updateMask` and omit its mapping in `environment.labels`. It is an
+// error to provide both a mask of this form and the `labels` mask. *
+// `config.nodeCount` * Horizontally scale the number of nodes in the
+// environment. An integer greater than or equal to 3 must be provided
+// in the `config.nodeCount` field. Supported for Cloud Composer
+// environments in versions composer-1.*.*-airflow-*.*.*. *
+// `config.webServerNetworkAccessControl` * Replace the environment's
+// current WebServerNetworkAccessControl. Supported for Cloud Composer
+// environments in versions composer-1.*.*-airflow-*.*.*. *
+// `config.softwareConfig.airflowConfigOverrides` * Replace all Apache
 // Airflow config overrides. If a replacement config overrides map is
 // not included in `environment`, all config overrides are cleared. It
 // is an error to provide both this mask and a mask specifying one or
 // more individual config overrides. *
-// config.softwareConfig.airflowConfigOverrides.section- name * Override
-// the Apache Airflow config property name in the section named section,
-// preserving other properties. To delete the property override, include
-// it in `updateMask` and omit its mapping in
+// `config.softwareConfig.airflowConfigOverrides.`section-name *
+// Override the Apache Airflow config property *name* in the section
+// named *section*, preserving other properties. To delete the property
+// override, include it in `updateMask` and omit its mapping in
 // `environment.config.softwareConfig.airflowConfigOverrides`. It is an
 // error to provide both a mask of this form and the
-// "config.softwareConfig.airflowConfigOverrides" mask. *
-// config.softwareConfig.envVariables * Replace all environment
+// `config.softwareConfig.airflowConfigOverrides` mask. *
+// `config.softwareConfig.envVariables` * Replace all environment
 // variables. If a replacement environment variable map is not included
 // in `environment`, all custom environment variables are cleared. It is
 // an error to provide both this mask and a mask specifying one or more
 // individual environment variables. *
-// config.softwareConfig.imageVersion * Upgrade the version of the
+// `config.softwareConfig.imageVersion` * Upgrade the version of the
 // environment in-place. Refer to `SoftwareConfig.image_version` for
 // information on how to format the new image version. Additionally, the
 // new image version cannot effect a version downgrade and must match
 // the current image version's Composer major version and Airflow major
-// and minor versions. Consult the Cloud Composer Version List for valid
-// values. * config.databaseConfig.machineType * Cloud SQL machine type
-// used by Airflow database. It has to be one of: db-n1-standard-2,
-// db-n1-standard-4, db-n1-standard-8 or db-n1-standard-16. *
-// config.webServerConfig.machineType * Machine type on which Airflow
-// web server is running. It has to be one of: composer-n1-webserver-2,
-// composer-n1-webserver-4 or composer-n1-webserver-8. *
-// config.maintenanceWindow * Maintenance window during which Cloud
-// Composer components may be under maintenance.
+// and minor versions. Consult the Cloud Composer Version List
+// (https://cloud.google.com/composer/docs/concepts/versioning/composer-versions)
+// for valid values. * `config.softwareConfig.schedulerCount` *
+// Horizontally scale the number of schedulers in Airflow. A positive
+// integer not greater than the number of nodes must be provided in the
+// `config.softwareConfig.schedulerCount` field. Supported for Cloud
+// Composer environments in versions composer-1.*.*-airflow-2.*.*. *
+// `config.databaseConfig.machineType` * Cloud SQL machine type used by
+// Airflow database. It has to be one of: db-n1-standard-2,
+// db-n1-standard-4, db-n1-standard-8 or db-n1-standard-16. Supported
+// for Cloud Composer environments in versions
+// composer-1.*.*-airflow-*.*.*. * `config.webServerConfig.machineType`
+// * Machine type on which Airflow web server is running. It has to be
+// one of: composer-n1-webserver-2, composer-n1-webserver-4 or
+// composer-n1-webserver-8. Supported for Cloud Composer environments in
+// versions composer-1.*.*-airflow-*.*.*. * `config.maintenanceWindow` *
+// Maintenance window during which Cloud Composer components may be
+// under maintenance. * `config.workloadsConfig` * The workloads
+// configuration settings for the GKE cluster associated with the Cloud
+// Composer environment. Supported for Cloud Composer environments in
+// versions composer-2.*.*-airflow-*.*.* and newer. *
+// `config.environmentSize` * The size of the Cloud Composer
+// environment. Supported for Cloud Composer environments in versions
+// composer-2.*.*-airflow-*.*.* and newer.
 func (c *ProjectsLocationsEnvironmentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsEnvironmentsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2318,7 +2646,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2398,7 +2726,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of paths, relative to `Environment`, of fields to update. For example, to set the version of scikit-learn to install in the environment to 0.19.0 and to remove an existing installation of argparse, the `updateMask` parameter would include the following two `paths` values: \"config.softwareConfig.pypiPackages.scikit-learn\" and \"config.softwareConfig.pypiPackages.argparse\". The included patch environment would specify the scikit-learn version as follows: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"scikit-learn\":\"==0.19.0\" } } } } Note that in the above example, any existing PyPI packages other than scikit-learn and argparse will be unaffected. Only one update type may be included in a single request's `updateMask`. For example, one cannot update both the PyPI packages and labels in the same request. However, it is possible to update multiple members of a map field simultaneously in the same request. For example, to set the labels \"label1\" and \"label2\" while clearing \"label3\" (assuming it already exists), one can provide the paths \"labels.label1\", \"labels.label2\", and \"labels.label3\" and populate the patch environment as follows: { \"labels\":{ \"label1\":\"new-label1-value\" \"label2\":\"new-label2-value\" } } Note that in the above example, any existing labels that are not included in the `updateMask` will be unaffected. It is also possible to replace an entire map field by providing the map field's path in the `updateMask`. The new value of the field will be that which is provided in the patch environment. For example, to delete all pre-existing user-specified PyPI packages and install botocore at version 1.7.14, the `updateMask` would contain the path \"config.softwareConfig.pypiPackages\", and the patch environment would be the following: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"botocore\":\"==1.7.14\" } } } } *Note:* Only the following fields can be updated: * config.softwareConfig.pypiPackages * Replace all custom custom PyPI packages. If a replacement package map is not included in `environment`, all custom PyPI packages are cleared. It is an error to provide both this mask and a mask specifying an individual package. * config.softwareConfig.pypiPackages.packagename * Update the custom PyPI package packagename, preserving other packages. To delete the package, include it in `updateMask`, and omit the mapping for it in `environment.config.softwareConfig.pypiPackages`. It is an error to provide both a mask of this form and the \"config.softwareConfig.pypiPackages\" mask. * labels * Replace all environment labels. If a replacement labels map is not included in `environment`, all labels are cleared. It is an error to provide both this mask and a mask specifying one or more individual labels. * labels.labelName * Set the label named labelName, while preserving other labels. To delete the label, include it in `updateMask` and omit its mapping in `environment.labels`. It is an error to provide both a mask of this form and the \"labels\" mask. * config.nodeCount * Horizontally scale the number of nodes in the environment. An integer greater than or equal to 3 must be provided in the `config.nodeCount` field. * config.webServerNetworkAccessControl * Replace the environment's current WebServerNetworkAccessControl. * config.softwareConfig.airflowConfigOverrides * Replace all Apache Airflow config overrides. If a replacement config overrides map is not included in `environment`, all config overrides are cleared. It is an error to provide both this mask and a mask specifying one or more individual config overrides. * config.softwareConfig.airflowConfigOverrides.section- name * Override the Apache Airflow config property name in the section named section, preserving other properties. To delete the property override, include it in `updateMask` and omit its mapping in `environment.config.softwareConfig.airflowConfigOverrides`. It is an error to provide both a mask of this form and the \"config.softwareConfig.airflowConfigOverrides\" mask. * config.softwareConfig.envVariables * Replace all environment variables. If a replacement environment variable map is not included in `environment`, all custom environment variables are cleared. It is an error to provide both this mask and a mask specifying one or more individual environment variables. * config.softwareConfig.imageVersion * Upgrade the version of the environment in-place. Refer to `SoftwareConfig.image_version` for information on how to format the new image version. Additionally, the new image version cannot effect a version downgrade and must match the current image version's Composer major version and Airflow major and minor versions. Consult the Cloud Composer Version List for valid values. * config.databaseConfig.machineType * Cloud SQL machine type used by Airflow database. It has to be one of: db-n1-standard-2, db-n1-standard-4, db-n1-standard-8 or db-n1-standard-16. * config.webServerConfig.machineType * Machine type on which Airflow web server is running. It has to be one of: composer-n1-webserver-2, composer-n1-webserver-4 or composer-n1-webserver-8. * config.maintenanceWindow * Maintenance window during which Cloud Composer components may be under maintenance.",
+	//       "description": "Required. A comma-separated list of paths, relative to `Environment`, of fields to update. For example, to set the version of scikit-learn to install in the environment to 0.19.0 and to remove an existing installation of argparse, the `updateMask` parameter would include the following two `paths` values: \"config.softwareConfig.pypiPackages.scikit-learn\" and \"config.softwareConfig.pypiPackages.argparse\". The included patch environment would specify the scikit-learn version as follows: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"scikit-learn\":\"==0.19.0\" } } } } Note that in the above example, any existing PyPI packages other than scikit-learn and argparse will be unaffected. Only one update type may be included in a single request's `updateMask`. For example, one cannot update both the PyPI packages and labels in the same request. However, it is possible to update multiple members of a map field simultaneously in the same request. For example, to set the labels \"label1\" and \"label2\" while clearing \"label3\" (assuming it already exists), one can provide the paths \"labels.label1\", \"labels.label2\", and \"labels.label3\" and populate the patch environment as follows: { \"labels\":{ \"label1\":\"new-label1-value\" \"label2\":\"new-label2-value\" } } Note that in the above example, any existing labels that are not included in the `updateMask` will be unaffected. It is also possible to replace an entire map field by providing the map field's path in the `updateMask`. The new value of the field will be that which is provided in the patch environment. For example, to delete all pre-existing user-specified PyPI packages and install botocore at version 1.7.14, the `updateMask` would contain the path \"config.softwareConfig.pypiPackages\", and the patch environment would be the following: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"botocore\":\"==1.7.14\" } } } } **Note:** Only the following fields can be updated: * `config.softwareConfig.pypiPackages` * Replace all custom custom PyPI packages. If a replacement package map is not included in `environment`, all custom PyPI packages are cleared. It is an error to provide both this mask and a mask specifying an individual package. * `config.softwareConfig.pypiPackages.`packagename * Update the custom PyPI package *packagename*, preserving other packages. To delete the package, include it in `updateMask`, and omit the mapping for it in `environment.config.softwareConfig.pypiPackages`. It is an error to provide both a mask of this form and the `config.softwareConfig.pypiPackages` mask. * `labels` * Replace all environment labels. If a replacement labels map is not included in `environment`, all labels are cleared. It is an error to provide both this mask and a mask specifying one or more individual labels. * `labels.`labelName * Set the label named *labelName*, while preserving other labels. To delete the label, include it in `updateMask` and omit its mapping in `environment.labels`. It is an error to provide both a mask of this form and the `labels` mask. * `config.nodeCount` * Horizontally scale the number of nodes in the environment. An integer greater than or equal to 3 must be provided in the `config.nodeCount` field. Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*. * `config.webServerNetworkAccessControl` * Replace the environment's current WebServerNetworkAccessControl. Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*. * `config.softwareConfig.airflowConfigOverrides` * Replace all Apache Airflow config overrides. If a replacement config overrides map is not included in `environment`, all config overrides are cleared. It is an error to provide both this mask and a mask specifying one or more individual config overrides. * `config.softwareConfig.airflowConfigOverrides.`section-name * Override the Apache Airflow config property *name* in the section named *section*, preserving other properties. To delete the property override, include it in `updateMask` and omit its mapping in `environment.config.softwareConfig.airflowConfigOverrides`. It is an error to provide both a mask of this form and the `config.softwareConfig.airflowConfigOverrides` mask. * `config.softwareConfig.envVariables` * Replace all environment variables. If a replacement environment variable map is not included in `environment`, all custom environment variables are cleared. It is an error to provide both this mask and a mask specifying one or more individual environment variables. * `config.softwareConfig.imageVersion` * Upgrade the version of the environment in-place. Refer to `SoftwareConfig.image_version` for information on how to format the new image version. Additionally, the new image version cannot effect a version downgrade and must match the current image version's Composer major version and Airflow major and minor versions. Consult the [Cloud Composer Version List](https://cloud.google.com/composer/docs/concepts/versioning/composer-versions) for valid values. * `config.softwareConfig.schedulerCount` * Horizontally scale the number of schedulers in Airflow. A positive integer not greater than the number of nodes must be provided in the `config.softwareConfig.schedulerCount` field. Supported for Cloud Composer environments in versions composer-1.*.*-airflow-2.*.*. * `config.databaseConfig.machineType` * Cloud SQL machine type used by Airflow database. It has to be one of: db-n1-standard-2, db-n1-standard-4, db-n1-standard-8 or db-n1-standard-16. Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*. * `config.webServerConfig.machineType` * Machine type on which Airflow web server is running. It has to be one of: composer-n1-webserver-2, composer-n1-webserver-4 or composer-n1-webserver-8. Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*. * `config.maintenanceWindow` * Maintenance window during which Cloud Composer components may be under maintenance. * `config.workloadsConfig` * The workloads configuration settings for the GKE cluster associated with the Cloud Composer environment. Supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer. * `config.environmentSize` * The size of the Cloud Composer environment. Supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2469,7 +2797,7 @@ func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) Header() http.Header
 
 func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2643,7 +2971,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2818,7 +3146,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2963,7 +3291,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3139,7 +3467,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

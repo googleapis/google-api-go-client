@@ -79,7 +79,8 @@ const mtlsBasePath = "https://recaptchaenterprise.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud Platform data
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -177,10 +178,10 @@ type GoogleCloudRecaptchaenterpriseV1AndroidKeySettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "AllowedPackageNames")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllowedPackageNames") to
@@ -235,9 +236,10 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// method, billing details, shipping address or other transaction
 	// information.
 	//   "INITIATED_TWO_FACTOR" - Indicates that the user was served a 2FA
-	// challenge. Sufficiently old assessments with this reason that have
-	// not been overwritten with PASSED_TWO_FACTOR will be treated as an
-	// abandoned 2FA flow, equivalent to FAILED_TWO_FACTOR.
+	// challenge. An old assessment with `ENUM_VALUES.INITIATED_TWO_FACTOR`
+	// reason that has not been overwritten with `PASSED_TWO_FACTOR` is
+	// treated as an abandoned 2FA flow. This is equivalent to
+	// `FAILED_TWO_FACTOR`.
 	//   "PASSED_TWO_FACTOR" - Indicates that the user passed a 2FA
 	// challenge.
 	//   "FAILED_TWO_FACTOR" - Indicates that the user failed a 2FA
@@ -250,10 +252,10 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Annotation") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Annotation") to include in
@@ -302,10 +304,10 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 
 	// ForceSendFields is a list of field names (e.g. "Event") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Event") to include in API
@@ -347,10 +349,10 @@ type GoogleCloudRecaptchaenterpriseV1ChallengeMetrics struct {
 
 	// ForceSendFields is a list of field names (e.g. "FailedCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FailedCount") to include
@@ -392,10 +394,10 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExpectedAction") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExpectedAction") to
@@ -423,10 +425,10 @@ type GoogleCloudRecaptchaenterpriseV1IOSKeySettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "AllowedBundleIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllowedBundleIds") to
@@ -481,10 +483,10 @@ type GoogleCloudRecaptchaenterpriseV1Key struct {
 
 	// ForceSendFields is a list of field names (e.g. "AndroidSettings") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AndroidSettings") to
@@ -519,10 +521,10 @@ type GoogleCloudRecaptchaenterpriseV1ListKeysResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Keys") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Keys") to include in API
@@ -547,6 +549,10 @@ type GoogleCloudRecaptchaenterpriseV1Metrics struct {
 	// INVISIBLE), will have challenge-based data.
 	ChallengeMetrics []*GoogleCloudRecaptchaenterpriseV1ChallengeMetrics `json:"challengeMetrics,omitempty"`
 
+	// Name: Output only. The name of the metrics, in the format
+	// "projects/{project}/keys/{key}/metrics".
+	Name string `json:"name,omitempty"`
+
 	// ScoreMetrics: Metrics will be continuous and in order by dates, and
 	// in the granularity of day. All Key types should have score-based
 	// data.
@@ -561,10 +567,10 @@ type GoogleCloudRecaptchaenterpriseV1Metrics struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChallengeMetrics") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChallengeMetrics") to
@@ -614,10 +620,10 @@ type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
 
 	// ForceSendFields is a list of field names (e.g. "Reasons") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Reasons") to include in
@@ -659,10 +665,10 @@ type GoogleCloudRecaptchaenterpriseV1ScoreDistribution struct {
 
 	// ForceSendFields is a list of field names (e.g. "ScoreBuckets") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ScoreBuckets") to include
@@ -693,10 +699,10 @@ type GoogleCloudRecaptchaenterpriseV1ScoreMetrics struct {
 
 	// ForceSendFields is a list of field names (e.g. "ActionMetrics") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ActionMetrics") to include
@@ -727,8 +733,8 @@ type GoogleCloudRecaptchaenterpriseV1TestingOptions struct {
 	// trust factors.
 	//   "NOCAPTCHA" - Challenge requests for this key will always return a
 	// nocaptcha, which does not require a solution.
-	//   "CHALLENGE" - Challenge requests for this key will always return an
-	// unsolvable challenge.
+	//   "UNSOLVABLE_CHALLENGE" - Challenge requests for this key will
+	// always return an unsolvable challenge.
 	TestingChallenge string `json:"testingChallenge,omitempty"`
 
 	// TestingScore: All assessments for this Key will return this score.
@@ -738,10 +744,10 @@ type GoogleCloudRecaptchaenterpriseV1TestingOptions struct {
 
 	// ForceSendFields is a list of field names (e.g. "TestingChallenge") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TestingChallenge") to
@@ -809,10 +815,10 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Action") to include in API
@@ -878,10 +884,10 @@ type GoogleCloudRecaptchaenterpriseV1WebKeySettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "AllowAllDomains") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllowAllDomains") to
@@ -963,7 +969,7 @@ func (c *ProjectsAssessmentsAnnotateCall) Header() http.Header {
 
 func (c *ProjectsAssessmentsAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1110,7 +1116,7 @@ func (c *ProjectsAssessmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsAssessmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1255,7 +1261,7 @@ func (c *ProjectsKeysCreateCall) Header() http.Header {
 
 func (c *ProjectsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1397,7 +1403,7 @@ func (c *ProjectsKeysDeleteCall) Header() http.Header {
 
 func (c *ProjectsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1541,7 +1547,7 @@ func (c *ProjectsKeysGetCall) Header() http.Header {
 
 func (c *ProjectsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1690,7 +1696,7 @@ func (c *ProjectsKeysGetMetricsCall) Header() http.Header {
 
 func (c *ProjectsKeysGetMetricsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1853,7 +1859,7 @@ func (c *ProjectsKeysListCall) Header() http.Header {
 
 func (c *ProjectsKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2030,7 +2036,7 @@ func (c *ProjectsKeysMigrateCall) Header() http.Header {
 
 func (c *ProjectsKeysMigrateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2182,7 +2188,7 @@ func (c *ProjectsKeysPatchCall) Header() http.Header {
 
 func (c *ProjectsKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

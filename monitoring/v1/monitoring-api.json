@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "See, edit, configure, and delete your Google Cloud Platform data"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         },
         "https://www.googleapis.com/auth/monitoring": {
           "description": "View and write monitoring data for all of your Google and third-party Cloud and API projects"
@@ -21,7 +21,7 @@
   "baseUrl": "https://monitoring.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Monitoring",
-  "description": "Manages your Cloud Monitoring data and configurations. Most projects must be associated with a Workspace, with a few exceptions as noted on the individual method pages. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the Cloud Monitoring documentation.",
+  "description": "Manages your Cloud Monitoring data and configurations. Most projects must be associated with a Workspace, with a few exceptions as noted on the individual method pages. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the Cloud Monitoring documentation (https://cloud.google.com/monitoring/docs).",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/monitoring/api/",
   "fullyEncodeReservedExpansion": true,
@@ -114,12 +114,168 @@
   },
   "protocol": "rest",
   "resources": {
+    "locations": {
+      "resources": {
+        "global": {
+          "resources": {
+            "metricsScopes": {
+              "methods": {
+                "get": {
+                  "description": "Returns a specific Metrics Scope, including the list of projects monitored by the specified Metrics Scope.",
+                  "flatPath": "v1/locations/global/metricsScopes/{metricsScopesId}",
+                  "httpMethod": "GET",
+                  "id": "monitoring.locations.global.metricsScopes.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The resource name of the Metrics Scope. Example: locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}",
+                      "location": "path",
+                      "pattern": "^locations/global/metricsScopes/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "MetricsScope"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/monitoring",
+                    "https://www.googleapis.com/auth/monitoring.read"
+                  ]
+                },
+                "listMetricsScopesByMonitoredProject": {
+                  "description": "Returns a list of every Metrics Scope that a specific MonitoredProject has been added to. The metrics scope representing the specified monitored project will always be the first entry in the response.",
+                  "flatPath": "v1/locations/global/metricsScopes:listMetricsScopesByMonitoredProject",
+                  "httpMethod": "GET",
+                  "id": "monitoring.locations.global.metricsScopes.listMetricsScopesByMonitoredProject",
+                  "parameterOrder": [],
+                  "parameters": {
+                    "monitoredResourceContainer": {
+                      "description": "Required. The resource name of the Monitored Project being requested. Example: projects/{MONITORED_PROJECT_ID_OR_NUMBER}",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/locations/global/metricsScopes:listMetricsScopesByMonitoredProject",
+                  "response": {
+                    "$ref": "ListMetricsScopesByMonitoredProjectResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/monitoring",
+                    "https://www.googleapis.com/auth/monitoring.read"
+                  ]
+                }
+              },
+              "resources": {
+                "projects": {
+                  "methods": {
+                    "create": {
+                      "description": "Adds a MonitoredProject with the given project ID to the specified Metrics Scope.",
+                      "flatPath": "v1/locations/global/metricsScopes/{metricsScopesId}/projects",
+                      "httpMethod": "POST",
+                      "id": "monitoring.locations.global.metricsScopes.projects.create",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. The resource name of the existing Metrics Scope that will monitor this project. Example: locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}",
+                          "location": "path",
+                          "pattern": "^locations/global/metricsScopes/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}/projects",
+                      "request": {
+                        "$ref": "MonitoredProject"
+                      },
+                      "response": {
+                        "$ref": "Operation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/monitoring",
+                        "https://www.googleapis.com/auth/monitoring.write"
+                      ]
+                    },
+                    "delete": {
+                      "description": "Deletes a MonitoredProject from the specified Metrics Scope.",
+                      "flatPath": "v1/locations/global/metricsScopes/{metricsScopesId}/projects/{projectsId}",
+                      "httpMethod": "DELETE",
+                      "id": "monitoring.locations.global.metricsScopes.projects.delete",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The resource name of the MonitoredProject. Example: locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}/projects/{MONITORED_PROJECT_ID_OR_NUMBER}Authorization requires the following Google IAM (https://cloud.google.com/iam) permissions on both the Metrics Scope and on the MonitoredProject: monitoring.metricsScopes.link",
+                          "location": "path",
+                          "pattern": "^locations/global/metricsScopes/[^/]+/projects/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "response": {
+                        "$ref": "Operation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/monitoring",
+                        "https://www.googleapis.com/auth/monitoring.write"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "operations": {
+      "methods": {
+        "get": {
+          "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+          "flatPath": "v1/operations/{operationsId}",
+          "httpMethod": "GET",
+          "id": "monitoring.operations.get",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "The name of the operation resource.",
+              "location": "path",
+              "pattern": "^operations/.*$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+name}",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/monitoring",
+            "https://www.googleapis.com/auth/monitoring.read"
+          ]
+        }
+      }
+    },
     "projects": {
       "resources": {
         "dashboards": {
           "methods": {
             "create": {
-              "description": "Creates a new custom dashboard. For examples on how you can use this API to create dashboards, see Managing dashboards by API. This method requires the monitoring.dashboards.create permission on the specified project. For more information about permissions, see Cloud Identity and Access Management.",
+              "description": "Creates a new custom dashboard. For examples on how you can use this API to create dashboards, see Managing dashboards by API (https://cloud.google.com/monitoring/dashboards/api-dashboard). This method requires the monitoring.dashboards.create permission on the specified project. For more information about permissions, see Cloud Identity and Access Management (https://cloud.google.com/iam).",
               "flatPath": "v1/projects/{projectsId}/dashboards",
               "httpMethod": "POST",
               "id": "monitoring.projects.dashboards.create",
@@ -285,7 +441,7 @@
       }
     }
   },
-  "revision": "20210614",
+  "revision": "20210809",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -384,6 +540,17 @@
             "Align the time series by using percentile aggregation (https://en.wikipedia.org/wiki/Percentile). The resulting data point in each alignment period is the 5th percentile of all data points in the period. This aligner is valid for GAUGE and DELTA metrics with distribution values. The output is a GAUGE metric with value_type DOUBLE.",
             "Align and convert to a percentage change. This aligner is valid for GAUGE and DELTA metrics with numeric values. This alignment returns ((current - previous)/previous) * 100, where the value of previous is determined based on the alignment_period.If the values of current and previous are both 0, then the returned value is 0. If only previous is 0, the returned value is infinity.A 10-minute moving mean is computed at each point of the alignment period prior to the above calculation to smooth the metric and prevent false positives from very short-lived spikes. The moving mean is only applicable for data whose values are \u003e= 0. Any values \u003c 0 are treated as a missing datapoint, and are ignored. While DELTA metrics are accepted by this alignment, special care should be taken that the values for the metric will always be positive. The output is a GAUGE metric with value_type DOUBLE."
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AlertChart": {
+      "description": "A chart that displays alert policy data.",
+      "id": "AlertChart",
+      "properties": {
+        "name": {
+          "description": "Required. The resource name of the alert policy. The format is: projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID] ",
           "type": "string"
         }
       },
@@ -533,6 +700,20 @@
             "The data is plotted as a set of filled areas (one area per series), with the areas stacked vertically (the base of each area is the top of its predecessor, and the base of the first area is the X axis). Since the areas do not overlap, each is filled with a different opaque color.",
             "The data is plotted as a set of rectangular boxes (one box per series), with the boxes stacked vertically (the base of each box is the top of its predecessor, and the base of the first box is the X axis). Since the boxes do not overlap, each is filled with a different opaque color.",
             "The data is plotted as a heatmap. The series being plotted must have a DISTRIBUTION value type. The value of each bucket in the distribution is displayed as a color. This type is not currently available in the Stackdriver Monitoring application."
+          ],
+          "type": "string"
+        },
+        "targetAxis": {
+          "description": "Optional. The target axis to use for plotting the metric.",
+          "enum": [
+            "TARGET_AXIS_UNSPECIFIED",
+            "Y1",
+            "Y2"
+          ],
+          "enumDescriptions": [
+            "The target axis was not specified. Defaults to Y1.",
+            "The y_axis (the right axis of chart).",
+            "The y2_axis (the left axis of chart)."
           ],
           "type": "string"
         },
@@ -723,6 +904,68 @@
       },
       "type": "object"
     },
+    "ListMetricsScopesByMonitoredProjectResponse": {
+      "description": "Response for the ListMetricsScopesByMonitoredProject method.",
+      "id": "ListMetricsScopesByMonitoredProjectResponse",
+      "properties": {
+        "metricsScopes": {
+          "description": "A set of all metrics scopes that the specified monitored project has been added to.",
+          "items": {
+            "$ref": "MetricsScope"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "MetricsScope": {
+      "description": "Represents a Metrics Scope (https://cloud.google.com/monitoring/settings#concept-scope) in Cloud Monitoring, which specifies one or more Google projects and zero or more AWS accounts to monitor together.",
+      "id": "MetricsScope",
+      "properties": {
+        "createTime": {
+          "description": "Output only. The time when this Metrics Scope was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "monitoredProjects": {
+          "description": "Output only. The list of projects monitored by this Metrics Scope.",
+          "items": {
+            "$ref": "MonitoredProject"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "name": {
+          "description": "Immutable. The resource name of the Monitoring Metrics Scope. On input, the resource name can be specified with the scoping project ID or number. On output, the resource name is specified with the scoping project number. Example: locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Output only. The time when this Metrics Scope record was last updated.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MonitoredProject": {
+      "description": "A project being monitored (https://cloud.google.com/monitoring/settings/multiple-projects#create-multi) by a Metrics Scope.",
+      "id": "MonitoredProject",
+      "properties": {
+        "createTime": {
+          "description": "Output only. The time when this MonitoredProject was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "Immutable. The resource name of the MonitoredProject. On input, the resource name includes the scoping project ID and monitored project ID. On output, it contains the equivalent project numbers. Example: locations/global/metricsScopes/{SCOPING_PROJECT_ID_OR_NUMBER}/projects/{MONITORED_PROJECT_ID_OR_NUMBER}",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "MosaicLayout": {
       "description": "A mosaic layout divides the available space into a grid of blocks, and overlays the grid with tiles. Unlike GridLayout, tiles may span multiple grid blocks and can be placed at arbitrary locations in the grid.",
       "id": "MosaicLayout",
@@ -738,6 +981,41 @@
             "$ref": "Tile"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Operation": {
+      "description": "This resource represents a long-running operation that is the result of a network API call.",
+      "id": "Operation",
+      "properties": {
+        "done": {
+          "description": "If the value is false, it means the operation is still in progress. If true, the operation is completed, and either error or response is available.",
+          "type": "boolean"
+        },
+        "error": {
+          "$ref": "Status",
+          "description": "The error result of the operation in case of failure or cancellation."
+        },
+        "metadata": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.",
+          "type": "object"
+        },
+        "name": {
+          "description": "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the name should be a resource name ending with operations/{unique_id}.",
+          "type": "string"
+        },
+        "response": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "The normal response of the operation in case of success. If the original method returns no data on success, such as Delete, the response is google.protobuf.Empty. If the original method is standard Get/Create/Update, the response should be the resource. For other methods, the response should have the type XxxResponse, where Xxx is the original method name. For example, if the original method name is TakeSnapshot(), the inferred response type is TakeSnapshotResponse.",
+          "type": "object"
         }
       },
       "type": "object"
@@ -988,6 +1266,33 @@
       },
       "type": "object"
     },
+    "Status": {
+      "description": "The Status type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each Status message contains three pieces of data: error code, error message, and error details.You can find out more about this error model and how to work with it in the API Design Guide (https://cloud.google.com/apis/design/errors).",
+      "id": "Status",
+      "properties": {
+        "code": {
+          "description": "The status code, which should be an enum value of google.rpc.Code.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "details": {
+          "description": "A list of messages that carry the error details. There is a common set of message types for APIs to use.",
+          "items": {
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL.",
+              "type": "any"
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "message": {
+          "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Text": {
       "description": "A widget that displays textual content.",
       "id": "Text",
@@ -1047,6 +1352,20 @@
         },
         "label": {
           "description": "A label for the threshold.",
+          "type": "string"
+        },
+        "targetAxis": {
+          "description": "The target axis to use for plotting the threshold. Target axis is not allowed in a Scorecard.",
+          "enum": [
+            "TARGET_AXIS_UNSPECIFIED",
+            "Y1",
+            "Y2"
+          ],
+          "enumDescriptions": [
+            "The target axis was not specified. Defaults to Y1.",
+            "The y_axis (the right axis of chart).",
+            "The y2_axis (the left axis of chart)."
+          ],
           "type": "string"
         },
         "value": {
@@ -1217,6 +1536,10 @@
       "description": "Widget contains a single dashboard component and configuration of how to present the component in the dashboard.",
       "id": "Widget",
       "properties": {
+        "alertChart": {
+          "$ref": "AlertChart",
+          "description": "A chart of alert policy data."
+        },
         "blank": {
           "$ref": "Empty",
           "description": "A blank space."
@@ -1270,6 +1593,10 @@
         "xAxis": {
           "$ref": "Axis",
           "description": "The properties applied to the X axis."
+        },
+        "y2Axis": {
+          "$ref": "Axis",
+          "description": "The properties applied to the Y2 axis."
         },
         "yAxis": {
           "$ref": "Axis",

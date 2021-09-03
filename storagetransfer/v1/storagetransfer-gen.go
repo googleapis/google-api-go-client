@@ -79,7 +79,8 @@ const mtlsBasePath = "https://storagetransfer.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud Platform data
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -183,10 +184,10 @@ type AwsAccessKey struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccessKeyId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccessKeyId") to include
@@ -225,12 +226,22 @@ type AwsS3Data struct {
 	// prefix. As such, it should generally not begin with a '/'.
 	Path string `json:"path,omitempty"`
 
+	// RoleArn: The Amazon Resource Name (ARN) of the role to support
+	// temporary credentials via `AssumeRoleWithWebIdentity`. For more
+	// information about ARNs, see IAM ARNs
+	// (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-arns).
+	// When a role ARN is provided, Transfer Service fetches temporary
+	// credentials for the session using a `AssumeRoleWithWebIdentity` call
+	// for the provided role using the GoogleServiceAccount for this
+	// project.
+	RoleArn string `json:"roleArn,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AwsAccessKey") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AwsAccessKey") to include
@@ -277,10 +288,10 @@ type AzureBlobStorageData struct {
 
 	// ForceSendFields is a list of field names (e.g. "AzureCredentials") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AzureCredentials") to
@@ -303,18 +314,21 @@ func (s *AzureBlobStorageData) MarshalJSON() ([]byte, error) {
 // retention policy for user credentials, see User credentials
 // (/storage-transfer/docs/data-retention#user-credentials).
 type AzureCredentials struct {
-	// SasToken: Required. Azure shared access signature. (see Grant limited
-	// access to Azure Storage resources using shared access signatures
-	// (SAS)
-	// (https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview)).
+	// SasToken: Required. Azure shared access signature (SAS).
+	// *Note:*Copying data from Azure Data Lake Storage (ADLS) Gen 2 is in
+	// Preview (/products/#product-launch-stages). During Preview, if you
+	// are copying data from ADLS Gen 2, you must use an account SAS. For
+	// more information about SAS, see Grant limited access to Azure Storage
+	// resources using shared access signatures (SAS)
+	// (https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview).
 	SasToken string `json:"sasToken,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SasToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SasToken") to include in
@@ -362,10 +376,10 @@ type Date struct {
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Day") to include in API
@@ -406,10 +420,10 @@ type ErrorLogEntry struct {
 
 	// ForceSendFields is a list of field names (e.g. "ErrorDetails") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ErrorDetails") to include
@@ -525,16 +539,16 @@ type ErrorSummary struct {
 	// ErrorCount: Required. Count of this type of error.
 	ErrorCount int64 `json:"errorCount,omitempty,string"`
 
-	// ErrorLogEntries: Error samples. At most 5 error log entries will be
+	// ErrorLogEntries: Error samples. At most 5 error log entries are
 	// recorded for a given error code for a single transfer operation.
 	ErrorLogEntries []*ErrorLogEntry `json:"errorLogEntries,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ErrorCode") to include in
@@ -557,25 +571,23 @@ func (s *ErrorSummary) MarshalJSON() ([]byte, error) {
 // `updated` property of Cloud Storage objects, which changes when the
 // content or the metadata of the object is updated.
 type GcsData struct {
-	// BucketName: Required. Cloud Storage bucket name (see Bucket Name
-	// Requirements
-	// (https://cloud.google.com/storage/docs/naming#requirements)).
+	// BucketName: Required. Cloud Storage bucket name. Must meet Bucket
+	// Name Requirements (/storage/docs/naming#requirements).
 	BucketName string `json:"bucketName,omitempty"`
 
 	// Path: Root path to transfer objects. Must be an empty string or full
 	// path name that ends with a '/'. This field is treated as an object
-	// prefix. As such, it should generally not begin with a '/'. (must meet
-	// Object Name
-	// Requirements](https://cloud.google.com/storage/docs/naming#objectnames
-	// )).
+	// prefix. As such, it should generally not begin with a '/'. The root
+	// path value must meet Object Name Requirements
+	// (/storage/docs/naming#objectnames).
 	Path string `json:"path,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BucketName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BucketName") to include in
@@ -598,16 +610,19 @@ type GoogleServiceAccount struct {
 	// AccountEmail: Email address of the service account.
 	AccountEmail string `json:"accountEmail,omitempty"`
 
+	// SubjectId: Unique identifier for the service account.
+	SubjectId string `json:"subjectId,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountEmail") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountEmail") to include
@@ -640,16 +655,16 @@ func (s *GoogleServiceAccount) MarshalJSON() ([]byte, error) {
 // mind: * When an object located at `http(s)://hostname:port/` is
 // transferred to a data sink, the name of the object at the data sink
 // is `/`. * If the specified size of an object does not match the
-// actual size of the object fetched, the object will not be
-// transferred. * If the specified MD5 does not match the MD5 computed
-// from the transferred bytes, the object transfer will fail. * Ensure
-// that each URL you specify is publicly accessible. For example, in
-// Cloud Storage you can [share an object publicly]
-// (https://cloud.google.com/storage/docs/cloud-console#_sharingdata)
-// and get a link to it. * Storage Transfer Service obeys `robots.txt`
-// rules and requires the source HTTP server to support `Range` requests
-// and to return a `Content-Length` header in each response. *
-// ObjectConditions have no effect when filtering objects to transfer.
+// actual size of the object fetched, the object is not transferred. *
+// If the specified MD5 does not match the MD5 computed from the
+// transferred bytes, the object transfer fails. * Ensure that each URL
+// you specify is publicly accessible. For example, in Cloud Storage you
+// can [share an object publicly]
+// (/storage/docs/cloud-console#_sharingdata) and get a link to it. *
+// Storage Transfer Service obeys `robots.txt` rules and requires the
+// source HTTP server to support `Range` requests and to return a
+// `Content-Length` header in each response. * ObjectConditions have no
+// effect when filtering objects to transfer.
 type HttpData struct {
 	// ListUrl: Required. The URL that points to the file that stores the
 	// object list entries. This file must allow public access. Currently,
@@ -658,10 +673,10 @@ type HttpData struct {
 
 	// ForceSendFields is a list of field names (e.g. "ListUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ListUrl") to include in
@@ -695,10 +710,10 @@ type ListOperationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -730,10 +745,10 @@ type ListTransferJobsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -751,16 +766,49 @@ func (s *ListTransferJobsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LoggingConfig: Logging configure.
+type LoggingConfig struct {
+	// EnableOnpremGcsTransferLogs: Enables the Cloud Storage transfer logs
+	// for this transfer. This is only supported for transfer jobs with
+	// PosixFilesystem sources. The default is that logs are not generated
+	// for this transfer.
+	EnableOnpremGcsTransferLogs bool `json:"enableOnpremGcsTransferLogs,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableOnpremGcsTransferLogs") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EnableOnpremGcsTransferLogs") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LoggingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod LoggingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NotificationConfig: Specification to configure notifications
-// published to Cloud Pub/Sub. Notifications will be published to the
+// published to Pub/Sub. Notifications are published to the
 // customer-provided topic using the following
 // `PubsubMessage.attributes`: * "eventType": one of the EventType
 // values * "payloadFormat": one of the PayloadFormat values *
 // "projectId": the project_id of the `TransferOperation` *
 // "transferJobName": the transfer_job_name of the `TransferOperation`
 // * "transferOperationName": the name of the `TransferOperation` The
-// `PubsubMessage.data` will contain a TransferOperation resource
-// formatted according to the specified `PayloadFormat`.
+// `PubsubMessage.data` contains a TransferOperation resource formatted
+// according to the specified `PayloadFormat`.
 type NotificationConfig struct {
 	// EventTypes: Event types for which a notification is desired. If
 	// empty, send notifications for all event types.
@@ -788,18 +836,18 @@ type NotificationConfig struct {
 	// son), in application/json.
 	PayloadFormat string `json:"payloadFormat,omitempty"`
 
-	// PubsubTopic: Required. The `Topic.name` of the Cloud Pub/Sub topic to
-	// which to publish notifications. Must be of the format:
-	// `projects/{project}/topics/{topic}`. Not matching this format will
-	// result in an INVALID_ARGUMENT error.
+	// PubsubTopic: Required. The `Topic.name` of the Pub/Sub topic to which
+	// to publish notifications. Must be of the format:
+	// `projects/{project}/topics/{topic}`. Not matching this format results
+	// in an INVALID_ARGUMENT error.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EventTypes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EventTypes") to include in
@@ -817,13 +865,14 @@ func (s *NotificationConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ObjectConditions: Conditions that determine which objects will be
+// ObjectConditions: Conditions that determine which objects are
 // transferred. Applies only to Cloud Data Sources such as S3, Azure,
 // and Cloud Storage. The "last modification time" refers to the time of
 // the last change to the object's content or metadata — specifically,
 // this is the `updated` property of Cloud Storage objects, the
 // `LastModified` field of S3 objects, and the `Last-Modified` header of
-// Azure blobs.
+// Azure blobs. This is not supported for transfers involving
+// PosixFilesystem.
 type ObjectConditions struct {
 	// ExcludePrefixes: If you specify `exclude_prefixes`, Storage Transfer
 	// Service uses the items in the `exclude_prefixes` array to determine
@@ -871,7 +920,7 @@ type ObjectConditions struct {
 
 	// LastModifiedBefore: If specified, only objects with a "last
 	// modification time" before this timestamp and objects that don't have
-	// a "last modification time" will be transferred.
+	// a "last modification time" are transferred.
 	LastModifiedBefore string `json:"lastModifiedBefore,omitempty"`
 
 	// LastModifiedSince: If specified, only objects with a "last
@@ -902,10 +951,10 @@ type ObjectConditions struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExcludePrefixes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExcludePrefixes") to
@@ -960,10 +1009,10 @@ type Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -986,6 +1035,34 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 type PauseTransferOperationRequest struct {
 }
 
+// PosixFilesystem: A POSIX filesystem data source or sink.
+type PosixFilesystem struct {
+	// RootDirectory: Root directory path to the filesystem.
+	RootDirectory string `json:"rootDirectory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RootDirectory") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RootDirectory") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PosixFilesystem) MarshalJSON() ([]byte, error) {
+	type NoMethod PosixFilesystem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ResumeTransferOperationRequest: Request passed to
 // ResumeTransferOperation.
 type ResumeTransferOperationRequest struct {
@@ -999,10 +1076,10 @@ type RunTransferJobRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ProjectId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ProjectId") to include in
@@ -1040,13 +1117,13 @@ type Schedule struct {
 	RepeatInterval string `json:"repeatInterval,omitempty"`
 
 	// ScheduleEndDate: The last day a transfer runs. Date boundaries are
-	// determined relative to UTC time. A job will run once per 24 hours
-	// within the following guidelines: * If `schedule_end_date` and
+	// determined relative to UTC time. A job runs once per 24 hours within
+	// the following guidelines: * If `schedule_end_date` and
 	// schedule_start_date are the same and in the future relative to UTC,
 	// the transfer is executed only one time. * If `schedule_end_date` is
 	// later than `schedule_start_date` and `schedule_end_date` is in the
-	// future relative to UTC, the job will run each day at
-	// start_time_of_day through `schedule_end_date`.
+	// future relative to UTC, the job runs each day at start_time_of_day
+	// through `schedule_end_date`.
 	ScheduleEndDate *Date `json:"scheduleEndDate,omitempty"`
 
 	// ScheduleStartDate: Required. The start date of a transfer. Date
@@ -1054,13 +1131,13 @@ type Schedule struct {
 	// `schedule_start_date` and start_time_of_day are in the past relative
 	// to the job's creation time, the transfer starts the day after you
 	// schedule the transfer request. **Note:** When starting jobs at or
-	// near midnight UTC it is possible that a job will start later than
+	// near midnight UTC it is possible that a job starts later than
 	// expected. For example, if you send an outbound request on June 1 one
 	// millisecond prior to midnight UTC and the Storage Transfer Service
-	// server receives the request on June 2, then it will create a
-	// TransferJob with `schedule_start_date` set to June 2 and a
-	// `start_time_of_day` set to midnight UTC. The first scheduled
-	// TransferOperation will take place on June 3 at midnight UTC.
+	// server receives the request on June 2, then it creates a TransferJob
+	// with `schedule_start_date` set to June 2 and a `start_time_of_day`
+	// set to midnight UTC. The first scheduled TransferOperation takes
+	// place on June 3 at midnight UTC.
 	ScheduleStartDate *Date `json:"scheduleStartDate,omitempty"`
 
 	// StartTimeOfDay: The time in UTC that a transfer job is scheduled to
@@ -1074,10 +1151,10 @@ type Schedule struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTimeOfDay") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTimeOfDay") to include
@@ -1118,10 +1195,10 @@ type Status struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -1162,10 +1239,10 @@ type TimeOfDay struct {
 
 	// ForceSendFields is a list of field names (e.g. "Hours") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Hours") to include in API
@@ -1216,6 +1293,25 @@ type TransferCounters struct {
 	// transferred because they already exist in the data sink.
 	BytesFromSourceSkippedBySync int64 `json:"bytesFromSourceSkippedBySync,omitempty,string"`
 
+	// DirectoriesFailedToListFromSource: For transfers involving
+	// PosixFilesystem only. Number of listing failures for each directory
+	// found at the source. Potential failures when listing a directory
+	// include permission failure or block failure. If listing a directory
+	// fails, no files in the directory are transferred.
+	DirectoriesFailedToListFromSource int64 `json:"directoriesFailedToListFromSource,omitempty,string"`
+
+	// DirectoriesFoundFromSource: For transfers involving PosixFilesystem
+	// only. Number of directories found while listing. For example, if the
+	// root directory of the transfer is `base/` and there are two other
+	// directories, `a/` and `b/` under this directory, the count after
+	// listing `base/`, `base/a/` and `base/b/` is 3.
+	DirectoriesFoundFromSource int64 `json:"directoriesFoundFromSource,omitempty,string"`
+
+	// DirectoriesSuccessfullyListedFromSource: For transfers involving
+	// PosixFilesystem only. Number of successful listings for each
+	// directory found at the source.
+	DirectoriesSuccessfullyListedFromSource int64 `json:"directoriesSuccessfullyListedFromSource,omitempty,string"`
+
 	// ObjectsCopiedToSink: Objects that are copied to the data sink.
 	ObjectsCopiedToSink int64 `json:"objectsCopiedToSink,omitempty,string"`
 
@@ -1249,10 +1345,10 @@ type TransferCounters struct {
 
 	// ForceSendFields is a list of field names (e.g. "BytesCopiedToSink")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BytesCopiedToSink") to
@@ -1295,20 +1391,29 @@ type TransferJob struct {
 	// has been created for this JobConfig.
 	LatestOperationName string `json:"latestOperationName,omitempty"`
 
+	// LoggingConfig: Logging configuration.
+	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
+
 	// Name: A unique name (within the transfer project) assigned when the
 	// job is created. If this field is empty in a CreateTransferJobRequest,
-	// Storage Transfer Service will assign a unique name. Otherwise, the
+	// Storage Transfer Service assigns a unique name. Otherwise, the
 	// specified name is used as the unique name for this job. If the
 	// specified name is in use by a job, the creation request fails with an
 	// ALREADY_EXISTS error. This name must start with "transferJobs/"
 	// prefix and end with a letter or a number, and should be no more than
-	// 128 characters. This name must not start with 'transferJobs/OPI'.
-	// 'transferJobs/OPI' is a reserved prefix. Example:
-	// "transferJobs/^(?!OPI)[A-Za-z0-9-._~]*[A-Za-z0-9]$" Invalid job
-	// names will fail with an INVALID_ARGUMENT error.
+	// 128 characters. For transfers involving PosixFilesystem, this name
+	// must start with 'transferJobs/OPI' specifically. For all other
+	// transfer types, this name must not start with 'transferJobs/OPI'.
+	// 'transferJobs/OPI' is a reserved prefix for PosixFilesystem
+	// transfers. Non-PosixFilesystem example:
+	// "transferJobs/^(?!OPI)[A-Za-z0-9-._~]*[A-Za-z0-9]$" PosixFilesystem
+	// example: "transferJobs/OPI^[A-Za-z0-9-._~]*[A-Za-z0-9]$"
+	// Applications must not rely on the enforcement of naming requirements
+	// involving OPI. Invalid job names fail with an INVALID_ARGUMENT error.
 	Name string `json:"name,omitempty"`
 
-	// NotificationConfig: Notification configuration.
+	// NotificationConfig: Notification configuration. This is not supported
+	// for transfers involving PosixFilesystem.
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
 
 	// ProjectId: The ID of the Google Cloud Platform Project that owns the
@@ -1316,9 +1421,9 @@ type TransferJob struct {
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Schedule: Specifies schedule for the transfer job. This is an
-	// optional field. When the field is not set, the job will never execute
-	// a transfer, unless you invoke RunTransferJob or update the job to
-	// have a non-empty schedule.
+	// optional field. When the field is not set, the job never executes a
+	// transfer, unless you invoke RunTransferJob or update the job to have
+	// a non-empty schedule.
 	Schedule *Schedule `json:"schedule,omitempty"`
 
 	// Status: Status of the job. This value MUST be specified for
@@ -1330,8 +1435,8 @@ type TransferJob struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Zero is an illegal value.
-	//   "ENABLED" - New transfers will be performed based on the schedule.
-	//   "DISABLED" - New transfers will not be scheduled.
+	//   "ENABLED" - New transfers are performed based on the schedule.
+	//   "DISABLED" - New transfers are not scheduled.
 	//   "DELETED" - This is a soft delete state. After a transfer job is
 	// set to this state, the job and all the transfer executions are
 	// subject to garbage collection. Transfer jobs become eligible for
@@ -1347,10 +1452,10 @@ type TransferJob struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreationTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreationTime") to include
@@ -1415,10 +1520,10 @@ type TransferOperation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Counters") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Counters") to include in
@@ -1453,17 +1558,17 @@ type TransferOptions struct {
 	// OverwriteObjectsAlreadyExistingInSink: When to overwrite objects that
 	// already exist in the sink. The default is that only objects that are
 	// different from the source are ovewritten. If true, all objects in the
-	// sink whose name matches an object in the source will be overwritten
-	// with the source object.
+	// sink whose name matches an object in the source are overwritten with
+	// the source object.
 	OverwriteObjectsAlreadyExistingInSink bool `json:"overwriteObjectsAlreadyExistingInSink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DeleteObjectsFromSourceAfterTransfer") to unconditionally include in
-	// API requests. By default, fields with empty values are omitted from
-	// API requests. However, any non-pointer, non-interface field appearing
-	// in ForceSendFields will be sent to the server regardless of whether
-	// the field is empty or not. This may be used to include empty fields
-	// in Patch requests.
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -1505,6 +1610,9 @@ type TransferSpec struct {
 	// objects in a data sink.
 	ObjectConditions *ObjectConditions `json:"objectConditions,omitempty"`
 
+	// PosixDataSource: A POSIX Filesystem data source.
+	PosixDataSource *PosixFilesystem `json:"posixDataSource,omitempty"`
+
 	// TransferOptions: If the option delete_objects_unique_in_sink is
 	// `true` and time-based object conditions such as 'last modification
 	// time' are specified, the request fails with an INVALID_ARGUMENT
@@ -1513,10 +1621,10 @@ type TransferSpec struct {
 
 	// ForceSendFields is a list of field names (e.g. "AwsS3DataSource") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AwsS3DataSource") to
@@ -1545,7 +1653,7 @@ type UpdateTransferJobRequest struct {
 	// to specify only four fields: description, transfer_spec,
 	// notification_config, and status. An `UpdateTransferJobRequest` that
 	// specifies other fields are rejected with the error INVALID_ARGUMENT.
-	// Updating a job satus to DELETED requires
+	// Updating a job status to DELETED requires
 	// `storagetransfer.jobs.delete` permissions.
 	TransferJob *TransferJob `json:"transferJob,omitempty"`
 
@@ -1560,10 +1668,10 @@ type UpdateTransferJobRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ProjectId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ProjectId") to include in
@@ -1646,7 +1754,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1778,7 +1886,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1872,7 +1980,7 @@ type TransferJobsGetCall struct {
 
 // Get: Gets a transfer job.
 //
-// - jobName: " The job to get.
+// - jobName: The job to get.
 // - projectId: The ID of the Google Cloud Platform Console project that
 //   owns the job.
 func (r *TransferJobsService) Get(jobName string, projectId string) *TransferJobsGetCall {
@@ -1919,7 +2027,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1991,7 +2099,7 @@ func (c *TransferJobsGetCall) Do(opts ...googleapi.CallOption) (*TransferJob, er
 	//   ],
 	//   "parameters": {
 	//     "jobName": {
-	//       "description": "Required. \" The job to get.",
+	//       "description": "Required. The job to get.",
 	//       "location": "path",
 	//       "pattern": "^transferJobs/.*$",
 	//       "required": true,
@@ -2092,7 +2200,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2260,7 +2368,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2405,7 +2513,7 @@ func (c *TransferJobsRunCall) Header() http.Header {
 
 func (c *TransferJobsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2565,7 +2673,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2718,7 +2826,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2891,7 +2999,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3067,7 +3175,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3209,7 +3317,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

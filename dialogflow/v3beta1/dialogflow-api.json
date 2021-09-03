@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "See, edit, configure, and delete your Google Cloud Platform data"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         },
         "https://www.googleapis.com/auth/dialogflow": {
           "description": "View, manage and query your Dialogflow agents"
@@ -111,11 +111,81 @@
     "projects": {
       "resources": {
         "locations": {
+          "methods": {
+            "get": {
+              "description": "Gets information about a location.",
+              "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}",
+              "httpMethod": "GET",
+              "id": "dialogflow.projects.locations.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Resource name for the location.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/locations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v3beta1/{+name}",
+              "response": {
+                "$ref": "GoogleCloudLocationLocation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
+              ]
+            },
+            "list": {
+              "description": "Lists information about the supported locations for this service.",
+              "flatPath": "v3beta1/projects/{projectsId}/locations",
+              "httpMethod": "GET",
+              "id": "dialogflow.projects.locations.list",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "filter": {
+                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
+                  "location": "query",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The resource that owns the locations collection, if applicable.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "pageSize": {
+                  "description": "The maximum number of results to return. If not set, the service selects a default.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v3beta1/{+name}/locations",
+              "response": {
+                "$ref": "GoogleCloudLocationListLocationsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
+              ]
+            }
+          },
           "resources": {
             "agents": {
               "methods": {
                 "create": {
-                  "description": "Creates an agent in the specified location.",
+                  "description": "Creates an agent in the specified location. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
                   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents",
                   "httpMethod": "POST",
                   "id": "dialogflow.projects.locations.agents.create",
@@ -170,7 +240,7 @@
                   ]
                 },
                 "export": {
-                  "description": "Exports the specified agent to a binary file.",
+                  "description": "Exports the specified agent to a binary file. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: An empty [Struct message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#struct) - `response`: ExportAgentResponse",
                   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}:export",
                   "httpMethod": "POST",
                   "id": "dialogflow.projects.locations.agents.export",
@@ -293,7 +363,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Updates the specified agent.",
+                  "description": "Updates the specified agent. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
                   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}",
                   "httpMethod": "PATCH",
                   "id": "dialogflow.projects.locations.agents.patch",
@@ -328,7 +398,7 @@
                   ]
                 },
                 "restore": {
-                  "description": "Restores the specified agent from a binary file. Replaces the current agent with a new one. Note that all existing resources in agent (e.g. intents, entity types, flows) will be removed.",
+                  "description": "Restores the specified agent from a binary file. Replaces the current agent with a new one. Note that all existing resources in agent (e.g. intents, entity types, flows) will be removed. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: An empty [Struct message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#struct) - `response`: An [Empty message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty) Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
                   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}:restore",
                   "httpMethod": "POST",
                   "id": "dialogflow.projects.locations.agents.restore",
@@ -424,7 +494,7 @@
                       ]
                     },
                     "delete": {
-                      "description": "Deletes the specified entity type.",
+                      "description": "Deletes the specified entity type. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/entityTypes/{entityTypesId}",
                       "httpMethod": "DELETE",
                       "id": "dialogflow.projects.locations.agents.entityTypes.delete",
@@ -528,7 +598,7 @@
                       ]
                     },
                     "patch": {
-                      "description": "Updates the specified entity type.",
+                      "description": "Updates the specified entity type. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/entityTypes/{entityTypesId}",
                       "httpMethod": "PATCH",
                       "id": "dialogflow.projects.locations.agents.entityTypes.patch",
@@ -572,7 +642,7 @@
                 "environments": {
                   "methods": {
                     "create": {
-                      "description": "Creates an Environment in the specified Agent.",
+                      "description": "Creates an Environment in the specified Agent. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: An empty [Struct message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#struct) - `response`: Environment",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.locations.agents.environments.create",
@@ -727,7 +797,7 @@
                       ]
                     },
                     "patch": {
-                      "description": "Updates the specified Environment.",
+                      "description": "Updates the specified Environment. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: An empty [Struct message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#struct) - `response`: Environment",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}",
                       "httpMethod": "PATCH",
                       "id": "dialogflow.projects.locations.agents.environments.patch",
@@ -762,7 +832,7 @@
                       ]
                     },
                     "runContinuousTest": {
-                      "description": "Kicks off a continuous test under the specified Environment.",
+                      "description": "Kicks off a continuous test under the specified Environment. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: RunContinuousTestMetadata - `response`: RunContinuousTestResponse",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/environments/{environmentsId}:runContinuousTest",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.locations.agents.environments.runContinuousTest",
@@ -1303,7 +1373,7 @@
                 "flows": {
                   "methods": {
                     "create": {
-                      "description": "Creates a flow in the specified agent.",
+                      "description": "Creates a flow in the specified agent. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/flows",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.locations.agents.flows.create",
@@ -1368,7 +1438,7 @@
                       ]
                     },
                     "export": {
-                      "description": "Exports the specified flow to a binary file. Note that resources (e.g. intents, entities, webhooks) that the flow references will also be exported.",
+                      "description": "Exports the specified flow to a binary file. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: An empty [Struct message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#struct) - `response`: ExportFlowResponse Note that resources (e.g. intents, entities, webhooks) that the flow references will also be exported.",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/flows/{flowsId}:export",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.locations.agents.flows.export",
@@ -1459,7 +1529,7 @@
                       ]
                     },
                     "import": {
-                      "description": "Imports the specified flow to the specified agent from a binary file.",
+                      "description": "Imports the specified flow to the specified agent from a binary file. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: An empty [Struct message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#struct) - `response`: ImportFlowResponse Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/flows:import",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.locations.agents.flows.import",
@@ -1530,7 +1600,7 @@
                       ]
                     },
                     "patch": {
-                      "description": "Updates the specified flow.",
+                      "description": "Updates the specified flow. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/flows/{flowsId}",
                       "httpMethod": "PATCH",
                       "id": "dialogflow.projects.locations.agents.flows.patch",
@@ -1551,7 +1621,7 @@
                           "type": "string"
                         },
                         "updateMask": {
-                          "description": "Required. The mask to control which fields get updated. If `update_mask` is not specified, an error will be returned.",
+                          "description": "The mask to control which fields get updated. If the mask is not present, all fields will be updated.",
                           "format": "google-fieldmask",
                           "location": "query",
                           "type": "string"
@@ -1570,7 +1640,7 @@
                       ]
                     },
                     "train": {
-                      "description": "Trains the specified flow. Note that only the flow in 'draft' environment is trained.",
+                      "description": "Trains the specified flow. Note that only the flow in 'draft' environment is trained. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: An empty [Struct message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#struct) - `response`: An [Empty message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty) Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/flows/{flowsId}:train",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.locations.agents.flows.train",
@@ -1814,7 +1884,7 @@
                     "transitionRouteGroups": {
                       "methods": {
                         "create": {
-                          "description": "Creates an TransitionRouteGroup in the specified flow.",
+                          "description": "Creates an TransitionRouteGroup in the specified flow. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
                           "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/flows/{flowsId}/transitionRouteGroups",
                           "httpMethod": "POST",
                           "id": "dialogflow.projects.locations.agents.flows.transitionRouteGroups.create",
@@ -1848,7 +1918,7 @@
                           ]
                         },
                         "delete": {
-                          "description": "Deletes the specified TransitionRouteGroup.",
+                          "description": "Deletes the specified TransitionRouteGroup. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
                           "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/flows/{flowsId}/transitionRouteGroups/{transitionRouteGroupsId}",
                           "httpMethod": "DELETE",
                           "id": "dialogflow.projects.locations.agents.flows.transitionRouteGroups.delete",
@@ -1952,7 +2022,7 @@
                           ]
                         },
                         "patch": {
-                          "description": "Updates the specified TransitionRouteGroup.",
+                          "description": "Updates the specified TransitionRouteGroup. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
                           "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/flows/{flowsId}/transitionRouteGroups/{transitionRouteGroupsId}",
                           "httpMethod": "PATCH",
                           "id": "dialogflow.projects.locations.agents.flows.transitionRouteGroups.patch",
@@ -1996,7 +2066,7 @@
                     "versions": {
                       "methods": {
                         "create": {
-                          "description": "Creates a Version in the specified Flow.",
+                          "description": "Creates a Version in the specified Flow. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: CreateVersionOperationMetadata - `response`: Version",
                           "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/flows/{flowsId}/versions",
                           "httpMethod": "POST",
                           "id": "dialogflow.projects.locations.agents.flows.versions.create",
@@ -2114,7 +2184,7 @@
                           ]
                         },
                         "load": {
-                          "description": "Loads resources in the specified version to the draft flow.",
+                          "description": "Loads resources in the specified version to the draft flow. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: An empty [Struct message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#struct) - `response`: An [Empty message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)",
                           "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/flows/{flowsId}/versions/{versionsId}:load",
                           "httpMethod": "POST",
                           "id": "dialogflow.projects.locations.agents.flows.versions.load",
@@ -2184,7 +2254,7 @@
                 "intents": {
                   "methods": {
                     "create": {
-                      "description": "Creates an intent in the specified agent.",
+                      "description": "Creates an intent in the specified agent. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/intents",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.locations.agents.intents.create",
@@ -2218,7 +2288,7 @@
                       ]
                     },
                     "delete": {
-                      "description": "Deletes the specified intent.",
+                      "description": "Deletes the specified intent. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/intents/{intentsId}",
                       "httpMethod": "DELETE",
                       "id": "dialogflow.projects.locations.agents.intents.delete",
@@ -2332,7 +2402,7 @@
                       ]
                     },
                     "patch": {
-                      "description": "Updates the specified intent.",
+                      "description": "Updates the specified intent. Note: You should always train a flow prior to sending it queries. See the [training documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/intents/{intentsId}",
                       "httpMethod": "PATCH",
                       "id": "dialogflow.projects.locations.agents.intents.patch",
@@ -2655,7 +2725,7 @@
                       ]
                     },
                     "batchRun": {
-                      "description": "Kicks off a batch run of test cases.",
+                      "description": "Kicks off a batch run of test cases. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: BatchRunTestCasesMetadata - `response`: BatchRunTestCasesResponse",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/testCases:batchRun",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.locations.agents.testCases.batchRun",
@@ -2756,7 +2826,7 @@
                       ]
                     },
                     "export": {
-                      "description": "Exports the test cases under the agent to a Cloud Storage bucket or a local file. Filter can be applied to export a subset of test cases.",
+                      "description": "Exports the test cases under the agent to a Cloud Storage bucket or a local file. Filter can be applied to export a subset of test cases. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ExportTestCasesMetadata - `response`: ExportTestCasesResponse",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/testCases:export",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.locations.agents.testCases.export",
@@ -2811,7 +2881,7 @@
                       ]
                     },
                     "import": {
-                      "description": "Imports the test cases from a Cloud Storage bucket or a local file. It always creates new test cases and won't overwite any existing ones. The provided ID in the imported test case is neglected.",
+                      "description": "Imports the test cases from a Cloud Storage bucket or a local file. It always creates new test cases and won't overwite any existing ones. The provided ID in the imported test case is neglected. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: ImportTestCasesMetadata - `response`: ImportTestCasesResponse",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/testCases:import",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.locations.agents.testCases.import",
@@ -2927,7 +2997,7 @@
                       ]
                     },
                     "run": {
-                      "description": "Kicks off a test case run.",
+                      "description": "Kicks off a test case run. This method is a [long-running operation](https://cloud.google.com/dialogflow/cx/docs/how/long-running-operation). The returned `Operation` type has the following method-specific fields: - `metadata`: RunTestCaseMetadata - `response`: RunTestCaseResponse",
                       "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/agents/{agentsId}/testCases/{testCasesId}:run",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.locations.agents.testCases.run",
@@ -3553,7 +3623,7 @@
       }
     }
   },
-  "revision": "20210611",
+  "revision": "20210830",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AudioInput": {
@@ -3692,7 +3762,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Required. Input only. The diagnostic info output for the turn.",
+          "description": "Required. Input only. The diagnostic info output for the turn. Required to calculate the testing coverage.",
           "type": "object"
         },
         "differences": {
@@ -3849,7 +3919,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowCxV3ExportTestCasesMetadata": {
-      "description": "Metadata returned for the TestCases.ExportTestCases long running operation.",
+      "description": "Metadata returned for the TestCases.ExportTestCases long running operation. This message currently has no fields.",
       "id": "GoogleCloudDialogflowCxV3ExportTestCasesMetadata",
       "properties": {},
       "type": "object"
@@ -4218,7 +4288,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "The key/value metadata to label an intent. Labels can contain lowercase letters, digits and the symbols '-' and '_'. International characters are allowed, including letters from unicase alphabets. Keys must start with a letter. Keys and values can be no longer than 63 characters and no more than 128 bytes. Prefix \"sys.\" is reserved for Dialogflow defined labels. Currently allowed Dialogflow defined labels include: * sys.head * sys.contextual The above labels do not require value. \"sys.head\" means the intent is a head intent. \"sys.contextual\" means the intent is a contextual intent.",
+          "description": "The key/value metadata to label an intent. Labels can contain lowercase letters, digits and the symbols '-' and '_'. International characters are allowed, including letters from unicase alphabets. Keys must start with a letter. Keys and values can be no longer than 63 characters and no more than 128 bytes. Prefix \"sys-\" is reserved for Dialogflow defined labels. Currently allowed Dialogflow defined labels include: * sys-head * sys-contextual The above labels do not require value. \"sys-head\" means the intent is a head intent. \"sys.contextual\" means the intent is a contextual intent.",
           "type": "object"
         },
         "name": {
@@ -4670,7 +4740,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowCxV3RunTestCaseMetadata": {
-      "description": "Metadata returned for the TestCases.RunTestCase long running operation.",
+      "description": "Metadata returned for the TestCases.RunTestCase long running operation. This message currently has no fields.",
       "id": "GoogleCloudDialogflowCxV3RunTestCaseMetadata",
       "properties": {},
       "type": "object"
@@ -5127,10 +5197,40 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowCxV3beta1AdvancedSettings": {
+      "description": "Hierarchical advanced settings for agent/flow/page/fulfillment/parameter. Settings exposed at lower level overrides the settings exposed at higher level. Hierarchy: Agent-\u003eFlow-\u003ePage-\u003eFulfillment/Parameter.",
+      "id": "GoogleCloudDialogflowCxV3beta1AdvancedSettings",
+      "properties": {
+        "loggingSettings": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings",
+          "description": "Settings for logging. Settings for Dialogflow History, Contact Center messages, StackDriver logs, and speech logging. Exposed at the following levels: - Agent level."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings": {
+      "description": "Define behaviors on logging.",
+      "id": "GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings",
+      "properties": {
+        "enableInteractionLogging": {
+          "description": "If true, DF Interaction logging is currently enabled.",
+          "type": "boolean"
+        },
+        "enableStackdriverLogging": {
+          "description": "If true, StackDriver logging is currently enabled.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3beta1Agent": {
       "description": "Agents are best described as Natural Language Understanding (NLU) modules that transform user requests into actionable data. You can include agents in your app, product, or service to determine user intent and respond to the user in a natural way. After you create an agent, you can add Intents, Entity Types, Flows, Fulfillments, Webhooks, and so on to manage the conversation flows..",
       "id": "GoogleCloudDialogflowCxV3beta1Agent",
       "properties": {
+        "advancedSettings": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1AdvancedSettings",
+          "description": "Hierarchical advanced settings for this agent. The settings exposed at the lower level overrides the settings exposed at the higher level."
+        },
         "avatarUri": {
           "description": "The URI of the agent's avatar. Avatars are used throughout the Dialogflow console and in the self-hosted [Web Demo](https://cloud.google.com/dialogflow/docs/integrations/web-demo) integration.",
           "type": "string"
@@ -5152,7 +5252,7 @@
           "type": "boolean"
         },
         "enableStackdriverLogging": {
-          "description": "Indicates if stackdriver logging is enabled for the agent.",
+          "description": "Indicates if stackdriver logging is enabled for the agent. Please use agent.advanced_settings instead.",
           "type": "boolean"
         },
         "name": {
@@ -5394,7 +5494,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Required. Input only. The diagnostic info output for the turn.",
+          "description": "Required. Input only. The diagnostic info output for the turn. Required to calculate the testing coverage.",
           "type": "object"
         },
         "differences": {
@@ -5760,24 +5860,38 @@
           "$ref": "GoogleCloudDialogflowCxV3beta1ExperimentResult",
           "description": "Inference result of the experiment."
         },
+        "rolloutConfig": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1RolloutConfig",
+          "description": "The configuration for auto rollout. If set, there should be exactly two variants in the experiment (control variant being the default version of the flow), the traffic allocation for the non-control variant will gradually increase to 100% when conditions are met, and eventually replace the control variant to become the default version of the flow."
+        },
+        "rolloutFailureReason": {
+          "description": "The reason why rollout has failed. Should only be set when state is ROLLOUT_FAILED.",
+          "type": "string"
+        },
+        "rolloutState": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1RolloutState",
+          "description": "State of the auto rollout process."
+        },
         "startTime": {
           "description": "Start time of this experiment.",
           "format": "google-datetime",
           "type": "string"
         },
         "state": {
-          "description": "The current state of the experiment. Transition triggered by Expriments.StartExperiment: PENDING-\u003eRUNNING. Transition triggered by Expriments.CancelExperiment: PENDING-\u003eCANCELLED or RUNNING-\u003eCANCELLED.",
+          "description": "The current state of the experiment. Transition triggered by Experiments.StartExperiment: DRAFT-\u003eRUNNING. Transition triggered by Experiments.CancelExperiment: DRAFT-\u003eDONE or RUNNING-\u003eDONE.",
           "enum": [
             "STATE_UNSPECIFIED",
             "DRAFT",
             "RUNNING",
-            "DONE"
+            "DONE",
+            "ROLLOUT_FAILED"
           ],
           "enumDescriptions": [
             "State unspecified.",
             "The experiment is created but not started yet.",
             "The experiment is running.",
-            "The experiment is done."
+            "The experiment is done.",
+            "The experiment with auto-rollout enabled has failed."
           ],
           "type": "string"
         },
@@ -5995,7 +6109,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowCxV3beta1ExportTestCasesMetadata": {
-      "description": "Metadata returned for the TestCases.ExportTestCases long running operation.",
+      "description": "Metadata returned for the TestCases.ExportTestCases long running operation. This message currently has no fields.",
       "id": "GoogleCloudDialogflowCxV3beta1ExportTestCasesMetadata",
       "properties": {},
       "type": "object"
@@ -7321,6 +7435,13 @@
           "description": "Whether to disable webhook calls for this request.",
           "type": "boolean"
         },
+        "flowVersions": {
+          "description": "A list of flow versions to override for the request. Format: `projects//locations//agents//flows//versions/`. If version 1 of flow X is included in this list, the traffic of flow X will go through version 1 regardless of the version configuration in the environment. Each flow can have at most one version specified in this list.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "geoLocation": {
           "$ref": "GoogleTypeLatLng",
           "description": "The geo location of this conversational query."
@@ -7678,6 +7799,70 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowCxV3beta1RolloutConfig": {
+      "description": "The configuration for auto rollout.",
+      "id": "GoogleCloudDialogflowCxV3beta1RolloutConfig",
+      "properties": {
+        "failureCondition": {
+          "description": "The conditions that are used to evaluate the failure of a rollout step. If not specified, no rollout steps will fail. E.g. \"containment_rate \u003c 10% OR average_turn_count \u003c 3\". See the [conditions reference](https://cloud.google.com/dialogflow/cx/docs/reference/condition).",
+          "type": "string"
+        },
+        "rolloutCondition": {
+          "description": "The conditions that are used to evaluate the success of a rollout step. If not specified, all rollout steps will proceed to the next one unless failure conditions are met. E.g. \"containment_rate \u003e 60% AND callback_rate \u003c 20%\". See the [conditions reference](https://cloud.google.com/dialogflow/cx/docs/reference/condition).",
+          "type": "string"
+        },
+        "rolloutSteps": {
+          "description": "Steps to roll out a flow version. Steps should be sorted by percentage in ascending order.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowCxV3beta1RolloutConfigRolloutStep"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1RolloutConfigRolloutStep": {
+      "description": "A single rollout step with specified traffic allocation.",
+      "id": "GoogleCloudDialogflowCxV3beta1RolloutConfigRolloutStep",
+      "properties": {
+        "displayName": {
+          "description": "The name of the rollout step;",
+          "type": "string"
+        },
+        "minDuration": {
+          "description": "The minimum time that this step should last. Should be longer than 1 hour. If not set, the default minimum duration for each step will be 1 hour.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "trafficPercent": {
+          "description": "The percentage of traffic allocated to the flow version of this rollout step. (0%, 100%].",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1RolloutState": {
+      "description": "State of the auto-rollout process.",
+      "id": "GoogleCloudDialogflowCxV3beta1RolloutState",
+      "properties": {
+        "startTime": {
+          "description": "Start time of the current step.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "step": {
+          "description": "Display name of the current auto rollout step.",
+          "type": "string"
+        },
+        "stepIndex": {
+          "description": "Index of the current step in the auto rollout steps list.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowCxV3beta1RunContinuousTestMetadata": {
       "description": "Metadata returned for the Environments.RunContinuousTest long running operation.",
       "id": "GoogleCloudDialogflowCxV3beta1RunContinuousTestMetadata",
@@ -7710,7 +7895,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowCxV3beta1RunTestCaseMetadata": {
-      "description": "Metadata returned for the TestCases.RunTestCase long running operation.",
+      "description": "Metadata returned for the TestCases.RunTestCase long running operation. This message currently has no fields.",
       "id": "GoogleCloudDialogflowCxV3beta1RunTestCaseMetadata",
       "properties": {},
       "type": "object"
@@ -7741,12 +7926,20 @@
       "description": "Represents the settings related to security issues, such as data redaction and data retention. It may take hours for updates on the settings to propagate to all the related components and take effect.",
       "id": "GoogleCloudDialogflowCxV3beta1SecuritySettings",
       "properties": {
+        "deidentifyTemplate": {
+          "description": "[DLP](https://cloud.google.com/dlp/docs) deidentify template name. Use this template to define de-identification configuration for the content. If empty, Dialogflow replaces sensitive info with `[redacted]` text. The template name will have one of the following formats: `projects//locations//deidentifyTemplates/` OR `organizations//locations//deidentifyTemplates/` Note: `deidentify_template` must be located in the same region as the `SecuritySettings`.",
+          "type": "string"
+        },
         "displayName": {
           "description": "Required. The human-readable name of the security settings, unique within the location.",
           "type": "string"
         },
+        "insightsExportSettings": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1SecuritySettingsInsightsExportSettings",
+          "description": "Controls conversation exporting settings to Insights after conversation is completed. If retention_strategy is set to REMOVE_AFTER_CONVERSATION, Insights export is disabled no matter what you configure here."
+        },
         "inspectTemplate": {
-          "description": "DLP inspect template name. Use this template to define inspect base settings. If empty, we use the default DLP inspect config. The template name will have one of the following formats: `projects//inspectTemplates/` OR `projects//locations//inspectTemplates/` OR `organizations//inspectTemplates/`",
+          "description": "[DLP](https://cloud.google.com/dlp/docs) inspect template name. Use this template to define inspect base settings. If empty, we use the default DLP inspect config. The template name will have one of the following formats: `projects//locations//inspectTemplates/` OR `organizations//locations//inspectTemplates/` Note: `inspect_template` must be located in the same region as the `SecuritySettings`.",
           "type": "string"
         },
         "name": {
@@ -7796,6 +7989,17 @@
           "description": "Retains data in interaction logging for the specified number of days. This does not apply to Cloud logging, which is owned by the user - not Dialogflow. User must Set a value lower than Dialogflow's default 30d TTL. Setting a value higher than that has no effect. A missing value or setting to 0 also means we use Dialogflow's default TTL. Note: Interaction logging is a limited access feature. Talk to your Google representative to check availability for you.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1SecuritySettingsInsightsExportSettings": {
+      "description": "Settings for exporting conversations to [Insights](https://cloud.google.com/dialogflow/priv/docs/insights).",
+      "id": "GoogleCloudDialogflowCxV3beta1SecuritySettingsInsightsExportSettings",
+      "properties": {
+        "enableInsightsExport": {
+          "description": "If enabled, we will automatically exports conversations to Insights and Insights runs its analyzers.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -9164,10 +9368,11 @@
           "type": "array"
         },
         "followupIntentInfo": {
-          "description": "Read-only. Information about all followup intents that have this intent as a direct or indirect parent. We populate this field only in the output.",
+          "description": "Output only. Read-only. Information about all followup intents that have this intent as a direct or indirect parent. We populate this field only in the output.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2IntentFollowupIntentInfo"
           },
+          "readOnly": true,
           "type": "array"
         },
         "inputContextNames": {
@@ -9228,7 +9433,8 @@
           "type": "boolean"
         },
         "rootFollowupIntentName": {
-          "description": "Read-only. The unique identifier of the root intent in the chain of followup intents. It identifies the correct followup intents chain for this intent. We populate this field only in the output. Format: `projects//agent/intents/`.",
+          "description": "Output only. Read-only. The unique identifier of the root intent in the chain of followup intents. It identifies the correct followup intents chain for this intent. We populate this field only in the output. Format: `projects//agent/intents/`.",
+          "readOnly": true,
           "type": "string"
         },
         "trainingPhrases": {
@@ -12573,6 +12779,58 @@
         "genericMetadata": {
           "$ref": "GoogleCloudDialogflowV3alpha1GenericKnowledgeOperationMetadata",
           "description": "The generic information of the operation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudLocationListLocationsResponse": {
+      "description": "The response message for Locations.ListLocations.",
+      "id": "GoogleCloudLocationListLocationsResponse",
+      "properties": {
+        "locations": {
+          "description": "A list of locations that matches the specified filter in the request.",
+          "items": {
+            "$ref": "GoogleCloudLocationLocation"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "The standard List next-page token.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudLocationLocation": {
+      "description": "A resource that represents Google Cloud Platform location.",
+      "id": "GoogleCloudLocationLocation",
+      "properties": {
+        "displayName": {
+          "description": "The friendly name for this location, typically a nearby city name. For example, \"Tokyo\".",
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Cross-service attributes for the location. For example {\"cloud.googleapis.com/region\": \"us-east1\"}",
+          "type": "object"
+        },
+        "locationId": {
+          "description": "The canonical id for this location. For example: `\"us-east1\"`.",
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "Service-specific metadata. For example the available capacity at the given location.",
+          "type": "object"
+        },
+        "name": {
+          "description": "Resource name for the location, which may vary between implementations. For example: `\"projects/example-project/locations/us-east1\"`",
+          "type": "string"
         }
       },
       "type": "object"

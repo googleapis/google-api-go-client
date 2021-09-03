@@ -1,5 +1,76 @@
 # Changes
 
+## [0.56.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.55.0...v0.56.0) (2021-08-31)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1199](https://www.github.com/googleapis/google-api-go-client/issues/1199)
+* **option:** add internaloption to force use of certain credential ([#1162](https://www.github.com/googleapis/google-api-go-client/issues/1162)) ([62f4bc9](https://www.github.com/googleapis/google-api-go-client/commit/62f4bc9cc6c081a5e30c360dce098e5d8f55050f))
+
+## [0.55.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.54.0...v0.55.0) (2021-08-30)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1195](https://www.github.com/googleapis/google-api-go-client/issues/1195) [#1191](https://www.github.com/googleapis/google-api-go-client/issues/1191) [#1190](https://www.github.com/googleapis/google-api-go-client/issues/1190) [#1189](https://www.github.com/googleapis/google-api-go-client/issues/1189) [#1188](https://www.github.com/googleapis/google-api-go-client/issues/1188) [#1183](https://www.github.com/googleapis/google-api-go-client/issues/1183) [#1181](https://www.github.com/googleapis/google-api-go-client/issues/1181) [#1180](https://www.github.com/googleapis/google-api-go-client/issues/1180) [#1175](https://www.github.com/googleapis/google-api-go-client/issues/1175) [#1174](https://www.github.com/googleapis/google-api-go-client/issues/1174) [#1173](https://www.github.com/googleapis/google-api-go-client/issues/1173) [#1172](https://www.github.com/googleapis/google-api-go-client/issues/1172) [#1171](https://www.github.com/googleapis/google-api-go-client/issues/1171) [#1169](https://www.github.com/googleapis/google-api-go-client/issues/1169) [#1168](https://www.github.com/googleapis/google-api-go-client/issues/1168) [#1166](https://www.github.com/googleapis/google-api-go-client/issues/1166) [#1164](https://www.github.com/googleapis/google-api-go-client/issues/1164)
+* **internaloption:** add AllowNonDefaultServiceAccount internaloption ([#1127](https://www.github.com/googleapis/google-api-go-client/issues/1127)) ([d713001](https://www.github.com/googleapis/google-api-go-client/commit/d71300120fdeff12fa2ecca866567989a67db946))
+
+
+### Bug Fixes
+
+* **idtoken:** provide default scope for cert endpoint ([#1198](https://www.github.com/googleapis/google-api-go-client/issues/1198)) ([7019080](https://www.github.com/googleapis/google-api-go-client/commit/701908002bf1b34e9bf88ca0c3d2191a39bed0d1)), refs [#1187](https://www.github.com/googleapis/google-api-go-client/issues/1187)
+* **impersonate:** allow lifetimes up to 12 hours ([#1186](https://www.github.com/googleapis/google-api-go-client/issues/1186)) ([569c56b](https://www.github.com/googleapis/google-api-go-client/commit/569c56bc622d1256ef3d3c0bb9d76d69721ec981)), refs [#1185](https://www.github.com/googleapis/google-api-go-client/issues/1185)
+
+## [0.54.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.53.0...v0.54.0) (2021-08-13)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1163](https://www.github.com/googleapis/google-api-go-client/issues/1163) [#1160](https://www.github.com/googleapis/google-api-go-client/issues/1160)
+
+## [0.53.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.52.0...v0.53.0) (2021-08-11)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1159](https://www.github.com/googleapis/google-api-go-client/issues/1159) [#1157](https://www.github.com/googleapis/google-api-go-client/issues/1157) [#1154](https://www.github.com/googleapis/google-api-go-client/issues/1154) [#1152](https://www.github.com/googleapis/google-api-go-client/issues/1152) [#1151](https://www.github.com/googleapis/google-api-go-client/issues/1151) [#1150](https://www.github.com/googleapis/google-api-go-client/issues/1150) [#1149](https://www.github.com/googleapis/google-api-go-client/issues/1149) [#1147](https://www.github.com/googleapis/google-api-go-client/issues/1147) [#1146](https://www.github.com/googleapis/google-api-go-client/issues/1146) [#1145](https://www.github.com/googleapis/google-api-go-client/issues/1145) [#1142](https://www.github.com/googleapis/google-api-go-client/issues/1142) [#1140](https://www.github.com/googleapis/google-api-go-client/issues/1140) [#1138](https://www.github.com/googleapis/google-api-go-client/issues/1138)
+* **googleapi:** support setting arbitrary query parameters ([#1123](https://www.github.com/googleapis/google-api-go-client/issues/1123)) ([8085c66](https://www.github.com/googleapis/google-api-go-client/commit/8085c66486a521065a7e56a2e326c8de241930f5)), refs [#550](https://www.github.com/googleapis/google-api-go-client/issues/550)
+
+## [0.52.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.51.0...v0.52.0) (2021-07-29)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1137](https://www.github.com/googleapis/google-api-go-client/issues/1137) [#1135](https://www.github.com/googleapis/google-api-go-client/issues/1135) [#1134](https://www.github.com/googleapis/google-api-go-client/issues/1134) [#1133](https://www.github.com/googleapis/google-api-go-client/issues/1133) [#1131](https://www.github.com/googleapis/google-api-go-client/issues/1131) [#1130](https://www.github.com/googleapis/google-api-go-client/issues/1130) [#1128](https://www.github.com/googleapis/google-api-go-client/issues/1128)
+
+## [0.51.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.50.0...v0.51.0) (2021-07-22)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1126](https://www.github.com/googleapis/google-api-go-client/issues/1126) [#1125](https://www.github.com/googleapis/google-api-go-client/issues/1125) [#1122](https://www.github.com/googleapis/google-api-go-client/issues/1122) [#1121](https://www.github.com/googleapis/google-api-go-client/issues/1121) [#1119](https://www.github.com/googleapis/google-api-go-client/issues/1119) [#1118](https://www.github.com/googleapis/google-api-go-client/issues/1118) [#1116](https://www.github.com/googleapis/google-api-go-client/issues/1116) [#1115](https://www.github.com/googleapis/google-api-go-client/issues/1115) [#1114](https://www.github.com/googleapis/google-api-go-client/issues/1114) [#1113](https://www.github.com/googleapis/google-api-go-client/issues/1113) [#1112](https://www.github.com/googleapis/google-api-go-client/issues/1112) [#1110](https://www.github.com/googleapis/google-api-go-client/issues/1110) [#1109](https://www.github.com/googleapis/google-api-go-client/issues/1109) [#1108](https://www.github.com/googleapis/google-api-go-client/issues/1108) [#1107](https://www.github.com/googleapis/google-api-go-client/issues/1107) [#1106](https://www.github.com/googleapis/google-api-go-client/issues/1106) [#1105](https://www.github.com/googleapis/google-api-go-client/issues/1105) [#1104](https://www.github.com/googleapis/google-api-go-client/issues/1104) [#1102](https://www.github.com/googleapis/google-api-go-client/issues/1102) [#1101](https://www.github.com/googleapis/google-api-go-client/issues/1101) [#1100](https://www.github.com/googleapis/google-api-go-client/issues/1100) [#1098](https://www.github.com/googleapis/google-api-go-client/issues/1098)
+
+## [0.50.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.49.0...v0.50.0) (2021-06-30)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1097](https://www.github.com/googleapis/google-api-go-client/issues/1097) [#1095](https://www.github.com/googleapis/google-api-go-client/issues/1095) [#1093](https://www.github.com/googleapis/google-api-go-client/issues/1093) [#1090](https://www.github.com/googleapis/google-api-go-client/issues/1090) [#1089](https://www.github.com/googleapis/google-api-go-client/issues/1089) [#1088](https://www.github.com/googleapis/google-api-go-client/issues/1088) [#1086](https://www.github.com/googleapis/google-api-go-client/issues/1086)
+
+
+### Bug Fixes
+
+* **internal:** fix self-signed detection with scopes ([#1096](https://www.github.com/googleapis/google-api-go-client/issues/1096)) ([ff1d20b](https://www.github.com/googleapis/google-api-go-client/commit/ff1d20ba85c66fcaed1c1e466fbc647e09339854)), refs [#1092](https://www.github.com/googleapis/google-api-go-client/issues/1092)
+
+## [0.49.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.48.0...v0.49.0) (2021-06-23)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1085](https://www.github.com/googleapis/google-api-go-client/issues/1085) [#1084](https://www.github.com/googleapis/google-api-go-client/issues/1084) [#1082](https://www.github.com/googleapis/google-api-go-client/issues/1082) [#1080](https://www.github.com/googleapis/google-api-go-client/issues/1080) [#1079](https://www.github.com/googleapis/google-api-go-client/issues/1079) [#1078](https://www.github.com/googleapis/google-api-go-client/issues/1078) [#1076](https://www.github.com/googleapis/google-api-go-client/issues/1076) [#1073](https://www.github.com/googleapis/google-api-go-client/issues/1073) [#1071](https://www.github.com/googleapis/google-api-go-client/issues/1071) [#1070](https://www.github.com/googleapis/google-api-go-client/issues/1070) [#1068](https://www.github.com/googleapis/google-api-go-client/issues/1068) [#1067](https://www.github.com/googleapis/google-api-go-client/issues/1067) [#1066](https://www.github.com/googleapis/google-api-go-client/issues/1066) [#1064](https://www.github.com/googleapis/google-api-go-client/issues/1064) [#1063](https://www.github.com/googleapis/google-api-go-client/issues/1063) [#1060](https://www.github.com/googleapis/google-api-go-client/issues/1060)
+* **internal:** [AIP-4111] support scopes for self-signed JWT auth flow ([#1075](https://www.github.com/googleapis/google-api-go-client/issues/1075)) ([29cab68](https://www.github.com/googleapis/google-api-go-client/commit/29cab68ebd5b9ca017503baf46d91a29f8e84716))
+
 ## [0.48.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.47.0...v0.48.0) (2021-06-07)
 
 

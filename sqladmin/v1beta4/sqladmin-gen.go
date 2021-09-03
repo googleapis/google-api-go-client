@@ -83,7 +83,8 @@ const mtlsBasePath = "https://sqladmin.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud Platform data
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Manage your Google SQL Service instances
@@ -125,6 +126,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.BackupRuns = NewBackupRunsService(s)
+	s.Connect = NewConnectService(s)
 	s.Databases = NewDatabasesService(s)
 	s.Flags = NewFlagsService(s)
 	s.Instances = NewInstancesService(s)
@@ -142,6 +144,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	BackupRuns *BackupRunsService
+
+	Connect *ConnectService
 
 	Databases *DatabasesService
 
@@ -173,6 +177,15 @@ func NewBackupRunsService(s *Service) *BackupRunsService {
 }
 
 type BackupRunsService struct {
+	s *Service
+}
+
+func NewConnectService(s *Service) *ConnectService {
+	rs := &ConnectService{s: s}
+	return rs
+}
+
+type ConnectService struct {
 	s *Service
 }
 
@@ -277,10 +290,10 @@ type AclEntry struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExpirationTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExpirationTime") to
@@ -318,10 +331,10 @@ type ApiWarning struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -357,7 +370,8 @@ type BackupConfiguration struct {
 	// Location: Location of the backup
 	Location string `json:"location,omitempty"`
 
-	// PointInTimeRecoveryEnabled: Reserved for future use.
+	// PointInTimeRecoveryEnabled: (Postgres only) Whether point in time
+	// recovery is enabled.
 	PointInTimeRecoveryEnabled bool `json:"pointInTimeRecoveryEnabled,omitempty"`
 
 	// ReplicationLogArchivingEnabled: Reserved for future use.
@@ -373,11 +387,11 @@ type BackupConfiguration struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "BackupRetentionSettings") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BackupRetentionSettings")
@@ -406,10 +420,10 @@ type BackupContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "BackupId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BackupId") to include in
@@ -446,10 +460,10 @@ type BackupRetentionSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "RetainedBackups") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "RetainedBackups") to
@@ -484,11 +498,10 @@ type BackupRun struct {
 	Description string `json:"description,omitempty"`
 
 	// DiskEncryptionConfiguration: Encryption configuration specific to a
-	// backup. Applies only to Second Generation instances.
+	// backup.
 	DiskEncryptionConfiguration *DiskEncryptionConfiguration `json:"diskEncryptionConfiguration,omitempty"`
 
-	// DiskEncryptionStatus: Encryption status specific to a backup. Applies
-	// only to Second Generation instances.
+	// DiskEncryptionStatus: Encryption status specific to a backup.
 	DiskEncryptionStatus *DiskEncryptionStatus `json:"diskEncryptionStatus,omitempty"`
 
 	// EndTime: The time the backup operation completed in UTC timezone in
@@ -564,10 +577,10 @@ type BackupRun struct {
 
 	// ForceSendFields is a list of field names (e.g. "BackupKind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BackupKind") to include in
@@ -605,10 +618,10 @@ type BackupRunsListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -639,10 +652,10 @@ type BinLogCoordinates struct {
 
 	// ForceSendFields is a list of field names (e.g. "BinLogFileName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BinLogFileName") to
@@ -679,15 +692,16 @@ type CloneContext struct {
 	// PitrTimestampMs: Reserved for future use.
 	PitrTimestampMs int64 `json:"pitrTimestampMs,omitempty,string"`
 
-	// PointInTime: Reserved for future use.
+	// PointInTime: Timestamp, if specified, identifies the time to which
+	// the source instance is cloned.
 	PointInTime string `json:"pointInTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BinLogCoordinates")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BinLogCoordinates") to
@@ -702,6 +716,95 @@ type CloneContext struct {
 
 func (s *CloneContext) MarshalJSON() ([]byte, error) {
 	type NoMethod CloneContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConnectSettings: Connect settings retrieval response.
+type ConnectSettings struct {
+	// BackendType: **SECOND_GEN**: Cloud SQL database instance.
+	// **EXTERNAL**: A database server that is not managed by Google. This
+	// property is read-only; use the **tier** property in the **settings**
+	// object to determine the database type.
+	//
+	// Possible values:
+	//   "SQL_BACKEND_TYPE_UNSPECIFIED" - This is an unknown backend type
+	// for instance.
+	//   "FIRST_GEN" - V1 speckle instance.
+	//   "SECOND_GEN" - V2 speckle instance.
+	//   "EXTERNAL" - On premises instance.
+	BackendType string `json:"backendType,omitempty"`
+
+	// DatabaseVersion: The database engine type and version. The
+	// **databaseVersion** field cannot be changed after instance creation.
+	// MySQL instances: **MYSQL_8_0**, **MYSQL_5_7** (default), or
+	// **MYSQL_5_6**. PostgreSQL instances: **POSTGRES_9_6**,
+	// **POSTGRES_10**, **POSTGRES_11** or **POSTGRES_12** (default). SQL
+	// Server instances: **SQLSERVER_2017_STANDARD** (default),
+	// **SQLSERVER_2017_ENTERPRISE**, **SQLSERVER_2017_EXPRESS**, or
+	// **SQLSERVER_2017_WEB**.
+	//
+	// Possible values:
+	//   "SQL_DATABASE_VERSION_UNSPECIFIED" - This is an unknown database
+	// version.
+	//   "MYSQL_5_1" - The database version is MySQL 5.1.
+	//   "MYSQL_5_5" - The database version is MySQL 5.5.
+	//   "MYSQL_5_6" - The database version is MySQL 5.6.
+	//   "MYSQL_5_7" - The database version is MySQL 5.7.
+	//   "POSTGRES_9_6" - The database version is PostgreSQL 9.6.
+	//   "POSTGRES_11" - The database version is PostgreSQL 11.
+	//   "SQLSERVER_2017_STANDARD" - The database version is SQL Server 2017
+	// Standard.
+	//   "SQLSERVER_2017_ENTERPRISE" - The database version is SQL Server
+	// 2017 Enterprise.
+	//   "SQLSERVER_2017_EXPRESS" - The database version is SQL Server 2017
+	// Express.
+	//   "SQLSERVER_2017_WEB" - The database version is SQL Server 2017 Web.
+	//   "POSTGRES_10" - The database version is PostgreSQL 10.
+	//   "POSTGRES_12" - The database version is PostgreSQL 12.
+	//   "MYSQL_8_0" - The database version is MySQL 8.
+	//   "POSTGRES_13" - The database version is PostgreSQL 13.
+	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
+	// Standard.
+	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server
+	// 2019 Enterprise.
+	//   "SQLSERVER_2019_EXPRESS" - The database version is SQL Server 2019
+	// Express.
+	//   "SQLSERVER_2019_WEB" - The database version is SQL Server 2019 Web.
+	DatabaseVersion string `json:"databaseVersion,omitempty"`
+
+	// IpAddresses: The assigned IP addresses for the instance.
+	IpAddresses []*IpMapping `json:"ipAddresses,omitempty"`
+
+	// Kind: This is always `sql#connectSettings`.
+	Kind string `json:"kind,omitempty"`
+
+	// ServerCaCert: SSL configuration.
+	ServerCaCert *SslCert `json:"serverCaCert,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BackendType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackendType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -744,10 +847,10 @@ type Database struct {
 
 	// ForceSendFields is a list of field names (e.g. "Charset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Charset") to include in
@@ -768,10 +871,9 @@ func (s *Database) MarshalJSON() ([]byte, error) {
 // DatabaseFlags: Database flags for Cloud SQL instances.
 type DatabaseFlags struct {
 	// Name: The name of the flag. These flags are passed at instance
-	// startup, so include both server options and system variables for
-	// MySQL. Flags are specified with underscores, not hyphens. For more
-	// information, see Configuring Database Flags in the Cloud SQL
-	// documentation.
+	// startup, so include both server options and system variables. Flags
+	// are specified with underscores, not hyphens. For more information,
+	// see Configuring Database Flags in the Cloud SQL documentation.
 	Name string `json:"name,omitempty"`
 
 	// Value: The value of the flag. Booleans are set to *on* for true and
@@ -781,10 +883,10 @@ type DatabaseFlags struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -821,6 +923,11 @@ type DatabaseInstance struct {
 	// connection strings.
 	ConnectionName string `json:"connectionName,omitempty"`
 
+	// CreateTime: Output only. The time when the instance was created in
+	// RFC 3339 format (https://tools.ietf.org/html/rfc3339), for example
+	// 2012-11-15T16:19:00.094Z
+	CreateTime string `json:"createTime,omitempty"`
+
 	// CurrentDiskSize: The current disk usage of the instance in bytes.
 	// This property has been deprecated. Use the
 	// "cloudsql.googleapis.com/database/disk/bytes_used" metric in Cloud
@@ -831,7 +938,9 @@ type DatabaseInstance struct {
 	// *databaseVersion* field cannot be changed after instance creation.
 	// MySQL instances: *MYSQL_8_0*, *MYSQL_5_7* (default), or *MYSQL_5_6*.
 	// PostgreSQL instances: *POSTGRES_9_6*, *POSTGRES_10*, *POSTGRES_11*,
-	// *POSTGRES_12*, or *POSTGRES_13* (default). SQL Server instances:
+	// *POSTGRES_12*, *POSTGRES_13* (default). SQL Server instances:
+	// *SQLSERVER_2019_STANDARD*, *SQLSERVER_2019_ENTERPRISE*,
+	// *SQLSERVER_2019_EXPRESS*, or *SQLSERVER_2019_WEB*,
 	// *SQLSERVER_2017_STANDARD* (default), *SQLSERVER_2017_ENTERPRISE*,
 	// *SQLSERVER_2017_EXPRESS*, or *SQLSERVER_2017_WEB*.
 	//
@@ -865,19 +974,17 @@ type DatabaseInstance struct {
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 
 	// DiskEncryptionConfiguration: Disk encryption configuration specific
-	// to an instance. Applies only to Second Generation instances.
+	// to an instance.
 	DiskEncryptionConfiguration *DiskEncryptionConfiguration `json:"diskEncryptionConfiguration,omitempty"`
 
 	// DiskEncryptionStatus: Disk encryption status specific to an instance.
-	// Applies only to Second Generation instances.
 	DiskEncryptionStatus *DiskEncryptionStatus `json:"diskEncryptionStatus,omitempty"`
 
 	// Etag: This field is deprecated and will be removed from a future
 	// version of the API. Use the *settings.settingsVersion* field instead.
 	Etag string `json:"etag,omitempty"`
 
-	// FailoverReplica: The name and status of the failover replica. This
-	// property is applicable only to Second Generation instances.
+	// FailoverReplica: The name and status of the failover replica.
 	FailoverReplica *DatabaseInstanceFailoverReplica `json:"failoverReplica,omitempty"`
 
 	// GceZone: The Compute Engine zone that the instance is currently
@@ -1002,6 +1109,8 @@ type DatabaseInstance struct {
 	//   "MAINTENANCE" - The instance is down for maintenance.
 	//   "FAILED" - The creation of the instance failed or a fatal error
 	// occurred during maintenance.
+	//   "ONLINE_MAINTENANCE" - The instance is under maintenance operations
+	// and the database is available.
 	State string `json:"state,omitempty"`
 
 	// SuspensionReason: If the instance state is SUSPENDED, the reason for
@@ -1026,10 +1135,10 @@ type DatabaseInstance struct {
 
 	// ForceSendFields is a list of field names (e.g. "BackendType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BackendType") to include
@@ -1048,8 +1157,7 @@ func (s *DatabaseInstance) MarshalJSON() ([]byte, error) {
 }
 
 // DatabaseInstanceFailoverReplica: The name and status of the failover
-// replica. This property is applicable only to Second Generation
-// instances.
+// replica.
 type DatabaseInstanceFailoverReplica struct {
 	// Available: The availability status of the failover replica. A false
 	// status indicates that the failover replica is out of sync. The
@@ -1059,16 +1167,15 @@ type DatabaseInstanceFailoverReplica struct {
 
 	// Name: The name of the failover replica. If specified at instance
 	// creation, a failover replica is created for the instance. The name
-	// doesn't include the project ID. This property is applicable only to
-	// Second Generation instances.
+	// doesn't include the project ID.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Available") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Available") to include in
@@ -1100,10 +1207,10 @@ type DatabasesListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1138,10 +1245,10 @@ type DemoteMasterConfiguration struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -1173,22 +1280,24 @@ type DemoteMasterContext struct {
 	// replicating from the on-premises primary instance.
 	ReplicaConfiguration *DemoteMasterConfiguration `json:"replicaConfiguration,omitempty"`
 
+	// SkipReplicationSetup: Flag to skip replication setup on the instance.
+	SkipReplicationSetup bool `json:"skipReplicationSetup,omitempty"`
+
 	// VerifyGtidConsistency: Verify GTID consistency for demote operation.
-	// Default value: *True*. Second Generation instances only. Setting this
-	// flag to false enables you to bypass GTID consistency check between
-	// on-premises primary instance and Cloud SQL instance during the
-	// demotion operation but also exposes you to the risk of future
-	// replication failures. Change the value only if you know the reason
-	// for the GTID divergence and are confident that doing so will not
-	// cause any replication issues.
+	// Default value: *True*. Setting this flag to false enables you to
+	// bypass GTID consistency check between on-premises primary instance
+	// and Cloud SQL instance during the demotion operation but also exposes
+	// you to the risk of future replication failures. Change the value only
+	// if you know the reason for the GTID divergence and are confident that
+	// doing so will not cause any replication issues.
 	VerifyGtidConsistency bool `json:"verifyGtidConsistency,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -1233,10 +1342,10 @@ type DemoteMasterMySqlReplicaConfiguration struct {
 
 	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CaCertificate") to include
@@ -1277,10 +1386,10 @@ type DenyMaintenancePeriod struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndDate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndDate") to include in
@@ -1309,10 +1418,10 @@ type DiskEncryptionConfiguration struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -1341,10 +1450,10 @@ type DiskEncryptionStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -1409,10 +1518,10 @@ type ExportContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "CsvExportOptions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CsvExportOptions") to
@@ -1439,10 +1548,10 @@ type ExportContextCsvExportOptions struct {
 
 	// ForceSendFields is a list of field names (e.g. "SelectQuery") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SelectQuery") to include
@@ -1476,10 +1585,10 @@ type ExportContextSqlExportOptions struct {
 
 	// ForceSendFields is a list of field names (e.g. "MysqlExportOptions")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MysqlExportOptions") to
@@ -1511,10 +1620,10 @@ type ExportContextSqlExportOptionsMysqlExportOptions struct {
 
 	// ForceSendFields is a list of field names (e.g. "MasterData") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MasterData") to include in
@@ -1544,10 +1653,10 @@ type FailoverContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -1625,7 +1734,7 @@ type Flag struct {
 	Name string `json:"name,omitempty"`
 
 	// RequiresRestart: Indicates whether changing this flag will trigger a
-	// database restart. Only applicable to Second Generation instances.
+	// database restart.
 	RequiresRestart bool `json:"requiresRestart,omitempty"`
 
 	// Type: The type of the flag. Flags are typed to being *BOOLEAN*,
@@ -1648,10 +1757,10 @@ type Flag struct {
 
 	// ForceSendFields is a list of field names (e.g. "AllowedIntValues") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllowedIntValues") to
@@ -1684,10 +1793,10 @@ type FlagsListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1701,6 +1810,76 @@ type FlagsListResponse struct {
 
 func (s *FlagsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FlagsListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GenerateEphemeralCertRequest: Ephemeral certificate creation request.
+type GenerateEphemeralCertRequest struct {
+	// AccessToken: Optional. Access token to include in the signed
+	// certificate.
+	AccessToken string `json:"access_token,omitempty"`
+
+	// PublicKey: PEM encoded public key to include in the signed
+	// certificate.
+	PublicKey string `json:"public_key,omitempty"`
+
+	// ReadTime: Optional. Optional snapshot read timestamp to trade
+	// freshness for performance.
+	ReadTime string `json:"readTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccessToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AccessToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenerateEphemeralCertRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateEphemeralCertRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GenerateEphemeralCertResponse: Ephemeral certificate creation
+// request.
+type GenerateEphemeralCertResponse struct {
+	// EphemeralCert: Generated cert
+	EphemeralCert *SslCert `json:"ephemeralCert,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EphemeralCert") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EphemeralCert") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenerateEphemeralCertResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateEphemeralCertResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1744,10 +1923,10 @@ type ImportContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "BakImportOptions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BakImportOptions") to
@@ -1773,10 +1952,10 @@ type ImportContextBakImportOptions struct {
 
 	// ForceSendFields is a list of field names (e.g. "EncryptionOptions")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EncryptionOptions") to
@@ -1811,10 +1990,10 @@ type ImportContextBakImportOptionsEncryptionOptions struct {
 
 	// ForceSendFields is a list of field names (e.g. "CertPath") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CertPath") to include in
@@ -1843,10 +2022,10 @@ type ImportContextCsvImportOptions struct {
 
 	// ForceSendFields is a list of field names (e.g. "Columns") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Columns") to include in
@@ -1870,8 +2049,8 @@ type InsightsConfig struct {
 	// QueryInsightsEnabled: Whether Query Insights feature is enabled.
 	QueryInsightsEnabled bool `json:"queryInsightsEnabled,omitempty"`
 
-	// QueryPlansPerMinute: Number of query plans generated by Insights per
-	// minute. Default is 5. Changing this will restart the database.
+	// QueryPlansPerMinute: Number of query execution plans captured by
+	// Insights per minute for all queries combined. Default is 5.
 	QueryPlansPerMinute int64 `json:"queryPlansPerMinute,omitempty"`
 
 	// QueryStringLength: Maximum query length stored in bytes. Default
@@ -1891,8 +2070,8 @@ type InsightsConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "QueryInsightsEnabled") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1914,6 +2093,42 @@ func (s *InsightsConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InstanceReference: Reference to another Cloud SQL instance.
+type InstanceReference struct {
+	// Name: The name of the Cloud SQL instance being referenced. This does
+	// not include the project ID.
+	Name string `json:"name,omitempty"`
+
+	// Project: The project ID of the Cloud SQL instance being referenced.
+	// The default is the same project ID as the instance references it.
+	Project string `json:"project,omitempty"`
+
+	// Region: The region of the Cloud SQL instance being referenced.
+	Region string `json:"region,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstanceReference) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // InstancesCloneRequest: Database instance clone request.
 type InstancesCloneRequest struct {
 	// CloneContext: Contains details about the clone operation.
@@ -1921,10 +2136,10 @@ type InstancesCloneRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "CloneContext") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CloneContext") to include
@@ -1951,10 +2166,10 @@ type InstancesDemoteMasterRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "DemoteMasterContext")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DemoteMasterContext") to
@@ -1980,10 +2195,10 @@ type InstancesExportRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExportContext") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExportContext") to include
@@ -2008,10 +2223,10 @@ type InstancesFailoverRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "FailoverContext") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FailoverContext") to
@@ -2037,10 +2252,10 @@ type InstancesImportRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ImportContext") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ImportContext") to include
@@ -2080,10 +2295,10 @@ type InstancesListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -2117,10 +2332,10 @@ type InstancesListServerCasResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ActiveVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ActiveVersion") to include
@@ -2147,8 +2362,8 @@ type InstancesRestoreBackupRequest struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "RestoreBackupContext") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2178,8 +2393,8 @@ type InstancesRotateServerCaRequest struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "RotateServerCaContext") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2209,10 +2424,10 @@ type InstancesTruncateLogRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "TruncateLogContext")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TruncateLogContext") to
@@ -2233,6 +2448,15 @@ func (s *InstancesTruncateLogRequest) MarshalJSON() ([]byte, error) {
 
 // IpConfiguration: IP Management configuration.
 type IpConfiguration struct {
+	// AllocatedIpRange: The name of the allocated ip range for the private
+	// ip CloudSQL instance. For example: "google-managed-services-default".
+	// If set, the instance ip will be created in the allocated range. The
+	// range name must comply with RFC 1035
+	// (https://tools.ietf.org/html/rfc1035). Specifically, the name must be
+	// 1-63 characters long and match the regular expression
+	// `[a-z]([-a-z0-9]*[a-z0-9])?.` Reserved for future use.
+	AllocatedIpRange string `json:"allocatedIpRange,omitempty"`
+
 	// AuthorizedNetworks: The list of external networks that are allowed to
 	// connect to the instance using the IP. In 'CIDR' notation, also known
 	// as 'slash' notation (for example: *192.168.100.0/24*).
@@ -2251,15 +2475,15 @@ type IpConfiguration struct {
 	// RequireSsl: Whether SSL connections over IP are enforced or not.
 	RequireSsl bool `json:"requireSsl,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AuthorizedNetworks")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AllocatedIpRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AuthorizedNetworks") to
+	// NullFields is a list of field names (e.g. "AllocatedIpRange") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2309,10 +2533,10 @@ type IpMapping struct {
 
 	// ForceSendFields is a list of field names (e.g. "IpAddress") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IpAddress") to include in
@@ -2354,8 +2578,8 @@ type LocationPreference struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "FollowGaeApplication") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2405,10 +2629,10 @@ type MaintenanceWindow struct {
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Day") to include in API
@@ -2476,10 +2700,10 @@ type MySqlReplicaConfiguration struct {
 
 	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CaCertificate") to include
@@ -2493,6 +2717,35 @@ type MySqlReplicaConfiguration struct {
 
 func (s *MySqlReplicaConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod MySqlReplicaConfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MySqlSyncConfig: MySQL-specific external server sync settings.
+type MySqlSyncConfig struct {
+	// InitialSyncFlags: Flags to use for the initial dump.
+	InitialSyncFlags []*SyncFlags `json:"initialSyncFlags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InitialSyncFlags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InitialSyncFlags") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MySqlSyncConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MySqlSyncConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2524,15 +2777,19 @@ type OnPremisesConfiguration struct {
 	// Password: The password for connecting to on-premises instance.
 	Password string `json:"password,omitempty"`
 
+	// SourceInstance: The reference to Cloud SQL instance if the source is
+	// Cloud SQL.
+	SourceInstance *InstanceReference `json:"sourceInstance,omitempty"`
+
 	// Username: The username for connecting to on-premises instance.
 	Username string `json:"username,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CaCertificate") to include
@@ -2672,10 +2929,10 @@ type Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "BackupContext") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BackupContext") to include
@@ -2706,10 +2963,10 @@ type OperationError struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -2738,10 +2995,10 @@ type OperationErrors struct {
 
 	// ForceSendFields is a list of field names (e.g. "Errors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Errors") to include in API
@@ -2778,10 +3035,10 @@ type OperationsListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -2824,10 +3081,10 @@ type ReplicaConfiguration struct {
 
 	// ForceSendFields is a list of field names (e.g. "FailoverTarget") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FailoverTarget") to
@@ -2866,10 +3123,10 @@ type Reschedule struct {
 
 	// ForceSendFields is a list of field names (e.g. "RescheduleType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "RescheduleType") to
@@ -2905,10 +3162,10 @@ type RestoreBackupContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "BackupRunId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BackupRunId") to include
@@ -2938,10 +3195,10 @@ type RotateServerCaContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -3040,8 +3297,7 @@ type Settings struct {
 
 	// IpConfiguration: The settings for IP Management. This allows to
 	// enable or disable the instance IP and manage which external networks
-	// can connect to the instance. The IPv4 address cannot be disabled for
-	// Second Generation instances.
+	// can connect to the instance. The IPv4 address cannot be disabled.
 	IpConfiguration *IpConfiguration `json:"ipConfiguration,omitempty"`
 
 	// Kind: This is always *sql#settings*.
@@ -3109,10 +3365,10 @@ type Settings struct {
 
 	// ForceSendFields is a list of field names (e.g. "ActivationPolicy") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ActivationPolicy") to
@@ -3142,10 +3398,10 @@ type SqlActiveDirectoryConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "Domain") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Domain") to include in API
@@ -3221,10 +3477,10 @@ type SqlExternalSyncSettingError struct {
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Detail") to include in API
@@ -3250,10 +3506,10 @@ type SqlInstancesRescheduleMaintenanceRequestBody struct {
 
 	// ForceSendFields is a list of field names (e.g. "Reschedule") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Reschedule") to include in
@@ -3267,6 +3523,91 @@ type SqlInstancesRescheduleMaintenanceRequestBody struct {
 
 func (s *SqlInstancesRescheduleMaintenanceRequestBody) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlInstancesRescheduleMaintenanceRequestBody
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SqlInstancesStartExternalSyncRequest struct {
+	// MysqlSyncConfig: MySQL-specific settings for start external sync.
+	MysqlSyncConfig *MySqlSyncConfig `json:"mysqlSyncConfig,omitempty"`
+
+	// SkipVerification: Whether to skip the verification step (VESS).
+	SkipVerification bool `json:"skipVerification,omitempty"`
+
+	// SyncMode: External sync mode.
+	//
+	// Possible values:
+	//   "EXTERNAL_SYNC_MODE_UNSPECIFIED" - Unknown external sync mode, will
+	// be defaulted to ONLINE mode
+	//   "ONLINE" - Online external sync will set up replication after
+	// initial data external sync
+	//   "OFFLINE" - Offline external sync only dumps and loads a one-time
+	// snapshot of the primary instance's data
+	SyncMode string `json:"syncMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MysqlSyncConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MysqlSyncConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlInstancesStartExternalSyncRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlInstancesStartExternalSyncRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SqlInstancesVerifyExternalSyncSettingsRequest struct {
+	// MysqlSyncConfig: Optional. MySQL-specific settings for start external
+	// sync.
+	MysqlSyncConfig *MySqlSyncConfig `json:"mysqlSyncConfig,omitempty"`
+
+	// SyncMode: External sync mode
+	//
+	// Possible values:
+	//   "EXTERNAL_SYNC_MODE_UNSPECIFIED" - Unknown external sync mode, will
+	// be defaulted to ONLINE mode
+	//   "ONLINE" - Online external sync will set up replication after
+	// initial data external sync
+	//   "OFFLINE" - Offline external sync only dumps and loads a one-time
+	// snapshot of the primary instance's data
+	SyncMode string `json:"syncMode,omitempty"`
+
+	// VerifyConnectionOnly: Flag to enable verifying connection only
+	VerifyConnectionOnly bool `json:"verifyConnectionOnly,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MysqlSyncConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MysqlSyncConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlInstancesVerifyExternalSyncSettingsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlInstancesVerifyExternalSyncSettingsRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3289,10 +3630,10 @@ type SqlInstancesVerifyExternalSyncSettingsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Errors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Errors") to include in API
@@ -3332,11 +3673,11 @@ type SqlOutOfDiskReport struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "SqlMinRecommendedIncreaseSizeGb") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -3363,16 +3704,20 @@ type SqlScheduledMaintenance struct {
 	// CanReschedule: If the scheduled maintenance can be rescheduled.
 	CanReschedule bool `json:"canReschedule,omitempty"`
 
+	// ScheduleDeadlineTime: Maintenance cannot be rescheduled to start
+	// beyond this deadline.
+	ScheduleDeadlineTime string `json:"scheduleDeadlineTime,omitempty"`
+
 	// StartTime: The start time of any upcoming scheduled maintenance for
 	// this instance.
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CanDefer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CanDefer") to include in
@@ -3402,10 +3747,10 @@ type SqlServerDatabaseDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "CompatibilityLevel")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CompatibilityLevel") to
@@ -3435,10 +3780,10 @@ type SqlServerUserDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Disabled") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Disabled") to include in
@@ -3493,10 +3838,10 @@ type SslCert struct {
 
 	// ForceSendFields is a list of field names (e.g. "Cert") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Cert") to include in API
@@ -3525,10 +3870,10 @@ type SslCertDetail struct {
 
 	// ForceSendFields is a list of field names (e.g. "CertInfo") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CertInfo") to include in
@@ -3558,10 +3903,10 @@ type SslCertsCreateEphemeralRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccessToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccessToken") to include
@@ -3587,10 +3932,10 @@ type SslCertsInsertRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommonName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonName") to include in
@@ -3630,10 +3975,10 @@ type SslCertsInsertResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClientCert") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClientCert") to include in
@@ -3665,10 +4010,10 @@ type SslCertsListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -3682,6 +4027,39 @@ type SslCertsListResponse struct {
 
 func (s *SslCertsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SslCertsListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SyncFlags: Initial sync flags for certain Cloud SQL APIs. Currently
+// used for the MySQL external server initial dump.
+type SyncFlags struct {
+	// Name: The name of the flag.
+	Name string `json:"name,omitempty"`
+
+	// Value: The value of the flag. This field must be omitted if the flag
+	// doesn't take a value.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SyncFlags) MarshalJSON() ([]byte, error) {
+	type NoMethod SyncFlags
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3706,10 +4084,10 @@ type Tier struct {
 
 	// ForceSendFields is a list of field names (e.g. "DiskQuota") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DiskQuota") to include in
@@ -3741,10 +4119,10 @@ type TiersListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -3773,10 +4151,10 @@ type TruncateLogContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -3839,10 +4217,10 @@ type User struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -3879,10 +4257,10 @@ type UsersListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -3914,7 +4292,7 @@ type BackupRunsDeleteCall struct {
 
 // Delete: Deletes the backup taken by a backup run.
 //
-// - id: The ID of the Backup Run to delete. To find a Backup Run ID,
+// - id: The ID of the backup run to delete. To find a backup run ID,
 //   use the list method.
 // - instance: Cloud SQL instance ID. This does not include the project
 //   ID.
@@ -3954,7 +4332,7 @@ func (c *BackupRunsDeleteCall) Header() http.Header {
 
 func (c *BackupRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4026,7 +4404,7 @@ func (c *BackupRunsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "The ID of the Backup Run to delete. To find a Backup Run ID, use the list method.",
+	//       "description": "The ID of the backup run to delete. To find a backup run ID, use the list method.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
@@ -4072,7 +4450,7 @@ type BackupRunsGetCall struct {
 
 // Get: Retrieves a resource containing information about a backup run.
 //
-// - id: The ID of this Backup Run.
+// - id: The ID of this backup run.
 // - instance: Cloud SQL instance ID. This does not include the project
 //   ID.
 // - project: Project ID of the project that contains the instance.
@@ -4121,7 +4499,7 @@ func (c *BackupRunsGetCall) Header() http.Header {
 
 func (c *BackupRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4196,7 +4574,7 @@ func (c *BackupRunsGetCall) Do(opts ...googleapi.CallOption) (*BackupRun, error)
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "The ID of this Backup Run.",
+	//       "description": "The ID of this backup run.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
@@ -4239,8 +4617,7 @@ type BackupRunsInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Creates a new backup run on demand. This method is applicable
-// only to Second Generation instances.
+// Insert: Creates a new backup run on demand.
 //
 // - instance: Cloud SQL instance ID. This does not include the project
 //   ID.
@@ -4280,7 +4657,7 @@ func (c *BackupRunsInsertCall) Header() http.Header {
 
 func (c *BackupRunsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4345,7 +4722,7 @@ func (c *BackupRunsInsertCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new backup run on demand. This method is applicable only to Second Generation instances.",
+	//   "description": "Creates a new backup run on demand.",
 	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns",
 	//   "httpMethod": "POST",
 	//   "id": "sql.backupRuns.insert",
@@ -4394,12 +4771,12 @@ type BackupRunsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all backup runs associated with a given instance and
-// configuration in the reverse chronological order of the backup
-// initiation time.
+// List: Lists all backup runs associated with the project or a given
+// instance and configuration in the reverse chronological order of the
+// backup initiation time.
 //
-// - instance: Cloud SQL instance ID. This does not include the project
-//   ID.
+// - instance: Cloud SQL instance ID, or "-" for all instances. This
+//   does not include the project ID.
 // - project: Project ID of the project that contains the instance.
 func (r *BackupRunsService) List(project string, instance string) *BackupRunsListCall {
 	c := &BackupRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4460,7 +4837,7 @@ func (c *BackupRunsListCall) Header() http.Header {
 
 func (c *BackupRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4523,7 +4900,7 @@ func (c *BackupRunsListCall) Do(opts ...googleapi.CallOption) (*BackupRunsListRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all backup runs associated with a given instance and configuration in the reverse chronological order of the backup initiation time.",
+	//   "description": "Lists all backup runs associated with the project or a given instance and configuration in the reverse chronological order of the backup initiation time.",
 	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns",
 	//   "httpMethod": "GET",
 	//   "id": "sql.backupRuns.list",
@@ -4533,7 +4910,7 @@ func (c *BackupRunsListCall) Do(opts ...googleapi.CallOption) (*BackupRunsListRe
 	//   ],
 	//   "parameters": {
 	//     "instance": {
-	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
+	//       "description": "Cloud SQL instance ID, or \"-\" for all instances. This does not include the project ID.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4589,6 +4966,334 @@ func (c *BackupRunsListCall) Pages(ctx context.Context, f func(*BackupRunsListRe
 	}
 }
 
+// method id "sql.connect.generateEphemeral":
+
+type ConnectGenerateEphemeralCertCall struct {
+	s                            *Service
+	project                      string
+	instance                     string
+	generateephemeralcertrequest *GenerateEphemeralCertRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// GenerateEphemeralCert: Generates a short-lived X509 certificate
+// containing the provided public key and signed by a private key
+// specific to the target instance. Users may use the certificate to
+// authenticate as themselves when connecting to the database.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
+func (r *ConnectService) GenerateEphemeralCert(project string, instance string, generateephemeralcertrequest *GenerateEphemeralCertRequest) *ConnectGenerateEphemeralCertCall {
+	c := &ConnectGenerateEphemeralCertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.instance = instance
+	c.generateephemeralcertrequest = generateephemeralcertrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ConnectGenerateEphemeralCertCall) Fields(s ...googleapi.Field) *ConnectGenerateEphemeralCertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ConnectGenerateEphemeralCertCall) Context(ctx context.Context) *ConnectGenerateEphemeralCertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ConnectGenerateEphemeralCertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ConnectGenerateEphemeralCertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.generateephemeralcertrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/projects/{project}/instances/{instance}:generateEphemeralCert")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"instance": c.instance,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sql.connect.generateEphemeral" call.
+// Exactly one of *GenerateEphemeralCertResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GenerateEphemeralCertResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ConnectGenerateEphemeralCertCall) Do(opts ...googleapi.CallOption) (*GenerateEphemeralCertResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GenerateEphemeralCertResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates a short-lived X509 certificate containing the provided public key and signed by a private key specific to the target instance. Users may use the certificate to authenticate as themselves when connecting to the database.",
+	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}:generateEphemeralCert",
+	//   "httpMethod": "POST",
+	//   "id": "sql.connect.generateEphemeral",
+	//   "parameterOrder": [
+	//     "project",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID of the project that contains the instance.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}:generateEphemeralCert",
+	//   "request": {
+	//     "$ref": "GenerateEphemeralCertRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GenerateEphemeralCertResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sqlservice.admin"
+	//   ]
+	// }
+
+}
+
+// method id "sql.connect.get":
+
+type ConnectGetCall struct {
+	s            *Service
+	project      string
+	instance     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves connect settings about a Cloud SQL instance.
+//
+// - instance: Cloud SQL instance ID. This does not include the project
+//   ID.
+// - project: Project ID of the project that contains the instance.
+func (r *ConnectService) Get(project string, instance string) *ConnectGetCall {
+	c := &ConnectGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.instance = instance
+	return c
+}
+
+// ReadTime sets the optional parameter "readTime": Optional snapshot
+// read timestamp to trade freshness for performance.
+func (c *ConnectGetCall) ReadTime(readTime string) *ConnectGetCall {
+	c.urlParams_.Set("readTime", readTime)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ConnectGetCall) Fields(s ...googleapi.Field) *ConnectGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ConnectGetCall) IfNoneMatch(entityTag string) *ConnectGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ConnectGetCall) Context(ctx context.Context) *ConnectGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ConnectGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ConnectGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/projects/{project}/instances/{instance}/connectSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"instance": c.instance,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sql.connect.get" call.
+// Exactly one of *ConnectSettings or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ConnectSettings.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ConnectGetCall) Do(opts ...googleapi.CallOption) (*ConnectSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ConnectSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves connect settings about a Cloud SQL instance.",
+	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/connectSettings",
+	//   "httpMethod": "GET",
+	//   "id": "sql.connect.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Cloud SQL instance ID. This does not include the project ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID of the project that contains the instance.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readTime": {
+	//       "description": "Optional. Optional snapshot read timestamp to trade freshness for performance.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/connectSettings",
+	//   "response": {
+	//     "$ref": "ConnectSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sqlservice.admin"
+	//   ]
+	// }
+
+}
+
 // method id "sql.databases.delete":
 
 type DatabasesDeleteCall struct {
@@ -4642,7 +5347,7 @@ func (c *DatabasesDeleteCall) Header() http.Header {
 
 func (c *DatabasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4809,7 +5514,7 @@ func (c *DatabasesGetCall) Header() http.Header {
 
 func (c *DatabasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4967,7 +5672,7 @@ func (c *DatabasesInsertCall) Header() http.Header {
 
 func (c *DatabasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5130,7 +5835,7 @@ func (c *DatabasesListCall) Header() http.Header {
 
 func (c *DatabasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5284,7 +5989,7 @@ func (c *DatabasesPatchCall) Header() http.Header {
 
 func (c *DatabasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5450,7 +6155,7 @@ func (c *DatabasesUpdateCall) Header() http.Header {
 
 func (c *DatabasesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5570,7 +6275,7 @@ type FlagsListCall struct {
 	header_      http.Header
 }
 
-// List: List all available database flags for Cloud SQL instances.
+// List: Lists all available database flags for Cloud SQL instances.
 func (r *FlagsService) List() *FlagsListCall {
 	c := &FlagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -5621,7 +6326,7 @@ func (c *FlagsListCall) Header() http.Header {
 
 func (c *FlagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5680,7 +6385,7 @@ func (c *FlagsListCall) Do(opts ...googleapi.CallOption) (*FlagsListResponse, er
 	}
 	return ret, nil
 	// {
-	//   "description": "List all available database flags for Cloud SQL instances.",
+	//   "description": "Lists all available database flags for Cloud SQL instances.",
 	//   "flatPath": "sql/v1beta4/flags",
 	//   "httpMethod": "GET",
 	//   "id": "sql.flags.list",
@@ -5758,7 +6463,7 @@ func (c *InstancesAddServerCaCall) Header() http.Header {
 
 func (c *InstancesAddServerCaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5906,7 +6611,7 @@ func (c *InstancesCloneCall) Header() http.Header {
 
 func (c *InstancesCloneCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6059,7 +6764,7 @@ func (c *InstancesDeleteCall) Header() http.Header {
 
 func (c *InstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6205,7 +6910,7 @@ func (c *InstancesDemoteMasterCall) Header() http.Header {
 
 func (c *InstancesDemoteMasterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6361,7 +7066,7 @@ func (c *InstancesExportCall) Header() http.Header {
 
 func (c *InstancesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6474,8 +7179,12 @@ type InstancesFailoverCall struct {
 	header_                  http.Header
 }
 
-// Failover: Failover the instance to its failover replica instance.
-// Using this operation might cause your instance to restart.
+// Failover: Initiates a manual failover of a high availability (HA)
+// primary instance to a standby instance, which becomes the primary
+// instance. Users are then rerouted to the new primary. For more
+// information, see the Overview of high availability page in the Cloud
+// SQL documentation. If using Legacy HA (MySQL only), this causes the
+// instance to failover to its failover replica instance.
 //
 // - instance: Cloud SQL instance ID. This does not include the project
 //   ID.
@@ -6515,7 +7224,7 @@ func (c *InstancesFailoverCall) Header() http.Header {
 
 func (c *InstancesFailoverCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6580,7 +7289,7 @@ func (c *InstancesFailoverCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Failover the instance to its failover replica instance. Using this operation might cause your instance to restart.",
+	//   "description": "Initiates a manual failover of a high availability (HA) primary instance to a standby instance, which becomes the primary instance. Users are then rerouted to the new primary. For more information, see the Overview of high availability page in the Cloud SQL documentation. If using Legacy HA (MySQL only), this causes the instance to failover to its failover replica instance.",
 	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/failover",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.failover",
@@ -6679,7 +7388,7 @@ func (c *InstancesGetCall) Header() http.Header {
 
 func (c *InstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6829,7 +7538,7 @@ func (c *InstancesImportCall) Header() http.Header {
 
 func (c *InstancesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6979,7 +7688,7 @@ func (c *InstancesInsertCall) Header() http.Header {
 
 func (c *InstancesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7160,7 +7869,7 @@ func (c *InstancesListCall) Header() http.Header {
 
 func (c *InstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7351,7 +8060,7 @@ func (c *InstancesListServerCasCall) Header() http.Header {
 
 func (c *InstancesListServerCasCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7501,7 +8210,7 @@ func (c *InstancesPatchCall) Header() http.Header {
 
 func (c *InstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7654,7 +8363,7 @@ func (c *InstancesPromoteReplicaCall) Header() http.Header {
 
 func (c *InstancesPromoteReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7799,7 +8508,7 @@ func (c *InstancesResetSslConfigCall) Header() http.Header {
 
 func (c *InstancesResetSslConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7944,7 +8653,7 @@ func (c *InstancesRestartCall) Header() http.Header {
 
 func (c *InstancesRestartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8091,7 +8800,7 @@ func (c *InstancesRestoreBackupCall) Header() http.Header {
 
 func (c *InstancesRestoreBackupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8247,7 +8956,7 @@ func (c *InstancesRotateServerCaCall) Header() http.Header {
 
 func (c *InstancesRotateServerCaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8398,7 +9107,7 @@ func (c *InstancesStartReplicaCall) Header() http.Header {
 
 func (c *InstancesStartReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8541,7 +9250,7 @@ func (c *InstancesStopReplicaCall) Header() http.Header {
 
 func (c *InstancesStopReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8688,7 +9397,7 @@ func (c *InstancesTruncateLogCall) Header() http.Header {
 
 func (c *InstancesTruncateLogCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8843,7 +9552,7 @@ func (c *InstancesUpdateCall) Header() http.Header {
 
 func (c *InstancesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9006,7 +9715,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9184,7 +9893,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9363,7 +10072,7 @@ func (c *ProjectsInstancesRescheduleMaintenanceCall) Header() http.Header {
 
 func (c *ProjectsInstancesRescheduleMaintenanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9468,12 +10177,13 @@ func (c *ProjectsInstancesRescheduleMaintenanceCall) Do(opts ...googleapi.CallOp
 // method id "sql.projects.instances.startExternalSync":
 
 type ProjectsInstancesStartExternalSyncCall struct {
-	s          *Service
-	project    string
-	instance   string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s                                    *Service
+	project                              string
+	instance                             string
+	sqlinstancesstartexternalsyncrequest *SqlInstancesStartExternalSyncRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
 }
 
 // StartExternalSync: Start External primary instance migration.
@@ -9481,31 +10191,11 @@ type ProjectsInstancesStartExternalSyncCall struct {
 // - instance: Cloud SQL instance ID. This does not include the project
 //   ID.
 // - project: ID of the project that contains the instance.
-func (r *ProjectsInstancesService) StartExternalSync(project string, instance string) *ProjectsInstancesStartExternalSyncCall {
+func (r *ProjectsInstancesService) StartExternalSync(project string, instance string, sqlinstancesstartexternalsyncrequest *SqlInstancesStartExternalSyncRequest) *ProjectsInstancesStartExternalSyncCall {
 	c := &ProjectsInstancesStartExternalSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
-	return c
-}
-
-// SkipVerification sets the optional parameter "skipVerification":
-// Whether to skip the verification step (VESS).
-func (c *ProjectsInstancesStartExternalSyncCall) SkipVerification(skipVerification bool) *ProjectsInstancesStartExternalSyncCall {
-	c.urlParams_.Set("skipVerification", fmt.Sprint(skipVerification))
-	return c
-}
-
-// SyncMode sets the optional parameter "syncMode": External sync mode.
-//
-// Possible values:
-//   "EXTERNAL_SYNC_MODE_UNSPECIFIED" - Unknown external sync mode, will
-// be defaulted to ONLINE mode
-//   "ONLINE" - Online external sync will set up replication after
-// initial data external sync
-//   "OFFLINE" - Offline external sync only dumps and loads a one-time
-// snapshot of the primary instance's data
-func (c *ProjectsInstancesStartExternalSyncCall) SyncMode(syncMode string) *ProjectsInstancesStartExternalSyncCall {
-	c.urlParams_.Set("syncMode", syncMode)
+	c.sqlinstancesstartexternalsyncrequest = sqlinstancesstartexternalsyncrequest
 	return c
 }
 
@@ -9536,12 +10226,17 @@ func (c *ProjectsInstancesStartExternalSyncCall) Header() http.Header {
 
 func (c *ProjectsInstancesStartExternalSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sqlinstancesstartexternalsyncrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/projects/{project}/instances/{instance}/startExternalSync")
@@ -9616,29 +10311,12 @@ func (c *ProjectsInstancesStartExternalSyncCall) Do(opts ...googleapi.CallOption
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "skipVerification": {
-	//       "description": "Whether to skip the verification step (VESS).",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "syncMode": {
-	//       "description": "External sync mode.",
-	//       "enum": [
-	//         "EXTERNAL_SYNC_MODE_UNSPECIFIED",
-	//         "ONLINE",
-	//         "OFFLINE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unknown external sync mode, will be defaulted to ONLINE mode",
-	//         "Online external sync will set up replication after initial data external sync",
-	//         "Offline external sync only dumps and loads a one-time snapshot of the primary instance's data"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/startExternalSync",
+	//   "request": {
+	//     "$ref": "SqlInstancesStartExternalSyncRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -9653,12 +10331,13 @@ func (c *ProjectsInstancesStartExternalSyncCall) Do(opts ...googleapi.CallOption
 // method id "sql.projects.instances.verifyExternalSyncSettings":
 
 type ProjectsInstancesVerifyExternalSyncSettingsCall struct {
-	s          *Service
-	project    string
-	instance   string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s                                             *Service
+	project                                       string
+	instance                                      string
+	sqlinstancesverifyexternalsyncsettingsrequest *SqlInstancesVerifyExternalSyncSettingsRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
 }
 
 // VerifyExternalSyncSettings: Verify External primary instance external
@@ -9667,31 +10346,11 @@ type ProjectsInstancesVerifyExternalSyncSettingsCall struct {
 // - instance: Cloud SQL instance ID. This does not include the project
 //   ID.
 // - project: Project ID of the project that contains the instance.
-func (r *ProjectsInstancesService) VerifyExternalSyncSettings(project string, instance string) *ProjectsInstancesVerifyExternalSyncSettingsCall {
+func (r *ProjectsInstancesService) VerifyExternalSyncSettings(project string, instance string, sqlinstancesverifyexternalsyncsettingsrequest *SqlInstancesVerifyExternalSyncSettingsRequest) *ProjectsInstancesVerifyExternalSyncSettingsCall {
 	c := &ProjectsInstancesVerifyExternalSyncSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
-	return c
-}
-
-// SyncMode sets the optional parameter "syncMode": External sync mode
-//
-// Possible values:
-//   "EXTERNAL_SYNC_MODE_UNSPECIFIED" - Unknown external sync mode, will
-// be defaulted to ONLINE mode
-//   "ONLINE" - Online external sync will set up replication after
-// initial data external sync
-//   "OFFLINE" - Offline external sync only dumps and loads a one-time
-// snapshot of the primary instance's data
-func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) SyncMode(syncMode string) *ProjectsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("syncMode", syncMode)
-	return c
-}
-
-// VerifyConnectionOnly sets the optional parameter
-// "verifyConnectionOnly": Flag to enable verifying connection only
-func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) VerifyConnectionOnly(verifyConnectionOnly bool) *ProjectsInstancesVerifyExternalSyncSettingsCall {
-	c.urlParams_.Set("verifyConnectionOnly", fmt.Sprint(verifyConnectionOnly))
+	c.sqlinstancesverifyexternalsyncsettingsrequest = sqlinstancesverifyexternalsyncsettingsrequest
 	return c
 }
 
@@ -9722,12 +10381,17 @@ func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) Header() http.Header {
 
 func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sqlinstancesverifyexternalsyncsettingsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/projects/{project}/instances/{instance}/verifyExternalSyncSettings")
@@ -9804,29 +10468,12 @@ func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) Do(opts ...googleapi.C
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "syncMode": {
-	//       "description": "External sync mode",
-	//       "enum": [
-	//         "EXTERNAL_SYNC_MODE_UNSPECIFIED",
-	//         "ONLINE",
-	//         "OFFLINE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unknown external sync mode, will be defaulted to ONLINE mode",
-	//         "Online external sync will set up replication after initial data external sync",
-	//         "Offline external sync only dumps and loads a one-time snapshot of the primary instance's data"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "verifyConnectionOnly": {
-	//       "description": "Flag to enable verifying connection only",
-	//       "location": "query",
-	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "sql/v1beta4/projects/{project}/instances/{instance}/verifyExternalSyncSettings",
+	//   "request": {
+	//     "$ref": "SqlInstancesVerifyExternalSyncSettingsRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "SqlInstancesVerifyExternalSyncSettingsResponse"
 	//   },
@@ -9893,7 +10540,7 @@ func (c *SslCertsCreateEphemeralCall) Header() http.Header {
 
 func (c *SslCertsCreateEphemeralCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10049,7 +10696,7 @@ func (c *SslCertsDeleteCall) Header() http.Header {
 
 func (c *SslCertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10217,7 +10864,7 @@ func (c *SslCertsGetCall) Header() http.Header {
 
 func (c *SslCertsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10376,7 +11023,7 @@ func (c *SslCertsInsertCall) Header() http.Header {
 
 func (c *SslCertsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10539,7 +11186,7 @@ func (c *SslCertsListCall) Header() http.Header {
 
 func (c *SslCertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10694,7 +11341,7 @@ func (c *TiersListCall) Header() http.Header {
 
 func (c *TiersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10847,7 +11494,7 @@ func (c *UsersDeleteCall) Header() http.Header {
 
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11003,7 +11650,7 @@ func (c *UsersInsertCall) Header() http.Header {
 
 func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11166,7 +11813,7 @@ func (c *UsersListCall) Header() http.Header {
 
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11329,7 +11976,7 @@ func (c *UsersUpdateCall) Header() http.Header {
 
 func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "See, edit, configure, and delete your Google Cloud Platform data"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -147,7 +147,7 @@
               "type": "string"
             },
             "sqlResource": {
-              "description": "The SQL name of the entry. SQL names are case-sensitive. Examples: * `pubsub.{PROJECT_ID}.{TOPIC_ID}` * `pubsub.{PROJECT_ID}.{TOPIC.ID.SEPARATED.WITH.DOTS}` * `bigquery.table.{PROJECT_ID}.{DATASET_ID}.{TABLE_ID}` * `bigquery.dataset.{PROJECT_ID}.{DATASET_ID}` * `datacatalog.entry.{PROJECT_ID}.{LOCATION_ID}.{ENTRY_GROUP_ID}.{ENTRY_ID}` Identifiers (`*_ID`) should comply with the [Lexical structure in Standard SQL] (https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical).",
+              "description": "The SQL name of the entry. SQL names are case-sensitive. Examples: * `pubsub.topic.{PROJECT_ID}.{TOPIC_ID}` * `pubsub.topic.{PROJECT_ID}.`\\``{TOPIC.ID.SEPARATED.WITH.DOTS}`\\` * `bigquery.table.{PROJECT_ID}.{DATASET_ID}.{TABLE_ID}` * `bigquery.dataset.{PROJECT_ID}.{DATASET_ID}` * `datacatalog.entry.{PROJECT_ID}.{LOCATION_ID}.{ENTRY_GROUP_ID}.{ENTRY_ID}` Identifiers (`*_ID`) should comply with the [Lexical structure in Standard SQL] (https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical).",
               "location": "query",
               "type": "string"
             }
@@ -183,7 +183,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The names of the project and location that the new entry group belongs to. Note: The entry group itself and its child resources might not be stored in the location specified in its name. ",
+                      "description": "Required. The names of the project and location that the new entry group belongs to. Note: The entry group itself and its child resources might not be stored in the location specified in its name.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -216,7 +216,7 @@
                       "type": "boolean"
                     },
                     "name": {
-                      "description": "Required. The name of the entry group to delete. ",
+                      "description": "Required. The name of the entry group to delete.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
                       "required": true,
@@ -241,7 +241,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The name of the entry group to get. ",
+                      "description": "Required. The name of the entry group to get.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
                       "required": true,
@@ -336,7 +336,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The resource name of the entry group in URL format. Note: The entry group itself and its child resources might not be stored in the location specified in its name. ",
+                      "description": "The resource name of the entry group in URL format. Note: The entry group itself and its child resources might not be stored in the location specified in its name.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
                       "required": true,
@@ -435,7 +435,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Required. The name of the entry group this entry belongs to. Note: The entry itself and its child resources might not be stored in the location specified in its name. ",
+                          "description": "Required. The name of the entry group this entry belongs to. Note: The entry itself and its child resources might not be stored in the location specified in its name.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
                           "required": true,
@@ -463,7 +463,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The name of the entry to delete. ",
+                          "description": "Required. The name of the entry to delete.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
                           "required": true,
@@ -488,7 +488,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The name of the entry to get. ",
+                          "description": "Required. The name of the entry to get.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
                           "required": true,
@@ -583,7 +583,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Output only. The resource name of an entry in URL format. Note: The entry itself and its child resources might not be stored in the location specified in its name. ",
+                          "description": "Output only. The resource name of an entry in URL format. Note: The entry itself and its child resources might not be stored in the location specified in its name.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
                           "required": true,
@@ -649,7 +649,7 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "Required. The name of the resource to attach this tag to. Tags can be attached to entries or entry groups. An entry can have up to 1000 attached tags. Note: The tag and its child resources might not be stored in the location specified in its name. ",
+                              "description": "Required. The name of the resource to attach this tag to. Tags can be attached to entries or entry groups. An entry can have up to 1000 attached tags. Note: The tag and its child resources might not be stored in the location specified in its name.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
                               "required": true,
@@ -677,7 +677,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "Required. The name of the tag to delete. ",
+                              "description": "Required. The name of the tag to delete.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+/tags/[^/]+$",
                               "required": true,
@@ -713,7 +713,7 @@
                               "type": "string"
                             },
                             "parent": {
-                              "description": "Required. The name of the Data Catalog resource to list the tags of. The resource can be an Entry or an EntryGroup (without `/entries/{entries}` at the end). ",
+                              "description": "Required. The name of the Data Catalog resource to list the tags of. The resource can be an Entry or an EntryGroup (without `/entries/{entries}` at the end).",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
                               "required": true,
@@ -738,7 +738,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "The resource name of the tag in URL format where tag ID is a system-generated identifier. Note: The tag itself might not be stored in the location specified in its name. ",
+                              "description": "The resource name of the tag in URL format where tag ID is a system-generated identifier. Note: The tag itself might not be stored in the location specified in its name.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+/tags/[^/]+$",
                               "required": true,
@@ -778,7 +778,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The name of the resource to attach this tag to. Tags can be attached to entries or entry groups. An entry can have up to 1000 attached tags. Note: The tag and its child resources might not be stored in the location specified in its name. ",
+                          "description": "Required. The name of the resource to attach this tag to. Tags can be attached to entries or entry groups. An entry can have up to 1000 attached tags. Note: The tag and its child resources might not be stored in the location specified in its name.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
                           "required": true,
@@ -806,7 +806,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The name of the tag to delete. ",
+                          "description": "Required. The name of the tag to delete.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/tags/[^/]+$",
                           "required": true,
@@ -842,7 +842,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Required. The name of the Data Catalog resource to list the tags of. The resource can be an Entry or an EntryGroup (without `/entries/{entries}` at the end). ",
+                          "description": "Required. The name of the Data Catalog resource to list the tags of. The resource can be an Entry or an EntryGroup (without `/entries/{entries}` at the end).",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
                           "required": true,
@@ -867,7 +867,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The resource name of the tag in URL format where tag ID is a system-generated identifier. Note: The tag itself might not be stored in the location specified in its name. ",
+                          "description": "The resource name of the tag in URL format where tag ID is a system-generated identifier. Note: The tag itself might not be stored in the location specified in its name.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/tags/[^/]+$",
                           "required": true,
@@ -907,7 +907,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The name of the project and the template location [region](https://cloud.google.com/data-catalog/docs/concepts/regions). ",
+                      "description": "Required. The name of the project and the template location [region](https://cloud.google.com/data-catalog/docs/concepts/regions).",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -945,7 +945,7 @@
                       "type": "boolean"
                     },
                     "name": {
-                      "description": "Required. The name of the tag template to delete. ",
+                      "description": "Required. The name of the tag template to delete.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
                       "required": true,
@@ -970,7 +970,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The name of the tag template to get. ",
+                      "description": "Required. The name of the tag template to get.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
                       "required": true,
@@ -1023,7 +1023,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The resource name of the tag template in URL format. Note: The tag template itself and its child resources might not be stored in the location specified in its name. ",
+                      "description": "The resource name of the tag template in URL format. Note: The tag template itself and its child resources might not be stored in the location specified in its name.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
                       "required": true,
@@ -1117,7 +1117,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The name of the project and the template location [region](https://cloud.google.com/data-catalog/docs/concepts/regions). ",
+                          "description": "Required. The name of the project and the template location [region](https://cloud.google.com/data-catalog/docs/concepts/regions).",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
                           "required": true,
@@ -1155,7 +1155,7 @@
                           "type": "boolean"
                         },
                         "name": {
-                          "description": "Required. The name of the tag template field to delete. ",
+                          "description": "Required. The name of the tag template field to delete.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+/fields/[^/]+$",
                           "required": true,
@@ -1180,7 +1180,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The name of the tag template field. ",
+                          "description": "Required. The name of the tag template field.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+/fields/[^/]+$",
                           "required": true,
@@ -1214,7 +1214,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The name of the tag template. ",
+                          "description": "Required. The name of the tag template.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+/fields/[^/]+$",
                           "required": true,
@@ -1246,7 +1246,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "Required. The name of the enum field value. ",
+                              "description": "Required. The name of the enum field value.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+/fields/[^/]+/enumValues/[^/]+$",
                               "required": true,
@@ -1282,7 +1282,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. Resource name of the project that the taxonomy will belong to. ",
+                      "description": "Required. Resource name of the project that the taxonomy will belong to.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -1310,7 +1310,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. Resource name of the taxonomy to delete. Note: All policy tags in this taxonomy are also deleted. ",
+                      "description": "Required. Resource name of the taxonomy to delete. Note: All policy tags in this taxonomy are also deleted.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
                       "required": true,
@@ -1335,7 +1335,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. Resource name of the project that the exported taxonomies belong to. ",
+                      "description": "Required. Resource name of the project that the exported taxonomies belong to.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -1371,7 +1371,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. Resource name of the taxonomy to get. ",
+                      "description": "Required. Resource name of the taxonomy to get.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
                       "required": true,
@@ -1424,7 +1424,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. Resource name of project that the imported taxonomies will belong to. ",
+                      "description": "Required. Resource name of project that the imported taxonomies will belong to.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -1463,7 +1463,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. Resource name of the project to list the taxonomies of. ",
+                      "description": "Required. Resource name of the project to list the taxonomies of.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -1488,7 +1488,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Output only. Resource name of this taxonomy in URL format. Note: Policy tag manager generates unique taxonomy IDs. ",
+                      "description": "Output only. Resource name of this taxonomy in URL format. Note: Policy tag manager generates unique taxonomy IDs.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
                       "required": true,
@@ -1610,7 +1610,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. Resource name of the taxonomy that the policy tag will belong to. ",
+                          "description": "Required. Resource name of the taxonomy that the policy tag will belong to.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
                           "required": true,
@@ -1638,7 +1638,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. Resource name of the policy tag to delete. Note: All of its descendant policy tags are also deleted. ",
+                          "description": "Required. Resource name of the policy tag to delete. Note: All of its descendant policy tags are also deleted.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
                           "required": true,
@@ -1663,7 +1663,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. Resource name of the policy tag. ",
+                          "description": "Required. Resource name of the policy tag.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
                           "required": true,
@@ -1727,7 +1727,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Required. Resource name of the taxonomy to list the policy tags of. ",
+                          "description": "Required. Resource name of the taxonomy to list the policy tags of.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
                           "required": true,
@@ -1752,7 +1752,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Output only. Resource name of this policy tag in the URL format. The policy tag manager generates unique taxonomy IDs and policy tag IDs. ",
+                          "description": "Output only. Resource name of this policy tag in the URL format. The policy tag manager generates unique taxonomy IDs and policy tag IDs.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
                           "required": true,
@@ -1841,7 +1841,7 @@
       }
     }
   },
-  "revision": "20210601",
+  "revision": "20210827",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -1918,6 +1918,33 @@
       },
       "type": "object"
     },
+    "GoogleCloudDatacatalogV1BigQueryConnectionSpec": {
+      "description": "Specification for the BigQuery connection.",
+      "id": "GoogleCloudDatacatalogV1BigQueryConnectionSpec",
+      "properties": {
+        "cloudSql": {
+          "$ref": "GoogleCloudDatacatalogV1CloudSqlBigQueryConnectionSpec",
+          "description": "Specification for the BigQuery connection to a Cloud SQL instance."
+        },
+        "connectionType": {
+          "description": "The type of the BigQuery connection.",
+          "enum": [
+            "CONNECTION_TYPE_UNSPECIFIED",
+            "CLOUD_SQL"
+          ],
+          "enumDescriptions": [
+            "Unspecified type.",
+            "Cloud SQL connection."
+          ],
+          "type": "string"
+        },
+        "hasCredential": {
+          "description": "True if there are credentials attached to the BigQuery connection; false otherwise.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDatacatalogV1BigQueryDateShardedSpec": {
       "description": "Specification for a group of BigQuery tables with the `[prefix]YYYYMMDD` name pattern. For more information, see [Introduction to partitioned tables] (https://cloud.google.com/bigquery/docs/partitioned-tables#partitioning_versus_sharding).",
       "id": "GoogleCloudDatacatalogV1BigQueryDateShardedSpec",
@@ -1937,6 +1964,20 @@
           "description": "Output only. The table name prefix of the shards. The name of any given shard is `[table_prefix]YYYYMMDD`. For example, for the `MyTable20180101` shard, the `table_prefix` is `MyTable`.",
           "readOnly": true,
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1BigQueryRoutineSpec": {
+      "description": "Fields specific for BigQuery routines.",
+      "id": "GoogleCloudDatacatalogV1BigQueryRoutineSpec",
+      "properties": {
+        "importedLibraries": {
+          "description": "Paths of the imported libraries.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1969,6 +2010,35 @@
         "viewSpec": {
           "$ref": "GoogleCloudDatacatalogV1ViewSpec",
           "description": "Table view specification. Populated only if the `table_source_type` is `BIGQUERY_VIEW`."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1CloudSqlBigQueryConnectionSpec": {
+      "description": "Specification for the BigQuery connection to a Cloud SQL instance.",
+      "id": "GoogleCloudDatacatalogV1CloudSqlBigQueryConnectionSpec",
+      "properties": {
+        "database": {
+          "description": "Database name.",
+          "type": "string"
+        },
+        "instanceId": {
+          "description": "Cloud SQL instance ID in the format of `project:location:instance`.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Type of the Cloud SQL database.",
+          "enum": [
+            "DATABASE_TYPE_UNSPECIFIED",
+            "POSTGRES",
+            "MYSQL"
+          ],
+          "enumDescriptions": [
+            "Unspecified database type.",
+            "Cloud SQL for PostgreSQL.",
+            "Cloud SQL for MySQL."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -2039,6 +2109,17 @@
       },
       "type": "object"
     },
+    "GoogleCloudDatacatalogV1DataSourceConnectionSpec": {
+      "description": "Specification that applies to a data source connection. Valid only for entries with the `DATA_SOURCE_CONNECTION` type.",
+      "id": "GoogleCloudDatacatalogV1DataSourceConnectionSpec",
+      "properties": {
+        "bigqueryConnectionSpec": {
+          "$ref": "GoogleCloudDatacatalogV1BigQueryConnectionSpec",
+          "description": "Fields specific to BigQuery connections."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDatacatalogV1DatabaseTableSpec": {
       "description": "Specification that applies to a table resource. Valid only for entries with the `TABLE` type.",
       "id": "GoogleCloudDatacatalogV1DatabaseTableSpec",
@@ -2077,6 +2158,10 @@
           "description": "Output only. Physical location of the entry.",
           "readOnly": true
         },
+        "dataSourceConnectionSpec": {
+          "$ref": "GoogleCloudDatacatalogV1DataSourceConnectionSpec",
+          "description": "Specification that applies to a data source connection. Valid only for entries with the `DATA_SOURCE_CONNECTION` type."
+        },
         "databaseTableSpec": {
           "$ref": "GoogleCloudDatacatalogV1DatabaseTableSpec",
           "description": "Specification that applies to a table resource. Valid only for entries with the `TABLE` type."
@@ -2114,14 +2199,25 @@
           "readOnly": true,
           "type": "string"
         },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Cloud labels attached to the entry. In Data Catalog, you can create and modify labels attached only to custom entries. Synced entries have unmodifiable labels that come from the source system.",
+          "type": "object"
+        },
         "linkedResource": {
           "description": "The resource this metadata entry refers to. For Google Cloud Platform resources, `linked_resource` is the [Full Resource Name] (https://cloud.google.com/apis/design/resource_names#full_resource_name). For example, the `linked_resource` for a table resource from BigQuery is: `//bigquery.googleapis.com/projects/{PROJECT_ID}/datasets/{DATASET_ID}/tables/{TABLE_ID}` Output only when the entry is one of the types in the `EntryType` enum. For entries with a `user_specified_type`, this field is optional and defaults to an empty string. The resource string must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), periods (.), colons (:), slashes (/), dashes (-), and hashes (#). The maximum size is 200 bytes when encoded in UTF-8.",
           "type": "string"
         },
         "name": {
-          "description": "Output only. The resource name of an entry in URL format. Note: The entry itself and its child resources might not be stored in the location specified in its name. ",
+          "description": "Output only. The resource name of an entry in URL format. Note: The entry itself and its child resources might not be stored in the location specified in its name.",
           "readOnly": true,
           "type": "string"
+        },
+        "routineSpec": {
+          "$ref": "GoogleCloudDatacatalogV1RoutineSpec",
+          "description": "Specification that applies to a user-defined function or procedure. Valid only for entries with the `ROUTINE` type."
         },
         "schema": {
           "$ref": "GoogleCloudDatacatalogV1Schema",
@@ -2139,7 +2235,10 @@
             "MODEL",
             "DATA_STREAM",
             "FILESET",
+            "CLUSTER",
             "DATABASE",
+            "DATA_SOURCE_CONNECTION",
+            "ROUTINE",
             "SERVICE"
           ],
           "enumDescriptions": [
@@ -2148,7 +2247,10 @@
             "Output only. The type of models. For more information, see [Supported models in BigQuery ML] (https://cloud.google.com/bigquery-ml/docs/introduction#supported_models_in).",
             "An entry type for streaming entries. For example, a Pub/Sub topic.",
             "An entry type for a set of files or objects. For example, a Cloud Storage fileset.",
+            "A group of servers that work together. For example, a Kafka cluster.",
             "A database.",
+            "Output only. Connection to a data source. For example, a BigQuery connection.",
+            "Output only. Routine, for example, a BigQuery routine.",
             "A service, for example, a Dataproc Metastore service."
           ],
           "type": "string"
@@ -2187,7 +2289,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The resource name of the entry group in URL format. Note: The entry group itself and its child resources might not be stored in the location specified in its name. ",
+          "description": "The resource name of the entry group in URL format. Note: The entry group itself and its child resources might not be stored in the location specified in its name.",
           "type": "string"
         }
       },
@@ -2221,14 +2323,16 @@
             "DOUBLE",
             "STRING",
             "BOOL",
-            "TIMESTAMP"
+            "TIMESTAMP",
+            "RICHTEXT"
           ],
           "enumDescriptions": [
             "The default invalid value for a type.",
             "A double precision number.",
             "An UTF-8 string.",
             "A boolean value.",
-            "A timestamp."
+            "A timestamp.",
+            "A Richtext description."
           ],
           "type": "string"
         }
@@ -2456,7 +2560,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Output only. Resource name of this policy tag in the URL format. The policy tag manager generates unique taxonomy IDs and policy tag IDs. ",
+          "description": "Output only. Resource name of this policy tag in the URL format. The policy tag manager generates unique taxonomy IDs and policy tag IDs.",
           "readOnly": true,
           "type": "string"
         },
@@ -2496,6 +2600,81 @@
         "serializedTaxonomy": {
           "$ref": "GoogleCloudDatacatalogV1SerializedTaxonomy",
           "description": "Required. Taxonomy to update along with its child policy tags."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1RoutineSpec": {
+      "description": "Specification that applies to a routine. Valid only for entries with the `ROUTINE` type.",
+      "id": "GoogleCloudDatacatalogV1RoutineSpec",
+      "properties": {
+        "bigqueryRoutineSpec": {
+          "$ref": "GoogleCloudDatacatalogV1BigQueryRoutineSpec",
+          "description": "Fields specific for BigQuery routines."
+        },
+        "definitionBody": {
+          "description": "The body of the routine.",
+          "type": "string"
+        },
+        "language": {
+          "description": "The language the routine is written in. The exact value depends on the source system. For BigQuery routines, possible values are: * `SQL` * `JAVASCRIPT`",
+          "type": "string"
+        },
+        "returnType": {
+          "description": "Return type of the argument. The exact value depends on the source system and the language.",
+          "type": "string"
+        },
+        "routineArguments": {
+          "description": "Arguments of the routine.",
+          "items": {
+            "$ref": "GoogleCloudDatacatalogV1RoutineSpecArgument"
+          },
+          "type": "array"
+        },
+        "routineType": {
+          "description": "The type of the routine.",
+          "enum": [
+            "ROUTINE_TYPE_UNSPECIFIED",
+            "SCALAR_FUNCTION",
+            "PROCEDURE"
+          ],
+          "enumDescriptions": [
+            "Unspecified type.",
+            "Non-builtin permanent scalar function.",
+            "Stored procedure."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1RoutineSpecArgument": {
+      "description": "Input or output argument of a function or stored procedure.",
+      "id": "GoogleCloudDatacatalogV1RoutineSpecArgument",
+      "properties": {
+        "mode": {
+          "description": "Specifies whether the argument is input or output.",
+          "enum": [
+            "MODE_UNSPECIFIED",
+            "IN",
+            "OUT",
+            "INOUT"
+          ],
+          "enumDescriptions": [
+            "Unspecified mode.",
+            "The argument is input-only.",
+            "The argument is output-only.",
+            "The argument is both an input and an output."
+          ],
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the argument. A return argument of a function might not have a name.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Type of the argument. The exact value depends on the source system and the language.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2563,6 +2742,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "includePublicTagTemplates": {
+          "description": "Optional. If `true`, include public tag templates in the search results. By default, they are included only if you have explicit permissions on them to view them. For example, if you are the owner. Other scope fields, for example, ``include_org_ids``, still restrict the returned public tag templates and at least one of them is required.",
+          "type": "boolean"
         },
         "restrictedLocations": {
           "description": "Optional. The list of locations to search within. If empty, all locations are searched. Returns an error if any location in the list isn't one of the [Supported regions](https://cloud.google.com/data-catalog/docs/concepts/regions#supported_regions). If a location is unreachable, its name is returned in the `SearchCatalogResponse.unreachable` field. To get additional information on the error, repeat the search request and set the location name as the value of this parameter.",
@@ -2778,7 +2961,7 @@
           "type": "object"
         },
         "name": {
-          "description": "The resource name of the tag in URL format where tag ID is a system-generated identifier. Note: The tag itself might not be stored in the location specified in its name. ",
+          "description": "The resource name of the tag in URL format where tag ID is a system-generated identifier. Note: The tag itself might not be stored in the location specified in its name.",
           "type": "string"
         },
         "template": {
@@ -2821,6 +3004,10 @@
           "readOnly": true,
           "type": "integer"
         },
+        "richtextValue": {
+          "description": "The value of a tag field with a rich text type. The maximum length is 10 MiB as this value holds HTML descriptions including encoded images. The maximum length of the text without images is 100 KiB.",
+          "type": "string"
+        },
         "stringValue": {
           "description": "The value of a tag field with a string type. The maximum length is 2000 UTF-8 characters.",
           "type": "string"
@@ -2859,8 +3046,12 @@
           "description": "Required. Map of tag template field IDs to the settings for the field. This map is an exhaustive list of the allowed fields. The map must contain at least one field and at most 500 fields. The keys to this map are tag template field IDs. The IDs have the following limitations: * Can contain uppercase and lowercase letters, numbers (0-9) and underscores (_). * Must be at least 1 character and at most 64 characters long. * Must start with a letter or underscore.",
           "type": "object"
         },
+        "isPubliclyReadable": {
+          "description": "Indicates whether this is a public tag template. Every user has view access to a *public* tag template by default. This means that: * Every user can use this tag template to tag an entry. * If an entry is tagged using the tag template, the tag is always shown in the response to ``ListTags`` called on the entry. * To get the template using the GetTagTemplate method, you need view access either on the project or the organization the tag template resides in but no other permission is needed. * Operations on the tag template other than viewing (for example, editing IAM policies) follow standard IAM structures. Tags created with a public tag template are referred to as public tags. You can search for a public tag by value with a simple search query instead of using a ``tag:`` predicate. Public tag templates may not appear in search results depending on scope, see: include_public_tag_templates Note: If an [IAM domain restriction](https://cloud.google.com/resource-manager/docs/organization-policy/restricting-domains) is configured in the tag template's location, the public access will not be enabled but the simple search for tag values will still work.",
+          "type": "boolean"
+        },
         "name": {
-          "description": "The resource name of the tag template in URL format. Note: The tag template itself and its child resources might not be stored in the location specified in its name. ",
+          "description": "The resource name of the tag template in URL format. Note: The tag template itself and its child resources might not be stored in the location specified in its name.",
           "type": "string"
         }
       },
@@ -2927,7 +3118,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Output only. Resource name of this taxonomy in URL format. Note: Policy tag manager generates unique taxonomy IDs. ",
+          "description": "Output only. Resource name of this taxonomy in URL format. Note: Policy tag manager generates unique taxonomy IDs.",
           "readOnly": true,
           "type": "string"
         },
@@ -3004,7 +3195,7 @@
       "type": "object"
     },
     "Policy": {
-      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
+      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
       "id": "Policy",
       "properties": {
         "bindings": {

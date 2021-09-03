@@ -94,7 +94,8 @@ const (
 	// members and their emails
 	CloudIdentityGroupsReadonlyScope = "https://www.googleapis.com/auth/cloud-identity.groups.readonly"
 
-	// See, edit, configure, and delete your Google Cloud Platform data
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -226,10 +227,10 @@ type CheckTransitiveMembershipResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "HasMembership") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HasMembership") to include
@@ -247,6 +248,22 @@ func (s *CheckTransitiveMembershipResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CreateGroupMetadata: Metadata for CreateGroup LRO.
+type CreateGroupMetadata struct {
+}
+
+// CreateMembershipMetadata: Metadata for CreateMembership LRO.
+type CreateMembershipMetadata struct {
+}
+
+// DeleteGroupMetadata: Metadata for DeleteGroup LRO.
+type DeleteGroupMetadata struct {
+}
+
+// DeleteMembershipMetadata: Metadata for DeleteMembership LRO.
+type DeleteMembershipMetadata struct {
+}
+
 // DynamicGroupMetadata: Dynamic group metadata like queries and status.
 type DynamicGroupMetadata struct {
 	// Queries: Memberships will be the union of all queries. Only one entry
@@ -259,10 +276,10 @@ type DynamicGroupMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Queries") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Queries") to include in
@@ -300,10 +317,10 @@ type DynamicGroupQuery struct {
 
 	// ForceSendFields is a list of field names (e.g. "Query") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Query") to include in API
@@ -342,10 +359,10 @@ type DynamicGroupStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "Status") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Status") to include in API
@@ -381,15 +398,15 @@ type EntityKey struct {
 	// a Google user or a Google Group. If specified, the `EntityKey`
 	// represents an external-identity-mapped group. The namespace must
 	// correspond to an identity source created in Admin Console and must be
-	// in the form of `identitysources/{identity_source_id}`.
+	// in the form of `identitysources/{identity_source}`.
 	Namespace string `json:"namespace,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -414,10 +431,10 @@ type ExpiryDetail struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExpireTime") to include in
@@ -435,6 +452,11 @@ func (s *ExpiryDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GetMembershipGraphMetadata: Metadata of GetMembershipGraphResponse
+// LRO. This is currently empty to permit future extensibility.
+type GetMembershipGraphMetadata struct {
+}
+
 // GetMembershipGraphResponse: The response message for
 // MembershipsService.GetMembershipGraph.
 type GetMembershipGraphResponse struct {
@@ -449,10 +471,10 @@ type GetMembershipGraphResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdjacencyList") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdjacencyList") to include
@@ -500,8 +522,8 @@ type GoogleAppsCloudidentityDevicesV1AndroidAttributes struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "EnabledUnknownSources") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -523,6 +545,11 @@ func (s *GoogleAppsCloudidentityDevicesV1AndroidAttributes) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCloudidentityDevicesV1ApproveDeviceUserMetadata: Metadata
+// for ApproveDeviceUser LRO.
+type GoogleAppsCloudidentityDevicesV1ApproveDeviceUserMetadata struct {
+}
+
 // GoogleAppsCloudidentityDevicesV1ApproveDeviceUserRequest: Request
 // message for approving the device to access user data.
 type GoogleAppsCloudidentityDevicesV1ApproveDeviceUserRequest struct {
@@ -530,16 +557,16 @@ type GoogleAppsCloudidentityDevicesV1ApproveDeviceUserRequest struct {
 	// (https://cloud.google.com/apis/design/resource_names) of the
 	// customer. If you're using this API for your own organization, use
 	// `customers/my_customer` If you're using this API to manage another
-	// organization, use `customers/{customer_id}`, where customer_id is the
+	// organization, use `customers/{customer}`, where customer is the
 	// customer to whom the device belongs.
 	Customer string `json:"customer,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Customer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Customer") to include in
@@ -565,10 +592,10 @@ type GoogleAppsCloudidentityDevicesV1ApproveDeviceUserResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceUser") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceUser") to include in
@@ -586,6 +613,11 @@ func (s *GoogleAppsCloudidentityDevicesV1ApproveDeviceUserResponse) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCloudidentityDevicesV1BlockDeviceUserMetadata: Metadata for
+// BlockDeviceUser LRO.
+type GoogleAppsCloudidentityDevicesV1BlockDeviceUserMetadata struct {
+}
+
 // GoogleAppsCloudidentityDevicesV1BlockDeviceUserRequest: Request
 // message for blocking account on device.
 type GoogleAppsCloudidentityDevicesV1BlockDeviceUserRequest struct {
@@ -593,16 +625,16 @@ type GoogleAppsCloudidentityDevicesV1BlockDeviceUserRequest struct {
 	// (https://cloud.google.com/apis/design/resource_names) of the
 	// customer. If you're using this API for your own organization, use
 	// `customers/my_customer` If you're using this API to manage another
-	// organization, use `customers/{customer_id}`, where customer_id is the
+	// organization, use `customers/{customer}`, where customer is the
 	// customer to whom the device belongs.
 	Customer string `json:"customer,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Customer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Customer") to include in
@@ -628,10 +660,10 @@ type GoogleAppsCloudidentityDevicesV1BlockDeviceUserResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceUser") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceUser") to include in
@@ -649,6 +681,11 @@ func (s *GoogleAppsCloudidentityDevicesV1BlockDeviceUserResponse) MarshalJSON() 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCloudidentityDevicesV1CancelWipeDeviceMetadata: Metadata
+// for CancelWipeDevice LRO.
+type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceMetadata struct {
+}
+
 // GoogleAppsCloudidentityDevicesV1CancelWipeDeviceRequest: Request
 // message for cancelling an unfinished device wipe.
 type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceRequest struct {
@@ -656,16 +693,16 @@ type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceRequest struct {
 	// (https://cloud.google.com/apis/design/resource_names) of the
 	// customer. If you're using this API for your own organization, use
 	// `customers/my_customer` If you're using this API to manage another
-	// organization, use `customers/{customer_id}`, where customer_id is the
+	// organization, use `customers/{customer}`, where customer is the
 	// customer to whom the device belongs.
 	Customer string `json:"customer,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Customer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Customer") to include in
@@ -692,10 +729,10 @@ type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Device") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Device") to include in API
@@ -713,6 +750,11 @@ func (s *GoogleAppsCloudidentityDevicesV1CancelWipeDeviceResponse) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserMetadata:
+// Metadata for CancelWipeDeviceUser LRO.
+type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserMetadata struct {
+}
+
 // GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserRequest: Request
 // message for cancelling an unfinished user account wipe.
 type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserRequest struct {
@@ -720,16 +762,16 @@ type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserRequest struct {
 	// (https://cloud.google.com/apis/design/resource_names) of the
 	// customer. If you're using this API for your own organization, use
 	// `customers/my_customer` If you're using this API to manage another
-	// organization, use `customers/{customer_id}`, where customer_id is the
+	// organization, use `customers/{customer}`, where customer is the
 	// customer to whom the device belongs.
 	Customer string `json:"customer,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Customer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Customer") to include in
@@ -755,10 +797,10 @@ type GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceUser") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceUser") to include in
@@ -844,16 +886,16 @@ type GoogleAppsCloudidentityDevicesV1ClientState struct {
 	// Name: Output only. Resource name
 	// (https://cloud.google.com/apis/design/resource_names) of the
 	// ClientState in format:
-	// `devices/{device_id}/deviceUsers/{device_user_id}/clientState/{partner
-	// _id}`, where partner_id corresponds to the partner storing the data.
-	// For partners belonging to the "BeyondCorp Alliance", this is the
-	// partner ID specified to you by Google. For all other callers, this is
-	// a string of the form: `{customer_id}-suffix`, where `customer_id` is
-	// your customer ID. The *suffix* is any string the caller specifies.
-	// This string will be displayed verbatim in the administration console.
-	// This suffix is used in setting up Custom Access Levels in
-	// Context-Aware Access. Your organization's customer ID can be obtained
-	// from the URL: `GET
+	// `devices/{device}/deviceUsers/{device_user}/clientState/{partner}`,
+	// where partner corresponds to the partner storing the data. For
+	// partners belonging to the "BeyondCorp Alliance", this is the partner
+	// ID specified to you by Google. For all other callers, this is a
+	// string of the form: `{customer}-suffix`, where `customer` is your
+	// customer ID. The *suffix* is any string the caller specifies. This
+	// string will be displayed verbatim in the administration console. This
+	// suffix is used in setting up Custom Access Levels in Context-Aware
+	// Access. Your organization's customer ID can be obtained from the URL:
+	// `GET
 	// https://www.googleapis.com/admin/directory/v1/customers/my_customer`
 	// The `id` field in the response contains the customer ID starting with
 	// the letter 'C'. The customer ID to be used in this API is the string
@@ -877,10 +919,10 @@ type GoogleAppsCloudidentityDevicesV1ClientState struct {
 
 	// ForceSendFields is a list of field names (e.g. "AssetTags") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssetTags") to include in
@@ -898,6 +940,11 @@ func (s *GoogleAppsCloudidentityDevicesV1ClientState) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCloudidentityDevicesV1CreateDeviceMetadata: Metadata for
+// CreateDevice LRO.
+type GoogleAppsCloudidentityDevicesV1CreateDeviceMetadata struct {
+}
+
 // GoogleAppsCloudidentityDevicesV1CustomAttributeValue: Additional
 // custom attribute values may be one of these types
 type GoogleAppsCloudidentityDevicesV1CustomAttributeValue struct {
@@ -912,10 +959,10 @@ type GoogleAppsCloudidentityDevicesV1CustomAttributeValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoolValue") to include in
@@ -945,6 +992,16 @@ func (s *GoogleAppsCloudidentityDevicesV1CustomAttributeValue) UnmarshalJSON(dat
 	}
 	s.NumberValue = float64(s1.NumberValue)
 	return nil
+}
+
+// GoogleAppsCloudidentityDevicesV1DeleteDeviceMetadata: Metadata for
+// DeleteDevice LRO.
+type GoogleAppsCloudidentityDevicesV1DeleteDeviceMetadata struct {
+}
+
+// GoogleAppsCloudidentityDevicesV1DeleteDeviceUserMetadata: Metadata
+// for DeleteDeviceUser LRO.
+type GoogleAppsCloudidentityDevicesV1DeleteDeviceUserMetadata struct {
 }
 
 // GoogleAppsCloudidentityDevicesV1Device:  A Device within the Cloud
@@ -1054,8 +1111,8 @@ type GoogleAppsCloudidentityDevicesV1Device struct {
 
 	// Name: Output only. Resource name
 	// (https://cloud.google.com/apis/design/resource_names) of the Device
-	// in format: `devices/{device_id}`, where device_id is the unique id
-	// assigned to the Device.
+	// in format: `devices/{device}`, where device is the unique id assigned
+	// to the Device.
 	Name string `json:"name,omitempty"`
 
 	// NetworkOperator: Output only. Mobile or network operator of device,
@@ -1103,11 +1160,11 @@ type GoogleAppsCloudidentityDevicesV1Device struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AndroidSpecificAttributes") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -1171,9 +1228,8 @@ type GoogleAppsCloudidentityDevicesV1DeviceUser struct {
 
 	// Name: Output only. Resource name
 	// (https://cloud.google.com/apis/design/resource_names) of the
-	// DeviceUser in format:
-	// `devices/{device_id}/deviceUsers/{device_user_id}`, where
-	// `device_user_id` uniquely identifies a user's use of a device.
+	// DeviceUser in format: `devices/{device}/deviceUsers/{device_user}`,
+	// where `device_user` uniquely identifies a user's use of a device.
 	Name string `json:"name,omitempty"`
 
 	// PasswordState: Password state of the DeviceUser object
@@ -1197,10 +1253,10 @@ type GoogleAppsCloudidentityDevicesV1DeviceUser struct {
 
 	// ForceSendFields is a list of field names (e.g. "CompromisedState") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CompromisedState") to
@@ -1235,10 +1291,10 @@ type GoogleAppsCloudidentityDevicesV1ListClientStatesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClientStates") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClientStates") to include
@@ -1272,10 +1328,10 @@ type GoogleAppsCloudidentityDevicesV1ListDeviceUsersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceUsers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceUsers") to include
@@ -1309,10 +1365,10 @@ type GoogleAppsCloudidentityDevicesV1ListDevicesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Devices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Devices") to include in
@@ -1330,6 +1386,11 @@ func (s *GoogleAppsCloudidentityDevicesV1ListDevicesResponse) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCloudidentityDevicesV1ListEndpointAppsMetadata: Metadata
+// for ListEndpointApps LRO.
+type GoogleAppsCloudidentityDevicesV1ListEndpointAppsMetadata struct {
+}
+
 // GoogleAppsCloudidentityDevicesV1LookupSelfDeviceUsersResponse:
 // Response containing resource names of the DeviceUsers associated with
 // the caller's credentials.
@@ -1341,9 +1402,9 @@ type GoogleAppsCloudidentityDevicesV1LookupSelfDeviceUsersResponse struct {
 	// Names: Resource names
 	// (https://cloud.google.com/apis/design/resource_names) of the
 	// DeviceUsers in the format:
-	// `devices/{device_id}/deviceUsers/{user_resource_id}`, where device_id
-	// is the unique ID assigned to a Device and user_resource_id is the
-	// unique user ID
+	// `devices/{device}/deviceUsers/{user_resource}`, where device is the
+	// unique ID assigned to a Device and user_resource is the unique user
+	// ID
 	Names []string `json:"names,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results. Empty if
@@ -1356,10 +1417,10 @@ type GoogleAppsCloudidentityDevicesV1LookupSelfDeviceUsersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Customer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Customer") to include in
@@ -1377,6 +1438,26 @@ func (s *GoogleAppsCloudidentityDevicesV1LookupSelfDeviceUsersResponse) MarshalJ
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCloudidentityDevicesV1SignoutDeviceUserMetadata: Metadata
+// for SignoutDeviceUser LRO.
+type GoogleAppsCloudidentityDevicesV1SignoutDeviceUserMetadata struct {
+}
+
+// GoogleAppsCloudidentityDevicesV1UpdateClientStateMetadata: Metadata
+// for UpdateClientState LRO.
+type GoogleAppsCloudidentityDevicesV1UpdateClientStateMetadata struct {
+}
+
+// GoogleAppsCloudidentityDevicesV1UpdateDeviceMetadata: Metadata for
+// UpdateDevice LRO.
+type GoogleAppsCloudidentityDevicesV1UpdateDeviceMetadata struct {
+}
+
+// GoogleAppsCloudidentityDevicesV1WipeDeviceMetadata: Metadata for
+// WipeDevice LRO.
+type GoogleAppsCloudidentityDevicesV1WipeDeviceMetadata struct {
+}
+
 // GoogleAppsCloudidentityDevicesV1WipeDeviceRequest: Request message
 // for wiping all data on the device.
 type GoogleAppsCloudidentityDevicesV1WipeDeviceRequest struct {
@@ -1384,16 +1465,16 @@ type GoogleAppsCloudidentityDevicesV1WipeDeviceRequest struct {
 	// (https://cloud.google.com/apis/design/resource_names) of the
 	// customer. If you're using this API for your own organization, use
 	// `customers/my_customer` If you're using this API to manage another
-	// organization, use `customers/{customer_id}`, where customer_id is the
+	// organization, use `customers/{customer}`, where customer is the
 	// customer to whom the device belongs.
 	Customer string `json:"customer,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Customer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Customer") to include in
@@ -1420,10 +1501,10 @@ type GoogleAppsCloudidentityDevicesV1WipeDeviceResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Device") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Device") to include in API
@@ -1441,6 +1522,11 @@ func (s *GoogleAppsCloudidentityDevicesV1WipeDeviceResponse) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAppsCloudidentityDevicesV1WipeDeviceUserMetadata: Metadata for
+// WipeDeviceUser LRO.
+type GoogleAppsCloudidentityDevicesV1WipeDeviceUserMetadata struct {
+}
+
 // GoogleAppsCloudidentityDevicesV1WipeDeviceUserRequest: Request
 // message for starting an account wipe on device.
 type GoogleAppsCloudidentityDevicesV1WipeDeviceUserRequest struct {
@@ -1448,16 +1534,16 @@ type GoogleAppsCloudidentityDevicesV1WipeDeviceUserRequest struct {
 	// (https://cloud.google.com/apis/design/resource_names) of the
 	// customer. If you're using this API for your own organization, use
 	// `customers/my_customer` If you're using this API to manage another
-	// organization, use `customers/{customer_id}`, where customer_id is the
+	// organization, use `customers/{customer}`, where customer is the
 	// customer to whom the device belongs.
 	Customer string `json:"customer,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Customer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Customer") to include in
@@ -1483,10 +1569,10 @@ type GoogleAppsCloudidentityDevicesV1WipeDeviceUserResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceUser") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceUser") to include in
@@ -1540,15 +1626,14 @@ type Group struct {
 
 	// Name: Output only. The resource name
 	// (https://cloud.google.com/apis/design/resource_names) of the `Group`.
-	// Shall be of the form `groups/{group_id}`.
+	// Shall be of the form `groups/{group}`.
 	Name string `json:"name,omitempty"`
 
 	// Parent: Required. Immutable. The resource name of the entity under
 	// which this `Group` resides in the Cloud Identity resource hierarchy.
-	// Must be of the form `identitysources/{identity_source_id}` for
-	// external- identity-mapped groups or `customers/{customer_id}` for
-	// Google Groups. The `customer_id` must begin with "C" (for example,
-	// 'C046psxkn').
+	// Must be of the form `identitysources/{identity_source}` for external-
+	// identity-mapped groups or `customers/{customer}` for Google Groups.
+	// The `customer` must begin with "C" (for example, 'C046psxkn').
 	Parent string `json:"parent,omitempty"`
 
 	// UpdateTime: Output only. The time when the `Group` was last updated.
@@ -1560,10 +1645,10 @@ type Group struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -1616,10 +1701,10 @@ type GroupRelation struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -1653,10 +1738,10 @@ type ListGroupsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Groups") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Groups") to include in API
@@ -1690,10 +1775,10 @@ type ListMembershipsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Memberships") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Memberships") to include
@@ -1725,10 +1810,10 @@ type LookupGroupNameResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -1752,7 +1837,7 @@ type LookupMembershipNameResponse struct {
 	// Name: The resource name
 	// (https://cloud.google.com/apis/design/resource_names) of the
 	// looked-up `Membership`. Must be of the form
-	// `groups/{group_id}/memberships/{membership_id}`.
+	// `groups/{group}/memberships/{membership}`.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1761,10 +1846,10 @@ type LookupMembershipNameResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -1813,10 +1898,10 @@ type MemberRelation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Member") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Member") to include in API
@@ -1844,7 +1929,7 @@ type Membership struct {
 	// Name: Output only. The resource name
 	// (https://cloud.google.com/apis/design/resource_names) of the
 	// `Membership`. Shall be of the form
-	// `groups/{group_id}/memberships/{membership_id}`.
+	// `groups/{group}/memberships/{membership}`.
 	Name string `json:"name,omitempty"`
 
 	// PreferredMemberKey: Required. Immutable. The `EntityKey` of the
@@ -1878,10 +1963,10 @@ type Membership struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -1913,10 +1998,10 @@ type MembershipAdjacencyList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Edges") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Edges") to include in API
@@ -1949,10 +2034,10 @@ type MembershipRole struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExpiryDetail") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExpiryDetail") to include
@@ -1994,10 +2079,10 @@ type ModifyMembershipRolesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AddRoles") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AddRoles") to include in
@@ -2028,10 +2113,10 @@ type ModifyMembershipRolesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Membership") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Membership") to include in
@@ -2090,10 +2175,10 @@ type Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -2127,10 +2212,10 @@ type SearchGroupsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Groups") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Groups") to include in API
@@ -2164,10 +2249,10 @@ type SearchTransitiveGroupsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Memberships") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Memberships") to include
@@ -2201,10 +2286,10 @@ type SearchTransitiveMembershipsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Memberships") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Memberships") to include
@@ -2245,10 +2330,10 @@ type Status struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -2275,10 +2360,10 @@ type TransitiveMembershipRole struct {
 
 	// ForceSendFields is a list of field names (e.g. "Role") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Role") to include in API
@@ -2296,6 +2381,14 @@ func (s *TransitiveMembershipRole) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpdateGroupMetadata: Metadata for UpdateGroup LRO.
+type UpdateGroupMetadata struct {
+}
+
+// UpdateMembershipMetadata: Metadata for UpdateMembership LRO.
+type UpdateMembershipMetadata struct {
+}
+
 // UpdateMembershipRolesParams: The details of an update to a
 // `MembershipRole`.
 type UpdateMembershipRolesParams struct {
@@ -2309,10 +2402,10 @@ type UpdateMembershipRolesParams struct {
 
 	// ForceSendFields is a list of field names (e.g. "FieldMask") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FieldMask") to include in
@@ -2363,10 +2456,10 @@ type UserInvitation struct {
 
 	// ForceSendFields is a list of field names (e.g. "MailsSentCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MailsSentCount") to
@@ -2406,7 +2499,7 @@ type DevicesCancelWipeCall struct {
 //
 // - name: Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the Device
-//   in format: `devices/{device_id}`, where device_id is the unique ID
+//   in format: `devices/{device}`, where device is the unique ID
 //   assigned to the Device.
 func (r *DevicesService) CancelWipe(name string, googleappscloudidentitydevicesv1cancelwipedevicerequest *GoogleAppsCloudidentityDevicesV1CancelWipeDeviceRequest) *DevicesCancelWipeCall {
 	c := &DevicesCancelWipeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2442,7 +2535,7 @@ func (c *DevicesCancelWipeCall) Header() http.Header {
 
 func (c *DevicesCancelWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2515,7 +2608,7 @@ func (c *DevicesCancelWipeCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}`, where device_id is the unique ID assigned to the Device.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device}`, where device is the unique ID assigned to the Device.",
 	//       "location": "path",
 	//       "pattern": "^devices/[^/]+$",
 	//       "required": true,
@@ -2557,7 +2650,7 @@ func (r *DevicesService) Create(googleappscloudidentitydevicesv1device *GoogleAp
 // (https://cloud.google.com/apis/design/resource_names) of the
 // customer. If you're using this API for your own organization, use
 // `customers/my_customer` If you're using this API to manage another
-// organization, use `customers/{customer_id}`, where customer_id is the
+// organization, use `customers/{customer}`, where customer is the
 // customer to whom the device belongs.
 func (c *DevicesCreateCall) Customer(customer string) *DevicesCreateCall {
 	c.urlParams_.Set("customer", customer)
@@ -2591,7 +2684,7 @@ func (c *DevicesCreateCall) Header() http.Header {
 
 func (c *DevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2659,7 +2752,7 @@ func (c *DevicesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer}`, where customer is the customer to whom the device belongs.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2689,7 +2782,7 @@ type DevicesDeleteCall struct {
 //
 // - name: Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the Device
-//   in format: `devices/{device_id}`, where device_id is the unique ID
+//   in format: `devices/{device}`, where device is the unique ID
 //   assigned to the Device.
 func (r *DevicesService) Delete(name string) *DevicesDeleteCall {
 	c := &DevicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2701,7 +2794,7 @@ func (r *DevicesService) Delete(name string) *DevicesDeleteCall {
 // (https://cloud.google.com/apis/design/resource_names) of the
 // customer. If you're using this API for your own organization, use
 // `customers/my_customer` If you're using this API to manage another
-// organization, use `customers/{customer_id}`, where customer_id is the
+// organization, use `customers/{customer}`, where customer is the
 // customer to whom the device belongs.
 func (c *DevicesDeleteCall) Customer(customer string) *DevicesDeleteCall {
 	c.urlParams_.Set("customer", customer)
@@ -2735,7 +2828,7 @@ func (c *DevicesDeleteCall) Header() http.Header {
 
 func (c *DevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2803,12 +2896,12 @@ func (c *DevicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer}`, where customer is the customer to whom the device belongs.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}`, where device_id is the unique ID assigned to the Device.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device}`, where device is the unique ID assigned to the Device.",
 	//       "location": "path",
 	//       "pattern": "^devices/[^/]+$",
 	//       "required": true,
@@ -2838,8 +2931,8 @@ type DevicesGetCall struct {
 //
 // - name: Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the Device
-//   in the format: `devices/{device_id}`, where device_id is the unique
-//   ID assigned to the Device.
+//   in the format: `devices/{device}`, where device is the unique ID
+//   assigned to the Device.
 func (r *DevicesService) Get(name string) *DevicesGetCall {
 	c := &DevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2848,12 +2941,11 @@ func (r *DevicesService) Get(name string) *DevicesGetCall {
 
 // Customer sets the optional parameter "customer": Resource name
 // (https://cloud.google.com/apis/design/resource_names) of the Customer
-// in the format: `customers/{customer_id}`, where customer_id is the
-// customer to whom the device belongs. If you're using this API for
-// your own organization, use `customers/my_customer`. If you're using
-// this API to manage another organization, use
-// `customers/{customer_id}`, where customer_id is the customer to whom
-// the device belongs.
+// in the format: `customers/{customer}`, where customer is the customer
+// to whom the device belongs. If you're using this API for your own
+// organization, use `customers/my_customer`. If you're using this API
+// to manage another organization, use `customers/{customer}`, where
+// customer is the customer to whom the device belongs.
 func (c *DevicesGetCall) Customer(customer string) *DevicesGetCall {
 	c.urlParams_.Set("customer", customer)
 	return c
@@ -2896,7 +2988,7 @@ func (c *DevicesGetCall) Header() http.Header {
 
 func (c *DevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2968,12 +3060,12 @@ func (c *DevicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleAppsCloudident
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Customer in the format: `customers/{customer_id}`, where customer_id is the customer to whom the device belongs. If you're using this API for your own organization, use `customers/my_customer`. If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Customer in the format: `customers/{customer}`, where customer is the customer to whom the device belongs. If you're using this API for your own organization, use `customers/my_customer`. If you're using this API to manage another organization, use `customers/{customer}`, where customer is the customer to whom the device belongs.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in the format: `devices/{device_id}`, where device_id is the unique ID assigned to the Device.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in the format: `devices/{device}`, where device is the unique ID assigned to the Device.",
 	//       "location": "path",
 	//       "pattern": "^devices/[^/]+$",
 	//       "required": true,
@@ -3006,12 +3098,11 @@ func (r *DevicesService) List() *DevicesListCall {
 
 // Customer sets the optional parameter "customer": Resource name
 // (https://cloud.google.com/apis/design/resource_names) of the customer
-// in the format: `customers/{customer_id}`, where customer_id is the
-// customer to whom the device belongs. If you're using this API for
-// your own organization, use `customers/my_customer`. If you're using
-// this API to manage another organization, use
-// `customers/{customer_id}`, where customer_id is the customer to whom
-// the device belongs.
+// in the format: `customers/{customer}`, where customer is the customer
+// to whom the device belongs. If you're using this API for your own
+// organization, use `customers/my_customer`. If you're using this API
+// to manage another organization, use `customers/{customer}`, where
+// customer is the customer to whom the device belongs.
 func (c *DevicesListCall) Customer(customer string) *DevicesListCall {
 	c.urlParams_.Set("customer", customer)
 	return c
@@ -3111,7 +3202,7 @@ func (c *DevicesListCall) Header() http.Header {
 
 func (c *DevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3179,7 +3270,7 @@ func (c *DevicesListCall) Do(opts ...googleapi.CallOption) (*GoogleAppsCloudiden
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer in the format: `customers/{customer_id}`, where customer_id is the customer to whom the device belongs. If you're using this API for your own organization, use `customers/my_customer`. If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer in the format: `customers/{customer}`, where customer is the customer to whom the device belongs. If you're using this API for your own organization, use `customers/my_customer`. If you're using this API to manage another organization, use `customers/{customer}`, where customer is the customer to whom the device belongs.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3264,9 +3355,9 @@ type DevicesWipeCall struct {
 //
 // - name: Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the Device
-//   in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
-//   where device_id is the unique ID assigned to the Device, and
-//   device_user_id is the unique ID assigned to the User.
+//   in format: `devices/{device}/deviceUsers/{device_user}`, where
+//   device is the unique ID assigned to the Device, and device_user is
+//   the unique ID assigned to the User.
 func (r *DevicesService) Wipe(name string, googleappscloudidentitydevicesv1wipedevicerequest *GoogleAppsCloudidentityDevicesV1WipeDeviceRequest) *DevicesWipeCall {
 	c := &DevicesWipeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3301,7 +3392,7 @@ func (c *DevicesWipeCall) Header() http.Header {
 
 func (c *DevicesWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3374,7 +3465,7 @@ func (c *DevicesWipeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device}/deviceUsers/{device_user}`, where device is the unique ID assigned to the Device, and device_user is the unique ID assigned to the User.",
 	//       "location": "path",
 	//       "pattern": "^devices/[^/]+$",
 	//       "required": true,
@@ -3407,9 +3498,9 @@ type DevicesDeviceUsersApproveCall struct {
 //
 // - name: Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the Device
-//   in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
-//   where device_id is the unique ID assigned to the Device, and
-//   device_user_id is the unique ID assigned to the User.
+//   in format: `devices/{device}/deviceUsers/{device_user}`, where
+//   device is the unique ID assigned to the Device, and device_user is
+//   the unique ID assigned to the User.
 func (r *DevicesDeviceUsersService) Approve(name string, googleappscloudidentitydevicesv1approvedeviceuserrequest *GoogleAppsCloudidentityDevicesV1ApproveDeviceUserRequest) *DevicesDeviceUsersApproveCall {
 	c := &DevicesDeviceUsersApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3444,7 +3535,7 @@ func (c *DevicesDeviceUsersApproveCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3517,7 +3608,7 @@ func (c *DevicesDeviceUsersApproveCall) Do(opts ...googleapi.CallOption) (*Opera
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device}/deviceUsers/{device_user}`, where device is the unique ID assigned to the Device, and device_user is the unique ID assigned to the User.",
 	//       "location": "path",
 	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+$",
 	//       "required": true,
@@ -3550,9 +3641,9 @@ type DevicesDeviceUsersBlockCall struct {
 //
 // - name: Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the Device
-//   in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
-//   where device_id is the unique ID assigned to the Device, and
-//   device_user_id is the unique ID assigned to the User.
+//   in format: `devices/{device}/deviceUsers/{device_user}`, where
+//   device is the unique ID assigned to the Device, and device_user is
+//   the unique ID assigned to the User.
 func (r *DevicesDeviceUsersService) Block(name string, googleappscloudidentitydevicesv1blockdeviceuserrequest *GoogleAppsCloudidentityDevicesV1BlockDeviceUserRequest) *DevicesDeviceUsersBlockCall {
 	c := &DevicesDeviceUsersBlockCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3587,7 +3678,7 @@ func (c *DevicesDeviceUsersBlockCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersBlockCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3660,7 +3751,7 @@ func (c *DevicesDeviceUsersBlockCall) Do(opts ...googleapi.CallOption) (*Operati
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device}/deviceUsers/{device_user}`, where device is the unique ID assigned to the Device, and device_user is the unique ID assigned to the User.",
 	//       "location": "path",
 	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+$",
 	//       "required": true,
@@ -3695,9 +3786,9 @@ type DevicesDeviceUsersCancelWipeCall struct {
 //
 // - name: Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the Device
-//   in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
-//   where device_id is the unique ID assigned to the Device, and
-//   device_user_id is the unique ID assigned to the User.
+//   in format: `devices/{device}/deviceUsers/{device_user}`, where
+//   device is the unique ID assigned to the Device, and device_user is
+//   the unique ID assigned to the User.
 func (r *DevicesDeviceUsersService) CancelWipe(name string, googleappscloudidentitydevicesv1cancelwipedeviceuserrequest *GoogleAppsCloudidentityDevicesV1CancelWipeDeviceUserRequest) *DevicesDeviceUsersCancelWipeCall {
 	c := &DevicesDeviceUsersCancelWipeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3732,7 +3823,7 @@ func (c *DevicesDeviceUsersCancelWipeCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersCancelWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3805,7 +3896,7 @@ func (c *DevicesDeviceUsersCancelWipeCall) Do(opts ...googleapi.CallOption) (*Op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device}/deviceUsers/{device_user}`, where device is the unique ID assigned to the Device, and device_user is the unique ID assigned to the User.",
 	//       "location": "path",
 	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+$",
 	//       "required": true,
@@ -3838,9 +3929,9 @@ type DevicesDeviceUsersDeleteCall struct {
 //
 // - name: Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the Device
-//   in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
-//   where device_id is the unique ID assigned to the Device, and
-//   device_user_id is the unique ID assigned to the User.
+//   in format: `devices/{device}/deviceUsers/{device_user}`, where
+//   device is the unique ID assigned to the Device, and device_user is
+//   the unique ID assigned to the User.
 func (r *DevicesDeviceUsersService) Delete(name string) *DevicesDeviceUsersDeleteCall {
 	c := &DevicesDeviceUsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3851,7 +3942,7 @@ func (r *DevicesDeviceUsersService) Delete(name string) *DevicesDeviceUsersDelet
 // (https://cloud.google.com/apis/design/resource_names) of the
 // customer. If you're using this API for your own organization, use
 // `customers/my_customer` If you're using this API to manage another
-// organization, use `customers/{customer_id}`, where customer_id is the
+// organization, use `customers/{customer}`, where customer is the
 // customer to whom the device belongs.
 func (c *DevicesDeviceUsersDeleteCall) Customer(customer string) *DevicesDeviceUsersDeleteCall {
 	c.urlParams_.Set("customer", customer)
@@ -3885,7 +3976,7 @@ func (c *DevicesDeviceUsersDeleteCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3953,12 +4044,12 @@ func (c *DevicesDeviceUsersDeleteCall) Do(opts ...googleapi.CallOption) (*Operat
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer}`, where customer is the customer to whom the device belongs.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device}/deviceUsers/{device_user}`, where device is the unique ID assigned to the Device, and device_user is the unique ID assigned to the User.",
 	//       "location": "path",
 	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+$",
 	//       "required": true,
@@ -3988,9 +4079,9 @@ type DevicesDeviceUsersGetCall struct {
 //
 // - name: Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the Device
-//   in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
-//   where device_id is the unique ID assigned to the Device, and
-//   device_user_id is the unique ID assigned to the User.
+//   in format: `devices/{device}/deviceUsers/{device_user}`, where
+//   device is the unique ID assigned to the Device, and device_user is
+//   the unique ID assigned to the User.
 func (r *DevicesDeviceUsersService) Get(name string) *DevicesDeviceUsersGetCall {
 	c := &DevicesDeviceUsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4001,7 +4092,7 @@ func (r *DevicesDeviceUsersService) Get(name string) *DevicesDeviceUsersGetCall 
 // (https://cloud.google.com/apis/design/resource_names) of the
 // customer. If you're using this API for your own organization, use
 // `customers/my_customer` If you're using this API to manage another
-// organization, use `customers/{customer_id}`, where customer_id is the
+// organization, use `customers/{customer}`, where customer is the
 // customer to whom the device belongs.
 func (c *DevicesDeviceUsersGetCall) Customer(customer string) *DevicesDeviceUsersGetCall {
 	c.urlParams_.Set("customer", customer)
@@ -4045,7 +4136,7 @@ func (c *DevicesDeviceUsersGetCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4118,12 +4209,12 @@ func (c *DevicesDeviceUsersGetCall) Do(opts ...googleapi.CallOption) (*GoogleApp
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer}`, where customer is the customer to whom the device belongs.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device}/deviceUsers/{device_user}`, where device is the unique ID assigned to the Device, and device_user is the unique ID assigned to the User.",
 	//       "location": "path",
 	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+$",
 	//       "required": true,
@@ -4164,7 +4255,7 @@ func (r *DevicesDeviceUsersService) List(parent string) *DevicesDeviceUsersListC
 // (https://cloud.google.com/apis/design/resource_names) of the
 // customer. If you're using this API for your own organization, use
 // `customers/my_customer` If you're using this API to manage another
-// organization, use `customers/{customer_id}`, where customer_id is the
+// organization, use `customers/{customer}`, where customer is the
 // customer to whom the device belongs.
 func (c *DevicesDeviceUsersListCall) Customer(customer string) *DevicesDeviceUsersListCall {
 	c.urlParams_.Set("customer", customer)
@@ -4244,7 +4335,7 @@ func (c *DevicesDeviceUsersListCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4318,7 +4409,7 @@ func (c *DevicesDeviceUsersListCall) Do(opts ...googleapi.CallOption) (*GoogleAp
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer}`, where customer is the customer to whom the device belongs.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4497,7 +4588,7 @@ func (c *DevicesDeviceUsersLookupCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4657,9 +4748,9 @@ type DevicesDeviceUsersWipeCall struct {
 //
 // - name: Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the Device
-//   in format: `devices/{device_id}/deviceUsers/{device_user_id}`,
-//   where device_id is the unique ID assigned to the Device, and
-//   device_user_id is the unique ID assigned to the User.
+//   in format: `devices/{device}/deviceUsers/{device_user}`, where
+//   device is the unique ID assigned to the Device, and device_user is
+//   the unique ID assigned to the User.
 func (r *DevicesDeviceUsersService) Wipe(name string, googleappscloudidentitydevicesv1wipedeviceuserrequest *GoogleAppsCloudidentityDevicesV1WipeDeviceUserRequest) *DevicesDeviceUsersWipeCall {
 	c := &DevicesDeviceUsersWipeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4694,7 +4785,7 @@ func (c *DevicesDeviceUsersWipeCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4767,7 +4858,7 @@ func (c *DevicesDeviceUsersWipeCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device_id}/deviceUsers/{device_user_id}`, where device_id is the unique ID assigned to the Device, and device_user_id is the unique ID assigned to the User.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Device in format: `devices/{device}/deviceUsers/{device_user}`, where device is the unique ID assigned to the Device, and device_user is the unique ID assigned to the User.",
 	//       "location": "path",
 	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+$",
 	//       "required": true,
@@ -4801,20 +4892,19 @@ type DevicesDeviceUsersClientStatesGetCall struct {
 // - name: Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the
 //   ClientState in format:
-//   `devices/{device_id}/deviceUsers/{device_user_id}/clientStates/{part
-//   ner_id}`, where `device_id` is the unique ID assigned to the
-//   Device, `device_user_id` is the unique ID assigned to the User and
-//   `partner_id` identifies the partner storing the data. To get the
-//   client state for devices belonging to your own organization, the
-//   `partnerId` is in the format: `customerId-*anystring*`. Where the
-//   `customerId` is your organization's customer ID and `anystring` is
-//   any suffix. This suffix is used in setting up Custom Access Levels
-//   in Context-Aware Access. You may use `my_customer` instead of the
-//   customer ID for devices managed by your own organization. You may
-//   specify `-` in place of the `{device_id}`, so the ClientState
-//   resource name can be:
-//   `devices/-/deviceUsers/{device_user_resource_id}/clientStates/{partn
-//   er_id}`.
+//   `devices/{device}/deviceUsers/{device_user}/clientStates/{partner}`,
+//    where `device` is the unique ID assigned to the Device,
+//   `device_user` is the unique ID assigned to the User and `partner`
+//   identifies the partner storing the data. To get the client state
+//   for devices belonging to your own organization, the `partnerId` is
+//   in the format: `customerId-*anystring*`. Where the `customerId` is
+//   your organization's customer ID and `anystring` is any suffix. This
+//   suffix is used in setting up Custom Access Levels in Context-Aware
+//   Access. You may use `my_customer` instead of the customer ID for
+//   devices managed by your own organization. You may specify `-` in
+//   place of the `{device}`, so the ClientState resource name can be:
+//   `devices/-/deviceUsers/{device_user_resource}/clientStates/{partner}
+//   `.
 func (r *DevicesDeviceUsersClientStatesService) Get(name string) *DevicesDeviceUsersClientStatesGetCall {
 	c := &DevicesDeviceUsersClientStatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4825,7 +4915,7 @@ func (r *DevicesDeviceUsersClientStatesService) Get(name string) *DevicesDeviceU
 // (https://cloud.google.com/apis/design/resource_names) of the
 // customer. If you're using this API for your own organization, use
 // `customers/my_customer` If you're using this API to manage another
-// organization, use `customers/{customer_id}`, where customer_id is the
+// organization, use `customers/{customer}`, where customer is the
 // customer to whom the device belongs.
 func (c *DevicesDeviceUsersClientStatesGetCall) Customer(customer string) *DevicesDeviceUsersClientStatesGetCall {
 	c.urlParams_.Set("customer", customer)
@@ -4869,7 +4959,7 @@ func (c *DevicesDeviceUsersClientStatesGetCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4942,12 +5032,12 @@ func (c *DevicesDeviceUsersClientStatesGetCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer}`, where customer is the customer to whom the device belongs.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the ClientState in format: `devices/{device_id}/deviceUsers/{device_user_id}/clientStates/{partner_id}`, where `device_id` is the unique ID assigned to the Device, `device_user_id` is the unique ID assigned to the User and `partner_id` identifies the partner storing the data. To get the client state for devices belonging to your own organization, the `partnerId` is in the format: `customerId-*anystring*`. Where the `customerId` is your organization's customer ID and `anystring` is any suffix. This suffix is used in setting up Custom Access Levels in Context-Aware Access. You may use `my_customer` instead of the customer ID for devices managed by your own organization. You may specify `-` in place of the `{device_id}`, so the ClientState resource name can be: `devices/-/deviceUsers/{device_user_resource_id}/clientStates/{partner_id}`.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the ClientState in format: `devices/{device}/deviceUsers/{device_user}/clientStates/{partner}`, where `device` is the unique ID assigned to the Device, `device_user` is the unique ID assigned to the User and `partner` identifies the partner storing the data. To get the client state for devices belonging to your own organization, the `partnerId` is in the format: `customerId-*anystring*`. Where the `customerId` is your organization's customer ID and `anystring` is any suffix. This suffix is used in setting up Custom Access Levels in Context-Aware Access. You may use `my_customer` instead of the customer ID for devices managed by your own organization. You may specify `-` in place of the `{device}`, so the ClientState resource name can be: `devices/-/deviceUsers/{device_user_resource}/clientStates/{partner}`.",
 	//       "location": "path",
 	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+/clientStates/[^/]+$",
 	//       "required": true,
@@ -4989,7 +5079,7 @@ func (r *DevicesDeviceUsersClientStatesService) List(parent string) *DevicesDevi
 // (https://cloud.google.com/apis/design/resource_names) of the
 // customer. If you're using this API for your own organization, use
 // `customers/my_customer` If you're using this API to manage another
-// organization, use `customers/{customer_id}`, where customer_id is the
+// organization, use `customers/{customer}`, where customer is the
 // customer to whom the device belongs.
 func (c *DevicesDeviceUsersClientStatesListCall) Customer(customer string) *DevicesDeviceUsersClientStatesListCall {
 	c.urlParams_.Set("customer", customer)
@@ -5057,7 +5147,7 @@ func (c *DevicesDeviceUsersClientStatesListCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5131,7 +5221,7 @@ func (c *DevicesDeviceUsersClientStatesListCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer}`, where customer is the customer to whom the device belongs.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5206,16 +5296,16 @@ type DevicesDeviceUsersClientStatesPatchCall struct {
 // - name: Output only. Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the
 //   ClientState in format:
-//   `devices/{device_id}/deviceUsers/{device_user_id}/clientState/{partn
-//   er_id}`, where partner_id corresponds to the partner storing the
-//   data. For partners belonging to the "BeyondCorp Alliance", this is
-//   the partner ID specified to you by Google. For all other callers,
-//   this is a string of the form: `{customer_id}-suffix`, where
-//   `customer_id` is your customer ID. The *suffix* is any string the
-//   caller specifies. This string will be displayed verbatim in the
-//   administration console. This suffix is used in setting up Custom
-//   Access Levels in Context-Aware Access. Your organization's customer
-//   ID can be obtained from the URL: `GET
+//   `devices/{device}/deviceUsers/{device_user}/clientState/{partner}`,
+//   where partner corresponds to the partner storing the data. For
+//   partners belonging to the "BeyondCorp Alliance", this is the
+//   partner ID specified to you by Google. For all other callers, this
+//   is a string of the form: `{customer}-suffix`, where `customer` is
+//   your customer ID. The *suffix* is any string the caller specifies.
+//   This string will be displayed verbatim in the administration
+//   console. This suffix is used in setting up Custom Access Levels in
+//   Context-Aware Access. Your organization's customer ID can be
+//   obtained from the URL: `GET
 //   https://www.googleapis.com/admin/directory/v1/customers/my_customer`
 //   The `id` field in the response contains the customer ID starting
 //   with the letter 'C'. The customer ID to be used in this API is the
@@ -5231,7 +5321,7 @@ func (r *DevicesDeviceUsersClientStatesService) Patch(name string, googleappsclo
 // (https://cloud.google.com/apis/design/resource_names) of the
 // customer. If you're using this API for your own organization, use
 // `customers/my_customer` If you're using this API to manage another
-// organization, use `customers/{customer_id}`, where customer_id is the
+// organization, use `customers/{customer}`, where customer is the
 // customer to whom the device belongs.
 func (c *DevicesDeviceUsersClientStatesPatchCall) Customer(customer string) *DevicesDeviceUsersClientStatesPatchCall {
 	c.urlParams_.Set("customer", customer)
@@ -5273,7 +5363,7 @@ func (c *DevicesDeviceUsersClientStatesPatchCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5346,12 +5436,12 @@ func (c *DevicesDeviceUsersClientStatesPatchCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "customer": {
-	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer_id}`, where customer_id is the customer to whom the device belongs.",
+	//       "description": "Optional. [Resource name](https://cloud.google.com/apis/design/resource_names) of the customer. If you're using this API for your own organization, use `customers/my_customer` If you're using this API to manage another organization, use `customers/{customer}`, where customer is the customer to whom the device belongs.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of the ClientState in format: `devices/{device_id}/deviceUsers/{device_user_id}/clientState/{partner_id}`, where partner_id corresponds to the partner storing the data. For partners belonging to the \"BeyondCorp Alliance\", this is the partner ID specified to you by Google. For all other callers, this is a string of the form: `{customer_id}-suffix`, where `customer_id` is your customer ID. The *suffix* is any string the caller specifies. This string will be displayed verbatim in the administration console. This suffix is used in setting up Custom Access Levels in Context-Aware Access. Your organization's customer ID can be obtained from the URL: `GET https://www.googleapis.com/admin/directory/v1/customers/my_customer` The `id` field in the response contains the customer ID starting with the letter 'C'. The customer ID to be used in this API is the string after the letter 'C' (not including 'C')",
+	//       "description": "Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of the ClientState in format: `devices/{device}/deviceUsers/{device_user}/clientState/{partner}`, where partner corresponds to the partner storing the data. For partners belonging to the \"BeyondCorp Alliance\", this is the partner ID specified to you by Google. For all other callers, this is a string of the form: `{customer}-suffix`, where `customer` is your customer ID. The *suffix* is any string the caller specifies. This string will be displayed verbatim in the administration console. This suffix is used in setting up Custom Access Levels in Context-Aware Access. Your organization's customer ID can be obtained from the URL: `GET https://www.googleapis.com/admin/directory/v1/customers/my_customer` The `id` field in the response contains the customer ID starting with the letter 'C'. The customer ID to be used in this API is the string after the letter 'C' (not including 'C')",
 	//       "location": "path",
 	//       "pattern": "^devices/[^/]+/deviceUsers/[^/]+/clientStates/[^/]+$",
 	//       "required": true,
@@ -5433,7 +5523,7 @@ func (c *GroupsCreateCall) Header() http.Header {
 
 func (c *GroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5545,7 +5635,7 @@ type GroupsDeleteCall struct {
 //
 // - name: The resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the
-//   `Group` to retrieve. Must be of the form `groups/{group_id}`.
+//   `Group` to retrieve. Must be of the form `groups/{group}`.
 func (r *GroupsService) Delete(name string) *GroupsDeleteCall {
 	c := &GroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5579,7 +5669,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5647,7 +5737,7 @@ func (c *GroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Group` to retrieve. Must be of the form `groups/{group_id}`.",
+	//       "description": "Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Group` to retrieve. Must be of the form `groups/{group}`.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -5681,7 +5771,7 @@ type GroupsGetCall struct {
 //
 // - name: The resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the
-//   `Group` to retrieve. Must be of the form `groups/{group_id}`.
+//   `Group` to retrieve. Must be of the form `groups/{group}`.
 func (r *GroupsService) Get(name string) *GroupsGetCall {
 	c := &GroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5725,7 +5815,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5796,7 +5886,7 @@ func (c *GroupsGetCall) Do(opts ...googleapi.CallOption) (*Group, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Group` to retrieve. Must be of the form `groups/{group_id}`.",
+	//       "description": "Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Group` to retrieve. Must be of the form `groups/{group}`.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -5855,10 +5945,9 @@ func (c *GroupsListCall) PageToken(pageToken string) *GroupsListCall {
 
 // Parent sets the optional parameter "parent": Required. The parent
 // resource under which to list all `Group` resources. Must be of the
-// form `identitysources/{identity_source_id}` for external-
-// identity-mapped groups or `customers/{customer_id}` for Google
-// Groups. The `customer_id` must begin with "C" (for example,
-// 'C046psxkn').
+// form `identitysources/{identity_source}` for external-
+// identity-mapped groups or `customers/{customer}` for Google Groups.
+// The `customer` must begin with "C" (for example, 'C046psxkn').
 func (c *GroupsListCall) Parent(parent string) *GroupsListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -5913,7 +6002,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5990,7 +6079,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsResponse, 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent resource under which to list all `Group` resources. Must be of the form `identitysources/{identity_source_id}` for external- identity-mapped groups or `customers/{customer_id}` for Google Groups. The `customer_id` must begin with \"C\" (for example, 'C046psxkn').",
+	//       "description": "Required. The parent resource under which to list all `Group` resources. Must be of the form `identitysources/{identity_source}` for external- identity-mapped groups or `customers/{customer}` for Google Groups. The `customer` must begin with \"C\" (for example, 'C046psxkn').",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6078,7 +6167,7 @@ func (c *GroupsLookupCall) GroupKeyId(groupKeyId string) *GroupsLookupCall {
 // or a Google Group. If specified, the `EntityKey` represents an
 // external-identity-mapped group. The namespace must correspond to an
 // identity source created in Admin Console and must be in the form of
-// `identitysources/{identity_source_id}`.
+// `identitysources/{identity_source}`.
 func (c *GroupsLookupCall) GroupKeyNamespace(groupKeyNamespace string) *GroupsLookupCall {
 	c.urlParams_.Set("groupKey.namespace", groupKeyNamespace)
 	return c
@@ -6121,7 +6210,7 @@ func (c *GroupsLookupCall) Header() http.Header {
 
 func (c *GroupsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6192,7 +6281,7 @@ func (c *GroupsLookupCall) Do(opts ...googleapi.CallOption) (*LookupGroupNameRes
 	//       "type": "string"
 	//     },
 	//     "groupKey.namespace": {
-	//       "description": "The namespace in which the entity exists. If not specified, the `EntityKey` represents a Google-managed entity such as a Google user or a Google Group. If specified, the `EntityKey` represents an external-identity-mapped group. The namespace must correspond to an identity source created in Admin Console and must be in the form of `identitysources/{identity_source_id}`.",
+	//       "description": "The namespace in which the entity exists. If not specified, the `EntityKey` represents a Google-managed entity such as a Google user or a Google Group. If specified, the `EntityKey` represents an external-identity-mapped group. The namespace must correspond to an identity source created in Admin Console and must be in the form of `identitysources/{identity_source}`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6225,7 +6314,7 @@ type GroupsPatchCall struct {
 //
 // - name: Output only. The resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the
-//   `Group`. Shall be of the form `groups/{group_id}`.
+//   `Group`. Shall be of the form `groups/{group}`.
 func (r *GroupsService) Patch(name string, group *Group) *GroupsPatchCall {
 	c := &GroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6234,8 +6323,8 @@ func (r *GroupsService) Patch(name string, group *Group) *GroupsPatchCall {
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The
-// fully-qualified names of fields to update. May only contain the
-// following fields: `display_name`, `description`, `labels`.
+// names of fields to update. May only contain the following fields:
+// `display_name`, `description`, `labels`.
 func (c *GroupsPatchCall) UpdateMask(updateMask string) *GroupsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6268,7 +6357,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6341,14 +6430,14 @@ func (c *GroupsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Group`. Shall be of the form `groups/{group_id}`.",
+	//       "description": "Output only. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Group`. Shall be of the form `groups/{group}`.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The fully-qualified names of fields to update. May only contain the following fields: `display_name`, `description`, `labels`.",
+	//       "description": "Required. The names of fields to update. May only contain the following fields: `display_name`, `description`, `labels`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6410,9 +6499,9 @@ func (c *GroupsSearchCall) PageToken(pageToken string) *GroupsSearchCall {
 // query. Must be specified in Common Expression Language
 // (https://opensource.google/projects/cel). May only contain equality
 // operators on the parent and inclusion operators on labels (e.g.,
-// `parent == 'customers/{customer_id}' &&
+// `parent == 'customers/{customer}' &&
 // 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`).
-// The `customer_id` must begin with "C" (for example, 'C046psxkn').
+// The `customer` must begin with "C" (for example, 'C046psxkn').
 func (c *GroupsSearchCall) Query(query string) *GroupsSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -6467,7 +6556,7 @@ func (c *GroupsSearchCall) Header() http.Header {
 
 func (c *GroupsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6544,7 +6633,7 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Required. The search query. Must be specified in [Common Expression Language](https://opensource.google/projects/cel). May only contain equality operators on the parent and inclusion operators on labels (e.g., `parent == 'customers/{customer_id}' \u0026\u0026 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`). The `customer_id` must begin with \"C\" (for example, 'C046psxkn').",
+	//       "description": "Required. The search query. Must be specified in [Common Expression Language](https://opensource.google/projects/cel). May only contain equality operators on the parent and inclusion operators on labels (e.g., `parent == 'customers/{customer}' \u0026\u0026 'cloudidentity.googleapis.com/groups.discussion_forum' in labels`). The `customer` must begin with \"C\" (for example, 'C046psxkn').",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6621,9 +6710,9 @@ type GroupsMembershipsCheckTransitiveMembershipCall struct {
 //
 // - parent: Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the group
-//   to check the transitive membership in. Format: `groups/{group_id}`,
-//   where `group_id` is the unique id assigned to the Group to which
-//   the Membership belongs to.
+//   to check the transitive membership in. Format: `groups/{group}`,
+//   where `group` is the unique id assigned to the Group to which the
+//   Membership belongs to.
 func (r *GroupsMembershipsService) CheckTransitiveMembership(parent string) *GroupsMembershipsCheckTransitiveMembershipCall {
 	c := &GroupsMembershipsCheckTransitiveMembershipCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6678,7 +6767,7 @@ func (c *GroupsMembershipsCheckTransitiveMembershipCall) Header() http.Header {
 
 func (c *GroupsMembershipsCheckTransitiveMembershipCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6750,7 +6839,7 @@ func (c *GroupsMembershipsCheckTransitiveMembershipCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "[Resource name](https://cloud.google.com/apis/design/resource_names) of the group to check the transitive membership in. Format: `groups/{group_id}`, where `group_id` is the unique id assigned to the Group to which the Membership belongs to.",
+	//       "description": "[Resource name](https://cloud.google.com/apis/design/resource_names) of the group to check the transitive membership in. Format: `groups/{group}`, where `group` is the unique id assigned to the Group to which the Membership belongs to.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -6789,7 +6878,7 @@ type GroupsMembershipsCreateCall struct {
 // Create: Creates a `Membership`.
 //
 // - parent: The parent `Group` resource under which to create the
-//   `Membership`. Must be of the form `groups/{group_id}`.
+//   `Membership`. Must be of the form `groups/{group}`.
 func (r *GroupsMembershipsService) Create(parent string, membership *Membership) *GroupsMembershipsCreateCall {
 	c := &GroupsMembershipsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6824,7 +6913,7 @@ func (c *GroupsMembershipsCreateCall) Header() http.Header {
 
 func (c *GroupsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6897,7 +6986,7 @@ func (c *GroupsMembershipsCreateCall) Do(opts ...googleapi.CallOption) (*Operati
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent `Group` resource under which to create the `Membership`. Must be of the form `groups/{group_id}`.",
+	//       "description": "Required. The parent `Group` resource under which to create the `Membership`. Must be of the form `groups/{group}`.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -6934,7 +7023,7 @@ type GroupsMembershipsDeleteCall struct {
 // - name: The resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the
 //   `Membership` to delete. Must be of the form
-//   `groups/{group_id}/memberships/{membership_id}`.
+//   `groups/{group}/memberships/{membership}`.
 func (r *GroupsMembershipsService) Delete(name string) *GroupsMembershipsDeleteCall {
 	c := &GroupsMembershipsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6968,7 +7057,7 @@ func (c *GroupsMembershipsDeleteCall) Header() http.Header {
 
 func (c *GroupsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7036,7 +7125,7 @@ func (c *GroupsMembershipsDeleteCall) Do(opts ...googleapi.CallOption) (*Operati
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Membership` to delete. Must be of the form `groups/{group_id}/memberships/{membership_id}`",
+	//       "description": "Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Membership` to delete. Must be of the form `groups/{group}/memberships/{membership}`",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+/memberships/[^/]+$",
 	//       "required": true,
@@ -7071,7 +7160,7 @@ type GroupsMembershipsGetCall struct {
 // - name: The resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the
 //   `Membership` to retrieve. Must be of the form
-//   `groups/{group_id}/memberships/{membership_id}`.
+//   `groups/{group}/memberships/{membership}`.
 func (r *GroupsMembershipsService) Get(name string) *GroupsMembershipsGetCall {
 	c := &GroupsMembershipsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7115,7 +7204,7 @@ func (c *GroupsMembershipsGetCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7186,7 +7275,7 @@ func (c *GroupsMembershipsGetCall) Do(opts ...googleapi.CallOption) (*Membership
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Membership` to retrieve. Must be of the form `groups/{group_id}/memberships/{membership_id}`.",
+	//       "description": "Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Membership` to retrieve. Must be of the form `groups/{group}/memberships/{membership}`.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+/memberships/[^/]+$",
 	//       "required": true,
@@ -7229,13 +7318,13 @@ type GroupsMembershipsGetMembershipGraphCall struct {
 //
 // - parent: Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the group
-//   to search transitive memberships in. Format: `groups/{group_id}`,
-//   where `group_id` is the unique ID assigned to the Group to which
-//   the Membership belongs to. group_id can be a wildcard collection id
-//   "-". When a group_id is specified, the membership graph will be
-//   constrained to paths between the member (defined in the query) and
-//   the parent. If a wildcard collection is provided, all membership
-//   paths connected to the member will be returned.
+//   to search transitive memberships in. Format: `groups/{group}`,
+//   where `group` is the unique ID assigned to the Group to which the
+//   Membership belongs to. group can be a wildcard collection id "-".
+//   When a group is specified, the membership graph will be constrained
+//   to paths between the member (defined in the query) and the parent.
+//   If a wildcard collection is provided, all membership paths
+//   connected to the member will be returned.
 func (r *GroupsMembershipsService) GetMembershipGraph(parent string) *GroupsMembershipsGetMembershipGraphCall {
 	c := &GroupsMembershipsGetMembershipGraphCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7290,7 +7379,7 @@ func (c *GroupsMembershipsGetMembershipGraphCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetMembershipGraphCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7361,7 +7450,7 @@ func (c *GroupsMembershipsGetMembershipGraphCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the group to search transitive memberships in. Format: `groups/{group_id}`, where `group_id` is the unique ID assigned to the Group to which the Membership belongs to. group_id can be a wildcard collection id \"-\". When a group_id is specified, the membership graph will be constrained to paths between the member (defined in the query) and the parent. If a wildcard collection is provided, all membership paths connected to the member will be returned.",
+	//       "description": "Required. [Resource name](https://cloud.google.com/apis/design/resource_names) of the group to search transitive memberships in. Format: `groups/{group}`, where `group` is the unique ID assigned to the Group to which the Membership belongs to. group can be a wildcard collection id \"-\". When a group is specified, the membership graph will be constrained to paths between the member (defined in the query) and the parent. If a wildcard collection is provided, all membership paths connected to the member will be returned.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -7400,7 +7489,7 @@ type GroupsMembershipsListCall struct {
 // List: Lists the `Membership`s within a `Group`.
 //
 // - parent: The parent `Group` resource under which to lookup the
-//   `Membership` name. Must be of the form `groups/{group_id}`.
+//   `Membership` name. Must be of the form `groups/{group}`.
 func (r *GroupsMembershipsService) List(parent string) *GroupsMembershipsListCall {
 	c := &GroupsMembershipsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7477,7 +7566,7 @@ func (c *GroupsMembershipsListCall) Header() http.Header {
 
 func (c *GroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7559,7 +7648,7 @@ func (c *GroupsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListMembe
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent `Group` resource under which to lookup the `Membership` name. Must be of the form `groups/{group_id}`.",
+	//       "description": "Required. The parent `Group` resource under which to lookup the `Membership` name. Must be of the form `groups/{group}`.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -7631,7 +7720,7 @@ type GroupsMembershipsLookupCall struct {
 // `Membership` by its `EntityKey`.
 //
 // - parent: The parent `Group` resource under which to lookup the
-//   `Membership` name. Must be of the form `groups/{group_id}`.
+//   `Membership` name. Must be of the form `groups/{group}`.
 func (r *GroupsMembershipsService) Lookup(parent string) *GroupsMembershipsLookupCall {
 	c := &GroupsMembershipsLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7654,7 +7743,7 @@ func (c *GroupsMembershipsLookupCall) MemberKeyId(memberKeyId string) *GroupsMem
 // or a Google Group. If specified, the `EntityKey` represents an
 // external-identity-mapped group. The namespace must correspond to an
 // identity source created in Admin Console and must be in the form of
-// `identitysources/{identity_source_id}`.
+// `identitysources/{identity_source}`.
 func (c *GroupsMembershipsLookupCall) MemberKeyNamespace(memberKeyNamespace string) *GroupsMembershipsLookupCall {
 	c.urlParams_.Set("memberKey.namespace", memberKeyNamespace)
 	return c
@@ -7697,7 +7786,7 @@ func (c *GroupsMembershipsLookupCall) Header() http.Header {
 
 func (c *GroupsMembershipsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7773,12 +7862,12 @@ func (c *GroupsMembershipsLookupCall) Do(opts ...googleapi.CallOption) (*LookupM
 	//       "type": "string"
 	//     },
 	//     "memberKey.namespace": {
-	//       "description": "The namespace in which the entity exists. If not specified, the `EntityKey` represents a Google-managed entity such as a Google user or a Google Group. If specified, the `EntityKey` represents an external-identity-mapped group. The namespace must correspond to an identity source created in Admin Console and must be in the form of `identitysources/{identity_source_id}`.",
+	//       "description": "The namespace in which the entity exists. If not specified, the `EntityKey` represents a Google-managed entity such as a Google user or a Google Group. If specified, the `EntityKey` represents an external-identity-mapped group. The namespace must correspond to an identity source created in Admin Console and must be in the form of `identitysources/{identity_source}`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent `Group` resource under which to lookup the `Membership` name. Must be of the form `groups/{group_id}`.",
+	//       "description": "Required. The parent `Group` resource under which to lookup the `Membership` name. Must be of the form `groups/{group}`.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -7815,7 +7904,7 @@ type GroupsMembershipsModifyMembershipRolesCall struct {
 // - name: The resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the
 //   `Membership` whose roles are to be modified. Must be of the form
-//   `groups/{group_id}/memberships/{membership_id}`.
+//   `groups/{group}/memberships/{membership}`.
 func (r *GroupsMembershipsService) ModifyMembershipRoles(name string, modifymembershiprolesrequest *ModifyMembershipRolesRequest) *GroupsMembershipsModifyMembershipRolesCall {
 	c := &GroupsMembershipsModifyMembershipRolesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7850,7 +7939,7 @@ func (c *GroupsMembershipsModifyMembershipRolesCall) Header() http.Header {
 
 func (c *GroupsMembershipsModifyMembershipRolesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7923,7 +8012,7 @@ func (c *GroupsMembershipsModifyMembershipRolesCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Membership` whose roles are to be modified. Must be of the form `groups/{group_id}/memberships/{membership_id}`.",
+	//       "description": "Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Membership` whose roles are to be modified. Must be of the form `groups/{group}/memberships/{membership}`.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+/memberships/[^/]+$",
 	//       "required": true,
@@ -7967,8 +8056,8 @@ type GroupsMembershipsSearchTransitiveGroupsCall struct {
 //
 // - parent: Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the group
-//   to search transitive memberships in. Format: `groups/{group_id}`,
-//   where `group_id` is always '-' as this API will search across all
+//   to search transitive memberships in. Format: `groups/{group}`,
+//   where `group` is always '-' as this API will search across all
 //   groups for a given member.
 func (r *GroupsMembershipsService) SearchTransitiveGroups(parent string) *GroupsMembershipsSearchTransitiveGroupsCall {
 	c := &GroupsMembershipsSearchTransitiveGroupsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8040,7 +8129,7 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) Header() http.Header {
 
 func (c *GroupsMembershipsSearchTransitiveGroupsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8122,7 +8211,7 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "[Resource name](https://cloud.google.com/apis/design/resource_names) of the group to search transitive memberships in. Format: `groups/{group_id}`, where `group_id` is always '-' as this API will search across all groups for a given member.",
+	//       "description": "[Resource name](https://cloud.google.com/apis/design/resource_names) of the group to search transitive memberships in. Format: `groups/{group}`, where `group` is always '-' as this API will search across all groups for a given member.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,
@@ -8190,8 +8279,8 @@ type GroupsMembershipsSearchTransitiveMembershipsCall struct {
 //
 // - parent: Resource name
 //   (https://cloud.google.com/apis/design/resource_names) of the group
-//   to search transitive memberships in. Format: `groups/{group_id}`,
-//   where `group_id` is the unique ID assigned to the Group.
+//   to search transitive memberships in. Format: `groups/{group}`,
+//   where `group` is the unique ID assigned to the Group.
 func (r *GroupsMembershipsService) SearchTransitiveMemberships(parent string) *GroupsMembershipsSearchTransitiveMembershipsCall {
 	c := &GroupsMembershipsSearchTransitiveMembershipsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8249,7 +8338,7 @@ func (c *GroupsMembershipsSearchTransitiveMembershipsCall) Header() http.Header 
 
 func (c *GroupsMembershipsSearchTransitiveMembershipsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210621")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8332,7 +8421,7 @@ func (c *GroupsMembershipsSearchTransitiveMembershipsCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "[Resource name](https://cloud.google.com/apis/design/resource_names) of the group to search transitive memberships in. Format: `groups/{group_id}`, where `group_id` is the unique ID assigned to the Group.",
+	//       "description": "[Resource name](https://cloud.google.com/apis/design/resource_names) of the group to search transitive memberships in. Format: `groups/{group}`, where `group` is the unique ID assigned to the Group.",
 	//       "location": "path",
 	//       "pattern": "^groups/[^/]+$",
 	//       "required": true,

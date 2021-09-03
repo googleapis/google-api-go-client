@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "See, edit, configure, and delete your Google Cloud Platform data"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -130,7 +130,8 @@
                 "IAM_POLICY",
                 "ORG_POLICY",
                 "ACCESS_POLICY",
-                "OS_INVENTORY"
+                "OS_INVENTORY",
+                "RELATIONSHIP"
               ],
               "enumDescriptions": [
                 "Unspecified content type.",
@@ -138,7 +139,8 @@
                 "The actual IAM policy set on a resource.",
                 "The Cloud Organization Policy set on an asset.",
                 "The Cloud Access context manager Policy set on an asset.",
-                "The runtime OS Inventory information."
+                "The runtime OS Inventory information.",
+                "The related resources."
               ],
               "location": "query",
               "type": "string"
@@ -165,6 +167,12 @@
               "description": "Timestamp to take an asset snapshot. This can only be set to a timestamp between the current time and the current time minus 35 days (inclusive). If not specified, the current time will be used. Due to delays in resource data collection and indexing, there is a volatile window during which running the same query may get different results.",
               "format": "google-datetime",
               "location": "query",
+              "type": "string"
+            },
+            "relationshipTypes": {
+              "description": "A list of relationship types to output, for example: `INSTANCE_TO_INSTANCEGROUP`. This field should only be specified if content_type=RELATIONSHIP. * If specified: it snapshots specified relationships. It returns an error if any of the [relationship_types] doesn't belong to the supported relationship types of the [asset_types] or if any of the [asset_types] doesn't belong to the source types of the [relationship_types]. * Otherwise: it snapshots the supported relationships for all [asset_types] or returns an error if any of the [asset_types] has no relationship support. An unspecified asset types field means all supported asset_types. See [Introduction to Cloud Asset Inventory](https://cloud.google.com/asset-inventory/docs/overview) for all supported asset types and relationship types.",
+              "location": "query",
+              "repeated": true,
               "type": "string"
             }
           },
@@ -434,7 +442,7 @@
           ]
         },
         "analyzeIamPolicyLongrunning": {
-          "description": "Analyzes IAM policies asynchronously to answer which identities have what accesses on which resources, and writes the analysis results to a Google Cloud Storage or a BigQuery destination. For Cloud Storage destination, the output format is the JSON format that represents a AnalyzeIamPolicyResponse. This method implements the google.longrunning.Operation, which allows you to track the operation status. We recommend intervals of at least 2 seconds with exponential backoff retry to poll the operation result. The metadata contains the request to help callers to map responses to requests.",
+          "description": "Analyzes IAM policies asynchronously to answer which identities have what accesses on which resources, and writes the analysis results to a Google Cloud Storage or a BigQuery destination. For Cloud Storage destination, the output format is the JSON format that represents a AnalyzeIamPolicyResponse. This method implements the google.longrunning.Operation, which allows you to track the operation status. We recommend intervals of at least 2 seconds with exponential backoff retry to poll the operation result. The metadata contains the metadata for the long-running operation.",
           "flatPath": "v1/{v1Id}/{v1Id1}:analyzeIamPolicyLongrunning",
           "httpMethod": "POST",
           "id": "cloudasset.analyzeIamPolicyLongrunning",
@@ -529,7 +537,8 @@
                 "IAM_POLICY",
                 "ORG_POLICY",
                 "ACCESS_POLICY",
-                "OS_INVENTORY"
+                "OS_INVENTORY",
+                "RELATIONSHIP"
               ],
               "enumDescriptions": [
                 "Unspecified content type.",
@@ -537,7 +546,8 @@
                 "The actual IAM policy set on a resource.",
                 "The Cloud Organization Policy set on an asset.",
                 "The Cloud Access context manager Policy set on an asset.",
-                "The runtime OS Inventory information."
+                "The runtime OS Inventory information.",
+                "The related resources."
               ],
               "location": "query",
               "type": "string"
@@ -559,6 +569,12 @@
               "description": "Start time of the time window (exclusive).",
               "format": "google-datetime",
               "location": "query",
+              "type": "string"
+            },
+            "relationshipTypes": {
+              "description": "Optional. A list of relationship types to output, for example: `INSTANCE_TO_INSTANCEGROUP`. This field should only be specified if content_type=RELATIONSHIP. * If specified: it outputs specified relationships' history on the [asset_names]. It returns an error if any of the [relationship_types] doesn't belong to the supported relationship types of the [asset_names] or if any of the [asset_names]'s types doesn't belong to the source types of the [relationship_types]. * Otherwise: it outputs the supported relationships' history on the [asset_names] or returns an error if any of the [asset_names]'s types has no relationship support. See [Introduction to Cloud Asset Inventory](https://cloud.google.com/asset-inventory/docs/overview) for all supported asset types and relationship types.",
+              "location": "query",
+              "repeated": true,
               "type": "string"
             }
           },
@@ -682,7 +698,13 @@
               "type": "string"
             },
             "query": {
-              "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query) for more information. If not specified or empty, it will search all the resources within the specified `scope`. Examples: * `name:Important` to find Cloud resources whose name contains \"Important\" as a word. * `name=Important` to find the Cloud resource whose name is exactly \"Important\". * `displayName:Impor*` to find Cloud resources whose display name contains \"Impor\" as a prefix of any word in the field. * `location:us-west*` to find Cloud resources whose location contains both \"us\" and \"west\" as prefixes. * `labels:prod` to find Cloud resources whose labels contain \"prod\" as a key or value. * `labels.env:prod` to find Cloud resources that have a label \"env\" and its value is \"prod\". * `labels.env:*` to find Cloud resources that have a label \"env\". * `kmsKey:key` to find Cloud resources encrypted with a customer-managed encryption key whose name contains the word \"key\". * `state:ACTIVE` to find Cloud resources whose state contains \"ACTIVE\" as a word. * `NOT state:ACTIVE` to find {{gcp_name}} resources whose state doesn't contain \"ACTIVE\" as a word. * `createTime\u003c1609459200` to find Cloud resources that were created before \"2021-01-01 00:00:00 UTC\". 1609459200 is the epoch timestamp of \"2021-01-01 00:00:00 UTC\" in seconds. * `updateTime\u003e1609459200` to find Cloud resources that were updated after \"2021-01-01 00:00:00 UTC\". 1609459200 is the epoch timestamp of \"2021-01-01 00:00:00 UTC\" in seconds. * `Important` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields. * `Impor*` to find Cloud resources that contain \"Impor\" as a prefix of any word in any of the searchable fields. * `Important location:(us-west1 OR global)` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields and are also located in the \"us-west1\" region or the \"global\" location.",
+              "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query) for more information. If not specified or empty, it will search all the resources within the specified `scope`. Examples: * `name:Important` to find Cloud resources whose name contains \"Important\" as a word. * `name=Important` to find the Cloud resource whose name is exactly \"Important\". * `displayName:Impor*` to find Cloud resources whose display name contains \"Impor\" as a prefix of any word in the field. * `location:us-west*` to find Cloud resources whose location contains both \"us\" and \"west\" as prefixes. * `labels:prod` to find Cloud resources whose labels contain \"prod\" as a key or value. * `labels.env:prod` to find Cloud resources that have a label \"env\" and its value is \"prod\". * `labels.env:*` to find Cloud resources that have a label \"env\". * `kmsKey:key` to find Cloud resources encrypted with a customer-managed encryption key whose name contains the word \"key\". * `state:ACTIVE` to find Cloud resources whose state contains \"ACTIVE\" as a word. * `NOT state:ACTIVE` to find Cloud resources whose state doesn't contain \"ACTIVE\" as a word. * `createTime\u003c1609459200` to find Cloud resources that were created before \"2021-01-01 00:00:00 UTC\". 1609459200 is the epoch timestamp of \"2021-01-01 00:00:00 UTC\" in seconds. * `updateTime\u003e1609459200` to find Cloud resources that were updated after \"2021-01-01 00:00:00 UTC\". 1609459200 is the epoch timestamp of \"2021-01-01 00:00:00 UTC\" in seconds. * `Important` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields. * `Impor*` to find Cloud resources that contain \"Impor\" as a prefix of any word in any of the searchable fields. * `Important location:(us-west1 OR global)` to find Cloud resources that contain \"Important\" as a word in any of the searchable fields and are also located in the \"us-west1\" region or the \"global\" location.",
+              "location": "query",
+              "type": "string"
+            },
+            "readMask": {
+              "description": "Optional. A comma-separated list of fields specifying which fields to be returned in ResourceSearchResult. Only '*' or combination of top level fields can be specified. Field names of both snake_case and camelCase are supported. Examples: `\"*\"`, `\"name,location\"`, `\"name,versionedResources\"`. The read_mask paths must be valid field paths listed but not limited to (both snake_case and camelCase are supported): * name * assetType * project * displayName * description * location * labels * networkTags * kmsKey * createTime * updateTime * state * additionalAttributes * versionedResources If read_mask is not specified, all fields except versionedResources will be returned. If only '*' is specified, all fields including versionedResources will be returned. Any invalid field path will trigger INVALID_ARGUMENT error.",
+              "format": "google-fieldmask",
               "location": "query",
               "type": "string"
             },
@@ -705,7 +727,7 @@
       }
     }
   },
-  "revision": "20210611",
+  "revision": "20210827",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "AccessSelector": {
@@ -725,6 +747,19 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "AnalyzeIamPolicyLongrunningMetadata": {
+      "description": "Represents the metadata of the longrunning operation for the AnalyzeIamPolicyLongrunning rpc.",
+      "id": "AnalyzeIamPolicyLongrunningMetadata",
+      "properties": {
+        "createTime": {
+          "description": "Output only. The time the operation was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -828,6 +863,10 @@
           "$ref": "Inventory",
           "description": "A representation of runtime OS Inventory information. See [this topic](https://cloud.google.com/compute/docs/instances/os-inventory-management) for more information."
         },
+        "relatedAssets": {
+          "$ref": "RelatedAssets",
+          "description": "The related assets of the asset of one relationship type. One asset only represents one type of relationship."
+        },
         "resource": {
           "$ref": "Resource",
           "description": "A representation of the resource."
@@ -840,6 +879,24 @@
           "description": "The last update timestamp of an asset. update_time is updated when create/update/delete operation is performed.",
           "format": "google-datetime",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AttachedResource": {
+      "description": "Attached resource representation, which is defined by the corresponding service provider. It represents an attached resource's payload.",
+      "id": "AttachedResource",
+      "properties": {
+        "assetType": {
+          "description": "The type of this attached resource. Example: `osconfig.googleapis.com/Inventory` You can find the supported attached asset types of each resource in this table: `https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types`",
+          "type": "string"
+        },
+        "versionedResources": {
+          "description": "Versioned resource representations of this attached resource. This is repeated because there could be multiple versions of the attached resource representations during version migration.",
+          "items": {
+            "$ref": "VersionedResource"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1005,6 +1062,28 @@
       },
       "type": "object"
     },
+    "Date": {
+      "description": "Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values * A month and day value, with a zero year, such as an anniversary * A year on its own, with zero month and day values * A year and month value, with a zero day, such as a credit card expiration date Related types are google.type.TimeOfDay and `google.protobuf.Timestamp`.",
+      "id": "Date",
+      "properties": {
+        "day": {
+          "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year by itself or a year and month where the day isn't significant.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "month": {
+          "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "year": {
+          "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
       "id": "Empty",
@@ -1044,7 +1123,8 @@
             "IAM_POLICY",
             "ORG_POLICY",
             "ACCESS_POLICY",
-            "OS_INVENTORY"
+            "OS_INVENTORY",
+            "RELATIONSHIP"
           ],
           "enumDescriptions": [
             "Unspecified content type.",
@@ -1052,7 +1132,8 @@
             "The actual IAM policy set on a resource.",
             "The Cloud Organization Policy set on an asset.",
             "The Cloud Access context manager Policy set on an asset.",
-            "The runtime OS Inventory information."
+            "The runtime OS Inventory information.",
+            "The related resources."
           ],
           "type": "string"
         },
@@ -1064,6 +1145,13 @@
           "description": "Timestamp to take an asset snapshot. This can only be set to a timestamp between the current time and the current time minus 35 days (inclusive). If not specified, the current time will be used. Due to delays in resource data collection and indexing, there is a volatile window during which running the same query may get different results.",
           "format": "google-datetime",
           "type": "string"
+        },
+        "relationshipTypes": {
+          "description": "A list of relationship types to export, for example: `INSTANCE_TO_INSTANCEGROUP`. This field should only be specified if content_type=RELATIONSHIP. * If specified: it snapshots specified relationships. It returns an error if any of the [relationship_types] doesn't belong to the supported relationship types of the [asset_types] or if any of the [asset_types] doesn't belong to the source types of the [relationship_types]. * Otherwise: it snapshots the supported relationships for all [asset_types] or returns an error if any of the [asset_types] has no relationship support. An unspecified asset types field means all supported asset_types. See [Introduction to Cloud Asset Inventory](https://cloud.google.com/asset-inventory/docs/overview) for all supported asset types and relationship types.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1121,7 +1209,8 @@
             "IAM_POLICY",
             "ORG_POLICY",
             "ACCESS_POLICY",
-            "OS_INVENTORY"
+            "OS_INVENTORY",
+            "RELATIONSHIP"
           ],
           "enumDescriptions": [
             "Unspecified content type.",
@@ -1129,7 +1218,8 @@
             "The actual IAM policy set on a resource.",
             "The Cloud Organization Policy set on an asset.",
             "The Cloud Access context manager Policy set on an asset.",
-            "The runtime OS Inventory information."
+            "The runtime OS Inventory information.",
+            "The related resources."
           ],
           "type": "string"
         },
@@ -1140,6 +1230,13 @@
         "name": {
           "description": "Required. The format will be projects/{project_number}/feeds/{client-assigned_feed_identifier} or folders/{folder_number}/feeds/{client-assigned_feed_identifier} or organizations/{organization_number}/feeds/{client-assigned_feed_identifier} The client-assigned feed identifier must be unique within the parent project/folder/organization.",
           "type": "string"
+        },
+        "relationshipTypes": {
+          "description": "A list of relationship types to output, for example: `INSTANCE_TO_INSTANCEGROUP`. This field should only be specified if content_type=RELATIONSHIP. * If specified: it outputs specified relationship updates on the [asset_names] or the [asset_types]. It returns an error if any of the [relationship_types] doesn't belong to the supported relationship types of the [asset_names] or [asset_types], or any of the [asset_names] or the [asset_types] doesn't belong to the source types of the [relationship_types]. * Otherwise: it outputs the supported relationships of the types of [asset_names] and [asset_types] or returns an error if any of the [asset_names] or the [asset_types] has no replationship support. See [Introduction to Cloud Asset Inventory](https://cloud.google.com/asset-inventory/docs/overview) for all supported asset types and relationship types.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1604,7 +1701,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Required. Resource name for the Access Level. The `short_name` component must begin with a letter and only include alphanumeric and '_'. Format: `accessPolicies/{policy_id}/accessLevels/{short_name}`. The maximum length of the `short_name` component is 50 characters.",
+          "description": "Required. Resource name for the Access Level. The `short_name` component must begin with a letter and only include alphanumeric and '_'. Format: `accessPolicies/{access_policy}/accessLevels/{access_level}`. The maximum length of the `access_level` component is 50 characters.",
           "type": "string"
         },
         "title": {
@@ -1623,7 +1720,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Output only. Resource name of the `AccessPolicy`. Format: `accessPolicies/{policy_id}`",
+          "description": "Output only. Resource name of the `AccessPolicy`. Format: `accessPolicies/{access_policy}`",
           "type": "string"
         },
         "parent": {
@@ -2014,7 +2111,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Required. Resource name for the ServicePerimeter. The `short_name` component must begin with a letter and only include alphanumeric and '_'. Format: `accessPolicies/{policy_id}/servicePerimeters/{short_name}`",
+          "description": "Required. Resource name for the ServicePerimeter. The `short_name` component must begin with a letter and only include alphanumeric and '_'. Format: `accessPolicies/{access_policy}/servicePerimeters/{service_perimeter}`",
           "type": "string"
         },
         "perimeterType": {
@@ -2320,7 +2417,7 @@
       "type": "object"
     },
     "Inventory": {
-      "description": "The inventory details of a VM.",
+      "description": "This API resource represents the available inventory data for a Compute Engine virtual machine (VM) instance at a given point in time. You can use this API resource to determine the inventory data of your VM. For more information, see [Information provided by OS inventory management](https://cloud.google.com/compute/docs/instances/os-inventory-management#data-collected).",
       "id": "Inventory",
       "properties": {
         "items": {
@@ -2330,9 +2427,20 @@
           "description": "Inventory items related to the VM keyed by an opaque unique identifier for each inventory item. The identifier is unique to each distinct and addressable inventory item and will change, when there is a new package version.",
           "type": "object"
         },
+        "name": {
+          "description": "Output only. The `Inventory` API resource name. Format: `projects/{project_number}/locations/{location}/instances/{instance_id}/inventory`",
+          "readOnly": true,
+          "type": "string"
+        },
         "osInfo": {
           "$ref": "OsInfo",
           "description": "Base level operating system information for the VM."
+        },
+        "updateTime": {
+          "description": "Output only. Timestamp of the last reported inventory for the VM.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -2635,7 +2743,7 @@
       "type": "object"
     },
     "Policy": {
-      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
+      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
       "id": "Policy",
       "properties": {
         "auditConfigs": {
@@ -2671,6 +2779,98 @@
       "properties": {
         "topic": {
           "description": "The name of the Pub/Sub topic to publish to. Example: `projects/PROJECT_ID/topics/TOPIC_ID`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RelatedAsset": {
+      "description": "An asset identify in Google Cloud which contains its name, type and ancestors. An asset can be any resource in the Google Cloud [resource hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy), a resource outside the Google Cloud resource hierarchy (such as Google Kubernetes Engine clusters and objects), or a policy (e.g. Cloud IAM policy). See [Supported asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types) for more information.",
+      "id": "RelatedAsset",
+      "properties": {
+        "ancestors": {
+          "description": "The ancestors of an asset in Google Cloud [resource hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy), represented as a list of relative resource names. An ancestry path starts with the closest ancestor in the hierarchy and ends at root. Example: `[\"projects/123456789\", \"folders/5432\", \"organizations/1234\"]`",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "asset": {
+          "description": "The full name of the asset. Example: `//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1` See [Resource names](https://cloud.google.com/apis/design/resource_names#full_resource_name) for more information.",
+          "type": "string"
+        },
+        "assetType": {
+          "description": "The type of the asset. Example: `compute.googleapis.com/Disk` See [Supported asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types) for more information.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RelatedAssets": {
+      "description": "The detailed related assets with the `relationship_type`.",
+      "id": "RelatedAssets",
+      "properties": {
+        "assets": {
+          "description": "The peer resources of the relationship.",
+          "items": {
+            "$ref": "RelatedAsset"
+          },
+          "type": "array"
+        },
+        "relationshipAttributes": {
+          "$ref": "RelationshipAttributes",
+          "description": "The detailed relationship attributes."
+        }
+      },
+      "type": "object"
+    },
+    "RelatedResource": {
+      "description": "The detailed related resource.",
+      "id": "RelatedResource",
+      "properties": {
+        "assetType": {
+          "description": "The type of the asset. Example: `compute.googleapis.com/Instance`",
+          "type": "string"
+        },
+        "fullResourceName": {
+          "description": "The full resource name of the related resource. Example: `//compute.googleapis.com/projects/my_proj_123/zones/instance/instance123`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RelatedResources": {
+      "description": "The related resources of the primary resource.",
+      "id": "RelatedResources",
+      "properties": {
+        "relatedResources": {
+          "description": "The detailed related resources of the primary resource.",
+          "items": {
+            "$ref": "RelatedResource"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "RelationshipAttributes": {
+      "description": "The relationship attributes which include `type`, `source_resource_type`, `target_resource_type` and `action`.",
+      "id": "RelationshipAttributes",
+      "properties": {
+        "action": {
+          "description": "The detail of the relationship, e.g. `contains`, `attaches`",
+          "type": "string"
+        },
+        "sourceResourceType": {
+          "description": "The source asset type. Example: `compute.googleapis.com/Instance`",
+          "type": "string"
+        },
+        "targetResourceType": {
+          "description": "The target asset type. Example: `compute.googleapis.com/Disk`",
+          "type": "string"
+        },
+        "type": {
+          "description": "The unique identifier of the relationship type. Example: `INSTANCE_TO_INSTANCEGROUP`",
           "type": "string"
         }
       },
@@ -2730,6 +2930,13 @@
         "assetType": {
           "description": "The type of this resource. Example: `compute.googleapis.com/Disk`. To search against the `asset_type`: * specify the `asset_type` field in your search request.",
           "type": "string"
+        },
+        "attachedResources": {
+          "description": "Attached resources of this resource. For example, an OSConfig Inventory is an attached resource of a Compute Instance. This field is repeated because a resource could have multiple attached resources. This `attached_resources` field is not searchable. Some attributes of the attached resources are exposed in `additional_attributes` field, so as to allow users to search on them.",
+          "items": {
+            "$ref": "AttachedResource"
+          },
+          "type": "array"
         },
         "createTime": {
           "description": "The create timestamp of this resource, at which the resource was created. The granularity is in seconds. Timestamp.nanos will always be 0. This field is available only when the resource's proto contains it. To search against `create_time`: * use a field query. - value in seconds since unix epoch. Example: `createTime \u003e 1609459200` - value in date string. Example: `createTime \u003e 2021-01-01` - value in date-time string (must be quoted). Example: `createTime \u003e \"2021-01-01T00:00:00\"`",
@@ -2793,6 +3000,13 @@
           "description": "The project that this resource belongs to, in the form of projects/{PROJECT_NUMBER}. This field is available when the resource belongs to a project. To search against `project`: * use a field query. Example: `project:12345` * use a free text query. Example: `12345` * specify the `scope` field as this project in your search request.",
           "type": "string"
         },
+        "relationships": {
+          "additionalProperties": {
+            "$ref": "RelatedResources"
+          },
+          "description": "A map of related resources of this resource, keyed by the relationship type. A relationship type is in the format of {SourceType}_{ACTION}_{DestType}. Example: `DISK_TO_INSTANCE`, `DISK_TO_NETWORK`, `INSTANCE_TO_INSTANCEGROUP`. See [supported relationship types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#supported_relationship_types).",
+          "type": "object"
+        },
         "state": {
           "description": "The state of this resource. Different resources types have different state definitions that are mapped from various fields of different resource types. This field is available only when the resource's proto contains it. Example: If the resource is an instance provided by Compute Engine, its state will include PROVISIONING, STAGING, RUNNING, STOPPING, SUSPENDING, SUSPENDED, REPAIRING, and TERMINATED. See `status` definition in [API Reference](https://cloud.google.com/compute/docs/reference/rest/v1/instances). If the resource is a project provided by Cloud Resource Manager, its state will include LIFECYCLE_STATE_UNSPECIFIED, ACTIVE, DELETE_REQUESTED and DELETE_IN_PROGRESS. See `lifecycleState` definition in [API Reference](https://cloud.google.com/resource-manager/reference/rest/v1/projects). To search against the `state`: * use a field query. Example: `state:RUNNING` * use a free text query. Example: `RUNNING`",
           "type": "string"
@@ -2801,6 +3015,13 @@
           "description": "The last update timestamp of this resource, at which the resource was last modified or deleted. The granularity is in seconds. Timestamp.nanos will always be 0. This field is available only when the resource's proto contains it. To search against `update_time`: * use a field query. - value in seconds since unix epoch. Example: `updateTime \u003c 1609459200` - value in date string. Example: `updateTime \u003c 2021-01-01` - value in date-time string (must be quoted). Example: `updateTime \u003c \"2021-01-01T00:00:00\"`",
           "format": "google-datetime",
           "type": "string"
+        },
+        "versionedResources": {
+          "description": "Versioned resource representations of this resource. This is repeated because there could be multiple versions of resource representations during version migration. This `versioned_resources` field is not searchable. Some attributes of the resource representations are exposed in `additional_attributes` field, so as to allow users to search on them.",
+          "items": {
+            "$ref": "VersionedResource"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2871,6 +3092,10 @@
         "qfePackage": {
           "$ref": "WindowsQuickFixEngineeringPackage",
           "description": "Details of a Windows Quick Fix engineering package. See https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-quickfixengineering for info in Windows Quick Fix Engineering."
+        },
+        "windowsApplication": {
+          "$ref": "WindowsApplication",
+          "description": "Details of Windows Application."
         },
         "wuaPackage": {
           "$ref": "WindowsUpdatePackage",
@@ -3006,6 +3231,52 @@
         },
         "version": {
           "description": "The version of the package.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VersionedResource": {
+      "description": "Resource representation as defined by the corresponding service providing the resource for a given API version.",
+      "id": "VersionedResource",
+      "properties": {
+        "resource": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "JSON representation of the resource as defined by the corresponding service providing this resource. Example: If the resource is an instance provided by Compute Engine, this field will contain the JSON representation of the instance as defined by Compute Engine: `https://cloud.google.com/compute/docs/reference/rest/v1/instances`. You can find the resource definition for each supported resource type in this table: `https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types`",
+          "type": "object"
+        },
+        "version": {
+          "description": "API version of the resource. Example: If the resource is an instance provided by Compute Engine v1 API as defined in `https://cloud.google.com/compute/docs/reference/rest/v1/instances`, version will be \"v1\".",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WindowsApplication": {
+      "description": "Contains information about a Windows application as retrieved from the Windows Registry. For more information about these fields, see [Windows Installer Properties for the Uninstall Registry](https://docs.microsoft.com/en-us/windows/win32/msi/uninstall-registry-key){: class=\"external\" }",
+      "id": "WindowsApplication",
+      "properties": {
+        "displayName": {
+          "description": "The name of the application or product.",
+          "type": "string"
+        },
+        "displayVersion": {
+          "description": "The version of the product or application in string format.",
+          "type": "string"
+        },
+        "helpLink": {
+          "description": "The internet address for technical support.",
+          "type": "string"
+        },
+        "installDate": {
+          "$ref": "Date",
+          "description": "The last time this product received service. The value of this property is replaced each time a patch is applied or removed from the product or the command-line option is used to repair the product."
+        },
+        "publisher": {
+          "description": "The name of the manufacturer for the product or application.",
           "type": "string"
         }
       },

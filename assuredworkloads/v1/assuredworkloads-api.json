@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "See, edit, configure, and delete your Google Cloud Platform data"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -351,7 +351,7 @@
       }
     }
   },
-  "revision": "20210506",
+  "revision": "20210819",
   "rootUrl": "https://assuredworkloads.googleapis.com/",
   "schemas": {
     "GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata": {
@@ -368,7 +368,8 @@
             "FEDRAMP_MODERATE",
             "US_REGIONAL_ACCESS",
             "HIPAA",
-            "HITRUST"
+            "HITRUST",
+            "EU_REGIONS_AND_SUPPORT"
           ],
           "enumDescriptions": [
             "Unknown compliance regime.",
@@ -378,7 +379,8 @@
             "FedRAMP Moderate data protection controls",
             "Assured Workloads For US Regions data protection controls",
             "Health Insurance Portability and Accountability Act controls",
-            "Health Information Trust Alliance controls"
+            "Health Information Trust Alliance controls",
+            "Assured Workloads For EU Regions and Support controls"
           ],
           "type": "string"
         },
@@ -434,7 +436,8 @@
             "FEDRAMP_MODERATE",
             "US_REGIONAL_ACCESS",
             "HIPAA",
-            "HITRUST"
+            "HITRUST",
+            "EU_REGIONS_AND_SUPPORT"
           ],
           "enumDescriptions": [
             "Unknown compliance regime.",
@@ -444,7 +447,8 @@
             "FedRAMP Moderate data protection controls",
             "Assured Workloads For US Regions data protection controls",
             "Health Insurance Portability and Accountability Act controls",
-            "Health Information Trust Alliance controls"
+            "Health Information Trust Alliance controls",
+            "Assured Workloads For EU Regions and Support controls"
           ],
           "type": "string"
         },
@@ -478,7 +482,7 @@
           "type": "string"
         },
         "provisionedResourcesParent": {
-          "description": "Input only. The parent resource for the resources managed by this Assured Workload. May be either an organization or a folder. Must be the same or a child of the Workload parent. If not specified all resources are created under the Workload parent. Formats: folders/{folder_id} organizations/{organization_id}",
+          "description": "Input only. The parent resource for the resources managed by this Assured Workload. May be either empty or a folder resource which is a child of the Workload parent. If not specified all resources are created under the parent organization. Format: folders/{folder_id}",
           "type": "string"
         },
         "resourceSettings": {
@@ -589,7 +593,9 @@
             "FEDRAMP_MODERATE",
             "US_REGIONAL_ACCESS",
             "HIPAA",
-            "HITRUST"
+            "HITRUST",
+            "EU_REGIONS_AND_SUPPORT",
+            "CA_REGIONS_AND_SUPPORT"
           ],
           "enumDescriptions": [
             "Unknown compliance regime.",
@@ -599,7 +605,9 @@
             "FedRAMP Moderate data protection controls",
             "Assured Workloads For US Regions data protection controls",
             "Health Insurance Portability and Accountability Act controls",
-            "Health Information Trust Alliance controls"
+            "Health Information Trust Alliance controls",
+            "Assured Workloads For EU Regions and Support controls",
+            "Assured Workloads For Canada Regions and Support controls"
           ],
           "type": "string"
         },
@@ -631,7 +639,7 @@
       "id": "GoogleCloudAssuredworkloadsV1beta1Workload",
       "properties": {
         "billingAccount": {
-          "description": "Required. Input only. The billing account used for the resources which are direct children of workload. This billing account is initially associated with the resources created as part of Workload creation. After the initial creation of these resources, the customer can change the assigned billing account. The resource name has the form `billingAccounts/{billing_account_id}`. For example, `billingAccounts/012345-567890-ABCDEF`.",
+          "description": "Input only. The billing account used for the resources which are direct children of workload. This billing account is initially associated with the resources created as part of Workload creation. After the initial creation of these resources, the customer can change the assigned billing account. The resource name has the form `billingAccounts/{billing_account_id}`. For example, `billingAccounts/012345-567890-ABCDEF`.",
           "type": "string"
         },
         "cjisSettings": {
@@ -648,7 +656,9 @@
             "FEDRAMP_MODERATE",
             "US_REGIONAL_ACCESS",
             "HIPAA",
-            "HITRUST"
+            "HITRUST",
+            "EU_REGIONS_AND_SUPPORT",
+            "CA_REGIONS_AND_SUPPORT"
           ],
           "enumDescriptions": [
             "Unknown compliance regime.",
@@ -658,7 +668,9 @@
             "FedRAMP Moderate data protection controls",
             "Assured Workloads For US Regions data protection controls",
             "Health Insurance Portability and Accountability Act controls",
-            "Health Information Trust Alliance controls"
+            "Health Information Trust Alliance controls",
+            "Assured Workloads For EU Regions and Support controls",
+            "Assured Workloads For Canada Regions and Support controls"
           ],
           "type": "string"
         },
@@ -704,7 +716,7 @@
           "type": "string"
         },
         "provisionedResourcesParent": {
-          "description": "Input only. The parent resource for the resources managed by this Assured Workload. May be either an organization or a folder. Must be the same or a child of the Workload parent. If not specified all resources are created under the Workload parent. Formats: folders/{folder_id} organizations/{organization_id}",
+          "description": "Input only. The parent resource for the resources managed by this Assured Workload. May be either empty or a folder resource which is a child of the Workload parent. If not specified all resources are created under the parent organization. Format: folders/{folder_id}",
           "type": "string"
         },
         "resourceSettings": {
@@ -800,12 +812,14 @@
           "enum": [
             "RESOURCE_TYPE_UNSPECIFIED",
             "CONSUMER_PROJECT",
+            "CONSUMER_FOLDER",
             "ENCRYPTION_KEYS_PROJECT",
             "KEYRING"
           ],
           "enumDescriptions": [
             "Unknown resource type.",
-            "Consumer project.",
+            "Deprecated. Existing workloads will continue to support this, but new CreateWorkloadRequests should not specify this as an input value.",
+            "Consumer Folder.",
             "Consumer project containing encryption keys.",
             "Keyring resource that hosts encryption keys."
           ],
@@ -831,12 +845,14 @@
           "enum": [
             "RESOURCE_TYPE_UNSPECIFIED",
             "CONSUMER_PROJECT",
+            "CONSUMER_FOLDER",
             "ENCRYPTION_KEYS_PROJECT",
             "KEYRING"
           ],
           "enumDescriptions": [
             "Unknown resource type.",
-            "Consumer project.",
+            "Deprecated. Existing workloads will continue to support this, but new CreateWorkloadRequests should not specify this as an input value.",
+            "Consumer Folder.",
             "Consumer project containing encryption keys.",
             "Keyring resource that hosts encryption keys."
           ],

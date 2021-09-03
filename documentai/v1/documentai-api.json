@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "See, edit, configure, and delete your Google Cloud Platform data"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -208,11 +208,11 @@
           "resources": {
             "operations": {
               "methods": {
-                "cancelOperation": {
+                "cancel": {
                   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
-                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
-                  "httpMethod": "DELETE",
-                  "id": "documentai.projects.locations.operations.cancelOperation",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
+                  "httpMethod": "POST",
+                  "id": "documentai.projects.locations.operations.cancel",
                   "parameterOrder": [
                     "name"
                   ],
@@ -225,7 +225,7 @@
                       "type": "string"
                     }
                   },
-                  "path": "v1/{+name}",
+                  "path": "v1/{+name}:cancel",
                   "response": {
                     "$ref": "GoogleProtobufEmpty"
                   },
@@ -564,11 +564,11 @@
               "resources": {
                 "operations": {
                   "methods": {
-                    "cancelOperation": {
+                    "cancel": {
                       "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
-                      "flatPath": "uiv1beta3/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
-                      "httpMethod": "DELETE",
-                      "id": "documentai.uiv1beta3.projects.locations.operations.cancelOperation",
+                      "flatPath": "uiv1beta3/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
+                      "httpMethod": "POST",
+                      "id": "documentai.uiv1beta3.projects.locations.operations.cancel",
                       "parameterOrder": [
                         "name"
                       ],
@@ -581,7 +581,7 @@
                           "type": "string"
                         }
                       },
-                      "path": "uiv1beta3/{+name}",
+                      "path": "uiv1beta3/{+name}:cancel",
                       "response": {
                         "$ref": "GoogleProtobufEmpty"
                       },
@@ -664,9 +664,41 @@
       }
     }
   },
-  "revision": "20210607",
+  "revision": "20210830",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
+    "GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata": {
+      "id": "GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata",
+      "properties": {
+        "commonMetadata": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
+          "description": "The basic metadata of the long running operation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsResponse": {
+      "description": "Response of the delete documents operation.",
+      "id": "GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsResponse",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata": {
+      "id": "GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata",
+      "properties": {
+        "commonMetadata": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
+          "description": "The basic metadata of the long running operation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsResponse": {
+      "description": "Response of the batch move documents operation.",
+      "id": "GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsResponse",
+      "properties": {},
+      "type": "object"
+    },
     "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata": {
       "description": "The common metadata for long running operations.",
       "id": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
@@ -825,6 +857,45 @@
       },
       "type": "object"
     },
+    "GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionMetadata": {
+      "description": "Metadata message associated with the ExportProcessorVersion operation.",
+      "id": "GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionMetadata",
+      "properties": {
+        "commonMetadata": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
+          "description": "The common metadata about the operation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse": {
+      "description": "Response message associated with the ExportProcessorVersion operation.",
+      "id": "GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse",
+      "properties": {
+        "gcsUri": {
+          "description": "The Cloud Storage URI containing the output artifacts.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata": {
+      "description": "Metadata of the import document operation.",
+      "id": "GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata",
+      "properties": {
+        "commonMetadata": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
+          "description": "The basic metadata of the long running operation."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3ImportDocumentsResponse": {
+      "description": "Response of the import document operation.",
+      "id": "GoogleCloudDocumentaiUiv1beta3ImportDocumentsResponse",
+      "properties": {},
+      "type": "object"
+    },
     "GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata": {
       "description": "The long running operation metadata for set default processor version method.",
       "id": "GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata",
@@ -918,6 +989,16 @@
       "description": "Response message for the undeploy processor version method.",
       "id": "GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionResponse",
       "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiUiv1beta3UpdateDatasetOperationMetadata": {
+      "id": "GoogleCloudDocumentaiUiv1beta3UpdateDatasetOperationMetadata",
+      "properties": {
+        "commonMetadata": {
+          "$ref": "GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata",
+          "description": "The basic metadata of the long running operation."
+        }
+      },
       "type": "object"
     },
     "GoogleCloudDocumentaiUiv1beta3UpdateHumanReviewConfigMetadata": {
@@ -1192,7 +1273,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1DocumentEntity": {
-      "description": "A phrase in the text that is a known entity type, such as a person, an organization, or location.",
+      "description": "An entity that could be a phrase in the text or a property belongs to the document. It is a known entity type, such as a person, an organization, or location.",
       "id": "GoogleCloudDocumentaiV1DocumentEntity",
       "properties": {
         "confidence": {
@@ -1209,7 +1290,7 @@
           "type": "string"
         },
         "mentionText": {
-          "description": "Optional. Text value in the document e.g. `1600 Amphitheatre Pkwy`.",
+          "description": "Optional. Text value in the document e.g. `1600 Amphitheatre Pkwy`. If the entity is not present in the document, this field will be empty.",
           "type": "string"
         },
         "normalizedValue": {
@@ -1266,12 +1347,22 @@
           "$ref": "GoogleTypeDateTime",
           "description": "DateTime value. Includes date, time, and timezone. See also: https://github.com/googleapis/googleapis/blob/master/google/type/datetime.proto"
         },
+        "floatValue": {
+          "description": "Float value.",
+          "format": "float",
+          "type": "number"
+        },
+        "integerValue": {
+          "description": "Integer value.",
+          "format": "int32",
+          "type": "integer"
+        },
         "moneyValue": {
           "$ref": "GoogleTypeMoney",
           "description": "Money value. See also: https://github.com/googleapis/googleapis/blob/master/google/type/money.proto"
         },
         "text": {
-          "description": "Required. Normalized entity value stored as a string. This field is populated for supported document type (e.g. Invoice). For some entity types, one of respective 'structured_value' fields may also be populated. - Money/Currency type (`money_value`) is in the ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601 text format. - Datetime type (`datetime_value`) is in the ISO 8601 text format.",
+          "description": "Optional. An optional field to store a normalized string. For some entity types, one of respective 'structured_value' fields may also be populated. Also not all the types of 'structured_value' will be normalized. For example, some processors may not generate float or int normalized text by default. Below are sample formats mapped to structured values. - Money/Currency type (`money_value`) is in the ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601 text format. - Datetime type (`datetime_value`) is in the ISO 8601 text format.",
           "type": "string"
         }
       },
@@ -1535,6 +1626,14 @@
       "description": "A form field detected on the page.",
       "id": "GoogleCloudDocumentaiV1DocumentPageFormField",
       "properties": {
+        "correctedKeyText": {
+          "description": "Created for Labeling UI to export key text. If corrections were made to the text identified by the `field_name.text_anchor`, this field will contain the correction.",
+          "type": "string"
+        },
+        "correctedValueText": {
+          "description": "Created for Labeling UI to export value text. If corrections were made to the text identified by the `field_value.text_anchor`, this field will contain the correction.",
+          "type": "string"
+        },
         "fieldName": {
           "$ref": "GoogleCloudDocumentaiV1DocumentPageLayout",
           "description": "Layout for the FormField name. e.g. `Address`, `Email`, `Grand total`, `Phone number`, etc."
@@ -1904,7 +2003,7 @@
           "type": "integer"
         },
         "index": {
-          "description": "The index of the parent revisions corresponding collection of items (eg. list of entities, properties within entities, etc.)",
+          "description": "The index of the parent item in the corresponding item list (eg. list of entities, properties within entities, etc.) on parent revision.",
           "format": "int32",
           "type": "integer"
         },
@@ -2413,7 +2512,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta1DocumentEntity": {
-      "description": "A phrase in the text that is a known entity type, such as a person, an organization, or location.",
+      "description": "An entity that could be a phrase in the text or a property belongs to the document. It is a known entity type, such as a person, an organization, or location.",
       "id": "GoogleCloudDocumentaiV1beta1DocumentEntity",
       "properties": {
         "confidence": {
@@ -2430,7 +2529,7 @@
           "type": "string"
         },
         "mentionText": {
-          "description": "Optional. Text value in the document e.g. `1600 Amphitheatre Pkwy`.",
+          "description": "Optional. Text value in the document e.g. `1600 Amphitheatre Pkwy`. If the entity is not present in the document, this field will be empty.",
           "type": "string"
         },
         "normalizedValue": {
@@ -2487,12 +2586,22 @@
           "$ref": "GoogleTypeDateTime",
           "description": "DateTime value. Includes date, time, and timezone. See also: https://github.com/googleapis/googleapis/blob/master/google/type/datetime.proto"
         },
+        "floatValue": {
+          "description": "Float value.",
+          "format": "float",
+          "type": "number"
+        },
+        "integerValue": {
+          "description": "Integer value.",
+          "format": "int32",
+          "type": "integer"
+        },
         "moneyValue": {
           "$ref": "GoogleTypeMoney",
           "description": "Money value. See also: https://github.com/googleapis/googleapis/blob/master/google/type/money.proto"
         },
         "text": {
-          "description": "Required. Normalized entity value stored as a string. This field is populated for supported document type (e.g. Invoice). For some entity types, one of respective 'structured_value' fields may also be populated. - Money/Currency type (`money_value`) is in the ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601 text format. - Datetime type (`datetime_value`) is in the ISO 8601 text format.",
+          "description": "Optional. An optional field to store a normalized string. For some entity types, one of respective 'structured_value' fields may also be populated. Also not all the types of 'structured_value' will be normalized. For example, some processors may not generate float or int normalized text by default. Below are sample formats mapped to structured values. - Money/Currency type (`money_value`) is in the ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601 text format. - Datetime type (`datetime_value`) is in the ISO 8601 text format.",
           "type": "string"
         }
       },
@@ -2734,6 +2843,14 @@
       "description": "A form field detected on the page.",
       "id": "GoogleCloudDocumentaiV1beta1DocumentPageFormField",
       "properties": {
+        "correctedKeyText": {
+          "description": "Created for Labeling UI to export key text. If corrections were made to the text identified by the `field_name.text_anchor`, this field will contain the correction.",
+          "type": "string"
+        },
+        "correctedValueText": {
+          "description": "Created for Labeling UI to export value text. If corrections were made to the text identified by the `field_value.text_anchor`, this field will contain the correction.",
+          "type": "string"
+        },
         "fieldName": {
           "$ref": "GoogleCloudDocumentaiV1beta1DocumentPageLayout",
           "description": "Layout for the FormField name. e.g. `Address`, `Email`, `Grand total`, `Phone number`, etc."
@@ -3103,7 +3220,7 @@
           "type": "integer"
         },
         "index": {
-          "description": "The index of the parent revisions corresponding collection of items (eg. list of entities, properties within entities, etc.)",
+          "description": "The index of the parent item in the corresponding item list (eg. list of entities, properties within entities, etc.) on parent revision.",
           "format": "int32",
           "type": "integer"
         },
@@ -3556,7 +3673,7 @@
       "type": "object"
     },
     "GoogleCloudDocumentaiV1beta2DocumentEntity": {
-      "description": "A phrase in the text that is a known entity type, such as a person, an organization, or location.",
+      "description": "An entity that could be a phrase in the text or a property belongs to the document. It is a known entity type, such as a person, an organization, or location.",
       "id": "GoogleCloudDocumentaiV1beta2DocumentEntity",
       "properties": {
         "confidence": {
@@ -3573,7 +3690,7 @@
           "type": "string"
         },
         "mentionText": {
-          "description": "Optional. Text value in the document e.g. `1600 Amphitheatre Pkwy`.",
+          "description": "Optional. Text value in the document e.g. `1600 Amphitheatre Pkwy`. If the entity is not present in the document, this field will be empty.",
           "type": "string"
         },
         "normalizedValue": {
@@ -3630,12 +3747,22 @@
           "$ref": "GoogleTypeDateTime",
           "description": "DateTime value. Includes date, time, and timezone. See also: https://github.com/googleapis/googleapis/blob/master/google/type/datetime.proto"
         },
+        "floatValue": {
+          "description": "Float value.",
+          "format": "float",
+          "type": "number"
+        },
+        "integerValue": {
+          "description": "Integer value.",
+          "format": "int32",
+          "type": "integer"
+        },
         "moneyValue": {
           "$ref": "GoogleTypeMoney",
           "description": "Money value. See also: https://github.com/googleapis/googleapis/blob/master/google/type/money.proto"
         },
         "text": {
-          "description": "Required. Normalized entity value stored as a string. This field is populated for supported document type (e.g. Invoice). For some entity types, one of respective 'structured_value' fields may also be populated. - Money/Currency type (`money_value`) is in the ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601 text format. - Datetime type (`datetime_value`) is in the ISO 8601 text format.",
+          "description": "Optional. An optional field to store a normalized string. For some entity types, one of respective 'structured_value' fields may also be populated. Also not all the types of 'structured_value' will be normalized. For example, some processors may not generate float or int normalized text by default. Below are sample formats mapped to structured values. - Money/Currency type (`money_value`) is in the ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601 text format. - Datetime type (`datetime_value`) is in the ISO 8601 text format.",
           "type": "string"
         }
       },
@@ -3897,6 +4024,14 @@
       "description": "A form field detected on the page.",
       "id": "GoogleCloudDocumentaiV1beta2DocumentPageFormField",
       "properties": {
+        "correctedKeyText": {
+          "description": "Created for Labeling UI to export key text. If corrections were made to the text identified by the `field_name.text_anchor`, this field will contain the correction.",
+          "type": "string"
+        },
+        "correctedValueText": {
+          "description": "Created for Labeling UI to export value text. If corrections were made to the text identified by the `field_value.text_anchor`, this field will contain the correction.",
+          "type": "string"
+        },
         "fieldName": {
           "$ref": "GoogleCloudDocumentaiV1beta2DocumentPageLayout",
           "description": "Layout for the FormField name. e.g. `Address`, `Email`, `Grand total`, `Phone number`, etc."
@@ -4266,7 +4401,7 @@
           "type": "integer"
         },
         "index": {
-          "description": "The index of the parent revisions corresponding collection of items (eg. list of entities, properties within entities, etc.)",
+          "description": "The index of the parent item in the corresponding item list (eg. list of entities, properties within entities, etc.) on parent revision.",
           "format": "int32",
           "type": "integer"
         },

@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "See, edit, configure, and delete your Google Cloud Platform data"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -375,7 +375,7 @@
       }
     }
   },
-  "revision": "20210528",
+  "revision": "20210813",
   "rootUrl": "https://recaptchaenterprise.googleapis.com/",
   "schemas": {
     "GoogleCloudRecaptchaenterpriseV1AndroidKeySettings": {
@@ -431,7 +431,7 @@
               "Default unspecified reason.",
               "Indicates a chargeback for fraud was issued for the transaction associated with the assessment.",
               "Indicates the transaction associated with the assessment is suspected of being fraudulent based on the payment method, billing details, shipping address or other transaction information.",
-              "Indicates that the user was served a 2FA challenge. Sufficiently old assessments with this reason that have not been overwritten with PASSED_TWO_FACTOR will be treated as an abandoned 2FA flow, equivalent to FAILED_TWO_FACTOR.",
+              "Indicates that the user was served a 2FA challenge. An old assessment with `ENUM_VALUES.INITIATED_TWO_FACTOR` reason that has not been overwritten with `PASSED_TWO_FACTOR` is treated as an abandoned 2FA flow. This is equivalent to `FAILED_TWO_FACTOR`.",
               "Indicates that the user passed a 2FA challenge.",
               "Indicates that the user failed a 2FA challenge.",
               "Indicates the user provided the correct password.",
@@ -615,6 +615,11 @@
           },
           "type": "array"
         },
+        "name": {
+          "description": "Output only. The name of the metrics, in the format \"projects/{project}/keys/{key}/metrics\".",
+          "readOnly": true,
+          "type": "string"
+        },
         "scoreMetrics": {
           "description": "Metrics will be continuous and in order by dates, and in the granularity of day. All Key types should have score-based data.",
           "items": {
@@ -713,7 +718,7 @@
           "enum": [
             "TESTING_CHALLENGE_UNSPECIFIED",
             "NOCAPTCHA",
-            "CHALLENGE"
+            "UNSOLVABLE_CHALLENGE"
           ],
           "enumDescriptions": [
             "Perform the normal risk analysis and return either nocaptcha or a challenge depending on risk and trust factors.",

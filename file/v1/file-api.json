@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "See, edit, configure, and delete your Google Cloud Platform data"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -199,7 +199,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The backup's project and location, in the format projects/{project_number}/locations/{location}. In Cloud Filestore, backup locations map to GCP regions, for example **us-west1**.",
+                      "description": "Required. The backup's project and location, in the format `projects/{project_number}/locations/{location}`. In Cloud Filestore, backup locations map to GCP regions, for example **us-west1**.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -227,7 +227,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The backup resource name, in the format projects/{project_number}/locations/{location}/backups/{backup_id}",
+                      "description": "Required. The backup resource name, in the format `projects/{project_number}/locations/{location}/backups/{backup_id}`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/backups/[^/]+$",
                       "required": true,
@@ -252,7 +252,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The backup resource name, in the format projects/{project_number}/locations/{location}/backups/{backup_id}.",
+                      "description": "Required. The backup resource name, in the format `projects/{project_number}/locations/{location}/backups/{backup_id}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/backups/[^/]+$",
                       "required": true,
@@ -298,7 +298,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The project and location for which to retrieve backup information, in the format projects/{project_number}/locations/{location}. In Cloud Filestore, backup locations map to GCP regions, for example **us-west1**. To retrieve backup information for all locations, use \"-\" for the {location} value.",
+                      "description": "Required. The project and location for which to retrieve backup information, in the format `projects/{project_number}/locations/{location}`. In Cloud Filestore, backup locations map to GCP regions, for example **us-west1**. To retrieve backup information for all locations, use \"-\" for the `{location}` value.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -323,7 +323,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Output only. The resource name of the backup, in the format projects/{project_number}/locations/{location_id}/backups/{backup_id}.",
+                      "description": "Output only. The resource name of the backup, in the format `projects/{project_number}/locations/{location_id}/backups/{backup_id}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/backups/[^/]+$",
                       "required": true,
@@ -366,7 +366,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The instance's project and location, in the format projects/{project_id}/locations/{location}. In Cloud Filestore, locations map to GCP zones, for example **us-west1-b**.",
+                      "description": "Required. The instance's project and location, in the format `projects/{project_id}/locations/{location}`. In Cloud Filestore, locations map to GCP zones, for example **us-west1-b**.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -394,7 +394,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The instance resource name, in the format projects/{project_id}/locations/{location}/instances/{instance_id}",
+                      "description": "Required. The instance resource name, in the format `projects/{project_id}/locations/{location}/instances/{instance_id}`",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -419,7 +419,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The instance resource name, in the format projects/{project_id}/locations/{location}/instances/{instance_id}.",
+                      "description": "Required. The instance resource name, in the format `projects/{project_id}/locations/{location}/instances/{instance_id}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -465,7 +465,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The project and location for which to retrieve instance information, in the format projects/{project_id}/locations/{location}. In Cloud Filestore, locations map to GCP zones, for example **us-west1-b**. To retrieve instance information for all locations, use \"-\" for the {location} value.",
+                      "description": "Required. The project and location for which to retrieve instance information, in the format `projects/{project_id}/locations/{location}`. In Cloud Filestore, locations map to GCP zones, for example **us-west1-b**. To retrieve instance information for all locations, use \"-\" for the `{location}` value.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -490,7 +490,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Output only. The resource name of the instance, in the format projects/{project}/locations/{location}/instances/{instance}.",
+                      "description": "Output only. The resource name of the instance, in the format `projects/{project}/locations/{location}/instances/{instance}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -524,7 +524,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The resource name of the instance, in the format projects/{project_number}/locations/{location_id}/instances/{instance_id}.",
+                      "description": "Required. The resource name of the instance, in the format `projects/{project_number}/locations/{location_id}/instances/{instance_id}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -672,7 +672,7 @@
       }
     }
   },
-  "revision": "20210422",
+  "revision": "20210804",
   "rootUrl": "https://file.googleapis.com/",
   "schemas": {
     "Backup": {
@@ -709,7 +709,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Output only. The resource name of the backup, in the format projects/{project_number}/locations/{location_id}/backups/{backup_id}.",
+          "description": "Output only. The resource name of the backup, in the format `projects/{project_number}/locations/{location_id}/backups/{backup_id}`.",
           "readOnly": true,
           "type": "string"
         },
@@ -723,7 +723,7 @@
           "type": "string"
         },
         "sourceInstance": {
-          "description": "The resource name of the source Cloud Filestore instance, in the format projects/{project_number}/locations/{location_id}/instances/{instance_id}, used to create this backup.",
+          "description": "The resource name of the source Cloud Filestore instance, in the format `projects/{project_number}/locations/{location_id}/instances/{instance_id}`, used to create this backup.",
           "type": "string"
         },
         "sourceInstanceTier": {
@@ -865,7 +865,7 @@
           "type": "array"
         },
         "sourceBackup": {
-          "description": "The resource name of the backup, in the format projects/{project_number}/locations/{location_id}/backups/{backup_id}, that this file share has been restored from.",
+          "description": "The resource name of the backup, in the format `projects/{project_number}/locations/{location_id}/backups/{backup_id}`, that this file share has been restored from.",
           "type": "string"
         }
       },
@@ -1052,6 +1052,10 @@
         "nodeId": {
           "description": "The id of the node. This should be equal to SaasInstanceNode.node_id.",
           "type": "string"
+        },
+        "perSliEligibility": {
+          "$ref": "GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility",
+          "description": "If present, this will override eligibility for the node coming from instance or exclusions for specified SLIs."
         }
       },
       "type": "object"
@@ -1129,10 +1133,6 @@
       "description": "SloMetadata contains resources required for proper SLO classification of the instance.",
       "id": "GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata",
       "properties": {
-        "eligibility": {
-          "$ref": "GoogleCloudSaasacceleratorManagementProvidersV1SloEligibility",
-          "description": "Optional. Global per-instance SLI eligibility which applies to all defined SLIs. Exactly one of 'eligibility' and 'per_sli_eligibility' fields must be used."
-        },
         "exclusions": {
           "description": "List of SLO exclusion windows. When multiple entries in the list match (matching the exclusion time-window against current time point) the exclusion reason used in the first matching entry will be published. It is not needed to include expired exclusion in this list, as only the currently applicable exclusions are taken into account by the eligibility exporting subsystem (the historical state of exclusions will be reflected in the historically produced timeseries regardless of the current state). This field can be used to mark the instance as temporary ineligible for the purpose of SLO calculation. For permanent instance SLO exclusion, use of custom instance eligibility is recommended. See 'eligibility' field below.",
           "items": {
@@ -1149,7 +1149,7 @@
         },
         "perSliEligibility": {
           "$ref": "GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility",
-          "description": "Optional. Multiple per-instance SLI eligibilities which apply for individual SLIs. Exactly one of 'eligibility' and 'per_sli_eligibility' fields must be used."
+          "description": "Optional. Multiple per-instance SLI eligibilities which apply for individual SLIs."
         },
         "tier": {
           "description": "Name of the SLO tier the Instance belongs to. This name will be expected to match the tiers specified in the service SLO configuration. Field is mandatory and must not be empty.",
@@ -1191,7 +1191,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Output only. The resource name of the instance, in the format projects/{project}/locations/{location}/instances/{instance}.",
+          "description": "Output only. The resource name of the instance, in the format `projects/{project}/locations/{location}/instances/{instance}`.",
           "readOnly": true,
           "type": "string"
         },
@@ -1263,7 +1263,7 @@
       "id": "ListBackupsResponse",
       "properties": {
         "backups": {
-          "description": "A list of backups in the project for the specified location. If the {location} value in the request is \"-\", the response contains a list of backups from all locations. If any location is unreachable, the response will only return backups in reachable locations and the \"unreachable\" field will be populated with a list of unreachable locations.",
+          "description": "A list of backups in the project for the specified location. If the `{location}` value in the request is \"-\", the response contains a list of backups from all locations. If any location is unreachable, the response will only return backups in reachable locations and the \"unreachable\" field will be populated with a list of unreachable locations.",
           "items": {
             "$ref": "Backup"
           },
@@ -1288,7 +1288,7 @@
       "id": "ListInstancesResponse",
       "properties": {
         "instances": {
-          "description": "A list of instances in the project for the specified location. If the {location} value in the request is \"-\", the response contains a list of instances from all locations. If any location is unreachable, the response will only return instances in reachable locations and the \"unreachable\" field will be populated with a list of unreachable locations.",
+          "description": "A list of instances in the project for the specified location. If the `{location}` value in the request is \"-\", the response contains a list of instances from all locations. If any location is unreachable, the response will only return instances in reachable locations and the \"unreachable\" field will be populated with a list of unreachable locations.",
           "items": {
             "$ref": "Instance"
           },
@@ -1448,7 +1448,7 @@
       "id": "NetworkConfig",
       "properties": {
         "ipAddresses": {
-          "description": "Output only. IPv4 addresses in the format {octet 1}.{octet 2}.{octet 3}.{octet 4} or IPv6 addresses in the format {block 1}:{block 2}:{block 3}:{block 4}:{block 5}:{block 6}:{block 7}:{block 8}.",
+          "description": "Output only. IPv4 addresses in the format `{octet1}.{octet2}.{octet3}.{octet4}` or IPv6 addresses in the format `{block1}:{block2}:{block3}:{block4}:{block5}:{block6}:{block7}:{block8}`.",
           "items": {
             "type": "string"
           },
@@ -1471,11 +1471,11 @@
           "type": "array"
         },
         "network": {
-          "description": "The name of the Google Compute Engine [VPC network](/compute/docs/networks-and-firewalls#networks) to which the instance is connected.",
+          "description": "The name of the Google Compute Engine [VPC network](https://cloud.google.com/vpc/docs/vpc) to which the instance is connected.",
           "type": "string"
         },
         "reservedIpRange": {
-          "description": "A /29 CIDR block in one of the [internal IP address ranges](https://www.arin.net/knowledge/address_filters.html) that identifies the range of IP addresses reserved for this instance. For example, 10.0.0.0/29 or 192.168.0.0/29. The range you specify can't overlap with either existing subnets or assigned IP address ranges for other Cloud Filestore instances in the selected VPC network.",
+          "description": "A /29 CIDR block in one of the [internal IP address ranges](https://www.arin.net/reference/research/statistics/address_filters/) that identifies the range of IP addresses reserved for this instance. For example, 10.0.0.0/29 or 192.168.0.0/29. The range you specify can't overlap with either existing subnets or assigned IP address ranges for other Cloud Filestore instances in the selected VPC network.",
           "type": "string"
         }
       },
@@ -1510,7 +1510,7 @@
           "type": "string"
         },
         "ipRanges": {
-          "description": "List of either an IPv4 addresses in the format {octet 1}.{octet 2}.{octet 3}.{octet 4} or CIDR ranges in the format {octet 1}.{octet 2}.{octet 3}.{octet 4}/{mask size} which may mount the file share. Overlapping IP ranges are not allowed, both within and across NfsExportOptions. An error will be returned. The limit is 64 IP ranges/addresses for each FileShareConfig among all NfsExportOptions.",
+          "description": "List of either an IPv4 addresses in the format `{octet1}.{octet2}.{octet3}.{octet4}` or CIDR ranges in the format `{octet1}.{octet2}.{octet3}.{octet4}/{mask size}` which may mount the file share. Overlapping IP ranges are not allowed, both within and across NfsExportOptions. An error will be returned. The limit is 64 IP ranges/addresses for each FileShareConfig among all NfsExportOptions.",
           "items": {
             "type": "string"
           },
@@ -1573,33 +1573,40 @@
       "id": "OperationMetadata",
       "properties": {
         "apiVersion": {
-          "description": "[Output only] API version used to start the operation.",
+          "description": "Output only. API version used to start the operation.",
+          "readOnly": true,
           "type": "string"
         },
         "cancelRequested": {
-          "description": "[Output only] Identifies whether the user has requested cancellation of the operation. Operations that have successfully been cancelled have Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+          "description": "Output only. Identifies whether the user has requested cancellation of the operation. Operations that have been cancelled successfully have Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+          "readOnly": true,
           "type": "boolean"
         },
         "createTime": {
-          "description": "[Output only] The time the operation was created.",
+          "description": "Output only. The time the operation was created.",
           "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         },
         "endTime": {
-          "description": "[Output only] The time the operation finished running.",
+          "description": "Output only. The time the operation finished running.",
           "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         },
         "statusDetail": {
-          "description": "[Output only] Human-readable status of the operation, if any.",
+          "description": "Output only. Human-readable status of the operation, if any.",
+          "readOnly": true,
           "type": "string"
         },
         "target": {
-          "description": "[Output only] Server-defined resource path for the target of the operation.",
+          "description": "Output only. Server-defined resource path for the target of the operation.",
+          "readOnly": true,
           "type": "string"
         },
         "verb": {
-          "description": "[Output only] Name of the verb executed by the operation.",
+          "description": "Output only. Name of the verb executed by the operation.",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -1614,7 +1621,7 @@
           "type": "string"
         },
         "sourceBackup": {
-          "description": "The resource name of the backup, in the format projects/{project_number}/locations/{location_id}/backups/{backup_id}.",
+          "description": "The resource name of the backup, in the format `projects/{project_number}/locations/{location_id}/backups/{backup_id}`.",
           "type": "string"
         }
       },
@@ -1733,7 +1740,7 @@
           "type": "string"
         },
         "denyMaintenancePeriods": {
-          "description": "Deny Maintenance Period that is applied to resource to indicate when maintenance is forbidden. User can specify zero or more non-overlapping deny periods. For V1, Maximum number of deny_maintenance_periods is expected to be one.",
+          "description": "Deny Maintenance Period that is applied to resource to indicate when maintenance is forbidden. User can specify zero or more non-overlapping deny periods. Maximum number of deny_maintenance_periods expected is one.",
           "items": {
             "$ref": "DenyMaintenancePeriod"
           },

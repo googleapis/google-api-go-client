@@ -1105,6 +1105,14 @@ type MembershipEndpoint struct {
 	// Features.
 	KubernetesResource *KubernetesResource `json:"kubernetesResource,omitempty"`
 
+	// MultiCloudCluster: Optional. Specific information for a GKE
+	// Multi-Cloud cluster.
+	MultiCloudCluster *MultiCloudCluster `json:"multiCloudCluster,omitempty"`
+
+	// OnPremCluster: Optional. Specific information for a GKE On-Prem
+	// cluster.
+	OnPremCluster *OnPremCluster `json:"onPremCluster,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "GkeCluster") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1162,6 +1170,88 @@ type MembershipState struct {
 
 func (s *MembershipState) MarshalJSON() ([]byte, error) {
 	type NoMethod MembershipState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MultiCloudCluster: MultiCloudCluster contains information specific to
+// GKE Multi-Cloud clusters.
+type MultiCloudCluster struct {
+	// ClusterMissing: Output only. If cluster_missing is set then it
+	// denotes that API(gkemulticloud.googleapis.com) resource for this GKE
+	// Multi-Cloud cluster no longer exists.
+	ClusterMissing bool `json:"clusterMissing,omitempty"`
+
+	// ResourceLink: Immutable. Self-link of the GCP resource for the GKE
+	// Multi-Cloud cluster. For example:
+	// //gkemulticloud.googleapis.com/projects/my-project/locations/us-west1-
+	// a/awsClusters/my-cluster
+	// //gkemulticloud.googleapis.com/projects/my-project/locations/us-west1-
+	// a/azureClusters/my-cluster
+	ResourceLink string `json:"resourceLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterMissing") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterMissing") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MultiCloudCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiCloudCluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OnPremCluster: OnPremCluster contains information specific to GKE
+// On-Prem clusters.
+type OnPremCluster struct {
+	// AdminCluster: Immutable. Whether the cluster is an admin cluster.
+	AdminCluster bool `json:"adminCluster,omitempty"`
+
+	// ClusterMissing: Output only. If cluster_missing is set then it
+	// denotes that API(gkeonprem.googleapis.com) resource for this GKE
+	// On-Prem cluster no longer exists.
+	ClusterMissing bool `json:"clusterMissing,omitempty"`
+
+	// ResourceLink: Immutable. Self-link of the GCP resource for the GKE
+	// On-Prem cluster. For example:
+	// //gkeonprem.googleapis.com/projects/my-project/locations/us-west1-a/vm
+	// wareClusters/my-cluster
+	// //gkeonprem.googleapis.com/projects/my-project/locations/us-west1-a/ba
+	// reMetalClusters/my-cluster
+	ResourceLink string `json:"resourceLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdminCluster") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdminCluster") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OnPremCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod OnPremCluster
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1650,7 +1740,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1822,7 +1912,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2003,7 +2093,7 @@ func (c *ProjectsLocationsGlobalMembershipsInitializeHubCall) Header() http.Head
 
 func (c *ProjectsLocationsGlobalMembershipsInitializeHubCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2161,7 +2251,7 @@ func (c *ProjectsLocationsMembershipsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2310,7 +2400,7 @@ func (c *ProjectsLocationsMembershipsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2508,7 +2598,7 @@ func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Header() http.
 
 func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2687,7 +2777,7 @@ func (c *ProjectsLocationsMembershipsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2851,7 +2941,7 @@ func (c *ProjectsLocationsMembershipsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3041,7 +3131,7 @@ func (c *ProjectsLocationsMembershipsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3228,7 +3318,7 @@ func (c *ProjectsLocationsMembershipsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3380,7 +3470,7 @@ func (c *ProjectsLocationsMembershipsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3529,7 +3619,7 @@ func (c *ProjectsLocationsMembershipsTestIamPermissionsCall) Header() http.Heade
 
 func (c *ProjectsLocationsMembershipsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3680,7 +3770,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3823,7 +3913,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3968,7 +4058,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4144,7 +4234,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

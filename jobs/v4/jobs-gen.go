@@ -83,7 +83,8 @@ const mtlsBasePath = "https://jobs.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud Platform data
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Manage job postings
@@ -1240,7 +1241,7 @@ type CustomRankingInfo struct {
 	// operator is either a numeric Job.custom_attributes key,
 	// integer/double value or an expression that can be evaluated to a
 	// number. Parenthesis are supported to adjust calculation precedence.
-	// The expression must be < 100 characters in length. The expression is
+	// The expression must be < 200 characters in length. The expression is
 	// considered invalid for a job if the expression references custom
 	// attributes that are not populated on the job or if the expression
 	// results in a divide by zero. If an expression is invalid for a job,
@@ -3140,16 +3141,22 @@ type SearchJobsRequest struct {
 	// of existing relevance score (determined by API algorithm).
 	CustomRankingInfo *CustomRankingInfo `json:"customRankingInfo,omitempty"`
 
-	// DisableKeywordMatch: Controls whether to disable exact keyword match
-	// on Job.title, Job.description, Job.company_display_name,
-	// Job.addresses, Job.qualifications. When disable keyword match is
-	// turned off, a keyword match returns jobs that do not match given
-	// category filters when there are matching keywords. For example, for
-	// the query "program manager," a result is returned even if the job
-	// posting has the title "software developer," which doesn't fall into
-	// "program manager" ontology, but does have "program manager" appearing
-	// in its description. For queries like "cloud" that don't contain title
-	// or location specific ontology, jobs with "cloud" keyword matches are
+	// DisableKeywordMatch: This field is deprecated. Please use
+	// SearchJobsRequest.keyword_match_mode going forward. To migrate,
+	// disable_keyword_match set to false maps to
+	// KeywordMatchMode.KEYWORD_MATCH_ALL, and disable_keyword_match set to
+	// true maps to KeywordMatchMode.KEYWORD_MATCH_DISABLED. If
+	// SearchJobsRequest.keyword_match_mode is set, this field is ignored.
+	// Controls whether to disable exact keyword match on Job.title,
+	// Job.description, Job.company_display_name, Job.addresses,
+	// Job.qualifications. When disable keyword match is turned off, a
+	// keyword match returns jobs that do not match given category filters
+	// when there are matching keywords. For example, for the query "program
+	// manager," a result is returned even if the job posting has the title
+	// "software developer," which doesn't fall into "program manager"
+	// ontology, but does have "program manager" appearing in its
+	// description. For queries like "cloud" that don't contain title or
+	// location specific ontology, jobs with "cloud" keyword matches are
 	// returned regardless of this flag's value. Use
 	// Company.keyword_searchable_job_custom_attributes if company-specific
 	// globally matched custom field/attribute string values are needed.
@@ -3175,10 +3182,18 @@ type SearchJobsRequest struct {
 	// results.
 	//   "SIMPLE" - Default diversifying behavior. The result list is
 	// ordered so that highly similar results are pushed to the end of the
-	// last page of search results. If you are using pageToken to page
-	// through the result set, latency might be lower but we can't guarantee
-	// that all results are returned. If you are using page offset, latency
-	// might be higher but all results are returned.
+	// last page of search results.
+	//   "ONE_PER_COMPANY" - Only one job from the same company will be
+	// shown at once, other jobs under same company are pushed to the end of
+	// the last page of search result.
+	//   "TWO_PER_COMPANY" - Similar to ONE_PER_COMPANY, but it allows at
+	// most two jobs in the same company to be shown at once, the other jobs
+	// under same company are pushed to the end of the last page of search
+	// result.
+	//   "DIVERSIFY_BY_LOOSER_SIMILARITY" - The result list is ordered such
+	// that somewhat similar results are pushed to the end of the last page
+	// of the search results. This option is recommended if SIMPLE
+	// diversification does not diversify enough.
 	DiversificationLevel string `json:"diversificationLevel,omitempty"`
 
 	// EnableBroadening: Controls whether to broaden the search when it
@@ -3275,6 +3290,23 @@ type SearchJobsRequest struct {
 	//   "JOB_VIEW_FULL" - All available attributes are included in the
 	// search results.
 	JobView string `json:"jobView,omitempty"`
+
+	// KeywordMatchMode: Controls what keyword match options to use. If both
+	// keyword_match_mode and disable_keyword_match are set,
+	// keyword_match_mode will take precedence. Defaults to
+	// KeywordMatchMode.KEYWORD_MATCH_ALL if no value is specified.
+	//
+	// Possible values:
+	//   "KEYWORD_MATCH_MODE_UNSPECIFIED" - The keyword match option isn't
+	// specified. Defaults to KeywordMatchMode.KEYWORD_MATCH_ALL behavior.
+	//   "KEYWORD_MATCH_DISABLED" - Disables keyword matching.
+	//   "KEYWORD_MATCH_ALL" - Enable keyword matching over Job.title,
+	// Job.description, Job.company_display_name, Job.addresses,
+	// Job.qualifications, and keyword searchable Job.custom_attributes
+	// fields.
+	//   "KEYWORD_MATCH_TITLE_ONLY" - Only enable keyword matching over
+	// Job.title.
+	KeywordMatchMode string `json:"keywordMatchMode,omitempty"`
 
 	// MaxPageSize: A limit on the number of jobs returned in the search
 	// results. Increasing this value above the default value of 10 can
@@ -3716,7 +3748,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3935,7 +3967,7 @@ func (c *ProjectsTenantsCompleteQueryCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompleteQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4129,7 +4161,7 @@ func (c *ProjectsTenantsCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4272,7 +4304,7 @@ func (c *ProjectsTenantsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4418,7 +4450,7 @@ func (c *ProjectsTenantsGetCall) Header() http.Header {
 
 func (c *ProjectsTenantsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4582,7 +4614,7 @@ func (c *ProjectsTenantsListCall) Header() http.Header {
 
 func (c *ProjectsTenantsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4765,7 +4797,7 @@ func (c *ProjectsTenantsPatchCall) Header() http.Header {
 
 func (c *ProjectsTenantsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4921,7 +4953,7 @@ func (c *ProjectsTenantsClientEventsCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsClientEventsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5066,7 +5098,7 @@ func (c *ProjectsTenantsCompaniesCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5210,7 +5242,7 @@ func (c *ProjectsTenantsCompaniesDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5357,7 +5389,7 @@ func (c *ProjectsTenantsCompaniesGetCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5530,7 +5562,7 @@ func (c *ProjectsTenantsCompaniesListCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5719,7 +5751,7 @@ func (c *ProjectsTenantsCompaniesPatchCall) Header() http.Header {
 
 func (c *ProjectsTenantsCompaniesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5870,7 +5902,7 @@ func (c *ProjectsTenantsJobsBatchCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6016,7 +6048,7 @@ func (c *ProjectsTenantsJobsBatchDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6161,7 +6193,7 @@ func (c *ProjectsTenantsJobsBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6307,7 +6339,7 @@ func (c *ProjectsTenantsJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6451,7 +6483,7 @@ func (c *ProjectsTenantsJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6598,7 +6630,7 @@ func (c *ProjectsTenantsJobsGetCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6803,7 +6835,7 @@ func (c *ProjectsTenantsJobsListCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7014,7 +7046,7 @@ func (c *ProjectsTenantsJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7167,7 +7199,7 @@ func (c *ProjectsTenantsJobsSearchCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7340,7 +7372,7 @@ func (c *ProjectsTenantsJobsSearchForAlertCall) Header() http.Header {
 
 func (c *ProjectsTenantsJobsSearchForAlertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210902")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210903")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

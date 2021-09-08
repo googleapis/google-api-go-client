@@ -1,2 +1,5 @@
 # Default owner for all directories not owned by others
-* @googleapis/yoshi-go-admins @yoshi-approver
+*                             @googleapis/yoshi-go-admins @yoshi-approver
+
+/storage/                     @googleapis/yoshi-go-admins @yoshi-approver @googleapis/cloud-storage-dpe
+/storage-transfer/            @googleapis/yoshi-go-admins @yoshi-approver @googleapis/cloud-storage-dpe

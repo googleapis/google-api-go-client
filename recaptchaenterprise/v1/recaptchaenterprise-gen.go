@@ -172,19 +172,24 @@ type ProjectsKeysService struct {
 // GoogleCloudRecaptchaenterpriseV1AndroidKeySettings: Settings specific
 // to keys that can be used by Android apps.
 type GoogleCloudRecaptchaenterpriseV1AndroidKeySettings struct {
+	// AllowAllPackageNames: If set to true, it means allowed_package_names
+	// will not be enforced.
+	AllowAllPackageNames bool `json:"allowAllPackageNames,omitempty"`
+
 	// AllowedPackageNames: Android package names of apps allowed to use the
 	// key. Example: 'com.companyname.appname'
 	AllowedPackageNames []string `json:"allowedPackageNames,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AllowedPackageNames")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowAllPackageNames") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AllowedPackageNames") to
+	// NullFields is a list of field names (e.g. "AllowAllPackageNames") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -419,19 +424,23 @@ func (s *GoogleCloudRecaptchaenterpriseV1Event) MarshalJSON() ([]byte, error) {
 // GoogleCloudRecaptchaenterpriseV1IOSKeySettings: Settings specific to
 // keys that can be used by iOS apps.
 type GoogleCloudRecaptchaenterpriseV1IOSKeySettings struct {
+	// AllowAllBundleIds: If set to true, it means allowed_bundle_ids will
+	// not be enforced.
+	AllowAllBundleIds bool `json:"allowAllBundleIds,omitempty"`
+
 	// AllowedBundleIds: iOS bundle ids of apps allowed to use the key.
 	// Example: 'com.companyname.productname.appname'
 	AllowedBundleIds []string `json:"allowedBundleIds,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AllowedBundleIds") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AllowAllBundleIds")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AllowedBundleIds") to
+	// NullFields is a list of field names (e.g. "AllowAllBundleIds") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -969,7 +978,7 @@ func (c *ProjectsAssessmentsAnnotateCall) Header() http.Header {
 
 func (c *ProjectsAssessmentsAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210907")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210908")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1116,7 +1125,7 @@ func (c *ProjectsAssessmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsAssessmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210907")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210908")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1261,7 +1270,7 @@ func (c *ProjectsKeysCreateCall) Header() http.Header {
 
 func (c *ProjectsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210907")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210908")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1403,7 +1412,7 @@ func (c *ProjectsKeysDeleteCall) Header() http.Header {
 
 func (c *ProjectsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210907")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210908")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1547,7 +1556,7 @@ func (c *ProjectsKeysGetCall) Header() http.Header {
 
 func (c *ProjectsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210907")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210908")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1696,7 +1705,7 @@ func (c *ProjectsKeysGetMetricsCall) Header() http.Header {
 
 func (c *ProjectsKeysGetMetricsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210907")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210908")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1859,7 +1868,7 @@ func (c *ProjectsKeysListCall) Header() http.Header {
 
 func (c *ProjectsKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210907")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210908")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2036,7 +2045,7 @@ func (c *ProjectsKeysMigrateCall) Header() http.Header {
 
 func (c *ProjectsKeysMigrateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210907")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210908")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2188,7 +2197,7 @@ func (c *ProjectsKeysPatchCall) Header() http.Header {
 
 func (c *ProjectsKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210907")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210908")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

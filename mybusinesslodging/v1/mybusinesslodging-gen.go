@@ -785,6 +785,275 @@ func (s *Connectivity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EcoCertification: An eco certificate awarded to the hotel.
+type EcoCertification struct {
+	// Awarded: Whether the eco certificate was awarded or not.
+	Awarded bool `json:"awarded,omitempty"`
+
+	// AwardedException: Awarded exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	AwardedException string `json:"awardedException,omitempty"`
+
+	// EcoCertificate: Required. The eco certificate.
+	//
+	// Possible values:
+	//   "ECO_CERTIFICATE_UNSPECIFIED" - Default EcoCertificate. Do not use.
+	//   "ISO14001" - ISO14001.
+	//   "ISO50001" - ISO50001.
+	//   "ASIAN_ECOTOURISM" - Asian Ecotourism Standard for Accommodations
+	// (AESA).
+	//   "BIOSPHERE_RESPOSNIBLE_TOURISM" - Biosphere Responsible Tourism
+	// Standard.
+	//   "BUREAU_VERITAS" - Bureau Veritas.
+	//   "CONTROL_UNION" - Control Union.
+	//   "EARTHCHECK" - EarthCheck.
+	//   "ECO_CERTIFICATION_MALTA" - Eco-Certification Malta Standard.
+	//   "ECOTOURISM_AUSTRALIAS_ECO" - Ecotourism Australia's ECO
+	// Certification Standard.
+	//   "GREAT_GREEN_DEAL" - GREAT Green Deal Certification.
+	//   "GREEN_GLOBE" - Green Globe.
+	//   "GREEN_GROWTH2050" - Green Growth 2050 Standard.
+	//   "GREEN_KEY" - Green Key.
+	//   "GREEN_KEY_ECO_RATING" - Geen Key Eco Rating.
+	//   "GREEN_SEAL" - Green Seal.
+	//   "GREEN_STAR" - Green Star Hotel Standard.
+	//   "GREEN_TOURISM_ACTIVE" - Green Tourism Active Standard.
+	//   "HILTON_LIGHTSTAY" - Hilton LightStay.
+	//   "HOSTELLING_INTERNATIONALS_QUALITY_AND_SUSTAINABILITY" - Hostelling
+	// International's Quality and Sustainability Standard.
+	//   "HOTELES_MAS_VERDES" - Hoteles más Verdes (AHT) Standard.
+	//   "NORDIC_SWAN_ECOLABEL" - Nordic Swan Ecolabel.
+	//   "PREFERRED_BY_NATURE_SUSTAINABLE_TOURISM" - Preferred by Nature
+	// Sustainable Tourism Standard for Accommodation.
+	//   "SUSTAINABLE_TRAVEL_IRELAND" - Sustainable Travel Ireland – GSTC
+	// Industry Criteria.
+	//   "TOF_TIGERS_INITITIVES_PUG" - TOFTigers Initiative's Pug Standard.
+	//   "TRAVELIFE" - Travelife Standard for Hotels & Accommodations.
+	//   "UNITED_CERTIFICATION_SYSTEMS_LIMITED" - United Certification
+	// Systems Limited.
+	//   "VIREO_SRL" - Vireo Srl.
+	EcoCertificate string `json:"ecoCertificate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Awarded") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Awarded") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EcoCertification) MarshalJSON() ([]byte, error) {
+	type NoMethod EcoCertification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EnergyEfficiency: Energy efficiency practices implemented at the
+// hotel.
+type EnergyEfficiency struct {
+	// CarbonFreeEnergySources: Carbon free energy sources. Property sources
+	// carbon-free electricity via at least one of the following methods:
+	// on-site clean energy generation, power purchase agreement(s) with
+	// clean energy generators, green power provided by electricity
+	// supplier, or purchases of Energy Attribute Certificates (such as
+	// Renewable Energy Certificates or Guarantees of Origin).
+	CarbonFreeEnergySources bool `json:"carbonFreeEnergySources,omitempty"`
+
+	// CarbonFreeEnergySourcesException: Carbon free energy sources
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	CarbonFreeEnergySourcesException string `json:"carbonFreeEnergySourcesException,omitempty"`
+
+	// EnergyConservationProgram: Energy conservation program. The property
+	// tracks corporate-level Scope 1 and 2 GHG emissions, and Scope 3
+	// emissions if available. The property has a commitment to implement
+	// initiatives that reduce GHG emissions year over year. The property
+	// has shown an absolute reduction in emissions for at least 2 years.
+	// Emissions are either verfied by a third-party and/or published in
+	// external communications.
+	EnergyConservationProgram bool `json:"energyConservationProgram,omitempty"`
+
+	// EnergyConservationProgramException: Energy conservation program
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	EnergyConservationProgramException string `json:"energyConservationProgramException,omitempty"`
+
+	// EnergyEfficientHeatingAndCoolingSystems: Energy efficient heating and
+	// cooling systems. The property doesn't use chlorofluorocarbon
+	// (CFC)-based refrigerants in heating, ventilating, and
+	// air-conditioning systems unless a third-party audit shows it's not
+	// economically feasible. The CFC-based refrigerants which are used
+	// should have a Global Warming Potential (GWP) ≤ 10. The property
+	// uses occupancy sensors on HVAC systems in back-of-house spaces,
+	// meeting rooms, and other low-traffic areas.
+	EnergyEfficientHeatingAndCoolingSystems bool `json:"energyEfficientHeatingAndCoolingSystems,omitempty"`
+
+	// EnergyEfficientHeatingAndCoolingSystemsException: Energy efficient
+	// heating and cooling systems exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	EnergyEfficientHeatingAndCoolingSystemsException string `json:"energyEfficientHeatingAndCoolingSystemsException,omitempty"`
+
+	// EnergyEfficientLighting: Energy efficient lighting. At least 75% of
+	// the property's lighting is energy efficient, using lighting that is
+	// more than 45 lumens per watt – typically LED or CFL lightbulbs.
+	EnergyEfficientLighting bool `json:"energyEfficientLighting,omitempty"`
+
+	// EnergyEfficientLightingException: Energy efficient lighting
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	EnergyEfficientLightingException string `json:"energyEfficientLightingException,omitempty"`
+
+	// EnergySavingThermostats: Energy saving thermostats. The property
+	// installed energy-saving thermostats throughout the building to
+	// conserve energy when rooms or areas are not in use. Energy-saving
+	// thermostats are devices that control heating/cooling in the building
+	// by learning temperature preferences and automatically adjusting to
+	// energy-saving temperatures as the default. The thermostats are
+	// automatically set to a temperature between 68-78 degrees F (20-26
+	// °C), depending on seasonality. In the winter, set the thermostat to
+	// 68°F (20°C) when the room is occupied, lowering room temperature
+	// when unoccupied. In the summer, set the thermostat to 78°F (26°C)
+	// when the room is occupied.
+	EnergySavingThermostats bool `json:"energySavingThermostats,omitempty"`
+
+	// EnergySavingThermostatsException: Energy saving thermostats
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	EnergySavingThermostatsException string `json:"energySavingThermostatsException,omitempty"`
+
+	// GreenBuildingDesign: Output only. Green building design. True if
+	// BREEAM-* or LEED-* certified.
+	GreenBuildingDesign bool `json:"greenBuildingDesign,omitempty"`
+
+	// GreenBuildingDesignException: Output only. Green building design
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	GreenBuildingDesignException string `json:"greenBuildingDesignException,omitempty"`
+
+	// IndependentOrganizationAuditsEnergyUse: Independent organization
+	// audits energy use. The property conducts an energy audit at least
+	// every 5 years, the results of which are either verified by a
+	// third-party and/or published in external communications. An energy
+	// audit is a detailed assessment of the facility which provides
+	// recommendations to existing operations and procedures to improve
+	// energy efficiency, available incentives or rebates,and opportunities
+	// for improvements through renovations or upgrades. Examples of
+	// organizations that conduct credible third party audits include: Engie
+	// Impact, DNV GL (EU), Dexma, and local utility providers (they often
+	// provide energy and water audits).
+	IndependentOrganizationAuditsEnergyUse bool `json:"independentOrganizationAuditsEnergyUse,omitempty"`
+
+	// IndependentOrganizationAuditsEnergyUseException: Independent
+	// organization audits energy use exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	IndependentOrganizationAuditsEnergyUseException string `json:"independentOrganizationAuditsEnergyUseException,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CarbonFreeEnergySources") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CarbonFreeEnergySources")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EnergyEfficiency) MarshalJSON() ([]byte, error) {
+	type NoMethod EnergyEfficiency
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // EnhancedCleaning: Enhanced cleaning measures implemented by the hotel
 // during COVID-19.
 type EnhancedCleaning struct {
@@ -3242,6 +3511,9 @@ type Lodging struct {
 	// these attributes.
 	SomeUnits *GuestUnitFeatures `json:"someUnits,omitempty"`
 
+	// Sustainability: Sustainability practices implemented at the hotel.
+	Sustainability *Sustainability `json:"sustainability,omitempty"`
+
 	// Transportation: Vehicles or vehicular services facilitated or owned
 	// by the property.
 	Transportation *Transportation `json:"transportation,omitempty"`
@@ -4845,6 +5117,319 @@ func (s *Services) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Sustainability: Sustainability practices implemented at the hotel.
+type Sustainability struct {
+	// EnergyEfficiency: Energy efficiency practices implemented at the
+	// hotel.
+	EnergyEfficiency *EnergyEfficiency `json:"energyEfficiency,omitempty"`
+
+	// SustainabilityCertifications: Sustainability certifications the hotel
+	// has been awarded.
+	SustainabilityCertifications *SustainabilityCertifications `json:"sustainabilityCertifications,omitempty"`
+
+	// SustainableSourcing: Sustainable sourcing practices implemented at
+	// the hotel.
+	SustainableSourcing *SustainableSourcing `json:"sustainableSourcing,omitempty"`
+
+	// WasteReduction: Waste reduction practices implemented at the hotel.
+	WasteReduction *WasteReduction `json:"wasteReduction,omitempty"`
+
+	// WaterConservation: Water conservation practices implemented at the
+	// hotel.
+	WaterConservation *WaterConservation `json:"waterConservation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EnergyEfficiency") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnergyEfficiency") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Sustainability) MarshalJSON() ([]byte, error) {
+	type NoMethod Sustainability
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SustainabilityCertifications: Sustainability certifications the hotel
+// has been awarded.
+type SustainabilityCertifications struct {
+	// BreeamCertification: BREEAM certification.
+	//
+	// Possible values:
+	//   "BREEAM_CERTIFICATION_UNSPECIFIED" - Default BreeamCertification.
+	// Do not use.
+	//   "NO_BREEAM_CERTIFICATION" - Not certified.
+	//   "BREEAM_PASS" - BREEAM Pass.
+	//   "BREEAM_GOOD" - BREEAM Good.
+	//   "BREEAM_VERY_GOOD" - BREEAM Very Good.
+	//   "BREEAM_EXCELLENT" - BREEAM Excellent.
+	//   "BREEAM_OUTSTANDING" - BREEAM Outstanding.
+	BreeamCertification string `json:"breeamCertification,omitempty"`
+
+	// BreeamCertificationException: BREEAM certification exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	BreeamCertificationException string `json:"breeamCertificationException,omitempty"`
+
+	// EcoCertifications: The eco certificates awarded to the hotel.
+	EcoCertifications []*EcoCertification `json:"ecoCertifications,omitempty"`
+
+	// LeedCertification: LEED certification.
+	//
+	// Possible values:
+	//   "LEED_CERTIFICATION_UNSPECIFIED" - Default LeedCertification. Do
+	// not use.
+	//   "NO_LEED_CERTIFICATION" - Not certified.
+	//   "LEED_CERTIFIED" - LEED Certified.
+	//   "LEED_SILVER" - LEED Silver.
+	//   "LEED_GOLD" - LEED Gold.
+	//   "LEED_PLATINUM" - LEED Platinum.
+	LeedCertification string `json:"leedCertification,omitempty"`
+
+	// LeedCertificationException: LEED certification exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	LeedCertificationException string `json:"leedCertificationException,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BreeamCertification")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BreeamCertification") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SustainabilityCertifications) MarshalJSON() ([]byte, error) {
+	type NoMethod SustainabilityCertifications
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SustainableSourcing: Sustainable sourcing practices implemented at
+// the hotel.
+type SustainableSourcing struct {
+	// EcoFriendlyToiletries: Eco friendly toiletries. Soap, shampoo,
+	// lotion, and other toiletries provided for guests have a nationally or
+	// internationally recognized sustainability certification, such as USDA
+	// Organic, EU Organic, or cruelty-free.
+	EcoFriendlyToiletries bool `json:"ecoFriendlyToiletries,omitempty"`
+
+	// EcoFriendlyToiletriesException: Eco friendly toiletries exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	EcoFriendlyToiletriesException string `json:"ecoFriendlyToiletriesException,omitempty"`
+
+	// LocallySourcedFoodAndBeverages: Locally sourced food and beverages.
+	// Property sources locally in order to lower the environmental
+	// footprint from reduced transportation and to stimulate the local
+	// economy. Products produced less than 62 miles from the establishment
+	// are normally considered as locally produced.
+	LocallySourcedFoodAndBeverages bool `json:"locallySourcedFoodAndBeverages,omitempty"`
+
+	// LocallySourcedFoodAndBeveragesException: Locally sourced food and
+	// beverages exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	LocallySourcedFoodAndBeveragesException string `json:"locallySourcedFoodAndBeveragesException,omitempty"`
+
+	// OrganicCageFreeEggs: Organic cage free eggs. The property sources
+	// 100% certified organic and cage-free eggs (shell, liquid, and egg
+	// products). Cage-free means hens are able to walk, spread their wings
+	// and lay their eggs in nests).
+	OrganicCageFreeEggs bool `json:"organicCageFreeEggs,omitempty"`
+
+	// OrganicCageFreeEggsException: Organic cage free eggs exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	OrganicCageFreeEggsException string `json:"organicCageFreeEggsException,omitempty"`
+
+	// OrganicFoodAndBeverages: Organic food and beverages. At least 25% of
+	// food and beverages, by spend, are certified organic. Organic means
+	// products that are certified to one of the organic standard listed in
+	// the IFOAM family of standards. Qualifying certifications include USDA
+	// Organic and EU Organic, among others.
+	OrganicFoodAndBeverages bool `json:"organicFoodAndBeverages,omitempty"`
+
+	// OrganicFoodAndBeveragesException: Organic food and beverages
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	OrganicFoodAndBeveragesException string `json:"organicFoodAndBeveragesException,omitempty"`
+
+	// ResponsiblePurchasingPolicy: Responsible purchasing policy. The
+	// property has a responsible procurement policy in place. Responsible
+	// means integration of social, ethical, and/or environmental
+	// performance factors into the procurement process when selecting
+	// suppliers.
+	ResponsiblePurchasingPolicy bool `json:"responsiblePurchasingPolicy,omitempty"`
+
+	// ResponsiblePurchasingPolicyException: Responsible purchasing policy
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	ResponsiblePurchasingPolicyException string `json:"responsiblePurchasingPolicyException,omitempty"`
+
+	// ResponsiblySourcesSeafood: Responsibly sources seafood. The property
+	// does not source seafood from the Monterey Bay Aquarium Seafood Watch
+	// "avoid" list, and must sustainably source seafood listed as "good
+	// alternative," "eco-certified," and "best choice". The property has a
+	// policy outlining a commitment to source Marine Stewardship Council
+	// (MSC) and/or Aquaculture Stewardship Council (ASC) Chain of Custody
+	// certified seafood.
+	ResponsiblySourcesSeafood bool `json:"responsiblySourcesSeafood,omitempty"`
+
+	// ResponsiblySourcesSeafoodException: Responsibly sources seafood
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	ResponsiblySourcesSeafoodException string `json:"responsiblySourcesSeafoodException,omitempty"`
+
+	// VeganMeals: Vegan meals. The property provides vegan menu options for
+	// guests. Vegan food does not contain animal products or byproducts.
+	VeganMeals bool `json:"veganMeals,omitempty"`
+
+	// VeganMealsException: Vegan meals exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	VeganMealsException string `json:"veganMealsException,omitempty"`
+
+	// VegetarianMeals: Vegetarian meals. The property provides vegetarian
+	// menu options for guests. Vegetarian food does not contain animal
+	// products.
+	VegetarianMeals bool `json:"vegetarianMeals,omitempty"`
+
+	// VegetarianMealsException: Vegetarian meals exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	VegetarianMealsException string `json:"vegetarianMealsException,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EcoFriendlyToiletries") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EcoFriendlyToiletries") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SustainableSourcing) MarshalJSON() ([]byte, error) {
+	type NoMethod SustainableSourcing
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TimeOfDay: Represents a time of day. The date and time zone are
 // either not significant or are specified elsewhere. An API may choose
 // to allow leap seconds. Related types are google.type.Date and
@@ -5210,6 +5795,497 @@ func (s *ViewsFromUnit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// WasteReduction: Waste reduction practices implemented at the hotel.
+type WasteReduction struct {
+	// CompostableFoodContainersAndCutlery: Compostable food containers and
+	// cutlery. 100% of food service containers and to-go cutlery are
+	// compostable, and reusable utensils are offered wherever possible.
+	// Compostable materials are capable of undergoing biological
+	// decomposition in a compost site, such that material is not visually
+	// distinguishable and breaks down into carbon dioxide, water, inorganic
+	// compounds, and biomass.
+	CompostableFoodContainersAndCutlery bool `json:"compostableFoodContainersAndCutlery,omitempty"`
+
+	// CompostableFoodContainersAndCutleryException: Compostable food
+	// containers and cutlery exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	CompostableFoodContainersAndCutleryException string `json:"compostableFoodContainersAndCutleryException,omitempty"`
+
+	// CompostsExcessFood: Composts excess food. The property has a program
+	// and/or policy for diverting waste from landfill by composting food
+	// and yard waste, either through compost collection and off-site
+	// processing or on-site compost processing.
+	CompostsExcessFood bool `json:"compostsExcessFood,omitempty"`
+
+	// CompostsExcessFoodException: Composts excess food exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	CompostsExcessFoodException string `json:"compostsExcessFoodException,omitempty"`
+
+	// DonatesExcessFood: Donates excess food. The property has a program
+	// and/or policy for diverting waste from landfill that may include
+	// efforts to donate for human consumption or divert food for animal
+	// feed.
+	DonatesExcessFood bool `json:"donatesExcessFood,omitempty"`
+
+	// DonatesExcessFoodException: Donates excess food exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	DonatesExcessFoodException string `json:"donatesExcessFoodException,omitempty"`
+
+	// FoodWasteReductionProgram: Food waste reduction program. The property
+	// has established a food waste reduction and donation program, aiming
+	// to reduce food waste by half. These programs typically use tools such
+	// as the Hotel Kitchen Toolkit and others to track waste and measure
+	// progress.
+	FoodWasteReductionProgram bool `json:"foodWasteReductionProgram,omitempty"`
+
+	// FoodWasteReductionProgramException: Food waste reduction program
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	FoodWasteReductionProgramException string `json:"foodWasteReductionProgramException,omitempty"`
+
+	// NoSingleUsePlasticStraws: No single use plastic straws. The property
+	// bans single-use plastic straws.
+	NoSingleUsePlasticStraws bool `json:"noSingleUsePlasticStraws,omitempty"`
+
+	// NoSingleUsePlasticStrawsException: No single use plastic straws
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	NoSingleUsePlasticStrawsException string `json:"noSingleUsePlasticStrawsException,omitempty"`
+
+	// NoSingleUsePlasticWaterBottles: No single use plastic water bottles.
+	// The property bans single-use plastic water bottles.
+	NoSingleUsePlasticWaterBottles bool `json:"noSingleUsePlasticWaterBottles,omitempty"`
+
+	// NoSingleUsePlasticWaterBottlesException: No single use plastic water
+	// bottles exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	NoSingleUsePlasticWaterBottlesException string `json:"noSingleUsePlasticWaterBottlesException,omitempty"`
+
+	// NoStyrofoamFoodContainers: No styrofoam food containers. The property
+	// eliminates the use of Styrofoam in disposable food service items.
+	NoStyrofoamFoodContainers bool `json:"noStyrofoamFoodContainers,omitempty"`
+
+	// NoStyrofoamFoodContainersException: No styrofoam food containers
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	NoStyrofoamFoodContainersException string `json:"noStyrofoamFoodContainersException,omitempty"`
+
+	// RecyclingProgram: Recycling program. The property has a recycling
+	// program, aligned with LEED waste requirements, and a policy outlining
+	// efforts to send less than 50% of waste to landfill. The recycling
+	// program includes storage locations for recyclable materials,
+	// including mixed paper, corrugated cardboard, glass, plastics, and
+	// metals.
+	RecyclingProgram bool `json:"recyclingProgram,omitempty"`
+
+	// RecyclingProgramException: Recycling program exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	RecyclingProgramException string `json:"recyclingProgramException,omitempty"`
+
+	// RefillableToiletryContainers: Refillable toiletry containers. The
+	// property has replaced miniature individual containers with refillable
+	// amenity dispensers for shampoo, conditioner, soap, and lotion.
+	RefillableToiletryContainers bool `json:"refillableToiletryContainers,omitempty"`
+
+	// RefillableToiletryContainersException: Refillable toiletry containers
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	RefillableToiletryContainersException string `json:"refillableToiletryContainersException,omitempty"`
+
+	// SafelyDisposesBatteries: Safely disposes batteries. The property
+	// safely stores and disposes batteries.
+	SafelyDisposesBatteries bool `json:"safelyDisposesBatteries,omitempty"`
+
+	// SafelyDisposesBatteriesException: Safely disposes batteries
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	SafelyDisposesBatteriesException string `json:"safelyDisposesBatteriesException,omitempty"`
+
+	// SafelyDisposesElectronics: Safely disposes electronics. The property
+	// has a reputable recycling program that keeps hazardous electronic
+	// parts and chemical compounds out of landfills, dumps and other
+	// unauthorized abandonment sites, and recycles/reuses applicable
+	// materials. (e.g. certified electronics recyclers).
+	SafelyDisposesElectronics bool `json:"safelyDisposesElectronics,omitempty"`
+
+	// SafelyDisposesElectronicsException: Safely disposes electronics
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	SafelyDisposesElectronicsException string `json:"safelyDisposesElectronicsException,omitempty"`
+
+	// SafelyDisposesLightbulbs: Safely disposes lightbulbs. The property
+	// safely stores and disposes lightbulbs.
+	SafelyDisposesLightbulbs bool `json:"safelyDisposesLightbulbs,omitempty"`
+
+	// SafelyDisposesLightbulbsException: Safely disposes lightbulbs
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	SafelyDisposesLightbulbsException string `json:"safelyDisposesLightbulbsException,omitempty"`
+
+	// SafelyHandlesHazardousSubstances: Safely handles hazardous
+	// substances. The property has a hazardous waste management program
+	// aligned wit GreenSeal and LEED requirements, and meets all regulatory
+	// requirements for hazardous waste disposal and recycling. Hazardous
+	// means substances that are classified as "hazardous" by an
+	// authoritative body (such as OSHA or DOT), are labeled with signal
+	// words such as "Danger," "Caution," "Warning," or are flammable,
+	// corrosive, or ignitable. Requirements include: - The property shall
+	// maintain records of the efforts it has made to replace the hazardous
+	// substances it uses with less hazardous alternatives. - An inventory
+	// of the hazardous materials stored on-site. - Products intended for
+	// cleaning, dishwashing, laundry, and pool maintenance shall be stored
+	// in clearly labeled containers. These containers shall be checked
+	// regularly for leaks, and replaced a necessary. - Spill containment
+	// devices shall be installed to collect spills, drips, or leaching of
+	// chemicals.
+	SafelyHandlesHazardousSubstances bool `json:"safelyHandlesHazardousSubstances,omitempty"`
+
+	// SafelyHandlesHazardousSubstancesException: Safely handles hazardous
+	// substances exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	SafelyHandlesHazardousSubstancesException string `json:"safelyHandlesHazardousSubstancesException,omitempty"`
+
+	// SoapDonationProgram: Soap donation program. The property participates
+	// in a soap donation program such as Clean the World or something
+	// similar.
+	SoapDonationProgram bool `json:"soapDonationProgram,omitempty"`
+
+	// SoapDonationProgramException: Soap donation program exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	SoapDonationProgramException string `json:"soapDonationProgramException,omitempty"`
+
+	// ToiletryDonationProgram: Toiletry donation program. The property
+	// participates in a toiletry donation program such as Clean the World
+	// or something similar.
+	ToiletryDonationProgram bool `json:"toiletryDonationProgram,omitempty"`
+
+	// ToiletryDonationProgramException: Toiletry donation program
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	ToiletryDonationProgramException string `json:"toiletryDonationProgramException,omitempty"`
+
+	// WaterBottleFillingStations: Water bottle filling stations. The
+	// property offers water stations throughout the building for guest use.
+	WaterBottleFillingStations bool `json:"waterBottleFillingStations,omitempty"`
+
+	// WaterBottleFillingStationsException: Water bottle filling stations
+	// exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	WaterBottleFillingStationsException string `json:"waterBottleFillingStationsException,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CompostableFoodContainersAndCutlery") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CompostableFoodContainersAndCutlery") to include in API requests
+	// with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. However, any field with an empty value
+	// appearing in NullFields will be sent to the server as null. It is an
+	// error if a field in this list has a non-empty value. This may be used
+	// to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WasteReduction) MarshalJSON() ([]byte, error) {
+	type NoMethod WasteReduction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WaterConservation: Water conservation practices implemented at the
+// hotel.
+type WaterConservation struct {
+	// IndependentOrganizationAuditsWaterUse: Independent organization
+	// audits water use. The property conducts a water conservation audit
+	// every 5 years, the results of which are either verified by a
+	// third-party and/or published in external communications. A water
+	// conservation audit is a detailed assessment of the facility,
+	// providing recommendations to existing operations and procedures to
+	// improve water efficiency, available incentives or rebates, and
+	// opportunities for improvements through renovations or upgrades.
+	// Examples of organizations who conduct credible third party audits
+	// include: Engie Impact, and local utility providers (they often
+	// provide energy and water audits).
+	IndependentOrganizationAuditsWaterUse bool `json:"independentOrganizationAuditsWaterUse,omitempty"`
+
+	// IndependentOrganizationAuditsWaterUseException: Independent
+	// organization audits water use exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	IndependentOrganizationAuditsWaterUseException string `json:"independentOrganizationAuditsWaterUseException,omitempty"`
+
+	// LinenReuseProgram: Linen reuse program. The property offers a linen
+	// reuse program.
+	LinenReuseProgram bool `json:"linenReuseProgram,omitempty"`
+
+	// LinenReuseProgramException: Linen reuse program exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	LinenReuseProgramException string `json:"linenReuseProgramException,omitempty"`
+
+	// TowelReuseProgram: Towel reuse program. The property offers a towel
+	// reuse program.
+	TowelReuseProgram bool `json:"towelReuseProgram,omitempty"`
+
+	// TowelReuseProgramException: Towel reuse program exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	TowelReuseProgramException string `json:"towelReuseProgramException,omitempty"`
+
+	// WaterSavingShowers: Water saving showers. All of the property's guest
+	// rooms have shower heads that use no more than 2.0 gallons per minute
+	// (gpm).
+	WaterSavingShowers bool `json:"waterSavingShowers,omitempty"`
+
+	// WaterSavingShowersException: Water saving showers exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	WaterSavingShowersException string `json:"waterSavingShowersException,omitempty"`
+
+	// WaterSavingSinks: Water saving sinks. All of the property's guest
+	// rooms have bathroom faucets that use a maximum of 1.5 gallons per
+	// minute (gpm), public restroom faucets do not exceed 0.5 gpm, and
+	// kitchen faucets (excluding faucets used exclusively for filling
+	// operations) do not exceed 2.2 gpm.
+	WaterSavingSinks bool `json:"waterSavingSinks,omitempty"`
+
+	// WaterSavingSinksException: Water saving sinks exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	WaterSavingSinksException string `json:"waterSavingSinksException,omitempty"`
+
+	// WaterSavingToilets: Water saving toilets. All of the property's
+	// toilets use 1.6 gallons per flush, or less.
+	WaterSavingToilets bool `json:"waterSavingToilets,omitempty"`
+
+	// WaterSavingToiletsException: Water saving toilets exception.
+	//
+	// Possible values:
+	//   "EXCEPTION_UNSPECIFIED" - Default unspecified exception. Use this
+	// only if a more specific exception does not match.
+	//   "UNDER_CONSTRUCTION" - Amenity or service is unavailable due to
+	// ongoing work orders.
+	//   "DEPENDENT_ON_SEASON" - Amenity or service availability is
+	// seasonal.
+	//   "DEPENDENT_ON_DAY_OF_WEEK" - Amenity or service availability
+	// depends on the day of the week.
+	WaterSavingToiletsException string `json:"waterSavingToiletsException,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "IndependentOrganizationAuditsWaterUse") to unconditionally include
+	// in API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "IndependentOrganizationAuditsWaterUse") to include in API requests
+	// with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. However, any field with an empty value
+	// appearing in NullFields will be sent to the server as null. It is an
+	// error if a field in this list has a non-empty value. This may be used
+	// to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WaterConservation) MarshalJSON() ([]byte, error) {
+	type NoMethod WaterConservation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Wellness: Guest facilities at the property to promote or maintain
 // health, beauty, and fitness.
 type Wellness struct {
@@ -5521,7 +6597,7 @@ func (c *LocationsGetLodgingCall) Header() http.Header {
 
 func (c *LocationsGetLodgingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210907")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210908")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5671,7 +6747,7 @@ func (c *LocationsUpdateLodgingCall) Header() http.Header {
 
 func (c *LocationsUpdateLodgingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210907")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210908")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5835,7 +6911,7 @@ func (c *LocationsLodgingGetGoogleUpdatedCall) Header() http.Header {
 
 func (c *LocationsLodgingGetGoogleUpdatedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210907")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210908")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -2791,7 +2791,8 @@ func (s *GoogleCloudVideointelligenceV1beta2PersonDetectionConfig) MarshalJSON()
 // for SHOT_CHANGE_DETECTION.
 type GoogleCloudVideointelligenceV1beta2ShotChangeDetectionConfig struct {
 	// Model: Model to use for shot change detection. Supported values:
-	// "builtin/stable" (the default if unset) and "builtin/latest".
+	// "builtin/stable" (the default if unset), "builtin/latest", and
+	// "builtin/legacy".
 	Model string `json:"model,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Model") to
@@ -8408,7 +8409,7 @@ func (c *VideosAnnotateCall) Header() http.Header {
 
 func (c *VideosAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210908")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210909")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

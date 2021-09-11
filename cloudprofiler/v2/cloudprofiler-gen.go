@@ -176,11 +176,11 @@ type ProjectsProfilesService struct {
 // supported by the agent. The creation call will hang until a profile
 // of one of these types needs to be collected.
 type CreateProfileRequest struct {
-	// Deployment: Deployment details.
+	// Deployment: Required. Deployment details.
 	Deployment *Deployment `json:"deployment,omitempty"`
 
-	// ProfileType: One or more profile types that the agent is capable of
-	// providing.
+	// ProfileType: Required. One or more profile types that the agent is
+	// capable of providing.
 	//
 	// Possible values:
 	//   "PROFILE_TYPE_UNSPECIFIED" - Unspecified profile type.
@@ -245,10 +245,10 @@ type Deployment struct {
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Target: Target is the service name used to group related deployments:
-	// * Service name for GAE Flex / Standard. * Cluster and container name
-	// for GKE. * User-specified string for direct GCE profiling (e.g.
-	// Java). * Job name for Dataflow. Validation regex: `^a-z
-	// ([-a-z0-9_.]{0,253}[a-z0-9])?$`.
+	// * Service name for App Engine Flex / Standard. * Cluster and
+	// container name for GKE. * User-specified string for direct Compute
+	// Engine profiling (e.g. Java). * Job name for Dataflow. Validation
+	// regex: `^a-z ([-a-z0-9_.]{0,253}[a-z0-9])?$`.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
@@ -410,7 +410,7 @@ func (c *ProjectsProfilesCreateCall) Header() http.Header {
 
 func (c *ProjectsProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210909")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210910")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -556,7 +556,7 @@ func (c *ProjectsProfilesCreateOfflineCall) Header() http.Header {
 
 func (c *ProjectsProfilesCreateOfflineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210909")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210910")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -714,7 +714,7 @@ func (c *ProjectsProfilesPatchCall) Header() http.Header {
 
 func (c *ProjectsProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210909")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210910")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -138,6 +138,7 @@ type PlatformsService struct {
 
 func NewPlatformsPropertiesService(s *Service) *PlatformsPropertiesService {
 	rs := &PlatformsPropertiesService{s: s}
+	rs.IdeaActivities = NewPlatformsPropertiesIdeaActivitiesService(s)
 	rs.IdeaStates = NewPlatformsPropertiesIdeaStatesService(s)
 	rs.Ideas = NewPlatformsPropertiesIdeasService(s)
 	rs.Locales = NewPlatformsPropertiesLocalesService(s)
@@ -148,6 +149,8 @@ func NewPlatformsPropertiesService(s *Service) *PlatformsPropertiesService {
 type PlatformsPropertiesService struct {
 	s *Service
 
+	IdeaActivities *PlatformsPropertiesIdeaActivitiesService
+
 	IdeaStates *PlatformsPropertiesIdeaStatesService
 
 	Ideas *PlatformsPropertiesIdeasService
@@ -155,6 +158,15 @@ type PlatformsPropertiesService struct {
 	Locales *PlatformsPropertiesLocalesService
 
 	TopicStates *PlatformsPropertiesTopicStatesService
+}
+
+func NewPlatformsPropertiesIdeaActivitiesService(s *Service) *PlatformsPropertiesIdeaActivitiesService {
+	rs := &PlatformsPropertiesIdeaActivitiesService{s: s}
+	return rs
+}
+
+type PlatformsPropertiesIdeaActivitiesService struct {
+	s *Service
 }
 
 func NewPlatformsPropertiesIdeaStatesService(s *Service) *PlatformsPropertiesIdeaStatesService {
@@ -258,6 +270,64 @@ type GoogleSearchIdeahubV1betaIdea struct {
 
 func (s *GoogleSearchIdeahubV1betaIdea) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSearchIdeahubV1betaIdea
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleSearchIdeahubV1betaIdeaActivity: An idea activity entry.
+type GoogleSearchIdeahubV1betaIdeaActivity struct {
+	// Ideas: The Idea IDs for this entry. If empty, topics should be set.
+	Ideas []string `json:"ideas,omitempty"`
+
+	// Name: Unique identifier for the idea activity. The name is ignored
+	// when creating an idea activity. Format:
+	// platforms/{platform}/properties/{property}/ideaActivities/{idea_activi
+	// ty}
+	Name string `json:"name,omitempty"`
+
+	// Topics: The Topic IDs for this entry. If empty, ideas should be set.
+	Topics []string `json:"topics,omitempty"`
+
+	// Type: The type of activity performed.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - An unspecified, unknown type of idea activity.
+	//   "POST_DRAFTED" - An idea activity type indicating a post has been
+	// drafted.
+	//   "POST_PUBLISHED" - An idea activity type indicating a post has been
+	// published.
+	//   "POST_DELETED" - An idea activity type indicating a post has been
+	// deleted.
+	//   "POST_UNPUBLISHED" - An idea activity type indicating a post has
+	// been unpublished.
+	Type string `json:"type,omitempty"`
+
+	// Uri: The uri the activity relates to.
+	Uri string `json:"uri,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Ideas") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Ideas") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleSearchIdeahubV1betaIdeaActivity) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleSearchIdeahubV1betaIdeaActivity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -453,6 +523,147 @@ func (s *GoogleSearchIdeahubV1betaTopicState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "ideahub.platforms.properties.ideaActivities.create":
+
+type PlatformsPropertiesIdeaActivitiesCreateCall struct {
+	s                                     *Service
+	parent                                string
+	googlesearchideahubv1betaideaactivity *GoogleSearchIdeahubV1betaIdeaActivity
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Create: Creates an idea activity entry.
+//
+// - parent: The parent resource where this idea activity will be
+//   created. Format: platforms/{platform}/property/{property}.
+func (r *PlatformsPropertiesIdeaActivitiesService) Create(parent string, googlesearchideahubv1betaideaactivity *GoogleSearchIdeahubV1betaIdeaActivity) *PlatformsPropertiesIdeaActivitiesCreateCall {
+	c := &PlatformsPropertiesIdeaActivitiesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlesearchideahubv1betaideaactivity = googlesearchideahubv1betaideaactivity
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PlatformsPropertiesIdeaActivitiesCreateCall) Fields(s ...googleapi.Field) *PlatformsPropertiesIdeaActivitiesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PlatformsPropertiesIdeaActivitiesCreateCall) Context(ctx context.Context) *PlatformsPropertiesIdeaActivitiesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PlatformsPropertiesIdeaActivitiesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PlatformsPropertiesIdeaActivitiesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210912")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlesearchideahubv1betaideaactivity)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/ideaActivities")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ideahub.platforms.properties.ideaActivities.create" call.
+// Exactly one of *GoogleSearchIdeahubV1betaIdeaActivity or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleSearchIdeahubV1betaIdeaActivity.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PlatformsPropertiesIdeaActivitiesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleSearchIdeahubV1betaIdeaActivity, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleSearchIdeahubV1betaIdeaActivity{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an idea activity entry.",
+	//   "flatPath": "v1beta/platforms/{platformsId}/properties/{propertiesId}/ideaActivities",
+	//   "httpMethod": "POST",
+	//   "id": "ideahub.platforms.properties.ideaActivities.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource where this idea activity will be created. Format: platforms/{platform}/property/{property}",
+	//       "location": "path",
+	//       "pattern": "^platforms/[^/]+/properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+parent}/ideaActivities",
+	//   "request": {
+	//     "$ref": "GoogleSearchIdeahubV1betaIdeaActivity"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleSearchIdeahubV1betaIdeaActivity"
+	//   }
+	// }
+
+}
+
 // method id "ideahub.platforms.properties.ideaStates.patch":
 
 type PlatformsPropertiesIdeaStatesPatchCall struct {
@@ -509,7 +720,7 @@ func (c *PlatformsPropertiesIdeaStatesPatchCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeaStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -703,7 +914,7 @@ func (c *PlatformsPropertiesIdeasListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesIdeasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -911,7 +1122,7 @@ func (c *PlatformsPropertiesLocalesListCall) Header() http.Header {
 
 func (c *PlatformsPropertiesLocalesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1087,7 +1298,7 @@ func (c *PlatformsPropertiesTopicStatesPatchCall) Header() http.Header {
 
 func (c *PlatformsPropertiesTopicStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210911")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210912")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

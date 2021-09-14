@@ -144,7 +144,7 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 			}
 			grpcOpts = []grpc.DialOption{
 				grpc.WithCredentialsBundle(
-					grpcgoogle.NewComputeEngineCredentials(oauth.TokenSource{creds.TokenSource}),
+					grpcgoogle.NewDirectPathCredentials(oauth.TokenSource{creds.TokenSource}),
 				),
 				// For now all DirectPath go clients will be using the following lb config, but in future
 				// when different services need different configs, then we should change this to a

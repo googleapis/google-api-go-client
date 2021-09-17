@@ -4071,7 +4071,7 @@ func (s *OsInfo) MarshalJSON() ([]byte, error) {
 // OutputConfig: Output configuration for export assets destination.
 type OutputConfig struct {
 	// BigqueryDestination: Destination on BigQuery. The output table stores
-	// the fields in asset proto as columns in BigQuery.
+	// the fields in asset Protobuf as columns in BigQuery.
 	BigqueryDestination *BigQueryDestination `json:"bigqueryDestination,omitempty"`
 
 	// GcsDestination: Destination on Cloud Storage.
@@ -4302,7 +4302,7 @@ func (s *PubsubDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RelatedAsset: An asset identify in Google Cloud which contains its
+// RelatedAsset: An asset identifier in Google Cloud which contains its
 // name, type and ancestors. An asset can be any resource in the Google
 // Cloud resource hierarchy
 // (https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy),
@@ -4599,7 +4599,7 @@ type ResourceSearchResult struct {
 	// CreateTime: The create timestamp of this resource, at which the
 	// resource was created. The granularity is in seconds. Timestamp.nanos
 	// will always be 0. This field is available only when the resource's
-	// proto contains it. To search against `create_time`: * use a field
+	// Protobuf contains it. To search against `create_time`: * use a field
 	// query. - value in seconds since unix epoch. Example: `createTime >
 	// 1609459200` - value in date string. Example: `createTime >
 	// 2021-01-01` - value in date-time string (must be quoted). Example:
@@ -4608,14 +4608,14 @@ type ResourceSearchResult struct {
 
 	// Description: One or more paragraphs of text description of this
 	// resource. Maximum length could be up to 1M bytes. This field is
-	// available only when the resource's proto contains it. To search
+	// available only when the resource's Protobuf contains it. To search
 	// against the `description`: * use a field query. Example:
 	// `description:"important instance" * use a free text query. Example:
 	// "important instance"
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: The display name of this resource. This field is
-	// available only when the resource's proto contains it. To search
+	// available only when the resource's Protobuf contains it. To search
 	// against the `display_name`: * use a field query. Example:
 	// `displayName:"My Instance" * use a free text query. Example: "My
 	// Instance"
@@ -4633,17 +4633,17 @@ type ResourceSearchResult struct {
 	// (https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys)
 	// name or CryptoKeyVersion
 	// (https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys.cryptoKeyVersions)
-	// name. This field is available only when the resource's proto contains
-	// it. To search against the `kms_key`: * use a field query. Example:
-	// `kmsKey:key` * use a free text query. Example: `key`
+	// name. This field is available only when the resource's Protobuf
+	// contains it. To search against the `kms_key`: * use a field query.
+	// Example: `kmsKey:key` * use a free text query. Example: `key`
 	KmsKey string `json:"kmsKey,omitempty"`
 
 	// Labels: Labels associated with this resource. See Labelling and
 	// grouping GCP resources
 	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources)
 	// for more information. This field is available only when the
-	// resource's proto contains it. To search against the `labels`: * use a
-	// field query: - query on any label's key or value. Example:
+	// resource's Protobuf contains it. To search against the `labels`: *
+	// use a field query: - query on any label's key or value. Example:
 	// `labels:prod` - query by a given label. Example: `labels.env:prod` -
 	// query by a given label's existence. Example: `labels.env:*` * use a
 	// free text query. Example: `prod`
@@ -4651,9 +4651,9 @@ type ResourceSearchResult struct {
 
 	// Location: Location can be `global`, regional like `us-east1`, or
 	// zonal like `us-west1-b`. This field is available only when the
-	// resource's proto contains it. To search against the `location`: * use
-	// a field query. Example: `location:us-west*` * use a free text query.
-	// Example: `us-west*`
+	// resource's Protobuf contains it. To search against the `location`: *
+	// use a field query. Example: `location:us-west*` * use a free text
+	// query. Example: `us-west*`
 	Location string `json:"location,omitempty"`
 
 	// Name: The full resource name of this resource. Example:
@@ -4670,9 +4670,9 @@ type ResourceSearchResult struct {
 	// See Labelling GCP resources
 	// (https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources)
 	// for more information. This field is available only when the
-	// resource's proto contains it. To search against the `network_tags`: *
-	// use a field query. Example: `networkTags:internal` * use a free text
-	// query. Example: `internal`
+	// resource's Protobuf contains it. To search against the
+	// `network_tags`: * use a field query. Example: `networkTags:internal`
+	// * use a free text query. Example: `internal`
 	NetworkTags []string `json:"networkTags,omitempty"`
 
 	// Organization: The organization that this resource belongs to, in the
@@ -4717,10 +4717,10 @@ type ResourceSearchResult struct {
 	// State: The state of this resource. Different resources types have
 	// different state definitions that are mapped from various fields of
 	// different resource types. This field is available only when the
-	// resource's proto contains it. Example: If the resource is an instance
-	// provided by Compute Engine, its state will include PROVISIONING,
-	// STAGING, RUNNING, STOPPING, SUSPENDING, SUSPENDED, REPAIRING, and
-	// TERMINATED. See `status` definition in API Reference
+	// resource's Protobuf contains it. Example: If the resource is an
+	// instance provided by Compute Engine, its state will include
+	// PROVISIONING, STAGING, RUNNING, STOPPING, SUSPENDING, SUSPENDED,
+	// REPAIRING, and TERMINATED. See `status` definition in API Reference
 	// (https://cloud.google.com/compute/docs/reference/rest/v1/instances).
 	// If the resource is a project provided by Cloud Resource Manager, its
 	// state will include LIFECYCLE_STATE_UNSPECIFIED, ACTIVE,
@@ -4734,8 +4734,8 @@ type ResourceSearchResult struct {
 	// UpdateTime: The last update timestamp of this resource, at which the
 	// resource was last modified or deleted. The granularity is in seconds.
 	// Timestamp.nanos will always be 0. This field is available only when
-	// the resource's proto contains it. To search against `update_time`: *
-	// use a field query. - value in seconds since unix epoch. Example:
+	// the resource's Protobuf contains it. To search against `update_time`:
+	// * use a field query. - value in seconds since unix epoch. Example:
 	// `updateTime < 1609459200` - value in date string. Example:
 	// `updateTime < 2021-01-01` - value in date-time string (must be
 	// quoted). Example: `updateTime < "2021-01-01T00:00:00"
@@ -5565,7 +5565,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5780,7 +5780,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5923,7 +5923,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6069,7 +6069,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6218,7 +6218,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6361,7 +6361,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6514,7 +6514,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6824,7 +6824,7 @@ func (c *V1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7041,7 +7041,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyLongrunningCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7226,7 +7226,7 @@ func (c *V1AnalyzeMoveCall) Header() http.Header {
 
 func (c *V1AnalyzeMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7465,7 +7465,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7617,8 +7617,8 @@ type V1ExportAssetsCall struct {
 // destinations, the output format is newline-delimited JSON. Each line
 // represents a google.cloud.asset.v1.Asset in the JSON format; for
 // BigQuery table destinations, the output table stores the fields in
-// asset proto as columns. This API implements the
-// google.longrunning.Operation API , which allows you to keep track of
+// asset Protobuf as columns. This API implements the
+// google.longrunning.Operation API, which allows you to keep track of
 // the export. We recommend intervals of at least 2 seconds with
 // exponential retry to poll the export operation result. For
 // regular-size resource parent, the export operation usually finishes
@@ -7662,7 +7662,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7726,7 +7726,7 @@ func (c *V1ExportAssetsCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports assets with time and resource types to a given Cloud Storage location/BigQuery table. For Cloud Storage location destinations, the output format is newline-delimited JSON. Each line represents a google.cloud.asset.v1.Asset in the JSON format; for BigQuery table destinations, the output table stores the fields in asset proto as columns. This API implements the google.longrunning.Operation API , which allows you to keep track of the export. We recommend intervals of at least 2 seconds with exponential retry to poll the export operation result. For regular-size resource parent, the export operation usually finishes within 5 minutes.",
+	//   "description": "Exports assets with time and resource types to a given Cloud Storage location/BigQuery table. For Cloud Storage location destinations, the output format is newline-delimited JSON. Each line represents a google.cloud.asset.v1.Asset in the JSON format; for BigQuery table destinations, the output table stores the fields in asset Protobuf as columns. This API implements the google.longrunning.Operation API, which allows you to keep track of the export. We recommend intervals of at least 2 seconds with exponential retry to poll the export operation result. For regular-size resource parent, the export operation usually finishes within 5 minutes.",
 	//   "flatPath": "v1/{v1Id}/{v1Id1}:exportAssets",
 	//   "httpMethod": "POST",
 	//   "id": "cloudasset.exportAssets",
@@ -7917,7 +7917,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8230,7 +8230,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210915")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

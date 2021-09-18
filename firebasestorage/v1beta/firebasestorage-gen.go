@@ -254,10 +254,12 @@ type GoogleFirebaseStorageControlplaneV1alphaMigrateLocationDestructivelyMetadat
 	// operation has been marked done and updated with a response.
 	//   "FAILED" - The migration failed at some stage and it is not
 	// possible to continue retrying that stage. Manual recovery may be
-	// needed.
+	// needed. Rollback is either impossible at this stage, or has been
+	// attempted and failed.
 	//   "ROLLING_BACK" - The migration has encountered a permanent failure
 	// and is now being rolled back so that the source bucket is restored to
 	// its original state.
+	//   "ROLLED_BACK" - The migration has been successfully rolled back.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -315,10 +317,12 @@ type GoogleFirebaseStorageControlplaneV1betaMigrateLocationDestructivelyMetadata
 	// operation has been marked done and updated with a response.
 	//   "FAILED" - The migration failed at some stage and it is not
 	// possible to continue retrying that stage. Manual recovery may be
-	// needed.
+	// needed. Rollback is either impossible at this stage, or has been
+	// attempted and failed.
 	//   "ROLLING_BACK" - The migration has encountered a permanent failure
 	// and is now being rolled back so that the source bucket is restored to
 	// its original state.
+	//   "ROLLED_BACK" - The migration has been successfully rolled back.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -437,7 +441,7 @@ func (c *ProjectsBucketsAddFirebaseCall) Header() http.Header {
 
 func (c *ProjectsBucketsAddFirebaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -591,7 +595,7 @@ func (c *ProjectsBucketsGetCall) Header() http.Header {
 
 func (c *ProjectsBucketsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -756,7 +760,7 @@ func (c *ProjectsBucketsListCall) Header() http.Header {
 
 func (c *ProjectsBucketsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -929,7 +933,7 @@ func (c *ProjectsBucketsRemoveFirebaseCall) Header() http.Header {
 
 func (c *ProjectsBucketsRemoveFirebaseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210916")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210917")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

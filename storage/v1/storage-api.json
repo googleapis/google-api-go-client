@@ -26,7 +26,7 @@
   "description": "Stores and retrieves potentially large, immutable data objects.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/storage/docs/json_api/",
-  "etag": "\"3138313838303239383939343230333837363830\"",
+  "etag": "\"3138303035363936323336303733373338393538\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/cloud_storage-16.png",
     "x32": "https://www.google.com/images/icons/product/cloud_storage-32.png"
@@ -3230,7 +3230,7 @@
       }
     }
   },
-  "revision": "20210127",
+  "revision": "20210914",
   "rootUrl": "https://storage.googleapis.com/",
   "schemas": {
     "Bucket": {
@@ -3535,6 +3535,10 @@
             }
           },
           "type": "object"
+        },
+        "rpo": {
+          "description": "The Recovery Point Objective (RPO) of this bucket. Set to ASYNC_TURBO to turn on Turbo Replication on a bucket.",
+          "type": "string"
         },
         "satisfiesPZS": {
           "description": "Reserved for future use.",

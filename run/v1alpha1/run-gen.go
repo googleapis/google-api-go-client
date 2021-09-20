@@ -625,6 +625,50 @@ func (s *ExecAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleRpcStatus: The `Status` type defines a logical error model that
+// is suitable for different programming environments, including REST
+// APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
+// `Status` message contains three pieces of data: error code, error
+// message, and error details. You can find out more about this error
+// model and how to work with it in the API Design Guide
+// (https://cloud.google.com/apis/design/errors).
+type GoogleRpcStatus struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details. There is a
+	// common set of message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any user-facing error message should be localized and sent
+	// in the google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleRpcStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // HTTPGetAction: Not supported by Cloud Run HTTPGetAction describes an
 // action based on HTTP Get requests.
 type HTTPGetAction struct {
@@ -694,6 +738,40 @@ type HTTPHeader struct {
 
 func (s *HTTPHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod HTTPHeader
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InstanceAttemptResult: Result of an instance attempt.
+type InstanceAttemptResult struct {
+	// ExitCode: Optional. The exit code of this attempt. This may be unset
+	// if the container was unable to exit cleanly with a code due to some
+	// other failure. See status field for possible failure details.
+	ExitCode int64 `json:"exitCode,omitempty"`
+
+	// Status: Optional. The status of this attempt. If the status code is
+	// OK, then the attempt succeeded.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExitCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExitCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstanceAttemptResult) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceAttemptResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -782,6 +860,10 @@ type InstanceStatus struct {
 	// Index: Required. Index of the instance, unique per Job, and beginning
 	// at 0.
 	Index int64 `json:"index,omitempty"`
+
+	// LastAttemptResult: Optional. Result of the last attempt of this
+	// instance. +optional
+	LastAttemptResult *InstanceAttemptResult `json:"lastAttemptResult,omitempty"`
 
 	// LastExitCode: Optional. Last exit code seen for this instance.
 	// +optional
@@ -1960,7 +2042,7 @@ func (c *NamespacesJobsCreateCall) Header() http.Header {
 
 func (c *NamespacesJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2125,7 +2207,7 @@ func (c *NamespacesJobsDeleteCall) Header() http.Header {
 
 func (c *NamespacesJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2284,7 +2366,7 @@ func (c *NamespacesJobsGetCall) Header() http.Header {
 
 func (c *NamespacesJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2485,7 +2567,7 @@ func (c *NamespacesJobsListCall) Header() http.Header {
 
 func (c *NamespacesJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

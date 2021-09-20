@@ -1392,6 +1392,11 @@ func (s *GoogleCloudDocumentaiV1DeployProcessorVersionMetadata) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1DeployProcessorVersionRequest: Request message
+// for the deploy processor version method.
+type GoogleCloudDocumentaiV1DeployProcessorVersionRequest struct {
+}
+
 // GoogleCloudDocumentaiV1DeployProcessorVersionResponse: Response
 // message for the deploy processor version method.
 type GoogleCloudDocumentaiV1DeployProcessorVersionResponse struct {
@@ -1425,6 +1430,11 @@ func (s *GoogleCloudDocumentaiV1DisableProcessorMetadata) MarshalJSON() ([]byte,
 	type NoMethod GoogleCloudDocumentaiV1DisableProcessorMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1DisableProcessorRequest: Request message for
+// the disable processor method.
+type GoogleCloudDocumentaiV1DisableProcessorRequest struct {
 }
 
 // GoogleCloudDocumentaiV1DisableProcessorResponse: Response message for
@@ -3026,10 +3036,160 @@ func (s *GoogleCloudDocumentaiV1EnableProcessorMetadata) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1EnableProcessorRequest: Request message for
+// the enable processor method.
+type GoogleCloudDocumentaiV1EnableProcessorRequest struct {
+}
+
 // GoogleCloudDocumentaiV1EnableProcessorResponse: Response message for
 // the enable processor method. Intentionally empty proto for adding
 // fields in future.
 type GoogleCloudDocumentaiV1EnableProcessorResponse struct {
+}
+
+// GoogleCloudDocumentaiV1EvaluationMetrics: Evaluation metrics, either
+// in aggregate or about a specific entity.
+type GoogleCloudDocumentaiV1EvaluationMetrics struct {
+	// F1Score: The calculated f1 score.
+	F1Score float64 `json:"f1Score,omitempty"`
+
+	// FalseNegativesCount: The amount of false negatives.
+	FalseNegativesCount int64 `json:"falseNegativesCount,omitempty"`
+
+	// FalsePositivesCount: The amount of false positives.
+	FalsePositivesCount int64 `json:"falsePositivesCount,omitempty"`
+
+	// GroundTruthOccurrencesCount: The amount of occurrences in ground
+	// truth documents.
+	GroundTruthOccurrencesCount int64 `json:"groundTruthOccurrencesCount,omitempty"`
+
+	// Precision: The calculated precision.
+	Precision float64 `json:"precision,omitempty"`
+
+	// PredictedOccurrencesCount: The amount of occurrences in predicted
+	// documents.
+	PredictedOccurrencesCount int64 `json:"predictedOccurrencesCount,omitempty"`
+
+	// Recall: The calculated recall.
+	Recall float64 `json:"recall,omitempty"`
+
+	// TotalDocumentsCount: The amount of documents that had an occurrence
+	// of this label.
+	TotalDocumentsCount int64 `json:"totalDocumentsCount,omitempty"`
+
+	// TruePositivesCount: The amount of true positives.
+	TruePositivesCount int64 `json:"truePositivesCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "F1Score") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "F1Score") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1EvaluationMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1EvaluationMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1EvaluationMetrics) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1EvaluationMetrics
+	var s1 struct {
+		F1Score   gensupport.JSONFloat64 `json:"f1Score"`
+		Precision gensupport.JSONFloat64 `json:"precision"`
+		Recall    gensupport.JSONFloat64 `json:"recall"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.F1Score = float64(s1.F1Score)
+	s.Precision = float64(s1.Precision)
+	s.Recall = float64(s1.Recall)
+	return nil
+}
+
+// GoogleCloudDocumentaiV1EvaluationReference: Gives a short summary of
+// an evaluation, and links to the evaluation itself.
+type GoogleCloudDocumentaiV1EvaluationReference struct {
+	// AggregateMetrics: An aggregate of the statistics for the evaluation.
+	AggregateMetrics *GoogleCloudDocumentaiV1EvaluationMetrics `json:"aggregateMetrics,omitempty"`
+
+	// Evaluation: The resource name of the evaluation.
+	Evaluation string `json:"evaluation,omitempty"`
+
+	// Operation: The resource name of the Long Running Operation for the
+	// evaluation.
+	Operation string `json:"operation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregateMetrics") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregateMetrics") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1EvaluationReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1EvaluationReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1FetchProcessorTypesResponse: Response message
+// for fetch processor types.
+type GoogleCloudDocumentaiV1FetchProcessorTypesResponse struct {
+	// ProcessorTypes: The list of processor types.
+	ProcessorTypes []*GoogleCloudDocumentaiV1ProcessorType `json:"processorTypes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ProcessorTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProcessorTypes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1FetchProcessorTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1FetchProcessorTypesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiV1GcsDocument: Specifies a document stored on
@@ -3177,6 +3337,78 @@ func (s *GoogleCloudDocumentaiV1HumanReviewStatus) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1ListProcessorVersionsResponse: Response
+// message for list processors.
+type GoogleCloudDocumentaiV1ListProcessorVersionsResponse struct {
+	// NextPageToken: Points to the next processor, otherwise empty.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ProcessorVersions: The list of processors.
+	ProcessorVersions []*GoogleCloudDocumentaiV1ProcessorVersion `json:"processorVersions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1ListProcessorVersionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1ListProcessorVersionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1ListProcessorsResponse: Response message for
+// list processors.
+type GoogleCloudDocumentaiV1ListProcessorsResponse struct {
+	// NextPageToken: Points to the next processor, otherwise empty.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Processors: The list of processors.
+	Processors []*GoogleCloudDocumentaiV1Processor `json:"processors,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1ListProcessorsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1ListProcessorsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1NormalizedVertex: A vertex represents a 2D
 // point in the image. NOTE: the normalized vertex coordinates are
 // relative to the original image and range from 0 to 1.
@@ -3297,6 +3529,248 @@ type GoogleCloudDocumentaiV1ProcessResponse struct {
 
 func (s *GoogleCloudDocumentaiV1ProcessResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1ProcessResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1Processor: The first-class citizen for DAI.
+// Each processor defines how to extract structural information from a
+// document.
+type GoogleCloudDocumentaiV1Processor struct {
+	// CreateTime: The time the processor was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DefaultProcessorVersion: The default processor version.
+	DefaultProcessorVersion string `json:"defaultProcessorVersion,omitempty"`
+
+	// DisplayName: The display name of the processor.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// KmsKeyName: The KMS key used for encryption/decryption in CMEK
+	// scenarios. See https://cloud.google.com/security-key-management.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// Name: Output only. Immutable. The resource name of the processor.
+	// Format:
+	// projects/{project}/locations/{location}/processors/{processor}
+	Name string `json:"name,omitempty"`
+
+	// ProcessEndpoint: Output only. Immutable. The http endpoint that can
+	// be called to invoke processing.
+	ProcessEndpoint string `json:"processEndpoint,omitempty"`
+
+	// State: Output only. The state of the processor.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The processor is in an unspecified state.
+	//   "ENABLED" - The processor is enabled, i.e, has an enabled version
+	// which can currently serve processing requests and all the feature
+	// dependencies have been successfully initialized.
+	//   "DISABLED" - The processor is disabled.
+	//   "ENABLING" - The processor is being enabled, will become ENABLED if
+	// successful.
+	//   "DISABLING" - The processor is being disabled, will become DISABLED
+	// if successful.
+	//   "CREATING" - The processor is being created, will become either
+	// ENABLED (for successful creation) or FAILED (for failed ones). Once a
+	// processor is in this state, it can then be used for document
+	// processing, but the feature dependencies of the processor might not
+	// be fully created yet.
+	//   "FAILED" - The processor failed during creation or initialization
+	// of feature dependencies. The user should delete the processor and
+	// recreate one as all the functionalities of the processor are
+	// disabled.
+	//   "DELETING" - The processor is being deleted, will be removed if
+	// successful.
+	State string `json:"state,omitempty"`
+
+	// Type: The processor type, e.g., INVOICE_PARSING, W2_PARSING, etc.
+	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1Processor) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1Processor
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1ProcessorType: A processor type is responsible
+// for performing a certain document understanding task on a certain
+// type of document. All processor types are created by the documentai
+// service internally. User will only list all available processor types
+// via UI. For different users (projects), the available processor types
+// may be different since we'll expose the access of some types via EAP
+// whitelisting. We make the ProcessorType a resource under location so
+// we have a unified API and keep the possibility that UI will load
+// different available processor types from different regions. But for
+// alpha the behavior is that the user will always get the union of all
+// available processor types among all regions no matter which
+// regionalized endpoint is called, and then we use the
+// 'available_locations' field to show under which regions a processor
+// type is available. For example, users can call either the 'US' or
+// 'EU' endpoint to feach processor types. In the return, we will have
+// an 'invoice parsing' processor with 'available_locations' field only
+// containing 'US'. So the user can try to create an 'invoice parsing'
+// processor under the location 'US'. Such attempt of creating under the
+// location 'EU' will fail. Next ID: 8.
+type GoogleCloudDocumentaiV1ProcessorType struct {
+	// AllowCreation: Whether the processor type allows creation. If yes,
+	// user can create a processor of this processor type. Otherwise, user
+	// needs to request access.
+	AllowCreation bool `json:"allowCreation,omitempty"`
+
+	// AvailableLocations: The locations in which this processor is
+	// available.
+	AvailableLocations []*GoogleCloudDocumentaiV1ProcessorTypeLocationInfo `json:"availableLocations,omitempty"`
+
+	// Category: The processor category, used by UI to group processor
+	// types.
+	Category string `json:"category,omitempty"`
+
+	// Name: The resource name of the processor type. Format:
+	// projects/{project}/processorTypes/{processor_type}
+	Name string `json:"name,omitempty"`
+
+	// Type: The type of the processor, e.g, "invoice_parsing".
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowCreation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowCreation") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1ProcessorType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1ProcessorType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1ProcessorTypeLocationInfo: The location
+// information about where the processor is available.
+type GoogleCloudDocumentaiV1ProcessorTypeLocationInfo struct {
+	// LocationId: The location id, currently must be one of [us, eu].
+	LocationId string `json:"locationId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LocationId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LocationId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1ProcessorTypeLocationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1ProcessorTypeLocationInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1ProcessorVersion: A processor version is an
+// implementation of a processor. Each processor can have multiple
+// versions, pre-trained by Google internally or up-trained by the
+// customer. At a time, a processor can only have one default version
+// version. So the processor's behavior (when processing documents) is
+// defined by a default version.
+type GoogleCloudDocumentaiV1ProcessorVersion struct {
+	// CreateTime: The time the processor version was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: The display name of the processor version.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// LatestEvaluation: The most recently invoked evaluation for the
+	// processor version.
+	LatestEvaluation *GoogleCloudDocumentaiV1EvaluationReference `json:"latestEvaluation,omitempty"`
+
+	// Name: The resource name of the processor version. Format:
+	// projects/{project}/locations/{location}/processors/{processor}/process
+	// orVersions/{processor_version}
+	Name string `json:"name,omitempty"`
+
+	// Schema: The schema of the processor version. Describes the output.
+	Schema *GoogleCloudDocumentaiV1Schema `json:"schema,omitempty"`
+
+	// State: The state of the processor version.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The processor version is in an unspecified
+	// state.
+	//   "DEPLOYED" - The processor version is deployed and can be used for
+	// processing.
+	//   "DEPLOYING" - The processor version is being deployed.
+	//   "UNDEPLOYED" - The processor version is not deployed and cannot be
+	// used for processing.
+	//   "UNDEPLOYING" - The processor version is being undeployed.
+	//   "CREATING" - The processor version is being created.
+	//   "DELETING" - The processor version is being deleted.
+	//   "FAILED" - The processor version failed and is in an indeterminate
+	// state.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1ProcessorVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1ProcessorVersion
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3439,6 +3913,121 @@ func (s *GoogleCloudDocumentaiV1ReviewDocumentResponse) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1Schema: The schema defines the output of the
+// processed document by a processor.
+type GoogleCloudDocumentaiV1Schema struct {
+	// Description: Description of the schema.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Display name to show to users.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EntityTypes: Entity types of the schema.
+	EntityTypes []*GoogleCloudDocumentaiV1SchemaEntityType `json:"entityTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1Schema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1Schema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1SchemaEntityType: EntityType is the wrapper of
+// a label of the corresponding model with detailed attributes and
+// limitations for entity-based processors. Multiple types can also
+// compose a dependency tree to represent nested types.
+type GoogleCloudDocumentaiV1SchemaEntityType struct {
+	// BaseType: Type of the entity. It must be one of the following:
+	// `document` - the entity represents a classification of a logical
+	// document. `object` - if the entity has properties it is likely an
+	// object (or or a document.) `datetime` - the entity is a date or time
+	// value. `money` - the entity represents a money value amount. `number`
+	// - the entity is a number - integer or floating point. `string` - the
+	// entity is a string value. `boolean` - the entity is a boolean value.
+	// `address` - the entity is a location address.
+	BaseType string `json:"baseType,omitempty"`
+
+	// Description: Description of the entity type.
+	Description string `json:"description,omitempty"`
+
+	// EnumValues: If specified, lists all the possible values for this
+	// entity.
+	EnumValues []string `json:"enumValues,omitempty"`
+
+	// OccurrenceType: Occurrence type limits the number of times an entity
+	// type appears in the document.
+	//
+	// Possible values:
+	//   "OCCURRENCE_TYPE_UNSPECIFIED" - Unspecified occurrence type.
+	//   "OPTIONAL_ONCE" - The entity type will appear zero times or once.
+	//   "OPTIONAL_MULTIPLE" - The entity type will appear zero or multiple
+	// times.
+	//   "REQUIRED_ONCE" - The entity type will only appear exactly once.
+	//   "REQUIRED_MULTIPLE" - The entity type will appear once or more
+	// times.
+	OccurrenceType string `json:"occurrenceType,omitempty"`
+
+	// Properties: Describing the nested structure of an entity. An
+	// EntityType may consist of several other EntityTypes. For example, in
+	// a document there can be an EntityType 'ID', which consists of
+	// EntityType 'name' and 'address', with corresponding attributes, such
+	// as TEXT for both types and ONCE for occurrence types.
+	Properties []*GoogleCloudDocumentaiV1SchemaEntityType `json:"properties,omitempty"`
+
+	// Source: Source of this entity type.
+	//
+	// Possible values:
+	//   "SOURCE_UNSPECIFIED" - Unspecified source.
+	//   "PREDEFINED" - The entity type is in the predefined schema of a
+	// pretrained version of a processor.
+	//   "USER_INPUT" - The entity type is added by the users either: -
+	// during an uptraining of an existing processor, or - during the
+	// process of creating a customized processor.
+	Source string `json:"source,omitempty"`
+
+	// Type: Name of the type. It must be unique within the set of same
+	// level types.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1SchemaEntityType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1SchemaEntityType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata: The long
 // running operation metadata for set default processor version method.
 type GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata struct {
@@ -3465,6 +4054,38 @@ type GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata struct {
 
 func (s *GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1SetDefaultProcessorVersionRequest: Request
+// message for the set default processor version method.
+type GoogleCloudDocumentaiV1SetDefaultProcessorVersionRequest struct {
+	// DefaultProcessorVersion: Required. The resource name of child
+	// ProcessorVersion to use as default.
+	DefaultProcessorVersion string `json:"defaultProcessorVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultProcessorVersion") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultProcessorVersion")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1SetDefaultProcessorVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1SetDefaultProcessorVersionRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3502,6 +4123,11 @@ func (s *GoogleCloudDocumentaiV1UndeployProcessorVersionMetadata) MarshalJSON() 
 	type NoMethod GoogleCloudDocumentaiV1UndeployProcessorVersionMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1UndeployProcessorVersionRequest: Request
+// message for the undeploy processor version method.
+type GoogleCloudDocumentaiV1UndeployProcessorVersionRequest struct {
 }
 
 // GoogleCloudDocumentaiV1UndeployProcessorVersionResponse: Response
@@ -8614,7 +9240,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8700,6 +9326,156 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 
 }
 
+// method id "documentai.projects.locations.fetchProcessorTypes":
+
+type ProjectsLocationsFetchProcessorTypesCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchProcessorTypes: Fetches processor types.
+//
+// - parent: The project of processor type to list. The available
+//   processor types may depend on the whitelisting on projects. Format:
+//   projects/{project}/locations/{location}.
+func (r *ProjectsLocationsService) FetchProcessorTypes(parent string) *ProjectsLocationsFetchProcessorTypesCall {
+	c := &ProjectsLocationsFetchProcessorTypesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFetchProcessorTypesCall) Fields(s ...googleapi.Field) *ProjectsLocationsFetchProcessorTypesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsFetchProcessorTypesCall) IfNoneMatch(entityTag string) *ProjectsLocationsFetchProcessorTypesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFetchProcessorTypesCall) Context(ctx context.Context) *ProjectsLocationsFetchProcessorTypesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFetchProcessorTypesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFetchProcessorTypesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:fetchProcessorTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.fetchProcessorTypes" call.
+// Exactly one of *GoogleCloudDocumentaiV1FetchProcessorTypesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDocumentaiV1FetchProcessorTypesResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsFetchProcessorTypesCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1FetchProcessorTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDocumentaiV1FetchProcessorTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Fetches processor types.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:fetchProcessorTypes",
+	//   "httpMethod": "GET",
+	//   "id": "documentai.projects.locations.fetchProcessorTypes",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The project of processor type to list. The available processor types may depend on the whitelisting on projects. Format: projects/{project}/locations/{location}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:fetchProcessorTypes",
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1FetchProcessorTypesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "documentai.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
@@ -8757,7 +9533,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8929,7 +9705,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9112,7 +9888,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9257,7 +10033,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9433,7 +10209,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9612,7 +10388,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9706,6 +10482,914 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Do(opts ...googleapi.CallO
 
 }
 
+// method id "documentai.projects.locations.processors.create":
+
+type ProjectsLocationsProcessorsCreateCall struct {
+	s                                *Service
+	parent                           string
+	googleclouddocumentaiv1processor *GoogleCloudDocumentaiV1Processor
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Create: Creates a processor from the type processor that the user
+// chose. The processor will be at "ENABLED" state by default after its
+// creation.
+//
+// - parent: The parent (project and location) under which to create the
+//   processor. Format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsProcessorsService) Create(parent string, googleclouddocumentaiv1processor *GoogleCloudDocumentaiV1Processor) *ProjectsLocationsProcessorsCreateCall {
+	c := &ProjectsLocationsProcessorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddocumentaiv1processor = googleclouddocumentaiv1processor
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsCreateCall) Context(ctx context.Context) *ProjectsLocationsProcessorsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1processor)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/processors")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.create" call.
+// Exactly one of *GoogleCloudDocumentaiV1Processor or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudDocumentaiV1Processor.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1Processor, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDocumentaiV1Processor{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a processor from the type processor that the user chose. The processor will be at \"ENABLED\" state by default after its creation.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processors",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent (project and location) under which to create the processor. Format: projects/{project}/locations/{location}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/processors",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1Processor"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1Processor"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.delete":
+
+type ProjectsLocationsProcessorsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the processor, unloads all deployed model artifacts
+// if it was enabled and then deletes all artifacts associated with this
+// processor.
+//
+// - name: The processor resource name to be deleted.
+func (r *ProjectsLocationsProcessorsService) Delete(name string) *ProjectsLocationsProcessorsDeleteCall {
+	c := &ProjectsLocationsProcessorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsDeleteCall) Context(ctx context.Context) *ProjectsLocationsProcessorsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the processor, unloads all deployed model artifacts if it was enabled and then deletes all artifacts associated with this processor.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "documentai.projects.locations.processors.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor resource name to be deleted.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.disable":
+
+type ProjectsLocationsProcessorsDisableCall struct {
+	s                                              *Service
+	name                                           string
+	googleclouddocumentaiv1disableprocessorrequest *GoogleCloudDocumentaiV1DisableProcessorRequest
+	urlParams_                                     gensupport.URLParams
+	ctx_                                           context.Context
+	header_                                        http.Header
+}
+
+// Disable: Disables a processor
+//
+// - name: The processor resource name to be disabled.
+func (r *ProjectsLocationsProcessorsService) Disable(name string, googleclouddocumentaiv1disableprocessorrequest *GoogleCloudDocumentaiV1DisableProcessorRequest) *ProjectsLocationsProcessorsDisableCall {
+	c := &ProjectsLocationsProcessorsDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddocumentaiv1disableprocessorrequest = googleclouddocumentaiv1disableprocessorrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsDisableCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsDisableCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsDisableCall) Context(ctx context.Context) *ProjectsLocationsProcessorsDisableCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsDisableCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsDisableCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1disableprocessorrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:disable")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.disable" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsDisableCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Disables a processor",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}:disable",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.disable",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor resource name to be disabled.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:disable",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1DisableProcessorRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.enable":
+
+type ProjectsLocationsProcessorsEnableCall struct {
+	s                                             *Service
+	name                                          string
+	googleclouddocumentaiv1enableprocessorrequest *GoogleCloudDocumentaiV1EnableProcessorRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Enable: Enables a processor
+//
+// - name: The processor resource name to be enabled.
+func (r *ProjectsLocationsProcessorsService) Enable(name string, googleclouddocumentaiv1enableprocessorrequest *GoogleCloudDocumentaiV1EnableProcessorRequest) *ProjectsLocationsProcessorsEnableCall {
+	c := &ProjectsLocationsProcessorsEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddocumentaiv1enableprocessorrequest = googleclouddocumentaiv1enableprocessorrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsEnableCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsEnableCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsEnableCall) Context(ctx context.Context) *ProjectsLocationsProcessorsEnableCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsEnableCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsEnableCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1enableprocessorrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:enable")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.enable" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsEnableCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Enables a processor",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}:enable",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.enable",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor resource name to be enabled.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:enable",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1EnableProcessorRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.get":
+
+type ProjectsLocationsProcessorsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a processor detail.
+//
+// - name: The processor resource name.
+func (r *ProjectsLocationsProcessorsService) Get(name string) *ProjectsLocationsProcessorsGetCall {
+	c := &ProjectsLocationsProcessorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProcessorsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessorsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsGetCall) Context(ctx context.Context) *ProjectsLocationsProcessorsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.get" call.
+// Exactly one of *GoogleCloudDocumentaiV1Processor or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudDocumentaiV1Processor.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1Processor, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDocumentaiV1Processor{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a processor detail.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}",
+	//   "httpMethod": "GET",
+	//   "id": "documentai.projects.locations.processors.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor resource name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1Processor"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.list":
+
+type ProjectsLocationsProcessorsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all processors which belong to this project.
+//
+// - parent: The parent (project and location) which owns this
+//   collection of Processors. Format:
+//   projects/{project}/locations/{location}.
+func (r *ProjectsLocationsProcessorsService) List(parent string) *ProjectsLocationsProcessorsListCall {
+	c := &ProjectsLocationsProcessorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of processors to return. If unspecified, at most 50 processors will
+// be returned. The maximum value is 100; values above 100 will be
+// coerced to 100.
+func (c *ProjectsLocationsProcessorsListCall) PageSize(pageSize int64) *ProjectsLocationsProcessorsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": We will return the
+// processors sorted by creation time. The page token will point to the
+// next processor.
+func (c *ProjectsLocationsProcessorsListCall) PageToken(pageToken string) *ProjectsLocationsProcessorsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProcessorsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessorsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsListCall) Context(ctx context.Context) *ProjectsLocationsProcessorsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/processors")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.list" call.
+// Exactly one of *GoogleCloudDocumentaiV1ListProcessorsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDocumentaiV1ListProcessorsResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsProcessorsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1ListProcessorsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDocumentaiV1ListProcessorsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all processors which belong to this project.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processors",
+	//   "httpMethod": "GET",
+	//   "id": "documentai.projects.locations.processors.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of processors to return. If unspecified, at most 50 processors will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "We will return the processors sorted by creation time. The page token will point to the next processor.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent (project and location) which owns this collection of Processors. Format: projects/{project}/locations/{location}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/processors",
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1ListProcessorsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsProcessorsListCall) Pages(ctx context.Context, f func(*GoogleCloudDocumentaiV1ListProcessorsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "documentai.projects.locations.processors.process":
 
 type ProjectsLocationsProcessorsProcessCall struct {
@@ -9759,7 +11443,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9854,6 +11538,151 @@ func (c *ProjectsLocationsProcessorsProcessCall) Do(opts ...googleapi.CallOption
 
 }
 
+// method id "documentai.projects.locations.processors.setDefaultProcessorVersion":
+
+type ProjectsLocationsProcessorsSetDefaultProcessorVersionCall struct {
+	s                                                        *Service
+	processor                                                string
+	googleclouddocumentaiv1setdefaultprocessorversionrequest *GoogleCloudDocumentaiV1SetDefaultProcessorVersionRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// SetDefaultProcessorVersion: Set the default (active) version of a
+// Processor that will be used in ProcessDocument and
+// BatchProcessDocuments.
+//
+// - processor: The resource name of the Processor to change default
+//   version.
+func (r *ProjectsLocationsProcessorsService) SetDefaultProcessorVersion(processor string, googleclouddocumentaiv1setdefaultprocessorversionrequest *GoogleCloudDocumentaiV1SetDefaultProcessorVersionRequest) *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall {
+	c := &ProjectsLocationsProcessorsSetDefaultProcessorVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.processor = processor
+	c.googleclouddocumentaiv1setdefaultprocessorversionrequest = googleclouddocumentaiv1setdefaultprocessorversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) Context(ctx context.Context) *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1setdefaultprocessorversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+processor}:setDefaultProcessorVersion")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"processor": c.processor,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.setDefaultProcessorVersion" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Set the default (active) version of a Processor that will be used in ProcessDocument and BatchProcessDocuments.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}:setDefaultProcessorVersion",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.setDefaultProcessorVersion",
+	//   "parameterOrder": [
+	//     "processor"
+	//   ],
+	//   "parameters": {
+	//     "processor": {
+	//       "description": "Required. The resource name of the Processor to change default version.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+processor}:setDefaultProcessorVersion",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1SetDefaultProcessorVersionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "documentai.projects.locations.processors.humanReviewConfig.reviewDocument":
 
 type ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall struct {
@@ -9904,7 +11733,7 @@ func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) Header(
 
 func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10050,7 +11879,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Header() 
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10144,6 +11973,627 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Do(opts .
 
 }
 
+// method id "documentai.projects.locations.processors.processorVersions.delete":
+
+type ProjectsLocationsProcessorsProcessorVersionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the processor version, all artifacts under the
+// processor version will be deleted.
+//
+// - name: The processor version resource name to be deleted.
+func (r *ProjectsLocationsProcessorsProcessorVersionsService) Delete(name string) *ProjectsLocationsProcessorsProcessorVersionsDeleteCall {
+	c := &ProjectsLocationsProcessorsProcessorVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsProcessorVersionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsProcessorsProcessorVersionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.processorVersions.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the processor version, all artifacts under the processor version will be deleted.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/processorVersions/{processorVersionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "documentai.projects.locations.processors.processorVersions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor version resource name to be deleted.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.processorVersions.deploy":
+
+type ProjectsLocationsProcessorsProcessorVersionsDeployCall struct {
+	s                                                    *Service
+	name                                                 string
+	googleclouddocumentaiv1deployprocessorversionrequest *GoogleCloudDocumentaiV1DeployProcessorVersionRequest
+	urlParams_                                           gensupport.URLParams
+	ctx_                                                 context.Context
+	header_                                              http.Header
+}
+
+// Deploy: Deploys the processor version.
+//
+// - name: The processor version resource name to be deployed.
+func (r *ProjectsLocationsProcessorsProcessorVersionsService) Deploy(name string, googleclouddocumentaiv1deployprocessorversionrequest *GoogleCloudDocumentaiV1DeployProcessorVersionRequest) *ProjectsLocationsProcessorsProcessorVersionsDeployCall {
+	c := &ProjectsLocationsProcessorsProcessorVersionsDeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddocumentaiv1deployprocessorversionrequest = googleclouddocumentaiv1deployprocessorversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsProcessorVersionsDeployCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) Context(ctx context.Context) *ProjectsLocationsProcessorsProcessorVersionsDeployCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1deployprocessorversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:deploy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.processorVersions.deploy" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deploys the processor version.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/processorVersions/{processorVersionsId}:deploy",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.processorVersions.deploy",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor version resource name to be deployed.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:deploy",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1DeployProcessorVersionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.processorVersions.get":
+
+type ProjectsLocationsProcessorsProcessorVersionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a processor version detail.
+//
+// - name: The processor resource name.
+func (r *ProjectsLocationsProcessorsProcessorVersionsService) Get(name string) *ProjectsLocationsProcessorsProcessorVersionsGetCall {
+	c := &ProjectsLocationsProcessorsProcessorVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsProcessorVersionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessorsProcessorVersionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) Context(ctx context.Context) *ProjectsLocationsProcessorsProcessorVersionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.processorVersions.get" call.
+// Exactly one of *GoogleCloudDocumentaiV1ProcessorVersion or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudDocumentaiV1ProcessorVersion.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1ProcessorVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDocumentaiV1ProcessorVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a processor version detail.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/processorVersions/{processorVersionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "documentai.projects.locations.processors.processorVersions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor resource name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1ProcessorVersion"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.processorVersions.list":
+
+type ProjectsLocationsProcessorsProcessorVersionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all versions of a processor.
+//
+// - parent: The parent (project, location and processor) to list all
+//   versions. Format:
+//   projects/{project}/locations/{location}/processors/{processor}.
+func (r *ProjectsLocationsProcessorsProcessorVersionsService) List(parent string) *ProjectsLocationsProcessorsProcessorVersionsListCall {
+	c := &ProjectsLocationsProcessorsProcessorVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of processor versions to return. If unspecified, at most 10 processor
+// versions will be returned. The maximum value is 20; values above 20
+// will be coerced to 20.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) PageSize(pageSize int64) *ProjectsLocationsProcessorsProcessorVersionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": We will return the
+// processor versions sorted by creation time. The page token will point
+// to the next processor version.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) PageToken(pageToken string) *ProjectsLocationsProcessorsProcessorVersionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsProcessorVersionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessorsProcessorVersionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) Context(ctx context.Context) *ProjectsLocationsProcessorsProcessorVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/processorVersions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.processorVersions.list" call.
+// Exactly one of *GoogleCloudDocumentaiV1ListProcessorVersionsResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudDocumentaiV1ListProcessorVersionsResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1ListProcessorVersionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDocumentaiV1ListProcessorVersionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all versions of a processor.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/processorVersions",
+	//   "httpMethod": "GET",
+	//   "id": "documentai.projects.locations.processors.processorVersions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of processor versions to return. If unspecified, at most 10 processor versions will be returned. The maximum value is 20; values above 20 will be coerced to 20.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "We will return the processor versions sorted by creation time. The page token will point to the next processor version.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent (project, location and processor) to list all versions. Format: projects/{project}/locations/{location}/processors/{processor}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/processorVersions",
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1ListProcessorVersionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) Pages(ctx context.Context, f func(*GoogleCloudDocumentaiV1ListProcessorVersionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "documentai.projects.locations.processors.processorVersions.process":
 
 type ProjectsLocationsProcessorsProcessorVersionsProcessCall struct {
@@ -10197,7 +12647,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Header() http.
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10292,6 +12742,148 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Do(opts ...goo
 
 }
 
+// method id "documentai.projects.locations.processors.processorVersions.undeploy":
+
+type ProjectsLocationsProcessorsProcessorVersionsUndeployCall struct {
+	s                                                      *Service
+	name                                                   string
+	googleclouddocumentaiv1undeployprocessorversionrequest *GoogleCloudDocumentaiV1UndeployProcessorVersionRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// Undeploy: Undeploys the processor version.
+//
+// - name: The processor version resource name to be undeployed.
+func (r *ProjectsLocationsProcessorsProcessorVersionsService) Undeploy(name string, googleclouddocumentaiv1undeployprocessorversionrequest *GoogleCloudDocumentaiV1UndeployProcessorVersionRequest) *ProjectsLocationsProcessorsProcessorVersionsUndeployCall {
+	c := &ProjectsLocationsProcessorsProcessorVersionsUndeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddocumentaiv1undeployprocessorversionrequest = googleclouddocumentaiv1undeployprocessorversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsProcessorVersionsUndeployCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) Context(ctx context.Context) *ProjectsLocationsProcessorsProcessorVersionsUndeployCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1undeployprocessorversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:undeploy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.processorVersions.undeploy" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Undeploys the processor version.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/processorVersions/{processorVersionsId}:undeploy",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.processorVersions.undeploy",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor version resource name to be undeployed.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:undeploy",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1UndeployProcessorVersionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "documentai.projects.operations.get":
 
 type ProjectsOperationsGetCall struct {
@@ -10351,7 +12943,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10497,7 +13089,7 @@ func (c *Uiv1beta3ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10669,7 +13261,7 @@ func (c *Uiv1beta3ProjectsLocationsListCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10852,7 +13444,7 @@ func (c *Uiv1beta3ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10997,7 +13589,7 @@ func (c *Uiv1beta3ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11173,7 +13765,7 @@ func (c *Uiv1beta3ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

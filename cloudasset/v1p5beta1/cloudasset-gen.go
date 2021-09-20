@@ -2273,8 +2273,8 @@ func (c *AssetsListCall) AssetTypes(assetTypes ...string) *AssetsListCall {
 //   "RESOURCE" - Resource metadata.
 //   "IAM_POLICY" - The actual IAM policy set on a resource.
 //   "ORG_POLICY" - The Cloud Organization Policy set on an asset.
-//   "ACCESS_POLICY" - The Cloud Access context mananger Policy set on
-// an asset.
+//   "ACCESS_POLICY" - The Cloud Access context manager Policy set on an
+// asset.
 func (c *AssetsListCall) ContentType(contentType string) *AssetsListCall {
 	c.urlParams_.Set("contentType", contentType)
 	return c
@@ -2346,7 +2346,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2436,7 +2436,7 @@ func (c *AssetsListCall) Do(opts ...googleapi.CallOption) (*ListAssetsResponse, 
 	//         "Resource metadata.",
 	//         "The actual IAM policy set on a resource.",
 	//         "The Cloud Organization Policy set on an asset.",
-	//         "The Cloud Access context mananger Policy set on an asset."
+	//         "The Cloud Access context manager Policy set on an asset."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

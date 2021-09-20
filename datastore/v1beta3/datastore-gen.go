@@ -1603,12 +1603,19 @@ type PropertyFilter struct {
 	//
 	// Possible values:
 	//   "OPERATOR_UNSPECIFIED" - Unspecified. This value must not be used.
-	//   "LESS_THAN" - Less than.
-	//   "LESS_THAN_OR_EQUAL" - Less than or equal.
-	//   "GREATER_THAN" - Greater than.
-	//   "GREATER_THAN_OR_EQUAL" - Greater than or equal.
-	//   "EQUAL" - Equal.
-	//   "HAS_ANCESTOR" - Has ancestor.
+	//   "LESS_THAN" - The given `property` is less than the given `value`.
+	// Requires: * That `property` comes first in `order_by`.
+	//   "LESS_THAN_OR_EQUAL" - The given `property` is less than or equal
+	// to the given `value`. Requires: * That `property` comes first in
+	// `order_by`.
+	//   "GREATER_THAN" - The given `property` is greater than the given
+	// `value`. Requires: * That `property` comes first in `order_by`.
+	//   "GREATER_THAN_OR_EQUAL" - The given `property` is greater than or
+	// equal to the given `value`. Requires: * That `property` comes first
+	// in `order_by`.
+	//   "EQUAL" - The given `property` is equal to the given `value`.
+	//   "HAS_ANCESTOR" - Limit the result set to the given entity and its
+	// descendants. Requires: * That `value` is an entity key.
 	Op string `json:"op,omitempty"`
 
 	// Property: The property to filter by.
@@ -2255,7 +2262,7 @@ func (c *ProjectsAllocateIdsCall) Header() http.Header {
 
 func (c *ProjectsAllocateIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2397,7 +2404,7 @@ func (c *ProjectsBeginTransactionCall) Header() http.Header {
 
 func (c *ProjectsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2540,7 +2547,7 @@ func (c *ProjectsCommitCall) Header() http.Header {
 
 func (c *ProjectsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2682,7 +2689,7 @@ func (c *ProjectsLookupCall) Header() http.Header {
 
 func (c *ProjectsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2825,7 +2832,7 @@ func (c *ProjectsReserveIdsCall) Header() http.Header {
 
 func (c *ProjectsReserveIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2967,7 +2974,7 @@ func (c *ProjectsRollbackCall) Header() http.Header {
 
 func (c *ProjectsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3109,7 +3116,7 @@ func (c *ProjectsRunQueryCall) Header() http.Header {
 
 func (c *ProjectsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210913")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210919")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

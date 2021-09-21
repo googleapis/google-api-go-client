@@ -11,10 +11,6 @@ if [[ $(go version) != *"go1.17"* ]]; then
   exit 0
 fi
 
-go install \
-  golang.org/x/lint/golint \
-  golang.org/x/tools/cmd/goimports
-
 # Fail if a dependency was added without the necessary go.mod/go.sum change
 # being part of the commit.
 go mod tidy

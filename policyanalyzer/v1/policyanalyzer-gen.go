@@ -319,9 +319,15 @@ func (r *ProjectsLocationsActivityTypesActivitiesService) Query(parent string) *
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the activities returned. Supported filters are: -
-// service_account_last_authn.full_resource_name {=} [STRING] -
-// service_account_key_last_authn.full_resource_name {=} [STRING]
+// restrict the activities returned. For
+// serviceAccountLastAuthentication activities, supported filters are: -
+// `activities.full_resource_name {=} [STRING]` -
+// `activities.fullResourceName {=} [STRING]` where `[STRING]` is the
+// full resource name of the service account. For
+// serviceAccountKeyLastAuthentication activities, supported filters
+// are: - `activities.full_resource_name {=} [STRING]` -
+// `activities.fullResourceName {=} [STRING]` where `[STRING]` is the
+// full resource name of the service account key.
 func (c *ProjectsLocationsActivityTypesActivitiesQueryCall) Filter(filter string) *ProjectsLocationsActivityTypesActivitiesQueryCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -383,7 +389,7 @@ func (c *ProjectsLocationsActivityTypesActivitiesQueryCall) Header() http.Header
 
 func (c *ProjectsLocationsActivityTypesActivitiesQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210920")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -456,7 +462,7 @@ func (c *ProjectsLocationsActivityTypesActivitiesQueryCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the activities returned. Supported filters are: - service_account_last_authn.full_resource_name {=} [STRING] - service_account_key_last_authn.full_resource_name {=} [STRING]",
+	//       "description": "Optional. Filter expression to restrict the activities returned. For serviceAccountLastAuthentication activities, supported filters are: - `activities.full_resource_name {=} [STRING]` - `activities.fullResourceName {=} [STRING]` where `[STRING]` is the full resource name of the service account. For serviceAccountKeyLastAuthentication activities, supported filters are: - `activities.full_resource_name {=} [STRING]` - `activities.fullResourceName {=} [STRING]` where `[STRING]` is the full resource name of the service account key.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

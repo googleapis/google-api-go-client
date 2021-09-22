@@ -540,6 +540,14 @@ type FilterPair struct {
 	//   "FILTER_OMID_CAPABLE"
 	//   "FILTER_VENDOR_MEASUREMENT_MODE"
 	//   "FILTER_IMPRESSION_LOSS_REJECTION_REASON"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_START"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_FIRST_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_MID_POINT"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_THIRD_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_COMPLETE"
+	//   "FILTER_VERIFICATION_VIDEO_RESIZED"
+	//   "FILTER_VERIFICATION_AUDIBILITY_START"
+	//   "FILTER_VERIFICATION_AUDIBILITY_COMPLETE"
 	Type string `json:"type,omitempty"`
 
 	// Value: Filter value.
@@ -972,6 +980,14 @@ type Parameters struct {
 	//   "FILTER_OMID_CAPABLE"
 	//   "FILTER_VENDOR_MEASUREMENT_MODE"
 	//   "FILTER_IMPRESSION_LOSS_REJECTION_REASON"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_START"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_FIRST_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_MID_POINT"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_THIRD_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_COMPLETE"
+	//   "FILTER_VERIFICATION_VIDEO_RESIZED"
+	//   "FILTER_VERIFICATION_AUDIBILITY_START"
+	//   "FILTER_VERIFICATION_AUDIBILITY_COMPLETE"
 	GroupBys []string `json:"groupBys,omitempty"`
 
 	// IncludeInviteData: Deprecated. This field is no longer in use.
@@ -1474,6 +1490,7 @@ type Parameters struct {
 	//   "METRIC_WIN_LOSS_LINEITEM_AVAILABLE_REQUESTS"
 	//   "METRIC_WIN_LOSS_DEAL_TARGETED_IMPRESSIONS"
 	//   "METRIC_WIN_LOSS_LINEITEM_TARGETED_IMPRESSIONS"
+	//   "METRIC_VERIFICATION_VIDEO_PLAYER_SIZE_MEASURABLE_IMPRESSIONS"
 	Metrics []string `json:"metrics,omitempty"`
 
 	// Options: Additional query options.
@@ -1903,6 +1920,14 @@ type PathQueryOptionsFilter struct {
 	//   "FILTER_OMID_CAPABLE"
 	//   "FILTER_VENDOR_MEASUREMENT_MODE"
 	//   "FILTER_IMPRESSION_LOSS_REJECTION_REASON"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_START"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_FIRST_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_MID_POINT"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_THIRD_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_COMPLETE"
+	//   "FILTER_VERIFICATION_VIDEO_RESIZED"
+	//   "FILTER_VERIFICATION_AUDIBILITY_START"
+	//   "FILTER_VERIFICATION_AUDIBILITY_COMPLETE"
 	Filter string `json:"filter,omitempty"`
 
 	// Match: Indicates how the filter should be matched to the value.
@@ -2505,7 +2530,7 @@ func (c *QueriesCreatequeryCall) Header() http.Header {
 
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210920")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2640,7 +2665,7 @@ func (c *QueriesDeletequeryCall) Header() http.Header {
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210920")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2755,7 +2780,7 @@ func (c *QueriesGetqueryCall) Header() http.Header {
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210920")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2912,7 +2937,7 @@ func (c *QueriesListqueriesCall) Header() http.Header {
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210920")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3076,7 +3101,7 @@ func (c *QueriesRunqueryCall) Header() http.Header {
 
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210920")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3220,7 +3245,7 @@ func (c *ReportsListreportsCall) Header() http.Header {
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210920")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

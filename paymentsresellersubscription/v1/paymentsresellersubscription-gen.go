@@ -188,6 +188,8 @@ type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	//   "CANCELLATION_REASON_UPGRADE_DOWNGRADE" - Used for notification
 	// only, do not use in Cancel API. Cancellation due to upgrade or
 	// downgrade.
+	//   "CANCELLATION_REASON_USER_DELINQUENCY" - Cancellation due to user
+	// delinquency
 	//   "CANCELLATION_REASON_OTHER" - Other reason.
 	CancellationReason string `json:"cancellationReason,omitempty"`
 
@@ -779,6 +781,8 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails st
 	//   "CANCELLATION_REASON_UPGRADE_DOWNGRADE" - Used for notification
 	// only, do not use in Cancel API. Cancellation due to upgrade or
 	// downgrade.
+	//   "CANCELLATION_REASON_USER_DELINQUENCY" - Cancellation due to user
+	// delinquency
 	//   "CANCELLATION_REASON_OTHER" - Other reason.
 	Reason string `json:"reason,omitempty"`
 
@@ -1003,7 +1007,7 @@ func (c *PartnersProductsListCall) Header() http.Header {
 
 func (c *PartnersProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1213,7 +1217,7 @@ func (c *PartnersPromotionsListCall) Header() http.Header {
 
 func (c *PartnersPromotionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1392,7 +1396,7 @@ func (c *PartnersSubscriptionsCancelCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1548,7 +1552,7 @@ func (c *PartnersSubscriptionsCreateCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1699,7 +1703,7 @@ func (c *PartnersSubscriptionsEntitleCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsEntitleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1845,7 +1849,7 @@ func (c *PartnersSubscriptionsExtendCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsExtendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1999,7 +2003,7 @@ func (c *PartnersSubscriptionsGetCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2151,7 +2155,7 @@ func (c *PartnersSubscriptionsProvisionCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsProvisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2303,7 +2307,7 @@ func (c *PartnersSubscriptionsUndoCancelCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsUndoCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

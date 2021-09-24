@@ -280,15 +280,22 @@ type BiddingFunction struct {
 	// group. `recent_impression_ages_secs` is not yet populated. The
 	// function returns the string creative ID of the selected ad, the bid
 	// price CPM, and (optionally) selected product IDs. In addition, the
-	// bidding function may populate an optional string debug token that may
-	// be useful for remote debugging of a bidding function performing
-	// unexpectedly. This debug string is available in `BidResponseFeedback`
+	// bidding function may populate an optional debug string that may be
+	// used for remote debugging and troubleshooting of a bidder-provided
+	// bidding function. The debug string should not contain a user
+	// identifier. The maximum length of the debug string is 200 bytes. This
+	// debug string is available in `BidResponseFeedback`
 	// (https://developers.google.com/authorized-buyers/rtb/realtime-bidding-guide#bidresponsefeedback-object)
-	// and BidFeedback
+	// and `BidFeedback`
 	// (https://developers.google.com/authorized-buyers/rtb/openrtb-guide#bidfeedback),
-	// for the Google protocol and openRTB protocol respectively. Example:
-	// ``` function biddingFunction(inputs) { ... return {
-	// "buyerCreativeId": "ad_creative_id_1", "bidPriceCpm": 0.3,
+	// for the Google protocol and OpenRTB protocol respectively. In
+	// addition, the debug string can be inserted into the creative HTML
+	// snippet via macro substitution if the following string is included in
+	// the snippet: “%%DEBUG_STRING%%”. Please ensure the debug string
+	// complies with [Platform Program
+	// Policies](https://support.google.com/platformspolicy/answer/3013851).
+	// Sample Bidding Function: ``` function biddingFunction(inputs) { ...
+	// return { "buyerCreativeId": "ad_creative_id_1", "bidPriceCpm": 0.3,
 	// "productIds": ["product_id_1", "product_id_2", "product_id_3"]
 	// "debugString": "Bidding function executed successfully!" } } ```
 	Type string `json:"type,omitempty"`
@@ -412,7 +419,7 @@ func (c *BiddersBiddingFunctionsActivateCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -558,7 +565,7 @@ func (c *BiddersBiddingFunctionsArchiveCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsArchiveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -701,7 +708,7 @@ func (c *BiddersBiddingFunctionsCreateCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -870,7 +877,7 @@ func (c *BiddersBiddingFunctionsListCall) Header() http.Header {
 
 func (c *BiddersBiddingFunctionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210921")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -568,8 +568,11 @@ type ReportedErrorEvent struct {
 	Context *ErrorContext `json:"context,omitempty"`
 
 	// EventTime: Optional. Time when the event occurred. If not provided,
-	// the time when the event was received by the Error Reporting system
-	// will be used.
+	// the time when the event was received by the Error Reporting system is
+	// used. If provided, the time must not exceed the logs retention period
+	// (https://cloud.google.com/logging/quotas#logs_retention_periods) in
+	// the past, or be more than 24 hours in the future. If an invalid time
+	// is provided, then an error is returned.
 	EventTime string `json:"eventTime,omitempty"`
 
 	// Message: Required. The error message. If no `context.reportLocation`
@@ -861,7 +864,7 @@ func (c *ProjectsDeleteEventsCall) Header() http.Header {
 
 func (c *ProjectsDeleteEventsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1079,7 +1082,7 @@ func (c *ProjectsEventsListCall) Header() http.Header {
 
 func (c *ProjectsEventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1304,7 +1307,7 @@ func (c *ProjectsEventsReportCall) Header() http.Header {
 
 func (c *ProjectsEventsReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1588,7 +1591,7 @@ func (c *ProjectsGroupStatsListCall) Header() http.Header {
 
 func (c *ProjectsGroupStatsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1858,7 +1861,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1997,7 +2000,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

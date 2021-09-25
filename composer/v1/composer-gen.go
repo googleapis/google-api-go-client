@@ -283,7 +283,8 @@ func (s *CheckUpgradeResponse) MarshalJSON() ([]byte, error) {
 }
 
 // DatabaseConfig: The configuration of Cloud SQL instance that is used
-// by the Apache Airflow software.
+// by the Apache Airflow software. Supported for Cloud Composer
+// environments in versions composer-1.*.*-airflow-*.*.*.
 type DatabaseConfig struct {
 	// MachineType: Optional. Cloud SQL machine type used by Airflow
 	// database. It has to be one of: db-n1-standard-2, db-n1-standard-4,
@@ -373,7 +374,8 @@ type Empty struct {
 }
 
 // EncryptionConfig: The encryption options for the Cloud Composer
-// environment and its dependencies.
+// environment and its dependencies.Supported for Cloud Composer
+// environments in versions composer-1.*.*-airflow-*.*.*.
 type EncryptionConfig struct {
 	// KmsKeyName: Optional. Customer-managed Encryption Key available
 	// through Google's Key Management Service. Cannot be updated. If not
@@ -494,11 +496,15 @@ type EnvironmentConfig struct {
 	DagGcsPrefix string `json:"dagGcsPrefix,omitempty"`
 
 	// DatabaseConfig: Optional. The configuration settings for Cloud SQL
-	// instance used internally by Apache Airflow software.
+	// instance used internally by Apache Airflow software. This field is
+	// supported for Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*.
 	DatabaseConfig *DatabaseConfig `json:"databaseConfig,omitempty"`
 
 	// EncryptionConfig: Optional. The encryption options for the Cloud
-	// Composer environment and its dependencies. Cannot be updated.
+	// Composer environment and its dependencies. Cannot be updated. This
+	// field is supported for Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*.
 	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
 
 	// GkeCluster: Output only. The Kubernetes Engine cluster used to run
@@ -509,7 +515,8 @@ type EnvironmentConfig struct {
 	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
 
 	// NodeCount: The number of nodes in the Kubernetes Engine cluster that
-	// will be used to run this environment.
+	// will be used to run this environment. This field is supported for
+	// Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 
 	// PrivateEnvironmentConfig: The configuration used for the Private IP
@@ -526,7 +533,9 @@ type EnvironmentConfig struct {
 
 	// WebServerNetworkAccessControl: Optional. The network-level access
 	// control policy for the Airflow web server. If unspecified, no
-	// network-level access restrictions will be applied.
+	// network-level access restrictions will be applied. This field is
+	// supported for Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*.
 	WebServerNetworkAccessControl *WebServerNetworkAccessControl `json:"webServerNetworkAccessControl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AirflowUri") to
@@ -556,25 +565,28 @@ func (s *EnvironmentConfig) MarshalJSON() ([]byte, error) {
 // allocated in the GKE cluster running the Apache Airflow software.
 type IPAllocationPolicy struct {
 	// ClusterIpv4CidrBlock: Optional. The IP address range used to allocate
-	// IP addresses to pods in the GKE cluster. This field is applicable
-	// only when `use_ip_aliases` is true. Set to blank to have GKE choose a
-	// range with the default size. Set to /netmask (e.g. `/14`) to have GKE
-	// choose a range with a specific netmask. Set to a CIDR
-	// (https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
+	// IP addresses to pods in the GKE cluster. For Cloud Composer
+	// environments in versions composer-1.*.*-airflow-*.*.*, this field is
+	// applicable only when `use_ip_aliases` is true. Set to blank to have
+	// GKE choose a range with the default size. Set to /netmask (e.g.
+	// `/14`) to have GKE choose a range with a specific netmask. Set to a
+	// CIDR (https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
 	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
 	// (e.g. `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a
 	// specific range to use.
 	ClusterIpv4CidrBlock string `json:"clusterIpv4CidrBlock,omitempty"`
 
 	// ClusterSecondaryRangeName: Optional. The name of the GKE cluster's
-	// secondary range used to allocate IP addresses to pods. This field is
-	// applicable only when `use_ip_aliases` is true.
+	// secondary range used to allocate IP addresses to pods. For Cloud
+	// Composer environments in versions composer-1.*.*-airflow-*.*.*, this
+	// field is applicable only when `use_ip_aliases` is true.
 	ClusterSecondaryRangeName string `json:"clusterSecondaryRangeName,omitempty"`
 
 	// ServicesIpv4CidrBlock: Optional. The IP address range of the services
-	// IP addresses in this GKE cluster. This field is applicable only when
-	// `use_ip_aliases` is true. Set to blank to have GKE choose a range
-	// with the default size. Set to /netmask (e.g. `/14`) to have GKE
+	// IP addresses in this GKE cluster. For Cloud Composer environments in
+	// versions composer-1.*.*-airflow-*.*.*, this field is applicable only
+	// when `use_ip_aliases` is true. Set to blank to have GKE choose a
+	// range with the default size. Set to /netmask (e.g. `/14`) to have GKE
 	// choose a range with a specific netmask. Set to a CIDR
 	// (https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
 	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
@@ -583,12 +595,16 @@ type IPAllocationPolicy struct {
 	ServicesIpv4CidrBlock string `json:"servicesIpv4CidrBlock,omitempty"`
 
 	// ServicesSecondaryRangeName: Optional. The name of the services'
-	// secondary range used to allocate IP addresses to the GKE cluster.
-	// This field is applicable only when `use_ip_aliases` is true.
+	// secondary range used to allocate IP addresses to the GKE cluster. For
+	// Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*,
+	// this field is applicable only when `use_ip_aliases` is true.
 	ServicesSecondaryRangeName string `json:"servicesSecondaryRangeName,omitempty"`
 
 	// UseIpAliases: Optional. Whether or not to enable Alias IPs in the GKE
-	// cluster. If `true`, a VPC-native cluster is created.
+	// cluster. If `true`, a VPC-native cluster is created. This field is
+	// only supported for Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*. Environments in newer versions always
+	// use VPC-native GKE clusters.
 	UseIpAliases bool `json:"useIpAliases,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -780,6 +796,8 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 type NodeConfig struct {
 	// DiskSizeGb: Optional. The disk size in GB used for node VMs. Minimum
 	// size is 20GB. If unspecified, defaults to 100GB. Cannot be updated.
+	// This field is supported for Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
 
 	// IpAllocationPolicy: Optional. The configuration for controlling how
@@ -798,7 +816,8 @@ type NodeConfig struct {
 	// Cloud Composer location, and propagate that choice to both fields. If
 	// only one field (`location` or `nodeConfig.machineType`) is specified,
 	// the location information from the specified field will be propagated
-	// to the unspecified field.
+	// to the unspecified field. This field is supported for Cloud Composer
+	// environments in versions composer-1.*.*-airflow-*.*.*.
 	Location string `json:"location,omitempty"`
 
 	// MachineType: Optional. The Compute Engine machine type
@@ -816,7 +835,9 @@ type NodeConfig struct {
 	// location information from the specified field will be propagated to
 	// the unspecified field. The `machineTypeId` must not be a shared-core
 	// machine type (/compute/docs/machine-types#sharedcore). If this field
-	// is unspecified, the `machineTypeId` defaults to "n1-standard-1".
+	// is unspecified, the `machineTypeId` defaults to "n1-standard-1". This
+	// field is supported for Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*.
 	MachineType string `json:"machineType,omitempty"`
 
 	// Network: Optional. The Compute Engine network to be used for machine
@@ -833,7 +854,8 @@ type NodeConfig struct {
 	// OauthScopes: Optional. The set of Google API scopes to be made
 	// available on all node VMs. If `oauth_scopes` is empty, defaults to
 	// ["https://www.googleapis.com/auth/cloud-platform"]. Cannot be
-	// updated.
+	// updated. This field is supported for Cloud Composer environments in
+	// versions composer-1.*.*-airflow-*.*.*.
 	OauthScopes []string `json:"oauthScopes,omitempty"`
 
 	// ServiceAccount: Optional. The Google Cloud Platform Service Account
@@ -854,7 +876,9 @@ type NodeConfig struct {
 	// Tags: Optional. The list of instance tags applied to all node VMs.
 	// Tags are used to identify valid sources or targets for network
 	// firewalls. Each tag within the list must comply with RFC1035
-	// (https://www.ietf.org/rfc/rfc1035.txt). Cannot be updated.
+	// (https://www.ietf.org/rfc/rfc1035.txt). Cannot be updated. This field
+	// is supported for Cloud Composer environments in versions
+	// composer-1.*.*-airflow-*.*.*.
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
@@ -1060,7 +1084,8 @@ type PrivateEnvironmentConfig struct {
 
 	// EnablePrivateEnvironment: Optional. If `true`, a Private IP Cloud
 	// Composer environment is created. If this field is set to true,
-	// `IPAllocationPolicy.use_ip_aliases` must be set to true.
+	// `IPAllocationPolicy.use_ip_aliases` must be set to true for Cloud
+	// Composer environments in versions composer-1.*.*-airflow-*.*.*.
 	EnablePrivateEnvironment bool `json:"enablePrivateEnvironment,omitempty"`
 
 	// PrivateClusterConfig: Optional. Configuration for the private GKE
@@ -1070,11 +1095,13 @@ type PrivateEnvironmentConfig struct {
 	// WebServerIpv4CidrBlock: Optional. The CIDR block from which IP range
 	// for web server will be reserved. Needs to be disjoint from
 	// `private_cluster_config.master_ipv4_cidr_block` and
-	// `cloud_sql_ipv4_cidr_block`.
+	// `cloud_sql_ipv4_cidr_block`. This field is supported for Cloud
+	// Composer environments in versions composer-1.*.*-airflow-*.*.*.
 	WebServerIpv4CidrBlock string `json:"webServerIpv4CidrBlock,omitempty"`
 
 	// WebServerIpv4ReservedRange: Output only. The IP range reserved for
-	// the tenant project's App Engine VMs.
+	// the tenant project's App Engine VMs. This field is supported for
+	// Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
 	WebServerIpv4ReservedRange string `json:"webServerIpv4ReservedRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1163,7 +1190,9 @@ type SoftwareConfig struct {
 	// PythonVersion: Optional. The major version of Python used to run the
 	// Apache Airflow scheduler, worker, and webserver processes. Can be set
 	// to '2' or '3'. If not specified, the default is '3'. Cannot be
-	// updated.
+	// updated. This field is only supported for Cloud Composer environments
+	// in versions composer-1.*.*-airflow-*.*.*. Environments in newer
+	// versions always use Python major version 3.
 	PythonVersion string `json:"pythonVersion,omitempty"`
 
 	// SchedulerCount: Optional. The number of schedulers for Airflow. This
@@ -1241,7 +1270,8 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 }
 
 // WebServerConfig: The configuration settings for the Airflow web
-// server App Engine instance.
+// server App Engine instance. Supported for Cloud Composer environments
+// in versions composer-1.*.*-airflow-*.*.*
 type WebServerConfig struct {
 	// MachineType: Optional. Machine type on which Airflow web server is
 	// running. It has to be one of: composer-n1-webserver-2,
@@ -1275,7 +1305,8 @@ func (s *WebServerConfig) MarshalJSON() ([]byte, error) {
 }
 
 // WebServerNetworkAccessControl: Network-level access control policy
-// for the Airflow web server.
+// for the Airflow web server. Supported for Cloud Composer environments
+// in versions composer-1.*.*-airflow-*.*.*.
 type WebServerNetworkAccessControl struct {
 	// AllowedIpRanges: A collection of allowed IP ranges with descriptions.
 	AllowedIpRanges []*AllowedIpRange `json:"allowedIpRanges,omitempty"`
@@ -1353,7 +1384,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1495,7 +1526,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1640,7 +1671,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1801,7 +1832,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1996,16 +2027,22 @@ func (r *ProjectsLocationsEnvironmentsService) Patch(name string, environment *E
 // error to provide both a mask of this form and the `labels` mask. *
 // `config.nodeCount` * Horizontally scale the number of nodes in the
 // environment. An integer greater than or equal to 3 must be provided
-// in the `config.nodeCount` field. *
+// in the `config.nodeCount` field. Supported for Cloud Composer
+// environments in versions composer-1.*.*-airflow-*.*.*. *
 // `config.webServerNetworkAccessControl` * Replace the environment's
-// current `WebServerNetworkAccessControl`. * `config.databaseConfig` *
-// Replace the environment's current `DatabaseConfig`. *
-// `config.webServerConfig` * Replace the environment's current
-// `WebServerConfig`. * `config.softwareConfig.airflowConfigOverrides` *
-// Replace all Apache Airflow config overrides. If a replacement config
-// overrides map is not included in `environment`, all config overrides
-// are cleared. It is an error to provide both this mask and a mask
-// specifying one or more individual config overrides. *
+// current `WebServerNetworkAccessControl`. * `config.databaseConfig`
+// Supported for Cloud Composer environments in versions
+// composer-1.*.*-airflow-*.*.*. * Replace the environment's current
+// `DatabaseConfig`. * `config.webServerConfig.machineType` * Machine
+// type on which Airflow web server is running. It has to be one of:
+// composer-n1-webserver-2, composer-n1-webserver-4 or
+// composer-n1-webserver-8. Supported for Cloud Composer environments in
+// versions composer-1.*.*-airflow-*.*.*. *
+// `config.softwareConfig.airflowConfigOverrides` * Replace all Apache
+// Airflow config overrides. If a replacement config overrides map is
+// not included in `environment`, all config overrides are cleared. It
+// is an error to provide both this mask and a mask specifying one or
+// more individual config overrides. *
 // `config.softwareConfig.airflowConfigOverrides.`section-name *
 // Override the Apache Airflow config property *name* in the section
 // named *section*, preserving other properties. To delete the property
@@ -2022,7 +2059,16 @@ func (r *ProjectsLocationsEnvironmentsService) Patch(name string, environment *E
 // number of schedulers in Airflow. A positive integer not greater than
 // the number of nodes must be provided in the
 // `config.softwareConfig.schedulerCount` field. Supported for Cloud
-// Composer environments in versions composer-1.*.*-airflow-2.*.*.
+// Composer environments in versions composer-1.*.*-airflow-2.*.*. *
+// `config.databaseConfig.machineType` * Cloud SQL machine type used by
+// Airflow database. It has to be one of: db-n1-standard-2,
+// db-n1-standard-4, db-n1-standard-8 or db-n1-standard-16. Supported
+// for Cloud Composer environments in versions
+// composer-1.*.*-airflow-*.*.*. * `config.webServerConfig.machineType`
+// * Machine type on which Airflow web server is running. It has to be
+// one of: composer-n1-webserver-2, composer-n1-webserver-4 or
+// composer-n1-webserver-8. Supported for Cloud Composer environments in
+// versions composer-1.*.*-airflow-*.*.*.
 func (c *ProjectsLocationsEnvironmentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsEnvironmentsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2055,7 +2101,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2135,7 +2181,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of paths, relative to `Environment`, of fields to update. For example, to set the version of scikit-learn to install in the environment to 0.19.0 and to remove an existing installation of numpy, the `updateMask` parameter would include the following two `paths` values: \"config.softwareConfig.pypiPackages.scikit-learn\" and \"config.softwareConfig.pypiPackages.numpy\". The included patch environment would specify the scikit-learn version as follows: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"scikit-learn\":\"==0.19.0\" } } } } Note that in the above example, any existing PyPI packages other than scikit-learn and numpy will be unaffected. Only one update type may be included in a single request's `updateMask`. For example, one cannot update both the PyPI packages and labels in the same request. However, it is possible to update multiple members of a map field simultaneously in the same request. For example, to set the labels \"label1\" and \"label2\" while clearing \"label3\" (assuming it already exists), one can provide the paths \"labels.label1\", \"labels.label2\", and \"labels.label3\" and populate the patch environment as follows: { \"labels\":{ \"label1\":\"new-label1-value\" \"label2\":\"new-label2-value\" } } Note that in the above example, any existing labels that are not included in the `updateMask` will be unaffected. It is also possible to replace an entire map field by providing the map field's path in the `updateMask`. The new value of the field will be that which is provided in the patch environment. For example, to delete all pre-existing user-specified PyPI packages and install botocore at version 1.7.14, the `updateMask` would contain the path \"config.softwareConfig.pypiPackages\", and the patch environment would be the following: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"botocore\":\"==1.7.14\" } } } } **Note:** Only the following fields can be updated: * `config.softwareConfig.pypiPackages` * Replace all custom custom PyPI packages. If a replacement package map is not included in `environment`, all custom PyPI packages are cleared. It is an error to provide both this mask and a mask specifying an individual package. * `config.softwareConfig.pypiPackages.`packagename * Update the custom PyPI package *packagename*, preserving other packages. To delete the package, include it in `updateMask`, and omit the mapping for it in `environment.config.softwareConfig.pypiPackages`. It is an error to provide both a mask of this form and the `config.softwareConfig.pypiPackages` mask. * `labels` * Replace all environment labels. If a replacement labels map is not included in `environment`, all labels are cleared. It is an error to provide both this mask and a mask specifying one or more individual labels. * `labels.`labelName * Set the label named *labelName*, while preserving other labels. To delete the label, include it in `updateMask` and omit its mapping in `environment.labels`. It is an error to provide both a mask of this form and the `labels` mask. * `config.nodeCount` * Horizontally scale the number of nodes in the environment. An integer greater than or equal to 3 must be provided in the `config.nodeCount` field. * `config.webServerNetworkAccessControl` * Replace the environment's current `WebServerNetworkAccessControl`. * `config.databaseConfig` * Replace the environment's current `DatabaseConfig`. * `config.webServerConfig` * Replace the environment's current `WebServerConfig`. * `config.softwareConfig.airflowConfigOverrides` * Replace all Apache Airflow config overrides. If a replacement config overrides map is not included in `environment`, all config overrides are cleared. It is an error to provide both this mask and a mask specifying one or more individual config overrides. * `config.softwareConfig.airflowConfigOverrides.`section-name * Override the Apache Airflow config property *name* in the section named *section*, preserving other properties. To delete the property override, include it in `updateMask` and omit its mapping in `environment.config.softwareConfig.airflowConfigOverrides`. It is an error to provide both a mask of this form and the `config.softwareConfig.airflowConfigOverrides` mask. * `config.softwareConfig.envVariables` * Replace all environment variables. If a replacement environment variable map is not included in `environment`, all custom environment variables are cleared. It is an error to provide both this mask and a mask specifying one or more individual environment variables. * `config.softwareConfig.schedulerCount` * Horizontally scale the number of schedulers in Airflow. A positive integer not greater than the number of nodes must be provided in the `config.softwareConfig.schedulerCount` field. Supported for Cloud Composer environments in versions composer-1.*.*-airflow-2.*.*.",
+	//       "description": "Required. A comma-separated list of paths, relative to `Environment`, of fields to update. For example, to set the version of scikit-learn to install in the environment to 0.19.0 and to remove an existing installation of numpy, the `updateMask` parameter would include the following two `paths` values: \"config.softwareConfig.pypiPackages.scikit-learn\" and \"config.softwareConfig.pypiPackages.numpy\". The included patch environment would specify the scikit-learn version as follows: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"scikit-learn\":\"==0.19.0\" } } } } Note that in the above example, any existing PyPI packages other than scikit-learn and numpy will be unaffected. Only one update type may be included in a single request's `updateMask`. For example, one cannot update both the PyPI packages and labels in the same request. However, it is possible to update multiple members of a map field simultaneously in the same request. For example, to set the labels \"label1\" and \"label2\" while clearing \"label3\" (assuming it already exists), one can provide the paths \"labels.label1\", \"labels.label2\", and \"labels.label3\" and populate the patch environment as follows: { \"labels\":{ \"label1\":\"new-label1-value\" \"label2\":\"new-label2-value\" } } Note that in the above example, any existing labels that are not included in the `updateMask` will be unaffected. It is also possible to replace an entire map field by providing the map field's path in the `updateMask`. The new value of the field will be that which is provided in the patch environment. For example, to delete all pre-existing user-specified PyPI packages and install botocore at version 1.7.14, the `updateMask` would contain the path \"config.softwareConfig.pypiPackages\", and the patch environment would be the following: { \"config\":{ \"softwareConfig\":{ \"pypiPackages\":{ \"botocore\":\"==1.7.14\" } } } } **Note:** Only the following fields can be updated: * `config.softwareConfig.pypiPackages` * Replace all custom custom PyPI packages. If a replacement package map is not included in `environment`, all custom PyPI packages are cleared. It is an error to provide both this mask and a mask specifying an individual package. * `config.softwareConfig.pypiPackages.`packagename * Update the custom PyPI package *packagename*, preserving other packages. To delete the package, include it in `updateMask`, and omit the mapping for it in `environment.config.softwareConfig.pypiPackages`. It is an error to provide both a mask of this form and the `config.softwareConfig.pypiPackages` mask. * `labels` * Replace all environment labels. If a replacement labels map is not included in `environment`, all labels are cleared. It is an error to provide both this mask and a mask specifying one or more individual labels. * `labels.`labelName * Set the label named *labelName*, while preserving other labels. To delete the label, include it in `updateMask` and omit its mapping in `environment.labels`. It is an error to provide both a mask of this form and the `labels` mask. * `config.nodeCount` * Horizontally scale the number of nodes in the environment. An integer greater than or equal to 3 must be provided in the `config.nodeCount` field. Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*. * `config.webServerNetworkAccessControl` * Replace the environment's current `WebServerNetworkAccessControl`. * `config.databaseConfig` Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*. * Replace the environment's current `DatabaseConfig`. * `config.webServerConfig.machineType` * Machine type on which Airflow web server is running. It has to be one of: composer-n1-webserver-2, composer-n1-webserver-4 or composer-n1-webserver-8. Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*. * `config.softwareConfig.airflowConfigOverrides` * Replace all Apache Airflow config overrides. If a replacement config overrides map is not included in `environment`, all config overrides are cleared. It is an error to provide both this mask and a mask specifying one or more individual config overrides. * `config.softwareConfig.airflowConfigOverrides.`section-name * Override the Apache Airflow config property *name* in the section named *section*, preserving other properties. To delete the property override, include it in `updateMask` and omit its mapping in `environment.config.softwareConfig.airflowConfigOverrides`. It is an error to provide both a mask of this form and the `config.softwareConfig.airflowConfigOverrides` mask. * `config.softwareConfig.envVariables` * Replace all environment variables. If a replacement environment variable map is not included in `environment`, all custom environment variables are cleared. It is an error to provide both this mask and a mask specifying one or more individual environment variables. * `config.softwareConfig.schedulerCount` * Horizontally scale the number of schedulers in Airflow. A positive integer not greater than the number of nodes must be provided in the `config.softwareConfig.schedulerCount` field. Supported for Cloud Composer environments in versions composer-1.*.*-airflow-2.*.*. * `config.databaseConfig.machineType` * Cloud SQL machine type used by Airflow database. It has to be one of: db-n1-standard-2, db-n1-standard-4, db-n1-standard-8 or db-n1-standard-16. Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*. * `config.webServerConfig.machineType` * Machine type on which Airflow web server is running. It has to be one of: composer-n1-webserver-2, composer-n1-webserver-4 or composer-n1-webserver-8. Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2235,7 +2281,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2410,7 +2456,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2555,7 +2601,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2731,7 +2777,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210922")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210924")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

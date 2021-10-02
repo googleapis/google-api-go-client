@@ -1,8 +1,7 @@
 {
   "extends": [
     "config:base",
-    "schedule:weekly",
-    ":disableDependencyDashboard"
+    "schedule:weekly"
   ],
   "semanticCommits": false,
   "postUpdateOptions": [

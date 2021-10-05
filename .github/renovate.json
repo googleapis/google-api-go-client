@@ -12,7 +12,8 @@
   "commitMessageAction": "update",
   "groupName": "all",
   "ignoreDeps": [
-    "golang.org/x/net"
+    "golang.org/x/net",
+    "google.golang.org/grpc"
   ],
   "force": {
     "constraints": {

@@ -424,7 +424,7 @@ func (s *GoogleChromePolicyV1ModifyOrgUnitPolicyRequest) MarshalJSON() ([]byte, 
 }
 
 // GoogleChromePolicyV1PolicySchema: Resource representing a policy
-// schema. Next ID: 10
+// schema. Next ID: 11
 type GoogleChromePolicyV1PolicySchema struct {
 	// AccessRestrictions: Output only. Specific access restrictions related
 	// to this policy.
@@ -457,13 +457,23 @@ type GoogleChromePolicyV1PolicySchema struct {
 
 	// SchemaName: Output only. The full qualified name of the policy
 	// schema. This value is used to fill the field `policy_schema` in
-	// PolicyValue when calling BatchInheritOrgUnitPolicies or
-	// BatchModifyOrgUnitPolicies.
+	// PolicyValue when calling BatchInheritOrgUnitPolicies
+	// BatchModifyOrgUnitPolicies BatchModifyGroupPolicies or
+	// BatchDeleteGroupPolicies.
 	SchemaName string `json:"schemaName,omitempty"`
 
 	// SupportUri: Output only. URI to related support article for this
 	// schema.
 	SupportUri string `json:"supportUri,omitempty"`
+
+	// ValidTargetResources: Output only. Information about applicable
+	// target resources for the policy.
+	//
+	// Possible values:
+	//   "TARGET_RESOURCE_UNSPECIFIED" - Unspecified target resource.
+	//   "ORG_UNIT" - Organizational Unit target resource.
+	//   "GROUP" - Group target resource.
+	ValidTargetResources []string `json:"validTargetResources,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1250,7 +1260,7 @@ func (c *CustomersPoliciesResolveCall) Header() http.Header {
 
 func (c *CustomersPoliciesResolveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1382,9 +1392,9 @@ type CustomersPoliciesOrgunitsBatchInheritCall struct {
 // specific org unit so that they now inherit the value from a parent
 // (if applicable). All targets must have the same target format. That
 // is to say that they must point to the same target resource and must
-// have the same keys specified in `additionalTargetKeyNames`. On
-// failure the request will return the error details as part of the
-// google.rpc.Status.
+// have the same keys specified in `additionalTargetKeyNames`, though
+// the values for those keys may be different. On failure the request
+// will return the error details as part of the google.rpc.Status.
 //
 // - customer: ID of the G Suite account or literal "my_customer" for
 //   the customer associated to the request.
@@ -1422,7 +1432,7 @@ func (c *CustomersPoliciesOrgunitsBatchInheritCall) Header() http.Header {
 
 func (c *CustomersPoliciesOrgunitsBatchInheritCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1486,7 +1496,7 @@ func (c *CustomersPoliciesOrgunitsBatchInheritCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Modify multiple policy values that are applied to a specific org unit so that they now inherit the value from a parent (if applicable). All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`. On failure the request will return the error details as part of the google.rpc.Status.",
+	//   "description": "Modify multiple policy values that are applied to a specific org unit so that they now inherit the value from a parent (if applicable). All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`, though the values for those keys may be different. On failure the request will return the error details as part of the google.rpc.Status.",
 	//   "flatPath": "v1/customers/{customersId}/policies/orgunits:batchInherit",
 	//   "httpMethod": "POST",
 	//   "id": "chromepolicy.customers.policies.orgunits.batchInherit",
@@ -1530,9 +1540,9 @@ type CustomersPoliciesOrgunitsBatchModifyCall struct {
 // BatchModify: Modify multiple policy values that are applied to a
 // specific org unit. All targets must have the same target format. That
 // is to say that they must point to the same target resource and must
-// have the same keys specified in `additionalTargetKeyNames`. On
-// failure the request will return the error details as part of the
-// google.rpc.Status.
+// have the same keys specified in `additionalTargetKeyNames`, though
+// the values for those keys may be different. On failure the request
+// will return the error details as part of the google.rpc.Status.
 //
 // - customer: ID of the G Suite account or literal "my_customer" for
 //   the customer associated to the request.
@@ -1570,7 +1580,7 @@ func (c *CustomersPoliciesOrgunitsBatchModifyCall) Header() http.Header {
 
 func (c *CustomersPoliciesOrgunitsBatchModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1634,7 +1644,7 @@ func (c *CustomersPoliciesOrgunitsBatchModifyCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Modify multiple policy values that are applied to a specific org unit. All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`. On failure the request will return the error details as part of the google.rpc.Status.",
+	//   "description": "Modify multiple policy values that are applied to a specific org unit. All targets must have the same target format. That is to say that they must point to the same target resource and must have the same keys specified in `additionalTargetKeyNames`, though the values for those keys may be different. On failure the request will return the error details as part of the google.rpc.Status.",
 	//   "flatPath": "v1/customers/{customersId}/policies/orgunits:batchModify",
 	//   "httpMethod": "POST",
 	//   "id": "chromepolicy.customers.policies.orgunits.batchModify",
@@ -1722,7 +1732,7 @@ func (c *CustomersPolicySchemasGetCall) Header() http.Header {
 
 func (c *CustomersPolicySchemasGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1892,7 +1902,7 @@ func (c *CustomersPolicySchemasListCall) Header() http.Header {
 
 func (c *CustomersPolicySchemasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2110,7 +2120,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

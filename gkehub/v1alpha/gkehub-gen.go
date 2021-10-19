@@ -290,6 +290,64 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Authority: Authority encodes how Google will recognize identities
+// from this Membership. See the workload identity documentation for
+// more details:
+// https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
+type Authority struct {
+	// IdentityProvider: Output only. An identity provider that reflects the
+	// `issuer` in the workload identity pool.
+	IdentityProvider string `json:"identityProvider,omitempty"`
+
+	// Issuer: Optional. A JSON Web Token (JWT) issuer URI. `issuer` must
+	// start with `https://` and be a valid URL with length <2000
+	// characters. If set, then Google will allow valid OIDC tokens from
+	// this issuer to authenticate within the workload_identity_pool. OIDC
+	// discovery will be performed on this URI to validate tokens from the
+	// issuer. Clearing `issuer` disables Workload Identity. `issuer` cannot
+	// be directly modified; it must be cleared (and Workload Identity
+	// disabled) before using a new issuer (and re-enabling Workload
+	// Identity).
+	Issuer string `json:"issuer,omitempty"`
+
+	// OidcJwks: Optional. OIDC verification keys for this Membership in
+	// JWKS format (RFC 7517). When this field is set, OIDC discovery will
+	// NOT be performed on `issuer`, and instead OIDC tokens will be
+	// validated using this field.
+	OidcJwks string `json:"oidcJwks,omitempty"`
+
+	// WorkloadIdentityPool: Output only. The name of the workload identity
+	// pool in which `issuer` will be recognized. There is a single Workload
+	// Identity Pool per Hub that is shared between all Memberships that
+	// belong to that Hub. For a Hub hosted in {PROJECT_ID}, the workload
+	// pool format is `{PROJECT_ID}.hub.id.goog`, although this is subject
+	// to change in newer versions of this API.
+	WorkloadIdentityPool string `json:"workloadIdentityPool,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IdentityProvider") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IdentityProvider") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Authority) MarshalJSON() ([]byte, error) {
+	type NoMethod Authority
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -566,18 +624,22 @@ func (s *ConfigManagementBinauthzVersion) MarshalJSON() ([]byte, error) {
 
 // ConfigManagementConfigSync: Configuration for Config Sync
 type ConfigManagementConfigSync struct {
+	// Enabled: Enables the installation of ConfigSync. If set to true,
+	// ConfigSync resources will be created and the other ConfigSync fields
+	// will be applied if exist. If set to false, all other ConfigSync
+	// fields will be ignored, ConfigSync resources will be deleted. If
+	// omitted, ConfigSync resources will be managed depends on the presence
+	// of git field.
+	Enabled bool `json:"enabled,omitempty"`
+
 	// Git: Git repo configuration for the cluster.
 	Git *ConfigManagementGitConfig `json:"git,omitempty"`
-
-	// ResourceRequirements: Specifies CPU and memory limits for containers,
-	// keyed by container name
-	ResourceRequirements map[string]ConfigManagementContainerResourceRequirements `json:"resourceRequirements,omitempty"`
 
 	// SourceFormat: Specifies whether the Config Sync Repo is in
 	// “hierarchical” or “unstructured” mode.
 	SourceFormat string `json:"sourceFormat,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Git") to
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -585,8 +647,8 @@ type ConfigManagementConfigSync struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Git") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -783,42 +845,6 @@ func (s *ConfigManagementConfigSyncVersion) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConfigManagementContainerResourceRequirements: ResourceRequirements
-// allows to override the CPU and memory resource requirements of a
-// container.
-type ConfigManagementContainerResourceRequirements struct {
-	// ContainerName: Name of the container
-	ContainerName string `json:"containerName,omitempty"`
-
-	// CpuLimit: Allows to override the CPU limit of a container
-	CpuLimit *ConfigManagementQuantity `json:"cpuLimit,omitempty"`
-
-	// MemoryLimit: Allows to override the memory limit of a container
-	MemoryLimit *ConfigManagementQuantity `json:"memoryLimit,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ContainerName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContainerName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ConfigManagementContainerResourceRequirements) MarshalJSON() ([]byte, error) {
-	type NoMethod ConfigManagementContainerResourceRequirements
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ConfigManagementErrorResource: Model for a config file in the git
 // repo with an associated Sync error
 type ConfigManagementErrorResource struct {
@@ -927,10 +953,6 @@ type ConfigManagementGitConfig struct {
 	// with the Git repo.
 	HttpsProxy string `json:"httpsProxy,omitempty"`
 
-	// NoSslVerify: Enable or disable the SSL certificate verification
-	// Default: false.
-	NoSslVerify bool `json:"noSslVerify,omitempty"`
-
 	// PolicyDir: The path within the Git repository that represents the top
 	// level of the repo to sync. Default: the root directory of the
 	// repository.
@@ -942,9 +964,6 @@ type ConfigManagementGitConfig struct {
 	// SyncBranch: The branch of the repository to sync from. Default:
 	// master.
 	SyncBranch string `json:"syncBranch,omitempty"`
-
-	// SyncDepth: The depth of git commits synced by the git-sync container.
-	SyncDepth int64 `json:"syncDepth,omitempty,string"`
 
 	// SyncRepo: The URL of the Git repository to use as the source of
 	// truth.
@@ -1454,36 +1473,6 @@ func (s *ConfigManagementPolicyControllerVersion) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConfigManagementQuantity: The view model of a single quantity, e.g.
-// "800 MiB". Corresponds to
-// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/generated.proto
-type ConfigManagementQuantity struct {
-	// String: Stringified version of the quantity, e.g., "800 MiB".
-	String string `json:"string,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "String") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "String") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ConfigManagementQuantity) MarshalJSON() ([]byte, error) {
-	type NoMethod ConfigManagementQuantity
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ConfigManagementSyncError: An ACM created error representing a
 // problem syncing configurations
 type ConfigManagementSyncError struct {
@@ -1828,6 +1817,43 @@ func (s *FeatureState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GkeCluster: GkeCluster contains information specific to GKE clusters.
+type GkeCluster struct {
+	// ClusterMissing: Output only. If cluster_missing is set then it
+	// denotes that the GKE cluster no longer exists in the GKE Control
+	// Plane.
+	ClusterMissing bool `json:"clusterMissing,omitempty"`
+
+	// ResourceLink: Immutable. Self-link of the GCP resource for the GKE
+	// cluster. For example:
+	// //container.googleapis.com/projects/my-project/locations/us-west1-a/cl
+	// usters/my-cluster Zonal clusters are also supported.
+	ResourceLink string `json:"resourceLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterMissing") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterMissing") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GkeCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod GkeCluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleRpcStatus: The `Status` type defines a logical error model that
 // is suitable for different programming environments, including REST
 // APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -2045,6 +2071,107 @@ func (s *IdentityServiceOidcConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// KubernetesMetadata: KubernetesMetadata provides informational
+// metadata for Memberships representing Kubernetes clusters.
+type KubernetesMetadata struct {
+	// KubernetesApiServerVersion: Output only. Kubernetes API server
+	// version string as reported by `/version`.
+	KubernetesApiServerVersion string `json:"kubernetesApiServerVersion,omitempty"`
+
+	// MemoryMb: Output only. The total memory capacity as reported by the
+	// sum of all Kubernetes nodes resources, defined in MB.
+	MemoryMb int64 `json:"memoryMb,omitempty"`
+
+	// NodeCount: Output only. Node count as reported by Kubernetes nodes
+	// resources.
+	NodeCount int64 `json:"nodeCount,omitempty"`
+
+	// NodeProviderId: Output only. Node providerID as reported by the first
+	// node in the list of nodes on the Kubernetes endpoint. On Kubernetes
+	// platforms that support zero-node clusters (like GKE-on-GCP), the
+	// node_count will be zero and the node_provider_id will be empty.
+	NodeProviderId string `json:"nodeProviderId,omitempty"`
+
+	// UpdateTime: Output only. The time at which these details were last
+	// updated. This update_time is different from the Membership-level
+	// update_time since EndpointDetails are updated internally for API
+	// consumers.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// VcpuCount: Output only. vCPU count as reported by Kubernetes nodes
+	// resources.
+	VcpuCount int64 `json:"vcpuCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "KubernetesApiServerVersion") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "KubernetesApiServerVersion") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KubernetesMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod KubernetesMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListAdminClusterMembershipsResponse: Response message for the
+// `GkeHub.ListAdminClusterMemberships` method.
+type ListAdminClusterMembershipsResponse struct {
+	// AdminClusterMemberships: The list of matching Memberships of admin
+	// clusters.
+	AdminClusterMemberships []*Membership `json:"adminClusterMemberships,omitempty"`
+
+	// NextPageToken: A token to request the next page of resources from the
+	// `ListAdminClusterMemberships` method. The value of an empty string
+	// means that there are no more resources to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: List of locations that could not be reached while
+	// fetching this list.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdminClusterMemberships") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdminClusterMemberships")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAdminClusterMembershipsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAdminClusterMembershipsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListFeaturesResponse: Response message for the `GkeHub.ListFeatures`
 // method.
 type ListFeaturesResponse struct {
@@ -2207,6 +2334,130 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Membership: Membership contains information about a member cluster.
+type Membership struct {
+	// Authority: Optional. How to identify workloads from this Membership.
+	// See the documentation on Workload Identity for more details:
+	// https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
+	Authority *Authority `json:"authority,omitempty"`
+
+	// CreateTime: Output only. When the Membership was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DeleteTime: Output only. When the Membership was deleted.
+	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// Description: Output only. Description of this membership, limited to
+	// 63 characters. Must match the regex: `a-zA-Z0-9*` This field is
+	// present for legacy purposes.
+	Description string `json:"description,omitempty"`
+
+	// Endpoint: Optional. Endpoint information to reach this member.
+	Endpoint *MembershipEndpoint `json:"endpoint,omitempty"`
+
+	// ExternalId: Optional. An externally-generated and managed ID for this
+	// Membership. This ID may be modified after creation, but this is not
+	// recommended. The ID must match the regex: `a-zA-Z0-9*` If this
+	// Membership represents a Kubernetes cluster, this value should be set
+	// to the UID of the `kube-system` namespace object.
+	ExternalId string `json:"externalId,omitempty"`
+
+	// Labels: Optional. GCP labels for this membership.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// LastConnectionTime: Output only. For clusters using Connect, the
+	// timestamp of the most recent connection established with Google
+	// Cloud. This time is updated every several minutes, not continuously.
+	// For clusters that do not use GKE Connect, or that have never
+	// connected successfully, this field will be unset.
+	LastConnectionTime string `json:"lastConnectionTime,omitempty"`
+
+	// Name: Output only. The full, unique name of this Membership resource
+	// in the format `projects/*/locations/*/memberships/{membership_id}`,
+	// set during creation. `membership_id` must be a valid RFC 1123
+	// compliant DNS label: 1. At most 63 characters in length 2. It must
+	// consist of lower case alphanumeric characters or `-` 3. It must start
+	// and end with an alphanumeric character Which can be expressed as the
+	// regex: `[a-z0-9]([-a-z0-9]*[a-z0-9])?`, with a maximum length of 63
+	// characters.
+	Name string `json:"name,omitempty"`
+
+	// State: Output only. State of the Membership resource.
+	State *MembershipState `json:"state,omitempty"`
+
+	// UniqueId: Output only. Google-generated UUID for this resource. This
+	// is unique across all Membership resources. If a Membership resource
+	// is deleted and another resource with the same name is created, it
+	// gets a different unique_id.
+	UniqueId string `json:"uniqueId,omitempty"`
+
+	// UpdateTime: Output only. When the Membership was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Authority") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Authority") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Membership) MarshalJSON() ([]byte, error) {
+	type NoMethod Membership
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MembershipEndpoint: MembershipEndpoint contains information needed to
+// contact a Kubernetes API, endpoint and any additional Kubernetes
+// metadata.
+type MembershipEndpoint struct {
+	// GkeCluster: Optional. Specific information for a GKE-on-GCP cluster.
+	GkeCluster *GkeCluster `json:"gkeCluster,omitempty"`
+
+	// KubernetesMetadata: Output only. Useful Kubernetes-specific metadata.
+	KubernetesMetadata *KubernetesMetadata `json:"kubernetesMetadata,omitempty"`
+
+	// MultiCloudCluster: Optional. Specific information for a GKE
+	// Multi-Cloud cluster.
+	MultiCloudCluster *MultiCloudCluster `json:"multiCloudCluster,omitempty"`
+
+	// OnPremCluster: Optional. Specific information for a GKE On-Prem
+	// cluster.
+	OnPremCluster *OnPremCluster `json:"onPremCluster,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GkeCluster") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GkeCluster") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MembershipEndpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod MembershipEndpoint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MembershipFeatureSpec: MembershipFeatureSpec contains configuration
 // information for a single Membership.
 type MembershipFeatureSpec struct {
@@ -2282,6 +2533,44 @@ func (s *MembershipFeatureState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MembershipState: MembershipState describes the state of a Membership
+// resource.
+type MembershipState struct {
+	// Code: Output only. The current state of the Membership resource.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - The code is not set.
+	//   "CREATING" - The cluster is being registered.
+	//   "READY" - The cluster is registered.
+	//   "DELETING" - The cluster is being unregistered.
+	//   "UPDATING" - The Membership is being updated.
+	//   "SERVICE_UPDATING" - The Membership is being updated by the Hub
+	// Service.
+	Code string `json:"code,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MembershipState) MarshalJSON() ([]byte, error) {
+	type NoMethod MembershipState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MeteringMembershipState: **Metering**: Per-Membership Feature State.
 type MeteringMembershipState struct {
 	// LastMeasurementTime: The time stamp of the most recent measurement of
@@ -2330,6 +2619,46 @@ func (s *MeteringMembershipState) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// MultiCloudCluster: MultiCloudCluster contains information specific to
+// GKE Multi-Cloud clusters.
+type MultiCloudCluster struct {
+	// ClusterMissing: Output only. If cluster_missing is set then it
+	// denotes that API(gkemulticloud.googleapis.com) resource for this GKE
+	// Multi-Cloud cluster no longer exists.
+	ClusterMissing bool `json:"clusterMissing,omitempty"`
+
+	// ResourceLink: Immutable. Self-link of the GCP resource for the GKE
+	// Multi-Cloud cluster. For example:
+	// //gkemulticloud.googleapis.com/projects/my-project/locations/us-west1-
+	// a/awsClusters/my-cluster
+	// //gkemulticloud.googleapis.com/projects/my-project/locations/us-west1-
+	// a/azureClusters/my-cluster
+	ResourceLink string `json:"resourceLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterMissing") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterMissing") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MultiCloudCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiCloudCluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MultiClusterIngressFeatureSpec: **Multi-cluster Ingress**: The
 // configuration for the MultiClusterIngress feature.
 type MultiClusterIngressFeatureSpec struct {
@@ -2366,6 +2695,48 @@ type MultiClusterIngressFeatureSpec struct {
 
 func (s *MultiClusterIngressFeatureSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod MultiClusterIngressFeatureSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OnPremCluster: OnPremCluster contains information specific to GKE
+// On-Prem clusters.
+type OnPremCluster struct {
+	// AdminCluster: Immutable. Whether the cluster is an admin cluster.
+	AdminCluster bool `json:"adminCluster,omitempty"`
+
+	// ClusterMissing: Output only. If cluster_missing is set then it
+	// denotes that API(gkeonprem.googleapis.com) resource for this GKE
+	// On-Prem cluster no longer exists.
+	ClusterMissing bool `json:"clusterMissing,omitempty"`
+
+	// ResourceLink: Immutable. Self-link of the GCP resource for the GKE
+	// On-Prem cluster. For example:
+	// //gkeonprem.googleapis.com/projects/my-project/locations/us-west1-a/vm
+	// wareClusters/my-cluster
+	// //gkeonprem.googleapis.com/projects/my-project/locations/us-west1-a/ba
+	// reMetalClusters/my-cluster
+	ResourceLink string `json:"resourceLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdminCluster") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdminCluster") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OnPremCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod OnPremCluster
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2942,7 +3313,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3114,7 +3485,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3313,7 +3684,7 @@ func (c *ProjectsLocationsFeaturesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3490,7 +3861,7 @@ func (c *ProjectsLocationsFeaturesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3644,7 +4015,7 @@ func (c *ProjectsLocationsFeaturesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3808,7 +4179,7 @@ func (c *ProjectsLocationsFeaturesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3997,7 +4368,7 @@ func (c *ProjectsLocationsFeaturesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4201,7 +4572,7 @@ func (c *ProjectsLocationsFeaturesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4358,7 +4729,7 @@ func (c *ProjectsLocationsFeaturesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4507,7 +4878,7 @@ func (c *ProjectsLocationsFeaturesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4676,7 +5047,7 @@ func (c *ProjectsLocationsMembershipsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4771,6 +5142,229 @@ func (c *ProjectsLocationsMembershipsGetIamPolicyCall) Do(opts ...googleapi.Call
 
 }
 
+// method id "gkehub.projects.locations.memberships.listAdmin":
+
+type ProjectsLocationsMembershipsListAdminCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListAdmin: Lists Memberships of admin clusters in a given project and
+// location. **This method is only used internally**.
+//
+// - parent: The parent (project and location) where the Memberships of
+//   admin cluster will be listed. Specified in the format
+//   `projects/*/locations/*`.
+func (r *ProjectsLocationsMembershipsService) ListAdmin(parent string) *ProjectsLocationsMembershipsListAdminCall {
+	c := &ProjectsLocationsMembershipsListAdminCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Lists Memberships of
+// admin clusters that match the filter expression.
+func (c *ProjectsLocationsMembershipsListAdminCall) Filter(filter string) *ProjectsLocationsMembershipsListAdminCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": One or more fields to
+// compare and use to sort the output. See
+// https://google.aip.dev/132#ordering.
+func (c *ProjectsLocationsMembershipsListAdminCall) OrderBy(orderBy string) *ProjectsLocationsMembershipsListAdminCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": When requesting a
+// 'page' of resources, `page_size` specifies number of resources to
+// return. If unspecified or set to 0, all resources will be returned.
+func (c *ProjectsLocationsMembershipsListAdminCall) PageSize(pageSize int64) *ProjectsLocationsMembershipsListAdminCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned by
+// previous call to `ListAdminClusterMemberships` which specifies the
+// position in the list from where to continue listing the resources.
+func (c *ProjectsLocationsMembershipsListAdminCall) PageToken(pageToken string) *ProjectsLocationsMembershipsListAdminCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMembershipsListAdminCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsListAdminCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsMembershipsListAdminCall) IfNoneMatch(entityTag string) *ProjectsLocationsMembershipsListAdminCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMembershipsListAdminCall) Context(ctx context.Context) *ProjectsLocationsMembershipsListAdminCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMembershipsListAdminCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsListAdminCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/memberships:listAdmin")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.listAdmin" call.
+// Exactly one of *ListAdminClusterMembershipsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListAdminClusterMembershipsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsMembershipsListAdminCall) Do(opts ...googleapi.CallOption) (*ListAdminClusterMembershipsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListAdminClusterMembershipsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Memberships of admin clusters in a given project and location. **This method is only used internally**.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/memberships:listAdmin",
+	//   "httpMethod": "GET",
+	//   "id": "gkehub.projects.locations.memberships.listAdmin",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Lists Memberships of admin clusters that match the filter expression.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. One or more fields to compare and use to sort the output. See https://google.aip.dev/132#ordering.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. When requesting a 'page' of resources, `page_size` specifies number of resources to return. If unspecified or set to 0, all resources will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Token returned by previous call to `ListAdminClusterMemberships` which specifies the position in the list from where to continue listing the resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent (project and location) where the Memberships of admin cluster will be listed. Specified in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/memberships:listAdmin",
+	//   "response": {
+	//     "$ref": "ListAdminClusterMembershipsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsMembershipsListAdminCall) Pages(ctx context.Context, f func(*ListAdminClusterMembershipsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "gkehub.projects.locations.memberships.setIamPolicy":
 
 type ProjectsLocationsMembershipsSetIamPolicyCall struct {
@@ -4823,7 +5417,7 @@ func (c *ProjectsLocationsMembershipsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4972,7 +5566,7 @@ func (c *ProjectsLocationsMembershipsTestIamPermissionsCall) Header() http.Heade
 
 func (c *ProjectsLocationsMembershipsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5123,7 +5717,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5266,7 +5860,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5411,7 +6005,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5587,7 +6181,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

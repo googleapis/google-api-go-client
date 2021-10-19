@@ -250,18 +250,16 @@ type ProjectsServicesService struct {
 }
 
 // GoogleFirebaseAppcheckV1betaAppAttestChallengeResponse: Response
-// object for GenerateAppAttestChallenge
+// message for the GenerateAppAttestChallenge method.
 type GoogleFirebaseAppcheckV1betaAppAttestChallengeResponse struct {
-	// Challenge: A one time use challenge for the client to pass to Apple's
-	// App Attest API.
+	// Challenge: A one-time use challenge for the client to pass to the App
+	// Attest API.
 	Challenge string `json:"challenge,omitempty"`
 
-	// Ttl: The duration from the time this challenge is minted until it is
-	// expired. This field is intended to ease client-side token management,
-	// since the device may have clock skew, but is still able to accurately
-	// measure a duration. This expiration is intended to minimize the
-	// replay window within which a single challenge may be reused. See AIP
-	// 142 for naming of this field.
+	// Ttl: The duration from the time this challenge is minted until its
+	// expiration. This field is intended to ease client-side token
+	// management, since the client may have clock skew, but is still able
+	// to accurately measure a duration.
 	Ttl string `json:"ttl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -294,7 +292,7 @@ func (s *GoogleFirebaseAppcheckV1betaAppAttestChallengeResponse) MarshalJSON() (
 // GoogleFirebaseAppcheckV1betaAppAttestConfig: An app's App Attest
 // configuration object. This configuration controls certain properties
 // of the App Check token returned by ExchangeAppAttestAttestation and
-// ExchangeAppAttestAttestation, such as its ttl. Note that the Team ID
+// ExchangeAppAttestAssertion, such as its ttl. Note that the Team ID
 // registered with your app is used as part of the validation process.
 // Please register it via the Firebase Console or programmatically via
 // the Firebase Management Service
@@ -593,15 +591,15 @@ type GoogleFirebaseAppcheckV1betaDebugToken struct {
 	// this debug token.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: The relative resource name of the debug token, in the format:
-	// ```
+	// Name: Required. The relative resource name of the debug token, in the
+	// format: ```
 	// projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id}
 	// ```
 	Name string `json:"name,omitempty"`
 
-	// Token: Input only. Immutable. The secret token itself. Must be
-	// provided during creation, and must be a UUID4, case insensitive. This
-	// field is immutable once set, and cannot be provided during an
+	// Token: Required. Input only. Immutable. The secret token itself. Must
+	// be provided during creation, and must be a UUID4, case insensitive.
+	// This field is immutable once set, and cannot be provided during an
 	// UpdateDebugToken request. You can, however, delete this debug token
 	// using DeleteDebugToken to revoke it. For security reasons, this field
 	// will never be populated in any response.
@@ -696,18 +694,18 @@ func (s *GoogleFirebaseAppcheckV1betaDeviceCheckConfig) MarshalJSON() ([]byte, e
 }
 
 // GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest:
-// Request message for ExchangeAppAttestAssertion
+// Request message for the ExchangeAppAttestAssertion method.
 type GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest struct {
-	// Artifact: The artifact previously returned by
+	// Artifact: Required. The artifact returned by a previous call to
 	// ExchangeAppAttestAttestation.
 	Artifact string `json:"artifact,omitempty"`
 
-	// Assertion: The CBOR encoded assertion provided by the Apple App
-	// Attest SDK.
+	// Assertion: Required. The CBOR-encoded assertion returned by the
+	// client-side App Attest API.
 	Assertion string `json:"assertion,omitempty"`
 
-	// Challenge: A one time challenge returned by
-	// GenerateAppAttestChallenge.
+	// Challenge: Required. A one-time challenge returned by an immediately
+	// prior call to GenerateAppAttestChallenge.
 	Challenge string `json:"challenge,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Artifact") to
@@ -734,15 +732,15 @@ func (s *GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest) MarshalJ
 }
 
 // GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest:
-// Request message for ExchangeAppAttestAttestation
+// Request message for the ExchangeAppAttestAttestation method.
 type GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest struct {
-	// AttestationStatement: Required. The App Attest statement as returned
-	// by Apple's client-side App Attest API. This is the CBOR object
-	// returned by Apple, which will be Base64 encoded in the JSON API.
+	// AttestationStatement: Required. The App Attest statement returned by
+	// the client-side App Attest API. This is a base64url encoded CBOR
+	// object in the JSON response.
 	AttestationStatement string `json:"attestationStatement,omitempty"`
 
-	// Challenge: Required. The challenge previously generated by the FAC
-	// backend.
+	// Challenge: Required. A one-time challenge returned by an immediately
+	// prior call to GenerateAppAttestChallenge.
 	Challenge string `json:"challenge,omitempty"`
 
 	// KeyId: Required. The key ID generated by App Attest for the client
@@ -775,15 +773,13 @@ func (s *GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest) Marsha
 }
 
 // GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationResponse:
-// Response message for ExchangeAppAttestAttestation and
-// ExchangeAppAttestDebugAttestation
+// Response message for the ExchangeAppAttestAttestation method.
 type GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationResponse struct {
-	// Artifact: An artifact that should be passed back during the Assertion
-	// flow.
+	// Artifact: An artifact that can be used in future calls to
+	// ExchangeAppAttestAssertion.
 	Artifact string `json:"artifact,omitempty"`
 
-	// AttestationToken: An attestation token which can be used to access
-	// Firebase APIs.
+	// AttestationToken: Encapsulates an App Check token.
 	AttestationToken *GoogleFirebaseAppcheckV1betaAttestationTokenResponse `json:"attestationToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -879,7 +875,7 @@ type GoogleFirebaseAppcheckV1betaExchangeDeviceCheckTokenRequest struct {
 	// DeviceToken: Required. The `device_token` as returned by Apple's
 	// client-side DeviceCheck API
 	// (https://developer.apple.com/documentation/devicecheck/dcdevice).
-	// This is the Base64 encoded `Data` (Swift) or `NSData` (ObjC) object.
+	// This is the base64 encoded `Data` (Swift) or `NSData` (ObjC) object.
 	DeviceToken string `json:"deviceToken,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceToken") to
@@ -970,7 +966,7 @@ func (s *GoogleFirebaseAppcheckV1betaExchangeSafetyNetTokenRequest) MarshalJSON(
 }
 
 // GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeRequest:
-// Request message for GenerateAppAttestChallenge
+// Request message for the GenerateAppAttestChallenge method.
 type GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeRequest struct {
 }
 
@@ -1112,7 +1108,7 @@ func (s *GoogleFirebaseAppcheckV1betaPublicJwk) MarshalJSON() ([]byte, error) {
 // public keys that can be used to verify App Check tokens. This object
 // is a JWK set as specified by section 5 of RFC 7517
 // (https://tools.ietf.org/html/rfc7517#section-5). For security, the
-// response **must not** be cached for longer than one day.
+// response **must not** be cached for longer than six hours.
 type GoogleFirebaseAppcheckV1betaPublicJwkSet struct {
 	// Keys: The set of public keys. See section 5.1 of RFC 7517
 	// (https://tools.ietf.org/html/rfc7517#section-5).
@@ -1433,7 +1429,7 @@ func (c *JwksGetCall) Header() http.Header {
 
 func (c *JwksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1529,23 +1525,26 @@ func (c *JwksGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV
 
 type ProjectsAppsExchangeAppAttestAssertionCall struct {
 	s                                                             *Service
-	app                                                           string
+	appid                                                         string
 	googlefirebaseappcheckv1betaexchangeappattestassertionrequest *GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest
 	urlParams_                                                    gensupport.URLParams
 	ctx_                                                          context.Context
 	header_                                                       http.Header
 }
 
-// ExchangeAppAttestAssertion: Accepts a AppAttest Artifact and
-// Assertion, and uses the developer's preconfigured auth token to
-// verify the token with Apple. Returns an AttestationToken with the App
-// ID as specified by the `app` field included as attested claims.
+// ExchangeAppAttestAssertion: Accepts an App Attest assertion and an
+// artifact previously obtained from ExchangeAppAttestAttestation and
+// verifies those with Apple. If valid, returns an App Check token
+// encapsulated in an AttestationTokenResponse.
 //
-// - app: The full resource name to the iOS App. Format:
-//   "projects/{project_id}/apps/{app_id}".
-func (r *ProjectsAppsService) ExchangeAppAttestAssertion(app string, googlefirebaseappcheckv1betaexchangeappattestassertionrequest *GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest) *ProjectsAppsExchangeAppAttestAssertionCall {
+// - app: The relative resource name of the iOS app, in the format: ```
+//   projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   `project_number` element can be replaced with the project ID of the
+//   Firebase project. Learn more about using project identifiers in
+//   Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+func (r *ProjectsAppsService) ExchangeAppAttestAssertion(appid string, googlefirebaseappcheckv1betaexchangeappattestassertionrequest *GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest) *ProjectsAppsExchangeAppAttestAssertionCall {
 	c := &ProjectsAppsExchangeAppAttestAssertionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.app = app
+	c.appid = appid
 	c.googlefirebaseappcheckv1betaexchangeappattestassertionrequest = googlefirebaseappcheckv1betaexchangeappattestassertionrequest
 	return c
 }
@@ -1577,7 +1576,7 @@ func (c *ProjectsAppsExchangeAppAttestAssertionCall) Header() http.Header {
 
 func (c *ProjectsAppsExchangeAppAttestAssertionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1598,7 +1597,7 @@ func (c *ProjectsAppsExchangeAppAttestAssertionCall) doRequest(alt string) (*htt
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"app": c.app,
+		"app": c.appid,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -1643,7 +1642,7 @@ func (c *ProjectsAppsExchangeAppAttestAssertionCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Accepts a AppAttest Artifact and Assertion, and uses the developer's preconfigured auth token to verify the token with Apple. Returns an AttestationToken with the App ID as specified by the `app` field included as attested claims.",
+	//   "description": "Accepts an App Attest assertion and an artifact previously obtained from ExchangeAppAttestAttestation and verifies those with Apple. If valid, returns an App Check token encapsulated in an AttestationTokenResponse.",
 	//   "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:exchangeAppAttestAssertion",
 	//   "httpMethod": "POST",
 	//   "id": "firebaseappcheck.projects.apps.exchangeAppAttestAssertion",
@@ -1652,7 +1651,7 @@ func (c *ProjectsAppsExchangeAppAttestAssertionCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "app": {
-	//       "description": "Required. The full resource name to the iOS App. Format: \"projects/{project_id}/apps/{app_id}\"",
+	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
 	//       "required": true,
@@ -1678,23 +1677,30 @@ func (c *ProjectsAppsExchangeAppAttestAssertionCall) Do(opts ...googleapi.CallOp
 
 type ProjectsAppsExchangeAppAttestAttestationCall struct {
 	s                                                               *Service
-	app                                                             string
+	appid                                                           string
 	googlefirebaseappcheckv1betaexchangeappattestattestationrequest *GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest
 	urlParams_                                                      gensupport.URLParams
 	ctx_                                                            context.Context
 	header_                                                         http.Header
 }
 
-// ExchangeAppAttestAttestation: Accepts a AppAttest CBOR Attestation,
-// and uses the developer's preconfigured team and bundle IDs to verify
-// the token with Apple. Returns an Attestation Artifact that can later
-// be exchanged for an AttestationToken in ExchangeAppAttestAssertion.
+// ExchangeAppAttestAttestation: Accepts an App Attest CBOR attestation
+// and verifies it with Apple using the developer's preconfigured team
+// and bundle IDs. If valid, returns an attestation artifact that can
+// later be exchanged for an AttestationTokenResponse using
+// ExchangeAppAttestAssertion. For convenience and performance, this
+// method's response object will also contain an App Check token
+// encapsulated in an AttestationTokenResponse (if the verification is
+// successful).
 //
-// - app: The full resource name to the iOS App. Format:
-//   "projects/{project_id}/apps/{app_id}".
-func (r *ProjectsAppsService) ExchangeAppAttestAttestation(app string, googlefirebaseappcheckv1betaexchangeappattestattestationrequest *GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest) *ProjectsAppsExchangeAppAttestAttestationCall {
+// - app: The relative resource name of the iOS app, in the format: ```
+//   projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   `project_number` element can be replaced with the project ID of the
+//   Firebase project. Learn more about using project identifiers in
+//   Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+func (r *ProjectsAppsService) ExchangeAppAttestAttestation(appid string, googlefirebaseappcheckv1betaexchangeappattestattestationrequest *GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest) *ProjectsAppsExchangeAppAttestAttestationCall {
 	c := &ProjectsAppsExchangeAppAttestAttestationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.app = app
+	c.appid = appid
 	c.googlefirebaseappcheckv1betaexchangeappattestattestationrequest = googlefirebaseappcheckv1betaexchangeappattestattestationrequest
 	return c
 }
@@ -1726,7 +1732,7 @@ func (c *ProjectsAppsExchangeAppAttestAttestationCall) Header() http.Header {
 
 func (c *ProjectsAppsExchangeAppAttestAttestationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1747,7 +1753,7 @@ func (c *ProjectsAppsExchangeAppAttestAttestationCall) doRequest(alt string) (*h
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"app": c.app,
+		"app": c.appid,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -1793,7 +1799,7 @@ func (c *ProjectsAppsExchangeAppAttestAttestationCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Accepts a AppAttest CBOR Attestation, and uses the developer's preconfigured team and bundle IDs to verify the token with Apple. Returns an Attestation Artifact that can later be exchanged for an AttestationToken in ExchangeAppAttestAssertion.",
+	//   "description": "Accepts an App Attest CBOR attestation and verifies it with Apple using the developer's preconfigured team and bundle IDs. If valid, returns an attestation artifact that can later be exchanged for an AttestationTokenResponse using ExchangeAppAttestAssertion. For convenience and performance, this method's response object will also contain an App Check token encapsulated in an AttestationTokenResponse (if the verification is successful).",
 	//   "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:exchangeAppAttestAttestation",
 	//   "httpMethod": "POST",
 	//   "id": "firebaseappcheck.projects.apps.exchangeAppAttestAttestation",
@@ -1802,7 +1808,7 @@ func (c *ProjectsAppsExchangeAppAttestAttestationCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "app": {
-	//       "description": "Required. The full resource name to the iOS App. Format: \"projects/{project_id}/apps/{app_id}\"",
+	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
 	//       "required": true,
@@ -1878,7 +1884,7 @@ func (c *ProjectsAppsExchangeCustomTokenCall) Header() http.Header {
 
 func (c *ProjectsAppsExchangeCustomTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2031,7 +2037,7 @@ func (c *ProjectsAppsExchangeDebugTokenCall) Header() http.Header {
 
 func (c *ProjectsAppsExchangeDebugTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2184,7 +2190,7 @@ func (c *ProjectsAppsExchangeDeviceCheckTokenCall) Header() http.Header {
 
 func (c *ProjectsAppsExchangeDeviceCheckTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2335,7 +2341,7 @@ func (c *ProjectsAppsExchangeRecaptchaTokenCall) Header() http.Header {
 
 func (c *ProjectsAppsExchangeRecaptchaTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2487,7 +2493,7 @@ func (c *ProjectsAppsExchangeSafetyNetTokenCall) Header() http.Header {
 
 func (c *ProjectsAppsExchangeSafetyNetTokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2588,22 +2594,26 @@ func (c *ProjectsAppsExchangeSafetyNetTokenCall) Do(opts ...googleapi.CallOption
 
 type ProjectsAppsGenerateAppAttestChallengeCall struct {
 	s                                                             *Service
-	app                                                           string
+	appid                                                         string
 	googlefirebaseappcheckv1betagenerateappattestchallengerequest *GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeRequest
 	urlParams_                                                    gensupport.URLParams
 	ctx_                                                          context.Context
 	header_                                                       http.Header
 }
 
-// GenerateAppAttestChallenge: Initiates the App Attest flow by
-// generating a challenge which will be used as a type of nonce for this
-// attestation.
+// GenerateAppAttestChallenge: Generates a challenge that protects the
+// integrity of an immediately following call to
+// ExchangeAppAttestAttestation or ExchangeAppAttestAssertion. A
+// challenge should not be reused for multiple calls.
 //
-// - app: The full resource name to the iOS App. Format:
-//   "projects/{project_id}/apps/{app_id}".
-func (r *ProjectsAppsService) GenerateAppAttestChallenge(app string, googlefirebaseappcheckv1betagenerateappattestchallengerequest *GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeRequest) *ProjectsAppsGenerateAppAttestChallengeCall {
+// - app: The relative resource name of the iOS app, in the format: ```
+//   projects/{project_number}/apps/{app_id} ``` If necessary, the
+//   `project_number` element can be replaced with the project ID of the
+//   Firebase project. Learn more about using project identifiers in
+//   Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+func (r *ProjectsAppsService) GenerateAppAttestChallenge(appid string, googlefirebaseappcheckv1betagenerateappattestchallengerequest *GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeRequest) *ProjectsAppsGenerateAppAttestChallengeCall {
 	c := &ProjectsAppsGenerateAppAttestChallengeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.app = app
+	c.appid = appid
 	c.googlefirebaseappcheckv1betagenerateappattestchallengerequest = googlefirebaseappcheckv1betagenerateappattestchallengerequest
 	return c
 }
@@ -2635,7 +2645,7 @@ func (c *ProjectsAppsGenerateAppAttestChallengeCall) Header() http.Header {
 
 func (c *ProjectsAppsGenerateAppAttestChallengeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2656,7 +2666,7 @@ func (c *ProjectsAppsGenerateAppAttestChallengeCall) doRequest(alt string) (*htt
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"app": c.app,
+		"app": c.appid,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -2702,7 +2712,7 @@ func (c *ProjectsAppsGenerateAppAttestChallengeCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Initiates the App Attest flow by generating a challenge which will be used as a type of nonce for this attestation.",
+	//   "description": "Generates a challenge that protects the integrity of an immediately following call to ExchangeAppAttestAttestation or ExchangeAppAttestAssertion. A challenge should not be reused for multiple calls.",
 	//   "flatPath": "v1beta/projects/{projectsId}/apps/{appsId}:generateAppAttestChallenge",
 	//   "httpMethod": "POST",
 	//   "id": "firebaseappcheck.projects.apps.generateAppAttestChallenge",
@@ -2711,7 +2721,7 @@ func (c *ProjectsAppsGenerateAppAttestChallengeCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "app": {
-	//       "description": "Required. The full resource name to the iOS App. Format: \"projects/{project_id}/apps/{app_id}\"",
+	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
 	//       "required": true,
@@ -2803,7 +2813,7 @@ func (c *ProjectsAppsAppAttestConfigBatchGetCall) Header() http.Header {
 
 func (c *ProjectsAppsAppAttestConfigBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2961,7 +2971,7 @@ func (c *ProjectsAppsAppAttestConfigGetCall) Header() http.Header {
 
 func (c *ProjectsAppsAppAttestConfigGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3113,7 +3123,7 @@ func (c *ProjectsAppsAppAttestConfigPatchCall) Header() http.Header {
 
 func (c *ProjectsAppsAppAttestConfigPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3270,7 +3280,7 @@ func (c *ProjectsAppsDebugTokensCreateCall) Header() http.Header {
 
 func (c *ProjectsAppsDebugTokensCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3418,7 +3428,7 @@ func (c *ProjectsAppsDebugTokensDeleteCall) Header() http.Header {
 
 func (c *ProjectsAppsDebugTokensDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3566,7 +3576,7 @@ func (c *ProjectsAppsDebugTokensGetCall) Header() http.Header {
 
 func (c *ProjectsAppsDebugTokensGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3738,7 +3748,7 @@ func (c *ProjectsAppsDebugTokensListCall) Header() http.Header {
 
 func (c *ProjectsAppsDebugTokensListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3923,7 +3933,7 @@ func (c *ProjectsAppsDebugTokensPatchCall) Header() http.Header {
 
 func (c *ProjectsAppsDebugTokensPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3997,7 +4007,7 @@ func (c *ProjectsAppsDebugTokensPatchCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The relative resource name of the debug token, in the format: ``` projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```",
+	//       "description": "Required. The relative resource name of the debug token, in the format: ``` projects/{project_number}/apps/{app_id}/debugTokens/{debug_token_id} ```",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/apps/[^/]+/debugTokens/[^/]+$",
 	//       "required": true,
@@ -4096,7 +4106,7 @@ func (c *ProjectsAppsDeviceCheckConfigBatchGetCall) Header() http.Header {
 
 func (c *ProjectsAppsDeviceCheckConfigBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4255,7 +4265,7 @@ func (c *ProjectsAppsDeviceCheckConfigGetCall) Header() http.Header {
 
 func (c *ProjectsAppsDeviceCheckConfigGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4408,7 +4418,7 @@ func (c *ProjectsAppsDeviceCheckConfigPatchCall) Header() http.Header {
 
 func (c *ProjectsAppsDeviceCheckConfigPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4582,7 +4592,7 @@ func (c *ProjectsAppsRecaptchaConfigBatchGetCall) Header() http.Header {
 
 func (c *ProjectsAppsRecaptchaConfigBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4741,7 +4751,7 @@ func (c *ProjectsAppsRecaptchaConfigGetCall) Header() http.Header {
 
 func (c *ProjectsAppsRecaptchaConfigGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4894,7 +4904,7 @@ func (c *ProjectsAppsRecaptchaConfigPatchCall) Header() http.Header {
 
 func (c *ProjectsAppsRecaptchaConfigPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5067,7 +5077,7 @@ func (c *ProjectsAppsSafetyNetConfigBatchGetCall) Header() http.Header {
 
 func (c *ProjectsAppsSafetyNetConfigBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5225,7 +5235,7 @@ func (c *ProjectsAppsSafetyNetConfigGetCall) Header() http.Header {
 
 func (c *ProjectsAppsSafetyNetConfigGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5377,7 +5387,7 @@ func (c *ProjectsAppsSafetyNetConfigPatchCall) Header() http.Header {
 
 func (c *ProjectsAppsSafetyNetConfigPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5532,7 +5542,7 @@ func (c *ProjectsServicesBatchUpdateCall) Header() http.Header {
 
 func (c *ProjectsServicesBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5693,7 +5703,7 @@ func (c *ProjectsServicesGetCall) Header() http.Header {
 
 func (c *ProjectsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5866,7 +5876,7 @@ func (c *ProjectsServicesListCall) Header() http.Header {
 
 func (c *ProjectsServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6053,7 +6063,7 @@ func (c *ProjectsServicesPatchCall) Header() http.Header {
 
 func (c *ProjectsServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

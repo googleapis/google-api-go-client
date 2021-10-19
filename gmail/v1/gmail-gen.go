@@ -101,17 +101,17 @@ const (
 	// Manage drafts and send emails
 	GmailComposeScope = "https://www.googleapis.com/auth/gmail.compose"
 
-	// Insert mail into your mailbox
+	// Add emails into your Gmail mailbox
 	GmailInsertScope = "https://www.googleapis.com/auth/gmail.insert"
 
-	// Manage mailbox labels
+	// See and edit your email labels
 	GmailLabelsScope = "https://www.googleapis.com/auth/gmail.labels"
 
 	// View your email message metadata such as labels and headers, but not
 	// the email body
 	GmailMetadataScope = "https://www.googleapis.com/auth/gmail.metadata"
 
-	// View and modify but not delete your email
+	// Read, compose, and send emails from your Gmail account
 	GmailModifyScope = "https://www.googleapis.com/auth/gmail.modify"
 
 	// View your email messages and settings
@@ -120,7 +120,7 @@ const (
 	// Send email on your behalf
 	GmailSendScope = "https://www.googleapis.com/auth/gmail.send"
 
-	// Manage your basic mail settings
+	// See, edit, create, or change your email settings and filters in Gmail
 	GmailSettingsBasicScope = "https://www.googleapis.com/auth/gmail.settings.basic"
 
 	// Manage your sensitive mail settings, including who can manage your
@@ -374,10 +374,10 @@ type AutoForwarding struct {
 
 	// ForceSendFields is a list of field names (e.g. "Disposition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Disposition") to include
@@ -401,10 +401,10 @@ type BatchDeleteMessagesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Ids") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Ids") to include in API
@@ -435,10 +435,10 @@ type BatchModifyMessagesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AddLabelIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AddLabelIds") to include
@@ -484,10 +484,10 @@ type Delegate struct {
 
 	// ForceSendFields is a list of field names (e.g. "DelegateEmail") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DelegateEmail") to include
@@ -519,10 +519,10 @@ type Draft struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -558,10 +558,10 @@ type Filter struct {
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Action") to include in API
@@ -592,10 +592,10 @@ type FilterAction struct {
 
 	// ForceSendFields is a list of field names (e.g. "AddLabelIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AddLabelIds") to include
@@ -661,10 +661,10 @@ type FilterCriteria struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExcludeChats") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExcludeChats") to include
@@ -702,10 +702,10 @@ type ForwardingAddress struct {
 
 	// ForceSendFields is a list of field names (e.g. "ForwardingEmail") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ForwardingEmail") to
@@ -751,10 +751,10 @@ type History struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -780,10 +780,10 @@ type HistoryLabelAdded struct {
 
 	// ForceSendFields is a list of field names (e.g. "LabelIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LabelIds") to include in
@@ -809,10 +809,10 @@ type HistoryLabelRemoved struct {
 
 	// ForceSendFields is a list of field names (e.g. "LabelIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LabelIds") to include in
@@ -835,10 +835,10 @@ type HistoryMessageAdded struct {
 
 	// ForceSendFields is a list of field names (e.g. "Message") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Message") to include in
@@ -861,10 +861,10 @@ type HistoryMessageDeleted struct {
 
 	// ForceSendFields is a list of field names (e.g. "Message") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Message") to include in
@@ -916,10 +916,10 @@ type ImapSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "AutoExpunge") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AutoExpunge") to include
@@ -938,7 +938,8 @@ func (s *ImapSettings) MarshalJSON() ([]byte, error) {
 }
 
 // Label: Labels are used to categorize messages and threads within the
-// user's mailbox.
+// user's mailbox. The maximum number of labels supported for a user's
+// mailbox is 10,000.
 type Label struct {
 	// Color: The color to assign to the label. Color is only available for
 	// labels that have their `type` set to `user`.
@@ -1001,10 +1002,10 @@ type Label struct {
 
 	// ForceSendFields is a list of field names (e.g. "Color") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Color") to include in API
@@ -1065,10 +1066,10 @@ type LabelColor struct {
 
 	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BackgroundColor") to
@@ -1109,10 +1110,10 @@ type LanguageSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayLanguage") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayLanguage") to
@@ -1144,10 +1145,10 @@ type ListDelegatesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Delegates") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Delegates") to include in
@@ -1184,10 +1185,10 @@ type ListDraftsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Drafts") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Drafts") to include in API
@@ -1216,10 +1217,10 @@ type ListFiltersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Filter") to include in API
@@ -1250,10 +1251,10 @@ type ListForwardingAddressesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ForwardingAddresses")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ForwardingAddresses") to
@@ -1291,10 +1292,10 @@ type ListHistoryResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "History") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "History") to include in
@@ -1324,10 +1325,10 @@ type ListLabelsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Labels") to include in API
@@ -1364,10 +1365,10 @@ type ListMessagesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Messages") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Messages") to include in
@@ -1396,10 +1397,10 @@ type ListSendAsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "SendAs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SendAs") to include in API
@@ -1427,10 +1428,10 @@ type ListSmimeInfoResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "SmimeInfo") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SmimeInfo") to include in
@@ -1467,10 +1468,10 @@ type ListThreadsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1537,10 +1538,10 @@ type Message struct {
 
 	// ForceSendFields is a list of field names (e.g. "HistoryId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HistoryId") to include in
@@ -1588,10 +1589,10 @@ type MessagePart struct {
 
 	// ForceSendFields is a list of field names (e.g. "Body") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Body") to include in API
@@ -1634,10 +1635,10 @@ type MessagePartBody struct {
 
 	// ForceSendFields is a list of field names (e.g. "AttachmentId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AttachmentId") to include
@@ -1666,10 +1667,10 @@ type MessagePartHeader struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -1696,10 +1697,10 @@ type ModifyMessageRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AddLabelIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AddLabelIds") to include
@@ -1726,10 +1727,10 @@ type ModifyThreadRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AddLabelIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AddLabelIds") to include
@@ -1777,10 +1778,10 @@ type PopSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccessWindow") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccessWindow") to include
@@ -1818,10 +1819,10 @@ type Profile struct {
 
 	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EmailAddress") to include
@@ -1878,7 +1879,8 @@ type SendAs struct {
 	SendAsEmail string `json:"sendAsEmail,omitempty"`
 
 	// Signature: An optional HTML signature that is included in messages
-	// composed with this alias in the Gmail web UI.
+	// composed with this alias in the Gmail web UI. This signature is added
+	// to new emails only.
 	Signature string `json:"signature,omitempty"`
 
 	// SmtpMsa: An optional SMTP service that will be used as an outbound
@@ -1908,10 +1910,10 @@ type SendAs struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -1966,8 +1968,8 @@ type SmimeInfo struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "EncryptedKeyPassword") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2024,10 +2026,10 @@ type SmtpMsa struct {
 
 	// ForceSendFields is a list of field names (e.g. "Host") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Host") to include in API
@@ -2066,10 +2068,10 @@ type Thread struct {
 
 	// ForceSendFields is a list of field names (e.g. "HistoryId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HistoryId") to include in
@@ -2138,10 +2140,10 @@ type VacationSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "EnableAutoReply") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EnableAutoReply") to
@@ -2190,10 +2192,10 @@ type WatchRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "LabelFilterAction")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LabelFilterAction") to
@@ -2228,10 +2230,10 @@ type WatchResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Expiration") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Expiration") to include in
@@ -2261,6 +2263,9 @@ type UsersGetProfileCall struct {
 }
 
 // GetProfile: Gets the current user's Gmail profile.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersService) GetProfile(userId string) *UsersGetProfileCall {
 	c := &UsersGetProfileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2304,7 +2309,7 @@ func (c *UsersGetProfileCall) Header() http.Header {
 
 func (c *UsersGetProfileCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2408,6 +2413,9 @@ type UsersStopCall struct {
 }
 
 // Stop: Stop receiving push notifications for the given user mailbox.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersService) Stop(userId string) *UsersStopCall {
 	c := &UsersStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2441,7 +2449,7 @@ func (c *UsersStopCall) Header() http.Header {
 
 func (c *UsersStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2515,6 +2523,9 @@ type UsersWatchCall struct {
 
 // Watch: Set up or update a push notification watch on the given user
 // mailbox.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersService) Watch(userId string, watchrequest *WatchRequest) *UsersWatchCall {
 	c := &UsersWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2549,7 +2560,7 @@ func (c *UsersWatchCall) Header() http.Header {
 
 func (c *UsersWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2659,6 +2670,9 @@ type UsersDraftsCreateCall struct {
 }
 
 // Create: Creates a new draft with the `DRAFT` label.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) Create(userId string, draft *Draft) *UsersDraftsCreateCall {
 	c := &UsersDraftsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2732,7 +2746,7 @@ func (c *UsersDraftsCreateCall) Header() http.Header {
 
 func (c *UsersDraftsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2887,6 +2901,10 @@ type UsersDraftsDeleteCall struct {
 
 // Delete: Immediately and permanently deletes the specified draft. Does
 // not simply trash it.
+//
+// - id: The ID of the draft to delete.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) Delete(userId string, id string) *UsersDraftsDeleteCall {
 	c := &UsersDraftsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2921,7 +2939,7 @@ func (c *UsersDraftsDeleteCall) Header() http.Header {
 
 func (c *UsersDraftsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3003,6 +3021,10 @@ type UsersDraftsGetCall struct {
 }
 
 // Get: Gets the specified draft.
+//
+// - id: The ID of the draft to retrieve.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) Get(userId string, id string) *UsersDraftsGetCall {
 	c := &UsersDraftsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3068,7 +3090,7 @@ func (c *UsersDraftsGetCall) Header() http.Header {
 
 func (c *UsersDraftsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3198,6 +3220,9 @@ type UsersDraftsListCall struct {
 }
 
 // List: Lists the drafts in the user's mailbox.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) List(userId string) *UsersDraftsListCall {
 	c := &UsersDraftsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3212,7 +3237,8 @@ func (c *UsersDraftsListCall) IncludeSpamTrash(includeSpamTrash bool) *UsersDraf
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of drafts to return.
+// of drafts to return. This field defaults to 100. The maximum allowed
+// value for this field is 500.
 func (c *UsersDraftsListCall) MaxResults(maxResults int64) *UsersDraftsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -3271,7 +3297,7 @@ func (c *UsersDraftsListCall) Header() http.Header {
 
 func (c *UsersDraftsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3349,7 +3375,7 @@ func (c *UsersDraftsListCall) Do(opts ...googleapi.CallOption) (*ListDraftsRespo
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Maximum number of drafts to return.",
+	//       "description": "Maximum number of drafts to return. This field defaults to 100. The maximum allowed value for this field is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -3421,6 +3447,9 @@ type UsersDraftsSendCall struct {
 
 // Send: Sends the specified, existing draft to the recipients in the
 // `To`, `Cc`, and `Bcc` headers.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) Send(userId string, draft *Draft) *UsersDraftsSendCall {
 	c := &UsersDraftsSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3494,7 +3523,7 @@ func (c *UsersDraftsSendCall) Header() http.Header {
 
 func (c *UsersDraftsSendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3650,6 +3679,10 @@ type UsersDraftsUpdateCall struct {
 }
 
 // Update: Replaces a draft's content.
+//
+// - id: The ID of the draft to update.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersDraftsService) Update(userId string, id string, draft *Draft) *UsersDraftsUpdateCall {
 	c := &UsersDraftsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3724,7 +3757,7 @@ func (c *UsersDraftsUpdateCall) Header() http.Header {
 
 func (c *UsersDraftsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3887,6 +3920,9 @@ type UsersHistoryListCall struct {
 
 // List: Lists the history of all changes to the given mailbox. History
 // results are returned in chronological order (increasing `historyId`).
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersHistoryService) List(userId string) *UsersHistoryListCall {
 	c := &UsersHistoryListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3913,8 +3949,9 @@ func (c *UsersHistoryListCall) LabelId(labelId string) *UsersHistoryListCall {
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": The maximum
-// number of history records to return.
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of history records to return. This field defaults to 100. The maximum
+// allowed value for this field is 500.
 func (c *UsersHistoryListCall) MaxResults(maxResults int64) *UsersHistoryListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -3982,7 +4019,7 @@ func (c *UsersHistoryListCall) Header() http.Header {
 
 func (c *UsersHistoryListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4077,7 +4114,7 @@ func (c *UsersHistoryListCall) Do(opts ...googleapi.CallOption) (*ListHistoryRes
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "The maximum number of history records to return.",
+	//       "description": "Maximum number of history records to return. This field defaults to 100. The maximum allowed value for this field is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4148,6 +4185,9 @@ type UsersLabelsCreateCall struct {
 }
 
 // Create: Creates a new label.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) Create(userId string, label *Label) *UsersLabelsCreateCall {
 	c := &UsersLabelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4182,7 +4222,7 @@ func (c *UsersLabelsCreateCall) Header() http.Header {
 
 func (c *UsersLabelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4291,6 +4331,10 @@ type UsersLabelsDeleteCall struct {
 
 // Delete: Immediately and permanently deletes the specified label and
 // removes it from any messages and threads that it is applied to.
+//
+// - id: The ID of the label to delete.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) Delete(userId string, id string) *UsersLabelsDeleteCall {
 	c := &UsersLabelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4325,7 +4369,7 @@ func (c *UsersLabelsDeleteCall) Header() http.Header {
 
 func (c *UsersLabelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4406,6 +4450,10 @@ type UsersLabelsGetCall struct {
 }
 
 // Get: Gets the specified label.
+//
+// - id: The ID of the label to retrieve.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) Get(userId string, id string) *UsersLabelsGetCall {
 	c := &UsersLabelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4450,7 +4498,7 @@ func (c *UsersLabelsGetCall) Header() http.Header {
 
 func (c *UsersLabelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4563,6 +4611,9 @@ type UsersLabelsListCall struct {
 }
 
 // List: Lists all labels in the user's mailbox.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) List(userId string) *UsersLabelsListCall {
 	c := &UsersLabelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4606,7 +4657,7 @@ func (c *UsersLabelsListCall) Header() http.Header {
 
 func (c *UsersLabelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4712,6 +4763,10 @@ type UsersLabelsPatchCall struct {
 }
 
 // Patch: Patch the specified label.
+//
+// - id: The ID of the label to update.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) Patch(userId string, id string, label *Label) *UsersLabelsPatchCall {
 	c := &UsersLabelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4747,7 +4802,7 @@ func (c *UsersLabelsPatchCall) Header() http.Header {
 
 func (c *UsersLabelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4864,6 +4919,10 @@ type UsersLabelsUpdateCall struct {
 }
 
 // Update: Updates the specified label.
+//
+// - id: The ID of the label to update.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersLabelsService) Update(userId string, id string, label *Label) *UsersLabelsUpdateCall {
 	c := &UsersLabelsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4899,7 +4958,7 @@ func (c *UsersLabelsUpdateCall) Header() http.Header {
 
 func (c *UsersLabelsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5017,6 +5076,9 @@ type UsersMessagesBatchDeleteCall struct {
 // BatchDelete: Deletes many messages by message ID. Provides no
 // guarantees that messages were not already deleted or even existed at
 // all.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) BatchDelete(userId string, batchdeletemessagesrequest *BatchDeleteMessagesRequest) *UsersMessagesBatchDeleteCall {
 	c := &UsersMessagesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5051,7 +5113,7 @@ func (c *UsersMessagesBatchDeleteCall) Header() http.Header {
 
 func (c *UsersMessagesBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5129,6 +5191,9 @@ type UsersMessagesBatchModifyCall struct {
 }
 
 // BatchModify: Modifies the labels on the specified messages.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) BatchModify(userId string, batchmodifymessagesrequest *BatchModifyMessagesRequest) *UsersMessagesBatchModifyCall {
 	c := &UsersMessagesBatchModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5163,7 +5228,7 @@ func (c *UsersMessagesBatchModifyCall) Header() http.Header {
 
 func (c *UsersMessagesBatchModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5243,6 +5308,10 @@ type UsersMessagesDeleteCall struct {
 
 // Delete: Immediately and permanently deletes the specified message.
 // This operation cannot be undone. Prefer `messages.trash` instead.
+//
+// - id: The ID of the message to delete.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Delete(userId string, id string) *UsersMessagesDeleteCall {
 	c := &UsersMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5277,7 +5346,7 @@ func (c *UsersMessagesDeleteCall) Header() http.Header {
 
 func (c *UsersMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5356,6 +5425,13 @@ type UsersMessagesGetCall struct {
 }
 
 // Get: Gets the specified message.
+//
+// - id: The ID of the message to retrieve. This ID is usually retrieved
+//   using `messages.list`. The ID is also contained in the result when
+//   a message is inserted (`messages.insert`) or imported
+//   (`messages.import`).
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Get(userId string, id string) *UsersMessagesGetCall {
 	c := &UsersMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5428,7 +5504,7 @@ func (c *UsersMessagesGetCall) Header() http.Header {
 
 func (c *UsersMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5571,6 +5647,9 @@ type UsersMessagesImportCall struct {
 // standard email delivery scanning and classification similar to
 // receiving via SMTP. Does not send a message. Note: This function
 // doesn't trigger forwarding rules or filters set up by the user.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Import(userId string, message *Message) *UsersMessagesImportCall {
 	c := &UsersMessagesImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5681,7 +5760,7 @@ func (c *UsersMessagesImportCall) Header() http.Header {
 
 func (c *UsersMessagesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5869,6 +5948,9 @@ type UsersMessagesInsertCall struct {
 // Insert: Directly inserts a message into only this user's mailbox
 // similar to `IMAP APPEND`, bypassing most scanning and classification.
 // Does not send a message.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Insert(userId string, message *Message) *UsersMessagesInsertCall {
 	c := &UsersMessagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5963,7 +6045,7 @@ func (c *UsersMessagesInsertCall) Header() http.Header {
 
 func (c *UsersMessagesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6136,6 +6218,9 @@ type UsersMessagesListCall struct {
 }
 
 // List: Lists the messages in the user's mailbox.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) List(userId string) *UsersMessagesListCall {
 	c := &UsersMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6157,7 +6242,8 @@ func (c *UsersMessagesListCall) LabelIds(labelIds ...string) *UsersMessagesListC
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of messages to return.
+// of messages to return. This field defaults to 100. The maximum
+// allowed value for this field is 500.
 func (c *UsersMessagesListCall) MaxResults(maxResults int64) *UsersMessagesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -6217,7 +6303,7 @@ func (c *UsersMessagesListCall) Header() http.Header {
 
 func (c *UsersMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6301,7 +6387,7 @@ func (c *UsersMessagesListCall) Do(opts ...googleapi.CallOption) (*ListMessagesR
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Maximum number of messages to return.",
+	//       "description": "Maximum number of messages to return. This field defaults to 100. The maximum allowed value for this field is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -6372,6 +6458,10 @@ type UsersMessagesModifyCall struct {
 }
 
 // Modify: Modifies the labels on the specified message.
+//
+// - id: The ID of the message to modify.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Modify(userId string, id string, modifymessagerequest *ModifyMessageRequest) *UsersMessagesModifyCall {
 	c := &UsersMessagesModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6407,7 +6497,7 @@ func (c *UsersMessagesModifyCall) Header() http.Header {
 
 func (c *UsersMessagesModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6524,6 +6614,9 @@ type UsersMessagesSendCall struct {
 
 // Send: Sends the specified message to the recipients in the `To`,
 // `Cc`, and `Bcc` headers.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Send(userId string, message *Message) *UsersMessagesSendCall {
 	c := &UsersMessagesSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6597,7 +6690,7 @@ func (c *UsersMessagesSendCall) Header() http.Header {
 
 func (c *UsersMessagesSendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6752,6 +6845,10 @@ type UsersMessagesTrashCall struct {
 }
 
 // Trash: Moves the specified message to the trash.
+//
+// - id: The ID of the message to Trash.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Trash(userId string, id string) *UsersMessagesTrashCall {
 	c := &UsersMessagesTrashCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6786,7 +6883,7 @@ func (c *UsersMessagesTrashCall) Header() http.Header {
 
 func (c *UsersMessagesTrashCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6893,6 +6990,10 @@ type UsersMessagesUntrashCall struct {
 }
 
 // Untrash: Removes the specified message from the trash.
+//
+// - id: The ID of the message to remove from Trash.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesService) Untrash(userId string, id string) *UsersMessagesUntrashCall {
 	c := &UsersMessagesUntrashCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -6927,7 +7028,7 @@ func (c *UsersMessagesUntrashCall) Header() http.Header {
 
 func (c *UsersMessagesUntrashCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7036,6 +7137,11 @@ type UsersMessagesAttachmentsGetCall struct {
 }
 
 // Get: Gets the specified message attachment.
+//
+// - id: The ID of the attachment.
+// - messageId: The ID of the message containing the attachment.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersMessagesAttachmentsService) Get(userId string, messageId string, id string) *UsersMessagesAttachmentsGetCall {
 	c := &UsersMessagesAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7081,7 +7187,7 @@ func (c *UsersMessagesAttachmentsGetCall) Header() http.Header {
 
 func (c *UsersMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7203,6 +7309,9 @@ type UsersSettingsGetAutoForwardingCall struct {
 
 // GetAutoForwarding: Gets the auto-forwarding setting for the specified
 // account.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) GetAutoForwarding(userId string) *UsersSettingsGetAutoForwardingCall {
 	c := &UsersSettingsGetAutoForwardingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7246,7 +7355,7 @@ func (c *UsersSettingsGetAutoForwardingCall) Header() http.Header {
 
 func (c *UsersSettingsGetAutoForwardingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7350,6 +7459,9 @@ type UsersSettingsGetImapCall struct {
 }
 
 // GetImap: Gets IMAP settings.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) GetImap(userId string) *UsersSettingsGetImapCall {
 	c := &UsersSettingsGetImapCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7393,7 +7505,7 @@ func (c *UsersSettingsGetImapCall) Header() http.Header {
 
 func (c *UsersSettingsGetImapCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7497,6 +7609,9 @@ type UsersSettingsGetLanguageCall struct {
 }
 
 // GetLanguage: Gets language settings.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) GetLanguage(userId string) *UsersSettingsGetLanguageCall {
 	c := &UsersSettingsGetLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7540,7 +7655,7 @@ func (c *UsersSettingsGetLanguageCall) Header() http.Header {
 
 func (c *UsersSettingsGetLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7644,6 +7759,9 @@ type UsersSettingsGetPopCall struct {
 }
 
 // GetPop: Gets POP settings.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) GetPop(userId string) *UsersSettingsGetPopCall {
 	c := &UsersSettingsGetPopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7687,7 +7805,7 @@ func (c *UsersSettingsGetPopCall) Header() http.Header {
 
 func (c *UsersSettingsGetPopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7791,6 +7909,9 @@ type UsersSettingsGetVacationCall struct {
 }
 
 // GetVacation: Gets vacation responder settings.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) GetVacation(userId string) *UsersSettingsGetVacationCall {
 	c := &UsersSettingsGetVacationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7834,7 +7955,7 @@ func (c *UsersSettingsGetVacationCall) Header() http.Header {
 
 func (c *UsersSettingsGetVacationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7942,6 +8063,9 @@ type UsersSettingsUpdateAutoForwardingCall struct {
 // when auto-forwarding is enabled. This method is only available to
 // service account clients that have been delegated domain-wide
 // authority.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) UpdateAutoForwarding(userId string, autoforwarding *AutoForwarding) *UsersSettingsUpdateAutoForwardingCall {
 	c := &UsersSettingsUpdateAutoForwardingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -7976,7 +8100,7 @@ func (c *UsersSettingsUpdateAutoForwardingCall) Header() http.Header {
 
 func (c *UsersSettingsUpdateAutoForwardingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8082,6 +8206,9 @@ type UsersSettingsUpdateImapCall struct {
 }
 
 // UpdateImap: Updates IMAP settings.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) UpdateImap(userId string, imapsettings *ImapSettings) *UsersSettingsUpdateImapCall {
 	c := &UsersSettingsUpdateImapCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8116,7 +8243,7 @@ func (c *UsersSettingsUpdateImapCall) Header() http.Header {
 
 func (c *UsersSettingsUpdateImapCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8227,6 +8354,9 @@ type UsersSettingsUpdateLanguageCall struct {
 // because the requested `displayLanguage` may not be directly supported
 // by Gmail but have a close variant that is, and so the variant may be
 // chosen and saved instead.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) UpdateLanguage(userId string, languagesettings *LanguageSettings) *UsersSettingsUpdateLanguageCall {
 	c := &UsersSettingsUpdateLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8261,7 +8391,7 @@ func (c *UsersSettingsUpdateLanguageCall) Header() http.Header {
 
 func (c *UsersSettingsUpdateLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8367,6 +8497,9 @@ type UsersSettingsUpdatePopCall struct {
 }
 
 // UpdatePop: Updates POP settings.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) UpdatePop(userId string, popsettings *PopSettings) *UsersSettingsUpdatePopCall {
 	c := &UsersSettingsUpdatePopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8401,7 +8534,7 @@ func (c *UsersSettingsUpdatePopCall) Header() http.Header {
 
 func (c *UsersSettingsUpdatePopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8507,6 +8640,9 @@ type UsersSettingsUpdateVacationCall struct {
 }
 
 // UpdateVacation: Updates vacation responder settings.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsService) UpdateVacation(userId string, vacationsettings *VacationSettings) *UsersSettingsUpdateVacationCall {
 	c := &UsersSettingsUpdateVacationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8541,7 +8677,7 @@ func (c *UsersSettingsUpdateVacationCall) Header() http.Header {
 
 func (c *UsersSettingsUpdateVacationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8658,6 +8794,9 @@ type UsersSettingsDelegatesCreateCall struct {
 // to a one minute delay before the new delegate is available for use.
 // This method is only available to service account clients that have
 // been delegated domain-wide authority.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsDelegatesService) Create(userId string, delegate *Delegate) *UsersSettingsDelegatesCreateCall {
 	c := &UsersSettingsDelegatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8692,7 +8831,7 @@ func (c *UsersSettingsDelegatesCreateCall) Header() http.Header {
 
 func (c *UsersSettingsDelegatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8803,6 +8942,11 @@ type UsersSettingsDelegatesDeleteCall struct {
 // by their primary email address, and not an email alias. This method
 // is only available to service account clients that have been delegated
 // domain-wide authority.
+//
+// - delegateEmail: The email address of the user to be removed as a
+//   delegate.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsDelegatesService) Delete(userId string, delegateEmail string) *UsersSettingsDelegatesDeleteCall {
 	c := &UsersSettingsDelegatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8837,7 +8981,7 @@ func (c *UsersSettingsDelegatesDeleteCall) Header() http.Header {
 
 func (c *UsersSettingsDelegatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8919,6 +9063,11 @@ type UsersSettingsDelegatesGetCall struct {
 // referred to by their primary email address, and not an email alias.
 // This method is only available to service account clients that have
 // been delegated domain-wide authority.
+//
+// - delegateEmail: The email address of the user whose delegate
+//   relationship is to be retrieved.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsDelegatesService) Get(userId string, delegateEmail string) *UsersSettingsDelegatesGetCall {
 	c := &UsersSettingsDelegatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -8963,7 +9112,7 @@ func (c *UsersSettingsDelegatesGetCall) Header() http.Header {
 
 func (c *UsersSettingsDelegatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9077,6 +9226,9 @@ type UsersSettingsDelegatesListCall struct {
 // List: Lists the delegates for the specified account. This method is
 // only available to service account clients that have been delegated
 // domain-wide authority.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsDelegatesService) List(userId string) *UsersSettingsDelegatesListCall {
 	c := &UsersSettingsDelegatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9120,7 +9272,7 @@ func (c *UsersSettingsDelegatesListCall) Header() http.Header {
 
 func (c *UsersSettingsDelegatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9225,6 +9377,9 @@ type UsersSettingsFiltersCreateCall struct {
 
 // Create: Creates a filter. Note: you can only create a maximum of
 // 1,000 filters.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsFiltersService) Create(userId string, filter *Filter) *UsersSettingsFiltersCreateCall {
 	c := &UsersSettingsFiltersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9259,7 +9414,7 @@ func (c *UsersSettingsFiltersCreateCall) Header() http.Header {
 
 func (c *UsersSettingsFiltersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9365,6 +9520,10 @@ type UsersSettingsFiltersDeleteCall struct {
 }
 
 // Delete: Deletes a filter.
+//
+// - id: The ID of the filter to be deleted.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsFiltersService) Delete(userId string, id string) *UsersSettingsFiltersDeleteCall {
 	c := &UsersSettingsFiltersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9399,7 +9558,7 @@ func (c *UsersSettingsFiltersDeleteCall) Header() http.Header {
 
 func (c *UsersSettingsFiltersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9478,6 +9637,10 @@ type UsersSettingsFiltersGetCall struct {
 }
 
 // Get: Gets a filter.
+//
+// - id: The ID of the filter to be fetched.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsFiltersService) Get(userId string, id string) *UsersSettingsFiltersGetCall {
 	c := &UsersSettingsFiltersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9522,7 +9685,7 @@ func (c *UsersSettingsFiltersGetCall) Header() http.Header {
 
 func (c *UsersSettingsFiltersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9634,6 +9797,9 @@ type UsersSettingsFiltersListCall struct {
 }
 
 // List: Lists the message filters of a Gmail user.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsFiltersService) List(userId string) *UsersSettingsFiltersListCall {
 	c := &UsersSettingsFiltersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9677,7 +9843,7 @@ func (c *UsersSettingsFiltersListCall) Header() http.Header {
 
 func (c *UsersSettingsFiltersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9786,6 +9952,9 @@ type UsersSettingsForwardingAddressesCreateCall struct {
 // will be created with verification status set to `accepted`. This
 // method is only available to service account clients that have been
 // delegated domain-wide authority.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsForwardingAddressesService) Create(userId string, forwardingaddress *ForwardingAddress) *UsersSettingsForwardingAddressesCreateCall {
 	c := &UsersSettingsForwardingAddressesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9820,7 +9989,7 @@ func (c *UsersSettingsForwardingAddressesCreateCall) Header() http.Header {
 
 func (c *UsersSettingsForwardingAddressesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9929,6 +10098,10 @@ type UsersSettingsForwardingAddressesDeleteCall struct {
 // verification that may have been required. This method is only
 // available to service account clients that have been delegated
 // domain-wide authority.
+//
+// - forwardingEmail: The forwarding address to be deleted.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsForwardingAddressesService) Delete(userId string, forwardingEmail string) *UsersSettingsForwardingAddressesDeleteCall {
 	c := &UsersSettingsForwardingAddressesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -9963,7 +10136,7 @@ func (c *UsersSettingsForwardingAddressesDeleteCall) Header() http.Header {
 
 func (c *UsersSettingsForwardingAddressesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10042,6 +10215,10 @@ type UsersSettingsForwardingAddressesGetCall struct {
 }
 
 // Get: Gets the specified forwarding address.
+//
+// - forwardingEmail: The forwarding address to be retrieved.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsForwardingAddressesService) Get(userId string, forwardingEmail string) *UsersSettingsForwardingAddressesGetCall {
 	c := &UsersSettingsForwardingAddressesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10086,7 +10263,7 @@ func (c *UsersSettingsForwardingAddressesGetCall) Header() http.Header {
 
 func (c *UsersSettingsForwardingAddressesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10198,6 +10375,9 @@ type UsersSettingsForwardingAddressesListCall struct {
 }
 
 // List: Lists the forwarding addresses for the specified account.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsForwardingAddressesService) List(userId string) *UsersSettingsForwardingAddressesListCall {
 	c := &UsersSettingsForwardingAddressesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10241,7 +10421,7 @@ func (c *UsersSettingsForwardingAddressesListCall) Header() http.Header {
 
 func (c *UsersSettingsForwardingAddressesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10354,6 +10534,9 @@ type UsersSettingsSendAsCreateCall struct {
 // sanitize the HTML before saving it with the alias. This method is
 // only available to service account clients that have been delegated
 // domain-wide authority.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Create(userId string, sendas *SendAs) *UsersSettingsSendAsCreateCall {
 	c := &UsersSettingsSendAsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10388,7 +10571,7 @@ func (c *UsersSettingsSendAsCreateCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10497,6 +10680,10 @@ type UsersSettingsSendAsDeleteCall struct {
 // that may have been required for using it. This method is only
 // available to service account clients that have been delegated
 // domain-wide authority.
+//
+// - sendAsEmail: The send-as alias to be deleted.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Delete(userId string, sendAsEmail string) *UsersSettingsSendAsDeleteCall {
 	c := &UsersSettingsSendAsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10531,7 +10718,7 @@ func (c *UsersSettingsSendAsDeleteCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10611,6 +10798,10 @@ type UsersSettingsSendAsGetCall struct {
 
 // Get: Gets the specified send-as alias. Fails with an HTTP 404 error
 // if the specified address is not a member of the collection.
+//
+// - sendAsEmail: The send-as alias to be retrieved.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Get(userId string, sendAsEmail string) *UsersSettingsSendAsGetCall {
 	c := &UsersSettingsSendAsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10655,7 +10846,7 @@ func (c *UsersSettingsSendAsGetCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10769,6 +10960,9 @@ type UsersSettingsSendAsListCall struct {
 // List: Lists the send-as aliases for the specified account. The result
 // includes the primary send-as address associated with the account as
 // well as any custom "from" aliases.
+//
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) List(userId string) *UsersSettingsSendAsListCall {
 	c := &UsersSettingsSendAsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10812,7 +11006,7 @@ func (c *UsersSettingsSendAsListCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10917,6 +11111,10 @@ type UsersSettingsSendAsPatchCall struct {
 }
 
 // Patch: Patch the specified send-as alias.
+//
+// - sendAsEmail: The send-as alias to be updated.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Patch(userId string, sendAsEmail string, sendas *SendAs) *UsersSettingsSendAsPatchCall {
 	c := &UsersSettingsSendAsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -10952,7 +11150,7 @@ func (c *UsersSettingsSendAsPatchCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11072,6 +11270,10 @@ type UsersSettingsSendAsUpdateCall struct {
 // other than the primary address for the account can only be updated by
 // service account clients that have been delegated domain-wide
 // authority.
+//
+// - sendAsEmail: The send-as alias to be updated.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Update(userId string, sendAsEmail string, sendas *SendAs) *UsersSettingsSendAsUpdateCall {
 	c := &UsersSettingsSendAsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11107,7 +11309,7 @@ func (c *UsersSettingsSendAsUpdateCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11225,6 +11427,10 @@ type UsersSettingsSendAsVerifyCall struct {
 // address. The verification status must be `pending`. This method is
 // only available to service account clients that have been delegated
 // domain-wide authority.
+//
+// - sendAsEmail: The send-as alias to be verified.
+// - userId: User's email address. The special value "me" can be used to
+//   indicate the authenticated user.
 func (r *UsersSettingsSendAsService) Verify(userId string, sendAsEmail string) *UsersSettingsSendAsVerifyCall {
 	c := &UsersSettingsSendAsVerifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11259,7 +11465,7 @@ func (c *UsersSettingsSendAsVerifyCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11339,6 +11545,12 @@ type UsersSettingsSendAsSmimeInfoDeleteCall struct {
 
 // Delete: Deletes the specified S/MIME config for the specified send-as
 // alias.
+//
+// - id: The immutable ID for the SmimeInfo.
+// - sendAsEmail: The email address that appears in the "From:" header
+//   for mail sent using this alias.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersSettingsSendAsSmimeInfoService) Delete(userId string, sendAsEmail string, id string) *UsersSettingsSendAsSmimeInfoDeleteCall {
 	c := &UsersSettingsSendAsSmimeInfoDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11374,7 +11586,7 @@ func (c *UsersSettingsSendAsSmimeInfoDeleteCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsSmimeInfoDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11464,6 +11676,12 @@ type UsersSettingsSendAsSmimeInfoGetCall struct {
 
 // Get: Gets the specified S/MIME config for the specified send-as
 // alias.
+//
+// - id: The immutable ID for the SmimeInfo.
+// - sendAsEmail: The email address that appears in the "From:" header
+//   for mail sent using this alias.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersSettingsSendAsSmimeInfoService) Get(userId string, sendAsEmail string, id string) *UsersSettingsSendAsSmimeInfoGetCall {
 	c := &UsersSettingsSendAsSmimeInfoGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11509,7 +11727,7 @@ func (c *UsersSettingsSendAsSmimeInfoGetCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsSmimeInfoGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11632,6 +11850,11 @@ type UsersSettingsSendAsSmimeInfoInsertCall struct {
 
 // Insert: Insert (upload) the given S/MIME config for the specified
 // send-as alias. Note that pkcs12 format is required for the key.
+//
+// - sendAsEmail: The email address that appears in the "From:" header
+//   for mail sent using this alias.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersSettingsSendAsSmimeInfoService) Insert(userId string, sendAsEmail string, smimeinfo *SmimeInfo) *UsersSettingsSendAsSmimeInfoInsertCall {
 	c := &UsersSettingsSendAsSmimeInfoInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11667,7 +11890,7 @@ func (c *UsersSettingsSendAsSmimeInfoInsertCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsSmimeInfoInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11783,6 +12006,11 @@ type UsersSettingsSendAsSmimeInfoListCall struct {
 }
 
 // List: Lists S/MIME configs for the specified send-as alias.
+//
+// - sendAsEmail: The email address that appears in the "From:" header
+//   for mail sent using this alias.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersSettingsSendAsSmimeInfoService) List(userId string, sendAsEmail string) *UsersSettingsSendAsSmimeInfoListCall {
 	c := &UsersSettingsSendAsSmimeInfoListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11827,7 +12055,7 @@ func (c *UsersSettingsSendAsSmimeInfoListCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsSmimeInfoListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11942,6 +12170,12 @@ type UsersSettingsSendAsSmimeInfoSetDefaultCall struct {
 
 // SetDefault: Sets the default S/MIME config for the specified send-as
 // alias.
+//
+// - id: The immutable ID for the SmimeInfo.
+// - sendAsEmail: The email address that appears in the "From:" header
+//   for mail sent using this alias.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersSettingsSendAsSmimeInfoService) SetDefault(userId string, sendAsEmail string, id string) *UsersSettingsSendAsSmimeInfoSetDefaultCall {
 	c := &UsersSettingsSendAsSmimeInfoSetDefaultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -11977,7 +12211,7 @@ func (c *UsersSettingsSendAsSmimeInfoSetDefaultCall) Header() http.Header {
 
 func (c *UsersSettingsSendAsSmimeInfoSetDefaultCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12065,6 +12299,10 @@ type UsersThreadsDeleteCall struct {
 
 // Delete: Immediately and permanently deletes the specified thread.
 // This operation cannot be undone. Prefer `threads.trash` instead.
+//
+// - id: ID of the Thread to delete.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) Delete(userId string, id string) *UsersThreadsDeleteCall {
 	c := &UsersThreadsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12099,7 +12337,7 @@ func (c *UsersThreadsDeleteCall) Header() http.Header {
 
 func (c *UsersThreadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12178,6 +12416,10 @@ type UsersThreadsGetCall struct {
 }
 
 // Get: Gets the specified thread.
+//
+// - id: The ID of the thread to retrieve.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) Get(userId string, id string) *UsersThreadsGetCall {
 	c := &UsersThreadsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12246,7 +12488,7 @@ func (c *UsersThreadsGetCall) Header() http.Header {
 
 func (c *UsersThreadsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12383,6 +12625,9 @@ type UsersThreadsListCall struct {
 }
 
 // List: Lists the threads in the user's mailbox.
+//
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) List(userId string) *UsersThreadsListCall {
 	c := &UsersThreadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12404,7 +12649,8 @@ func (c *UsersThreadsListCall) LabelIds(labelIds ...string) *UsersThreadsListCal
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of threads to return.
+// of threads to return. This field defaults to 100. The maximum allowed
+// value for this field is 500.
 func (c *UsersThreadsListCall) MaxResults(maxResults int64) *UsersThreadsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -12464,7 +12710,7 @@ func (c *UsersThreadsListCall) Header() http.Header {
 
 func (c *UsersThreadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12548,7 +12794,7 @@ func (c *UsersThreadsListCall) Do(opts ...googleapi.CallOption) (*ListThreadsRes
 	//     },
 	//     "maxResults": {
 	//       "default": "100",
-	//       "description": "Maximum number of threads to return.",
+	//       "description": "Maximum number of threads to return. This field defaults to 100. The maximum allowed value for this field is 500.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -12620,6 +12866,10 @@ type UsersThreadsModifyCall struct {
 
 // Modify: Modifies the labels applied to the thread. This applies to
 // all messages in the thread.
+//
+// - id: The ID of the thread to modify.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) Modify(userId string, id string, modifythreadrequest *ModifyThreadRequest) *UsersThreadsModifyCall {
 	c := &UsersThreadsModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12655,7 +12905,7 @@ func (c *UsersThreadsModifyCall) Header() http.Header {
 
 func (c *UsersThreadsModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12770,6 +13020,10 @@ type UsersThreadsTrashCall struct {
 }
 
 // Trash: Moves the specified thread to the trash.
+//
+// - id: The ID of the thread to Trash.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) Trash(userId string, id string) *UsersThreadsTrashCall {
 	c := &UsersThreadsTrashCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12804,7 +13058,7 @@ func (c *UsersThreadsTrashCall) Header() http.Header {
 
 func (c *UsersThreadsTrashCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12911,6 +13165,10 @@ type UsersThreadsUntrashCall struct {
 }
 
 // Untrash: Removes the specified thread from the trash.
+//
+// - id: The ID of the thread to remove from Trash.
+// - userId: The user's email address. The special value `me` can be
+//   used to indicate the authenticated user.
 func (r *UsersThreadsService) Untrash(userId string, id string) *UsersThreadsUntrashCall {
 	c := &UsersThreadsUntrashCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12945,7 +13203,7 @@ func (c *UsersThreadsUntrashCall) Header() http.Header {
 
 func (c *UsersThreadsUntrashCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

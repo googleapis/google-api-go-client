@@ -157,7 +157,7 @@ type AccountsProductsService struct {
 }
 
 // Attributes: Attributes of the product. For more information, see
-// https://support.google.com/manufacturers/answer/6124116. Next tag: 48
+// https://support.google.com/manufacturers/answer/6124116.
 type Attributes struct {
 	// AdditionalImageLink: The additional images of the product. For more
 	// information, see
@@ -294,7 +294,7 @@ type Attributes struct {
 
 	// SizeType: The size type of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#sizetype.
-	SizeType string `json:"sizeType,omitempty"`
+	SizeType []string `json:"sizeType,omitempty"`
 
 	// SuggestedRetailPrice: The suggested retail price (MSRP) of the
 	// product. For more information, see
@@ -319,10 +319,10 @@ type Attributes struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdditionalImageLink")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdditionalImageLink") to
@@ -352,10 +352,10 @@ type Capacity struct {
 
 	// ForceSendFields is a list of field names (e.g. "Unit") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Unit") to include in API
@@ -385,10 +385,10 @@ type Count struct {
 
 	// ForceSendFields is a list of field names (e.g. "Unit") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Unit") to include in API
@@ -423,10 +423,10 @@ type DestinationStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "Destination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Destination") to include
@@ -471,10 +471,10 @@ type FeatureDescription struct {
 
 	// ForceSendFields is a list of field names (e.g. "Headline") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Headline") to include in
@@ -533,10 +533,10 @@ type Image struct {
 
 	// ForceSendFields is a list of field names (e.g. "ImageUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ImageUrl") to include in
@@ -606,10 +606,10 @@ type Issue struct {
 
 	// ForceSendFields is a list of field names (e.g. "Attribute") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Attribute") to include in
@@ -641,10 +641,10 @@ type ListProductsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -672,10 +672,10 @@ type Price struct {
 
 	// ForceSendFields is a list of field names (e.g. "Amount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Amount") to include in API
@@ -737,10 +737,10 @@ type Product struct {
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Attributes") to include in
@@ -774,10 +774,10 @@ type ProductDetail struct {
 
 	// ForceSendFields is a list of field names (e.g. "AttributeName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AttributeName") to include
@@ -807,6 +807,17 @@ type AccountsProductsDeleteCall struct {
 }
 
 // Delete: Deletes the product from a Manufacturer Center account.
+//
+// - name: Name in the format
+//   `{target_country}:{content_language}:{product_id}`.
+//   `target_country` - The target country of the product as a CLDR
+//   territory code (for example, US). `content_language` - The content
+//   language of the product as a two-letter ISO 639-1 language code
+//   (for example, en). `product_id` - The ID of the product. For more
+//   information, see
+//   https://support.google.com/manufacturers/answer/6124116#id.
+// - parent: Parent ID in the format `accounts/{account_id}`.
+//   `account_id` - The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) Delete(parent string, name string) *AccountsProductsDeleteCall {
 	c := &AccountsProductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -841,7 +852,7 @@ func (c *AccountsProductsDeleteCall) Header() http.Header {
 
 func (c *AccountsProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -953,6 +964,17 @@ type AccountsProductsGetCall struct {
 // process. Changes are only visible after it has been processed. While
 // some issues may be available once the product has been processed,
 // other issues may take days to appear.
+//
+// - name: Name in the format
+//   `{target_country}:{content_language}:{product_id}`.
+//   `target_country` - The target country of the product as a CLDR
+//   territory code (for example, US). `content_language` - The content
+//   language of the product as a two-letter ISO 639-1 language code
+//   (for example, en). `product_id` - The ID of the product. For more
+//   information, see
+//   https://support.google.com/manufacturers/answer/6124116#id.
+// - parent: Parent ID in the format `accounts/{account_id}`.
+//   `account_id` - The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) Get(parent string, name string) *AccountsProductsGetCall {
 	c := &AccountsProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1011,7 +1033,7 @@ func (c *AccountsProductsGetCall) Header() http.Header {
 
 func (c *AccountsProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1139,6 +1161,9 @@ type AccountsProductsListCall struct {
 }
 
 // List: Lists all the products in a Manufacturer Center account.
+//
+// - parent: Parent ID in the format `accounts/{account_id}`.
+//   `account_id` - The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) List(parent string) *AccountsProductsListCall {
 	c := &AccountsProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1210,7 +1235,7 @@ func (c *AccountsProductsListCall) Header() http.Header {
 
 func (c *AccountsProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1374,6 +1399,17 @@ type AccountsProductsUpdateCall struct {
 // retrieved. Until then, new products will be unavailable, and
 // retrieval of previously uploaded products will return the original
 // state of the product.
+//
+// - name: Name in the format
+//   `{target_country}:{content_language}:{product_id}`.
+//   `target_country` - The target country of the product as a CLDR
+//   territory code (for example, US). `content_language` - The content
+//   language of the product as a two-letter ISO 639-1 language code
+//   (for example, en). `product_id` - The ID of the product. For more
+//   information, see
+//   https://support.google.com/manufacturers/answer/6124116#id.
+// - parent: Parent ID in the format `accounts/{account_id}`.
+//   `account_id` - The ID of the Manufacturer Center account.
 func (r *AccountsProductsService) Update(parent string, name string, attributes *Attributes) *AccountsProductsUpdateCall {
 	c := &AccountsProductsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1409,7 +1445,7 @@ func (c *AccountsProductsUpdateCall) Header() http.Header {
 
 func (c *AccountsProductsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

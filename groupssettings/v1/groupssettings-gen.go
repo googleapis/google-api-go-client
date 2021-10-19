@@ -210,6 +210,12 @@ type Groups struct {
 	// true.
 	DefaultMessageDenyNotificationText string `json:"defaultMessageDenyNotificationText,omitempty"`
 
+	// DefaultSender: Default sender for members who can post messages as
+	// the group. Possible values are: - `DEFAULT_SELF`: By default messages
+	// will be sent from the user - `GROUP`: By default messages will be
+	// sent from the group
+	DefaultSender string `json:"default_sender,omitempty"`
+
 	// Description: Description of the group. This property value may be an
 	// empty string if no group description has been entered. If entered,
 	// the maximum group description is no more than 300 characters.
@@ -704,8 +710,8 @@ type Groups struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowExternalMembers") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -739,6 +745,8 @@ type GroupsGetCall struct {
 }
 
 // Get: Gets one resource by id.
+//
+// - groupUniqueId: The group's email address.
 func (r *GroupsService) Get(groupUniqueId string) *GroupsGetCall {
 	c := &GroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupUniqueId = groupUniqueId
@@ -782,7 +790,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -882,6 +890,8 @@ type GroupsPatchCall struct {
 
 // Patch: Updates an existing resource. This method supports patch
 // semantics.
+//
+// - groupUniqueId: The group's email address.
 func (r *GroupsService) Patch(groupUniqueId string, groups *Groups) *GroupsPatchCall {
 	c := &GroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupUniqueId = groupUniqueId
@@ -916,7 +926,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1020,6 +1030,8 @@ type GroupsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - groupUniqueId: The group's email address.
 func (r *GroupsService) Update(groupUniqueId string, groups *Groups) *GroupsUpdateCall {
 	c := &GroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupUniqueId = groupUniqueId
@@ -1054,7 +1066,7 @@ func (c *GroupsUpdateCall) Header() http.Header {
 
 func (c *GroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

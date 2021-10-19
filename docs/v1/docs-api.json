@@ -3,16 +3,16 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/documents": {
-          "description": "View and manage your Google Docs documents"
+          "description": "See, edit, create, and delete all your Google Docs documents"
         },
         "https://www.googleapis.com/auth/documents.readonly": {
-          "description": "View your Google Docs documents"
+          "description": "See all your Google Docs documents"
         },
         "https://www.googleapis.com/auth/drive": {
           "description": "See, edit, create, and delete all of your Google Drive files"
         },
         "https://www.googleapis.com/auth/drive.file": {
-          "description": "View and manage Google Drive files and folders that you have opened or created with this app"
+          "description": "See, edit, create, and delete only the specific Google Drive files you use with this app"
         },
         "https://www.googleapis.com/auth/drive.readonly": {
           "description": "See and download all your Google Drive files"
@@ -216,7 +216,7 @@
       }
     }
   },
-  "revision": "20200803",
+  "revision": "20210707",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -2273,6 +2273,14 @@
           "$ref": "PageBreak",
           "description": "A page break paragraph element."
         },
+        "person": {
+          "$ref": "Person",
+          "description": "A paragraph element that links to a person or email address."
+        },
+        "richLink": {
+          "$ref": "RichLink",
+          "description": "A paragraph element that links to a Google resource (such as a file in Drive, a Youtube video, a Calendar event, etc.)"
+        },
         "startIndex": {
           "description": "The zero-based start index of this paragraph element, in UTF-16 code units.",
           "format": "int32",
@@ -2525,6 +2533,65 @@
       },
       "type": "object"
     },
+    "Person": {
+      "description": "A person or email address mentioned in a document. These mentions behave as a single, immutable element containing the person's name or email address.",
+      "id": "Person",
+      "properties": {
+        "personId": {
+          "description": "Output only. The unique ID of this link.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "personProperties": {
+          "$ref": "PersonProperties",
+          "description": "Output only. The properties of this Person. This field is always present.",
+          "readOnly": true
+        },
+        "suggestedDeletionIds": {
+          "description": "IDs for suggestions that remove this person link from the document. A Person might have multiple deletion IDs if, for example, multiple users suggest to delete it. If empty, then this person link isn't suggested for deletion.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "suggestedInsertionIds": {
+          "description": "IDs for suggestions that insert this person link into the document. A Person might have multiple insertion IDs if it is a nested suggested change (a suggestion within a suggestion made by a different user, for example). If empty, then this person link isn't a suggested insertion.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "suggestedTextStyleChanges": {
+          "additionalProperties": {
+            "$ref": "SuggestedTextStyle"
+          },
+          "description": "The suggested text style changes to this Person, keyed by suggestion ID.",
+          "type": "object"
+        },
+        "textStyle": {
+          "$ref": "TextStyle",
+          "description": "The text style of this Person."
+        }
+      },
+      "type": "object"
+    },
+    "PersonProperties": {
+      "description": "Properties specific to a linked Person.",
+      "id": "PersonProperties",
+      "properties": {
+        "email": {
+          "description": "Output only. The email address linked to this Person. This field is always present.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. The name of the person if it is displayed in the link text instead of the person's email address.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "PositionedObject": {
       "description": "An object that is tethered to a Paragraph and positioned relative to the beginning of the paragraph. A PositionedObject contains an EmbeddedObject such as an image.",
       "id": "PositionedObject",
@@ -2570,7 +2637,8 @@
             "BREAK_LEFT",
             "BREAK_RIGHT",
             "BREAK_LEFT_RIGHT",
-            "IN_FRONT_OF_TEXT"
+            "IN_FRONT_OF_TEXT",
+            "BEHIND_TEXT"
           ],
           "enumDescriptions": [
             "The layout is unspecified.",
@@ -2578,7 +2646,8 @@
             "Breaks text such that the positioned object is on the left and text is on the right.",
             "Breaks text such that the positioned object is on the right and text is on the left.",
             "Breaks text such that there is no text on the left or right of the positioned object.",
-            "The positioned object is in front of the text."
+            "The positioned object is in front of the text.",
+            "The positioned object is behind the text."
           ],
           "type": "string"
         },
@@ -2924,6 +2993,70 @@
           "description": "The red component of the color, from 0.0 to 1.0.",
           "format": "float",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "RichLink": {
+      "description": "A link to a Google resource (e.g., a file in Drive, a YouTube video, a Calendar event, etc.).",
+      "id": "RichLink",
+      "properties": {
+        "richLinkId": {
+          "description": "Output only. The ID of this link.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "richLinkProperties": {
+          "$ref": "RichLinkProperties",
+          "description": "Output only. The properties of this RichLink. This field is always present.",
+          "readOnly": true
+        },
+        "suggestedDeletionIds": {
+          "description": "IDs for suggestions that remove this link from the document. A RichLink might have multiple deletion IDs if, for example, multiple users suggest to delete it. If empty, then this person link isn't suggested for deletion.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "suggestedInsertionIds": {
+          "description": "IDs for suggestions that insert this link into the document. A RichLink might have multiple insertion IDs if it is a nested suggested change (a suggestion within a suggestion made by a different user, for example). If empty, then this person link isn't a suggested insertion.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "suggestedTextStyleChanges": {
+          "additionalProperties": {
+            "$ref": "SuggestedTextStyle"
+          },
+          "description": "The suggested text style changes to this RichLink, keyed by suggestion ID.",
+          "type": "object"
+        },
+        "textStyle": {
+          "$ref": "TextStyle",
+          "description": "The text style of this RichLink."
+        }
+      },
+      "type": "object"
+    },
+    "RichLinkProperties": {
+      "description": "Properties specific to a RichLink.",
+      "id": "RichLinkProperties",
+      "properties": {
+        "mimeType": {
+          "description": "Output only. The [MIME type](https://developers.google.com/drive/api/v3/mime-types) of the RichLink, if there is one (i.e., when it is a file in Drive).",
+          "readOnly": true,
+          "type": "string"
+        },
+        "title": {
+          "description": "Output only. The title of the RichLink as displayed in the link. This title matches the title of the linked resource at the time of the insertion or last update of the link. This field is always present.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "uri": {
+          "description": "Output only. The URI to the RichLink. This is always present.",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"

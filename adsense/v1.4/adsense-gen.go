@@ -477,10 +477,10 @@ type Account struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreationTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreationTime") to include
@@ -519,10 +519,10 @@ type Accounts struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -559,10 +559,10 @@ type AdClient struct {
 
 	// ForceSendFields is a list of field names (e.g. "ArcOptIn") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ArcOptIn") to include in
@@ -601,10 +601,10 @@ type AdClients struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -643,10 +643,10 @@ type AdCode struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdCode") to include in API
@@ -682,10 +682,10 @@ type AdStyle struct {
 
 	// ForceSendFields is a list of field names (e.g. "Colors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Colors") to include in API
@@ -724,10 +724,10 @@ type AdStyleColors struct {
 
 	// ForceSendFields is a list of field names (e.g. "Background") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Background") to include in
@@ -755,10 +755,10 @@ type AdStyleFont struct {
 
 	// ForceSendFields is a list of field names (e.g. "Family") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Family") to include in API
@@ -827,10 +827,10 @@ type AdUnit struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -863,10 +863,10 @@ type AdUnitContentAdsSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "BackupOption") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BackupOption") to include
@@ -899,10 +899,10 @@ type AdUnitContentAdsSettingsBackupOption struct {
 
 	// ForceSendFields is a list of field names (e.g. "Color") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Color") to include in API
@@ -939,10 +939,10 @@ type AdUnitFeedAdsSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdPosition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdPosition") to include in
@@ -977,10 +977,10 @@ type AdUnitMobileContentAdsSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "MarkupLanguage") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MarkupLanguage") to
@@ -1020,10 +1020,10 @@ type AdUnits struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -1086,10 +1086,10 @@ type AdsenseReportsGenerateResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Averages") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Averages") to include in
@@ -1121,10 +1121,10 @@ type AdsenseReportsGenerateResponseHeaders struct {
 
 	// ForceSendFields is a list of field names (e.g. "Currency") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Currency") to include in
@@ -1169,10 +1169,10 @@ type Alert struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -1203,10 +1203,10 @@ type Alerts struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1250,10 +1250,10 @@ type CustomChannel struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -1293,10 +1293,10 @@ type CustomChannelTargetingInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdsAppearOn") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdsAppearOn") to include
@@ -1335,10 +1335,10 @@ type CustomChannels struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -1368,10 +1368,10 @@ type Metadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1409,10 +1409,10 @@ type Payment struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -1444,10 +1444,10 @@ type Payments struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1503,8 +1503,8 @@ type ReportingMetadataEntry struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CompatibleDimensions") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1547,10 +1547,10 @@ type SavedAdStyle struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdStyle") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdStyle") to include in
@@ -1589,10 +1589,10 @@ type SavedAdStyles struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -1622,10 +1622,10 @@ type SavedReport struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -1664,10 +1664,10 @@ type SavedReports struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -1700,10 +1700,10 @@ type UrlChannel struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -1742,10 +1742,10 @@ type UrlChannels struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -1775,6 +1775,8 @@ type AccountsGetCall struct {
 }
 
 // Get: Get information about the selected AdSense account.
+//
+// - accountId: Account to get information about.
 func (r *AccountsService) Get(accountId string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -1825,7 +1827,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1987,7 +1989,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2110,6 +2112,9 @@ type AccountsAdclientsGetAdCodeCall struct {
 }
 
 // GetAdCode: Get Auto ad code for a given ad client.
+//
+// - accountId: Account which contains the ad client.
+// - adClientId: Ad client to get the code for.
 func (r *AccountsAdclientsService) GetAdCode(accountId string, adClientId string) *AccountsAdclientsGetAdCodeCall {
 	c := &AccountsAdclientsGetAdCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2161,7 +2166,7 @@ func (c *AccountsAdclientsGetAdCodeCall) Header() http.Header {
 
 func (c *AccountsAdclientsGetAdCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2274,6 +2279,8 @@ type AccountsAdclientsListCall struct {
 }
 
 // List: List all ad clients in the specified account.
+//
+// - accountId: Account for which to list ad clients.
 func (r *AccountsAdclientsService) List(accountId string) *AccountsAdclientsListCall {
 	c := &AccountsAdclientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2333,7 +2340,7 @@ func (c *AccountsAdclientsListCall) Header() http.Header {
 
 func (c *AccountsAdclientsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2470,6 +2477,10 @@ type AccountsAdunitsGetCall struct {
 
 // Get: Gets the specified ad unit in the specified ad client for the
 // specified account.
+//
+// - accountId: Account to which the ad client belongs.
+// - adClientId: Ad client for which to get the ad unit.
+// - adUnitId: Ad unit to retrieve.
 func (r *AccountsAdunitsService) Get(accountId string, adClientId string, adUnitId string) *AccountsAdunitsGetCall {
 	c := &AccountsAdunitsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2515,7 +2526,7 @@ func (c *AccountsAdunitsGetCall) Header() http.Header {
 
 func (c *AccountsAdunitsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2633,6 +2644,10 @@ type AccountsAdunitsGetAdCodeCall struct {
 }
 
 // GetAdCode: Get ad code for the specified ad unit.
+//
+// - accountId: Account which contains the ad client.
+// - adClientId: Ad client with contains the ad unit.
+// - adUnitId: Ad unit to get the code for.
 func (r *AccountsAdunitsService) GetAdCode(accountId string, adClientId string, adUnitId string) *AccountsAdunitsGetAdCodeCall {
 	c := &AccountsAdunitsGetAdCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2678,7 +2693,7 @@ func (c *AccountsAdunitsGetAdCodeCall) Header() http.Header {
 
 func (c *AccountsAdunitsGetAdCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2796,6 +2811,9 @@ type AccountsAdunitsListCall struct {
 
 // List: List all ad units in the specified ad client for the specified
 // account.
+//
+// - accountId: Account to which the ad client belongs.
+// - adClientId: Ad client for which to list ad units.
 func (r *AccountsAdunitsService) List(accountId string, adClientId string) *AccountsAdunitsListCall {
 	c := &AccountsAdunitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2863,7 +2881,7 @@ func (c *AccountsAdunitsListCall) Header() http.Header {
 
 func (c *AccountsAdunitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3013,6 +3031,10 @@ type AccountsAdunitsCustomchannelsListCall struct {
 
 // List: List all custom channels which the specified ad unit belongs
 // to.
+//
+// - accountId: Account to which the ad client belongs.
+// - adClientId: Ad client which contains the ad unit.
+// - adUnitId: Ad unit for which to list custom channels.
 func (r *AccountsAdunitsCustomchannelsService) List(accountId string, adClientId string, adUnitId string) *AccountsAdunitsCustomchannelsListCall {
 	c := &AccountsAdunitsCustomchannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3075,7 +3097,7 @@ func (c *AccountsAdunitsCustomchannelsListCall) Header() http.Header {
 
 func (c *AccountsAdunitsCustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3226,6 +3248,9 @@ type AccountsAlertsDeleteCall struct {
 
 // Delete: Dismiss (delete) the specified alert from the specified
 // publisher AdSense account.
+//
+// - accountId: Account which contains the ad unit.
+// - alertId: Alert to delete.
 func (r *AccountsAlertsService) Delete(accountId string, alertId string) *AccountsAlertsDeleteCall {
 	c := &AccountsAlertsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3260,7 +3285,7 @@ func (c *AccountsAlertsDeleteCall) Header() http.Header {
 
 func (c *AccountsAlertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3336,6 +3361,8 @@ type AccountsAlertsListCall struct {
 }
 
 // List: List the alerts for the specified AdSense account.
+//
+// - accountId: Account for which to retrieve the alerts.
 func (r *AccountsAlertsService) List(accountId string) *AccountsAlertsListCall {
 	c := &AccountsAlertsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3388,7 +3415,7 @@ func (c *AccountsAlertsListCall) Header() http.Header {
 
 func (c *AccountsAlertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3496,6 +3523,10 @@ type AccountsCustomchannelsGetCall struct {
 
 // Get: Get the specified custom channel from the specified ad client
 // for the specified account.
+//
+// - accountId: Account to which the ad client belongs.
+// - adClientId: Ad client which contains the custom channel.
+// - customChannelId: Custom channel to retrieve.
 func (r *AccountsCustomchannelsService) Get(accountId string, adClientId string, customChannelId string) *AccountsCustomchannelsGetCall {
 	c := &AccountsCustomchannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3541,7 +3572,7 @@ func (c *AccountsCustomchannelsGetCall) Header() http.Header {
 
 func (c *AccountsCustomchannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3659,6 +3690,9 @@ type AccountsCustomchannelsListCall struct {
 
 // List: List all custom channels in the specified ad client for the
 // specified account.
+//
+// - accountId: Account to which the ad client belongs.
+// - adClientId: Ad client for which to list custom channels.
 func (r *AccountsCustomchannelsService) List(accountId string, adClientId string) *AccountsCustomchannelsListCall {
 	c := &AccountsCustomchannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3720,7 +3754,7 @@ func (c *AccountsCustomchannelsListCall) Header() http.Header {
 
 func (c *AccountsCustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3864,6 +3898,10 @@ type AccountsCustomchannelsAdunitsListCall struct {
 }
 
 // List: List all ad units in the specified custom channel.
+//
+// - accountId: Account to which the ad client belongs.
+// - adClientId: Ad client which contains the custom channel.
+// - customChannelId: Custom channel for which to list ad units.
 func (r *AccountsCustomchannelsAdunitsService) List(accountId string, adClientId string, customChannelId string) *AccountsCustomchannelsAdunitsListCall {
 	c := &AccountsCustomchannelsAdunitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -3932,7 +3970,7 @@ func (c *AccountsCustomchannelsAdunitsListCall) Header() http.Header {
 
 func (c *AccountsCustomchannelsAdunitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4087,6 +4125,8 @@ type AccountsPaymentsListCall struct {
 }
 
 // List: List the payments for the specified AdSense account.
+//
+// - accountId: Account for which to retrieve the payments.
 func (r *AccountsPaymentsService) List(accountId string) *AccountsPaymentsListCall {
 	c := &AccountsPaymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4130,7 +4170,7 @@ func (c *AccountsPaymentsListCall) Header() http.Header {
 
 func (c *AccountsPaymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4232,6 +4272,12 @@ type AccountsReportsGenerateCall struct {
 // Generate: Generate an AdSense report based on the report request sent
 // in the query parameters. Returns the result as JSON; to retrieve
 // output in CSV format specify "alt=csv" as a query parameter.
+//
+// - accountId: Account upon which to report.
+// - endDate: End of the date range to report on in "YYYY-MM-DD" format,
+//   inclusive.
+// - startDate: Start of the date range to report on in "YYYY-MM-DD"
+//   format, inclusive.
 func (r *AccountsReportsService) Generate(accountId string, startDate string, endDate string) *AccountsReportsGenerateCall {
 	c := &AccountsReportsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4346,7 +4392,7 @@ func (c *AccountsReportsGenerateCall) Header() http.Header {
 
 func (c *AccountsReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4542,6 +4588,9 @@ type AccountsReportsSavedGenerateCall struct {
 
 // Generate: Generate an AdSense report based on the saved report ID
 // sent in the query parameters.
+//
+// - accountId: Account to which the saved reports belong.
+// - savedReportId: The saved report to retrieve.
 func (r *AccountsReportsSavedService) Generate(accountId string, savedReportId string) *AccountsReportsSavedGenerateCall {
 	c := &AccountsReportsSavedGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4608,7 +4657,7 @@ func (c *AccountsReportsSavedGenerateCall) Header() http.Header {
 
 func (c *AccountsReportsSavedGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4738,6 +4787,8 @@ type AccountsReportsSavedListCall struct {
 }
 
 // List: List all saved reports in the specified AdSense account.
+//
+// - accountId: Account to which the saved reports belong.
 func (r *AccountsReportsSavedService) List(accountId string) *AccountsReportsSavedListCall {
 	c := &AccountsReportsSavedListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4797,7 +4848,7 @@ func (c *AccountsReportsSavedListCall) Header() http.Header {
 
 func (c *AccountsReportsSavedListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4932,6 +4983,9 @@ type AccountsSavedadstylesGetCall struct {
 }
 
 // Get: List a specific saved ad style for the specified account.
+//
+// - accountId: Account for which to get the saved ad style.
+// - savedAdStyleId: Saved ad style to retrieve.
 func (r *AccountsSavedadstylesService) Get(accountId string, savedAdStyleId string) *AccountsSavedadstylesGetCall {
 	c := &AccountsSavedadstylesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -4976,7 +5030,7 @@ func (c *AccountsSavedadstylesGetCall) Header() http.Header {
 
 func (c *AccountsSavedadstylesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5084,6 +5138,8 @@ type AccountsSavedadstylesListCall struct {
 }
 
 // List: List all saved ad styles in the specified account.
+//
+// - accountId: Account for which to list saved ad styles.
 func (r *AccountsSavedadstylesService) List(accountId string) *AccountsSavedadstylesListCall {
 	c := &AccountsSavedadstylesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5144,7 +5200,7 @@ func (c *AccountsSavedadstylesListCall) Header() http.Header {
 
 func (c *AccountsSavedadstylesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5280,6 +5336,9 @@ type AccountsUrlchannelsListCall struct {
 
 // List: List all URL channels in the specified ad client for the
 // specified account.
+//
+// - accountId: Account to which the ad client belongs.
+// - adClientId: Ad client for which to list URL channels.
 func (r *AccountsUrlchannelsService) List(accountId string, adClientId string) *AccountsUrlchannelsListCall {
 	c := &AccountsUrlchannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5340,7 +5399,7 @@ func (c *AccountsUrlchannelsListCall) Header() http.Header {
 
 func (c *AccountsUrlchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5539,7 +5598,7 @@ func (c *AdclientsListCall) Header() http.Header {
 
 func (c *AdclientsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5662,6 +5721,9 @@ type AdunitsGetCall struct {
 }
 
 // Get: Gets the specified ad unit in the specified ad client.
+//
+// - adClientId: Ad client for which to get the ad unit.
+// - adUnitId: Ad unit to retrieve.
 func (r *AdunitsService) Get(adClientId string, adUnitId string) *AdunitsGetCall {
 	c := &AdunitsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -5706,7 +5768,7 @@ func (c *AdunitsGetCall) Header() http.Header {
 
 func (c *AdunitsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5815,6 +5877,9 @@ type AdunitsGetAdCodeCall struct {
 }
 
 // GetAdCode: Get ad code for the specified ad unit.
+//
+// - adClientId: Ad client with contains the ad unit.
+// - adUnitId: Ad unit to get the code for.
 func (r *AdunitsService) GetAdCode(adClientId string, adUnitId string) *AdunitsGetAdCodeCall {
 	c := &AdunitsGetAdCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -5859,7 +5924,7 @@ func (c *AdunitsGetAdCodeCall) Header() http.Header {
 
 func (c *AdunitsGetAdCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5968,6 +6033,8 @@ type AdunitsListCall struct {
 
 // List: List all ad units in the specified ad client for this AdSense
 // account.
+//
+// - adClientId: Ad client for which to list ad units.
 func (r *AdunitsService) List(adClientId string) *AdunitsListCall {
 	c := &AdunitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -6034,7 +6101,7 @@ func (c *AdunitsListCall) Header() http.Header {
 
 func (c *AdunitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6175,6 +6242,9 @@ type AdunitsCustomchannelsListCall struct {
 
 // List: List all custom channels which the specified ad unit belongs
 // to.
+//
+// - adClientId: Ad client which contains the ad unit.
+// - adUnitId: Ad unit for which to list custom channels.
 func (r *AdunitsCustomchannelsService) List(adClientId string, adUnitId string) *AdunitsCustomchannelsListCall {
 	c := &AdunitsCustomchannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -6236,7 +6306,7 @@ func (c *AdunitsCustomchannelsListCall) Header() http.Header {
 
 func (c *AdunitsCustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6378,6 +6448,8 @@ type AlertsDeleteCall struct {
 
 // Delete: Dismiss (delete) the specified alert from the publisher's
 // AdSense account.
+//
+// - alertId: Alert to delete.
 func (r *AlertsService) Delete(alertId string) *AlertsDeleteCall {
 	c := &AlertsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId
@@ -6411,7 +6483,7 @@ func (c *AlertsDeleteCall) Header() http.Header {
 
 func (c *AlertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6529,7 +6601,7 @@ func (c *AlertsListCall) Header() http.Header {
 
 func (c *AlertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6623,6 +6695,9 @@ type CustomchannelsGetCall struct {
 }
 
 // Get: Get the specified custom channel from the specified ad client.
+//
+// - adClientId: Ad client which contains the custom channel.
+// - customChannelId: Custom channel to retrieve.
 func (r *CustomchannelsService) Get(adClientId string, customChannelId string) *CustomchannelsGetCall {
 	c := &CustomchannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -6667,7 +6742,7 @@ func (c *CustomchannelsGetCall) Header() http.Header {
 
 func (c *CustomchannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6776,6 +6851,8 @@ type CustomchannelsListCall struct {
 
 // List: List all custom channels in the specified ad client for this
 // AdSense account.
+//
+// - adClientId: Ad client for which to list custom channels.
 func (r *CustomchannelsService) List(adClientId string) *CustomchannelsListCall {
 	c := &CustomchannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -6836,7 +6913,7 @@ func (c *CustomchannelsListCall) Header() http.Header {
 
 func (c *CustomchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6971,6 +7048,9 @@ type CustomchannelsAdunitsListCall struct {
 }
 
 // List: List all ad units in the specified custom channel.
+//
+// - adClientId: Ad client which contains the custom channel.
+// - customChannelId: Custom channel for which to list ad units.
 func (r *CustomchannelsAdunitsService) List(adClientId string, customChannelId string) *CustomchannelsAdunitsListCall {
 	c := &CustomchannelsAdunitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -7038,7 +7118,7 @@ func (c *CustomchannelsAdunitsListCall) Header() http.Header {
 
 func (c *CustomchannelsAdunitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7227,7 +7307,7 @@ func (c *MetadataDimensionsListCall) Header() http.Header {
 
 func (c *MetadataDimensionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7355,7 +7435,7 @@ func (c *MetadataMetricsListCall) Header() http.Header {
 
 func (c *MetadataMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7482,7 +7562,7 @@ func (c *PaymentsListCall) Header() http.Header {
 
 func (c *PaymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7569,6 +7649,11 @@ type ReportsGenerateCall struct {
 // Generate: Generate an AdSense report based on the report request sent
 // in the query parameters. Returns the result as JSON; to retrieve
 // output in CSV format specify "alt=csv" as a query parameter.
+//
+// - endDate: End of the date range to report on in "YYYY-MM-DD" format,
+//   inclusive.
+// - startDate: Start of the date range to report on in "YYYY-MM-DD"
+//   format, inclusive.
 func (r *ReportsService) Generate(startDate string, endDate string) *ReportsGenerateCall {
 	c := &ReportsGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("startDate", startDate)
@@ -7689,7 +7774,7 @@ func (c *ReportsGenerateCall) Header() http.Header {
 
 func (c *ReportsGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7880,6 +7965,8 @@ type ReportsSavedGenerateCall struct {
 
 // Generate: Generate an AdSense report based on the saved report ID
 // sent in the query parameters.
+//
+// - savedReportId: The saved report to retrieve.
 func (r *ReportsSavedService) Generate(savedReportId string) *ReportsSavedGenerateCall {
 	c := &ReportsSavedGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.savedReportId = savedReportId
@@ -7945,7 +8032,7 @@ func (c *ReportsSavedGenerateCall) Header() http.Header {
 
 func (c *ReportsSavedGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8124,7 +8211,7 @@ func (c *ReportsSavedListCall) Header() http.Header {
 
 func (c *ReportsSavedListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8246,6 +8333,8 @@ type SavedadstylesGetCall struct {
 }
 
 // Get: Get a specific saved ad style from the user's account.
+//
+// - savedAdStyleId: Saved ad style to retrieve.
 func (r *SavedadstylesService) Get(savedAdStyleId string) *SavedadstylesGetCall {
 	c := &SavedadstylesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.savedAdStyleId = savedAdStyleId
@@ -8289,7 +8378,7 @@ func (c *SavedadstylesGetCall) Header() http.Header {
 
 func (c *SavedadstylesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8447,7 +8536,7 @@ func (c *SavedadstylesListCall) Header() http.Header {
 
 func (c *SavedadstylesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8570,6 +8659,8 @@ type UrlchannelsListCall struct {
 
 // List: List all URL channels in the specified ad client for this
 // AdSense account.
+//
+// - adClientId: Ad client for which to list URL channels.
 func (r *UrlchannelsService) List(adClientId string) *UrlchannelsListCall {
 	c := &UrlchannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.adClientId = adClientId
@@ -8629,7 +8720,7 @@ func (c *UrlchannelsListCall) Header() http.Header {
 
 func (c *UrlchannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

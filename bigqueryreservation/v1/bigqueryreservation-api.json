@@ -3,10 +3,10 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/bigquery": {
-          "description": "View and manage your data in Google BigQuery"
+          "description": "View and manage your data in Google BigQuery and see the email address for your Google Account"
         },
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -108,78 +108,6 @@
   },
   "protocol": "rest",
   "resources": {
-    "operations": {
-      "methods": {
-        "delete": {
-          "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
-          "flatPath": "v1/operations/{operationsId}",
-          "httpMethod": "DELETE",
-          "id": "bigqueryreservation.operations.delete",
-          "parameterOrder": [
-            "name"
-          ],
-          "parameters": {
-            "name": {
-              "description": "The name of the operation resource to be deleted.",
-              "location": "path",
-              "pattern": "^operations/.*$",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "v1/{+name}",
-          "response": {
-            "$ref": "Empty"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/bigquery",
-            "https://www.googleapis.com/auth/cloud-platform"
-          ]
-        },
-        "list": {
-          "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
-          "flatPath": "v1/operations",
-          "httpMethod": "GET",
-          "id": "bigqueryreservation.operations.list",
-          "parameterOrder": [
-            "name"
-          ],
-          "parameters": {
-            "filter": {
-              "description": "The standard list filter.",
-              "location": "query",
-              "type": "string"
-            },
-            "name": {
-              "description": "The name of the operation's parent resource.",
-              "location": "path",
-              "pattern": "^operations$",
-              "required": true,
-              "type": "string"
-            },
-            "pageSize": {
-              "description": "The standard list page size.",
-              "format": "int32",
-              "location": "query",
-              "type": "integer"
-            },
-            "pageToken": {
-              "description": "The standard list page token.",
-              "location": "query",
-              "type": "string"
-            }
-          },
-          "path": "v1/{+name}",
-          "response": {
-            "$ref": "ListOperationsResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/bigquery",
-            "https://www.googleapis.com/auth/cloud-platform"
-          ]
-        }
-      }
-    },
     "projects": {
       "resources": {
         "locations": {
@@ -194,7 +122,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Name of the requested reservation, for example: `projects/{project_id}/locations/{location_id}/bireservation`",
+                  "description": "Required. Name of the requested reservation, for example: `projects/{project_id}/locations/{location_id}/biReservation`",
                   "location": "path",
                   "pattern": "^projects/[^/]+/locations/[^/]+/biReservation$",
                   "required": true,
@@ -253,7 +181,7 @@
               ]
             },
             "searchAssignments": {
-              "description": "Looks up assignments for a specified resource for a particular region. If the request is about a project: 1. Assignments created on the project will be returned if they exist. 2. Otherwise assignments created on the closest ancestor will be returned. 3. Assignments for different JobTypes will all be returned. The same logic applies if the request is about a folder. If the request is about an organization, then assignments created on the organization will be returned (organization doesn't have ancestors). Comparing to ListAssignments, there are some behavior differences: 1. permission on the assignee will be verified in this API. 2. Hierarchy lookup (project-\u003efolder-\u003eorganization) happens in this API. 3. Parent here is `projects/*/locations/*`, instead of `projects/*/locations/*reservations/*`. **Note** \"-\" cannot be used for projects nor locations.",
+              "description": "Deprecated: Looks up assignments for a specified resource for a particular region. If the request is about a project: 1. Assignments created on the project will be returned if they exist. 2. Otherwise assignments created on the closest ancestor will be returned. 3. Assignments for different JobTypes will all be returned. The same logic applies if the request is about a folder. If the request is about an organization, then assignments created on the organization will be returned (organization doesn't have ancestors). Comparing to ListAssignments, there are some behavior differences: 1. permission on the assignee will be verified in this API. 2. Hierarchy lookup (project-\u003efolder-\u003eorganization) happens in this API. 3. Parent here is `projects/*/locations/*`, instead of `projects/*/locations/*reservations/*`. **Note** \"-\" cannot be used for projects nor locations.",
               "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:searchAssignments",
               "httpMethod": "GET",
               "id": "bigqueryreservation.projects.locations.searchAssignments",
@@ -304,7 +232,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "The resource name of the singleton BI reservation. Reservation names have the form `projects/{project_id}/locations/{location_id}/bireservation`.",
+                  "description": "The resource name of the singleton BI reservation. Reservation names have the form `projects/{project_id}/locations/{location_id}/biReservation`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/locations/[^/]+/biReservation$",
                   "required": true,
@@ -342,6 +270,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "capacityCommitmentId": {
+                      "description": "The optional capacity commitment ID. Capacity commitment name will be generated automatically if this field is empty. This field must only contain lower case alphanumeric characters or dash. Max length is 64 characters. NOTE: this ID won't be kept if the capacity commitment is split or merged.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "enforceSingleAdminProjectPerOrg": {
                       "description": "If true, fail the request if another project in the organization has a capacity commitment.",
                       "location": "query",
@@ -376,6 +309,11 @@
                     "name"
                   ],
                   "parameters": {
+                    "force": {
+                      "description": "Can be used to force delete commitments even if assignments exist. Deleting commitments with assignments may cause queries to fail if they no longer have access to slots.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
                     "name": {
                       "description": "Required. Resource name of the capacity commitment to delete. E.g., `projects/myproject/locations/US/capacityCommitments/123`",
                       "location": "path",
@@ -716,7 +654,7 @@
                 "assignments": {
                   "methods": {
                     "create": {
-                      "description": "Creates an assignment object which allows the given project to submit jobs of a certain type using slots from the specified reservation. Currently a resource (project, folder, organization) can only have one assignment per each (job_type, location) combination, and that reservation will be used for all jobs of the matching type. Different assignments can be created on different levels of the projects, folders or organization hierarchy. During query execution, the assignment is looked up at the project, folder and organization levels in that order. The first assignment found is applied to the query. When creating assignments, it does not matter if other assignments exist at higher levels. Example: * The organization `organizationA` contains two projects, `project1` and `project2`. * Assignments for all three entities (`organizationA`, `project1`, and `project2`) could all be created and mapped to the same or different reservations. Returns `google.rpc.Code.PERMISSION_DENIED` if user does not have 'bigquery.admin' permissions on the project using the reservation and the project that owns this reservation. Returns `google.rpc.Code.INVALID_ARGUMENT` when location of the assignment does not match location of the reservation.",
+                      "description": "Creates an assignment object which allows the given project to submit jobs of a certain type using slots from the specified reservation. Currently a resource (project, folder, organization) can only have one assignment per each (job_type, location) combination, and that reservation will be used for all jobs of the matching type. Different assignments can be created on different levels of the projects, folders or organization hierarchy. During query execution, the assignment is looked up at the project, folder and organization levels in that order. The first assignment found is applied to the query. When creating assignments, it does not matter if other assignments exist at higher levels. Example: * The organization `organizationA` contains two projects, `project1` and `project2`. * Assignments for all three entities (`organizationA`, `project1`, and `project2`) could all be created and mapped to the same or different reservations. \"None\" assignments represent an absence of the assignment. Projects assigned to None use on-demand pricing. To create a \"None\" assignment, use \"none\" as a reservation_id in the parent. Example parent: `projects/myproject/locations/US/reservations/none`. Returns `google.rpc.Code.PERMISSION_DENIED` if user does not have 'bigquery.admin' permissions on the project using the reservation and the project that owns this reservation. Returns `google.rpc.Code.INVALID_ARGUMENT` when location of the assignment does not match location of the reservation.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}/assignments",
                       "httpMethod": "POST",
                       "id": "bigqueryreservation.projects.locations.reservations.assignments.create",
@@ -724,6 +662,11 @@
                         "parent"
                       ],
                       "parameters": {
+                        "assignmentId": {
+                          "description": "The optional assignment ID. Assignment name will be generated automatically if this field is empty. This field must only contain lower case alphanumeric characters or dash. Max length is 64 characters.",
+                          "location": "query",
+                          "type": "string"
+                        },
                         "parent": {
                           "description": "Required. The parent resource name of the assignment E.g. `projects/myproject/locations/US/reservations/team1-prod`",
                           "location": "path",
@@ -845,11 +788,11 @@
       }
     }
   },
-  "revision": "20200808",
+  "revision": "20210910",
   "rootUrl": "https://bigqueryreservation.googleapis.com/",
   "schemas": {
     "Assignment": {
-      "description": "A Assignment allows a project to submit jobs of a certain type using slots from the specified reservation.",
+      "description": "An assignment allows a project to submit jobs of a certain type using slots from the specified reservation.",
       "id": "Assignment",
       "properties": {
         "assignee": {
@@ -900,7 +843,7 @@
       "id": "BiReservation",
       "properties": {
         "name": {
-          "description": "The resource name of the singleton BI reservation. Reservation names have the form `projects/{project_id}/locations/{location_id}/bireservation`.",
+          "description": "The resource name of the singleton BI reservation. Reservation names have the form `projects/{project_id}/locations/{location_id}/biReservation`.",
           "type": "string"
         },
         "size": {
@@ -1004,17 +947,6 @@
       },
       "type": "object"
     },
-    "CreateSlotPoolMetadata": {
-      "description": "The metadata for operation returned from ReservationService.CreateSlotPool.",
-      "id": "CreateSlotPoolMetadata",
-      "properties": {
-        "slotPool": {
-          "description": "Resource name of the slot pool that is being created. E.g., projects/myproject/locations/us-central1/reservations/foo/slotPools/123",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
       "id": "Empty",
@@ -1053,24 +985,6 @@
         "nextPageToken": {
           "description": "Token to retrieve the next page of results, or empty if there are no more results in the list.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "ListOperationsResponse": {
-      "description": "The response message for Operations.ListOperations.",
-      "id": "ListOperationsResponse",
-      "properties": {
-        "nextPageToken": {
-          "description": "The standard List next-page token.",
-          "type": "string"
-        },
-        "operations": {
-          "description": "A list of operations that matches the specified filter in the request.",
-          "items": {
-            "$ref": "Operation"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -1118,41 +1032,6 @@
       },
       "type": "object"
     },
-    "Operation": {
-      "description": "This resource represents a long-running operation that is the result of a network API call.",
-      "id": "Operation",
-      "properties": {
-        "done": {
-          "description": "If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available.",
-          "type": "boolean"
-        },
-        "error": {
-          "$ref": "Status",
-          "description": "The error result of the operation in case of failure or cancellation."
-        },
-        "metadata": {
-          "additionalProperties": {
-            "description": "Properties of the object. Contains field @type with type URL.",
-            "type": "any"
-          },
-          "description": "Service-specific metadata associated with the operation. It typically contains progress information and common metadata such as create time. Some services might not provide such metadata. Any method that returns a long-running operation should document the metadata type, if any.",
-          "type": "object"
-        },
-        "name": {
-          "description": "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/{unique_id}`.",
-          "type": "string"
-        },
-        "response": {
-          "additionalProperties": {
-            "description": "Properties of the object. Contains field @type with type URL.",
-            "type": "any"
-          },
-          "description": "The normal response of the operation in case of success. If the original method returns no data on success, such as `Delete`, the response is `google.protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`, the response should be the resource. For other methods, the response should have the type `XxxResponse`, where `Xxx` is the original method name. For example, if the original method name is `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.",
-          "type": "object"
-        }
-      },
-      "type": "object"
-    },
     "Reservation": {
       "description": "A reservation is a mechanism used to guarantee slots to users.",
       "id": "Reservation",
@@ -1164,7 +1043,7 @@
           "type": "string"
         },
         "ignoreIdleSlots": {
-          "description": "If false, any query using this reservation will use idle slots from other reservations within the same admin project. If true, a query using this reservation will execute with the slot capacity specified above at most.",
+          "description": "If false, any query or pipeline job using this reservation will use idle slots from other reservations within the same admin project. If true, a query or pipeline job using this reservation will execute with the slot capacity specified in the slot_capacity field at most.",
           "type": "boolean"
         },
         "name": {

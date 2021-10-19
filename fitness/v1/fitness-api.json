@@ -6,67 +6,67 @@
           "description": "Use Google Fit to see and store your physical activity data"
         },
         "https://www.googleapis.com/auth/fitness.activity.write": {
-          "description": "See and add to your Google Fit physical activity data"
+          "description": "Add to your Google Fit physical activity data"
         },
         "https://www.googleapis.com/auth/fitness.blood_glucose.read": {
           "description": "See info about your blood glucose in Google Fit. I consent to Google sharing my blood glucose information with this app."
         },
         "https://www.googleapis.com/auth/fitness.blood_glucose.write": {
-          "description": "See and add info about your blood glucose to Google Fit. I consent to Google sharing my blood glucose information with this app."
+          "description": "Add info about your blood glucose to Google Fit. I consent to Google using my blood glucose information with this app."
         },
         "https://www.googleapis.com/auth/fitness.blood_pressure.read": {
           "description": "See info about your blood pressure in Google Fit. I consent to Google sharing my blood pressure information with this app."
         },
         "https://www.googleapis.com/auth/fitness.blood_pressure.write": {
-          "description": "See and add info about your blood pressure in Google Fit. I consent to Google sharing my blood pressure information with this app."
+          "description": "Add info about your blood pressure in Google Fit. I consent to Google using my blood pressure information with this app."
         },
         "https://www.googleapis.com/auth/fitness.body.read": {
-          "description": "See info about your body measurements and heart rate in Google Fit"
+          "description": "See info about your body measurements in Google Fit"
         },
         "https://www.googleapis.com/auth/fitness.body.write": {
-          "description": "See and add info about your body measurements and heart rate to Google Fit"
+          "description": "Add info about your body measurements to Google Fit"
         },
         "https://www.googleapis.com/auth/fitness.body_temperature.read": {
           "description": "See info about your body temperature in Google Fit. I consent to Google sharing my body temperature information with this app."
         },
         "https://www.googleapis.com/auth/fitness.body_temperature.write": {
-          "description": "See and add to info about your body temperature in Google Fit. I consent to Google sharing my body temperature information with this app."
+          "description": "Add to info about your body temperature in Google Fit. I consent to Google using my body temperature information with this app."
         },
         "https://www.googleapis.com/auth/fitness.heart_rate.read": {
           "description": "See your heart rate data in Google Fit. I consent to Google sharing my heart rate information with this app."
         },
         "https://www.googleapis.com/auth/fitness.heart_rate.write": {
-          "description": "See and add to your heart rate data in Google Fit. I consent to Google sharing my heart rate information with this app."
+          "description": "Add to your heart rate data in Google Fit. I consent to Google using my heart rate information with this app."
         },
         "https://www.googleapis.com/auth/fitness.location.read": {
           "description": "See your Google Fit speed and distance data"
         },
         "https://www.googleapis.com/auth/fitness.location.write": {
-          "description": "See and add to your Google Fit location data"
+          "description": "Add to your Google Fit location data"
         },
         "https://www.googleapis.com/auth/fitness.nutrition.read": {
           "description": "See info about your nutrition in Google Fit"
         },
         "https://www.googleapis.com/auth/fitness.nutrition.write": {
-          "description": "See and add to info about your nutrition in Google Fit"
+          "description": "Add to info about your nutrition in Google Fit"
         },
         "https://www.googleapis.com/auth/fitness.oxygen_saturation.read": {
           "description": "See info about your oxygen saturation in Google Fit. I consent to Google sharing my oxygen saturation information with this app."
         },
         "https://www.googleapis.com/auth/fitness.oxygen_saturation.write": {
-          "description": "See and add info about your oxygen saturation in Google Fit. I consent to Google sharing my oxygen saturation information with this app."
+          "description": "Add info about your oxygen saturation in Google Fit. I consent to Google using my oxygen saturation information with this app."
         },
         "https://www.googleapis.com/auth/fitness.reproductive_health.read": {
           "description": "See info about your reproductive health in Google Fit. I consent to Google sharing my reproductive health information with this app."
         },
         "https://www.googleapis.com/auth/fitness.reproductive_health.write": {
-          "description": "See and add info about your reproductive health in Google Fit. I consent to Google sharing my reproductive health information with this app."
+          "description": "Add info about your reproductive health in Google Fit. I consent to Google using my reproductive health information with this app."
         },
         "https://www.googleapis.com/auth/fitness.sleep.read": {
           "description": "See your sleep data in Google Fit. I consent to Google sharing my sleep information with this app."
         },
         "https://www.googleapis.com/auth/fitness.sleep.write": {
-          "description": "See and add to your sleep data in Google Fit. I consent to Google sharing my sleep information with this app."
+          "description": "Add to your sleep data in Google Fit. I consent to Google using my sleep information with this app."
         }
       }
     }
@@ -477,12 +477,6 @@
                     "datasetId"
                   ],
                   "parameters": {
-                    "currentTimeMillis": {
-                      "description": "The client's current time in milliseconds since epoch.",
-                      "format": "int64",
-                      "location": "query",
-                      "type": "string"
-                    },
                     "dataSourceId": {
                       "description": "The data stream ID of the data source that created the dataset.",
                       "location": "path",
@@ -493,12 +487,6 @@
                       "description": "Dataset identifier that is a composite of the minimum data point start time and maximum data point end time represented as nanoseconds from the epoch. The ID is formatted like: \"startTime-endTime\" where startTime and endTime are 64 bit integers.",
                       "location": "path",
                       "required": true,
-                      "type": "string"
-                    },
-                    "modifiedTimeMillis": {
-                      "description": "When the operation was performed on the client.",
-                      "format": "int64",
-                      "location": "query",
                       "type": "string"
                     },
                     "userId": {
@@ -604,12 +592,6 @@
                     "datasetId"
                   ],
                   "parameters": {
-                    "currentTimeMillis": {
-                      "description": "The client's current time in milliseconds since epoch. Note that the minStartTimeNs and maxEndTimeNs properties in the request body are in nanoseconds instead of milliseconds.",
-                      "format": "int64",
-                      "location": "query",
-                      "type": "string"
-                    },
                     "dataSourceId": {
                       "description": "The data stream ID of the data source that created the dataset.",
                       "location": "path",
@@ -718,12 +700,6 @@
                 "sessionId"
               ],
               "parameters": {
-                "currentTimeMillis": {
-                  "description": "The client's current time in milliseconds since epoch.",
-                  "format": "int64",
-                  "location": "query",
-                  "type": "string"
-                },
                 "sessionId": {
                   "description": "The ID of the session to be deleted.",
                   "location": "path",
@@ -825,12 +801,6 @@
                 "sessionId"
               ],
               "parameters": {
-                "currentTimeMillis": {
-                  "description": "The client's current time in milliseconds since epoch.",
-                  "format": "int64",
-                  "location": "query",
-                  "type": "string"
-                },
                 "sessionId": {
                   "description": "The ID of the session to be created.",
                   "location": "path",
@@ -861,7 +831,7 @@
       }
     }
   },
-  "revision": "20210115",
+  "revision": "20210920",
   "rootUrl": "https://fitness.googleapis.com/",
   "schemas": {
     "AggregateBucket": {
@@ -967,7 +937,7 @@
               "fitness.users.dataset.aggregate"
             ]
           },
-          "description": "The end of a window of time. Data that intersects with this time window will be aggregated. The time is in milliseconds since epoch, inclusive.",
+          "description": "The end of a window of time. Data that intersects with this time window will be aggregated. The time is in milliseconds since epoch, inclusive. The maximum allowed difference between start_time_millis // and end_time_millis is 7776000000 (roughly 90 days).",
           "format": "int64",
           "type": "string"
         },

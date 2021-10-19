@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -12,7 +12,7 @@
   "baseUrl": "https://apigee.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Apigee",
-  "description": "Use the Apigee API to programmatically develop and manage APIs with a set of RESTful operations. Develop and secure API proxies, deploy and undeploy API proxy revisions, monitor APIs, configure environments, manage users, and more. Get started using the APIs. *Note:* This product is available as a free trial for a time period of 60 days.",
+  "description": "Use the Apigee API to programmatically develop and manage APIs with a set of RESTful operations. Develop and secure API proxies, deploy and undeploy API proxy revisions, monitor APIs, configure environments, manage users, and more. Note: This product is available as a free trial for a time period of 60 days.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/apigee-api-management/",
   "fullyEncodeReservedExpansion": true,
@@ -254,6 +254,31 @@
             "https://www.googleapis.com/auth/cloud-platform"
           ]
         },
+        "getRuntimeConfig": {
+          "description": "Get runtime config for an organization.",
+          "flatPath": "v1/organizations/{organizationsId}/runtimeConfig",
+          "httpMethod": "GET",
+          "id": "apigee.organizations.getRuntimeConfig",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. Name of the runtime config for the organization in the following format: 'organizations/{org}/runtimeConfig'.",
+              "location": "path",
+              "pattern": "^organizations/[^/]+/runtimeConfig$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+name}",
+          "response": {
+            "$ref": "GoogleCloudApigeeV1RuntimeConfig"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
         "getSyncAuthorization": {
           "description": "Lists the service accounts with the permissions required to allow the Synchronizer to download environment data from the control plane. An ETag is returned in the response to `getSyncAuthorization`. Pass that ETag when calling [setSyncAuthorization](setSyncAuthorization) to ensure that you are updating the correct version. If you don't pass the ETag in the call to `setSyncAuthorization`, then the existing authorization is overwritten indiscriminately. For more information, see [Configure the Synchronizer](https://cloud.google.com/apigee/docs/hybrid/latest/synchronizer-access). **Note**: Available to Apigee hybrid only.",
           "flatPath": "v1/organizations/{organizationsId}:getSyncAuthorization",
@@ -302,6 +327,34 @@
           "path": "v1/{+parent}",
           "response": {
             "$ref": "GoogleCloudApigeeV1ListOrganizationsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
+        "setAddons": {
+          "description": "Configures the add-ons for the Apigee organization. The existing add-on configuration will be fully replaced.",
+          "flatPath": "v1/organizations/{organizationsId}:setAddons",
+          "httpMethod": "POST",
+          "id": "apigee.organizations.setAddons",
+          "parameterOrder": [
+            "org"
+          ],
+          "parameters": {
+            "org": {
+              "description": "Required. Name of the organization. Use the following structure in your request: `organizations/{org}`",
+              "location": "path",
+              "pattern": "^organizations/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+org}:setAddons",
+          "request": {
+            "$ref": "GoogleCloudApigeeV1SetAddonsRequest"
+          },
+          "response": {
+            "$ref": "GoogleLongrunningOperation"
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
@@ -568,7 +621,7 @@
               ]
             },
             "create": {
-              "description": "Creates an API product in an organization. You create API products after you have proxied backend services using API proxies. An API product is a collection of API resources combined with quota settings and metadata that you can use to deliver customized and productized API bundles to your developer community. This metadata can include: - Scope - Environments - API proxies - Extensible profile API products enable you repackage APIs on-the-fly, without having to do any additional coding or configuration. Apigee recommends that you start with a simple API product including only required elements. You then provision credentials to apps to enable them to start testing your APIs. After you have authentication and authorization working against a simple API product, you can iterate to create finer grained API products, defining different sets of API resources for each API product. **WARNING:** - If you don't specify an API proxy in the request body, *any* app associated with the product can make calls to *any* API in your entire organization. - If you don't specify an environment in the request body, the product allows access to all environments. For more information, see What is an API product?",
+              "description": "Creates an API product in an organization. You create API products after you have proxied backend services using API proxies. An API product is a collection of API resources combined with quota settings and metadata that you can use to deliver customized and productized API bundles to your developer community. This metadata can include: - Scope - Environments - API proxies - Extensible profile API products enable you repackage APIs on the fly, without having to do any additional coding or configuration. Apigee recommends that you start with a simple API product including only required elements. You then provision credentials to apps to enable them to start testing your APIs. After you have authentication and authorization working against a simple API product, you can iterate to create finer-grained API products, defining different sets of API resources for each API product. **WARNING:** - If you don't specify an API proxy in the request body, *any* app associated with the product can make calls to *any* API in your entire organization. - If you don't specify an environment in the request body, the product allows access to all environments. For more information, see What is an API product?",
               "flatPath": "v1/organizations/{organizationsId}/apiproducts",
               "httpMethod": "POST",
               "id": "apigee.organizations.apiproducts.create",
@@ -646,7 +699,7 @@
               ]
             },
             "list": {
-              "description": "Lists all API product names for an organization. Filter the list by passing an `attributename` and `attibutevalue`. The limit on the number of API products returned by the API is 1000. You can paginate the list of API products returned using the `startKey` and `count` query parameters.",
+              "description": "Lists all API product names for an organization. Filter the list by passing an `attributename` and `attibutevalue`. The maximum number of API products returned is 1000. You can paginate the list of API products returned using the `startKey` and `count` query parameters.",
               "flatPath": "v1/organizations/{organizationsId}/apiproducts",
               "httpMethod": "GET",
               "id": "apigee.organizations.apiproducts.list",
@@ -697,7 +750,7 @@
               ]
             },
             "update": {
-              "description": "Updates an existing API product. You must include all required values, whether or not you are updating them, as well as any optional values that you are updating. The API product name required in the request URL is the internal name of the product, not the Display Name. While they may be the same, it depends on whether the API product was created via UI or API. View the list of API products to identify their internal names.",
+              "description": "Updates an existing API product. You must include all required values, whether or not you are updating them, as well as any optional values that you are updating. The API product name required in the request URL is the internal name of the product, not the display name. While they may be the same, it depends on whether the API product was created via UI or API. View the list of API products to identify their internal names.",
               "flatPath": "v1/organizations/{organizationsId}/apiproducts/{apiproductsId}",
               "httpMethod": "PUT",
               "id": "apigee.organizations.apiproducts.update",
@@ -826,6 +879,177 @@
                   },
                   "response": {
                     "$ref": "GoogleCloudApigeeV1Attribute"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
+            "rateplans": {
+              "methods": {
+                "create": {
+                  "description": "Create a rate plan that is associated with an API product in an organization. Using rate plans, API product owners can monetize their API products by configuring one or more of the following: - Billing frequency - Initial setup fees for using an API product - Payment funding model (postpaid only) - Fixed recurring or consumption-based charges for using an API product - Revenue sharing with developer partners An API product can have multiple rate plans associated with it but *only one* rate plan can be active at any point of time. **Note: From the developer's perspective, they purchase API products not rate plans.",
+                  "flatPath": "v1/organizations/{organizationsId}/apiproducts/{apiproductsId}/rateplans",
+                  "httpMethod": "POST",
+                  "id": "apigee.organizations.apiproducts.rateplans.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. Name of the API product that is associated with the rate plan. Use the following structure in your request: `organizations/{org}/apiproducts/{apiproduct}`",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/apiproducts/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/rateplans",
+                  "request": {
+                    "$ref": "GoogleCloudApigeeV1RatePlan"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudApigeeV1RatePlan"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Deletes a rate plan.",
+                  "flatPath": "v1/organizations/{organizationsId}/apiproducts/{apiproductsId}/rateplans/{rateplansId}",
+                  "httpMethod": "DELETE",
+                  "id": "apigee.organizations.apiproducts.rateplans.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. ID of the rate plan. Use the following structure in your request: `organizations/{org}/apiproducts/{apiproduct}/rateplans/{rateplan}`",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/apiproducts/[^/]+/rateplans/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "GoogleCloudApigeeV1RatePlan"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Gets the details of a rate plan.",
+                  "flatPath": "v1/organizations/{organizationsId}/apiproducts/{apiproductsId}/rateplans/{rateplansId}",
+                  "httpMethod": "GET",
+                  "id": "apigee.organizations.apiproducts.rateplans.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the rate plan. Use the following structure in your request: `organizations/{org}/apiproducts/{apiproduct}/rateplans/{rateplan}`",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/apiproducts/[^/]+/rateplans/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "GoogleCloudApigeeV1RatePlan"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists all the rate plans for an API product.",
+                  "flatPath": "v1/organizations/{organizationsId}/apiproducts/{apiproductsId}/rateplans",
+                  "httpMethod": "GET",
+                  "id": "apigee.organizations.apiproducts.rateplans.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "count": {
+                      "description": "Number of rate plans to return in the API call. Use with the `startKey` parameter to provide more targeted filtering. The maximum limit is 1000. Defaults to 100.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "expand": {
+                      "description": "Flag that specifies whether to expand the results. Set to `true` to get expanded details about each API. Defaults to `false`.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
+                    "orderBy": {
+                      "description": "Name of the attribute used for sorting. Valid values include: * `name`: Name of the rate plan. * `state`: State of the rate plan (`DRAFT`, `PUBLISHED`). * `startTime`: Time when the rate plan becomes active. * `endTime`: Time when the rate plan expires. **Note**: Not supported by Apigee at this time.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. Name of the API product. Use the following structure in your request: `organizations/{org}/apiproducts/{apiproduct}` Use `organizations/{org}/apiproducts/-` to return rate plans for all API products within the organization.",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/apiproducts/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "startKey": {
+                      "description": "Name of the rate plan from which to start displaying the list of rate plans. If omitted, the list starts from the first item. For example, to view the rate plans from 51-150, set the value of `startKey` to the name of the 51st rate plan and set the value of `count` to 100.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "state": {
+                      "description": "State of the rate plans (`DRAFT`, `PUBLISHED`) that you want to display.",
+                      "enum": [
+                        "STATE_UNSPECIFIED",
+                        "DRAFT",
+                        "PUBLISHED"
+                      ],
+                      "enumDescriptions": [
+                        "State of the rate plan is not specified.",
+                        "Rate plan is in draft mode and only visible to API providers.",
+                        "Rate plan is published and will become visible to developers for the configured duration (between `startTime` and `endTime`)."
+                      ],
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/rateplans",
+                  "response": {
+                    "$ref": "GoogleCloudApigeeV1ListRatePlansResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "update": {
+                  "description": "Updates an existing rate plan.",
+                  "flatPath": "v1/organizations/{organizationsId}/apiproducts/{apiproductsId}/rateplans/{rateplansId}",
+                  "httpMethod": "PUT",
+                  "id": "apigee.organizations.apiproducts.rateplans.update",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the rate plan. Use the following structure in your request: `organizations/{org}/apiproducts/{apiproduct}/rateplans/{rateplan}`",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/apiproducts/[^/]+/rateplans/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "request": {
+                    "$ref": "GoogleCloudApigeeV1RatePlan"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudApigeeV1RatePlan"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -964,6 +1188,40 @@
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
+            },
+            "patch": {
+              "description": "Updates an existing API proxy.",
+              "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}",
+              "httpMethod": "PATCH",
+              "id": "apigee.organizations.apis.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. API proxy to update in the following format: `organizations/{org}/apis/{api}`",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/apis/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "Required. The list of fields to update.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "GoogleCloudApigeeV1ApiProxy"
+              },
+              "response": {
+                "$ref": "GoogleCloudApigeeV1ApiProxy"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
             }
           },
           "resources": {
@@ -1081,7 +1339,7 @@
                   ]
                 },
                 "get": {
-                  "description": "Gets an API proxy revision. To download the API proxy configuration bundle for the specified revision as a zip file, do the following: * Set the `format` query parameter to `bundle`. * Set the `Accept` header to `application/zip`. If you are using curl, specify `-o filename.zip` to save the output to a file; otherwise, it displays to `stdout`. Then, develop the API proxy configuration locally and upload the updated API proxy configuration revision, as described in [updateApiProxyRevision](updateApiProxyRevision).",
+                  "description": "Gets an API proxy revision. To download the API proxy configuration bundle for the specified revision as a zip file, set the `format` query parameter to `bundle`. If you are using curl, specify `-o filename.zip` to save the output to a file; otherwise, it displays to `stdout`. Then, develop the API proxy configuration locally and upload the updated API proxy configuration revision, as described in [updateApiProxyRevision](updateApiProxyRevision).",
                   "flatPath": "v1/organizations/{organizationsId}/apis/{apisId}/revisions/{revisionsId}",
                   "httpMethod": "GET",
                   "id": "apigee.organizations.apis.revisions.get",
@@ -1481,7 +1739,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. Email address of the developer for which attributes are being updated in the following format: `organizations/{org}/developers/{developer_email}`",
+                  "description": "Required. Email address of the developer for which attributes are being updated. Use the following structure in your request: `organizations/{org}/developers/{developer_email}`",
                   "location": "path",
                   "pattern": "^organizations/[^/]+/developers/[^/]+$",
                   "required": true,
@@ -1582,6 +1840,56 @@
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
+            "getBalance": {
+              "description": "Gets the account balance for the developer.",
+              "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/balance",
+              "httpMethod": "GET",
+              "id": "apigee.organizations.developers.getBalance",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Account balance for the developer. Use the following structure in your request: `organizations/{org}/developers/{developer}/balance`",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/developers/[^/]+/balance$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "GoogleCloudApigeeV1DeveloperBalance"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "getMonetizationConfig": {
+              "description": "Gets the monetization configuration for the developer.",
+              "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/monetizationConfig",
+              "httpMethod": "GET",
+              "id": "apigee.organizations.developers.getMonetizationConfig",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Monetization configuration for the developer. Use the following structure in your request: `organizations/{org}/developers/{developer}/monetizationConfig`",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/developers/[^/]+/monetizationConfig$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "GoogleCloudApigeeV1DeveloperMonetizationConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
             "list": {
               "description": "Lists all developers in an organization by email address. By default, the response does not include company developers. Set the `includeCompany` query parameter to `true` to include company developers. **Note**: A maximum of 1000 developers are returned in the response. You paginate the list of developers returned using the `startKey` and `count` query parameters.",
               "flatPath": "v1/organizations/{organizationsId}/developers",
@@ -1639,7 +1947,7 @@
               ]
             },
             "setDeveloperStatus": {
-              "description": "Sets the status of a developer. Valid values are `active` or `inactive`. A developer is `active` by default. If you set a developer's status to `inactive`, the API keys assigned to the developer apps are no longer valid even though the API keys are set to `approved`. Inactive developers can still sign in to the developer portal and create apps; however, any new API keys generated during app creation won't work. If successful, the API call returns the following HTTP status code: `204 No Content`",
+              "description": "Sets the status of a developer. A developer is `active` by default. If you set a developer's status to `inactive`, the API keys assigned to the developer apps are no longer valid even though the API keys are set to `approved`. Inactive developers can still sign in to the developer portal and create apps; however, any new API keys generated during app creation won't work. To set the status of a developer, set the `action` query parameter to `active` or `inactive`, and the `Content-Type` header to `application/octet-stream`. If successful, the API call returns the following HTTP status code: `204 No Content`",
               "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}",
               "httpMethod": "POST",
               "id": "apigee.organizations.developers.setDeveloperStatus",
@@ -1653,7 +1961,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "Required. Email address of the developer. Use the following structure in your request: `organizations/{org}/developers/{developer_email}`",
+                  "description": "Required. Name of the developer. Use the following structure in your request: `organizations/{org}/developers/{developer_id}`",
                   "location": "path",
                   "pattern": "^organizations/[^/]+/developers/[^/]+$",
                   "required": true,
@@ -1691,6 +1999,34 @@
               },
               "response": {
                 "$ref": "GoogleCloudApigeeV1Developer"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "updateMonetizationConfig": {
+              "description": "Updates the monetization configuration for the developer.",
+              "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/monetizationConfig",
+              "httpMethod": "PUT",
+              "id": "apigee.organizations.developers.updateMonetizationConfig",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Monetization configuration for the developer. Use the following structure in your request: `organizations/{org}/developers/{developer}/monetizationConfig`",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/developers/[^/]+/monetizationConfig$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "GoogleCloudApigeeV1DeveloperMonetizationConfig"
+              },
+              "response": {
+                "$ref": "GoogleCloudApigeeV1DeveloperMonetizationConfig"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
@@ -2035,7 +2371,7 @@
                 "keys": {
                   "methods": {
                     "create": {
-                      "description": "Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee hybrid from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteDeveloperAppKey API.",
+                      "description": "Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteDeveloperAppKey API.",
                       "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys",
                       "httpMethod": "POST",
                       "id": "apigee.organizations.developers.apps.keys.create",
@@ -2088,7 +2424,7 @@
                       ]
                     },
                     "get": {
-                      "description": "Returns details for a consumer key for a developer app, including the key and secret value, associated API products, and other information.",
+                      "description": "Gets details for a consumer key for a developer app, including the key and secret value, associated API products, and other information.",
                       "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys/{keysId}",
                       "httpMethod": "GET",
                       "id": "apigee.organizations.developers.apps.keys.get",
@@ -2203,7 +2539,7 @@
                           ]
                         },
                         "updateDeveloperAppKeyApiProduct": {
-                          "description": "Approve or revoke an app's consumer key. After a consumer key is approved, the app can use it to access APIs. A consumer key that is revoked or pending cannot be used to access an API. Any access tokens associated with a revoked consumer key will remain active. However, Apigee hybrid checks the status of the consumer key and if set to `revoked` will not allow access to the API.",
+                          "description": "Approves or revokes the consumer key for an API product. After a consumer key is approved, the app can use it to access APIs. A consumer key that is revoked or pending cannot be used to access an API. Any access tokens associated with a revoked consumer key will remain active. However, Apigee checks the status of the consumer key and if set to `revoked` will not allow access to the API.",
                           "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys/{keysId}/apiproducts/{apiproductsId}",
                           "httpMethod": "POST",
                           "id": "apigee.organizations.developers.apps.keys.apiproducts.updateDeveloperAppKeyApiProduct",
@@ -2237,7 +2573,7 @@
                     "create": {
                       "methods": {
                         "create": {
-                          "description": "Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee hybrid from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteDeveloperAppKey API.",
+                          "description": "Creates a custom consumer key and secret for a developer app. This is particularly useful if you want to migrate existing consumer keys and secrets to Apigee from another system. Consumer keys and secrets can contain letters, numbers, underscores, and hyphens. No other special characters are allowed. To avoid service disruptions, a consumer key and secret should not exceed 2 KBs each. **Note**: When creating the consumer key and secret, an association to API products will not be made. Therefore, you should not specify the associated API products in your request. Instead, use the UpdateDeveloperAppKey API to make the association after the consumer key and secret are created. If a consumer key and secret already exist, you can keep them or delete them using the DeleteDeveloperAppKey API.",
                           "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/apps/{appsId}/keys/create",
                           "httpMethod": "POST",
                           "id": "apigee.organizations.developers.apps.keys.create.create",
@@ -2332,7 +2668,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. Email address of the developer for which attributes are being listed in the following format: `organizations/{org}/developers/{developer_email}`",
+                      "description": "Required. Email address of the developer for which attributes are being listed. Use the following structure in your request: `organizations/{org}/developers/{developer_email}`",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/developers/[^/]+$",
                       "required": true,
@@ -2370,6 +2706,159 @@
                   },
                   "response": {
                     "$ref": "GoogleCloudApigeeV1Attribute"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
+            "balance": {
+              "methods": {
+                "credit": {
+                  "description": "Credits the account balance for the developer.",
+                  "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/balance:credit",
+                  "httpMethod": "POST",
+                  "id": "apigee.organizations.developers.balance.credit",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Account balance for the developer. Use the following structure in your request: `organizations/{org}/developers/{developer}/balance`",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/developers/[^/]+/balance$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:credit",
+                  "request": {
+                    "$ref": "GoogleCloudApigeeV1CreditDeveloperBalanceRequest"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudApigeeV1DeveloperBalance"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
+            "subscriptions": {
+              "methods": {
+                "create": {
+                  "description": "Creates a subscription to an API product. ",
+                  "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/subscriptions",
+                  "httpMethod": "POST",
+                  "id": "apigee.organizations.developers.subscriptions.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. Email address of the developer that is purchasing a subscription to the API product. Use the following structure in your request: `organizations/{org}/developers/{developer_email}`",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/developers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/subscriptions",
+                  "request": {
+                    "$ref": "GoogleCloudApigeeV1DeveloperSubscription"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudApigeeV1DeveloperSubscription"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "expire": {
+                  "description": "Expires an API product subscription immediately.",
+                  "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/subscriptions/{subscriptionsId}:expire",
+                  "httpMethod": "POST",
+                  "id": "apigee.organizations.developers.subscriptions.expire",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the API product subscription. Use the following structure in your request: `organizations/{org}/developers/{developer_email}/subscriptions/{subscription}`",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/developers/[^/]+/subscriptions/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:expire",
+                  "request": {
+                    "$ref": "GoogleCloudApigeeV1ExpireDeveloperSubscriptionRequest"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudApigeeV1DeveloperSubscription"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Gets details for an API product subscription.",
+                  "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/subscriptions/{subscriptionsId}",
+                  "httpMethod": "GET",
+                  "id": "apigee.organizations.developers.subscriptions.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the API product subscription. Use the following structure in your request: `organizations/{org}/developers/{developer_email}/subscriptions/{subscription}`",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/developers/[^/]+/subscriptions/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "GoogleCloudApigeeV1DeveloperSubscription"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists all API product subscriptions for a developer.",
+                  "flatPath": "v1/organizations/{organizationsId}/developers/{developersId}/subscriptions",
+                  "httpMethod": "GET",
+                  "id": "apigee.organizations.developers.subscriptions.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "count": {
+                      "description": "Number of API product subscriptions to return in the API call. Use with `startKey` to provide more targeted filtering. Defaults to 100. The maximum limit is 1000.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "parent": {
+                      "description": "Required. Email address of the developer. Use the following structure in your request: `organizations/{org}/developers/{developer_email}`",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/developers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "startKey": {
+                      "description": "Name of the API product subscription from which to start displaying the list of subscriptions. If omitted, the list starts from the first item. For example, to view the API product subscriptions from 51-150, set the value of `startKey` to the name of the 51st subscription and set the value of `count` to 100.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/subscriptions",
+                  "response": {
+                    "$ref": "GoogleCloudApigeeV1ListDeveloperSubscriptionsResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -2822,6 +3311,31 @@
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
+            "getTraceConfig": {
+              "description": "Get distributed trace configuration in an environment.",
+              "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/traceConfig",
+              "httpMethod": "GET",
+              "id": "apigee.organizations.environments.getTraceConfig",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the trace configuration. Use the following structure in your request: \"organizations/*/environments/*/traceConfig\".",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/environments/[^/]+/traceConfig$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "GoogleCloudApigeeV1TraceConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
             "setIamPolicy": {
               "description": "Sets the IAM policy on an environment, if the policy already exists it will be replaced. For more information, see [Manage users, roles, and permissions using the API](https://cloud.google.com/apigee/docs/api-platform/system-administration/manage-users-roles). You must have the `apigee.environments.setIamPolicy` permission to call this API.",
               "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}:setIamPolicy",
@@ -3025,6 +3539,40 @@
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
+            },
+            "updateTraceConfig": {
+              "description": "Updates the trace configurations in an environment. Note that the repeated fields have replace semantics when included in the field mask and that they will be overwritten by the value of the fields in the request body.",
+              "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/traceConfig",
+              "httpMethod": "PATCH",
+              "id": "apigee.organizations.environments.updateTraceConfig",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the trace configuration. Use the following structure in your request: \"organizations/*/environments/*/traceConfig\".",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/environments/[^/]+/traceConfig$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "List of fields to be updated.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "GoogleCloudApigeeV1TraceConfig"
+              },
+              "response": {
+                "$ref": "GoogleCloudApigeeV1TraceConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
             }
           },
           "resources": {
@@ -3033,7 +3581,7 @@
                 "admin": {
                   "methods": {
                     "getSchemav2": {
-                      "description": "Get a list of metrics and dimensions which can be used for creating analytics queries and reports. Each schema element contains the name of the field with its associated type and if it is either custom field or standard field.",
+                      "description": "Gets a list of metrics and dimensions that can be used to create analytics queries and reports. Each schema element contains the name of the field, its associated type, and a flag indicating whether it is a standard or custom field.",
                       "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/analytics/admin/schemav2",
                       "httpMethod": "GET",
                       "id": "apigee.organizations.environments.analytics.admin.getSchemav2",
@@ -3041,15 +3589,20 @@
                         "name"
                       ],
                       "parameters": {
+                        "disableCache": {
+                          "description": "Flag that specifies whether the schema is be read from the database or cache. Set to `true` to read the schema from the database. Defaults to cache.",
+                          "location": "query",
+                          "type": "boolean"
+                        },
                         "name": {
-                          "description": "Required. The parent organization and environment names. Must be of the form `organizations/{org}/environments/{env}/analytics/admin/schemav2`.",
+                          "description": "Required. Path to the schema. Use the following structure in your request: `organizations/{org}/environments/{env}/analytics/admin/schemav2`.",
                           "location": "path",
                           "pattern": "^organizations/[^/]+/environments/[^/]+/analytics/admin/schemav2$",
                           "required": true,
                           "type": "string"
                         },
                         "type": {
-                          "description": "Required. Type refers to the dataset name whose schema needs to be retrieved E.g. type=fact or type=agg_cus1",
+                          "description": "Required. Name of the dataset for which you want to retrieve the schema. For example: `fact` or `agg_cus1`",
                           "location": "query",
                           "type": "string"
                         }
@@ -3198,14 +3751,19 @@
                           "type": "string"
                         },
                         "override": {
-                          "description": "Flag that specifies whether the new deployment replaces other deployed revisions of the API proxy in the environment. Set override to true to replace other deployed revisions. By default, override is false and the deployment is rejected if other revisions of the API proxy are deployed in the environment.",
+                          "description": "Flag that specifies whether the new deployment replaces other deployed revisions of the API proxy in the environment. Set `override` to `true` to replace other deployed revisions. By default, `override` is `false` and the deployment is rejected if other revisions of the API proxy are deployed in the environment.",
                           "location": "query",
                           "type": "boolean"
                         },
                         "sequencedRollout": {
-                          "description": "If true, a best-effort attempt will be made to roll out the routing rules corresponding to this deployment and the environment changes to add this deployment in a safe order. This reduces the risk of downtime that could be caused by changing the environment group's routing before the new destination for the affected traffic is ready to receive it. This should only be necessary if the new deployment will be capturing traffic from another environment under a shared environment group or if traffic will be rerouted to a different environment due to a basepath removal. The GenerateDeployChangeReport API may be used to examine routing changes before issuing the deployment request, and its response will indicate if a sequenced rollout is recommended for the deployment.",
+                          "description": "Flag that specifies whether to enable sequenced rollout. If set to `true`, a best-effort attempt will be made to roll out the routing rules corresponding to this deployment and the environment changes to add this deployment in a safe order. This reduces the risk of downtime that could be caused by changing the environment group's routing before the new destination for the affected traffic is ready to receive it. This should only be necessary if the new deployment will be capturing traffic from another environment under a shared environment group or if traffic will be rerouted to a different environment due to a base path removal. The [GenerateDeployChangeReport API](GenerateDeployChangeReport) may be used to examine routing changes before issuing the deployment request, and its response will indicate if a sequenced rollout is recommended for the deployment.",
                           "location": "query",
                           "type": "boolean"
+                        },
+                        "serviceAccount": {
+                          "description": "Google Cloud IAM service account. The service account represents the identity of the deployed proxy, and determines what permissions it has. The format must be `{ACCOUNT_ID}@{PROJECT}.iam.gserviceaccount.com`.",
+                          "location": "query",
+                          "type": "string"
                         }
                       },
                       "path": "v1/{+name}/deployments",
@@ -3258,7 +3816,7 @@
                           "type": "string"
                         },
                         "sequencedRollout": {
-                          "description": "If true, a best-effort attempt will be made to remove the environment group routing rules corresponding to this deployment before removing the deployment from the runtime. This is likely to be a rare use case; it is only needed when the intended effect of undeploying this proxy is to cause the traffic it currently handles to be rerouted to some other existing proxy in the environment group. The GenerateUndeployChangeReport API may be used to examine routing changes before issuing the undeployment request, and its response will indicate if a sequenced rollout is recommended for the undeployment.",
+                          "description": "Flag that specifies whether to enable sequenced rollout. If set to `true`, a best-effort attempt will be made to remove the environment group routing rules corresponding to this deployment before removing the deployment from the runtime. This is likely to be a rare use case; it is only needed when the intended effect of undeploying this proxy is to cause the traffic it currently handles to be rerouted to some other existing proxy in the environment group. The [GenerateUndeployChangeReport API](GenerateUndeployChangeReport) may be used to examine routing changes before issuing the undeployment request, and its response will indicate if a sequenced rollout is recommended for the undeployment.",
                           "location": "query",
                           "type": "boolean"
                         }
@@ -3488,6 +4046,219 @@
                       }
                     }
                   }
+                }
+              }
+            },
+            "archiveDeployments": {
+              "methods": {
+                "create": {
+                  "description": "Creates a new ArchiveDeployment.",
+                  "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/archiveDeployments",
+                  "httpMethod": "POST",
+                  "id": "apigee.organizations.environments.archiveDeployments.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The Environment this Archive Deployment will be created in.",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/environments/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/archiveDeployments",
+                  "request": {
+                    "$ref": "GoogleCloudApigeeV1ArchiveDeployment"
+                  },
+                  "response": {
+                    "$ref": "GoogleLongrunningOperation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Deletes an archive deployment.",
+                  "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/archiveDeployments/{archiveDeploymentsId}",
+                  "httpMethod": "DELETE",
+                  "id": "apigee.organizations.environments.archiveDeployments.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the Archive Deployment in the following format: `organizations/{org}/environments/{env}/archiveDeployments/{id}`.",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/environments/[^/]+/archiveDeployments/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "GoogleProtobufEmpty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "generateDownloadUrl": {
+                  "description": "Generates a signed URL for downloading the original zip file used to create an Archive Deployment. The URL is only valid for a limited period and should be used within minutes after generation. Each call returns a new upload URL.",
+                  "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/archiveDeployments/{archiveDeploymentsId}:generateDownloadUrl",
+                  "httpMethod": "POST",
+                  "id": "apigee.organizations.environments.archiveDeployments.generateDownloadUrl",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the Archive Deployment you want to download.",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/environments/[^/]+/archiveDeployments/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:generateDownloadUrl",
+                  "request": {
+                    "$ref": "GoogleCloudApigeeV1GenerateDownloadUrlRequest"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudApigeeV1GenerateDownloadUrlResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "generateUploadUrl": {
+                  "description": "Generates a signed URL for uploading an Archive zip file to Google Cloud Storage. Once the upload is complete, the signed URL should be passed to CreateArchiveDeployment. When uploading to the generated signed URL, please follow these restrictions: * Source file type should be a zip file. * Source file size should not exceed 1GB limit. * No credentials should be attached - the signed URLs provide access to the target bucket using internal service identity; if credentials were attached, the identity from the credentials would be used, but that identity does not have permissions to upload files to the URL. When making a HTTP PUT request, these two headers need to be specified: * `content-type: application/zip` * `x-goog-content-length-range: 0,1073741824` And this header SHOULD NOT be specified: * `Authorization: Bearer YOUR_TOKEN`",
+                  "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/archiveDeployments:generateUploadUrl",
+                  "httpMethod": "POST",
+                  "id": "apigee.organizations.environments.archiveDeployments.generateUploadUrl",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The organization and environment to upload to.",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/environments/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/archiveDeployments:generateUploadUrl",
+                  "request": {
+                    "$ref": "GoogleCloudApigeeV1GenerateUploadUrlRequest"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudApigeeV1GenerateUploadUrlResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Gets the specified ArchiveDeployment.",
+                  "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/archiveDeployments/{archiveDeploymentsId}",
+                  "httpMethod": "GET",
+                  "id": "apigee.organizations.environments.archiveDeployments.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the Archive Deployment in the following format: `organizations/{org}/environments/{env}/archiveDeployments/{id}`.",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/environments/[^/]+/archiveDeployments/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "GoogleCloudApigeeV1ArchiveDeployment"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists the ArchiveDeployments in the specified Environment.",
+                  "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/archiveDeployments",
+                  "httpMethod": "GET",
+                  "id": "apigee.organizations.environments.archiveDeployments.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "Optional. An optional query used to return a subset of Archive Deployments using the semantics defined in https://google.aip.dev/160.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "Optional. Maximum number of Archive Deployments to return. If unspecified, at most 25 deployments will be returned.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "Optional. Page token, returned from a previous ListArchiveDeployments call, that you can use to retrieve the next page.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. Name of the Environment for which to list Archive Deployments in the format: `organizations/{org}/environments/{env}`.",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/environments/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/archiveDeployments",
+                  "response": {
+                    "$ref": "GoogleCloudApigeeV1ListArchiveDeploymentsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "patch": {
+                  "description": "Updates an existing ArchiveDeployment. Labels can modified but most of the other fields are not modifiable.",
+                  "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/archiveDeployments/{archiveDeploymentsId}",
+                  "httpMethod": "PATCH",
+                  "id": "apigee.organizations.environments.archiveDeployments.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Name of the Archive Deployment in the following format: `organizations/{org}/environments/{env}/archiveDeployments/{id}`.",
+                      "location": "path",
+                      "pattern": "^organizations/[^/]+/environments/[^/]+/archiveDeployments/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Required. The list of fields to be updated.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "request": {
+                    "$ref": "GoogleCloudApigeeV1ArchiveDeployment"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudApigeeV1ArchiveDeployment"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
                 }
               }
             },
@@ -4009,7 +4780,7 @@
                       "type": "string"
                     },
                     "name": {
-                      "description": "Required. The resource name for which the interactive query will be executed. Must be of the form `organizations/{organization_id}/environments/{environment_id/stats/{dimensions}` Dimensions let you view metrics in meaningful groupings. E.g. apiproxy, target_host. The value of dimensions should be comma separated list as shown below `organizations/{org}/environments/{env}/stats/apiproxy,request_verb`",
+                      "description": "Required. The resource name for which the interactive query will be executed. Must be of the form `organizations/{organization_id}/environments/{environment_id/optimizedStats/{dimensions}` Dimensions let you view metrics in meaningful groupings. E.g. apiproxy, target_host. The value of dimensions should be comma separated list as shown below `organizations/{org}/environments/{env}/optimizedStats/apiproxy,request_verb`",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/environments/[^/]+/optimizedStats/.*$",
                       "required": true,
@@ -4602,9 +5373,14 @@
                           "type": "string"
                         },
                         "override": {
-                          "description": "Flag that specifies whether to force the deployment of the new revision over the currently deployed revision by overriding conflict checks. If an existing shared flow revision is deployed, to ensure seamless deployment with no downtime, set this parameter to `true`. In this case, hybrid deploys the new revision fully before undeploying the existing revision. If set to `false`, you must undeploy the existing revision before deploying the new revision.",
+                          "description": "Flag that specifies whether the new deployment replaces other deployed revisions of the shared flow in the environment. Set `override` to `true` to replace other deployed revisions. By default, `override` is `false` and the deployment is rejected if other revisions of the shared flow are deployed in the environment.",
                           "location": "query",
                           "type": "boolean"
+                        },
+                        "serviceAccount": {
+                          "description": "Google Cloud IAM service account. The service account represents the identity of the deployed proxy, and determines what permissions it has. The format must be `{ACCOUNT_ID}@{PROJECT}.iam.gserviceaccount.com`.",
+                          "location": "query",
+                          "type": "string"
                         }
                       },
                       "path": "v1/{+name}/deployments",
@@ -4887,6 +5663,162 @@
                   ]
                 }
               }
+            },
+            "traceConfig": {
+              "resources": {
+                "overrides": {
+                  "methods": {
+                    "create": {
+                      "description": "Creates a trace configuration override. The response contains a system-generated UUID, that can be used to view, update, or delete the configuration override. Use the List API to view the existing trace configuration overrides.",
+                      "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/traceConfig/overrides",
+                      "httpMethod": "POST",
+                      "id": "apigee.organizations.environments.traceConfig.overrides.create",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. Parent resource of the trace configuration override. Use the following structure in your request. \"organizations/*/environments/*/traceConfig\".",
+                          "location": "path",
+                          "pattern": "^organizations/[^/]+/environments/[^/]+/traceConfig$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}/overrides",
+                      "request": {
+                        "$ref": "GoogleCloudApigeeV1TraceConfigOverride"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudApigeeV1TraceConfigOverride"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "delete": {
+                      "description": "Deletes a distributed trace configuration override.",
+                      "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/traceConfig/overrides/{overridesId}",
+                      "httpMethod": "DELETE",
+                      "id": "apigee.organizations.environments.traceConfig.overrides.delete",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. Name of the trace configuration override. Use the following structure in your request: \"organizations/*/environments/*/traceConfig/overrides/*\".",
+                          "location": "path",
+                          "pattern": "^organizations/[^/]+/environments/[^/]+/traceConfig/overrides/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "response": {
+                        "$ref": "GoogleProtobufEmpty"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "get": {
+                      "description": "Gets a trace configuration override.",
+                      "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/traceConfig/overrides/{overridesId}",
+                      "httpMethod": "GET",
+                      "id": "apigee.organizations.environments.traceConfig.overrides.get",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. Name of the trace configuration override. Use the following structure in your request: \"organizations/*/environments/*/traceConfig/overrides/*\".",
+                          "location": "path",
+                          "pattern": "^organizations/[^/]+/environments/[^/]+/traceConfig/overrides/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "response": {
+                        "$ref": "GoogleCloudApigeeV1TraceConfigOverride"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "list": {
+                      "description": "Lists all of the distributed trace configuration overrides in an environment.",
+                      "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/traceConfig/overrides",
+                      "httpMethod": "GET",
+                      "id": "apigee.organizations.environments.traceConfig.overrides.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "pageSize": {
+                          "description": "Maximum number of trace configuration overrides to return. If not specified, the maximum number returned is 25. The maximum number cannot exceed 100.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "A page token, returned from a previous `ListTraceConfigOverrides` call. Token value that can be used to retrieve the subsequent page. When paginating, all other parameters provided to `ListTraceConfigOverrides` must match those specified in the call to obtain the page token.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. Parent resource of the trace configuration override. Use the following structure in your request: \"organizations/*/environments/*/traceConfig\".",
+                          "location": "path",
+                          "pattern": "^organizations/[^/]+/environments/[^/]+/traceConfig$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}/overrides",
+                      "response": {
+                        "$ref": "GoogleCloudApigeeV1ListTraceConfigOverridesResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "patch": {
+                      "description": "Updates a distributed trace configuration override. Note that the repeated fields have replace semantics when included in the field mask and that they will be overwritten by the value of the fields in the request body.",
+                      "flatPath": "v1/organizations/{organizationsId}/environments/{environmentsId}/traceConfig/overrides/{overridesId}",
+                      "httpMethod": "PATCH",
+                      "id": "apigee.organizations.environments.traceConfig.overrides.patch",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. Name of the trace configuration override. Use the following structure in your request: \"organizations/*/environments/*/traceConfig/overrides/*\".",
+                          "location": "path",
+                          "pattern": "^organizations/[^/]+/environments/[^/]+/traceConfig/overrides/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "updateMask": {
+                          "description": "List of fields to be updated.",
+                          "format": "google-fieldmask",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "request": {
+                        "$ref": "GoogleCloudApigeeV1TraceConfigOverride"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudApigeeV1TraceConfigOverride"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
+                }
+              }
             }
           }
         },
@@ -5089,7 +6021,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "Required. The resource name for which the interactive query will be executed. Must be of the form `organizations/{organization_id}/stats/{dimensions}`. Dimensions let you view metrics in meaningful groupings. E.g. apiproxy, target_host. The value of dimensions should be comma separated list as shown below `organizations/{org}/stats/apiproxy,request_verb`",
+                  "description": "Required. The resource name for which the interactive query will be executed. Must be of the form `organizations/{organization_id}/hostStats/{dimensions}`. Dimensions let you view metrics in meaningful groupings. E.g. apiproxy, target_host. The value of dimensions should be comma separated list as shown below `organizations/{org}/hostStats/apiproxy,request_verb`",
                   "location": "path",
                   "pattern": "^organizations/[^/]+/hostStats/.*$",
                   "required": true,
@@ -5267,6 +6199,40 @@
               "path": "v1/{+parent}/instances",
               "response": {
                 "$ref": "GoogleCloudApigeeV1ListInstancesResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "patch": {
+              "description": "Updates an Apigee runtime instance. You can update the fields described in NodeConfig. No other fields will be updated. **Note:** Not supported for Apigee hybrid.",
+              "flatPath": "v1/organizations/{organizationsId}/instances/{instancesId}",
+              "httpMethod": "PATCH",
+              "id": "apigee.organizations.instances.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the instance. Use the following structure in your request: `organizations/{org}/instances/{instance}`.",
+                  "location": "path",
+                  "pattern": "^organizations/[^/]+/instances/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "List of fields to be updated.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "GoogleCloudApigeeV1Instance"
+              },
+              "response": {
+                "$ref": "GoogleLongrunningOperation"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
@@ -5784,7 +6750,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "Required. The resource name for which the interactive query will be executed. Must be of the form `organizations/{organization_id}/stats/{dimensions}`. Dimensions let you view metrics in meaningful groupings. E.g. apiproxy, target_host. The value of dimensions should be comma separated list as shown below `organizations/{org}/stats/apiproxy,request_verb`",
+                  "description": "Required. The resource name for which the interactive query will be executed. Must be of the form `organizations/{organization_id}/optimizedHostStats/{dimensions}`. Dimensions let you view metrics in meaningful groupings. E.g. apiproxy, target_host. The value of dimensions should be comma separated list as shown below `organizations/{org}/optimizedHostStats/apiproxy,request_verb`",
                   "location": "path",
                   "pattern": "^organizations/[^/]+/optimizedHostStats/.*$",
                   "required": true,
@@ -6175,7 +7141,7 @@
                   ]
                 },
                 "get": {
-                  "description": "Gets a revision of a shared flow. If `format=bundle` is passed, it instead outputs a shared flow revision as a ZIP-formatted bundle of code and config files.",
+                  "description": "Gets a revision of a shared flow. To download the shared flow configuration bundle for the specified revision as a zip file, set the `format` query parameter to `bundle`. If you are using curl, specify `-o filename.zip` to save the output to a file; otherwise, it displays to `stdout`. Then, develop the shared flow configuration locally and upload the updated sharedFlow configuration revision, as described in [updateSharedFlowRevision](updateSharedFlowRevision).",
                   "flatPath": "v1/organizations/{organizationsId}/sharedflows/{sharedflowsId}/revisions/{revisionsId}",
                   "httpMethod": "GET",
                   "id": "apigee.organizations.sharedflows.revisions.get",
@@ -6446,9 +7412,38 @@
       }
     }
   },
-  "revision": "20210113",
+  "revision": "20210916",
   "rootUrl": "https://apigee.googleapis.com/",
   "schemas": {
+    "EdgeConfigstoreBundleBadBundle": {
+      "description": "Describes why a bundle is invalid. Intended for use in error details.",
+      "id": "EdgeConfigstoreBundleBadBundle",
+      "properties": {
+        "violations": {
+          "description": "Describes all precondition violations.",
+          "items": {
+            "$ref": "EdgeConfigstoreBundleBadBundleViolation"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "EdgeConfigstoreBundleBadBundleViolation": {
+      "description": "A message type used to describe a single bundle validation error.",
+      "id": "EdgeConfigstoreBundleBadBundleViolation",
+      "properties": {
+        "description": {
+          "description": "A description of why the bundle is invalid and how to fix it.",
+          "type": "string"
+        },
+        "filename": {
+          "description": "The filename (including relative path from the bundle root) in which the error occurred.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleApiHttpBody": {
       "description": "Message that represents an arbitrary HTTP body. It should only be used for payload formats that can't be represented as JSON, such as raw binary or an HTML page. This message can be used both in streaming and non-streaming API methods in the request as well as the response. It can be used as a top-level request field, which is convenient if one wants to extract parameters from either the URL or HTTP template into the request fields and also want access to the raw HTTP body. Example: message GetResourceRequest { // A unique request id. string request_id = 1; // The raw HTTP body is bound to this field. google.api.HttpBody http_body = 2; } service ResourceService { rpc GetResource(GetResourceRequest) returns (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody) returns (google.protobuf.Empty); } Example with streaming methods: service CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); rpc UpdateCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); } Use of this type only changes how the request and response bodies are handled, all other features will continue to work unchanged.",
       "id": "GoogleApiHttpBody",
@@ -6537,6 +7532,32 @@
       "description": "Request for ActivateNatAddressRequest. Activate the nat address request.",
       "id": "GoogleCloudApigeeV1ActivateNatAddressRequest",
       "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1AddonsConfig": {
+      "description": "Add-on configurations for the Apigee organization.",
+      "id": "GoogleCloudApigeeV1AddonsConfig",
+      "properties": {
+        "advancedApiOpsConfig": {
+          "$ref": "GoogleCloudApigeeV1AdvancedApiOpsConfig",
+          "description": "Configuration for the Advanced API Ops add-on."
+        },
+        "monetizationConfig": {
+          "$ref": "GoogleCloudApigeeV1MonetizationConfig",
+          "description": "Configuration for the Monetization add-on."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1AdvancedApiOpsConfig": {
+      "description": "Configuration for the Advanced API Ops add-on.",
+      "id": "GoogleCloudApigeeV1AdvancedApiOpsConfig",
+      "properties": {
+        "enabled": {
+          "description": "Flag that specifies whether the Advanced API Ops add-on is enabled.",
+          "type": "boolean"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudApigeeV1Alias": {
@@ -6686,6 +7707,10 @@
           },
           "type": "array"
         },
+        "graphqlOperationGroup": {
+          "$ref": "GoogleCloudApigeeV1GraphQLOperationGroup",
+          "description": "Configuration used to group Apigee proxies or remote services with graphQL operation name, graphQL operation type and quotas. This grouping allows us to precisely set quota for a particular combination of graphQL name and operation type for a particular proxy request. If graphQL name is not set, this would imply quota will be applied on all graphQL requests matching the operation type."
+        },
         "lastModifiedAt": {
           "description": "Response only. Modified time of this environment as milliseconds since epoch.",
           "format": "int64",
@@ -6746,23 +7771,34 @@
       "description": "Metadata describing the API proxy",
       "id": "GoogleCloudApigeeV1ApiProxy",
       "properties": {
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "User labels applied to this API Proxy.",
+          "type": "object"
+        },
         "latestRevisionId": {
-          "description": "The id of the most recently created revision for this api proxy.",
+          "description": "Output only. The id of the most recently created revision for this api proxy.",
+          "readOnly": true,
           "type": "string"
         },
         "metaData": {
           "$ref": "GoogleCloudApigeeV1EntityMetadata",
-          "description": "Metadata describing the API proxy."
+          "description": "Output only. Metadata describing the API proxy.",
+          "readOnly": true
         },
         "name": {
-          "description": "Name of the API proxy.",
+          "description": "Output only. Name of the API proxy.",
+          "readOnly": true,
           "type": "string"
         },
         "revision": {
-          "description": "List of revisons defined for the API proxy.",
+          "description": "Output only. List of revisons defined for the API proxy.",
           "items": {
             "type": "string"
           },
+          "readOnly": true,
           "type": "array"
         }
       },
@@ -6991,6 +8027,45 @@
         },
         "status": {
           "description": "Status of the credential.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1ArchiveDeployment": {
+      "description": "Archive Deployment information.",
+      "id": "GoogleCloudApigeeV1ArchiveDeployment",
+      "properties": {
+        "createdAt": {
+          "description": "Output only. The time at which the Archive Deployment was created in milliseconds since the epoch.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
+        "gcsUri": {
+          "description": "Input only. The Google Cloud Storage signed URL returned from GenerateUploadUrl and used to upload the Archive zip file.",
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "User-supplied key-value pairs used to organize ArchiveDeployments. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: \\p{Ll}\\p{Lo}{0,62} Label values must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: [\\p{Ll}\\p{Lo}\\p{N}_-]{0,63} No more than 64 labels can be associated with a given store.",
+          "type": "object"
+        },
+        "name": {
+          "description": "Name of the Archive Deployment in the following format: `organizations/{org}/environments/{env}/archiveDeployments/{id}`.",
+          "type": "string"
+        },
+        "operation": {
+          "description": "Output only. A reference to the LRO that created this Archive Deployment in the following format: `organizations/{org}/operations/{id}`",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "Output only. The time at which the Archive Deployment was updated in milliseconds since the epoch.",
+          "format": "int64",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -7361,6 +8436,21 @@
         },
         "status": {
           "description": "Status of the credential.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1CreditDeveloperBalanceRequest": {
+      "description": "Request for CreditDeveloperBalance.",
+      "id": "GoogleCloudApigeeV1CreditDeveloperBalanceRequest",
+      "properties": {
+        "transactionAmount": {
+          "$ref": "GoogleTypeMoney",
+          "description": "The amount of money to be credited. The wallet corresponding to the currency specified within `transaction_amount` will be updated. For example, if you specified `currency_code` within `transaction_amount` as \"USD\", then the amount would be added to the wallet which has the \"USD\" currency or if no such wallet exists, a new wallet will be created with the \"USD\" currency."
+        },
+        "transactionId": {
+          "description": "Each transaction_id uniquely identifies a credit balance request. If multiple requests are received with the same transaction_id, only one of them will be considered.",
           "type": "string"
         }
       },
@@ -7821,7 +8911,7 @@
           "type": "array"
         },
         "pods": {
-          "description": "Status reported by runtime pods. This field is not populated for List APIs.",
+          "description": "Status reported by runtime pods. This field is not populated for List APIs. **Note**: **This field is deprecated**. Runtime versions 1.3 and above report instance level status rather than pod status.",
           "items": {
             "$ref": "GoogleCloudApigeeV1PodStatus"
           },
@@ -7832,11 +8922,15 @@
           "type": "string"
         },
         "routeConflicts": {
-          "description": "Conflicts in the desired state routing configuration. The presence of conflicts does not cause the state to be ERROR, but it will mean that some of the deployments basepaths are not routed to its environment. If the conflicts change, the state will transition to PROGRESSING until the latest configuration is rolled out to all instances. This field is not populated in List APIs.",
+          "description": "Conflicts in the desired state routing configuration. The presence of conflicts does not cause the state to be `ERROR`, but it will mean that some of the deployment's base paths are not routed to its environment. If the conflicts change, the state will transition to `PROGRESSING` until the latest configuration is rolled out to all instances. This field is not populated in List APIs.",
           "items": {
             "$ref": "GoogleCloudApigeeV1DeploymentChangeReportRoutingConflict"
           },
           "type": "array"
+        },
+        "serviceAccount": {
+          "description": "The full resource name of Cloud IAM Service Account that this deployment is using, eg, `projects/-/serviceAccounts/{email}`.",
+          "type": "string"
         },
         "state": {
           "description": "Current state of the deployment. This field is not populated in List APIs.",
@@ -7848,9 +8942,9 @@
           ],
           "enumDescriptions": [
             "This value should never be returned.",
-            "The runtime has loaded the deployment.",
-            "The deployment is not fully ready in the runtime.",
-            "There is an error with the deployment that requires intervention."
+            "Runtime has loaded the deployment.",
+            "Deployment is not fully ready in the runtime.",
+            "Encountered an error with the deployment that requires intervention."
           ],
           "type": "string"
         }
@@ -7858,7 +8952,7 @@
       "type": "object"
     },
     "GoogleCloudApigeeV1DeploymentChangeReport": {
-      "description": "Response for GenerateDeployChangeReport and GenerateUndeployChangeReport. This report contains any validation failures that would cause the deployment to be rejected, as well changes and conflicts in routing that may occur due to the new deployment. The existence of a routing warning does not necessarily imply that the deployment request is bad, if the desired state of the deployment request is to effect a routing change. The primary purposes of the routing messages are: 1) To inform users of routing changes that may have an effect on traffic currently being routed to other existing deployments. 2) To warn users if some basepath in the proxy will not receive traffic due to an existing deployment having already claimed that basepath. The presence of routing conflicts/changes will not cause non-dry-run DeployApiProxy/UndeployApiProxy requests to be rejected.",
+      "description": "Response for GenerateDeployChangeReport and GenerateUndeployChangeReport. This report contains any validation failures that would cause the deployment to be rejected, as well changes and conflicts in routing that may occur due to the new deployment. The existence of a routing warning does not necessarily imply that the deployment request is bad, if the desired state of the deployment request is to effect a routing change. The primary purposes of the routing messages are: 1) To inform users of routing changes that may have an effect on traffic currently being routed to other existing deployments. 2) To warn users if some base path in the proxy will not receive traffic due to an existing deployment having already claimed that base path. The presence of routing conflicts/changes will not cause non-dry-run DeployApiProxy/UndeployApiProxy requests to be rejected.",
       "id": "GoogleCloudApigeeV1DeploymentChangeReport",
       "properties": {
         "routingChanges": {
@@ -7869,7 +8963,7 @@
           "type": "array"
         },
         "routingConflicts": {
-          "description": "All basepath conflicts detected for a deployment request.",
+          "description": "All base path conflicts detected for a deployment request.",
           "items": {
             "$ref": "GoogleCloudApigeeV1DeploymentChangeReportRoutingConflict"
           },
@@ -7887,71 +8981,72 @@
       "id": "GoogleCloudApigeeV1DeploymentChangeReportRoutingChange",
       "properties": {
         "description": {
-          "description": "A human-readable description of this routing change.",
+          "description": "Human-readable description of this routing change.",
           "type": "string"
         },
         "environmentGroup": {
-          "description": "The name of the environment group affected by this routing change.",
+          "description": "Name of the environment group affected by this routing change.",
           "type": "string"
         },
         "fromDeployment": {
           "$ref": "GoogleCloudApigeeV1DeploymentChangeReportRoutingDeployment",
-          "description": "The basepath/deployment that may stop receiving some traffic."
+          "description": "Base path/deployment that may stop receiving some traffic."
         },
         "shouldSequenceRollout": {
-          "description": "True if using sequenced rollout would make this routing change safer. Note: this does not necessarily imply that automated sequenced rollout mode is supported for the operation.",
+          "description": "Set to `true` if using sequenced rollout would make this routing change safer. **Note**: This does not necessarily imply that automated sequenced rollout mode is supported for the operation.",
           "type": "boolean"
         },
         "toDeployment": {
           "$ref": "GoogleCloudApigeeV1DeploymentChangeReportRoutingDeployment",
-          "description": "The basepath/deployment that may start receiving that traffic. May be null if no deployment is able to receive the traffic."
+          "description": "Base path/deployment that may start receiving that traffic. May be null if no deployment is able to receive the traffic."
         }
       },
       "type": "object"
     },
     "GoogleCloudApigeeV1DeploymentChangeReportRoutingConflict": {
-      "description": "Describes a routing conflict that may cause a deployment not to receive traffic at some basepath.",
+      "description": "Describes a routing conflict that may cause a deployment not to receive traffic at some base path.",
       "id": "GoogleCloudApigeeV1DeploymentChangeReportRoutingConflict",
       "properties": {
         "conflictingDeployment": {
           "$ref": "GoogleCloudApigeeV1DeploymentChangeReportRoutingDeployment",
-          "description": "The existing basepath/deployment causing the conflict."
+          "description": "Existing base path/deployment causing the conflict."
         },
         "description": {
-          "description": "A human-readable description of this conflict.",
+          "description": "Human-readable description of this conflict.",
           "type": "string"
         },
         "environmentGroup": {
-          "description": "The name of the environment group in which this conflict exists.",
+          "description": "Name of the environment group in which this conflict exists.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "GoogleCloudApigeeV1DeploymentChangeReportRoutingDeployment": {
-      "description": "A tuple representing a basepath and the deployment containing it.",
+      "description": "Tuple representing a base path and the deployment containing it.",
       "id": "GoogleCloudApigeeV1DeploymentChangeReportRoutingDeployment",
       "properties": {
         "apiProxy": {
-          "description": "The name of the deployed proxy revision containing the basepath.",
+          "description": "Name of the deployed API proxy revision containing the base path.",
           "type": "string"
         },
         "basepath": {
-          "description": "The basepath receiving traffic.",
+          "description": "Base path receiving traffic.",
           "type": "string"
         },
         "environment": {
-          "description": "The name of the environment in which the proxy is deployed.",
+          "description": "Name of the environment in which the proxy is deployed.",
           "type": "string"
         },
         "revision": {
-          "description": "The name of the deployed proxy revision containing the basepath.",
+          "description": "Name of the deployed API proxy revision containing the base path.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "GoogleCloudApigeeV1DeploymentConfig": {
+      "description": "NEXT ID: 9",
       "id": "GoogleCloudApigeeV1DeploymentConfig",
       "properties": {
         "attributes": {
@@ -7975,6 +9070,10 @@
         },
         "proxyUid": {
           "description": "Unique ID of the API proxy revision.",
+          "type": "string"
+        },
+        "serviceAccount": {
+          "description": "The service account identity associated with this deployment. If non-empty, will be in the following format: `projects/-/serviceAccounts/{account_email}`",
           "type": "string"
         },
         "uid": {
@@ -8167,6 +9266,11 @@
           "format": "int64",
           "type": "string"
         },
+        "expiresInSeconds": {
+          "description": "Input only. Expiration time, in seconds, for the consumer key. If not set or left to the default value of `-1`, the API key never expires. The expiration time can't be updated after it is set.",
+          "format": "int64",
+          "type": "string"
+        },
         "issuedAt": {
           "description": "Time the developer app was created in milliseconds since epoch.",
           "format": "int64",
@@ -8181,6 +9285,97 @@
         },
         "status": {
           "description": "Status of the credential. Valid values include `approved` or `revoked`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1DeveloperBalance": {
+      "description": "Account balance for the developer.",
+      "id": "GoogleCloudApigeeV1DeveloperBalance",
+      "properties": {
+        "wallets": {
+          "description": "Output only. List of all wallets. Each individual wallet stores the account balance for a particular currency.",
+          "items": {
+            "$ref": "GoogleCloudApigeeV1DeveloperBalanceWallet"
+          },
+          "readOnly": true,
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1DeveloperBalanceWallet": {
+      "description": "Wallet used to manage an account balance for a particular currency.",
+      "id": "GoogleCloudApigeeV1DeveloperBalanceWallet",
+      "properties": {
+        "balance": {
+          "$ref": "GoogleTypeMoney",
+          "description": "Current remaining balance of the developer for a particular currency."
+        },
+        "lastCreditTime": {
+          "description": "Output only. Time at which the developer last added credit to the account in milliseconds since epoch.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1DeveloperMonetizationConfig": {
+      "description": "Monetization configuration for the developer.",
+      "id": "GoogleCloudApigeeV1DeveloperMonetizationConfig",
+      "properties": {
+        "billingType": {
+          "description": "Billing type.",
+          "enum": [
+            "BILLING_TYPE_UNSPECIFIED",
+            "PREPAID",
+            "POSTPAID"
+          ],
+          "enumDescriptions": [
+            "The default/unset value.",
+            "Developer pays in advance for the use of APIs and the charged amount is deducted from their account balance.",
+            "Developer does not maintain an account balance. The API provider bills the developer for API usage."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1DeveloperSubscription": {
+      "description": "Structure of a DeveloperSubscription.",
+      "id": "GoogleCloudApigeeV1DeveloperSubscription",
+      "properties": {
+        "apiproduct": {
+          "description": "Name of the API product for which the developer is purchasing a subscription.",
+          "type": "string"
+        },
+        "createdAt": {
+          "description": "Output only. Time when the API product subscription was created in milliseconds since epoch.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
+        "endTime": {
+          "description": "Time when the API product subscription ends in milliseconds since epoch.",
+          "format": "int64",
+          "type": "string"
+        },
+        "lastModifiedAt": {
+          "description": "Output only. Time when the API product subscription was last modified in milliseconds since epoch.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. Name of the API product subscription.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "startTime": {
+          "description": "Time when the API product subscription starts in milliseconds since epoch.",
+          "format": "int64",
           "type": "string"
         }
       },
@@ -8228,10 +9423,38 @@
     "GoogleCloudApigeeV1Environment": {
       "id": "GoogleCloudApigeeV1Environment",
       "properties": {
+        "apiProxyType": {
+          "description": "Optional. API Proxy type supported by the environment. The type can be set when creating the Environment and cannot be changed.",
+          "enum": [
+            "API_PROXY_TYPE_UNSPECIFIED",
+            "PROGRAMMABLE",
+            "CONFIGURABLE"
+          ],
+          "enumDescriptions": [
+            "API proxy type not specified.",
+            "Programmable API Proxies enable you to develop APIs with highly flexible behavior using bundled policy configuration and one or more programming languages to describe complex sequential and/or conditional flows of logic.",
+            "Configurable API Proxies enable you to develop efficient APIs using simple configuration while complex execution control flow logic is handled by Apigee. This type only works with the ARCHIVE deployment type and cannot be combined with the PROXY deployment type."
+          ],
+          "type": "string"
+        },
         "createdAt": {
           "description": "Output only. Creation time of this environment as milliseconds since epoch.",
           "format": "int64",
           "readOnly": true,
+          "type": "string"
+        },
+        "deploymentType": {
+          "description": "Optional. Deployment type supported by the environment. The deployment type can be set when creating the environment and cannot be changed. When you enable archive deployment, you will be **prevented from performing** a [subset of actions](/apigee/docs/api-platform/local-development/overview#prevented-actions) within the environment, including: * Managing the deployment of API proxy or shared flow revisions * Creating, updating, or deleting resource files * Creating, updating, or deleting target servers",
+          "enum": [
+            "DEPLOYMENT_TYPE_UNSPECIFIED",
+            "PROXY",
+            "ARCHIVE"
+          ],
+          "enumDescriptions": [
+            "Deployment type not specified.",
+            "Proxy deployment enables you to develop and deploy API proxies using Apigee on Google Cloud. This cannot currently be combined with the CONFIGURABLE API proxy type.",
+            "Archive deployment enables you to develop API proxies locally then deploy an archive of your API proxy configuration to an environment in Apigee on Google Cloud. You will be prevented from performing a [subset of actions](/apigee/docs/api-platform/local-development/overview#prevented-actions) within the environment."
+          ],
           "type": "string"
         },
         "description": {
@@ -8255,6 +9478,25 @@
         "properties": {
           "$ref": "GoogleCloudApigeeV1Properties",
           "description": "Optional. Key-value pairs that may be used for customizing the environment."
+        },
+        "state": {
+          "description": "Output only. State of the environment. Values other than ACTIVE means the resource is not ready to use.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "CREATING",
+            "ACTIVE",
+            "DELETING",
+            "UPDATING"
+          ],
+          "enumDescriptions": [
+            "Resource is in an unspecified state.",
+            "Resource is being created.",
+            "Resource is provisioned and ready to use.",
+            "The resource is being deleted.",
+            "The resource is being updated."
+          ],
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -8262,6 +9504,10 @@
     "GoogleCloudApigeeV1EnvironmentConfig": {
       "id": "GoogleCloudApigeeV1EnvironmentConfig",
       "properties": {
+        "arcConfigLocation": {
+          "description": "The location for the config blob of API Runtime Control, aka Envoy Adapter, for op-based authentication as a URI, e.g. a Cloud Storage URI. This is only used by Envoy-based gateways.",
+          "type": "string"
+        },
         "createTime": {
           "description": "Time that the environment configuration was created.",
           "format": "google-datetime",
@@ -8298,6 +9544,10 @@
             "$ref": "GoogleCloudApigeeV1FlowHookConfig"
           },
           "type": "array"
+        },
+        "gatewayConfigLocation": {
+          "description": "The location for the gateway config blob as a URI, e.g. a Cloud Storage URI. This is only used by Envoy-based gateways.",
+          "type": "string"
         },
         "keystores": {
           "description": "List of keystores in the environment.",
@@ -8386,6 +9636,25 @@
         "name": {
           "description": "ID of the environment group.",
           "type": "string"
+        },
+        "state": {
+          "description": "Output only. State of the environment group. Values other than ACTIVE means the resource is not ready to use.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "CREATING",
+            "ACTIVE",
+            "DELETING",
+            "UPDATING"
+          ],
+          "enumDescriptions": [
+            "Resource is in an unspecified state.",
+            "Resource is being created.",
+            "Resource is provisioned and ready to use.",
+            "The resource is being deleted.",
+            "The resource is being updated."
+          ],
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -8443,6 +9712,12 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1ExpireDeveloperSubscriptionRequest": {
+      "description": "Request for ExpireDeveloperSubscription.",
+      "id": "GoogleCloudApigeeV1ExpireDeveloperSubscriptionRequest",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudApigeeV1Export": {
@@ -8529,7 +9804,7 @@
       "id": "GoogleCloudApigeeV1FlowHook",
       "properties": {
         "continueOnError": {
-          "description": "Optional. Flag that specifies whether execution should continue if the flow hook throws an exception. Set to `true` to continue execution. Set to `false` to stop execution if the flow hook throws an exception.Defaults to `true`.",
+          "description": "Optional. Flag that specifies whether execution should continue if the flow hook throws an exception. Set to `true` to continue execution. Set to `false` to stop execution if the flow hook throws an exception. Defaults to `true`.",
           "type": "boolean"
         },
         "description": {
@@ -8566,10 +9841,109 @@
       },
       "type": "object"
     },
+    "GoogleCloudApigeeV1GenerateDownloadUrlRequest": {
+      "description": "Request for GenerateDownloadUrl method.",
+      "id": "GoogleCloudApigeeV1GenerateDownloadUrlRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1GenerateDownloadUrlResponse": {
+      "description": "Response for GenerateDownloadUrl method.",
+      "id": "GoogleCloudApigeeV1GenerateDownloadUrlResponse",
+      "properties": {
+        "downloadUri": {
+          "description": "The Google Cloud Storage signed URL that can be used to download the Archive zip file.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1GenerateUploadUrlRequest": {
+      "description": "Request for GenerateUploadUrl method.",
+      "id": "GoogleCloudApigeeV1GenerateUploadUrlRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1GenerateUploadUrlResponse": {
+      "description": "Response for GenerateUploadUrl method.",
+      "id": "GoogleCloudApigeeV1GenerateUploadUrlResponse",
+      "properties": {
+        "uploadUri": {
+          "description": "The Google Cloud Storage signed URL that can be used to upload a new Archive zip file.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudApigeeV1GetSyncAuthorizationRequest": {
       "description": "Request for GetSyncAuthorization.",
       "id": "GoogleCloudApigeeV1GetSyncAuthorizationRequest",
       "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1GraphQLOperation": {
+      "description": "Represents the pairing of GraphQL operation types and the GraphQL operation name.",
+      "id": "GoogleCloudApigeeV1GraphQLOperation",
+      "properties": {
+        "operation": {
+          "description": "GraphQL operation name. The name and operation type will be used to apply quotas. If no name is specified, the quota will be applied to all GraphQL operations irrespective of their operation names in the payload.",
+          "type": "string"
+        },
+        "operationTypes": {
+          "description": "Required. GraphQL operation types. Valid values include `query` or `mutation`. **Note**: Apigee does not currently support `subscription` types.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1GraphQLOperationConfig": {
+      "description": "Binds the resources in a proxy or remote service with the GraphQL operation and its associated quota enforcement.",
+      "id": "GoogleCloudApigeeV1GraphQLOperationConfig",
+      "properties": {
+        "apiSource": {
+          "description": "Required. Name of the API proxy endpoint or remote service with which the GraphQL operation and quota are associated.",
+          "type": "string"
+        },
+        "attributes": {
+          "description": "Custom attributes associated with the operation.",
+          "items": {
+            "$ref": "GoogleCloudApigeeV1Attribute"
+          },
+          "type": "array"
+        },
+        "operations": {
+          "description": "Required. List of GraphQL name/operation type pairs for the proxy or remote service to which quota will be applied. If only operation types are specified, the quota will be applied to all GraphQL requests irrespective of the GraphQL name. **Note**: Currently, you can specify only a single GraphQLOperation. Specifying more than one will cause the operation to fail.",
+          "items": {
+            "$ref": "GoogleCloudApigeeV1GraphQLOperation"
+          },
+          "type": "array"
+        },
+        "quota": {
+          "$ref": "GoogleCloudApigeeV1Quota",
+          "description": "Quota parameters to be enforced for the resources, methods, and API source combination. If none are specified, quota enforcement will not be done."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1GraphQLOperationGroup": {
+      "description": "List of graphQL operation configuration details associated with Apigee API proxies or remote services. Remote services are non-Apigee proxies, such as Istio-Envoy.",
+      "id": "GoogleCloudApigeeV1GraphQLOperationGroup",
+      "properties": {
+        "operationConfigType": {
+          "description": "Flag that specifies whether the configuration is for Apigee API proxy or a remote service. Valid values include `proxy` or `remoteservice`. Defaults to `proxy`. Set to `proxy` when Apigee API proxies are associated with the API product. Set to `remoteservice` when non-Apigee proxies like Istio-Envoy are associated with the API product.",
+          "type": "string"
+        },
+        "operationConfigs": {
+          "description": "Required. List of operation configurations for either Apigee API proxies or other remote services that are associated with this API product.",
+          "items": {
+            "$ref": "GoogleCloudApigeeV1GraphQLOperationConfig"
+          },
+          "type": "array"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudApigeeV1IngressConfig": {
@@ -8626,7 +10000,7 @@
           "type": "string"
         },
         "host": {
-          "description": "Output only. Hostname or IP address of the exposed Apigee endpoint used by clients to connect to the service.",
+          "description": "Output only. Internal hostname or IP address of the Apigee endpoint used by clients to connect to the service.",
           "readOnly": true,
           "type": "string"
         },
@@ -8644,24 +10018,55 @@
           "description": "Required. Resource ID of the instance. Values must match the regular expression `^a-z{0,30}[a-z\\d]$`.",
           "type": "string"
         },
+        "peeringCidrRange": {
+          "description": "Optional. Size of the CIDR block range that will be reserved by the instance. PAID organizations support `SLASH_16` to `SLASH_20` and defaults to `SLASH_16`. Evaluation organizations support only `SLASH_23`.",
+          "enum": [
+            "CIDR_RANGE_UNSPECIFIED",
+            "SLASH_16",
+            "SLASH_17",
+            "SLASH_18",
+            "SLASH_19",
+            "SLASH_20",
+            "SLASH_22",
+            "SLASH_23"
+          ],
+          "enumDescriptions": [
+            "Range not specified.",
+            "`/16` CIDR range.",
+            "`/17` CIDR range.",
+            "`/18` CIDR range.",
+            "`/19` CIDR range.",
+            "`/20` CIDR range.",
+            "`/22` CIDR range. Supported for evaluation only.",
+            "`/23` CIDR range. Supported for evaluation only."
+          ],
+          "type": "string"
+        },
         "port": {
           "description": "Output only. Port number of the exposed Apigee endpoint.",
           "readOnly": true,
           "type": "string"
         },
+        "runtimeVersion": {
+          "description": "Output only. Version of the runtime system running in the instance. The runtime system is the set of components that serve the API Proxy traffic in your Environments.",
+          "readOnly": true,
+          "type": "string"
+        },
         "state": {
-          "description": "Output only. State of the instance. Values other than ACTIVE means the resource is not ready to use.",
+          "description": "Output only. State of the instance. Values other than `ACTIVE` means the resource is not ready to use.",
           "enum": [
             "STATE_UNSPECIFIED",
             "CREATING",
             "ACTIVE",
-            "DELETING"
+            "DELETING",
+            "UPDATING"
           ],
           "enumDescriptions": [
             "Resource is in an unspecified state.",
             "Resource is being created.",
             "Resource is provisioned and ready to use.",
-            "The resource is being deleted."
+            "The resource is being deleted.",
+            "The resource is being updated."
           ],
           "readOnly": true,
           "type": "string"
@@ -8703,7 +10108,7 @@
           "type": "array"
         },
         "deployedRoutes": {
-          "description": "The current routes deployed in the ingress routing table. A route which is missing will appear in missing_routes.",
+          "description": "Current routes deployed in the ingress routing table. A route which is missing will appear in `missing_routes`.",
           "items": {
             "$ref": "GoogleCloudApigeeV1InstanceDeploymentStatusDeployedRoute"
           },
@@ -8721,35 +10126,35 @@
       "id": "GoogleCloudApigeeV1InstanceDeploymentStatusDeployedRevision",
       "properties": {
         "percentage": {
-          "description": "The percentage of MP replicas reporting this revision",
+          "description": "Percentage of MP replicas reporting this revision.",
           "format": "int32",
           "type": "integer"
         },
         "revision": {
-          "description": "The proxy revision reported as deployed.",
+          "description": "API proxy revision reported as deployed.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "GoogleCloudApigeeV1InstanceDeploymentStatusDeployedRoute": {
-      "description": "A route deployed in the ingress routing table.",
+      "description": "Route deployed in the ingress routing table.",
       "id": "GoogleCloudApigeeV1InstanceDeploymentStatusDeployedRoute",
       "properties": {
         "basepath": {
-          "description": "The basepath in the routing table.",
+          "description": "Base path in the routing table.",
           "type": "string"
         },
         "envgroup": {
-          "description": "The envgroup where this route is installed.",
+          "description": "Environment group where this route is installed.",
           "type": "string"
         },
         "environment": {
-          "description": "The destination environment. This will be empty if the route is not yet reported.",
+          "description": "Destination environment. This will be empty if the route is not yet reported.",
           "type": "string"
         },
         "percentage": {
-          "description": "The percentage of ingress replicas reporting this route.",
+          "description": "Percentage of ingress replicas reporting this route.",
           "format": "int32",
           "type": "integer"
         }
@@ -8888,6 +10293,24 @@
       },
       "type": "object"
     },
+    "GoogleCloudApigeeV1ListArchiveDeploymentsResponse": {
+      "description": "Response for ListArchiveDeployments method.",
+      "id": "GoogleCloudApigeeV1ListArchiveDeploymentsResponse",
+      "properties": {
+        "archiveDeployments": {
+          "description": "Archive Deployments in the specified environment.",
+          "items": {
+            "$ref": "GoogleCloudApigeeV1ArchiveDeployment"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Page token that you can include in a ListArchiveDeployments request to retrieve the next page. If omitted, no subsequent pages exist.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudApigeeV1ListAsyncQueriesResponse": {
       "description": "The response for ListAsyncQueries.",
       "id": "GoogleCloudApigeeV1ListAsyncQueriesResponse",
@@ -8986,6 +10409,24 @@
             "$ref": "GoogleCloudApigeeV1DeveloperApp"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1ListDeveloperSubscriptionsResponse": {
+      "description": "Response for ListDeveloperSubscriptions.",
+      "id": "GoogleCloudApigeeV1ListDeveloperSubscriptionsResponse",
+      "properties": {
+        "developerSubscriptions": {
+          "description": "List of all subscriptions.",
+          "items": {
+            "$ref": "GoogleCloudApigeeV1DeveloperSubscription"
+          },
+          "type": "array"
+        },
+        "nextStartKey": {
+          "description": "Value that can be sent as `startKey` to retrieve the next page of content. If this field is omitted, there are no subsequent pages.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -9147,12 +10588,48 @@
       },
       "type": "object"
     },
+    "GoogleCloudApigeeV1ListRatePlansResponse": {
+      "description": "Response for ListRatePlans.",
+      "id": "GoogleCloudApigeeV1ListRatePlansResponse",
+      "properties": {
+        "nextStartKey": {
+          "description": "Value that can be sent as `startKey` to retrieve the next page of content. If this field is omitted, there are no subsequent pages.",
+          "type": "string"
+        },
+        "ratePlans": {
+          "description": "List of rate plans in an organization.",
+          "items": {
+            "$ref": "GoogleCloudApigeeV1RatePlan"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudApigeeV1ListSharedFlowsResponse": {
       "id": "GoogleCloudApigeeV1ListSharedFlowsResponse",
       "properties": {
         "sharedFlows": {
           "items": {
             "$ref": "GoogleCloudApigeeV1SharedFlow"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1ListTraceConfigOverridesResponse": {
+      "description": "Response for ListTraceConfigOverrides.",
+      "id": "GoogleCloudApigeeV1ListTraceConfigOverridesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "Token value that can be passed as `page_token` to retrieve the next page of content.",
+          "type": "string"
+        },
+        "traceConfigOverrides": {
+          "description": "List all trace configuration overrides in an environment.",
+          "items": {
+            "$ref": "GoogleCloudApigeeV1TraceConfigOverride"
           },
           "type": "array"
         }
@@ -9198,12 +10675,24 @@
       },
       "type": "object"
     },
+    "GoogleCloudApigeeV1MonetizationConfig": {
+      "description": "Configuration for the Monetization add-on.",
+      "id": "GoogleCloudApigeeV1MonetizationConfig",
+      "properties": {
+        "enabled": {
+          "description": "Flag that specifies whether the Monetization add-on is enabled.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudApigeeV1NatAddress": {
       "description": "Apigee NAT(network address translation) address. A NAT address is a static external IP address used for Internet egress traffic.",
       "id": "GoogleCloudApigeeV1NatAddress",
       "properties": {
         "ipAddress": {
-          "description": "Required. The static IPV4 address.",
+          "description": "Output only. The static IPV4 address.",
+          "readOnly": true,
           "type": "string"
         },
         "name": {
@@ -9211,7 +10700,7 @@
           "type": "string"
         },
         "state": {
-          "description": "Required. State of the nat address.",
+          "description": "Output only. State of the nat address.",
           "enum": [
             "STATE_UNSPECIFIED",
             "CREATING",
@@ -9226,13 +10715,14 @@
             "The NAT address is active and used for Internet egress.",
             "The NAT address is being deleted."
           ],
+          "readOnly": true,
           "type": "string"
         }
       },
       "type": "object"
     },
     "GoogleCloudApigeeV1Operation": {
-      "description": "Operation represents the pairing of REST resource path and the actions (verbs) allowed on the resource path.",
+      "description": "Represents the pairing of REST resource path and the actions (verbs) allowed on the resource path.",
       "id": "GoogleCloudApigeeV1Operation",
       "properties": {
         "methods": {
@@ -9243,18 +10733,18 @@
           "type": "array"
         },
         "resource": {
-          "description": "Required. resource represents REST resource path associated with the proxy/remote service.",
+          "description": "Required. REST resource path associated with the API proxy or remote service.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "GoogleCloudApigeeV1OperationConfig": {
-      "description": "OperationConfig binds the resources in a proxy or remote service with the allowed REST methods and its associated quota enforcement.",
+      "description": "Binds the resources in an API proxy or remote service with the allowed REST methods and associated quota enforcement.",
       "id": "GoogleCloudApigeeV1OperationConfig",
       "properties": {
         "apiSource": {
-          "description": "Required. API proxy or remote service name with which the resources, methods, and quota are associated.",
+          "description": "Required. Name of the API proxy or remote service with which the resources, methods, and quota are associated.",
           "type": "string"
         },
         "attributes": {
@@ -9265,7 +10755,7 @@
           "type": "array"
         },
         "operations": {
-          "description": "List of resource/method pairs for the proxy/remote service, upon which quota will applied. **Note**: Currently, you can specify only a single resource/method pair. The call will fail if more than one resource/method pair is provided.",
+          "description": "List of resource/method pairs for the API proxy or remote service to which quota will applied. **Note**: Currently, you can specify only a single resource/method pair. The call will fail if more than one resource/method pair is provided.",
           "items": {
             "$ref": "GoogleCloudApigeeV1Operation"
           },
@@ -9273,7 +10763,7 @@
         },
         "quota": {
           "$ref": "GoogleCloudApigeeV1Quota",
-          "description": "Quota parameters to be enforced for the resources, methods, api_source combination. If none are specified, quota enforcement will not be done."
+          "description": "Quota parameters to be enforced for the resources, methods, and API source combination. If none are specified, quota enforcement will not be done."
         }
       },
       "type": "object"
@@ -9283,7 +10773,7 @@
       "id": "GoogleCloudApigeeV1OperationGroup",
       "properties": {
         "operationConfigType": {
-          "description": "Flag that specifes whether the configuration is for Apigee API proxy or a remote service. Valid values are `proxy` or `remoteservice`. Defaults to `proxy`. Set to `proxy` when Apigee API proxies are associated with the API product. Set to `remoteservice` when non-Apigee proxies like Istio-Envoy are associated with the API product.",
+          "description": "Flag that specifes whether the configuration is for Apigee API proxy or a remote service. Valid values include `proxy` or `remoteservice`. Defaults to `proxy`. Set to `proxy` when Apigee API proxies are associated with the API product. Set to `remoteservice` when non-Apigee proxies like Istio-Envoy are associated with the API product.",
           "type": "string"
         },
         "operationConfigs": {
@@ -9315,6 +10805,10 @@
           ],
           "type": "string"
         },
+        "progress": {
+          "$ref": "GoogleCloudApigeeV1OperationMetadataProgress",
+          "description": "Progress of the operation."
+        },
         "state": {
           "enum": [
             "STATE_UNSPECIFIED",
@@ -9332,6 +10826,46 @@
         },
         "targetResourceName": {
           "description": "Name of the resource for which the operation is operating on.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1OperationMetadataProgress": {
+      "description": "Information about operation progress.",
+      "id": "GoogleCloudApigeeV1OperationMetadataProgress",
+      "properties": {
+        "description": {
+          "description": "Description of the operation's progress.",
+          "type": "string"
+        },
+        "details": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "The additional details of the progress.",
+          "type": "object"
+        },
+        "percentDone": {
+          "description": "The percentage of the operation progress.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "state": {
+          "description": "State of the operation.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "NOT_STARTED",
+            "IN_PROGRESS",
+            "FINISHED"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
           "type": "string"
         }
       },
@@ -9390,6 +10924,10 @@
     "GoogleCloudApigeeV1Organization": {
       "id": "GoogleCloudApigeeV1Organization",
       "properties": {
+        "addonsConfig": {
+          "$ref": "GoogleCloudApigeeV1AddonsConfig",
+          "description": "Addon configurations of the Apigee organization."
+        },
         "analyticsRegion": {
           "description": "Required. Primary GCP region for analytics data storage. For valid values, see [Create an Apigee organization](https://cloud.google.com/apigee/docs/api-platform/get-started/create-org).",
           "type": "string"
@@ -9402,11 +10940,25 @@
           "type": "array"
         },
         "authorizedNetwork": {
-          "description": "Compute Engine network used for Service Networking to be peered with Apigee runtime instances. See [Getting started with the Service Networking API](https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started). Valid only when [RuntimeType] is set to CLOUD. The value can be updated only when there are no runtime instances. For example: \"default\". **Note:** Not supported for Apigee hybrid.",
+          "description": "Compute Engine network used for Service Networking to be peered with Apigee runtime instances. See [Getting started with the Service Networking API](https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started). Valid only when [RuntimeType](#RuntimeType) is set to `CLOUD`. The value must be set before the creation of a runtime instance and can be updated only when there are no runtime instances. For example: `default`. Apigee also supports shared VPC (that is, the host network project is not the same as the one that is peering with Apigee). See [Shared VPC overview](https://cloud.google.com/vpc/docs/shared-vpc). To use a shared VPC network, use the following format: `projects/{host-project-id}/{region}/networks/{network-name}`. For example: `projects/my-sharedvpc-host/global/networks/mynetwork` **Note:** Not supported for Apigee hybrid.",
+          "type": "string"
+        },
+        "billingType": {
+          "description": "Billing type of the Apigee organization. See [Apigee pricing](https://cloud.google.com/apigee/pricing).",
+          "enum": [
+            "BILLING_TYPE_UNSPECIFIED",
+            "SUBSCRIPTION",
+            "EVALUATION"
+          ],
+          "enumDescriptions": [
+            "Billing type not specified.",
+            "A pre-paid subscription to Apigee.",
+            "Free and limited access to Apigee for evaluation purposes only. only."
+          ],
           "type": "string"
         },
         "caCertificate": {
-          "description": "Output only. Base64-encoded public certificate for the root CA of the Apigee organization. Valid only when [RuntimeType] is CLOUD.",
+          "description": "Output only. Base64-encoded public certificate for the root CA of the Apigee organization. Valid only when [RuntimeType](#RuntimeType) is `CLOUD`.",
           "format": "byte",
           "readOnly": true,
           "type": "string"
@@ -9426,6 +10978,7 @@
           "type": "string"
         },
         "displayName": {
+          "description": "Display name for the Apigee organization. Unused, but reserved for future use.",
           "type": "string"
         },
         "environments": {
@@ -9435,6 +10988,12 @@
           },
           "readOnly": true,
           "type": "array"
+        },
+        "expiresAt": {
+          "description": "Output only. Time that the Apigee organization is scheduled for deletion.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
         },
         "lastModifiedAt": {
           "description": "Output only. Time that the Apigee organization was last modified in milliseconds since epoch.",
@@ -9448,7 +11007,8 @@
           "type": "string"
         },
         "projectId": {
-          "description": "The project ID associated with the Apigee organization.",
+          "description": "Output only. Project ID associated with the Apigee organization.",
+          "readOnly": true,
           "type": "string"
         },
         "properties": {
@@ -9456,7 +11016,7 @@
           "description": "Properties defined in the Apigee organization profile."
         },
         "runtimeDatabaseEncryptionKeyName": {
-          "description": "Cloud KMS key name used for encrypting the data that is stored and replicated across runtime instances. Update is not allowed after the organization is created. If not specified, a Google-Managed encryption key will be used. Valid only when [RuntimeType] is CLOUD. For example: \"projects/foo/locations/us/keyRings/bar/cryptoKeys/baz\". **Note:** Not supported for Apigee hybrid.",
+          "description": "Cloud KMS key name used for encrypting the data that is stored and replicated across runtime instances. Update is not allowed after the organization is created. Required when [RuntimeType](#RuntimeType) is `CLOUD`. If not specified when [RuntimeType](#RuntimeType) is `TRIAL`, a Google-Managed encryption key will be used. For example: \"projects/foo/locations/us/keyRings/bar/cryptoKeys/baz\". **Note:** Not supported for Apigee hybrid.",
           "type": "string"
         },
         "runtimeType": {
@@ -9473,8 +11033,27 @@
           ],
           "type": "string"
         },
+        "state": {
+          "description": "Output only. State of the organization. Values other than ACTIVE means the resource is not ready to use.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "CREATING",
+            "ACTIVE",
+            "DELETING",
+            "UPDATING"
+          ],
+          "enumDescriptions": [
+            "Resource is in an unspecified state.",
+            "Resource is being created.",
+            "Resource is provisioned and ready to use.",
+            "The resource is being deleted.",
+            "The resource is being updated."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
         "subscriptionType": {
-          "description": "Output only. Subscription type of the Apigee organization. Valid values include trial (free, limited, and for evaluation purposes only) or paid (full subscription has been purchased). See [Apigee pricing](https://cloud.google.com/apigee/pricing/).",
+          "description": "Output only. DEPRECATED: This will eventually be replaced by BillingType. Subscription type of the Apigee organization. Valid values include trial (free, limited, and for evaluation purposes only) or paid (full subscription has been purchased). See [Apigee pricing](https://cloud.google.com/apigee/pricing/).",
           "enum": [
             "SUBSCRIPTION_TYPE_UNSPECIFIED",
             "PAID",
@@ -9629,7 +11208,7 @@
           "type": "string"
         },
         "runtimeLocation": {
-          "description": "Cloud Platform location for the runtime instance. Defaults to `us-west1-a`.",
+          "description": "Cloud Platform location for the runtime instance. Defaults to zone `us-west1-a`. If a region is provided, `EVAL` organizations will use the region for automatically selecting a zone for the runtime instance.",
           "type": "string"
         }
       },
@@ -9756,7 +11335,7 @@
       "type": "object"
     },
     "GoogleCloudApigeeV1Quota": {
-      "description": "Quota contains the essential parameters needed that can be applied on a proxy/remote service, resources and methods combination associated with this API product. While setting of Quota is optional, setting it prevents requests from exceeding the provisioned parameters.",
+      "description": "Quota contains the essential parameters needed that can be applied on the resources, methods, API source combination associated with this API product. While Quota is optional, setting it prevents requests from exceeding the provisioned parameters.",
       "id": "GoogleCloudApigeeV1Quota",
       "properties": {
         "interval": {
@@ -9769,6 +11348,178 @@
         },
         "timeUnit": {
           "description": "Time unit defined for the `interval`. Valid values include `minute`, `hour`, `day`, or `month`. If `limit` and `interval` are valid, the default value is `hour`; otherwise, the default is null.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1RatePlan": {
+      "description": "Rate plan details.",
+      "id": "GoogleCloudApigeeV1RatePlan",
+      "properties": {
+        "apiproduct": {
+          "description": "Name of the API product that the rate plan is associated with.",
+          "type": "string"
+        },
+        "billingPeriod": {
+          "description": "Frequency at which the customer will be billed.",
+          "enum": [
+            "BILLING_PERIOD_UNSPECIFIED",
+            "WEEKLY",
+            "MONTHLY"
+          ],
+          "enumDescriptions": [
+            "Billing period not specified.",
+            "Weekly billing period. **Note**: Not supported by Apigee at this time.",
+            "Monthly billing period."
+          ],
+          "type": "string"
+        },
+        "consumptionPricingRates": {
+          "description": "API call volume ranges and the fees charged when the total number of API calls is within a given range. The method used to calculate the final fee depends on the selected pricing model. For example, if the pricing model is `STAIRSTEP` and the ranges are defined as follows: ``` { \"start\": 1, \"end\": 100, \"fee\": 75 }, { \"start\": 101, \"end\": 200, \"fee\": 100 }, } ``` Then the following fees would be charged based on the total number of API calls (assuming the currency selected is `USD`): * 1 call costs $75 * 50 calls cost $75 * 150 calls cost $100 The number of API calls cannot exceed 200.",
+          "items": {
+            "$ref": "GoogleCloudApigeeV1RateRange"
+          },
+          "type": "array"
+        },
+        "consumptionPricingType": {
+          "description": "Pricing model used for consumption-based charges.",
+          "enum": [
+            "CONSUMPTION_PRICING_TYPE_UNSPECIFIED",
+            "FIXED_PER_UNIT",
+            "BANDED",
+            "TIERED",
+            "STAIRSTEP"
+          ],
+          "enumDescriptions": [
+            "Pricing model not specified. This is the default.",
+            "Fixed rate charged for each API call.",
+            "Variable rate charged for each API call based on price tiers. Example: * 1-100 calls cost $2 per call * 101-200 calls cost $1.50 per call * 201-300 calls cost $1 per call * Total price for 50 calls: 50 x $2 = $100 * Total price for 150 calls: 100 x $2 + 50 x $1.5 = $275 * Total price for 250 calls: 100 x $2 + 100 x $1.5 + 50 x $1 = $400. **Note**: Not supported by Apigee at this time.",
+            "**Note**: Not supported by Apigee at this time.",
+            "**Note**: Not supported by Apigee at this time."
+          ],
+          "type": "string"
+        },
+        "createdAt": {
+          "description": "Output only. Time that the rate plan was created in milliseconds since epoch.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
+        "currencyCode": {
+          "description": "Currency to be used for billing. Consists of a three-letter code as defined by the [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) standard.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Description of the rate plan.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Display name of the rate plan.",
+          "type": "string"
+        },
+        "endTime": {
+          "description": "Time when the rate plan will expire in milliseconds since epoch. Set to 0 or `null` to indicate that the rate plan should never expire.",
+          "format": "int64",
+          "type": "string"
+        },
+        "fixedFeeFrequency": {
+          "description": "Frequency at which the fixed fee is charged.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "fixedRecurringFee": {
+          "$ref": "GoogleTypeMoney",
+          "description": "Fixed amount that is charged at a defined interval and billed in advance of use of the API product. The fee will be prorated for the first billing period."
+        },
+        "lastModifiedAt": {
+          "description": "Output only. Time the rate plan was last modified in milliseconds since epoch.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. Name of the rate plan.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "paymentFundingModel": {
+          "description": "DEPRECATED: This field is no longer supported and will eventually be removed when Apigee Hybrid 1.5/1.6 is no longer supported. Instead, use the `billingType` field inside `DeveloperMonetizationConfig` resource. Flag that specifies the billing account type, prepaid or postpaid.",
+          "enum": [
+            "PAYMENT_FUNDING_MODEL_UNSPECIFIED",
+            "PREPAID",
+            "POSTPAID"
+          ],
+          "enumDescriptions": [
+            "Billing account type not specified.",
+            "Prepaid billing account type. Developer pays in advance for the use of your API products. Funds are deducted from their prepaid account balance. **Note**: Not supported by Apigee at this time.",
+            "Postpaid billing account type. Developer is billed through an invoice after using your API products."
+          ],
+          "type": "string"
+        },
+        "revenueShareRates": {
+          "description": "Details of the revenue sharing model.",
+          "items": {
+            "$ref": "GoogleCloudApigeeV1RevenueShareRange"
+          },
+          "type": "array"
+        },
+        "revenueShareType": {
+          "description": "Method used to calculate the revenue that is shared with developers.",
+          "enum": [
+            "REVENUE_SHARE_TYPE_UNSPECIFIED",
+            "FIXED",
+            "VOLUME_BANDED"
+          ],
+          "enumDescriptions": [
+            "Revenue share type is not specified.",
+            "Fixed percentage of the total revenue will be shared. The percentage to be shared can be configured by the API provider.",
+            "Amount of revenue shared depends on the number of API calls. The API call volume ranges and the revenue share percentage for each volume can be configured by the API provider. **Note**: Not supported by Apigee at this time."
+          ],
+          "type": "string"
+        },
+        "setupFee": {
+          "$ref": "GoogleTypeMoney",
+          "description": "Initial, one-time fee paid when purchasing the API product."
+        },
+        "startTime": {
+          "description": "Time when the rate plan becomes active in milliseconds since epoch.",
+          "format": "int64",
+          "type": "string"
+        },
+        "state": {
+          "description": "Current state of the rate plan (draft or published).",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "DRAFT",
+            "PUBLISHED"
+          ],
+          "enumDescriptions": [
+            "State of the rate plan is not specified.",
+            "Rate plan is in draft mode and only visible to API providers.",
+            "Rate plan is published and will become visible to developers for the configured duration (between `startTime` and `endTime`)."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1RateRange": {
+      "description": "API call volume range and the fees charged when the total number of API calls is within the range.",
+      "id": "GoogleCloudApigeeV1RateRange",
+      "properties": {
+        "end": {
+          "description": "Ending value of the range. Set to 0 or `null` for the last range of values.",
+          "format": "int64",
+          "type": "string"
+        },
+        "fee": {
+          "$ref": "GoogleTypeMoney",
+          "description": "Fee to charge when total number of API calls falls within this range."
+        },
+        "start": {
+          "description": "Starting value of the range. Set to 0 or `null` for the initial range of values.",
+          "format": "int64",
           "type": "string"
         }
       },
@@ -9980,6 +11731,28 @@
       },
       "type": "object"
     },
+    "GoogleCloudApigeeV1RevenueShareRange": {
+      "description": "API call volume range and the percentage of revenue to share with the developer when the total number of API calls is within the range.",
+      "id": "GoogleCloudApigeeV1RevenueShareRange",
+      "properties": {
+        "end": {
+          "description": "Ending value of the range. Set to 0 or `null` for the last range of values.",
+          "format": "int64",
+          "type": "string"
+        },
+        "sharePercentage": {
+          "description": "Percentage of the revenue to be shared with the developer. For example, to share 21 percent of the total revenue with the developer, set this value to 21. Specify a decimal number with a maximum of two digits following the decimal point.",
+          "format": "double",
+          "type": "number"
+        },
+        "start": {
+          "description": "Starting value of the range. Set to 0 or `null` for the initial range of values.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudApigeeV1RevisionStatus": {
       "description": "The status of a specific resource revision.",
       "id": "GoogleCloudApigeeV1RevisionStatus",
@@ -9992,7 +11765,7 @@
           "type": "array"
         },
         "jsonSpec": {
-          "description": "The json content of the resource revision.",
+          "description": "The json content of the resource revision. Large specs should be sent individually via the spec field to avoid hitting request size limits.",
           "type": "string"
         },
         "replicas": {
@@ -10030,6 +11803,30 @@
         "updateTime": {
           "description": "The unix timestamp when this rule was updated. This is updated whenever env_group_revision is updated. This field is omitted from the IngressConfig unless the GetDeployedIngressConfig API is called with view=FULL.",
           "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1RuntimeConfig": {
+      "description": "Runtime configuration for the organization. Response for GetRuntimeConfig.",
+      "id": "GoogleCloudApigeeV1RuntimeConfig",
+      "properties": {
+        "analyticsBucket": {
+          "description": "Cloud Storage bucket used for uploading Analytics records.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the resource in the following format: `organizations/{org}/runtimeConfig`.",
+          "type": "string"
+        },
+        "tenantProjectId": {
+          "description": "Output only. Tenant project ID associated with the Apigee organization. The tenant project is used to host Google-managed resources that are dedicated to this Apigee organization. Clients have limited access to resources within the tenant project used to support Apigee runtime instances. Access to the tenant project is managed using SetSyncAuthorization. It can be empty if the tenant project hasn't been created yet.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "traceBucket": {
+          "description": "Cloud Storage bucket used for uploading Trace records.",
           "type": "string"
         }
       },
@@ -10147,7 +11944,7 @@
       "id": "GoogleCloudApigeeV1Schema",
       "properties": {
         "dimensions": {
-          "description": "List of schema fiels grouped as dimensions.",
+          "description": "List of schema fields grouped as dimensions.",
           "items": {
             "$ref": "GoogleCloudApigeeV1SchemaSchemaElement"
           },
@@ -10161,7 +11958,7 @@
           "type": "array"
         },
         "metrics": {
-          "description": "List of schema fields grouped as dimensions. These are fields that can be used with an aggregate function such as sum, avg, min, max.",
+          "description": "List of schema fields grouped as dimensions that can be used with an aggregate function such as `sum`, `avg`, `min`, and `max`.",
           "items": {
             "$ref": "GoogleCloudApigeeV1SchemaSchemaElement"
           },
@@ -10175,26 +11972,26 @@
       "id": "GoogleCloudApigeeV1SchemaSchemaElement",
       "properties": {
         "name": {
-          "description": "Name of the field",
+          "description": "Name of the field.",
           "type": "string"
         },
         "properties": {
           "$ref": "GoogleCloudApigeeV1SchemaSchemaProperty",
-          "description": "Property of the schema field E.g. { \"createTime\": \"2016-02-26T10:23:09.592Z\", \"custom\": \"false\", \"type\": \"string\" }"
+          "description": "Properties for the schema field. For example: { \"createTime\": \"2016-02-26T10:23:09.592Z\", \"custom\": \"false\", \"type\": \"string\" }"
         }
       },
       "type": "object"
     },
     "GoogleCloudApigeeV1SchemaSchemaProperty": {
-      "description": "Message type for schema property",
+      "description": "Properties for the schema field.",
       "id": "GoogleCloudApigeeV1SchemaSchemaProperty",
       "properties": {
         "createTime": {
-          "description": "Creation time of the field",
+          "description": "Time the field was created in RFC3339 string form. For example: `2016-02-26T10:23:09.592Z`.",
           "type": "string"
         },
         "custom": {
-          "description": "Custom is a flag signifying if the field was provided as part of the standard dataset or a custom field created by the customer",
+          "description": "Flag that specifies whether the field is standard in the dataset or a custom field created by the customer. `true` indicates that it is a custom field.",
           "type": "string"
         },
         "type": {
@@ -10233,6 +12030,17 @@
           "description": "The first transaction creation timestamp in millisecond, recoreded by UAP.",
           "format": "int64",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1SetAddonsRequest": {
+      "description": "Request for SetAddons.",
+      "id": "GoogleCloudApigeeV1SetAddonsRequest",
+      "properties": {
+        "addonsConfig": {
+          "$ref": "GoogleCloudApigeeV1AddonsConfig",
+          "description": "Required. Add-on configurations."
         }
       },
       "type": "object"
@@ -10468,6 +12276,20 @@
           "format": "int32",
           "type": "integer"
         },
+        "protocol": {
+          "description": "Immutable. The protocol used by this TargetServer.",
+          "enum": [
+            "PROTOCOL_UNSPECIFIED",
+            "HTTP",
+            "GRPC"
+          ],
+          "enumDescriptions": [
+            "UNSPECIFIED defaults to HTTP for backwards compatibility.",
+            "The TargetServer uses HTTP.",
+            "The TargetServer uses GRPC."
+          ],
+          "type": "string"
+        },
         "sSLInfo": {
           "$ref": "GoogleCloudApigeeV1TlsInfo",
           "description": "Optional. Specifies TLS configuration info for this TargetServer. The JSON name is `sSLInfo` for legacy/backwards compatibility reasons -- Edge originally supported SSL, and the name is still used for TLS configuration."
@@ -10478,6 +12300,10 @@
     "GoogleCloudApigeeV1TargetServerConfig": {
       "id": "GoogleCloudApigeeV1TargetServerConfig",
       "properties": {
+        "enabled": {
+          "description": "Whether the target server is enabled. An empty/omitted value for this field should be interpreted as true.",
+          "type": "boolean"
+        },
         "host": {
           "description": "Host name of the target server.",
           "type": "string"
@@ -10490,6 +12316,20 @@
           "description": "Port number for the target server.",
           "format": "int32",
           "type": "integer"
+        },
+        "protocol": {
+          "description": "The protocol used by this target server.",
+          "enum": [
+            "PROTOCOL_UNSPECIFIED",
+            "HTTP",
+            "GRPC"
+          ],
+          "enumDescriptions": [
+            "UNSPECIFIED defaults to HTTP for backwards compatibility.",
+            "The TargetServer uses HTTP.",
+            "The TargetServer uses GRPC."
+          ],
+          "type": "string"
         },
         "tlsInfo": {
           "$ref": "GoogleCloudApigeeV1TlsInfoConfig",
@@ -10626,6 +12466,80 @@
       },
       "type": "object"
     },
+    "GoogleCloudApigeeV1TraceConfig": {
+      "description": "TraceConfig defines the configurations in an environment of distributed trace.",
+      "id": "GoogleCloudApigeeV1TraceConfig",
+      "properties": {
+        "endpoint": {
+          "description": "Required. Endpoint of the exporter.",
+          "type": "string"
+        },
+        "exporter": {
+          "description": "Required. Exporter that is used to view the distributed trace captured using OpenCensus. An exporter sends traces to any backend that is capable of consuming them. Recorded spans can be exported by registered exporters.",
+          "enum": [
+            "EXPORTER_UNSPECIFIED",
+            "JAEGER",
+            "CLOUD_TRACE"
+          ],
+          "enumDescriptions": [
+            "Exporter unspecified",
+            "Jaeger exporter",
+            "Cloudtrace exporter"
+          ],
+          "type": "string"
+        },
+        "samplingConfig": {
+          "$ref": "GoogleCloudApigeeV1TraceSamplingConfig",
+          "description": "Distributed trace configuration for all API proxies in an environment. You can also override the configuration for a specific API proxy using the distributed trace configuration overrides API."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1TraceConfigOverride": {
+      "description": "A representation of a configuration override.",
+      "id": "GoogleCloudApigeeV1TraceConfigOverride",
+      "properties": {
+        "apiProxy": {
+          "description": "ID of the API proxy that will have its trace configuration overridden.",
+          "type": "string"
+        },
+        "name": {
+          "description": "ID of the trace configuration override specified as a system-generated UUID.",
+          "type": "string"
+        },
+        "samplingConfig": {
+          "$ref": "GoogleCloudApigeeV1TraceSamplingConfig",
+          "description": "Trace configuration to override."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudApigeeV1TraceSamplingConfig": {
+      "description": "TraceSamplingConfig represents the detail settings of distributed tracing. Only the fields that are defined in the distributed trace configuration can be overridden using the distribute trace configuration override APIs.",
+      "id": "GoogleCloudApigeeV1TraceSamplingConfig",
+      "properties": {
+        "sampler": {
+          "description": "Sampler of distributed tracing. OFF is the default value.",
+          "enum": [
+            "SAMPLER_UNSPECIFIED",
+            "OFF",
+            "PROBABILITY"
+          ],
+          "enumDescriptions": [
+            "Sampler unspecified.",
+            "OFF means distributed trace is disabled, or the sampling probability is 0.",
+            "PROBABILITY means traces are captured on a probability that defined by sampling_rate. The sampling rate is limited to 0 to 0.5 when this is set."
+          ],
+          "type": "string"
+        },
+        "samplingRate": {
+          "description": "Field sampling rate. This value is only applicable when using the PROBABILITY sampler. The supported values are \u003e 0 and \u003c= 0.5.",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudApigeeV1UpdateError": {
       "description": "Details on why a resource update failed in the runtime.",
       "id": "GoogleCloudApigeeV1UpdateError",
@@ -10662,7 +12576,7 @@
             "The caller does not have permission to execute the specified operation. `PERMISSION_DENIED` must not be used for rejections caused by exhausting some resource (use `RESOURCE_EXHAUSTED` instead for those errors). `PERMISSION_DENIED` must not be used if the caller can not be identified (use `UNAUTHENTICATED` instead for those errors). This error code does not imply the request is valid or the requested entity exists or satisfies other pre-conditions. HTTP Mapping: 403 Forbidden",
             "The request does not have valid authentication credentials for the operation. HTTP Mapping: 401 Unauthorized",
             "Some resource has been exhausted, perhaps a per-user quota, or perhaps the entire file system is out of space. HTTP Mapping: 429 Too Many Requests",
-            "The operation was rejected because the system is not in a state required for the operation's execution. For example, the directory to be deleted is non-empty, an rmdir operation is applied to a non-directory, etc. Service implementors can use the following guidelines to decide between `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`: (a) Use `UNAVAILABLE` if the client can retry just the failing call. (b) Use `ABORTED` if the client should retry at a higher level (e.g., when a client-specified test-and-set fails, indicating the client should restart a read-modify-write sequence). (c) Use `FAILED_PRECONDITION` if the client should not retry until the system state has been explicitly fixed. E.g., if an \"rmdir\" fails because the directory is non-empty, `FAILED_PRECONDITION` should be returned since the client should not retry unless the files are deleted from the directory. HTTP Mapping: 400 Bad Request",
+            "The operation was rejected because the system is not in a state required for the operation's execution. For example, the directory to be deleted is non-empty, an rmdir operation is applied to a non-directory, etc. Service implementors can use the following guidelines to decide between `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`: (a) Use `UNAVAILABLE` if the client can retry just the failing call. (b) Use `ABORTED` if the client should retry at a higher level. For example, when a client-specified test-and-set fails, indicating the client should restart a read-modify-write sequence. (c) Use `FAILED_PRECONDITION` if the client should not retry until the system state has been explicitly fixed. For example, if an \"rmdir\" fails because the directory is non-empty, `FAILED_PRECONDITION` should be returned since the client should not retry unless the files are deleted from the directory. HTTP Mapping: 400 Bad Request",
             "The operation was aborted, typically due to a concurrency issue such as a sequencer check failure or transaction abort. See the guidelines above for deciding between `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`. HTTP Mapping: 409 Conflict",
             "The operation was attempted past the valid range. E.g., seeking or reading past end-of-file. Unlike `INVALID_ARGUMENT`, this error indicates a problem that may be fixed if the system state changes. For example, a 32-bit file system will generate `INVALID_ARGUMENT` if asked to read at an offset that is not in the range [0,2^32-1], but it will generate `OUT_OF_RANGE` if asked to read from an offset past the current file size. There is a fair bit of overlap between `FAILED_PRECONDITION` and `OUT_OF_RANGE`. We recommend using `OUT_OF_RANGE` (the more specific error) when it applies so that callers who are iterating through a space can easily look for an `OUT_OF_RANGE` error to detect when they are done. HTTP Mapping: 400 Bad Request",
             "The operation is not implemented or is not supported/enabled in this service. HTTP Mapping: 501 Not Implemented",
@@ -10758,7 +12672,7 @@
       "type": "object"
     },
     "GoogleIamV1Policy": {
-      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
+      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
       "id": "GoogleIamV1Policy",
       "properties": {
         "auditConfigs": {
@@ -10969,6 +12883,27 @@
         },
         "title": {
           "description": "Optional. Title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleTypeMoney": {
+      "description": "Represents an amount of money with its currency type.",
+      "id": "GoogleTypeMoney",
+      "properties": {
+        "currencyCode": {
+          "description": "The three-letter currency code defined in ISO 4217.",
+          "type": "string"
+        },
+        "nanos": {
+          "description": "Number of nano (10^-9) units of the amount. The value must be between -999,999,999 and +999,999,999 inclusive. If `units` is positive, `nanos` must be positive or zero. If `units` is zero, `nanos` can be positive, zero, or negative. If `units` is negative, `nanos` must be negative or zero. For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "units": {
+          "description": "The whole units of the amount. For example if `currencyCode` is `\"USD\"`, then 1 unit is one US dollar.",
+          "format": "int64",
           "type": "string"
         }
       },

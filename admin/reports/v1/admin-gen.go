@@ -6,7 +6,7 @@
 
 // Package admin provides access to the Admin SDK API.
 //
-// For product documentation, see: http://developers.google.com/admin-sdk/
+// For product documentation, see: https://developers.google.com/admin-sdk/
 //
 // Creating a client
 //
@@ -223,10 +223,10 @@ type Activities struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -259,10 +259,10 @@ type Activity struct {
 	Id *ActivityId `json:"id,omitempty"`
 
 	// IpAddress: IP address of the user doing the action. This is the
-	// Internet Protocol (IP) address of the user when logging into G Suite
-	// which may or may not reflect the user's physical location. For
-	// example, the IP address can be the user's proxy server's address or a
-	// virtual private network (VPN) address. The API supports IPv4 and
+	// Internet Protocol (IP) address of the user when logging into Google
+	// Workspace, which may or may not reflect the user's physical location.
+	// For example, the IP address can be the user's proxy server's address
+	// or a virtual private network (VPN) address. The API supports IPv4 and
 	// IPv6.
 	IpAddress string `json:"ipAddress,omitempty"`
 
@@ -277,10 +277,10 @@ type Activity struct {
 
 	// ForceSendFields is a list of field names (e.g. "Actor") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Actor") to include in API
@@ -312,16 +312,16 @@ type ActivityActor struct {
 	// identifier for robot accounts.
 	Key string `json:"key,omitempty"`
 
-	// ProfileId: The unique G Suite profile ID of the actor. May be absent
-	// if the actor is not a G Suite user.
+	// ProfileId: The unique Google Workspace profile ID of the actor. May
+	// be absent if the actor is not a Google Workspace user.
 	ProfileId string `json:"profileId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CallerType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CallerType") to include in
@@ -341,11 +341,11 @@ func (s *ActivityActor) MarshalJSON() ([]byte, error) {
 
 type ActivityEvents struct {
 	// Name: Name of the event. This is the specific name of the activity
-	// reported by the API. And each `eventName` is related to a specific G
-	// Suite service or feature which the API organizes into types of
-	// events. For `eventName` request parameters in general: - If no
-	// `eventName` is given, the report returns all possible instances of an
-	// `eventName`. - When you request an `eventName`, the API's response
+	// reported by the API. And each `eventName` is related to a specific
+	// Google Workspace service or feature which the API organizes into
+	// types of events. For `eventName` request parameters in general: - If
+	// no `eventName` is given, the report returns all possible instances of
+	// an `eventName`. - When you request an `eventName`, the API's response
 	// returns all activities which contain that `eventName`. It is possible
 	// that the returned activities will have other `eventName` properties
 	// in addition to the one requested. For more information about
@@ -358,7 +358,7 @@ type ActivityEvents struct {
 	// for various applications above in `applicationName`.
 	Parameters []*ActivityEventsParameters `json:"parameters,omitempty"`
 
-	// Type: Type of event. The G Suite service or feature that an
+	// Type: Type of event. The Google Workspace service or feature that an
 	// administrator changes is identified in the `type` property which
 	// identifies an event using the `eventName` property. For a full list
 	// of the API's `type` categories, see the list of event names for
@@ -367,10 +367,10 @@ type ActivityEvents struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -418,10 +418,10 @@ type ActivityEventsParameters struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoolValue") to include in
@@ -450,10 +450,10 @@ type ActivityEventsParametersMessageValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "Parameter") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Parameter") to include in
@@ -477,10 +477,10 @@ type ActivityEventsParametersMultiMessageValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "Parameter") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Parameter") to include in
@@ -505,7 +505,7 @@ type ActivityId struct {
 	// `applicationName`.
 	ApplicationName string `json:"applicationName,omitempty"`
 
-	// CustomerId: The unique identifier for a G suite account.
+	// CustomerId: The unique identifier for a Google Workspace account.
 	CustomerId string `json:"customerId,omitempty"`
 
 	// Time: Time of occurrence of the activity. This is in UNIX epoch time
@@ -518,10 +518,10 @@ type ActivityId struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApplicationName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApplicationName") to
@@ -586,10 +586,10 @@ type Channel struct {
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Address") to include in
@@ -633,10 +633,10 @@ type NestedParameter struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoolValue") to include in
@@ -677,10 +677,10 @@ type UsageReport struct {
 
 	// ForceSendFields is a list of field names (e.g. "Date") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Date") to include in API
@@ -710,7 +710,7 @@ type UsageReportEntity struct {
 	// than "Objects".
 	EntityId string `json:"entityId,omitempty"`
 
-	// ProfileId: Output only. The user's immutable G Suite profile
+	// ProfileId: Output only. The user's immutable Google Workspace profile
 	// identifier.
 	ProfileId string `json:"profileId,omitempty"`
 
@@ -723,10 +723,10 @@ type UsageReportEntity struct {
 
 	// ForceSendFields is a list of field names (e.g. "CustomerId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CustomerId") to include in
@@ -767,10 +767,10 @@ type UsageReportParameters struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoolValue") to include in
@@ -814,10 +814,10 @@ type UsageReports struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -853,10 +853,10 @@ type UsageReportsWarnings struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -885,10 +885,10 @@ type UsageReportsWarningsData struct {
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -924,6 +924,15 @@ type ActivitiesListCall struct {
 // administrator and Google Drive activity reports. For more information
 // about the activity report's parameters, see the activity parameters
 // reference guides.
+//
+// - applicationName: Application name for which the events are to be
+//   retrieved.
+// - userKey: Represents the profile ID or the user email for which the
+//   data should be filtered. Can be `all` for all information, or
+//   `userKey` for a user's unique Google Workspace profile ID or their
+//   primary email address. Must not be a deleted user. For a deleted
+//   user, call `users.list` in Directory API with `showDeleted=true`,
+//   then use the returned `ID` as the `userKey`.
 func (r *ActivitiesService) List(userKey string, applicationName string) *ActivitiesListCall {
 	c := &ActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -973,8 +982,8 @@ func (c *ActivitiesListCall) EndTime(endTime string) *ActivitiesListCall {
 
 // EventName sets the optional parameter "eventName": The name of the
 // event being queried by the API. Each `eventName` is related to a
-// specific G Suite service or feature which the API organizes into
-// types of events. An example is the Google Calendar events in the
+// specific Google Workspace service or feature which the API organizes
+// into types of events. An example is the Google Calendar events in the
 // Admin console application's reports. The Calendar Settings `type`
 // structure has all of the Calendar `eventName` activities reported by
 // the API. When an administrator changes a Calendar setting, the API
@@ -1028,7 +1037,7 @@ func (c *ActivitiesListCall) Filters(filters string) *ActivitiesListCall {
 
 // GroupIdFilter sets the optional parameter "groupIdFilter": Comma
 // separated group ids (obfuscated) on which user activities are
-// filtered, i.e, the response will contain activities for only those
+// filtered, i.e. the response will contain activities for only those
 // users that are a part of at least one of the group ids mentioned
 // here. Format: "id:abc123,id:xyz456"
 func (c *ActivitiesListCall) GroupIdFilter(groupIdFilter string) *ActivitiesListCall {
@@ -1114,7 +1123,7 @@ func (c *ActivitiesListCall) Header() http.Header {
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1194,7 +1203,6 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//     "applicationName": {
 	//       "description": "Application name for which the events are to be retrieved.",
 	//       "enum": [
-	//         "application_name_undefined",
 	//         "access_transparency",
 	//         "admin",
 	//         "calendar",
@@ -1214,15 +1222,15 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//         "user_accounts",
 	//         "context_aware_access",
 	//         "chrome",
-	//         "data_studio"
+	//         "data_studio",
+	//         "keep"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
-	//         "The G Suite Access Transparency activity reports return information about different types of Access Transparency activity events.",
+	//         "The Google Workspace Access Transparency activity reports return information about different types of Access Transparency activity events.",
 	//         "The Admin console application's activity reports return account information about different types of administrator activity events.",
-	//         "The G Suite Calendar application's activity reports return information about various Calendar activity events.",
+	//         "The Google Calendar application's activity reports return information about various Calendar activity events.",
 	//         "The Chat activity reports return information about various Chat activity events.",
-	//         "The Google Drive application's activity reports return information about various Google Drive activity events. The Drive activity report is only available for G Suite Business customers.",
+	//         "The Google Drive application's activity reports return information about various Google Drive activity events. The Drive activity report is only available for Google Workspace Business and Enterprise customers.",
 	//         "The Google Cloud Platform application's activity reports return information about various GCP activity events.",
 	//         "The Google+ application's activity reports return information about various Google+ activity events.",
 	//         "The Google Groups application's activity reports return information about various Groups activity events.",
@@ -1236,11 +1244,12 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//         "The Token application's activity reports return account information about different types of Token activity events.",
 	//         "The User Accounts application's activity reports return account information about different types of User Accounts activity events.",
 	//         "The Context-aware access activity reports return information about users' access denied events due to Context-aware access rules.",
-	//         "The Chrome activity reports return information about unsafe events reported in the context of the WebProtect features of BeyondCorp.",
-	//         "The Data Studio activity reports return information about various types of Data Studio activity events."
+	//         "The Chrome activity reports return information about Chrome browser and Chrome OS events.",
+	//         "The Data Studio activity reports return information about various types of Data Studio activity events.",
+	//         "The Keep application's activity reports return information about various Google Keep activity events. The Keep activity report is only available for Google Workspace Business and Enterprise customers."
 	//       ],
 	//       "location": "path",
-	//       "pattern": "(access_transparency)|(admin)|(calendar)|(chat)|(chrome)|(context_aware_access)|(data_studio)|(drive)|(gcp)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(login)|(meet)|(mobile)|(rules)|(saml)|(token)|(user_accounts)",
+	//       "pattern": "(access_transparency)|(admin)|(calendar)|(chat)|(chrome)|(context_aware_access)|(data_studio)|(drive)|(gcp)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(keep)|(login)|(meet)|(mobile)|(rules)|(saml)|(token)|(user_accounts)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1257,7 +1266,7 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//       "type": "string"
 	//     },
 	//     "eventName": {
-	//       "description": "The name of the event being queried by the API. Each `eventName` is related to a specific G Suite service or feature which the API organizes into types of events. An example is the Google Calendar events in the Admin console application's reports. The Calendar Settings `type` structure has all of the Calendar `eventName` activities reported by the API. When an administrator changes a Calendar setting, the API reports this activity in the Calendar Settings `type` and `eventName` parameters. For more information about `eventName` query strings and parameters, see the list of event names for various applications above in `applicationName`.",
+	//       "description": "The name of the event being queried by the API. Each `eventName` is related to a specific Google Workspace service or feature which the API organizes into types of events. An example is the Google Calendar events in the Admin console application's reports. The Calendar Settings `type` structure has all of the Calendar `eventName` activities reported by the API. When an administrator changes a Calendar setting, the API reports this activity in the Calendar Settings `type` and `eventName` parameters. For more information about `eventName` query strings and parameters, see the list of event names for various applications above in `applicationName`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1268,7 +1277,7 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//       "type": "string"
 	//     },
 	//     "groupIdFilter": {
-	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e, the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
+	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e. the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
 	//       "location": "query",
 	//       "pattern": "(id:[a-z0-9]+(,id:[a-z0-9]+)*)",
 	//       "type": "string"
@@ -1301,7 +1310,7 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//       "type": "string"
 	//     },
 	//     "userKey": {
-	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique G Suite profile ID or their primary email address.",
+	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique Google Workspace profile ID or their primary email address. Must not be a deleted user. For a deleted user, call `users.list` in Directory API with `showDeleted=true`, then use the returned `ID` as the `userKey`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1353,6 +1362,15 @@ type ActivitiesWatchCall struct {
 
 // Watch: Start receiving notifications for account activities. For more
 // information, see Receiving Push Notifications.
+//
+// - applicationName: Application name for which the events are to be
+//   retrieved.
+// - userKey: Represents the profile ID or the user email for which the
+//   data should be filtered. Can be `all` for all information, or
+//   `userKey` for a user's unique Google Workspace profile ID or their
+//   primary email address. Must not be a deleted user. For a deleted
+//   user, call `users.list` in Directory API with `showDeleted=true`,
+//   then use the returned `ID` as the `userKey`.
 func (r *ActivitiesService) Watch(userKey string, applicationName string, channel *Channel) *ActivitiesWatchCall {
 	c := &ActivitiesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -1403,8 +1421,8 @@ func (c *ActivitiesWatchCall) EndTime(endTime string) *ActivitiesWatchCall {
 
 // EventName sets the optional parameter "eventName": The name of the
 // event being queried by the API. Each `eventName` is related to a
-// specific G Suite service or feature which the API organizes into
-// types of events. An example is the Google Calendar events in the
+// specific Google Workspace service or feature which the API organizes
+// into types of events. An example is the Google Calendar events in the
 // Admin console application's reports. The Calendar Settings `type`
 // structure has all of the Calendar `eventName` activities reported by
 // the API. When an administrator changes a Calendar setting, the API
@@ -1458,7 +1476,7 @@ func (c *ActivitiesWatchCall) Filters(filters string) *ActivitiesWatchCall {
 
 // GroupIdFilter sets the optional parameter "groupIdFilter": Comma
 // separated group ids (obfuscated) on which user activities are
-// filtered, i.e, the response will contain activities for only those
+// filtered, i.e. the response will contain activities for only those
 // users that are a part of at least one of the group ids mentioned
 // here. Format: "id:abc123,id:xyz456"
 func (c *ActivitiesWatchCall) GroupIdFilter(groupIdFilter string) *ActivitiesWatchCall {
@@ -1534,7 +1552,7 @@ func (c *ActivitiesWatchCall) Header() http.Header {
 
 func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1616,7 +1634,6 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//     "applicationName": {
 	//       "description": "Application name for which the events are to be retrieved.",
 	//       "enum": [
-	//         "application_name_unspecified",
 	//         "access_transparency",
 	//         "admin",
 	//         "calendar",
@@ -1636,15 +1653,15 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//         "user_accounts",
 	//         "context_aware_access",
 	//         "chrome",
-	//         "data_studio"
+	//         "data_studio",
+	//         "keep"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
-	//         "The G Suite Access Transparency activity reports return information about different types of Access Transparency activity events.",
+	//         "The Google Workspace Access Transparency activity reports return information about different types of Access Transparency activity events.",
 	//         "The Admin console application's activity reports return account information about different types of administrator activity events.",
-	//         "The G Suite Calendar application's activity reports return information about various Calendar activity events.",
+	//         "The Google Calendar application's activity reports return information about various Calendar activity events.",
 	//         "The Chat activity reports return information about various Chat activity events.",
-	//         "The Google Drive application's activity reports return information about various Google Drive activity events. The Drive activity report is only available for G Suite Business customers.",
+	//         "The Google Drive application's activity reports return information about various Google Drive activity events. The Drive activity report is only available for Google Workspace Business and Google Workspace Enterprise customers.",
 	//         "The Google Cloud Platform application's activity reports return information about various GCP activity events.",
 	//         "The Google+ application's activity reports return information about various Google+ activity events.",
 	//         "The Google Groups application's activity reports return information about various Groups activity events.",
@@ -1658,11 +1675,12 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//         "The Token application's activity reports return account information about different types of Token activity events.",
 	//         "The User Accounts application's activity reports return account information about different types of User Accounts activity events.",
 	//         "The Context-aware access activity reports return information about users' access denied events due to Context-aware access rules.",
-	//         "The Chrome activity reports return information about unsafe events reported in the context of the WebProtect features of BeyondCorp.",
-	//         "The Data Studio activity reports return information about various types of Data Studio activity events."
+	//         "The Chrome activity reports return information about Chrome browser and Chrome OS events.",
+	//         "The Data Studio activity reports return information about various types of Data Studio activity events.",
+	//         "The Keep application's activity reports return information about various Google Keep activity events. The Keep activity report is only available for Google Workspace Business and Enterprise customers."
 	//       ],
 	//       "location": "path",
-	//       "pattern": "(access_transparency)|(admin)|(calendar)|(chat)|(chrome)|(context_aware_access)|(data_studio)|(drive)|(gcp)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(login)|(meet)|(mobile)|(rules)|(saml)|(token)|(user_accounts)",
+	//       "pattern": "(access_transparency)|(admin)|(calendar)|(chat)|(chrome)|(context_aware_access)|(data_studio)|(drive)|(gcp)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(keep)|(login)|(meet)|(mobile)|(rules)|(saml)|(token)|(user_accounts)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1679,7 +1697,7 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//       "type": "string"
 	//     },
 	//     "eventName": {
-	//       "description": "The name of the event being queried by the API. Each `eventName` is related to a specific G Suite service or feature which the API organizes into types of events. An example is the Google Calendar events in the Admin console application's reports. The Calendar Settings `type` structure has all of the Calendar `eventName` activities reported by the API. When an administrator changes a Calendar setting, the API reports this activity in the Calendar Settings `type` and `eventName` parameters. For more information about `eventName` query strings and parameters, see the list of event names for various applications above in `applicationName`.",
+	//       "description": "The name of the event being queried by the API. Each `eventName` is related to a specific Google Workspace service or feature which the API organizes into types of events. An example is the Google Calendar events in the Admin console application's reports. The Calendar Settings `type` structure has all of the Calendar `eventName` activities reported by the API. When an administrator changes a Calendar setting, the API reports this activity in the Calendar Settings `type` and `eventName` parameters. For more information about `eventName` query strings and parameters, see the list of event names for various applications above in `applicationName`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1690,7 +1708,7 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//       "type": "string"
 	//     },
 	//     "groupIdFilter": {
-	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e, the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
+	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e. the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
 	//       "location": "query",
 	//       "pattern": "(id:[a-z0-9]+(,id:[a-z0-9]+)*)",
 	//       "type": "string"
@@ -1723,7 +1741,7 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//       "type": "string"
 	//     },
 	//     "userKey": {
-	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique G Suite profile ID or their primary email address.",
+	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique Google Workspace profile ID or their primary email address. Must not be a deleted user. For a deleted user, call `users.list` in Directory API with `showDeleted=true`, then use the returned `ID` as the `userKey`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1787,7 +1805,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1856,6 +1874,10 @@ type CustomerUsageReportsGetCall struct {
 // see the Customers Usage Report guide. For more information about the
 // customer report's parameters, see the Customers Usage parameters
 // reference guides.
+//
+// - date: Represents the date the usage occurred. The timestamp is in
+//   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
+//   account's time zone for this.
 func (r *CustomerUsageReportsService) Get(date string) *CustomerUsageReportsGetCall {
 	c := &CustomerUsageReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.date = date
@@ -1937,7 +1959,7 @@ func (c *CustomerUsageReportsGetCall) Header() http.Header {
 
 func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2082,6 +2104,13 @@ type EntityUsageReportsGetCall struct {
 // information, see the Entities Usage Report guide. For more
 // information about the entities report's parameters, see the Entities
 // Usage parameters reference guides.
+//
+// - date: Represents the date the usage occurred. The timestamp is in
+//   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
+//   account's time zone for this.
+// - entityKey: Represents the key of the object to filter the data
+//   with.
+// - entityType: Represents the type of entity for the report.
 func (r *EntityUsageReportsService) Get(entityType string, entityKey string, date string) *EntityUsageReportsGetCall {
 	c := &EntityUsageReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.entityType = entityType
@@ -2197,7 +2226,7 @@ func (c *EntityUsageReportsGetCall) Header() http.Header {
 
 func (c *EntityUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2287,12 +2316,10 @@ func (c *EntityUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageRepo
 	//     "entityKey": {
 	//       "description": "Represents the key of the object to filter the data with.",
 	//       "enum": [
-	//         "entityKeyUndefined",
 	//         "all",
 	//         "entityKey"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Returns activity events for all users.",
 	//         "Represents an app-specific identifier for the entity. For details on how to obtain the `entityKey` for a particular `entityType`, see the Entities Usage parameters reference guides."
 	//       ],
@@ -2303,11 +2330,9 @@ func (c *EntityUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageRepo
 	//     "entityType": {
 	//       "description": "Represents the type of entity for the report.",
 	//       "enum": [
-	//         "entity_type_undefined",
 	//         "gplus_communities"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
 	//         "Returns a report on Google+ communities."
 	//       ],
 	//       "location": "path",
@@ -2390,6 +2415,16 @@ type UserUsageReportGetCall struct {
 // statistics for a set of users with the account. For more information,
 // see the User Usage Report guide. For more information about the user
 // report's parameters, see the Users Usage parameters reference guides.
+//
+// - date: Represents the date the usage occurred. The timestamp is in
+//   the ISO 8601 format, yyyy-mm-dd. We recommend you use your
+//   account's time zone for this.
+// - userKey: Represents the profile ID or the user email for which the
+//   data should be filtered. Can be `all` for all information, or
+//   `userKey` for a user's unique Google Workspace profile ID or their
+//   primary email address. Must not be a deleted user. For a deleted
+//   user, call `users.list` in Directory API with `showDeleted=true`,
+//   then use the returned `ID` as the `userKey`.
 func (r *UserUsageReportService) Get(userKey string, date string) *UserUsageReportGetCall {
 	c := &UserUsageReportGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -2428,7 +2463,7 @@ func (c *UserUsageReportGetCall) Filters(filters string) *UserUsageReportGetCall
 
 // GroupIdFilter sets the optional parameter "groupIdFilter": Comma
 // separated group ids (obfuscated) on which user activities are
-// filtered, i.e, the response will contain activities for only those
+// filtered, i.e. the response will contain activities for only those
 // users that are a part of at least one of the group ids mentioned
 // here. Format: "id:abc123,id:xyz456"
 func (c *UserUsageReportGetCall) GroupIdFilter(groupIdFilter string) *UserUsageReportGetCall {
@@ -2524,7 +2559,7 @@ func (c *UserUsageReportGetCall) Header() http.Header {
 
 func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2616,7 +2651,7 @@ func (c *UserUsageReportGetCall) Do(opts ...googleapi.CallOption) (*UsageReports
 	//       "type": "string"
 	//     },
 	//     "groupIdFilter": {
-	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e, the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
+	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e. the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
 	//       "location": "query",
 	//       "pattern": "(id:[a-z0-9]+(,id:[a-z0-9]+)*)",
 	//       "type": "string"
@@ -2649,7 +2684,7 @@ func (c *UserUsageReportGetCall) Do(opts ...googleapi.CallOption) (*UsageReports
 	//       "type": "string"
 	//     },
 	//     "userKey": {
-	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique G Suite profile ID or their primary email address.",
+	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique Google Workspace profile ID or their primary email address. Must not be a deleted user. For a deleted user, call `users.list` in Directory API with `showDeleted=true`, then use the returned `ID` as the `userKey`.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

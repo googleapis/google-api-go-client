@@ -18,7 +18,7 @@
           "description": "View and manage the provisioning of users on your domain"
         },
         "https://www.googleapis.com/auth/documents": {
-          "description": "View and manage your Google Docs documents"
+          "description": "See, edit, create, and delete all your Google Docs documents"
         },
         "https://www.googleapis.com/auth/drive": {
           "description": "See, edit, create, and delete all of your Google Drive files"
@@ -51,10 +51,10 @@
           "description": "View Google Apps Script projects"
         },
         "https://www.googleapis.com/auth/spreadsheets": {
-          "description": "See, edit, create, and delete your spreadsheets in Google Drive"
+          "description": "See, edit, create, and delete all your Google Sheets spreadsheets"
         },
         "https://www.googleapis.com/auth/userinfo.email": {
-          "description": "View your email address"
+          "description": "See your primary Google Account email address"
         }
       }
     }
@@ -887,7 +887,7 @@
       }
     }
   },
-  "revision": "20210106",
+  "revision": "20210703",
   "rootUrl": "https://script.googleapis.com/",
   "schemas": {
     "Content": {
@@ -909,7 +909,7 @@
       "type": "object"
     },
     "CreateProjectRequest": {
-      "description": "Request to create a script project.",
+      "description": "Request to create a script project. Request to create a script project.",
       "id": "CreateProjectRequest",
       "properties": {
         "parentId": {

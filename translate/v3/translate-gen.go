@@ -85,7 +85,8 @@ const mtlsBasePath = "https://translation.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Translate text from one language to another using Google Translate
@@ -217,9 +218,7 @@ type BatchTranslateTextRequest struct {
 	// `projects/{project-number-or-id}/locations/{location-id}/models/{model
 	// -id}` - General (built-in) models:
 	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-	// l/nmt`,
-	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-	// l/base` If the map is empty or a specific model is not requested for
+	// l/nmt`, If the map is empty or a specific model is not requested for
 	// a language pair, then default google model (nmt) is used.
 	Models map[string]string `json:"models,omitempty"`
 
@@ -236,10 +235,10 @@ type BatchTranslateTextRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Glossaries") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Glossaries") to include in
@@ -291,10 +290,10 @@ type DetectLanguageRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -325,10 +324,10 @@ type DetectLanguageResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Languages") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Languages") to include in
@@ -357,10 +356,10 @@ type DetectedLanguage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Confidence") to include in
@@ -416,10 +415,10 @@ type GcsDestination struct {
 
 	// ForceSendFields is a list of field names (e.g. "OutputUriPrefix") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputUriPrefix") to
@@ -446,10 +445,10 @@ type GcsSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "InputUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "InputUri") to include in
@@ -501,10 +500,10 @@ type Glossary struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -542,10 +541,10 @@ type GlossaryInputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsSource") to include in
@@ -590,10 +589,10 @@ type InputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsSource") to include in
@@ -625,10 +624,10 @@ type LanguageCodePair struct {
 
 	// ForceSendFields is a list of field names (e.g. "SourceLanguageCode")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SourceLanguageCode") to
@@ -657,10 +656,10 @@ type LanguageCodesSet struct {
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCodes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LanguageCodes") to include
@@ -694,10 +693,10 @@ type ListGlossariesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Glossaries") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Glossaries") to include in
@@ -731,10 +730,10 @@ type ListLocationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Locations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Locations") to include in
@@ -768,10 +767,10 @@ type ListOperationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -818,10 +817,10 @@ type Location struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -880,10 +879,10 @@ type Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -959,10 +958,10 @@ type OutputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsDestination") to
@@ -1004,10 +1003,10 @@ type Status struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -1046,10 +1045,10 @@ type SupportedLanguage struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -1080,10 +1079,10 @@ type SupportedLanguages struct {
 
 	// ForceSendFields is a list of field names (e.g. "Languages") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Languages") to include in
@@ -1118,10 +1117,10 @@ type TranslateTextGlossaryConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "Glossary") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Glossary") to include in
@@ -1171,12 +1170,10 @@ type TranslateTextRequest struct {
 	// `projects/{project-number-or-id}/locations/{location-id}/models/{model
 	// -id}` - General (built-in) models:
 	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-	// l/nmt`,
-	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-	// l/base` For global (non-regionalized) requests, use `location-id`
+	// l/nmt`, For global (non-regionalized) requests, use `location-id`
 	// `global`. For example,
 	// `projects/{project-number-or-id}/locations/global/models/general/nmt`.
-	//  If missing, the system decides which google base model to use.
+	//  If not provided, the default Google model (NMT) will be used
 	Model string `json:"model,omitempty"`
 
 	// SourceLanguageCode: Optional. The BCP-47 language code of the input
@@ -1193,10 +1190,10 @@ type TranslateTextRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Contents") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Contents") to include in
@@ -1230,8 +1227,8 @@ type TranslateTextResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "GlossaryTranslations") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1274,13 +1271,15 @@ type Translation struct {
 	// .
 	Model string `json:"model,omitempty"`
 
-	// TranslatedText: Text translated into the target language.
+	// TranslatedText: Text translated into the target language. If an error
+	// occurs during translation, this field might be excluded from the
+	// response.
 	TranslatedText string `json:"translatedText,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DetectedLanguageCode") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1313,10 +1312,10 @@ type WaitOperationRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Timeout") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Timeout") to include in
@@ -1346,6 +1345,15 @@ type ProjectsDetectLanguageCall struct {
 }
 
 // DetectLanguage: Detects the language of text within a request.
+//
+// - parent: Project or location to make a call. Must refer to a
+//   caller's project. Format:
+//   `projects/{project-number-or-id}/locations/{location-id}` or
+//   `projects/{project-number-or-id}`. For global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Only models within the same
+//   region (has same location-id) can be used. Otherwise an
+//   INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsService) DetectLanguage(parent string, detectlanguagerequest *DetectLanguageRequest) *ProjectsDetectLanguageCall {
 	c := &ProjectsDetectLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1380,7 +1388,7 @@ func (c *ProjectsDetectLanguageCall) Header() http.Header {
 
 func (c *ProjectsDetectLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1488,6 +1496,16 @@ type ProjectsGetSupportedLanguagesCall struct {
 
 // GetSupportedLanguages: Returns a list of supported languages for
 // translation.
+//
+// - parent: Project or location to make a call. Must refer to a
+//   caller's project. Format: `projects/{project-number-or-id}` or
+//   `projects/{project-number-or-id}/locations/{location-id}`. For
+//   global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Non-global location is required
+//   for AutoML models. Only models within the same region (have same
+//   location-id) can be used, otherwise an INVALID_ARGUMENT (400) error
+//   is returned.
 func (r *ProjectsService) GetSupportedLanguages(parent string) *ProjectsGetSupportedLanguagesCall {
 	c := &ProjectsGetSupportedLanguagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1509,11 +1527,8 @@ func (c *ProjectsGetSupportedLanguagesCall) DisplayLanguageCode(displayLanguageC
 // `projects/{project-number-or-id}/locations/{location-id}/models/{model
 // -id}` - General (built-in) models:
 // `projects/{project-number-or-id}/locations/{location-id}/models/genera
-// l/nmt`,
-// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-// l/base` Returns languages supported by the specified model. If
-// missing, we get supported languages of Google general base (PBMT)
-// model.
+// l/nmt`, Returns languages supported by the specified model. If
+// missing, we get supported languages of Google general NMT model.
 func (c *ProjectsGetSupportedLanguagesCall) Model(model string) *ProjectsGetSupportedLanguagesCall {
 	c.urlParams_.Set("model", model)
 	return c
@@ -1556,7 +1571,7 @@ func (c *ProjectsGetSupportedLanguagesCall) Header() http.Header {
 
 func (c *ProjectsGetSupportedLanguagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1632,7 +1647,7 @@ func (c *ProjectsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOption) (*S
 	//       "type": "string"
 	//     },
 	//     "model": {
-	//       "description": "Optional. Get supported languages of this model. The format depends on model type: - AutoML Translation models: `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}` - General (built-in) models: `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`, `projects/{project-number-or-id}/locations/{location-id}/models/general/base` Returns languages supported by the specified model. If missing, we get supported languages of Google general base (PBMT) model.",
+	//       "description": "Optional. Get supported languages of this model. The format depends on model type: - AutoML Translation models: `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}` - General (built-in) models: `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`, Returns languages supported by the specified model. If missing, we get supported languages of Google general NMT model.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1668,6 +1683,16 @@ type ProjectsTranslateTextCall struct {
 }
 
 // TranslateText: Translates input text and returns translated text.
+//
+// - parent: Project or location to make a call. Must refer to a
+//   caller's project. Format: `projects/{project-number-or-id}` or
+//   `projects/{project-number-or-id}/locations/{location-id}`. For
+//   global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Non-global location is required
+//   for requests using AutoML models or custom glossaries. Models and
+//   glossaries must be within the same region (have same location-id),
+//   otherwise an INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsService) TranslateText(parent string, translatetextrequest *TranslateTextRequest) *ProjectsTranslateTextCall {
 	c := &ProjectsTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1702,7 +1727,7 @@ func (c *ProjectsTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1815,6 +1840,13 @@ type ProjectsLocationsBatchTranslateTextCall struct {
 // the specified output location. This call returns immediately and you
 // can use google.longrunning.Operation.name to poll the status of the
 // call.
+//
+// - parent: Location to make a call. Must refer to a caller's project.
+//   Format: `projects/{project-number-or-id}/locations/{location-id}`.
+//   The `global` location is not supported for batch translation. Only
+//   AutoML Translation models or glossaries within the same region
+//   (have the same location-id) can be used, otherwise an
+//   INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) BatchTranslateText(parent string, batchtranslatetextrequest *BatchTranslateTextRequest) *ProjectsLocationsBatchTranslateTextCall {
 	c := &ProjectsLocationsBatchTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1849,7 +1881,7 @@ func (c *ProjectsLocationsBatchTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsLocationsBatchTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1955,6 +1987,15 @@ type ProjectsLocationsDetectLanguageCall struct {
 }
 
 // DetectLanguage: Detects the language of text within a request.
+//
+// - parent: Project or location to make a call. Must refer to a
+//   caller's project. Format:
+//   `projects/{project-number-or-id}/locations/{location-id}` or
+//   `projects/{project-number-or-id}`. For global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Only models within the same
+//   region (has same location-id) can be used. Otherwise an
+//   INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) DetectLanguage(parent string, detectlanguagerequest *DetectLanguageRequest) *ProjectsLocationsDetectLanguageCall {
 	c := &ProjectsLocationsDetectLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1989,7 +2030,7 @@ func (c *ProjectsLocationsDetectLanguageCall) Header() http.Header {
 
 func (c *ProjectsLocationsDetectLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2096,6 +2137,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2139,7 +2182,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2242,6 +2285,16 @@ type ProjectsLocationsGetSupportedLanguagesCall struct {
 
 // GetSupportedLanguages: Returns a list of supported languages for
 // translation.
+//
+// - parent: Project or location to make a call. Must refer to a
+//   caller's project. Format: `projects/{project-number-or-id}` or
+//   `projects/{project-number-or-id}/locations/{location-id}`. For
+//   global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Non-global location is required
+//   for AutoML models. Only models within the same region (have same
+//   location-id) can be used, otherwise an INVALID_ARGUMENT (400) error
+//   is returned.
 func (r *ProjectsLocationsService) GetSupportedLanguages(parent string) *ProjectsLocationsGetSupportedLanguagesCall {
 	c := &ProjectsLocationsGetSupportedLanguagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2263,11 +2316,8 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) DisplayLanguageCode(display
 // `projects/{project-number-or-id}/locations/{location-id}/models/{model
 // -id}` - General (built-in) models:
 // `projects/{project-number-or-id}/locations/{location-id}/models/genera
-// l/nmt`,
-// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-// l/base` Returns languages supported by the specified model. If
-// missing, we get supported languages of Google general base (PBMT)
-// model.
+// l/nmt`, Returns languages supported by the specified model. If
+// missing, we get supported languages of Google general NMT model.
 func (c *ProjectsLocationsGetSupportedLanguagesCall) Model(model string) *ProjectsLocationsGetSupportedLanguagesCall {
 	c.urlParams_.Set("model", model)
 	return c
@@ -2310,7 +2360,7 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetSupportedLanguagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2386,7 +2436,7 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "model": {
-	//       "description": "Optional. Get supported languages of this model. The format depends on model type: - AutoML Translation models: `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}` - General (built-in) models: `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`, `projects/{project-number-or-id}/locations/{location-id}/models/general/base` Returns languages supported by the specified model. If missing, we get supported languages of Google general base (PBMT) model.",
+	//       "description": "Optional. Get supported languages of this model. The format depends on model type: - AutoML Translation models: `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}` - General (built-in) models: `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`, Returns languages supported by the specified model. If missing, we get supported languages of Google general NMT model.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2423,28 +2473,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2487,7 +2543,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2558,7 +2614,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2570,13 +2626,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2626,6 +2682,16 @@ type ProjectsLocationsTranslateTextCall struct {
 }
 
 // TranslateText: Translates input text and returns translated text.
+//
+// - parent: Project or location to make a call. Must refer to a
+//   caller's project. Format: `projects/{project-number-or-id}` or
+//   `projects/{project-number-or-id}/locations/{location-id}`. For
+//   global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Non-global location is required
+//   for requests using AutoML models or custom glossaries. Models and
+//   glossaries must be within the same region (have same location-id),
+//   otherwise an INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) TranslateText(parent string, translatetextrequest *TranslateTextRequest) *ProjectsLocationsTranslateTextCall {
 	c := &ProjectsLocationsTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2660,7 +2726,7 @@ func (c *ProjectsLocationsTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsLocationsTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2768,6 +2834,8 @@ type ProjectsLocationsGlossariesCreateCall struct {
 
 // Create: Creates a glossary and returns the long-running operation.
 // Returns NOT_FOUND, if the project doesn't exist.
+//
+// - parent: The project name.
 func (r *ProjectsLocationsGlossariesService) Create(parent string, glossary *Glossary) *ProjectsLocationsGlossariesCreateCall {
 	c := &ProjectsLocationsGlossariesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2802,7 +2870,7 @@ func (c *ProjectsLocationsGlossariesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2909,6 +2977,8 @@ type ProjectsLocationsGlossariesDeleteCall struct {
 // Delete: Deletes a glossary, or cancels glossary construction if the
 // glossary isn't created yet. Returns NOT_FOUND, if the glossary
 // doesn't exist.
+//
+// - name: The name of the glossary to delete.
 func (r *ProjectsLocationsGlossariesService) Delete(name string) *ProjectsLocationsGlossariesDeleteCall {
 	c := &ProjectsLocationsGlossariesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2942,7 +3012,7 @@ func (c *ProjectsLocationsGlossariesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3042,6 +3112,8 @@ type ProjectsLocationsGlossariesGetCall struct {
 
 // Get: Gets a glossary. Returns NOT_FOUND, if the glossary doesn't
 // exist.
+//
+// - name: The name of the glossary to retrieve.
 func (r *ProjectsLocationsGlossariesService) Get(name string) *ProjectsLocationsGlossariesGetCall {
 	c := &ProjectsLocationsGlossariesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3085,7 +3157,7 @@ func (c *ProjectsLocationsGlossariesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3188,6 +3260,9 @@ type ProjectsLocationsGlossariesListCall struct {
 
 // List: Lists glossaries in a project. Returns NOT_FOUND, if the
 // project doesn't exist.
+//
+// - parent: The name of the project from which to list all of the
+//   glossaries.
 func (r *ProjectsLocationsGlossariesService) List(parent string) *ProjectsLocationsGlossariesListCall {
 	c := &ProjectsLocationsGlossariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3270,7 +3345,7 @@ func (c *ProjectsLocationsGlossariesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3418,6 +3493,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3452,7 +3529,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3561,6 +3638,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3594,7 +3673,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3695,6 +3774,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3738,7 +3819,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3849,6 +3930,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3913,7 +3996,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4051,9 +4134,9 @@ type ProjectsLocationsOperationsWaitCall struct {
 	header_              http.Header
 }
 
-// Wait: Waits for the specified long-running operation until it is done
-// or reaches at most a specified timeout, returning the latest state.
-// If the operation is already done, the latest state is immediately
+// Wait: Waits until the specified long-running operation is done or
+// reaches at most a specified timeout, returning the latest state. If
+// the operation is already done, the latest state is immediately
 // returned. If the timeout specified is greater than the default
 // HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does
 // not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.
@@ -4061,6 +4144,8 @@ type ProjectsLocationsOperationsWaitCall struct {
 // latest state before the specified timeout (including immediately),
 // meaning even an immediate response is no guarantee that the operation
 // is done.
+//
+// - name: The name of the operation resource to wait on.
 func (r *ProjectsLocationsOperationsService) Wait(name string, waitoperationrequest *WaitOperationRequest) *ProjectsLocationsOperationsWaitCall {
 	c := &ProjectsLocationsOperationsWaitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4095,7 +4180,7 @@ func (c *ProjectsLocationsOperationsWaitCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4159,7 +4244,7 @@ func (c *ProjectsLocationsOperationsWaitCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Waits for the specified long-running operation until it is done or reaches at most a specified timeout, returning the latest state. If the operation is already done, the latest state is immediately returned. If the timeout specified is greater than the default HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort basis. It may return the latest state before the specified timeout (including immediately), meaning even an immediate response is no guarantee that the operation is done.",
+	//   "description": "Waits until the specified long-running operation is done or reaches at most a specified timeout, returning the latest state. If the operation is already done, the latest state is immediately returned. If the timeout specified is greater than the default HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort basis. It may return the latest state before the specified timeout (including immediately), meaning even an immediate response is no guarantee that the operation is done.",
 	//   "flatPath": "v3/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:wait",
 	//   "httpMethod": "POST",
 	//   "id": "translate.projects.locations.operations.wait",

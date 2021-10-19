@@ -1,13 +1,23 @@
 {
-    "extends": [
-        "config:base",
-        "schedule:weekly"
-    ],
-    "semanticCommits": false,
-    "postUpdateOptions": [
-        "gomodTidy"
-    ],
-    "commitMessagePrefix": "chore(all): ",
-    "commitMessageAction": "update",
-    "groupName": "all"
+  "extends": [
+    "config:base",
+    "schedule:weekly",
+    ":disableDependencyDashboard"
+  ],
+  "semanticCommits": false,
+  "postUpdateOptions": [
+    "gomodTidy"
+  ],
+  "commitMessagePrefix": "chore(all): ",
+  "commitMessageAction": "update",
+  "groupName": "all",
+  "ignoreDeps": [
+    "golang.org/x/net",
+    "google.golang.org/grpc"
+  ],
+  "force": {
+    "constraints": {
+      "go": "1.17"
+    }
+  }
 }

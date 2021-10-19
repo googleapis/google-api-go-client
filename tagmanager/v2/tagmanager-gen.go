@@ -231,6 +231,7 @@ type AccountsContainersVersionsService struct {
 func NewAccountsContainersWorkspacesService(s *Service) *AccountsContainersWorkspacesService {
 	rs := &AccountsContainersWorkspacesService{s: s}
 	rs.BuiltInVariables = NewAccountsContainersWorkspacesBuiltInVariablesService(s)
+	rs.Clients = NewAccountsContainersWorkspacesClientsService(s)
 	rs.Folders = NewAccountsContainersWorkspacesFoldersService(s)
 	rs.Tags = NewAccountsContainersWorkspacesTagsService(s)
 	rs.Templates = NewAccountsContainersWorkspacesTemplatesService(s)
@@ -244,6 +245,8 @@ type AccountsContainersWorkspacesService struct {
 	s *Service
 
 	BuiltInVariables *AccountsContainersWorkspacesBuiltInVariablesService
+
+	Clients *AccountsContainersWorkspacesClientsService
 
 	Folders *AccountsContainersWorkspacesFoldersService
 
@@ -264,6 +267,15 @@ func NewAccountsContainersWorkspacesBuiltInVariablesService(s *Service) *Account
 }
 
 type AccountsContainersWorkspacesBuiltInVariablesService struct {
+	s *Service
+}
+
+func NewAccountsContainersWorkspacesClientsService(s *Service) *AccountsContainersWorkspacesClientsService {
+	rs := &AccountsContainersWorkspacesClientsService{s: s}
+	return rs
+}
+
+type AccountsContainersWorkspacesClientsService struct {
 	s *Service
 }
 
@@ -364,10 +376,10 @@ type Account struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -401,10 +413,10 @@ type AccountAccess struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permission") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permission") to include in
@@ -556,6 +568,9 @@ type BuiltInVariable struct {
 	//   "requestMethod"
 	//   "clientName"
 	//   "queryString"
+	//   "serverPageLocationUrl"
+	//   "serverPageLocationPath"
+	//   "serverPageLocationHostname"
 	Type string `json:"type,omitempty"`
 
 	// WorkspaceId: GTM Workspace ID.
@@ -563,10 +578,10 @@ type BuiltInVariable struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -603,6 +618,11 @@ type Client struct {
 	// tagmanager.accounts.containers.workspaces.clients.update
 	Name string `json:"name,omitempty"`
 
+	// Notes: User notes on how to apply this tag in the container. @mutable
+	// tagmanager.accounts.containers.workspaces.tags.create @mutable
+	// tagmanager.accounts.containers.workspaces.tags.update
+	Notes string `json:"notes,omitempty"`
+
 	// Parameter: The client's parameters. @mutable
 	// tagmanager.accounts.containers.workspaces.clients.create @mutable
 	// tagmanager.accounts.containers.workspaces.clients.update
@@ -630,12 +650,16 @@ type Client struct {
 	// WorkspaceId: GTM Workspace ID.
 	WorkspaceId string `json:"workspaceId,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -691,10 +715,10 @@ type Condition struct {
 
 	// ForceSendFields is a list of field names (e.g. "Parameter") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Parameter") to include in
@@ -773,10 +797,10 @@ type Container struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -817,10 +841,10 @@ type ContainerAccess struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContainerId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContainerId") to include
@@ -912,10 +936,10 @@ type ContainerVersion struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -987,10 +1011,10 @@ type ContainerVersionHeader struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -1018,10 +1042,10 @@ type CreateBuiltInVariableResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "BuiltInVariable") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BuiltInVariable") to
@@ -1051,10 +1075,10 @@ type CreateContainerVersionRequestVersionOptions struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -1095,10 +1119,10 @@ type CreateContainerVersionResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CompilerError") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CompilerError") to include
@@ -1159,10 +1183,10 @@ type CustomTemplate struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -1211,10 +1235,10 @@ type Entity struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChangeStatus") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChangeStatus") to include
@@ -1310,10 +1334,10 @@ type Environment struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -1371,10 +1395,10 @@ type Folder struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -1413,10 +1437,10 @@ type FolderEntities struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1461,10 +1485,10 @@ type GalleryReference struct {
 
 	// ForceSendFields is a list of field names (e.g. "Host") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Host") to include in API
@@ -1497,10 +1521,10 @@ type GetWorkspaceStatusResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "MergeConflict") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MergeConflict") to include
@@ -1533,10 +1557,10 @@ type ListAccountsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Account") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Account") to include in
@@ -1550,6 +1574,41 @@ type ListAccountsResponse struct {
 
 func (s *ListAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccountsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListClientsResponse struct {
+	// Client: All GTM Clients of a GTM Container.
+	Client []*Client `json:"client,omitempty"`
+
+	// NextPageToken: Continuation token for fetching the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Client") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Client") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListClientsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListClientsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1570,8 +1629,8 @@ type ListContainerVersionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ContainerVersionHeader") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1608,10 +1667,10 @@ type ListContainersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Container") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Container") to include in
@@ -1645,10 +1704,10 @@ type ListEnabledBuiltInVariablesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "BuiltInVariable") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BuiltInVariable") to
@@ -1682,10 +1741,10 @@ type ListEnvironmentsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Environment") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Environment") to include
@@ -1718,10 +1777,10 @@ type ListFoldersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Folder") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Folder") to include in API
@@ -1754,10 +1813,10 @@ type ListTagsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1789,10 +1848,10 @@ type ListTemplatesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1825,10 +1884,10 @@ type ListTriggersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1861,10 +1920,10 @@ type ListUserPermissionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1897,10 +1956,10 @@ type ListVariablesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1933,10 +1992,10 @@ type ListWorkspacesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1968,10 +2027,10 @@ type ListZonesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -2004,10 +2063,10 @@ type MergeConflict struct {
 
 	// ForceSendFields is a list of field names (e.g. "EntityInBaseVersion")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EntityInBaseVersion") to
@@ -2097,10 +2156,10 @@ type Parameter struct {
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -2132,10 +2191,10 @@ type PublishContainerVersionResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CompilerError") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CompilerError") to include
@@ -2171,10 +2230,10 @@ type QuickPreviewResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CompilerError") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CompilerError") to include
@@ -2204,10 +2263,10 @@ type RevertBuiltInVariableResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Enabled") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Enabled") to include in
@@ -2221,6 +2280,42 @@ type RevertBuiltInVariableResponse struct {
 
 func (s *RevertBuiltInVariableResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RevertBuiltInVariableResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RevertClientResponse: The result of reverting a client in a
+// workspace.
+type RevertClientResponse struct {
+	// Client: Client as it appears in the latest container version since
+	// the last workspace synchronization operation. If no client is
+	// present, that means the client was deleted in the latest container
+	// version.
+	Client *Client `json:"client,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Client") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Client") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RevertClientResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RevertClientResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2240,10 +2335,10 @@ type RevertFolderResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Folder") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Folder") to include in API
@@ -2274,10 +2369,10 @@ type RevertTagResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Tag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Tag") to include in API
@@ -2310,10 +2405,10 @@ type RevertTemplateResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Template") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Template") to include in
@@ -2346,10 +2441,10 @@ type RevertTriggerResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Trigger") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Trigger") to include in
@@ -2382,10 +2477,10 @@ type RevertVariableResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Variable") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Variable") to include in
@@ -2416,10 +2511,10 @@ type RevertZoneResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Zone") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Zone") to include in API
@@ -2450,10 +2545,10 @@ type SetupTag struct {
 
 	// ForceSendFields is a list of field names (e.g. "StopOnSetupFailure")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "StopOnSetupFailure") to
@@ -2482,10 +2577,10 @@ type SyncStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "MergeConflict") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MergeConflict") to include
@@ -2521,10 +2616,10 @@ type SyncWorkspaceResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "MergeConflict") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MergeConflict") to include
@@ -2558,6 +2653,11 @@ type Tag struct {
 	// tagmanager.accounts.containers.workspaces.tags.create @mutable
 	// tagmanager.accounts.containers.workspaces.tags.update
 	BlockingTriggerId []string `json:"blockingTriggerId,omitempty"`
+
+	// ConsentSettings: Consent settings of a tag. @mutable
+	// tagmanager.accounts.containers.workspaces.tags.create @mutable
+	// tagmanager.accounts.containers.workspaces.tags.update
+	ConsentSettings *TagConsentSetting `json:"consentSettings,omitempty"`
 
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
@@ -2682,10 +2782,10 @@ type Tag struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -2703,6 +2803,46 @@ func (s *Tag) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type TagConsentSetting struct {
+	// ConsentStatus: The tag's consent status. If set to NEEDED, the
+	// runtime will check that the consent types specified by the
+	// consent_type field have been granted.
+	//
+	// Possible values:
+	//   "notSet" - Default value where user has not specified any setting
+	// on it.
+	//   "notNeeded" - Tag doesn't require any additional consent settings.
+	//   "needed" - Tag requires additional consent settings.
+	ConsentStatus string `json:"consentStatus,omitempty"`
+
+	// ConsentType: The type of consents to check for during tag firing if
+	// in the consent NEEDED state. This parameter must be of type LIST
+	// where each list item is of type STRING.
+	ConsentType *Parameter `json:"consentType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsentStatus") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsentStatus") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TagConsentSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod TagConsentSetting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TeardownTag: Represents a tag that fires after another tag in order
 // to tear down dependencies.
 type TeardownTag struct {
@@ -2716,8 +2856,8 @@ type TeardownTag struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "StopTeardownOnFailure") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2872,6 +3012,9 @@ type Trigger struct {
 	//   "windowLoaded"
 	//   "customEvent"
 	//   "triggerGroup"
+	//   "init"
+	//   "consentInit"
+	//   "serverPageview"
 	//   "always"
 	//   "firebaseAppException"
 	//   "firebaseAppUpdate"
@@ -2960,10 +3103,10 @@ type Trigger struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -3010,10 +3153,10 @@ type UserPermission struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountAccess") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountAccess") to include
@@ -3116,10 +3259,10 @@ type Variable struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -3163,10 +3306,10 @@ type VariableFormatValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "CaseConversionType")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CaseConversionType") to
@@ -3223,10 +3366,10 @@ type Workspace struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -3289,10 +3432,10 @@ type Zone struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -3322,10 +3465,10 @@ type ZoneBoundary struct {
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Condition") to include in
@@ -3353,10 +3496,10 @@ type ZoneChildContainer struct {
 
 	// ForceSendFields is a list of field names (e.g. "Nickname") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Nickname") to include in
@@ -3385,10 +3528,10 @@ type ZoneTypeRestriction struct {
 
 	// ForceSendFields is a list of field names (e.g. "Enable") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Enable") to include in API
@@ -3418,6 +3561,9 @@ type AccountsGetCall struct {
 }
 
 // Get: Gets a GTM Account.
+//
+// - path: GTM Accounts's API relative path. Example:
+//   accounts/{account_id}.
 func (r *AccountsService) Get(path string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -3461,7 +3607,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3612,7 +3758,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3729,6 +3875,9 @@ type AccountsUpdateCall struct {
 }
 
 // Update: Updates a GTM Account.
+//
+// - path: GTM Accounts's API relative path. Example:
+//   accounts/{account_id}.
 func (r *AccountsService) Update(path string, account *Account) *AccountsUpdateCall {
 	c := &AccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -3771,7 +3920,7 @@ func (c *AccountsUpdateCall) Header() http.Header {
 
 func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3882,6 +4031,9 @@ type AccountsContainersCreateCall struct {
 }
 
 // Create: Creates a Container.
+//
+// - parent: GTM Account's API relative path. Example:
+//   accounts/{account_id}.
 func (r *AccountsContainersService) Create(parent string, container *Container) *AccountsContainersCreateCall {
 	c := &AccountsContainersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3916,7 +4068,7 @@ func (c *AccountsContainersCreateCall) Header() http.Header {
 
 func (c *AccountsContainersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4021,6 +4173,9 @@ type AccountsContainersDeleteCall struct {
 }
 
 // Delete: Deletes a Container.
+//
+// - path: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersService) Delete(path string) *AccountsContainersDeleteCall {
 	c := &AccountsContainersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4054,7 +4209,7 @@ func (c *AccountsContainersDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4124,6 +4279,9 @@ type AccountsContainersGetCall struct {
 }
 
 // Get: Gets a Container.
+//
+// - path: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersService) Get(path string) *AccountsContainersGetCall {
 	c := &AccountsContainersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4167,7 +4325,7 @@ func (c *AccountsContainersGetCall) Header() http.Header {
 
 func (c *AccountsContainersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4269,6 +4427,9 @@ type AccountsContainersListCall struct {
 }
 
 // List: Lists all Containers that belongs to a GTM Account.
+//
+// - parent: GTM Accounts's API relative path. Example:
+//   accounts/{account_id}.
 func (r *AccountsContainersService) List(parent string) *AccountsContainersListCall {
 	c := &AccountsContainersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4319,7 +4480,7 @@ func (c *AccountsContainersListCall) Header() http.Header {
 
 func (c *AccountsContainersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4447,6 +4608,9 @@ type AccountsContainersUpdateCall struct {
 }
 
 // Update: Updates a Container.
+//
+// - path: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersService) Update(path string, container *Container) *AccountsContainersUpdateCall {
 	c := &AccountsContainersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4489,7 +4653,7 @@ func (c *AccountsContainersUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4600,6 +4764,9 @@ type AccountsContainersEnvironmentsCreateCall struct {
 }
 
 // Create: Creates a GTM Environment.
+//
+// - parent: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersEnvironmentsService) Create(parent string, environment *Environment) *AccountsContainersEnvironmentsCreateCall {
 	c := &AccountsContainersEnvironmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4634,7 +4801,7 @@ func (c *AccountsContainersEnvironmentsCreateCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4739,6 +4906,10 @@ type AccountsContainersEnvironmentsDeleteCall struct {
 }
 
 // Delete: Deletes a GTM Environment.
+//
+// - path: GTM Environment's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/environments/{enviro
+//   nment_id}.
 func (r *AccountsContainersEnvironmentsService) Delete(path string) *AccountsContainersEnvironmentsDeleteCall {
 	c := &AccountsContainersEnvironmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4772,7 +4943,7 @@ func (c *AccountsContainersEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4842,6 +5013,10 @@ type AccountsContainersEnvironmentsGetCall struct {
 }
 
 // Get: Gets a GTM Environment.
+//
+// - path: GTM Environment's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/environments/{enviro
+//   nment_id}.
 func (r *AccountsContainersEnvironmentsService) Get(path string) *AccountsContainersEnvironmentsGetCall {
 	c := &AccountsContainersEnvironmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -4885,7 +5060,7 @@ func (c *AccountsContainersEnvironmentsGetCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4987,6 +5162,9 @@ type AccountsContainersEnvironmentsListCall struct {
 }
 
 // List: Lists all GTM Environments of a GTM Container.
+//
+// - parent: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersEnvironmentsService) List(parent string) *AccountsContainersEnvironmentsListCall {
 	c := &AccountsContainersEnvironmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5037,7 +5215,7 @@ func (c *AccountsContainersEnvironmentsListCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5166,6 +5344,10 @@ type AccountsContainersEnvironmentsReauthorizeCall struct {
 
 // Reauthorize: Re-generates the authorization code for a GTM
 // Environment.
+//
+// - path: GTM Environment's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/environments/{enviro
+//   nment_id}.
 func (r *AccountsContainersEnvironmentsService) Reauthorize(path string, environment *Environment) *AccountsContainersEnvironmentsReauthorizeCall {
 	c := &AccountsContainersEnvironmentsReauthorizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5200,7 +5382,7 @@ func (c *AccountsContainersEnvironmentsReauthorizeCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsReauthorizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5306,6 +5488,10 @@ type AccountsContainersEnvironmentsUpdateCall struct {
 }
 
 // Update: Updates a GTM Environment.
+//
+// - path: GTM Environment's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/environments/{enviro
+//   nment_id}.
 func (r *AccountsContainersEnvironmentsService) Update(path string, environment *Environment) *AccountsContainersEnvironmentsUpdateCall {
 	c := &AccountsContainersEnvironmentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5348,7 +5534,7 @@ func (c *AccountsContainersEnvironmentsUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersEnvironmentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5459,6 +5645,9 @@ type AccountsContainersVersionHeadersLatestCall struct {
 }
 
 // Latest: Gets the latest container version header
+//
+// - parent: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersVersionHeadersService) Latest(parent string) *AccountsContainersVersionHeadersLatestCall {
 	c := &AccountsContainersVersionHeadersLatestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5502,7 +5691,7 @@ func (c *AccountsContainersVersionHeadersLatestCall) Header() http.Header {
 
 func (c *AccountsContainersVersionHeadersLatestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5604,6 +5793,9 @@ type AccountsContainersVersionHeadersListCall struct {
 }
 
 // List: Lists all Container Versions of a GTM Container.
+//
+// - parent: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersVersionHeadersService) List(parent string) *AccountsContainersVersionHeadersListCall {
 	c := &AccountsContainersVersionHeadersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5661,7 +5853,7 @@ func (c *AccountsContainersVersionHeadersListCall) Header() http.Header {
 
 func (c *AccountsContainersVersionHeadersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5794,6 +5986,10 @@ type AccountsContainersVersionsDeleteCall struct {
 }
 
 // Delete: Deletes a Container Version.
+//
+// - path: GTM ContainerVersion's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) Delete(path string) *AccountsContainersVersionsDeleteCall {
 	c := &AccountsContainersVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5827,7 +6023,7 @@ func (c *AccountsContainersVersionsDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5897,6 +6093,10 @@ type AccountsContainersVersionsGetCall struct {
 }
 
 // Get: Gets a Container Version.
+//
+// - path: GTM ContainerVersion's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) Get(path string) *AccountsContainersVersionsGetCall {
 	c := &AccountsContainersVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -5948,7 +6148,7 @@ func (c *AccountsContainersVersionsGetCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6056,6 +6256,9 @@ type AccountsContainersVersionsLiveCall struct {
 }
 
 // Live: Gets the live (i.e. published) container version
+//
+// - parent: GTM Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersVersionsService) Live(parent string) *AccountsContainersVersionsLiveCall {
 	c := &AccountsContainersVersionsLiveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6099,7 +6302,7 @@ func (c *AccountsContainersVersionsLiveCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsLiveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6200,6 +6403,10 @@ type AccountsContainersVersionsPublishCall struct {
 }
 
 // Publish: Publishes a Container Version.
+//
+// - path: GTM ContainerVersion's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) Publish(path string) *AccountsContainersVersionsPublishCall {
 	c := &AccountsContainersVersionsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6241,7 +6448,7 @@ func (c *AccountsContainersVersionsPublishCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsPublishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6344,6 +6551,10 @@ type AccountsContainersVersionsSetLatestCall struct {
 
 // SetLatest: Sets the latest version used for synchronization of
 // workspaces when detecting conflicts and errors.
+//
+// - path: GTM ContainerVersion's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) SetLatest(path string) *AccountsContainersVersionsSetLatestCall {
 	c := &AccountsContainersVersionsSetLatestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6377,7 +6588,7 @@ func (c *AccountsContainersVersionsSetLatestCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsSetLatestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6474,6 +6685,10 @@ type AccountsContainersVersionsUndeleteCall struct {
 }
 
 // Undelete: Undeletes a Container Version.
+//
+// - path: GTM ContainerVersion's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) Undelete(path string) *AccountsContainersVersionsUndeleteCall {
 	c := &AccountsContainersVersionsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6507,7 +6722,7 @@ func (c *AccountsContainersVersionsUndeleteCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6605,6 +6820,10 @@ type AccountsContainersVersionsUpdateCall struct {
 }
 
 // Update: Updates a Container Version.
+//
+// - path: GTM ContainerVersion's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/versions/{version_id
+//   }.
 func (r *AccountsContainersVersionsService) Update(path string, containerversion *ContainerVersion) *AccountsContainersVersionsUpdateCall {
 	c := &AccountsContainersVersionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6647,7 +6866,7 @@ func (c *AccountsContainersVersionsUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersVersionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6758,6 +6977,9 @@ type AccountsContainersWorkspacesCreateCall struct {
 }
 
 // Create: Creates a Workspace.
+//
+// - parent: GTM parent Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersWorkspacesService) Create(parent string, workspace *Workspace) *AccountsContainersWorkspacesCreateCall {
 	c := &AccountsContainersWorkspacesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6792,7 +7014,7 @@ func (c *AccountsContainersWorkspacesCreateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6900,6 +7122,10 @@ type AccountsContainersWorkspacesCreateVersionCall struct {
 // CreateVersion: Creates a Container Version from the entities present
 // in the workspace, deletes the workspace, and sets the base container
 // version to the newly created version.
+//
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) CreateVersion(path string, createcontainerversionrequestversionoptions *CreateContainerVersionRequestVersionOptions) *AccountsContainersWorkspacesCreateVersionCall {
 	c := &AccountsContainersWorkspacesCreateVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -6934,7 +7160,7 @@ func (c *AccountsContainersWorkspacesCreateVersionCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesCreateVersionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7039,6 +7265,10 @@ type AccountsContainersWorkspacesDeleteCall struct {
 }
 
 // Delete: Deletes a Workspace.
+//
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) Delete(path string) *AccountsContainersWorkspacesDeleteCall {
 	c := &AccountsContainersWorkspacesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7072,7 +7302,7 @@ func (c *AccountsContainersWorkspacesDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7142,6 +7372,10 @@ type AccountsContainersWorkspacesGetCall struct {
 }
 
 // Get: Gets a Workspace.
+//
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) Get(path string) *AccountsContainersWorkspacesGetCall {
 	c := &AccountsContainersWorkspacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7185,7 +7419,7 @@ func (c *AccountsContainersWorkspacesGetCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7287,6 +7521,10 @@ type AccountsContainersWorkspacesGetStatusCall struct {
 }
 
 // GetStatus: Finds conflicting and modified entities in the workspace.
+//
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) GetStatus(path string) *AccountsContainersWorkspacesGetStatusCall {
 	c := &AccountsContainersWorkspacesGetStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7330,7 +7568,7 @@ func (c *AccountsContainersWorkspacesGetStatusCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesGetStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7432,6 +7670,9 @@ type AccountsContainersWorkspacesListCall struct {
 }
 
 // List: Lists all Workspaces that belong to a GTM Container.
+//
+// - parent: GTM parent Container's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}.
 func (r *AccountsContainersWorkspacesService) List(parent string) *AccountsContainersWorkspacesListCall {
 	c := &AccountsContainersWorkspacesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7482,7 +7723,7 @@ func (c *AccountsContainersWorkspacesListCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7610,6 +7851,10 @@ type AccountsContainersWorkspacesQuickPreviewCall struct {
 
 // QuickPreview: Quick previews a workspace by creating a fake container
 // version from all entities in the provided workspace.
+//
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) QuickPreview(path string) *AccountsContainersWorkspacesQuickPreviewCall {
 	c := &AccountsContainersWorkspacesQuickPreviewCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7643,7 +7888,7 @@ func (c *AccountsContainersWorkspacesQuickPreviewCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesQuickPreviewCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7742,6 +7987,10 @@ type AccountsContainersWorkspacesResolveConflictCall struct {
 
 // ResolveConflict: Resolves a merge conflict for a workspace entity by
 // updating it to the resolved entity passed in the request.
+//
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) ResolveConflict(path string, entity *Entity) *AccountsContainersWorkspacesResolveConflictCall {
 	c := &AccountsContainersWorkspacesResolveConflictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7784,7 +8033,7 @@ func (c *AccountsContainersWorkspacesResolveConflictCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesResolveConflictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7868,6 +8117,10 @@ type AccountsContainersWorkspacesSyncCall struct {
 // Sync: Syncs a workspace to the latest container version by updating
 // all unmodified workspace entities and displaying conflicts for
 // modified entities.
+//
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) Sync(path string) *AccountsContainersWorkspacesSyncCall {
 	c := &AccountsContainersWorkspacesSyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -7901,7 +8154,7 @@ func (c *AccountsContainersWorkspacesSyncCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7999,6 +8252,10 @@ type AccountsContainersWorkspacesUpdateCall struct {
 }
 
 // Update: Updates a Workspace.
+//
+// - path: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesService) Update(path string, workspace *Workspace) *AccountsContainersWorkspacesUpdateCall {
 	c := &AccountsContainersWorkspacesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -8041,7 +8298,7 @@ func (c *AccountsContainersWorkspacesUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8151,6 +8408,10 @@ type AccountsContainersWorkspacesBuiltInVariablesCreateCall struct {
 }
 
 // Create: Creates one or more GTM Built-In Variables.
+//
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) Create(parent string) *AccountsContainersWorkspacesBuiltInVariablesCreateCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8271,6 +8532,9 @@ func (r *AccountsContainersWorkspacesBuiltInVariablesService) Create(parent stri
 //   "requestMethod"
 //   "clientName"
 //   "queryString"
+//   "serverPageLocationUrl"
+//   "serverPageLocationPath"
+//   "serverPageLocationHostname"
 func (c *AccountsContainersWorkspacesBuiltInVariablesCreateCall) Type(type_ ...string) *AccountsContainersWorkspacesBuiltInVariablesCreateCall {
 	c.urlParams_.SetMulti("type", append([]string{}, type_...))
 	return c
@@ -8303,7 +8567,7 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesCreateCall) Header() http.H
 
 func (c *AccountsContainersWorkspacesBuiltInVariablesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8489,7 +8753,10 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesCreateCall) Do(opts ...goog
 	//         "requestPath",
 	//         "requestMethod",
 	//         "clientName",
-	//         "queryString"
+	//         "queryString",
+	//         "serverPageLocationUrl",
+	//         "serverPageLocationPath",
+	//         "serverPageLocationHostname"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -8601,6 +8868,9 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesCreateCall) Do(opts ...goog
 	//         "",
 	//         "",
 	//         "",
+	//         "",
+	//         "",
+	//         "",
 	//         ""
 	//       ],
 	//       "location": "query",
@@ -8630,6 +8900,10 @@ type AccountsContainersWorkspacesBuiltInVariablesDeleteCall struct {
 }
 
 // Delete: Deletes one or more GTM Built-In Variables.
+//
+// - path: GTM BuiltInVariable's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/built_in_variables.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) Delete(path string) *AccountsContainersWorkspacesBuiltInVariablesDeleteCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -8750,6 +9024,9 @@ func (r *AccountsContainersWorkspacesBuiltInVariablesService) Delete(path string
 //   "requestMethod"
 //   "clientName"
 //   "queryString"
+//   "serverPageLocationUrl"
+//   "serverPageLocationPath"
+//   "serverPageLocationHostname"
 func (c *AccountsContainersWorkspacesBuiltInVariablesDeleteCall) Type(type_ ...string) *AccountsContainersWorkspacesBuiltInVariablesDeleteCall {
 	c.urlParams_.SetMulti("type", append([]string{}, type_...))
 	return c
@@ -8782,7 +9059,7 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesDeleteCall) Header() http.H
 
 func (c *AccountsContainersWorkspacesBuiltInVariablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8943,7 +9220,10 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesDeleteCall) Do(opts ...goog
 	//         "requestPath",
 	//         "requestMethod",
 	//         "clientName",
-	//         "queryString"
+	//         "queryString",
+	//         "serverPageLocationUrl",
+	//         "serverPageLocationPath",
+	//         "serverPageLocationHostname"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -9055,6 +9335,9 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesDeleteCall) Do(opts ...goog
 	//         "",
 	//         "",
 	//         "",
+	//         "",
+	//         "",
+	//         "",
 	//         ""
 	//       ],
 	//       "location": "query",
@@ -9082,6 +9365,10 @@ type AccountsContainersWorkspacesBuiltInVariablesListCall struct {
 }
 
 // List: Lists all the enabled Built-In Variables of a GTM Container.
+//
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) List(parent string) *AccountsContainersWorkspacesBuiltInVariablesListCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9132,7 +9419,7 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesListCall) Header() http.Hea
 
 func (c *AccountsContainersWorkspacesBuiltInVariablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9261,6 +9548,10 @@ type AccountsContainersWorkspacesBuiltInVariablesRevertCall struct {
 
 // Revert: Reverts changes to a GTM Built-In Variables in a GTM
 // Workspace.
+//
+// - path: GTM BuiltInVariable's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/built_in_variables.
 func (r *AccountsContainersWorkspacesBuiltInVariablesService) Revert(path string) *AccountsContainersWorkspacesBuiltInVariablesRevertCall {
 	c := &AccountsContainersWorkspacesBuiltInVariablesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -9381,6 +9672,9 @@ func (r *AccountsContainersWorkspacesBuiltInVariablesService) Revert(path string
 //   "requestMethod"
 //   "clientName"
 //   "queryString"
+//   "serverPageLocationUrl"
+//   "serverPageLocationPath"
+//   "serverPageLocationHostname"
 func (c *AccountsContainersWorkspacesBuiltInVariablesRevertCall) Type(type_ string) *AccountsContainersWorkspacesBuiltInVariablesRevertCall {
 	c.urlParams_.Set("type", type_)
 	return c
@@ -9413,7 +9707,7 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesRevertCall) Header() http.H
 
 func (c *AccountsContainersWorkspacesBuiltInVariablesRevertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9599,7 +9893,10 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesRevertCall) Do(opts ...goog
 	//         "requestPath",
 	//         "requestMethod",
 	//         "clientName",
-	//         "queryString"
+	//         "queryString",
+	//         "serverPageLocationUrl",
+	//         "serverPageLocationPath",
+	//         "serverPageLocationHostname"
 	//       ],
 	//       "enumDescriptions": [
 	//         "",
@@ -9711,6 +10008,9 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesRevertCall) Do(opts ...goog
 	//         "",
 	//         "",
 	//         "",
+	//         "",
+	//         "",
+	//         "",
 	//         ""
 	//       ],
 	//       "location": "query",
@@ -9720,6 +10020,889 @@ func (c *AccountsContainersWorkspacesBuiltInVariablesRevertCall) Do(opts ...goog
 	//   "path": "tagmanager/v2/{+path}/built_in_variables:revert",
 	//   "response": {
 	//     "$ref": "RevertBuiltInVariableResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.workspaces.clients.create":
+
+type AccountsContainersWorkspacesClientsCreateCall struct {
+	s          *Service
+	parent     string
+	client     *Client
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a GTM Client.
+//
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
+func (r *AccountsContainersWorkspacesClientsService) Create(parent string, client *Client) *AccountsContainersWorkspacesClientsCreateCall {
+	c := &AccountsContainersWorkspacesClientsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.client = client
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesClientsCreateCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesClientsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesClientsCreateCall) Context(ctx context.Context) *AccountsContainersWorkspacesClientsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesClientsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesClientsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.client)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v2/{+parent}/clients")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.clients.create" call.
+// Exactly one of *Client or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Client.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AccountsContainersWorkspacesClientsCreateCall) Do(opts ...googleapi.CallOption) (*Client, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Client{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a GTM Client.",
+	//   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/clients",
+	//   "httpMethod": "POST",
+	//   "id": "tagmanager.accounts.containers.workspaces.clients.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "GTM Workspace's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/containers/[^/]+/workspaces/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tagmanager/v2/{+parent}/clients",
+	//   "request": {
+	//     "$ref": "Client"
+	//   },
+	//   "response": {
+	//     "$ref": "Client"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.workspaces.clients.delete":
+
+type AccountsContainersWorkspacesClientsDeleteCall struct {
+	s          *Service
+	path       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a GTM Client.
+//
+// - path: GTM Client's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/clients/{client_id}.
+func (r *AccountsContainersWorkspacesClientsService) Delete(path string) *AccountsContainersWorkspacesClientsDeleteCall {
+	c := &AccountsContainersWorkspacesClientsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.path = path
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesClientsDeleteCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesClientsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesClientsDeleteCall) Context(ctx context.Context) *AccountsContainersWorkspacesClientsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesClientsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesClientsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v2/{+path}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"path": c.path,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.clients.delete" call.
+func (c *AccountsContainersWorkspacesClientsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a GTM Client.",
+	//   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/clients/{clientsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "tagmanager.accounts.containers.workspaces.clients.delete",
+	//   "parameterOrder": [
+	//     "path"
+	//   ],
+	//   "parameters": {
+	//     "path": {
+	//       "description": "GTM Client's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/clients/{client_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/containers/[^/]+/workspaces/[^/]+/clients/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tagmanager/v2/{+path}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.workspaces.clients.get":
+
+type AccountsContainersWorkspacesClientsGetCall struct {
+	s            *Service
+	path         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a GTM Client.
+//
+// - path: GTM Client's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/clients/{client_id}.
+func (r *AccountsContainersWorkspacesClientsService) Get(path string) *AccountsContainersWorkspacesClientsGetCall {
+	c := &AccountsContainersWorkspacesClientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.path = path
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesClientsGetCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesClientsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsContainersWorkspacesClientsGetCall) IfNoneMatch(entityTag string) *AccountsContainersWorkspacesClientsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesClientsGetCall) Context(ctx context.Context) *AccountsContainersWorkspacesClientsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesClientsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesClientsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v2/{+path}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"path": c.path,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.clients.get" call.
+// Exactly one of *Client or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Client.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AccountsContainersWorkspacesClientsGetCall) Do(opts ...googleapi.CallOption) (*Client, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Client{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a GTM Client.",
+	//   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/clients/{clientsId}",
+	//   "httpMethod": "GET",
+	//   "id": "tagmanager.accounts.containers.workspaces.clients.get",
+	//   "parameterOrder": [
+	//     "path"
+	//   ],
+	//   "parameters": {
+	//     "path": {
+	//       "description": "GTM Client's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/clients/{client_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/containers/[^/]+/workspaces/[^/]+/clients/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tagmanager/v2/{+path}",
+	//   "response": {
+	//     "$ref": "Client"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
+	//     "https://www.googleapis.com/auth/tagmanager.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.workspaces.clients.list":
+
+type AccountsContainersWorkspacesClientsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all GTM Clients of a GTM container workspace.
+//
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
+func (r *AccountsContainersWorkspacesClientsService) List(parent string) *AccountsContainersWorkspacesClientsListCall {
+	c := &AccountsContainersWorkspacesClientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token
+// for fetching the next page of results.
+func (c *AccountsContainersWorkspacesClientsListCall) PageToken(pageToken string) *AccountsContainersWorkspacesClientsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesClientsListCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesClientsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsContainersWorkspacesClientsListCall) IfNoneMatch(entityTag string) *AccountsContainersWorkspacesClientsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesClientsListCall) Context(ctx context.Context) *AccountsContainersWorkspacesClientsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesClientsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesClientsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v2/{+parent}/clients")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.clients.list" call.
+// Exactly one of *ListClientsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListClientsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsContainersWorkspacesClientsListCall) Do(opts ...googleapi.CallOption) (*ListClientsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListClientsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all GTM Clients of a GTM container workspace.",
+	//   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/clients",
+	//   "httpMethod": "GET",
+	//   "id": "tagmanager.accounts.containers.workspaces.clients.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageToken": {
+	//       "description": "Continuation token for fetching the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "GTM Workspace's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/containers/[^/]+/workspaces/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tagmanager/v2/{+parent}/clients",
+	//   "response": {
+	//     "$ref": "ListClientsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
+	//     "https://www.googleapis.com/auth/tagmanager.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsContainersWorkspacesClientsListCall) Pages(ctx context.Context, f func(*ListClientsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "tagmanager.accounts.containers.workspaces.clients.revert":
+
+type AccountsContainersWorkspacesClientsRevertCall struct {
+	s          *Service
+	path       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Revert: Reverts changes to a GTM Client in a GTM Workspace.
+//
+// - path: GTM Client's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/clients/{client_id}.
+func (r *AccountsContainersWorkspacesClientsService) Revert(path string) *AccountsContainersWorkspacesClientsRevertCall {
+	c := &AccountsContainersWorkspacesClientsRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.path = path
+	return c
+}
+
+// Fingerprint sets the optional parameter "fingerprint": When provided,
+// this fingerprint must match the fingerprint of the client in storage.
+func (c *AccountsContainersWorkspacesClientsRevertCall) Fingerprint(fingerprint string) *AccountsContainersWorkspacesClientsRevertCall {
+	c.urlParams_.Set("fingerprint", fingerprint)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesClientsRevertCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesClientsRevertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesClientsRevertCall) Context(ctx context.Context) *AccountsContainersWorkspacesClientsRevertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesClientsRevertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesClientsRevertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v2/{+path}:revert")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"path": c.path,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.clients.revert" call.
+// Exactly one of *RevertClientResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RevertClientResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsContainersWorkspacesClientsRevertCall) Do(opts ...googleapi.CallOption) (*RevertClientResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RevertClientResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reverts changes to a GTM Client in a GTM Workspace.",
+	//   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/clients/{clientsId}:revert",
+	//   "httpMethod": "POST",
+	//   "id": "tagmanager.accounts.containers.workspaces.clients.revert",
+	//   "parameterOrder": [
+	//     "path"
+	//   ],
+	//   "parameters": {
+	//     "fingerprint": {
+	//       "description": "When provided, this fingerprint must match the fingerprint of the client in storage.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "path": {
+	//       "description": "GTM Client's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/clients/{client_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/containers/[^/]+/workspaces/[^/]+/clients/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tagmanager/v2/{+path}:revert",
+	//   "response": {
+	//     "$ref": "RevertClientResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.workspaces.clients.update":
+
+type AccountsContainersWorkspacesClientsUpdateCall struct {
+	s          *Service
+	path       string
+	client     *Client
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Update: Updates a GTM Client.
+//
+// - path: GTM Client's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/clients/{client_id}.
+func (r *AccountsContainersWorkspacesClientsService) Update(path string, client *Client) *AccountsContainersWorkspacesClientsUpdateCall {
+	c := &AccountsContainersWorkspacesClientsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.path = path
+	c.client = client
+	return c
+}
+
+// Fingerprint sets the optional parameter "fingerprint": When provided,
+// this fingerprint must match the fingerprint of the client in storage.
+func (c *AccountsContainersWorkspacesClientsUpdateCall) Fingerprint(fingerprint string) *AccountsContainersWorkspacesClientsUpdateCall {
+	c.urlParams_.Set("fingerprint", fingerprint)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesClientsUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesClientsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesClientsUpdateCall) Context(ctx context.Context) *AccountsContainersWorkspacesClientsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesClientsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesClientsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.client)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v2/{+path}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"path": c.path,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.clients.update" call.
+// Exactly one of *Client or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Client.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *AccountsContainersWorkspacesClientsUpdateCall) Do(opts ...googleapi.CallOption) (*Client, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Client{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a GTM Client.",
+	//   "flatPath": "tagmanager/v2/accounts/{accountsId}/containers/{containersId}/workspaces/{workspacesId}/clients/{clientsId}",
+	//   "httpMethod": "PUT",
+	//   "id": "tagmanager.accounts.containers.workspaces.clients.update",
+	//   "parameterOrder": [
+	//     "path"
+	//   ],
+	//   "parameters": {
+	//     "fingerprint": {
+	//       "description": "When provided, this fingerprint must match the fingerprint of the client in storage.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "path": {
+	//       "description": "GTM Client's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/clients/{client_id}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/containers/[^/]+/workspaces/[^/]+/clients/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tagmanager/v2/{+path}",
+	//   "request": {
+	//     "$ref": "Client"
+	//   },
+	//   "response": {
+	//     "$ref": "Client"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
@@ -9740,6 +10923,10 @@ type AccountsContainersWorkspacesFoldersCreateCall struct {
 }
 
 // Create: Creates a GTM Folder.
+//
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Create(parent string, folder *Folder) *AccountsContainersWorkspacesFoldersCreateCall {
 	c := &AccountsContainersWorkspacesFoldersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9774,7 +10961,7 @@ func (c *AccountsContainersWorkspacesFoldersCreateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesFoldersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9879,6 +11066,10 @@ type AccountsContainersWorkspacesFoldersDeleteCall struct {
 }
 
 // Delete: Deletes a GTM Folder.
+//
+// - path: GTM Folder's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Delete(path string) *AccountsContainersWorkspacesFoldersDeleteCall {
 	c := &AccountsContainersWorkspacesFoldersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -9912,7 +11103,7 @@ func (c *AccountsContainersWorkspacesFoldersDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesFoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9981,6 +11172,10 @@ type AccountsContainersWorkspacesFoldersEntitiesCall struct {
 }
 
 // Entities: List all entities in a GTM Folder.
+//
+// - path: GTM Folder's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Entities(path string) *AccountsContainersWorkspacesFoldersEntitiesCall {
 	c := &AccountsContainersWorkspacesFoldersEntitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10021,7 +11216,7 @@ func (c *AccountsContainersWorkspacesFoldersEntitiesCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesFoldersEntitiesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10146,6 +11341,10 @@ type AccountsContainersWorkspacesFoldersGetCall struct {
 }
 
 // Get: Gets a GTM Folder.
+//
+// - path: GTM Folder's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Get(path string) *AccountsContainersWorkspacesFoldersGetCall {
 	c := &AccountsContainersWorkspacesFoldersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10189,7 +11388,7 @@ func (c *AccountsContainersWorkspacesFoldersGetCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesFoldersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10291,6 +11490,10 @@ type AccountsContainersWorkspacesFoldersListCall struct {
 }
 
 // List: Lists all GTM Folders of a Container.
+//
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesFoldersService) List(parent string) *AccountsContainersWorkspacesFoldersListCall {
 	c := &AccountsContainersWorkspacesFoldersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10341,7 +11544,7 @@ func (c *AccountsContainersWorkspacesFoldersListCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesFoldersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10469,6 +11672,10 @@ type AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall struct {
 }
 
 // MoveEntitiesToFolder: Moves entities to a GTM Folder.
+//
+// - path: GTM Folder's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) MoveEntitiesToFolder(path string, folder *Folder) *AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall {
 	c := &AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10524,7 +11731,7 @@ func (c *AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall) Header() h
 
 func (c *AccountsContainersWorkspacesFoldersMoveEntitiesToFolderCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10619,6 +11826,10 @@ type AccountsContainersWorkspacesFoldersRevertCall struct {
 }
 
 // Revert: Reverts changes to a GTM Folder in a GTM Workspace.
+//
+// - path: GTM Folder's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Revert(path string) *AccountsContainersWorkspacesFoldersRevertCall {
 	c := &AccountsContainersWorkspacesFoldersRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10659,7 +11870,7 @@ func (c *AccountsContainersWorkspacesFoldersRevertCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesFoldersRevertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10762,6 +11973,10 @@ type AccountsContainersWorkspacesFoldersUpdateCall struct {
 }
 
 // Update: Updates a GTM Folder.
+//
+// - path: GTM Folder's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/folders/{folder_id}.
 func (r *AccountsContainersWorkspacesFoldersService) Update(path string, folder *Folder) *AccountsContainersWorkspacesFoldersUpdateCall {
 	c := &AccountsContainersWorkspacesFoldersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -10803,7 +12018,7 @@ func (c *AccountsContainersWorkspacesFoldersUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesFoldersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10914,6 +12129,10 @@ type AccountsContainersWorkspacesTagsCreateCall struct {
 }
 
 // Create: Creates a GTM Tag.
+//
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTagsService) Create(parent string, tag *Tag) *AccountsContainersWorkspacesTagsCreateCall {
 	c := &AccountsContainersWorkspacesTagsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10948,7 +12167,7 @@ func (c *AccountsContainersWorkspacesTagsCreateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11053,6 +12272,10 @@ type AccountsContainersWorkspacesTagsDeleteCall struct {
 }
 
 // Delete: Deletes a GTM Tag.
+//
+// - path: GTM Tag's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/tags/{tag_id}.
 func (r *AccountsContainersWorkspacesTagsService) Delete(path string) *AccountsContainersWorkspacesTagsDeleteCall {
 	c := &AccountsContainersWorkspacesTagsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11086,7 +12309,7 @@ func (c *AccountsContainersWorkspacesTagsDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11156,6 +12379,10 @@ type AccountsContainersWorkspacesTagsGetCall struct {
 }
 
 // Get: Gets a GTM Tag.
+//
+// - path: GTM Tag's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/tags/{tag_id}.
 func (r *AccountsContainersWorkspacesTagsService) Get(path string) *AccountsContainersWorkspacesTagsGetCall {
 	c := &AccountsContainersWorkspacesTagsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11199,7 +12426,7 @@ func (c *AccountsContainersWorkspacesTagsGetCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTagsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11301,6 +12528,10 @@ type AccountsContainersWorkspacesTagsListCall struct {
 }
 
 // List: Lists all GTM Tags of a Container.
+//
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTagsService) List(parent string) *AccountsContainersWorkspacesTagsListCall {
 	c := &AccountsContainersWorkspacesTagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11351,7 +12582,7 @@ func (c *AccountsContainersWorkspacesTagsListCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11478,6 +12709,10 @@ type AccountsContainersWorkspacesTagsRevertCall struct {
 }
 
 // Revert: Reverts changes to a GTM Tag in a GTM Workspace.
+//
+// - path: GTM Tag's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/tags/{tag_id}.
 func (r *AccountsContainersWorkspacesTagsService) Revert(path string) *AccountsContainersWorkspacesTagsRevertCall {
 	c := &AccountsContainersWorkspacesTagsRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11518,7 +12753,7 @@ func (c *AccountsContainersWorkspacesTagsRevertCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTagsRevertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11621,6 +12856,10 @@ type AccountsContainersWorkspacesTagsUpdateCall struct {
 }
 
 // Update: Updates a GTM Tag.
+//
+// - path: GTM Tag's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/tags/{tag_id}.
 func (r *AccountsContainersWorkspacesTagsService) Update(path string, tag *Tag) *AccountsContainersWorkspacesTagsUpdateCall {
 	c := &AccountsContainersWorkspacesTagsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11662,7 +12901,7 @@ func (c *AccountsContainersWorkspacesTagsUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTagsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11773,6 +13012,10 @@ type AccountsContainersWorkspacesTemplatesCreateCall struct {
 }
 
 // Create: Creates a GTM Custom Template.
+//
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) Create(parent string, customtemplate *CustomTemplate) *AccountsContainersWorkspacesTemplatesCreateCall {
 	c := &AccountsContainersWorkspacesTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11807,7 +13050,7 @@ func (c *AccountsContainersWorkspacesTemplatesCreateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11912,6 +13155,10 @@ type AccountsContainersWorkspacesTemplatesDeleteCall struct {
 }
 
 // Delete: Deletes a GTM Template.
+//
+// - path: GTM Custom Template's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/templates/{template_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) Delete(path string) *AccountsContainersWorkspacesTemplatesDeleteCall {
 	c := &AccountsContainersWorkspacesTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -11945,7 +13192,7 @@ func (c *AccountsContainersWorkspacesTemplatesDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12015,6 +13262,10 @@ type AccountsContainersWorkspacesTemplatesGetCall struct {
 }
 
 // Get: Gets a GTM Template.
+//
+// - path: GTM Custom Template's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/templates/{template_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) Get(path string) *AccountsContainersWorkspacesTemplatesGetCall {
 	c := &AccountsContainersWorkspacesTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12058,7 +13309,7 @@ func (c *AccountsContainersWorkspacesTemplatesGetCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12160,6 +13411,10 @@ type AccountsContainersWorkspacesTemplatesListCall struct {
 }
 
 // List: Lists all GTM Templates of a GTM container workspace.
+//
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) List(parent string) *AccountsContainersWorkspacesTemplatesListCall {
 	c := &AccountsContainersWorkspacesTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12210,7 +13465,7 @@ func (c *AccountsContainersWorkspacesTemplatesListCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTemplatesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12337,6 +13592,10 @@ type AccountsContainersWorkspacesTemplatesRevertCall struct {
 }
 
 // Revert: Reverts changes to a GTM Template in a GTM Workspace.
+//
+// - path: GTM Custom Template's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/templates/{template_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) Revert(path string) *AccountsContainersWorkspacesTemplatesRevertCall {
 	c := &AccountsContainersWorkspacesTemplatesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12378,7 +13637,7 @@ func (c *AccountsContainersWorkspacesTemplatesRevertCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTemplatesRevertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12481,6 +13740,10 @@ type AccountsContainersWorkspacesTemplatesUpdateCall struct {
 }
 
 // Update: Updates a GTM Template.
+//
+// - path: GTM Custom Template's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/templates/{template_id}.
 func (r *AccountsContainersWorkspacesTemplatesService) Update(path string, customtemplate *CustomTemplate) *AccountsContainersWorkspacesTemplatesUpdateCall {
 	c := &AccountsContainersWorkspacesTemplatesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12523,7 +13786,7 @@ func (c *AccountsContainersWorkspacesTemplatesUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTemplatesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12634,6 +13897,10 @@ type AccountsContainersWorkspacesTriggersCreateCall struct {
 }
 
 // Create: Creates a GTM Trigger.
+//
+// - parent: GTM Workspaces's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Create(parent string, trigger *Trigger) *AccountsContainersWorkspacesTriggersCreateCall {
 	c := &AccountsContainersWorkspacesTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12668,7 +13935,7 @@ func (c *AccountsContainersWorkspacesTriggersCreateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12773,6 +14040,10 @@ type AccountsContainersWorkspacesTriggersDeleteCall struct {
 }
 
 // Delete: Deletes a GTM Trigger.
+//
+// - path: GTM Trigger's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/triggers/{trigger_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Delete(path string) *AccountsContainersWorkspacesTriggersDeleteCall {
 	c := &AccountsContainersWorkspacesTriggersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12806,7 +14077,7 @@ func (c *AccountsContainersWorkspacesTriggersDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12876,6 +14147,10 @@ type AccountsContainersWorkspacesTriggersGetCall struct {
 }
 
 // Get: Gets a GTM Trigger.
+//
+// - path: GTM Trigger's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/triggers/{trigger_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Get(path string) *AccountsContainersWorkspacesTriggersGetCall {
 	c := &AccountsContainersWorkspacesTriggersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -12919,7 +14194,7 @@ func (c *AccountsContainersWorkspacesTriggersGetCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13021,6 +14296,10 @@ type AccountsContainersWorkspacesTriggersListCall struct {
 }
 
 // List: Lists all GTM Triggers of a Container.
+//
+// - parent: GTM Workspaces's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesTriggersService) List(parent string) *AccountsContainersWorkspacesTriggersListCall {
 	c := &AccountsContainersWorkspacesTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13071,7 +14350,7 @@ func (c *AccountsContainersWorkspacesTriggersListCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13198,6 +14477,10 @@ type AccountsContainersWorkspacesTriggersRevertCall struct {
 }
 
 // Revert: Reverts changes to a GTM Trigger in a GTM Workspace.
+//
+// - path: GTM Trigger's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/triggers/{trigger_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Revert(path string) *AccountsContainersWorkspacesTriggersRevertCall {
 	c := &AccountsContainersWorkspacesTriggersRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13239,7 +14522,7 @@ func (c *AccountsContainersWorkspacesTriggersRevertCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTriggersRevertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13342,6 +14625,10 @@ type AccountsContainersWorkspacesTriggersUpdateCall struct {
 }
 
 // Update: Updates a GTM Trigger.
+//
+// - path: GTM Trigger's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/triggers/{trigger_id}.
 func (r *AccountsContainersWorkspacesTriggersService) Update(path string, trigger *Trigger) *AccountsContainersWorkspacesTriggersUpdateCall {
 	c := &AccountsContainersWorkspacesTriggersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13384,7 +14671,7 @@ func (c *AccountsContainersWorkspacesTriggersUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesTriggersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13495,6 +14782,10 @@ type AccountsContainersWorkspacesVariablesCreateCall struct {
 }
 
 // Create: Creates a GTM Variable.
+//
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesVariablesService) Create(parent string, variable *Variable) *AccountsContainersWorkspacesVariablesCreateCall {
 	c := &AccountsContainersWorkspacesVariablesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13529,7 +14820,7 @@ func (c *AccountsContainersWorkspacesVariablesCreateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesVariablesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13634,6 +14925,10 @@ type AccountsContainersWorkspacesVariablesDeleteCall struct {
 }
 
 // Delete: Deletes a GTM Variable.
+//
+// - path: GTM Variable's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/variables/{variable_id}.
 func (r *AccountsContainersWorkspacesVariablesService) Delete(path string) *AccountsContainersWorkspacesVariablesDeleteCall {
 	c := &AccountsContainersWorkspacesVariablesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13667,7 +14962,7 @@ func (c *AccountsContainersWorkspacesVariablesDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesVariablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13737,6 +15032,10 @@ type AccountsContainersWorkspacesVariablesGetCall struct {
 }
 
 // Get: Gets a GTM Variable.
+//
+// - path: GTM Variable's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/variables/{variable_id}.
 func (r *AccountsContainersWorkspacesVariablesService) Get(path string) *AccountsContainersWorkspacesVariablesGetCall {
 	c := &AccountsContainersWorkspacesVariablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -13780,7 +15079,7 @@ func (c *AccountsContainersWorkspacesVariablesGetCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesVariablesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13882,6 +15181,10 @@ type AccountsContainersWorkspacesVariablesListCall struct {
 }
 
 // List: Lists all GTM Variables of a Container.
+//
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesVariablesService) List(parent string) *AccountsContainersWorkspacesVariablesListCall {
 	c := &AccountsContainersWorkspacesVariablesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13932,7 +15235,7 @@ func (c *AccountsContainersWorkspacesVariablesListCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesVariablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14059,6 +15362,10 @@ type AccountsContainersWorkspacesVariablesRevertCall struct {
 }
 
 // Revert: Reverts changes to a GTM Variable in a GTM Workspace.
+//
+// - path: GTM Variable's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/variables/{variable_id}.
 func (r *AccountsContainersWorkspacesVariablesService) Revert(path string) *AccountsContainersWorkspacesVariablesRevertCall {
 	c := &AccountsContainersWorkspacesVariablesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14100,7 +15407,7 @@ func (c *AccountsContainersWorkspacesVariablesRevertCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesVariablesRevertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14203,6 +15510,10 @@ type AccountsContainersWorkspacesVariablesUpdateCall struct {
 }
 
 // Update: Updates a GTM Variable.
+//
+// - path: GTM Variable's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/variables/{variable_id}.
 func (r *AccountsContainersWorkspacesVariablesService) Update(path string, variable *Variable) *AccountsContainersWorkspacesVariablesUpdateCall {
 	c := &AccountsContainersWorkspacesVariablesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14245,7 +15556,7 @@ func (c *AccountsContainersWorkspacesVariablesUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesVariablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14356,6 +15667,10 @@ type AccountsContainersWorkspacesZonesCreateCall struct {
 }
 
 // Create: Creates a GTM Zone.
+//
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesZonesService) Create(parent string, zone *Zone) *AccountsContainersWorkspacesZonesCreateCall {
 	c := &AccountsContainersWorkspacesZonesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14390,7 +15705,7 @@ func (c *AccountsContainersWorkspacesZonesCreateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesZonesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14495,6 +15810,10 @@ type AccountsContainersWorkspacesZonesDeleteCall struct {
 }
 
 // Delete: Deletes a GTM Zone.
+//
+// - path: GTM Zone's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/zones/{zone_id}.
 func (r *AccountsContainersWorkspacesZonesService) Delete(path string) *AccountsContainersWorkspacesZonesDeleteCall {
 	c := &AccountsContainersWorkspacesZonesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14528,7 +15847,7 @@ func (c *AccountsContainersWorkspacesZonesDeleteCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesZonesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14598,6 +15917,10 @@ type AccountsContainersWorkspacesZonesGetCall struct {
 }
 
 // Get: Gets a GTM Zone.
+//
+// - path: GTM Zone's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/zones/{zone_id}.
 func (r *AccountsContainersWorkspacesZonesService) Get(path string) *AccountsContainersWorkspacesZonesGetCall {
 	c := &AccountsContainersWorkspacesZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14641,7 +15964,7 @@ func (c *AccountsContainersWorkspacesZonesGetCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesZonesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14743,6 +16066,10 @@ type AccountsContainersWorkspacesZonesListCall struct {
 }
 
 // List: Lists all GTM Zones of a GTM container workspace.
+//
+// - parent: GTM Workspace's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}.
 func (r *AccountsContainersWorkspacesZonesService) List(parent string) *AccountsContainersWorkspacesZonesListCall {
 	c := &AccountsContainersWorkspacesZonesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14793,7 +16120,7 @@ func (c *AccountsContainersWorkspacesZonesListCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesZonesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14920,6 +16247,10 @@ type AccountsContainersWorkspacesZonesRevertCall struct {
 }
 
 // Revert: Reverts changes to a GTM Zone in a GTM Workspace.
+//
+// - path: GTM Zone's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/zones/{zone_id}.
 func (r *AccountsContainersWorkspacesZonesService) Revert(path string) *AccountsContainersWorkspacesZonesRevertCall {
 	c := &AccountsContainersWorkspacesZonesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -14960,7 +16291,7 @@ func (c *AccountsContainersWorkspacesZonesRevertCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesZonesRevertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15063,6 +16394,10 @@ type AccountsContainersWorkspacesZonesUpdateCall struct {
 }
 
 // Update: Updates a GTM Zone.
+//
+// - path: GTM Zone's API relative path. Example:
+//   accounts/{account_id}/containers/{container_id}/workspaces/{workspac
+//   e_id}/zones/{zone_id}.
 func (r *AccountsContainersWorkspacesZonesService) Update(path string, zone *Zone) *AccountsContainersWorkspacesZonesUpdateCall {
 	c := &AccountsContainersWorkspacesZonesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -15104,7 +16439,7 @@ func (c *AccountsContainersWorkspacesZonesUpdateCall) Header() http.Header {
 
 func (c *AccountsContainersWorkspacesZonesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15215,6 +16550,9 @@ type AccountsUserPermissionsCreateCall struct {
 }
 
 // Create: Creates a user's Account & Container access.
+//
+// - parent: GTM Account's API relative path. Example:
+//   accounts/{account_id}.
 func (r *AccountsUserPermissionsService) Create(parent string, userpermission *UserPermission) *AccountsUserPermissionsCreateCall {
 	c := &AccountsUserPermissionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15249,7 +16587,7 @@ func (c *AccountsUserPermissionsCreateCall) Header() http.Header {
 
 func (c *AccountsUserPermissionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15355,6 +16693,9 @@ type AccountsUserPermissionsDeleteCall struct {
 
 // Delete: Removes a user from the account, revoking access to it and
 // all of its containers.
+//
+// - path: GTM UserPermission's API relative path. Example:
+//   accounts/{account_id}/user_permissions/{user_permission_id}.
 func (r *AccountsUserPermissionsService) Delete(path string) *AccountsUserPermissionsDeleteCall {
 	c := &AccountsUserPermissionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -15388,7 +16729,7 @@ func (c *AccountsUserPermissionsDeleteCall) Header() http.Header {
 
 func (c *AccountsUserPermissionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15458,6 +16799,9 @@ type AccountsUserPermissionsGetCall struct {
 }
 
 // Get: Gets a user's Account & Container access.
+//
+// - path: GTM UserPermission's API relative path. Example:
+//   accounts/{account_id}/user_permissions/{user_permission_id}.
 func (r *AccountsUserPermissionsService) Get(path string) *AccountsUserPermissionsGetCall {
 	c := &AccountsUserPermissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -15501,7 +16845,7 @@ func (c *AccountsUserPermissionsGetCall) Header() http.Header {
 
 func (c *AccountsUserPermissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15603,6 +16947,9 @@ type AccountsUserPermissionsListCall struct {
 
 // List: List all users that have access to the account along with
 // Account and Container user access granted to each of them.
+//
+// - parent: GTM Accounts's API relative path. Example:
+//   accounts/{account_id}.
 func (r *AccountsUserPermissionsService) List(parent string) *AccountsUserPermissionsListCall {
 	c := &AccountsUserPermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15653,7 +17000,7 @@ func (c *AccountsUserPermissionsListCall) Header() http.Header {
 
 func (c *AccountsUserPermissionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15780,6 +17127,9 @@ type AccountsUserPermissionsUpdateCall struct {
 }
 
 // Update: Updates a user's Account & Container access.
+//
+// - path: GTM UserPermission's API relative path. Example:
+//   accounts/{account_id}/user_permissions/{user_permission_id}.
 func (r *AccountsUserPermissionsService) Update(path string, userpermission *UserPermission) *AccountsUserPermissionsUpdateCall {
 	c := &AccountsUserPermissionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.path = path
@@ -15814,7 +17164,7 @@ func (c *AccountsUserPermissionsUpdateCall) Header() http.Header {
 
 func (c *AccountsUserPermissionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

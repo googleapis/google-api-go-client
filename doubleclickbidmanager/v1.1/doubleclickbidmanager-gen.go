@@ -116,10 +116,8 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
-	s.Lineitems = NewLineitemsService(s)
 	s.Queries = NewQueriesService(s)
 	s.Reports = NewReportsService(s)
-	s.Sdf = NewSdfService(s)
 	return s, nil
 }
 
@@ -128,13 +126,9 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
-	Lineitems *LineitemsService
-
 	Queries *QueriesService
 
 	Reports *ReportsService
-
-	Sdf *SdfService
 }
 
 func (s *Service) userAgent() string {
@@ -142,15 +136,6 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
-}
-
-func NewLineitemsService(s *Service) *LineitemsService {
-	rs := &LineitemsService{s: s}
-	return rs
-}
-
-type LineitemsService struct {
-	s *Service
 }
 
 func NewQueriesService(s *Service) *QueriesService {
@@ -171,15 +156,6 @@ type ReportsService struct {
 	s *Service
 }
 
-func NewSdfService(s *Service) *SdfService {
-	rs := &SdfService{s: s}
-	return rs
-}
-
-type SdfService struct {
-	s *Service
-}
-
 // ChannelGrouping: A channel grouping defines a set of rules that can
 // be used to categorize events in a path report.
 type ChannelGrouping struct {
@@ -196,10 +172,10 @@ type ChannelGrouping struct {
 
 	// ForceSendFields is a list of field names (e.g. "FallbackName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FallbackName") to include
@@ -226,10 +202,10 @@ type DisjunctiveMatchStatement struct {
 
 	// ForceSendFields is a list of field names (e.g. "EventFilters") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EventFilters") to include
@@ -247,197 +223,6 @@ func (s *DisjunctiveMatchStatement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DownloadLineItemsRequest: Request to fetch stored line items.
-type DownloadLineItemsRequest struct {
-	// FileSpec: File specification (column names, types, order) in which
-	// the line items will be returned. Default to EWF.
-	//
-	// Possible values:
-	//   "EWF"
-	FileSpec string `json:"fileSpec,omitempty"`
-
-	// FilterIds: Ids of the specified filter type used to filter line items
-	// to fetch. If omitted, all the line items will be returned.
-	FilterIds googleapi.Int64s `json:"filterIds,omitempty"`
-
-	// FilterType: Filter type used to filter line items to fetch.
-	//
-	// Possible values:
-	//   "ADVERTISER_ID"
-	//   "INSERTION_ORDER_ID"
-	//   "LINE_ITEM_ID"
-	FilterType string `json:"filterType,omitempty"`
-
-	// Format: Format in which the line items will be returned. Default to
-	// CSV.
-	//
-	// Possible values:
-	//   "CSV"
-	Format string `json:"format,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "FileSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FileSpec") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DownloadLineItemsRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod DownloadLineItemsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DownloadLineItemsResponse: Download line items response.
-type DownloadLineItemsResponse struct {
-	// LineItems: Retrieved line items in CSV format. For more information
-	// about file formats, see Entity Write File Format.
-	LineItems string `json:"lineItems,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "LineItems") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LineItems") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DownloadLineItemsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod DownloadLineItemsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DownloadRequest: Request to fetch stored inventory sources,
-// campaigns, insertion orders, line items, YouTube ad groups and ads.
-type DownloadRequest struct {
-	// FileTypes: File types that will be returned. If INVENTORY_SOURCE is
-	// requested, no other file types may be requested. Acceptable values
-	// are: - "AD" - "AD_GROUP" - "CAMPAIGN" - "INSERTION_ORDER" -
-	// "INVENTORY_SOURCE" - "LINE_ITEM"
-	//
-	// Possible values:
-	//   "INSERTION_ORDER"
-	//   "LINE_ITEM"
-	//   "AD_GROUP"
-	//   "AD"
-	//   "CAMPAIGN"
-	//   "INVENTORY_SOURCE"
-	FileTypes []string `json:"fileTypes,omitempty"`
-
-	// FilterIds: The IDs of the specified filter type. This is used to
-	// filter entities to fetch. At least one ID must be specified.
-	FilterIds googleapi.Int64s `json:"filterIds,omitempty"`
-
-	// FilterType: Filter type used to filter entities to fetch. PARTNER_ID
-	// and INVENTORY_SOURCE_ID may only be used when downloading inventory
-	// sources.
-	//
-	// Possible values:
-	//   "ADVERTISER_ID"
-	//   "INSERTION_ORDER_ID"
-	//   "LINE_ITEM_ID"
-	//   "CAMPAIGN_ID"
-	//   "INVENTORY_SOURCE_ID"
-	//   "PARTNER_ID"
-	FilterType string `json:"filterType,omitempty"`
-
-	// Version: SDF Version (column names, types, order) in which the
-	// entities will be returned. Default to 5.
-	Version string `json:"version,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "FileTypes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FileTypes") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DownloadRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod DownloadRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// DownloadResponse: Download response.
-type DownloadResponse struct {
-	// AdGroups: Retrieved ad groups in SDF format.
-	AdGroups string `json:"adGroups,omitempty"`
-
-	// Ads: Retrieved ads in SDF format.
-	Ads string `json:"ads,omitempty"`
-
-	// Campaigns: Retrieved campaigns in SDF format.
-	Campaigns string `json:"campaigns,omitempty"`
-
-	// InsertionOrders: Retrieved insertion orders in SDF format.
-	InsertionOrders string `json:"insertionOrders,omitempty"`
-
-	InventorySources string `json:"inventorySources,omitempty"`
-
-	// LineItems: Retrieved line items in SDF format.
-	LineItems string `json:"lineItems,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AdGroups") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdGroups") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DownloadResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod DownloadResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // EventFilter: Defines the type of filter to be applied to the path, a
 // DV360 event dimension filter.
 type EventFilter struct {
@@ -446,10 +231,10 @@ type EventFilter struct {
 
 	// ForceSendFields is a list of field names (e.g. "DimensionFilter") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DimensionFilter") to
@@ -524,7 +309,6 @@ type FilterPair struct {
 	//   "FILTER_VIDEO_RATING_TIER"
 	//   "FILTER_VIDEO_FORMAT_SUPPORT"
 	//   "FILTER_VIDEO_SKIPPABLE_SUPPORT"
-	//   "FILTER_VIDEO_VPAID_SUPPORT"
 	//   "FILTER_VIDEO_CREATIVE_DURATION"
 	//   "FILTER_PAGE_LAYOUT"
 	//   "FILTER_VIDEO_AD_POSITION_IN_STREAM"
@@ -736,6 +520,34 @@ type FilterPair struct {
 	//   "FILTER_CHANNEL_GROUPING"
 	//   "FILTER_OM_SDK_AVAILABLE"
 	//   "FILTER_DATA_SOURCE"
+	//   "FILTER_CM360_PLACEMENT_ID"
+	//   "FILTER_TRUEVIEW_CLICK_TYPE_NAME"
+	//   "FILTER_TRUEVIEW_AD_TYPE_NAME"
+	//   "FILTER_VIDEO_CONTENT_DURATION"
+	//   "FILTER_MATCHED_GENRE_TARGET"
+	//   "FILTER_VIDEO_CONTENT_LIVE_STREAM"
+	//   "FILTER_BUDGET_SEGMENT_TYPE"
+	//   "FILTER_BUDGET_SEGMENT_BUDGET"
+	//   "FILTER_BUDGET_SEGMENT_START_DATE"
+	//   "FILTER_BUDGET_SEGMENT_END_DATE"
+	//   "FILTER_BUDGET_SEGMENT_PACING_PERCENTAGE"
+	//   "FILTER_LINE_ITEM_BUDGET"
+	//   "FILTER_LINE_ITEM_START_DATE"
+	//   "FILTER_LINE_ITEM_END_DATE"
+	//   "FILTER_INSERTION_ORDER_GOAL_TYPE"
+	//   "FILTER_LINE_ITEM_PACING_PERCENTAGE"
+	//   "FILTER_INSERTION_ORDER_GOAL_VALUE"
+	//   "FILTER_OMID_CAPABLE"
+	//   "FILTER_VENDOR_MEASUREMENT_MODE"
+	//   "FILTER_IMPRESSION_LOSS_REJECTION_REASON"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_START"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_FIRST_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_MID_POINT"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_THIRD_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_COMPLETE"
+	//   "FILTER_VERIFICATION_VIDEO_RESIZED"
+	//   "FILTER_VERIFICATION_AUDIBILITY_START"
+	//   "FILTER_VERIFICATION_AUDIBILITY_COMPLETE"
 	Type string `json:"type,omitempty"`
 
 	// Value: Filter value.
@@ -743,10 +555,10 @@ type FilterPair struct {
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Type") to include in API
@@ -782,10 +594,10 @@ type ListQueriesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -821,10 +633,10 @@ type ListReportsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -855,11 +667,11 @@ type Options struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "IncludeOnlyTargetedUserLists") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -937,7 +749,6 @@ type Parameters struct {
 	//   "FILTER_VIDEO_RATING_TIER"
 	//   "FILTER_VIDEO_FORMAT_SUPPORT"
 	//   "FILTER_VIDEO_SKIPPABLE_SUPPORT"
-	//   "FILTER_VIDEO_VPAID_SUPPORT"
 	//   "FILTER_VIDEO_CREATIVE_DURATION"
 	//   "FILTER_PAGE_LAYOUT"
 	//   "FILTER_VIDEO_AD_POSITION_IN_STREAM"
@@ -1149,6 +960,34 @@ type Parameters struct {
 	//   "FILTER_CHANNEL_GROUPING"
 	//   "FILTER_OM_SDK_AVAILABLE"
 	//   "FILTER_DATA_SOURCE"
+	//   "FILTER_CM360_PLACEMENT_ID"
+	//   "FILTER_TRUEVIEW_CLICK_TYPE_NAME"
+	//   "FILTER_TRUEVIEW_AD_TYPE_NAME"
+	//   "FILTER_VIDEO_CONTENT_DURATION"
+	//   "FILTER_MATCHED_GENRE_TARGET"
+	//   "FILTER_VIDEO_CONTENT_LIVE_STREAM"
+	//   "FILTER_BUDGET_SEGMENT_TYPE"
+	//   "FILTER_BUDGET_SEGMENT_BUDGET"
+	//   "FILTER_BUDGET_SEGMENT_START_DATE"
+	//   "FILTER_BUDGET_SEGMENT_END_DATE"
+	//   "FILTER_BUDGET_SEGMENT_PACING_PERCENTAGE"
+	//   "FILTER_LINE_ITEM_BUDGET"
+	//   "FILTER_LINE_ITEM_START_DATE"
+	//   "FILTER_LINE_ITEM_END_DATE"
+	//   "FILTER_INSERTION_ORDER_GOAL_TYPE"
+	//   "FILTER_LINE_ITEM_PACING_PERCENTAGE"
+	//   "FILTER_INSERTION_ORDER_GOAL_VALUE"
+	//   "FILTER_OMID_CAPABLE"
+	//   "FILTER_VENDOR_MEASUREMENT_MODE"
+	//   "FILTER_IMPRESSION_LOSS_REJECTION_REASON"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_START"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_FIRST_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_MID_POINT"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_THIRD_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_COMPLETE"
+	//   "FILTER_VERIFICATION_VIDEO_RESIZED"
+	//   "FILTER_VERIFICATION_AUDIBILITY_START"
+	//   "FILTER_VERIFICATION_AUDIBILITY_COMPLETE"
 	GroupBys []string `json:"groupBys,omitempty"`
 
 	// IncludeInviteData: Deprecated. This field is no longer in use.
@@ -1626,6 +1465,32 @@ type Parameters struct {
 	//   "METRIC_TARGET_RATING_POINTS"
 	//   "METRIC_PROVISIONAL_IMPRESSIONS"
 	//   "METRIC_VENDOR_BLOCKED_ADS"
+	//   "METRIC_GRP_CORRECTED_VIEWABLE_IMPRESSIONS"
+	//   "METRIC_GRP_CORRECTED_VIEWABLE_IMPRESSIONS_SHARE_PERCENT"
+	//   "METRIC_VIEWABLE_GROSS_RATING_POINTS"
+	//
+	// "METRIC_VIRTUAL_PEOPLE_AVERAGE_VIEWABLE_IMPRESSION_FREQUENCY_BY_DEMO"
+	//   "METRIC_VIRTUAL_PEOPLE_VIEWABLE_IMPRESSION_REACH_BY_DEMO"
+	//   "METRIC_VIRTUAL_PEOPLE_VIEWABLE_IMPRESSION_REACH_PERCENT"
+	//   "METRIC_VIRTUAL_PEOPLE_VIEWABLE_IMPRESSION_REACH_SHARE_PERCENT"
+	//   "METRIC_ENGAGEMENT_RATE"
+	//   "METRIC_CM360_POST_VIEW_REVENUE"
+	//   "METRIC_CM360_POST_CLICK_REVENUE"
+	//   "METRIC_CM360_POST_CLICK_REVENUE_CROSS_ENVIRONMENT"
+	//   "METRIC_CM360_POST_VIEW_REVENUE_CROSS_ENVIRONMENT"
+	//   "METRIC_PERCENTAGE_FROM_CURRENT_IO_GOAL"
+	//   "METRIC_DUPLICATE_FLOODLIGHT_IMPRESSIONS"
+	//   "METRIC_COOKIE_CONSENTED_FLOODLIGHT_IMPRESSIONS"
+	//   "METRIC_COOKIE_UNCONSENTED_FLOODLIGHT_IMPRESSIONS"
+	//   "METRIC_TRACKING_UNCONSENTED_CLICKS"
+	//   "METRIC_IMPRESSION_LOSS_TARGETED_IMPRESSIONS"
+	//   "METRIC_LINEITEM_BID_RESPONSE_COUNT"
+	//   "METRIC_WIN_LOSS_RATE"
+	//   "METRIC_WIN_LOSS_DEAL_AVAILABLE_REQUESTS"
+	//   "METRIC_WIN_LOSS_LINEITEM_AVAILABLE_REQUESTS"
+	//   "METRIC_WIN_LOSS_DEAL_TARGETED_IMPRESSIONS"
+	//   "METRIC_WIN_LOSS_LINEITEM_TARGETED_IMPRESSIONS"
+	//   "METRIC_VERIFICATION_VIDEO_PLAYER_SIZE_MEASURABLE_IMPRESSIONS"
 	Metrics []string `json:"metrics,omitempty"`
 
 	// Options: Additional query options.
@@ -1672,10 +1537,10 @@ type Parameters struct {
 
 	// ForceSendFields is a list of field names (e.g. "Filters") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Filters") to include in
@@ -1714,10 +1579,10 @@ type PathFilter struct {
 
 	// ForceSendFields is a list of field names (e.g. "EventFilters") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EventFilters") to include
@@ -1746,10 +1611,10 @@ type PathQueryOptions struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChannelGrouping") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelGrouping") to
@@ -1824,7 +1689,6 @@ type PathQueryOptionsFilter struct {
 	//   "FILTER_VIDEO_RATING_TIER"
 	//   "FILTER_VIDEO_FORMAT_SUPPORT"
 	//   "FILTER_VIDEO_SKIPPABLE_SUPPORT"
-	//   "FILTER_VIDEO_VPAID_SUPPORT"
 	//   "FILTER_VIDEO_CREATIVE_DURATION"
 	//   "FILTER_PAGE_LAYOUT"
 	//   "FILTER_VIDEO_AD_POSITION_IN_STREAM"
@@ -2036,6 +1900,34 @@ type PathQueryOptionsFilter struct {
 	//   "FILTER_CHANNEL_GROUPING"
 	//   "FILTER_OM_SDK_AVAILABLE"
 	//   "FILTER_DATA_SOURCE"
+	//   "FILTER_CM360_PLACEMENT_ID"
+	//   "FILTER_TRUEVIEW_CLICK_TYPE_NAME"
+	//   "FILTER_TRUEVIEW_AD_TYPE_NAME"
+	//   "FILTER_VIDEO_CONTENT_DURATION"
+	//   "FILTER_MATCHED_GENRE_TARGET"
+	//   "FILTER_VIDEO_CONTENT_LIVE_STREAM"
+	//   "FILTER_BUDGET_SEGMENT_TYPE"
+	//   "FILTER_BUDGET_SEGMENT_BUDGET"
+	//   "FILTER_BUDGET_SEGMENT_START_DATE"
+	//   "FILTER_BUDGET_SEGMENT_END_DATE"
+	//   "FILTER_BUDGET_SEGMENT_PACING_PERCENTAGE"
+	//   "FILTER_LINE_ITEM_BUDGET"
+	//   "FILTER_LINE_ITEM_START_DATE"
+	//   "FILTER_LINE_ITEM_END_DATE"
+	//   "FILTER_INSERTION_ORDER_GOAL_TYPE"
+	//   "FILTER_LINE_ITEM_PACING_PERCENTAGE"
+	//   "FILTER_INSERTION_ORDER_GOAL_VALUE"
+	//   "FILTER_OMID_CAPABLE"
+	//   "FILTER_VENDOR_MEASUREMENT_MODE"
+	//   "FILTER_IMPRESSION_LOSS_REJECTION_REASON"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_START"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_FIRST_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_MID_POINT"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_THIRD_QUARTILE"
+	//   "FILTER_VERIFICATION_VIDEO_PLAYER_SIZE_COMPLETE"
+	//   "FILTER_VERIFICATION_VIDEO_RESIZED"
+	//   "FILTER_VERIFICATION_AUDIBILITY_START"
+	//   "FILTER_VERIFICATION_AUDIBILITY_COMPLETE"
 	Filter string `json:"filter,omitempty"`
 
 	// Match: Indicates how the filter should be matched to the value.
@@ -2053,10 +1945,10 @@ type PathQueryOptionsFilter struct {
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Filter") to include in API
@@ -2112,10 +2004,10 @@ type Query struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -2209,10 +2101,10 @@ type QueryMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "DataRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DataRange") to include in
@@ -2244,6 +2136,7 @@ type QuerySchedule struct {
 	//   "SEMI_MONTHLY"
 	//   "MONTHLY"
 	//   "QUARTERLY"
+	//   "YEARLY"
 	Frequency string `json:"frequency,omitempty"`
 
 	// NextRunMinuteOfDay: Time of day at which a new report will be
@@ -2261,10 +2154,10 @@ type QuerySchedule struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTimeMs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTimeMs") to include in
@@ -2295,10 +2188,10 @@ type Report struct {
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -2343,10 +2236,10 @@ type ReportFailure struct {
 
 	// ForceSendFields is a list of field names (e.g. "ErrorCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ErrorCode") to include in
@@ -2374,10 +2267,10 @@ type ReportKey struct {
 
 	// ForceSendFields is a list of field names (e.g. "QueryId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "QueryId") to include in
@@ -2414,8 +2307,8 @@ type ReportMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "GoogleCloudStoragePath") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2464,10 +2357,10 @@ type ReportStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "Failure") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Failure") to include in
@@ -2485,49 +2378,6 @@ func (s *ReportStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RowStatus: Represents the upload status of a row in the request.
-type RowStatus struct {
-	// Changed: Whether the stored entity is changed as a result of upload.
-	Changed bool `json:"changed,omitempty"`
-
-	// EntityId: Entity Id.
-	EntityId int64 `json:"entityId,omitempty,string"`
-
-	// EntityName: Entity name.
-	EntityName string `json:"entityName,omitempty"`
-
-	// Errors: Reasons why the entity can't be uploaded.
-	Errors []string `json:"errors,omitempty"`
-
-	// Persisted: Whether the entity is persisted.
-	Persisted bool `json:"persisted,omitempty"`
-
-	// RowNumber: Row number.
-	RowNumber int64 `json:"rowNumber,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Changed") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Changed") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RowStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod RowStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Rule: A Rule defines a name, and a boolean expression in conjunctive
 // normal form (http:
 // //mathworld.wolfram.com/ConjunctiveNormalForm.html){.external} that
@@ -2541,11 +2391,11 @@ type Rule struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DisjunctiveMatchStatements") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -2607,10 +2457,10 @@ type RunQueryRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "DataRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DataRange") to include in
@@ -2626,360 +2476,6 @@ func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunQueryRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadLineItemsRequest: Request to upload line items.
-type UploadLineItemsRequest struct {
-	// DryRun: Set to true to get upload status without actually persisting
-	// the line items.
-	DryRun bool `json:"dryRun,omitempty"`
-
-	// Format: Format the line items are in. Default to CSV.
-	//
-	// Possible values:
-	//   "CSV"
-	Format string `json:"format,omitempty"`
-
-	// LineItems: Line items in CSV to upload. Refer to Entity Write File
-	// Format for more information on file format.
-	LineItems string `json:"lineItems,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DryRun") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DryRun") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadLineItemsRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadLineItemsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadLineItemsResponse: Upload line items response.
-type UploadLineItemsResponse struct {
-	// UploadStatus: Status of upload.
-	UploadStatus *UploadStatus `json:"uploadStatus,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "UploadStatus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UploadStatus") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadLineItemsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadLineItemsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadStatus: Represents the status of upload.
-type UploadStatus struct {
-	// Errors: Reasons why upload can't be completed.
-	Errors []string `json:"errors,omitempty"`
-
-	// RowStatus: Per-row upload status.
-	RowStatus []*RowStatus `json:"rowStatus,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Errors") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Errors") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadStatus) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// method id "doubleclickbidmanager.lineitems.downloadlineitems":
-
-type LineitemsDownloadlineitemsCall struct {
-	s                        *Service
-	downloadlineitemsrequest *DownloadLineItemsRequest
-	urlParams_               gensupport.URLParams
-	ctx_                     context.Context
-	header_                  http.Header
-}
-
-// Downloadlineitems: Retrieves line items in CSV format. YouTube &
-// partners line items are not supported.
-func (r *LineitemsService) Downloadlineitems(downloadlineitemsrequest *DownloadLineItemsRequest) *LineitemsDownloadlineitemsCall {
-	c := &LineitemsDownloadlineitemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.downloadlineitemsrequest = downloadlineitemsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *LineitemsDownloadlineitemsCall) Fields(s ...googleapi.Field) *LineitemsDownloadlineitemsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *LineitemsDownloadlineitemsCall) Context(ctx context.Context) *LineitemsDownloadlineitemsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *LineitemsDownloadlineitemsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *LineitemsDownloadlineitemsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.downloadlineitemsrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "lineitems/downloadlineitems")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "doubleclickbidmanager.lineitems.downloadlineitems" call.
-// Exactly one of *DownloadLineItemsResponse or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *DownloadLineItemsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *LineitemsDownloadlineitemsCall) Do(opts ...googleapi.CallOption) (*DownloadLineItemsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &DownloadLineItemsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves line items in CSV format. YouTube \u0026 partners line items are not supported.",
-	//   "flatPath": "lineitems/downloadlineitems",
-	//   "httpMethod": "POST",
-	//   "id": "doubleclickbidmanager.lineitems.downloadlineitems",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "lineitems/downloadlineitems",
-	//   "request": {
-	//     "$ref": "DownloadLineItemsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "DownloadLineItemsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/doubleclickbidmanager"
-	//   ]
-	// }
-
-}
-
-// method id "doubleclickbidmanager.lineitems.uploadlineitems":
-
-type LineitemsUploadlineitemsCall struct {
-	s                      *Service
-	uploadlineitemsrequest *UploadLineItemsRequest
-	urlParams_             gensupport.URLParams
-	ctx_                   context.Context
-	header_                http.Header
-}
-
-// Uploadlineitems: Uploads line items in CSV format. YouTube & partners
-// line items are not supported.
-func (r *LineitemsService) Uploadlineitems(uploadlineitemsrequest *UploadLineItemsRequest) *LineitemsUploadlineitemsCall {
-	c := &LineitemsUploadlineitemsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.uploadlineitemsrequest = uploadlineitemsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *LineitemsUploadlineitemsCall) Fields(s ...googleapi.Field) *LineitemsUploadlineitemsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *LineitemsUploadlineitemsCall) Context(ctx context.Context) *LineitemsUploadlineitemsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *LineitemsUploadlineitemsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *LineitemsUploadlineitemsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.uploadlineitemsrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "lineitems/uploadlineitems")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "doubleclickbidmanager.lineitems.uploadlineitems" call.
-// Exactly one of *UploadLineItemsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *UploadLineItemsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *LineitemsUploadlineitemsCall) Do(opts ...googleapi.CallOption) (*UploadLineItemsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &UploadLineItemsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Uploads line items in CSV format. YouTube \u0026 partners line items are not supported.",
-	//   "flatPath": "lineitems/uploadlineitems",
-	//   "httpMethod": "POST",
-	//   "id": "doubleclickbidmanager.lineitems.uploadlineitems",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "lineitems/uploadlineitems",
-	//   "request": {
-	//     "$ref": "UploadLineItemsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "UploadLineItemsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/doubleclickbidmanager"
-	//   ]
-	// }
-
 }
 
 // method id "doubleclickbidmanager.queries.createquery":
@@ -3034,7 +2530,7 @@ func (c *QueriesCreatequeryCall) Header() http.Header {
 
 func (c *QueriesCreatequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3134,6 +2630,8 @@ type QueriesDeletequeryCall struct {
 
 // Deletequery: Deletes a stored query as well as the associated stored
 // reports.
+//
+// - queryId: Query ID to delete.
 func (r *QueriesService) Deletequery(queryId int64) *QueriesDeletequeryCall {
 	c := &QueriesDeletequeryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -3167,7 +2665,7 @@ func (c *QueriesDeletequeryCall) Header() http.Header {
 
 func (c *QueriesDeletequeryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3237,6 +2735,8 @@ type QueriesGetqueryCall struct {
 }
 
 // Getquery: Retrieves a stored query.
+//
+// - queryId: Query ID to retrieve.
 func (r *QueriesService) Getquery(queryId int64) *QueriesGetqueryCall {
 	c := &QueriesGetqueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -3280,7 +2780,7 @@ func (c *QueriesGetqueryCall) Header() http.Header {
 
 func (c *QueriesGetqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3437,7 +2937,7 @@ func (c *QueriesListqueriesCall) Header() http.Header {
 
 func (c *QueriesListqueriesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3558,6 +3058,8 @@ type QueriesRunqueryCall struct {
 }
 
 // Runquery: Runs a stored query to generate a report.
+//
+// - queryId: Query ID to run.
 func (r *QueriesService) Runquery(queryId int64, runqueryrequest *RunQueryRequest) *QueriesRunqueryCall {
 	c := &QueriesRunqueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -3599,7 +3101,7 @@ func (c *QueriesRunqueryCall) Header() http.Header {
 
 func (c *QueriesRunqueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3683,6 +3185,8 @@ type ReportsListreportsCall struct {
 }
 
 // Listreports: Retrieves stored reports.
+//
+// - queryId: Query ID with which the reports are associated.
 func (r *ReportsService) Listreports(queryId int64) *ReportsListreportsCall {
 	c := &ReportsListreportsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queryId = queryId
@@ -3741,7 +3245,7 @@ func (c *ReportsListreportsCall) Header() http.Header {
 
 func (c *ReportsListreportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3860,129 +3364,4 @@ func (c *ReportsListreportsCall) Pages(ctx context.Context, f func(*ListReportsR
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-// method id "doubleclickbidmanager.sdf.download":
-
-type SdfDownloadCall struct {
-	s               *Service
-	downloadrequest *DownloadRequest
-	urlParams_      gensupport.URLParams
-	ctx_            context.Context
-	header_         http.Header
-}
-
-// Download: Retrieves entities in SDF format.
-func (r *SdfService) Download(downloadrequest *DownloadRequest) *SdfDownloadCall {
-	c := &SdfDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.downloadrequest = downloadrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *SdfDownloadCall) Fields(s ...googleapi.Field) *SdfDownloadCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *SdfDownloadCall) Context(ctx context.Context) *SdfDownloadCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *SdfDownloadCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *SdfDownloadCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.downloadrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "sdf/download")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "doubleclickbidmanager.sdf.download" call.
-// Exactly one of *DownloadResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *DownloadResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *SdfDownloadCall) Do(opts ...googleapi.CallOption) (*DownloadResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &DownloadResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves entities in SDF format.",
-	//   "flatPath": "sdf/download",
-	//   "httpMethod": "POST",
-	//   "id": "doubleclickbidmanager.sdf.download",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "sdf/download",
-	//   "request": {
-	//     "$ref": "DownloadRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "DownloadResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/doubleclickbidmanager"
-	//   ]
-	// }
-
 }

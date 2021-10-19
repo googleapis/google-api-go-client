@@ -44,7 +44,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/access-approval/docs",
+      "documentationLink": "https://cloud.google.com/cloud-provider-access-management/access-approval/docs",
       "preferred": true
     },
     {
@@ -167,7 +167,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "http://developers.google.com/admin-sdk/",
+      "documentationLink": "https://developers.google.com/admin-sdk/",
       "preferred": false
     },
     {
@@ -182,7 +182,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "http://developers.google.com/admin-sdk/",
+      "documentationLink": "https://developers.google.com/admin-sdk/",
       "preferred": false
     },
     {
@@ -197,7 +197,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "http://developers.google.com/admin-sdk/",
+      "documentationLink": "https://developers.google.com/admin-sdk/",
       "preferred": true
     },
     {
@@ -238,6 +238,21 @@
       "title": "AdSense Management API",
       "description": "The AdSense Management API allows publishers to access their inventory and run earnings and performance reports.",
       "discoveryRestUrl": "https://adsense.googleapis.com/$discovery/rest?version=v1.4",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "http://code.google.com/apis/adsense/management/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "adsense:v2",
+      "name": "adsense",
+      "version": "v2",
+      "title": "AdSense Management API",
+      "description": "The AdSense Management API allows publishers to access their inventory and run earnings and performance reports.",
+      "discoveryRestUrl": "https://adsense.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -307,12 +322,12 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "analyticsdata:v1alpha",
+      "id": "analyticsdata:v1beta",
       "name": "analyticsdata",
-      "version": "v1alpha",
+      "version": "v1beta",
       "title": "Google Analytics Data API",
       "description": "Accesses report data in Google Analytics.",
-      "discoveryRestUrl": "https://analyticsdata.googleapis.com/$discovery/rest?version=v1alpha",
+      "discoveryRestUrl": "https://analyticsdata.googleapis.com/$discovery/rest?version=v1beta",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -430,13 +445,28 @@
       "name": "apigee",
       "version": "v1",
       "title": "Apigee API",
-      "description": "Use the Apigee API to programmatically develop and manage APIs with a set of RESTful operations. Develop and secure API proxies, deploy and undeploy API proxy revisions, monitor APIs, configure environments, manage users, and more. Get started using the APIs \u003chttps://cloud.google.com/apigee/docs/api-platform/get-started/api-get-started\u003e. *Note:* This product is available as a free trial for a time period of 60 days.",
+      "description": "Use the Apigee API to programmatically develop and manage APIs with a set of RESTful operations. Develop and secure API proxies, deploy and undeploy API proxy revisions, monitor APIs, configure environments, manage users, and more. Note: This product is available as a free trial for a time period of 60 days.",
       "discoveryRestUrl": "https://apigee.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/apigee-api-management/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "apikeys:v2",
+      "name": "apikeys",
+      "version": "v2",
+      "title": "API Keys API",
+      "description": "Manages the API keys associated with developer projects.",
+      "discoveryRestUrl": "https://apikeys.googleapis.com/$discovery/rest?version=v2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/api-keys/docs",
       "preferred": true
     },
     {
@@ -462,36 +492,6 @@
       "title": "App Engine Admin API",
       "description": "Provisions and manages developers' App Engine applications.",
       "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1beta",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "appengine:v1beta4",
-      "name": "appengine",
-      "version": "v1beta4",
-      "title": "App Engine Admin API",
-      "description": "Provisions and manages developers' App Engine applications.",
-      "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1beta4",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/appengine/docs/admin-api/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "appengine:v1beta5",
-      "name": "appengine",
-      "version": "v1beta5",
-      "title": "App Engine Admin API",
-      "description": "Provisions and manages developers' App Engine applications.",
-      "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1beta5",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -591,6 +591,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "baremetalsolution:v1",
+      "name": "baremetalsolution",
+      "version": "v1",
+      "title": "Bare Metal Solution API",
+      "description": "Bare Metal Solution provides hardware to run specialized workloads with low latency on Google Cloud.",
+      "discoveryRestUrl": "https://baremetalsolution.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/bare-metal",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "bigquery:v2",
       "name": "bigquery",
       "version": "v2",
@@ -601,7 +616,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://developers.google.com/bigquery/",
+      "documentationLink": "https://cloud.google.com/bigquery/",
       "preferred": true
     },
     {
@@ -631,7 +646,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/bigquery/",
+      "documentationLink": "https://cloud.google.com/bigquery-transfer/",
       "preferred": true
     },
     {
@@ -831,6 +846,36 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "chromemanagement:v1",
+      "name": "chromemanagement",
+      "version": "v1",
+      "title": "Chrome Management API",
+      "description": "The Chrome Management API is a suite of services that allows Chrome administrators to view, manage and gain insights on their Chrome OS and Chrome Browser devices.",
+      "discoveryRestUrl": "https://chromemanagement.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "http://developers.google.com/chrome/management/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "chromepolicy:v1",
+      "name": "chromepolicy",
+      "version": "v1",
+      "title": "Chrome Policy API",
+      "description": "The Chrome Policy API is a suite of services that allows Chrome administrators to control the policies applied to their managed Chrome OS devices and Chrome browsers.",
+      "discoveryRestUrl": "https://chromepolicy.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "http://developers.google.com/chrome/policy",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "chromeuxreport:v1",
       "name": "chromeuxreport",
       "version": "v1",
@@ -921,6 +966,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "cloudasset:v1p7beta1",
+      "name": "cloudasset",
+      "version": "v1p7beta1",
+      "title": "Cloud Asset API",
+      "description": "The cloud asset API manages the history and inventory of cloud resources.",
+      "discoveryRestUrl": "https://cloudasset.googleapis.com/$discovery/rest?version=v1p7beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/asset-inventory/docs/quickstart",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "cloudasset:v1beta1",
       "name": "cloudasset",
       "version": "v1beta1",
@@ -996,6 +1056,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "cloudbuild:v1beta1",
+      "name": "cloudbuild",
+      "version": "v1beta1",
+      "title": "Cloud Build API",
+      "description": "Creates and manages builds on Google Cloud Platform.",
+      "discoveryRestUrl": "https://cloudbuild.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/cloud-build/docs/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "cloudbuild:v1",
       "name": "cloudbuild",
       "version": "v1",
@@ -1007,6 +1082,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/cloud-build/docs/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "cloudchannel:v1",
+      "name": "cloudchannel",
+      "version": "v1",
+      "title": "Cloud Channel API",
+      "description": "The Cloud Channel API enables Google Cloud partners to have a single unified resale platform and APIs across all of Google Cloud including GCP, Workspace, Maps and Chrome.",
+      "discoveryRestUrl": "https://cloudchannel.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/channel",
       "preferred": true
     },
     {
@@ -1187,6 +1277,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/resource-manager",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "cloudresourcemanager:v3",
+      "name": "cloudresourcemanager",
+      "version": "v3",
+      "title": "Cloud Resource Manager API",
+      "description": "Creates, reads, and updates metadata for Google Cloud Platform resource containers.",
+      "discoveryRestUrl": "https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v3",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/resource-manager",
       "preferred": true
     },
     {
@@ -1225,7 +1330,7 @@
       "name": "cloudsearch",
       "version": "v1",
       "title": "Cloud Search API",
-      "description": "Cloud Search provides cloud-based search capabilities over G Suite data. The Cloud Search API allows indexing of non-G Suite data into Cloud Search.",
+      "description": "Cloud Search provides cloud-based search capabilities over Google Workspace data. The Cloud Search API allows indexing of non-Google Workspace data into Cloud Search.",
       "discoveryRestUrl": "https://cloudsearch.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1233,21 +1338,6 @@
       },
       "documentationLink": "https://developers.google.com/cloud-search/docs/guides/",
       "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "cloudshell:v1alpha1",
-      "name": "cloudshell",
-      "version": "v1alpha1",
-      "title": "Cloud Shell API",
-      "description": "Allows users to start, configure, and connect to interactive shell sessions running in the cloud.",
-      "discoveryRestUrl": "https://cloudshell.googleapis.com/$discovery/rest?version=v1alpha1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/shell/docs/",
-      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",
@@ -1434,6 +1524,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "contactcenterinsights:v1",
+      "name": "contactcenterinsights",
+      "version": "v1",
+      "title": "Contact Center AI Insights API",
+      "description": "",
+      "discoveryRestUrl": "https://contactcenterinsights.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/contact-center/insights/docs",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "container:v1beta1",
       "name": "container",
       "version": "v1beta1",
@@ -1550,6 +1655,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/data-catalog/docs/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "datacatalog:v1",
+      "name": "datacatalog",
+      "version": "v1",
+      "title": "Google Cloud Data Catalog API",
+      "description": "A fully managed and highly scalable data discovery and metadata management service.",
+      "discoveryRestUrl": "https://datacatalog.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/data-catalog/docs/",
       "preferred": true
     },
     {
@@ -1625,22 +1745,22 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/database-migration/",
-      "preferred": true
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "dataproc:v1beta2",
-      "name": "dataproc",
-      "version": "v1beta2",
-      "title": "Cloud Dataproc API",
-      "description": "Manages Hadoop-based clusters and jobs on Google Cloud Platform.",
-      "discoveryRestUrl": "https://dataproc.googleapis.com/$discovery/rest?version=v1beta2",
+      "id": "datamigration:v1",
+      "name": "datamigration",
+      "version": "v1",
+      "title": "Database Migration API",
+      "description": "Manage Cloud Database Migration Service resources on Google Cloud Platform.",
+      "discoveryRestUrl": "https://datamigration.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/dataproc/",
-      "preferred": false
+      "documentationLink": "https://cloud.google.com/database-migration/",
+      "preferred": true
     },
     {
       "kind": "discovery#directoryItem",
@@ -1753,7 +1873,7 @@
       "name": "dfareporting",
       "version": "v3.3",
       "title": "Campaign Manager 360 API",
-      "description": "Manage your DoubleClick Campaign Manager ad campaigns and reports.",
+      "description": "Build applications to efficiently manage large or complex trafficking, reporting, and attribution workflows for Campaign Manager 360.",
       "discoveryRestUrl": "https://dfareporting.googleapis.com/$discovery/rest?version=v3.3",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1768,8 +1888,23 @@
       "name": "dfareporting",
       "version": "v3.4",
       "title": "Campaign Manager 360 API",
-      "description": "Manage your DoubleClick Campaign Manager ad campaigns and reports.",
+      "description": "Build applications to efficiently manage large or complex trafficking, reporting, and attribution workflows for Campaign Manager 360.",
       "discoveryRestUrl": "https://dfareporting.googleapis.com/$discovery/rest?version=v3.4",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "dfareporting:v3.5",
+      "name": "dfareporting",
+      "version": "v3.5",
+      "title": "Campaign Manager 360 API",
+      "description": "Build applications to efficiently manage large or complex trafficking, reporting, and attribution workflows for Campaign Manager 360.",
+      "discoveryRestUrl": "https://dfareporting.googleapis.com/$discovery/rest?version=v3.5",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1970,6 +2105,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/document-ai/docs/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "documentai:v1",
+      "name": "documentai",
+      "version": "v1",
+      "title": "Cloud Document AI API",
+      "description": "Service to parse structured information from unstructured or semi-structured documents using state-of-the-art Google AI such as natural language, computer vision, translation, and AutoML.",
+      "discoveryRestUrl": "https://documentai.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/document-ai/docs/",
       "preferred": true
     },
     {
@@ -2111,6 +2261,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "essentialcontacts:v1",
+      "name": "essentialcontacts",
+      "version": "v1",
+      "title": "Essential Contacts API",
+      "description": "",
+      "discoveryRestUrl": "https://essentialcontacts.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/essentialcontacts/docs/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "eventarc:v1beta1",
       "name": "eventarc",
       "version": "v1beta1",
@@ -2171,6 +2336,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "fcmdata:v1beta1",
+      "name": "fcmdata",
+      "version": "v1beta1",
+      "title": "Firebase Cloud Messaging Data API",
+      "description": "Provides additional information about Firebase Cloud Messaging (FCM) message sends and deliveries.",
+      "discoveryRestUrl": "https://fcmdata.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://firebase.google.com/docs/cloud-messaging",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "file:v1beta1",
       "name": "file",
       "version": "v1beta1",
@@ -2216,6 +2396,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "firebaseappcheck:v1beta",
+      "name": "firebaseappcheck",
+      "version": "v1beta",
+      "title": "Firebase App Check API",
+      "description": "App Check works alongside other Firebase services to help protect your backend resources from abuse, such as billing fraud or phishing. With App Check, devices running your app will use an app or device attestation provider that attests to one or both of the following: * Requests originate from your authentic app * Requests originate from an authentic, untampered device This attestation is attached to every request your app makes to your Firebase backend resources. The Firebase App Check REST API allows you to manage your App Check configurations programmatically. It also allows you to exchange attestation material for App Check tokens directly without using a Firebase SDK. Finally, it allows you to obtain the public key set necessary to validate an App Check token yourself. [Learn more about App Check](https://firebase.google.com/docs/app-check).",
+      "discoveryRestUrl": "https://firebaseappcheck.googleapis.com/$discovery/rest?version=v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://firebase.google.com/docs/app-check",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "firebasedatabase:v1beta",
       "name": "firebasedatabase",
       "version": "v1beta",
@@ -2250,7 +2445,7 @@
       "name": "firebasehosting",
       "version": "v1beta1",
       "title": "Firebase Hosting API",
-      "description": "The Firebase Hosting REST API enables programmatic and customizable deployments to your Firebase-hosted sites. Use this REST API to deploy new or updated hosting configurations and content files.",
+      "description": "The Firebase Hosting REST API enables programmatic and customizable management and deployments to your Firebase-hosted sites. Use this REST API to create and manage channels and sites as well as to deploy new or updated hosting configurations and content files.",
       "discoveryRestUrl": "https://firebasehosting.googleapis.com/$discovery/rest?version=v1beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2265,7 +2460,7 @@
       "name": "firebasehosting",
       "version": "v1",
       "title": "Firebase Hosting API",
-      "description": "The Firebase Hosting REST API enables programmatic and customizable deployments to your Firebase-hosted sites. Use this REST API to deploy new or updated hosting configurations and content files.",
+      "description": "The Firebase Hosting REST API enables programmatic and customizable management and deployments to your Firebase-hosted sites. Use this REST API to create and manage channels and sites as well as to deploy new or updated hosting configurations and content files.",
       "discoveryRestUrl": "https://firebasehosting.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2317,6 +2512,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://firebase.google.com/docs/storage/security",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "firebasestorage:v1beta",
+      "name": "firebasestorage",
+      "version": "v1beta",
+      "title": "Cloud Storage for Firebase API",
+      "description": "The Cloud Storage for Firebase API enables programmatic management of Cloud Storage buckets for use in Firebase projects",
+      "discoveryRestUrl": "https://firebasestorage.googleapis.com/$discovery/rest?version=v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://firebase.google.com/docs/storage",
       "preferred": true
     },
     {
@@ -2456,21 +2666,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "genomics:v1alpha2",
-      "name": "genomics",
-      "version": "v1alpha2",
-      "title": "Genomics API",
-      "description": "Uploads, processes, queries, and searches Genomics data in the cloud.",
-      "discoveryRestUrl": "https://genomics.googleapis.com/$discovery/rest?version=v1alpha2",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/genomics",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "genomics:v2alpha1",
       "name": "genomics",
       "version": "v2alpha1",
@@ -2482,21 +2677,81 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/genomics",
-      "preferred": false
+      "preferred": true
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "genomics:v1",
-      "name": "genomics",
-      "version": "v1",
-      "title": "Genomics API",
-      "description": "Uploads, processes, queries, and searches Genomics data in the cloud.",
-      "discoveryRestUrl": "https://genomics.googleapis.com/$discovery/rest?version=v1",
+      "id": "gkehub:v1alpha",
+      "name": "gkehub",
+      "version": "v1alpha",
+      "title": "GKE Hub API",
+      "description": "",
+      "discoveryRestUrl": "https://gkehub.googleapis.com/$discovery/rest?version=v1alpha",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/genomics",
+      "documentationLink": "https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "gkehub:v1alpha2",
+      "name": "gkehub",
+      "version": "v1alpha2",
+      "title": "GKE Hub API",
+      "description": "",
+      "discoveryRestUrl": "https://gkehub.googleapis.com/$discovery/rest?version=v1alpha2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "gkehub:v1beta",
+      "name": "gkehub",
+      "version": "v1beta",
+      "title": "GKE Hub API",
+      "description": "",
+      "discoveryRestUrl": "https://gkehub.googleapis.com/$discovery/rest?version=v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "gkehub:v1beta1",
+      "name": "gkehub",
+      "version": "v1beta1",
+      "title": "GKE Hub API",
+      "description": "",
+      "discoveryRestUrl": "https://gkehub.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "gkehub:v1",
+      "name": "gkehub",
+      "version": "v1",
+      "title": "GKE Hub API",
+      "description": "",
+      "discoveryRestUrl": "https://gkehub.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster",
       "preferred": true
     },
     {
@@ -2681,6 +2936,36 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "ideahub:v1alpha",
+      "name": "ideahub",
+      "version": "v1alpha",
+      "title": "Idea Hub API",
+      "description": "",
+      "discoveryRestUrl": "https://ideahub.googleapis.com/$discovery/rest?version=v1alpha",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://console.cloud.google.com/apis/library/ideahub.googleapis.com",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "ideahub:v1beta",
+      "name": "ideahub",
+      "version": "v1beta",
+      "title": "Idea Hub API",
+      "description": "",
+      "discoveryRestUrl": "https://ideahub.googleapis.com/$discovery/rest?version=v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://console.cloud.google.com/apis/library/ideahub.googleapis.com",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "identitytoolkit:v3",
       "name": "identitytoolkit",
       "version": "v3",
@@ -2752,6 +3037,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/talent-solution/job-search/docs/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "keep:v1",
+      "name": "keep",
+      "version": "v1",
+      "title": "Google Keep API",
+      "description": "This API is an enterprise-only API used to create and manage the Keep notes within your domain, including resolving issues identified by CASB software.",
+      "discoveryRestUrl": "https://keep.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/keep/api",
       "preferred": true
     },
     {
@@ -3030,7 +3330,7 @@
       "name": "monitoring",
       "version": "v1",
       "title": "Cloud Monitoring API",
-      "description": "Manages your Cloud Monitoring data and configurations. Most projects must be associated with a Workspace, with a few exceptions as noted on the individual method pages. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the [Cloud Monitoring documentation](/monitoring/docs).",
+      "description": "Manages your Cloud Monitoring data and configurations. Most projects must be associated with a Workspace, with a few exceptions as noted on the individual method pages. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the [Cloud Monitoring documentation](https://cloud.google.com/monitoring/docs).",
       "discoveryRestUrl": "https://monitoring.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3045,7 +3345,7 @@
       "name": "monitoring",
       "version": "v3",
       "title": "Cloud Monitoring API",
-      "description": "Manages your Cloud Monitoring data and configurations. Most projects must be associated with a Workspace, with a few exceptions as noted on the individual method pages. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the [Cloud Monitoring documentation](/monitoring/docs).",
+      "description": "Manages your Cloud Monitoring data and configurations. Most projects must be associated with a Workspace, with a few exceptions as noted on the individual method pages. The table entries below are presented in alphabetical order, not in order of common use. For explanations of the concepts found in the table entries, read the [Cloud Monitoring documentation](https://cloud.google.com/monitoring/docs).",
       "discoveryRestUrl": "https://monitoring.googleapis.com/$discovery/rest?version=v3",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3056,17 +3356,122 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "mybusinessaccountmanagement:v1",
+      "name": "mybusinessaccountmanagement",
+      "version": "v1",
+      "title": "My Business Account Management API",
+      "description": "The My Business Account Management API provides an interface for managing access to a location on Google.",
+      "discoveryRestUrl": "https://mybusinessaccountmanagement.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/my-business/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "mybusinessbusinessinformation:v1",
+      "name": "mybusinessbusinessinformation",
+      "version": "v1",
+      "title": "My Business Business Information API",
+      "description": "The My Business Business Information API provides an interface for managing business information on Google.",
+      "discoveryRestUrl": "https://mybusinessbusinessinformation.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/my-business/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "mybusinesslodging:v1",
+      "name": "mybusinesslodging",
+      "version": "v1",
+      "title": "My Business Lodging API",
+      "description": "The My Business Lodging API enables managing lodging business information on Google.",
+      "discoveryRestUrl": "https://mybusinesslodging.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/my-business/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "mybusinessnotifications:v1",
+      "name": "mybusinessnotifications",
+      "version": "v1",
+      "title": "My Business Notifications API",
+      "description": "The My Business Notification Settings API enables managing notification settings for business accounts.",
+      "discoveryRestUrl": "https://mybusinessnotifications.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/my-business/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "mybusinessplaceactions:v1",
+      "name": "mybusinessplaceactions",
+      "version": "v1",
+      "title": "My Business Place Actions API",
+      "description": "The My Business Place Actions API provides an interface for managing place action links of a location on Google.",
+      "discoveryRestUrl": "https://mybusinessplaceactions.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/my-business/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "mybusinessverifications:v1",
+      "name": "mybusinessverifications",
+      "version": "v1",
+      "title": "My Business Verifications API",
+      "description": "The My Business Verifications API provides an interface for taking verifications related actions for locations.",
+      "discoveryRestUrl": "https://mybusinessverifications.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/my-business/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "networkconnectivity:v1alpha1",
       "name": "networkconnectivity",
       "version": "v1alpha1",
       "title": "Network Connectivity API",
-      "description": "The Network Connectivity API will be home to various services which provide information pertaining to network connectivity.",
+      "description": "The Network Connectivity API provides access to Network Connectivity Center.",
       "discoveryRestUrl": "https://networkconnectivity.googleapis.com/$discovery/rest?version=v1alpha1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/network-connectivity/docs",
+      "documentationLink": "https://cloud.google.com/network-connectivity/docs/reference/networkconnectivity/rest",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "networkconnectivity:v1",
+      "name": "networkconnectivity",
+      "version": "v1",
+      "title": "Network Connectivity API",
+      "description": "The Network Connectivity API provides access to Network Connectivity Center.",
+      "discoveryRestUrl": "https://networkconnectivity.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/network-connectivity/docs/reference/networkconnectivity/rest",
       "preferred": true
     },
     {
@@ -3101,17 +3506,77 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "networksecurity:v1beta1",
+      "name": "networksecurity",
+      "version": "v1beta1",
+      "title": "Network Security API",
+      "description": "",
+      "discoveryRestUrl": "https://networksecurity.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/networking",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "networksecurity:v1",
+      "name": "networksecurity",
+      "version": "v1",
+      "title": "Network Security API",
+      "description": "",
+      "discoveryRestUrl": "https://networksecurity.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/networking",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "networkservices:v1beta1",
+      "name": "networkservices",
+      "version": "v1beta1",
+      "title": "Network Services API",
+      "description": "",
+      "discoveryRestUrl": "https://networkservices.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/networking",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "networkservices:v1",
+      "name": "networkservices",
+      "version": "v1",
+      "title": "Network Services API",
+      "description": "",
+      "discoveryRestUrl": "https://networkservices.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/networking",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "notebooks:v1",
       "name": "notebooks",
       "version": "v1",
       "title": "Notebooks API",
-      "description": "AI Platform Notebooks API is used to manage notebook resources in Google Cloud.",
+      "description": "Notebooks API is used to manage notebook resources in Google Cloud.",
       "discoveryRestUrl": "https://notebooks.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/ai-platform/notebooks/docs/",
+      "documentationLink": "https://cloud.google.com/notebooks/docs/",
       "preferred": true
     },
     {
@@ -3132,17 +3597,62 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "osconfig:v1alpha2",
-      "name": "osconfig",
-      "version": "v1alpha2",
-      "title": "OS Config API",
-      "description": "OS management tools that can be used for patch management, patch compliance, and configuration management on VM instances.",
-      "discoveryRestUrl": "https://osconfig.googleapis.com/$discovery/rest?version=v1alpha2",
+      "id": "ondemandscanning:v1beta1",
+      "name": "ondemandscanning",
+      "version": "v1beta1",
+      "title": "On-Demand Scanning API",
+      "description": "A service to scan container images for vulnerabilities.",
+      "discoveryRestUrl": "https://ondemandscanning.googleapis.com/$discovery/rest?version=v1beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/compute/docs/manage-os",
+      "documentationLink": "https://cloud.google.com/container-analysis/docs/on-demand-scanning/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "ondemandscanning:v1",
+      "name": "ondemandscanning",
+      "version": "v1",
+      "title": "On-Demand Scanning API",
+      "description": "A service to scan container images for vulnerabilities.",
+      "discoveryRestUrl": "https://ondemandscanning.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/container-analysis/docs/on-demand-scanning/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "orgpolicy:v2",
+      "name": "orgpolicy",
+      "version": "v2",
+      "title": "Organization Policy API",
+      "description": "The Org Policy API allows users to configure governance ruleson their GCP resources across the Cloud Resource Hierarchy.",
+      "discoveryRestUrl": "https://orgpolicy.googleapis.com/$discovery/rest?version=v2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/orgpolicy/docs/reference/rest/index.html",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "osconfig:v1alpha",
+      "name": "osconfig",
+      "version": "v1alpha",
+      "title": "OS Config API",
+      "description": "OS management tools that can be used for patch management, patch compliance, and configuration management on VM instances.",
+      "discoveryRestUrl": "https://osconfig.googleapis.com/$discovery/rest?version=v1alpha",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/compute/docs/osconfig/rest",
       "preferred": false
     },
     {
@@ -3157,7 +3667,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/compute/docs/manage-os",
+      "documentationLink": "https://cloud.google.com/compute/docs/osconfig/rest",
       "preferred": false
     },
     {
@@ -3172,7 +3682,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/compute/docs/manage-os",
+      "documentationLink": "https://cloud.google.com/compute/docs/osconfig/rest",
       "preferred": true
     },
     {
@@ -3237,6 +3747,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "paymentsresellersubscription:v1",
+      "name": "paymentsresellersubscription",
+      "version": "v1",
+      "title": "Payments Reseller Subscription API",
+      "description": "",
+      "discoveryRestUrl": "https://paymentsresellersubscription.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/payments/reseller/subscription/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "people:v1",
       "name": "people",
       "version": "v1",
@@ -3278,6 +3803,66 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/android/work/play/custom-app-api/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "policyanalyzer:v1beta1",
+      "name": "policyanalyzer",
+      "version": "v1beta1",
+      "title": "Policy Analyzer API",
+      "description": "",
+      "discoveryRestUrl": "https://policyanalyzer.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://www.google.com",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "policyanalyzer:v1",
+      "name": "policyanalyzer",
+      "version": "v1",
+      "title": "Policy Analyzer API",
+      "description": "",
+      "discoveryRestUrl": "https://policyanalyzer.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://www.google.com",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "policysimulator:v1beta1",
+      "name": "policysimulator",
+      "version": "v1beta1",
+      "title": "Policy Simulator API",
+      "description": "Policy Simulator is a collection of endpoints for creating, running, and viewing a [Replay][google.cloud.policysimulator.v1beta1.Replay]. A `Replay` is a type of simulation that lets you see how your members' access to resources might change if you changed your IAM policy. During a `Replay`, Policy Simulator re-evaluates, or replays, past access attempts under both the current policy and your proposed policy, and compares those results to determine how your members' access might change under the proposed policy.",
+      "discoveryRestUrl": "https://policysimulator.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/iam/docs/simulating-access",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "policysimulator:v1",
+      "name": "policysimulator",
+      "version": "v1",
+      "title": "Policy Simulator API",
+      "description": "Policy Simulator is a collection of endpoints for creating, running, and viewing a [Replay][google.cloud.policysimulator.v1beta1.Replay]. A `Replay` is a type of simulation that lets you see how your members' access to resources might change if you changed your IAM policy. During a `Replay`, Policy Simulator re-evaluates, or replays, past access attempts under both the current policy and your proposed policy, and compares those results to determine how your members' access might change under the proposed policy.",
+      "discoveryRestUrl": "https://policysimulator.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/iam/docs/simulating-access",
       "preferred": true
     },
     {
@@ -3333,6 +3918,21 @@
       "title": "Certificate Authority API",
       "description": "The Certificate Authority Service API is a highly-available, scalable service that enables you to simplify and automate the management of private certificate authorities (CAs) while staying in control of your private keys.\"",
       "discoveryRestUrl": "https://privateca.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "privateca:v1",
+      "name": "privateca",
+      "version": "v1",
+      "title": "Certificate Authority API",
+      "description": "The Certificate Authority Service API is a highly-available, scalable service that enables you to simplify and automate the management of private certificate authorities (CAs) while staying in control of your private keys.\"",
+      "discoveryRestUrl": "https://privateca.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3447,6 +4047,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "recaptchaenterprise:v1",
+      "name": "recaptchaenterprise",
+      "version": "v1",
+      "title": "reCAPTCHA Enterprise API",
+      "description": "",
+      "discoveryRestUrl": "https://recaptchaenterprise.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/recaptcha-enterprise/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "recommendationengine:v1beta1",
       "name": "recommendationengine",
       "version": "v1beta1",
@@ -3522,51 +4137,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "remotebuildexecution:v1alpha",
-      "name": "remotebuildexecution",
-      "version": "v1alpha",
-      "title": "Remote Build Execution API",
-      "description": "Supplies a Remote Execution API service for tools such as bazel.",
-      "discoveryRestUrl": "https://admin-remotebuildexecution.googleapis.com/$discovery/rest?version=v1alpha",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/remote-build-execution/docs/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "remotebuildexecution:v1",
-      "name": "remotebuildexecution",
-      "version": "v1",
-      "title": "Remote Build Execution API",
-      "description": "Supplies a Remote Execution API service for tools such as bazel.",
-      "discoveryRestUrl": "https://remotebuildexecution.googleapis.com/$discovery/rest?version=v1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/remote-build-execution/docs/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "remotebuildexecution:v2",
-      "name": "remotebuildexecution",
-      "version": "v2",
-      "title": "Remote Build Execution API",
-      "description": "Supplies a Remote Execution API service for tools such as bazel.",
-      "discoveryRestUrl": "https://remotebuildexecution.googleapis.com/$discovery/rest?version=v2",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/remote-build-execution/docs/",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "reseller:v1",
       "name": "reseller",
       "version": "v1",
@@ -3578,6 +4148,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/google-apps/reseller/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "resourcesettings:v1",
+      "name": "resourcesettings",
+      "version": "v1",
+      "title": "Resource Settings API",
+      "description": "The Resource Settings API allows users to control and modify the behavior of their GCP resources (e.g., VM, firewall, Project, etc.) across the Cloud Resource Hierarchy.",
+      "discoveryRestUrl": "https://resourcesettings.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/resource-manager/docs/resource-settings/overview",
       "preferred": true
     },
     {
@@ -3631,23 +4216,8 @@
       "name": "run",
       "version": "v1alpha1",
       "title": "Cloud Run Admin API",
-      "description": "Deploy and manage user provided container images that scale automatically based on HTTP traffic.",
+      "description": "Deploy and manage user provided container images that scale automatically based on incoming requests. The Cloud Run Admin API follows the Knative Serving API specification.",
       "discoveryRestUrl": "https://run.googleapis.com/$discovery/rest?version=v1alpha1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/run/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
-      "id": "run:v1beta1",
-      "name": "run",
-      "version": "v1beta1",
-      "title": "Cloud Run Admin API",
-      "description": "Deploy and manage user provided container images that scale automatically based on HTTP traffic.",
-      "discoveryRestUrl": "https://run.googleapis.com/$discovery/rest?version=v1beta1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3661,7 +4231,7 @@
       "name": "run",
       "version": "v1",
       "title": "Cloud Run Admin API",
-      "description": "Deploy and manage user provided container images that scale automatically based on HTTP traffic.",
+      "description": "Deploy and manage user provided container images that scale automatically based on incoming requests. The Cloud Run Admin API follows the Knative Serving API specification.",
       "discoveryRestUrl": "https://run.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -4148,6 +4718,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/cloud-sql/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "sqladmin:v1",
+      "name": "sqladmin",
+      "version": "v1",
+      "title": "Cloud SQL Admin API",
+      "description": "API for Cloud SQL database instance management",
+      "discoveryRestUrl": "https://sqladmin.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/cloud-sql/",
       "preferred": true
     },
     {
@@ -4267,6 +4852,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
+      "documentationLink": "https://developers.google.com/tasks/",
       "preferred": true
     },
     {
@@ -4632,6 +5218,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "webrisk:v1",
+      "name": "webrisk",
+      "version": "v1",
+      "title": "Web Risk API",
+      "description": "",
+      "discoveryRestUrl": "https://webrisk.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/web-risk/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "websecurityscanner:v1alpha",
       "name": "websecurityscanner",
       "version": "v1alpha",
@@ -4688,6 +5289,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/workflows",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "workflowexecutions:v1",
+      "name": "workflowexecutions",
+      "version": "v1",
+      "title": "Workflow Executions API",
+      "description": "Execute workflows created with Workflows API.",
+      "discoveryRestUrl": "https://workflowexecutions.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/workflows",
       "preferred": true
     },
     {
@@ -4696,8 +5312,23 @@
       "name": "workflows",
       "version": "v1beta",
       "title": "Workflows API",
-      "description": "Orchestrate Workflows consisting of Google Cloud APIs, SaaS APIs or private API endpoints.",
+      "description": "Manage workflow definitions. To execute workflows and manage executions, see the Workflows Executions API.",
       "discoveryRestUrl": "https://workflows.googleapis.com/$discovery/rest?version=v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/workflows",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "workflows:v1",
+      "name": "workflows",
+      "version": "v1",
+      "title": "Workflows API",
+      "description": "Manage workflow definitions. To execute workflows and manage executions, see the Workflows Executions API.",
+      "discoveryRestUrl": "https://workflows.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"

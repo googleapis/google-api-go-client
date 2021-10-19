@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         },
         "https://www.googleapis.com/auth/jobs": {
           "description": "Manage job postings"
@@ -110,6 +110,36 @@
   "resources": {
     "projects": {
       "resources": {
+        "operations": {
+          "methods": {
+            "get": {
+              "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
+              "flatPath": "v4/projects/{projectsId}/operations/{operationsId}",
+              "httpMethod": "GET",
+              "id": "jobs.projects.operations.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The name of the operation resource.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/operations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v4/{+name}",
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/jobs"
+              ]
+            }
+          }
+        },
         "tenants": {
           "methods": {
             "completeQuery": {
@@ -722,7 +752,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "Required. The filter string specifies the jobs to be enumerated. Supported operator: =, AND The fields eligible for filtering are: * `companyName` (Required) * `requisitionId` * `status` Available values: OPEN, EXPIRED, ALL. Defaults to OPEN if no value is specified. Sample Query: * companyName = \"projects/foo/tenants/bar/companies/baz\" * companyName = \"projects/foo/tenants/bar/companies/baz\" AND requisitionId = \"req-1\" * companyName = \"projects/foo/tenants/bar/companies/baz\" AND status = \"EXPIRED\"",
+                      "description": "Required. The filter string specifies the jobs to be enumerated. Supported operator: =, AND The fields eligible for filtering are: * `companyName` * `requisitionId` * `status` Available values: OPEN, EXPIRED, ALL. Defaults to OPEN if no value is specified. At least one of `companyName` and `requisitionId` must present or an INVALID_ARGUMENT error is thrown. Sample Query: * companyName = \"projects/foo/tenants/bar/companies/baz\" * companyName = \"projects/foo/tenants/bar/companies/baz\" AND requisitionId = \"req-1\" * companyName = \"projects/foo/tenants/bar/companies/baz\" AND status = \"EXPIRED\" * requisitionId = \"req-1\" * requisitionId = \"req-1\" AND status = \"EXPIRED\"",
                       "location": "query",
                       "type": "string"
                     },
@@ -873,7 +903,7 @@
       }
     }
   },
-  "revision": "20201124",
+  "revision": "20210830",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -1094,12 +1124,18 @@
           "enum": [
             "COMMUTE_METHOD_UNSPECIFIED",
             "DRIVING",
-            "TRANSIT"
+            "TRANSIT",
+            "WALKING",
+            "CYCLING",
+            "TRANSIT_ACCESSIBLE"
           ],
           "enumDescriptions": [
             "Commute method isn't specified.",
             "Commute time is calculated based on driving time.",
-            "Commute time is calculated based on public transit including bus, metro, subway, and so on."
+            "Commute time is calculated based on public transit including bus, metro, subway, and so on.",
+            "Commute time is calculated based on walking time.",
+            "Commute time is calculated based on biking time.",
+            "Commute time is calculated based on public transit that is wheelchair accessible."
           ],
           "type": "string"
         },
@@ -1523,7 +1559,7 @@
           "type": "string"
         },
         "rankingExpression": {
-          "description": "Required. Controls over how job documents get ranked on top of existing relevance score (determined by API algorithm). A combination of the ranking expression and relevance score is used to determine job's final ranking position. The syntax for this expression is a subset of Google SQL syntax. Supported operators are: +, -, *, /, where the left and right side of the operator is either a numeric Job.custom_attributes key, integer/double value or an expression that can be evaluated to a number. Parenthesis are supported to adjust calculation precedence. The expression must be \u003c 100 characters in length. The expression is considered invalid for a job if the expression references custom attributes that are not populated on the job or if the expression results in a divide by zero. If an expression is invalid for a job, that job is demoted to the end of the results. Sample ranking expression (year + 25) * 0.25 - (freshness / 0.5)",
+          "description": "Required. Controls over how job documents get ranked on top of existing relevance score (determined by API algorithm). A combination of the ranking expression and relevance score is used to determine job's final ranking position. The syntax for this expression is a subset of Google SQL syntax. Supported operators are: +, -, *, /, where the left and right side of the operator is either a numeric Job.custom_attributes key, integer/double value or an expression that can be evaluated to a number. Parenthesis are supported to adjust calculation precedence. The expression must be \u003c 200 characters in length. The expression is considered invalid for a job if the expression references custom attributes that are not populated on the job or if the expression results in a divide by zero. If an expression is invalid for a job, that job is demoted to the end of the results. Sample ranking expression (year + 25) * 0.25 - (freshness / 0.5)",
           "type": "string"
         }
       },
@@ -1603,7 +1639,7 @@
       "id": "Job",
       "properties": {
         "addresses": {
-          "description": "Strongly recommended for the best service experience. Location(s) where the employer is looking to hire for this job posting. Specifying the full street address(es) of the hiring location enables better API results, especially job searches by commute time. At most 50 locations are allowed for best search performance. If a job has more locations, it is suggested to split it into multiple jobs with unique requisition_ids (e.g. 'ReqA' becomes 'ReqA-1', 'ReqA-2', and so on.) as multiple jobs with the same company, language_code and requisition_id are not allowed. If the original requisition_id must be preserved, a custom field should be used for storage. It is also suggested to group the locations that close to each other in the same job for better search experience. The maximum number of allowed characters is 500.",
+          "description": "Strongly recommended for the best service experience. Location(s) where the employer is looking to hire for this job posting. Specifying the full street address(es) of the hiring location enables better API results, especially job searches by commute time. At most 50 locations are allowed for best search performance. If a job has more locations, it is suggested to split it into multiple jobs with unique requisition_ids (e.g. 'ReqA' becomes 'ReqA-1', 'ReqA-2', and so on.) as multiple jobs with the same company, language_code and requisition_id are not allowed. If the original requisition_id must be preserved, a custom field should be used for storage. It is also suggested to group the locations that close to each other in the same job for better search experience. Jobs with multiple addresses must have their addresses with the same LocationType to allow location filtering to work properly. (For example, a Job with addresses \"1600 Amphitheatre Parkway, Mountain View, CA, USA\" and \"London, UK\" may not have location filters applied correctly at search time since the first is a LocationType.STREET_ADDRESS and the second is a LocationType.LOCALITY.) If a job needs to have multiple addresses, it is suggested to split it into multiple jobs with same LocationTypes. The maximum number of allowed characters is 500.",
           "items": {
             "type": "string"
           },
@@ -2035,7 +2071,7 @@
           "description": "This search filter is applied only to Job.compensation_info. For example, if the filter is specified as \"Hourly job with per-hour compensation \u003e $15\", only jobs meeting these criteria are searched. If a filter isn't defined, all open jobs are searched."
         },
         "customAttributeFilter": {
-          "description": "This filter specifies a structured syntax to match against the Job.custom_attributes marked as `filterable`. The syntax for this expression is a subset of SQL syntax. Supported operators are: `=`, `!=`, `\u003c`, `\u003c=`, `\u003e`, and `\u003e=` where the left of the operator is a custom field key and the right of the operator is a number or a quoted string. You must escape backslash (\\\\) and quote (\\\") characters. Supported functions are `LOWER([field_name])` to perform a case insensitive match and `EMPTY([field_name])` to filter on the existence of a key. Boolean expressions (AND/OR/NOT) are supported up to 3 levels of nesting (for example, \"((A AND B AND C) OR NOT D) AND E\"), a maximum of 100 comparisons or functions are allowed in the expression. The expression must be \u003c 6000 bytes in length. Sample Query: `(LOWER(driving_license)=\"class \\\"a\\\"\" OR EMPTY(driving_license)) AND driving_years \u003e 10`",
+          "description": "This filter specifies a structured syntax to match against the Job.custom_attributes marked as `filterable`. The syntax for this expression is a subset of SQL syntax. Supported operators are: `=`, `!=`, `\u003c`, `\u003c=`, `\u003e`, and `\u003e=` where the left of the operator is a custom field key and the right of the operator is a number or a quoted string. You must escape backslash (\\\\) and quote (\\\") characters. Supported functions are `LOWER([field_name])` to perform a case insensitive match and `EMPTY([field_name])` to filter on the existence of a key. Boolean expressions (AND/OR/NOT) are supported up to 3 levels of nesting (for example, \"((A AND B AND C) OR NOT D) AND E\"), a maximum of 100 comparisons or functions are allowed in the expression. The expression must be \u003c 10000 bytes in length. Sample Query: `(LOWER(driving_license)=\"class \\\"a\\\"\" OR EMPTY(driving_license)) AND driving_years \u003e 10`",
           "type": "string"
         },
         "disableSpellCheck": {
@@ -2200,7 +2236,7 @@
       "type": "object"
     },
     "LatLng": {
-      "description": "An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this must conform to the WGS84 standard. Values must be within normalized ranges.",
+      "description": "An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this object must conform to the WGS84 standard. Values must be within normalized ranges.",
       "id": "LatLng",
       "properties": {
         "latitude": {
@@ -2350,7 +2386,7 @@
           "description": "The latitude and longitude of the geographic center to search from. This field is ignored if `address` is provided."
         },
         "regionCode": {
-          "description": "CLDR region code of the country/region of the address. This is used to address ambiguity of the user-input location, for example, \"Liverpool\" against \"Liverpool, NY, US\" or \"Liverpool, UK\". Set this field to bias location resolution toward a specific country or territory. If this field is not set, application behavior is biased toward the United States by default. See https://www.unicode.org/cldr/charts/30/supplemental/territory_information.html for details. Example: \"CH\" for Switzerland.",
+          "description": "CLDR region code of the country/region. This field may be used in two ways: 1) If telecommute preference is not set, this field is used address ambiguity of the user-input address. For example, \"Liverpool\" may refer to \"Liverpool, NY, US\" or \"Liverpool, UK\". This region code biases the address resolution toward a specific country or territory. If this field is not set, address resolution is biased toward the United States by default. 2) If telecommute preference is set to TELECOMMUTE_ALLOWED, the telecommute location filter will be limited to the region specified in this field. If this field is not set, the telecommute job locations will not be See https://unicode-org.github.io/cldr-staging/charts/latest/supplemental/territory_information.html for details. Example: \"CH\" for Switzerland.",
           "type": "string"
         },
         "telecommutePreference": {
@@ -2696,7 +2732,7 @@
           "description": "Controls over how job documents get ranked on top of existing relevance score (determined by API algorithm)."
         },
         "disableKeywordMatch": {
-          "description": "Controls whether to disable exact keyword match on Job.title, Job.description, Job.company_display_name, Job.addresses, Job.qualifications. When disable keyword match is turned off, a keyword match returns jobs that do not match given category filters when there are matching keywords. For example, for the query \"program manager,\" a result is returned even if the job posting has the title \"software developer,\" which doesn't fall into \"program manager\" ontology, but does have \"program manager\" appearing in its description. For queries like \"cloud\" that don't contain title or location specific ontology, jobs with \"cloud\" keyword matches are returned regardless of this flag's value. Use Company.keyword_searchable_job_custom_attributes if company-specific globally matched custom field/attribute string values are needed. Enabling keyword match improves recall of subsequent search requests. Defaults to false.",
+          "description": "This field is deprecated. Please use SearchJobsRequest.keyword_match_mode going forward. To migrate, disable_keyword_match set to false maps to KeywordMatchMode.KEYWORD_MATCH_ALL, and disable_keyword_match set to true maps to KeywordMatchMode.KEYWORD_MATCH_DISABLED. If SearchJobsRequest.keyword_match_mode is set, this field is ignored. Controls whether to disable exact keyword match on Job.title, Job.description, Job.company_display_name, Job.addresses, Job.qualifications. When disable keyword match is turned off, a keyword match returns jobs that do not match given category filters when there are matching keywords. For example, for the query \"program manager,\" a result is returned even if the job posting has the title \"software developer,\" which doesn't fall into \"program manager\" ontology, but does have \"program manager\" appearing in its description. For queries like \"cloud\" that don't contain title or location specific ontology, jobs with \"cloud\" keyword matches are returned regardless of this flag's value. Use Company.keyword_searchable_job_custom_attributes if company-specific globally matched custom field/attribute string values are needed. Enabling keyword match improves recall of subsequent search requests. Defaults to false.",
           "type": "boolean"
         },
         "diversificationLevel": {
@@ -2704,12 +2740,18 @@
           "enum": [
             "DIVERSIFICATION_LEVEL_UNSPECIFIED",
             "DISABLED",
-            "SIMPLE"
+            "SIMPLE",
+            "ONE_PER_COMPANY",
+            "TWO_PER_COMPANY",
+            "DIVERSIFY_BY_LOOSER_SIMILARITY"
           ],
           "enumDescriptions": [
             "The diversification level isn't specified.",
             "Disables diversification. Jobs that would normally be pushed to the last page would not have their positions altered. This may result in highly similar jobs appearing in sequence in the search results.",
-            "Default diversifying behavior. The result list is ordered so that highly similar results are pushed to the end of the last page of search results. If you are using pageToken to page through the result set, latency might be lower but we can't guarantee that all results are returned. If you are using page offset, latency might be higher but all results are returned."
+            "Default diversifying behavior. The result list is ordered so that highly similar results are pushed to the end of the last page of search results.",
+            "Only one job from the same company will be shown at once, other jobs under same company are pushed to the end of the last page of search result.",
+            "Similar to ONE_PER_COMPANY, but it allows at most two jobs in the same company to be shown at once, the other jobs under same company are pushed to the end of the last page of search result.",
+            "The result list is ordered such that somewhat similar results are pushed to the end of the last page of the search results. This option is recommended if SIMPLE diversification does not diversify enough."
           ],
           "type": "string"
         },
@@ -2718,7 +2760,7 @@
           "type": "boolean"
         },
         "histogramQueries": {
-          "description": "An expression specifies a histogram request against matching jobs. Expression syntax is an aggregation function call with histogram facets and other options. Available aggregation function calls are: * `count(string_histogram_facet)`: Count the number of matching entities, for each distinct attribute value. * `count(numeric_histogram_facet, list of buckets)`: Count the number of matching entities within each bucket. Data types: * Histogram facet: facet names with format a-zA-Z+. * String: string like \"any string with backslash escape for quote(\\\").\" * Number: whole number and floating point number like 10, -1 and -0.01. * List: list of elements with comma(,) separator surrounded by square brackets, for example, [1, 2, 3] and [\"one\", \"two\", \"three\"]. Built-in constants: * MIN (minimum number similar to java Double.MIN_VALUE) * MAX (maximum number similar to java Double.MAX_VALUE) Built-in functions: * bucket(start, end[, label]): bucket built-in function creates a bucket with range of start, end). Note that the end is exclusive, for example, bucket(1, MAX, \"positive number\") or bucket(1, 10). Job histogram facets: * company_display_name: histogram by [Job.company_display_name. * employment_type: histogram by Job.employment_types, for example, \"FULL_TIME\", \"PART_TIME\". * company_size: histogram by CompanySize, for example, \"SMALL\", \"MEDIUM\", \"BIG\". * publish_time_in_month: histogram by the Job.posting_publish_time in months. Must specify list of numeric buckets in spec. * publish_time_in_year: histogram by the Job.posting_publish_time in years. Must specify list of numeric buckets in spec. * degree_types: histogram by the Job.degree_types, for example, \"Bachelors\", \"Masters\". * job_level: histogram by the Job.job_level, for example, \"Entry Level\". * country: histogram by the country code of jobs, for example, \"US\", \"FR\". * admin1: histogram by the admin1 code of jobs, which is a global placeholder referring to the state, province, or the particular term a country uses to define the geographic structure below the country level, for example, \"CA\", \"IL\". * city: histogram by a combination of the \"city name, admin1 code\". For example, \"Mountain View, CA\", \"New York, NY\". * admin1_country: histogram by a combination of the \"admin1 code, country\", for example, \"CA, US\", \"IL, US\". * city_coordinate: histogram by the city center's GPS coordinates (latitude and longitude), for example, 37.4038522,-122.0987765. Since the coordinates of a city center can change, customers may need to refresh them periodically. * locale: histogram by the Job.language_code, for example, \"en-US\", \"fr-FR\". * language: histogram by the language subtag of the Job.language_code, for example, \"en\", \"fr\". * category: histogram by the JobCategory, for example, \"COMPUTER_AND_IT\", \"HEALTHCARE\". * base_compensation_unit: histogram by the CompensationInfo.CompensationUnit of base salary, for example, \"WEEKLY\", \"MONTHLY\". * base_compensation: histogram by the base salary. Must specify list of numeric buckets to group results by. * annualized_base_compensation: histogram by the base annualized salary. Must specify list of numeric buckets to group results by. * annualized_total_compensation: histogram by the total annualized salary. Must specify list of numeric buckets to group results by. * string_custom_attribute: histogram by string Job.custom_attributes. Values can be accessed via square bracket notations like string_custom_attribute[\"key1\"]. * numeric_custom_attribute: histogram by numeric Job.custom_attributes. Values can be accessed via square bracket notations like numeric_custom_attribute[\"key1\"]. Must specify list of numeric buckets to group results by. Example expressions: * `count(admin1)` * `count(base_compensation, [bucket(1000, 10000), bucket(10000, 100000), bucket(100000, MAX)])` * `count(string_custom_attribute[\"some-string-custom-attribute\"])` * `count(numeric_custom_attribute[\"some-numeric-custom-attribute\"], [bucket(MIN, 0, \"negative\"), bucket(0, MAX, \"non-negative\"])`",
+          "description": "An expression specifies a histogram request against matching jobs. Expression syntax is an aggregation function call with histogram facets and other options. Available aggregation function calls are: * `count(string_histogram_facet)`: Count the number of matching entities, for each distinct attribute value. * `count(numeric_histogram_facet, list of buckets)`: Count the number of matching entities within each bucket. Data types: * Histogram facet: facet names with format a-zA-Z+. * String: string like \"any string with backslash escape for quote(\\\").\" * Number: whole number and floating point number like 10, -1 and -0.01. * List: list of elements with comma(,) separator surrounded by square brackets, for example, [1, 2, 3] and [\"one\", \"two\", \"three\"]. Built-in constants: * MIN (minimum number similar to java Double.MIN_VALUE) * MAX (maximum number similar to java Double.MAX_VALUE) Built-in functions: * bucket(start, end[, label]): bucket built-in function creates a bucket with range of start, end). Note that the end is exclusive, for example, bucket(1, MAX, \"positive number\") or bucket(1, 10). Job histogram facets: * company_display_name: histogram by [Job.company_display_name. * employment_type: histogram by Job.employment_types, for example, \"FULL_TIME\", \"PART_TIME\". * company_size: histogram by CompanySize, for example, \"SMALL\", \"MEDIUM\", \"BIG\". * publish_time_in_day: histogram by the Job.posting_publish_time in days. Must specify list of numeric buckets in spec. * publish_time_in_month: histogram by the Job.posting_publish_time in months. Must specify list of numeric buckets in spec. * publish_time_in_year: histogram by the Job.posting_publish_time in years. Must specify list of numeric buckets in spec. * degree_types: histogram by the Job.degree_types, for example, \"Bachelors\", \"Masters\". * job_level: histogram by the Job.job_level, for example, \"Entry Level\". * country: histogram by the country code of jobs, for example, \"US\", \"FR\". * admin1: histogram by the admin1 code of jobs, which is a global placeholder referring to the state, province, or the particular term a country uses to define the geographic structure below the country level, for example, \"CA\", \"IL\". * city: histogram by a combination of the \"city name, admin1 code\". For example, \"Mountain View, CA\", \"New York, NY\". * admin1_country: histogram by a combination of the \"admin1 code, country\", for example, \"CA, US\", \"IL, US\". * city_coordinate: histogram by the city center's GPS coordinates (latitude and longitude), for example, 37.4038522,-122.0987765. Since the coordinates of a city center can change, customers may need to refresh them periodically. * locale: histogram by the Job.language_code, for example, \"en-US\", \"fr-FR\". * language: histogram by the language subtag of the Job.language_code, for example, \"en\", \"fr\". * category: histogram by the JobCategory, for example, \"COMPUTER_AND_IT\", \"HEALTHCARE\". * base_compensation_unit: histogram by the CompensationInfo.CompensationUnit of base salary, for example, \"WEEKLY\", \"MONTHLY\". * base_compensation: histogram by the base salary. Must specify list of numeric buckets to group results by. * annualized_base_compensation: histogram by the base annualized salary. Must specify list of numeric buckets to group results by. * annualized_total_compensation: histogram by the total annualized salary. Must specify list of numeric buckets to group results by. * string_custom_attribute: histogram by string Job.custom_attributes. Values can be accessed via square bracket notations like string_custom_attribute[\"key1\"]. * numeric_custom_attribute: histogram by numeric Job.custom_attributes. Values can be accessed via square bracket notations like numeric_custom_attribute[\"key1\"]. Must specify list of numeric buckets to group results by. Example expressions: * `count(admin1)` * `count(base_compensation, [bucket(1000, 10000), bucket(10000, 100000), bucket(100000, MAX)])` * `count(string_custom_attribute[\"some-string-custom-attribute\"])` * `count(numeric_custom_attribute[\"some-numeric-custom-attribute\"], [bucket(MIN, 0, \"negative\"), bucket(0, MAX, \"non-negative\")])`",
           "items": {
             "$ref": "HistogramQuery"
           },
@@ -2743,6 +2785,22 @@
             "A minimal view of the job, with the following attributes: Job.name, Job.requisition_id, Job.title, Job.company, Job.DerivedInfo.locations, Job.language_code.",
             "A small view of the job, with the following attributes in the search results: Job.name, Job.requisition_id, Job.title, Job.company, Job.DerivedInfo.locations, Job.visibility, Job.language_code, Job.description.",
             "All available attributes are included in the search results."
+          ],
+          "type": "string"
+        },
+        "keywordMatchMode": {
+          "description": "Controls what keyword match options to use. If both keyword_match_mode and disable_keyword_match are set, keyword_match_mode will take precedence. Defaults to KeywordMatchMode.KEYWORD_MATCH_ALL if no value is specified.",
+          "enum": [
+            "KEYWORD_MATCH_MODE_UNSPECIFIED",
+            "KEYWORD_MATCH_DISABLED",
+            "KEYWORD_MATCH_ALL",
+            "KEYWORD_MATCH_TITLE_ONLY"
+          ],
+          "enumDescriptions": [
+            "The keyword match option isn't specified. Defaults to KeywordMatchMode.KEYWORD_MATCH_ALL behavior.",
+            "Disables keyword matching.",
+            "Enable keyword matching over Job.title, Job.description, Job.company_display_name, Job.addresses, Job.qualifications, and keyword searchable Job.custom_attributes fields.",
+            "Only enable keyword matching over Job.title."
           ],
           "type": "string"
         },

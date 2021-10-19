@@ -142,6 +142,7 @@ func (s *Service) userAgent() string {
 func NewBiddersService(s *Service) *BiddersService {
 	rs := &BiddersService{s: s}
 	rs.Creatives = NewBiddersCreativesService(s)
+	rs.Endpoints = NewBiddersEndpointsService(s)
 	rs.PretargetingConfigs = NewBiddersPretargetingConfigsService(s)
 	return rs
 }
@@ -150,6 +151,8 @@ type BiddersService struct {
 	s *Service
 
 	Creatives *BiddersCreativesService
+
+	Endpoints *BiddersEndpointsService
 
 	PretargetingConfigs *BiddersPretargetingConfigsService
 }
@@ -160,6 +163,15 @@ func NewBiddersCreativesService(s *Service) *BiddersCreativesService {
 }
 
 type BiddersCreativesService struct {
+	s *Service
+}
+
+func NewBiddersEndpointsService(s *Service) *BiddersEndpointsService {
+	rs := &BiddersEndpointsService{s: s}
+	return rs
+}
+
+type BiddersEndpointsService struct {
 	s *Service
 }
 
@@ -210,6 +222,67 @@ type BuyersUserListsService struct {
 type ActivatePretargetingConfigRequest struct {
 }
 
+// AdTechnologyProviders: The list of detected Ad Technology Providers
+// for this creative. Bids placed for inventory that will serve to EEA
+// or UK users are expected to comply with GDPR requirements. You must
+// ensure that the creatives used in such bids should contain only user
+// consented ad technology providers as indicated in the bid request.
+// Google reserves the right to filter non-compliant bids. User
+// consented ad technology providers can be found in the Google Protocol
+// (https://developers.google.com/authorized-buyers/rtb/downloads/realtime-bidding-proto)
+// with the `BidRequest.adslot.consented_providers_settings` field, and
+// can be found as an OpenRTB extension
+// (https://developers.google.com/authorized-buyers/rtb/downloads/openrtb-adx-proto)
+// with the `BidRequest.user.ext.consented_providers_settings` and
+// `BidRequest.user.ext.consent` fields. See
+// https://support.google.com/authorizedbuyers/answer/9789378 for
+// additional information about the Google TCF v2 integration.
+type AdTechnologyProviders struct {
+	// DetectedGvlIds: The detected IAB Global Vendor List (GVL) IDs for
+	// this creative. See the IAB Global Vendor List at
+	// https://vendorlist.consensu.org/v2/vendor-list.json for details about
+	// the vendors.
+	DetectedGvlIds googleapi.Int64s `json:"detectedGvlIds,omitempty"`
+
+	// DetectedProviderIds: The detected Google Ad Tech Providers (ATP)
+	// (https://support.google.com/admanager/answer/9012903) for this
+	// creative. See
+	// https://storage.googleapis.com/adx-rtb-dictionaries/providers.csv for
+	// mapping of provider ID to provided name, a privacy policy URL, and a
+	// list of domains which can be attributed to the provider.
+	DetectedProviderIds googleapi.Int64s `json:"detectedProviderIds,omitempty"`
+
+	// UnidentifiedProviderDomains: Domains of detected unidentified ad
+	// technology providers (if any). You must ensure that the creatives
+	// used in bids placed for inventory that will serve to EEA or UK users
+	// does not contain unidentified ad technology providers. Google
+	// reserves the right to filter non-compliant bids.
+	UnidentifiedProviderDomains []string `json:"unidentifiedProviderDomains,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DetectedGvlIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectedGvlIds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdTechnologyProviders) MarshalJSON() ([]byte, error) {
+	type NoMethod AdTechnologyProviders
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AddTargetedAppsRequest: A request to start targeting the provided app
 // IDs in a specific pretargeting configuration. The pretargeting
 // configuration itself specifies how these apps are targeted. in
@@ -237,10 +310,10 @@ type AddTargetedAppsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AppIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppIds") to include in API
@@ -288,10 +361,10 @@ type AddTargetedPublishersRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "PublisherIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PublisherIds") to include
@@ -335,10 +408,10 @@ type AddTargetedSitesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Sites") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Sites") to include in API
@@ -380,10 +453,10 @@ type AdvertiserAndBrand struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserId") to include
@@ -417,11 +490,11 @@ type AppTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "MobileAppCategoryTargeting") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -436,6 +509,138 @@ type AppTargeting struct {
 
 func (s *AppTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod AppTargeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Bidder: Bidder settings.
+type Bidder struct {
+	// BypassNonguaranteedDealsPretargeting: Output only. A flag to bypass
+	// pretargeting for private auctions and preferred deals. When true, bid
+	// requests from these nonguaranteed deals will always be sent. When
+	// false, bid requests will be subject to regular pretargeting
+	// configurations. Programmatic Guaranteed deals will always be sent to
+	// the bidder, regardless of the value for this flag. Auction packages
+	// are not impacted by this value and are subject to the regular
+	// pretargeting configurations.
+	BypassNonguaranteedDealsPretargeting bool `json:"bypassNonguaranteedDealsPretargeting,omitempty"`
+
+	// CookieMatchingNetworkId: Output only. The buyer's network ID used for
+	// cookie matching. This ID corresponds to the `google_nid` parameter in
+	// the URL used in cookie match requests. Refer to
+	// https://developers.google.com/authorized-buyers/rtb/cookie-guide for
+	// further information.
+	CookieMatchingNetworkId string `json:"cookieMatchingNetworkId,omitempty"`
+
+	// CookieMatchingUrl: Output only. The base URL used in cookie match
+	// requests. Refer to
+	// https://developers.google.com/authorized-buyers/rtb/cookie-guide for
+	// further information.
+	CookieMatchingUrl string `json:"cookieMatchingUrl,omitempty"`
+
+	// DealsBillingId: Output only. The billing ID for the deals
+	// pretargeting config. This billing ID is sent on the bid request for
+	// guaranteed and nonguaranteed deals matched in pretargeting.
+	DealsBillingId string `json:"dealsBillingId,omitempty"`
+
+	// Name: Output only. Name of the bidder resource that must follow the
+	// pattern `bidders/{bidderAccountId}`, where `{bidderAccountId}` is the
+	// account ID of the bidder whose information is to be received. One can
+	// get their account ID on the Authorized Buyers or Open Bidding UI, or
+	// by contacting their Google account manager.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BypassNonguaranteedDealsPretargeting") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "BypassNonguaranteedDealsPretargeting") to include in API requests
+	// with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. However, any field with an empty value
+	// appearing in NullFields will be sent to the server as null. It is an
+	// error if a field in this list has a non-empty value. This may be used
+	// to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Bidder) MarshalJSON() ([]byte, error) {
+	type NoMethod Bidder
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Buyer: RTB Buyer account information.
+type Buyer struct {
+	// ActiveCreativeCount: Output only. The number of creatives that this
+	// buyer submitted via the API or bid with in the last 30 days. This is
+	// counted against the maximum number of active creatives.
+	ActiveCreativeCount int64 `json:"activeCreativeCount,omitempty,string"`
+
+	// Bidder: Output only. The name of the bidder resource that is
+	// responsible for receiving bidding traffic for this account. The
+	// bidder name must follow the pattern `bidders/{bidderAccountId}`,
+	// where `{bidderAccountId}` is the account ID of the bidder receiving
+	// traffic for this buyer.
+	Bidder string `json:"bidder,omitempty"`
+
+	// BillingIds: Output only. A list of billing IDs associated with this
+	// account. These IDs appear on: 1. A bid request, to signal which
+	// buyers are eligible to bid on a given opportunity, and which
+	// pretargeting configurations were matched for each eligible buyer. 2.
+	// The bid response, to attribute a winning impression to a specific
+	// account for billing, reporting, policy and publisher block
+	// enforcement.
+	BillingIds []string `json:"billingIds,omitempty"`
+
+	// DisplayName: Output only. The diplay name associated with this buyer
+	// account, as visible to sellers.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// MaximumActiveCreativeCount: Output only. The maximum number of active
+	// creatives that this buyer can have.
+	MaximumActiveCreativeCount int64 `json:"maximumActiveCreativeCount,omitempty,string"`
+
+	// Name: Output only. Name of the buyer resource that must follow the
+	// pattern `buyers/{buyerAccountId}`, where `{buyerAccountId}` is the
+	// account ID of the buyer account whose information is to be received.
+	// One can get their account ID on the Authorized Buyers or Open Bidding
+	// UI, or by contacting their Google account manager.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ActiveCreativeCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActiveCreativeCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Buyer) MarshalJSON() ([]byte, error) {
+	type NoMethod Buyer
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -624,10 +829,10 @@ type Creative struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -656,10 +861,10 @@ type CreativeDimensions struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -680,6 +885,9 @@ func (s *CreativeDimensions) MarshalJSON() ([]byte, error) {
 // CreativeServingDecision: Top level status and detected attributes of
 // a creative.
 type CreativeServingDecision struct {
+	// AdTechnologyProviders: The detected ad technology providers.
+	AdTechnologyProviders *AdTechnologyProviders `json:"adTechnologyProviders,omitempty"`
+
 	// ChinaPolicyCompliance: The policy compliance of this creative in
 	// China. When approved or disapproved, this applies to both deals and
 	// open auction in China. When pending review, this creative is allowed
@@ -826,15 +1034,15 @@ type CreativeServingDecision struct {
 	RussiaPolicyCompliance *PolicyCompliance `json:"russiaPolicyCompliance,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "ChinaPolicyCompliance") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// "AdTechnologyProviders") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ChinaPolicyCompliance") to
+	// NullFields is a list of field names (e.g. "AdTechnologyProviders") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -875,10 +1083,10 @@ type Date struct {
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Day") to include in API
@@ -920,10 +1128,10 @@ type DestinationNotCrawlableEvidence struct {
 
 	// ForceSendFields is a list of field names (e.g. "CrawlTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CrawlTime") to include in
@@ -1006,10 +1214,10 @@ type DestinationNotWorkingEvidence struct {
 
 	// ForceSendFields is a list of field names (e.g. "DnsError") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DnsError") to include in
@@ -1034,10 +1242,10 @@ type DestinationUrlEvidence struct {
 
 	// ForceSendFields is a list of field names (e.g. "DestinationUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DestinationUrl") to
@@ -1070,10 +1278,10 @@ type DomainCallEvidence struct {
 
 	// ForceSendFields is a list of field names (e.g. "TopHttpCallDomains")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TopHttpCallDomains") to
@@ -1102,10 +1310,10 @@ type DomainCalls struct {
 
 	// ForceSendFields is a list of field names (e.g. "Domain") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Domain") to include in API
@@ -1136,11 +1344,11 @@ type DownloadSizeEvidence struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "TopUrlDownloadSizeBreakdowns") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -1171,6 +1379,80 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// Endpoint: Bidder endpoint that receives bid requests.
+type Endpoint struct {
+	// BidProtocol: The protocol that the bidder endpoint is using.
+	//
+	// Possible values:
+	//   "BID_PROTOCOL_UNSPECIFIED" - Placeholder for undefined bid
+	// protocol. This value should not be used.
+	//   "GOOGLE_RTB" - Google RTB protocol / Protobuf encoding.
+	//   "OPENRTB_2_2" - OpenRTB / JSON encoding, specification version 2.2.
+	//   "OPENRTB_2_3" - OpenRTB / JSON encoding, specification version 2.3.
+	//   "OPENRTB_PROTOBUF_2_3" - OpenRTB / Protobuf encoding, specification
+	// version 2.3.
+	//   "OPENRTB_2_4" - OpenRTB / JSON encoding, specification version 2.4.
+	//   "OPENRTB_PROTOBUF_2_4" - OpenRTB / Protobuf encoding, specification
+	// version 2.4.
+	//   "OPENRTB_2_5" - OpenRTB / JSON encoding, specification version 2.5.
+	//   "OPENRTB_PROTOBUF_2_5" - OpenRTB / Protobuf encoding, specification
+	// version 2.5.
+	BidProtocol string `json:"bidProtocol,omitempty"`
+
+	// MaximumQps: The maximum number of queries per second allowed to be
+	// sent to this server.
+	MaximumQps int64 `json:"maximumQps,omitempty,string"`
+
+	// Name: Output only. Name of the endpoint resource that must follow the
+	// pattern `bidders/{bidderAccountId}/endpoints/{endpointId}`, where
+	// {bidderAccountId} is the account ID of the bidder who operates this
+	// endpoint, and {endpointId} is a unique ID assigned by the server.
+	Name string `json:"name,omitempty"`
+
+	// TradingLocation: The trading location that bid requests should be
+	// sent from. See
+	// https://developers.google.com/authorized-buyers/rtb/peer-guide#trading-locations
+	// for further information.
+	//
+	// Possible values:
+	//   "TRADING_LOCATION_UNSPECIFIED" - A placeholder for an undefined
+	// trading region. This value should not be used.
+	//   "US_WEST" - The Western US trading location.
+	//   "US_EAST" - The Eastern US trading location.
+	//   "EUROPE" - The European trading location.
+	//   "ASIA" - The Asia trading location.
+	TradingLocation string `json:"tradingLocation,omitempty"`
+
+	// Url: Output only. The URL that bid requests should be sent to.
+	Url string `json:"url,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BidProtocol") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BidProtocol") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Endpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod Endpoint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GetRemarketingTagResponse: Response for a request to get remarketing
 // tag.
 type GetRemarketingTagResponse struct {
@@ -1186,10 +1468,10 @@ type GetRemarketingTagResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Snippet") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Snippet") to include in
@@ -1223,10 +1505,10 @@ type HtmlContent struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -1252,10 +1534,10 @@ type HttpCallEvidence struct {
 
 	// ForceSendFields is a list of field names (e.g. "Urls") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Urls") to include in API
@@ -1290,10 +1572,10 @@ type HttpCookieEvidence struct {
 
 	// ForceSendFields is a list of field names (e.g. "CookieNames") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CookieNames") to include
@@ -1325,10 +1607,10 @@ type Image struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -1342,6 +1624,80 @@ type Image struct {
 
 func (s *Image) MarshalJSON() ([]byte, error) {
 	type NoMethod Image
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListBiddersResponse: A response containing bidders.
+type ListBiddersResponse struct {
+	// Bidders: List of bidders.
+	Bidders []*Bidder `json:"bidders,omitempty"`
+
+	// NextPageToken: A token which can be passed to a subsequent call to
+	// the `ListBidders` method to retrieve the next page of results in
+	// ListBiddersRequest.pageToken.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Bidders") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bidders") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListBiddersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBiddersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListBuyersResponse: A response containing buyer account information.
+type ListBuyersResponse struct {
+	// Buyers: List of buyers.
+	Buyers []*Buyer `json:"buyers,omitempty"`
+
+	// NextPageToken: A token which can be passed to a subsequent call to
+	// the `ListBuyers` method to retrieve the next page of results in
+	// ListBuyersRequest.pageToken.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Buyers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Buyers") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListBuyersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBuyersResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1363,10 +1719,10 @@ type ListCreativesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Creatives") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Creatives") to include in
@@ -1380,6 +1736,43 @@ type ListCreativesResponse struct {
 
 func (s *ListCreativesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCreativesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListEndpointsResponse: A response containing bidder endpoints.
+type ListEndpointsResponse struct {
+	// Endpoints: List of bidder endpoints.
+	Endpoints []*Endpoint `json:"endpoints,omitempty"`
+
+	// NextPageToken: A token which can be passed to a subsequent call to
+	// the `ListEndpoints` method to retrieve the next page of results in
+	// ListEndpointsRequest.pageToken.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Endpoints") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Endpoints") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListEndpointsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEndpointsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1401,10 +1794,10 @@ type ListPretargetingConfigsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1440,10 +1833,10 @@ type ListUserListsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1495,10 +1888,10 @@ type MediaFile struct {
 
 	// ForceSendFields is a list of field names (e.g. "Bitrate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Bitrate") to include in
@@ -1559,12 +1952,15 @@ type NativeContent struct {
 	// VideoUrl: The URL to fetch a native video ad.
 	VideoUrl string `json:"videoUrl,omitempty"`
 
+	// VideoVastXml: The contents of a VAST document for a native video ad.
+	VideoVastXml string `json:"videoVastXml,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AdvertiserName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserName") to
@@ -1609,10 +2005,10 @@ type NumericTargetingDimension struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExcludedIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExcludedIds") to include
@@ -1655,10 +2051,10 @@ type PolicyCompliance struct {
 
 	// ForceSendFields is a list of field names (e.g. "Status") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Status") to include in API
@@ -1697,10 +2093,10 @@ type PolicyTopicEntry struct {
 
 	// ForceSendFields is a list of field names (e.g. "Evidences") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Evidences") to include in
@@ -1748,11 +2144,11 @@ type PolicyTopicEvidence struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DestinationNotCrawlable") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DestinationNotCrawlable")
@@ -1982,11 +2378,11 @@ type PretargetingConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowedUserTargetingModes") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -2017,10 +2413,10 @@ type RemoveTargetedAppsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AppIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppIds") to include in API
@@ -2054,10 +2450,10 @@ type RemoveTargetedPublishersRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "PublisherIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PublisherIds") to include
@@ -2087,10 +2483,10 @@ type RemoveTargetedSitesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Sites") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Sites") to include in API
@@ -2127,10 +2523,10 @@ type StringTargetingDimension struct {
 
 	// ForceSendFields is a list of field names (e.g. "TargetingMode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TargetingMode") to include
@@ -2164,10 +2560,10 @@ type UrlDownloadSize struct {
 
 	// ForceSendFields is a list of field names (e.g. "DownloadSizeKb") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DownloadSizeKb") to
@@ -2225,10 +2621,10 @@ type UrlRestriction struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndDate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndDate") to include in
@@ -2291,10 +2687,10 @@ type UserList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -2326,10 +2722,10 @@ type VideoContent struct {
 
 	// ForceSendFields is a list of field names (e.g. "VideoMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "VideoMetadata") to include
@@ -2387,10 +2783,10 @@ type VideoMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Duration") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Duration") to include in
@@ -2436,10 +2832,10 @@ type WatchCreativesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Subscription") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Subscription") to include
@@ -2457,6 +2853,333 @@ func (s *WatchCreativesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "realtimebidding.bidders.get":
+
+type BiddersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a bidder account by its name.
+//
+// - name: Name of the bidder to get. Format:
+//   `bidders/{bidderAccountId}`.
+func (r *BiddersService) Get(name string) *BiddersGetCall {
+	c := &BiddersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersGetCall) Fields(s ...googleapi.Field) *BiddersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BiddersGetCall) IfNoneMatch(entityTag string) *BiddersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersGetCall) Context(ctx context.Context) *BiddersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.get" call.
+// Exactly one of *Bidder or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Bidder.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *BiddersGetCall) Do(opts ...googleapi.CallOption) (*Bidder, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Bidder{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a bidder account by its name.",
+	//   "flatPath": "v1/bidders/{biddersId}",
+	//   "httpMethod": "GET",
+	//   "id": "realtimebidding.bidders.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the bidder to get. Format: `bidders/{bidderAccountId}`",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Bidder"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// method id "realtimebidding.bidders.list":
+
+type BiddersListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the bidder accounts that belong to the caller.
+func (r *BiddersService) List() *BiddersListCall {
+	c := &BiddersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of bidders to return. If unspecified, at most 100 bidders will be
+// returned. The maximum value is 500; values above 500 will be coerced
+// to 500.
+func (c *BiddersListCall) PageSize(pageSize int64) *BiddersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. This value is
+// received from a previous `ListBidders` call in
+// ListBiddersResponse.nextPageToken.
+func (c *BiddersListCall) PageToken(pageToken string) *BiddersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersListCall) Fields(s ...googleapi.Field) *BiddersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BiddersListCall) IfNoneMatch(entityTag string) *BiddersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersListCall) Context(ctx context.Context) *BiddersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/bidders")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.list" call.
+// Exactly one of *ListBiddersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListBiddersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BiddersListCall) Do(opts ...googleapi.CallOption) (*ListBiddersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListBiddersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the bidder accounts that belong to the caller.",
+	//   "flatPath": "v1/bidders",
+	//   "httpMethod": "GET",
+	//   "id": "realtimebidding.bidders.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of bidders to return. If unspecified, at most 100 bidders will be returned. The maximum value is 500; values above 500 will be coerced to 500.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. This value is received from a previous `ListBidders` call in ListBiddersResponse.nextPageToken.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/bidders",
+	//   "response": {
+	//     "$ref": "ListBiddersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BiddersListCall) Pages(ctx context.Context, f func(*ListBiddersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "realtimebidding.bidders.creatives.list":
 
 type BiddersCreativesListCall struct {
@@ -2469,6 +3192,20 @@ type BiddersCreativesListCall struct {
 }
 
 // List: Lists creatives.
+//
+// - parent: Name of the parent buyer that owns the creatives. The
+//   pattern for this resource is either `buyers/{buyerAccountId}` or
+//   `bidders/{bidderAccountId}`. For `buyers/{buyerAccountId}`, the
+//   `buyerAccountId` can be one of the following: 1. The ID of the
+//   buyer that is accessing their own creatives. 2. The ID of the child
+//   seat buyer under a bidder account. So for listing creatives
+//   pertaining to the child seat buyer (`456`) under bidder account
+//   (`123`), you would use the pattern: `buyers/456`. 3. The ID of the
+//   bidder itself. So for listing creatives pertaining to bidder
+//   (`123`), you would use `buyers/123`. If you want to access all
+//   creatives pertaining to both the bidder and all of its child seat
+//   accounts, you would use `bidders/{bidderAccountId}`, e.g., for all
+//   creatives pertaining to bidder (`123`), use `bidders/123`.
 func (r *BiddersCreativesService) List(parent string) *BiddersCreativesListCall {
 	c := &BiddersCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2559,7 +3296,7 @@ func (c *BiddersCreativesListCall) Header() http.Header {
 
 func (c *BiddersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2718,6 +3455,10 @@ type BiddersCreativesWatchCall struct {
 // accounts will have access to read from the topic. Subsequent
 // invocations of this method will return the existing Pub/Sub
 // configuration.
+//
+// - parent: To watch all creatives pertaining to the bidder and all its
+//   child seat accounts, the bidder must follow the pattern
+//   `bidders/{bidderAccountId}`.
 func (r *BiddersCreativesService) Watch(parent string, watchcreativesrequest *WatchCreativesRequest) *BiddersCreativesWatchCall {
 	c := &BiddersCreativesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2752,7 +3493,7 @@ func (c *BiddersCreativesWatchCall) Header() http.Header {
 
 func (c *BiddersCreativesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2846,6 +3587,350 @@ func (c *BiddersCreativesWatchCall) Do(opts ...googleapi.CallOption) (*WatchCrea
 
 }
 
+// method id "realtimebidding.bidders.endpoints.get":
+
+type BiddersEndpointsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a bidder endpoint by its name.
+//
+// - name: Name of the bidder endpoint to get. Format:
+//   `bidders/{bidderAccountId}/endpoints/{endpointId}`.
+func (r *BiddersEndpointsService) Get(name string) *BiddersEndpointsGetCall {
+	c := &BiddersEndpointsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersEndpointsGetCall) Fields(s ...googleapi.Field) *BiddersEndpointsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BiddersEndpointsGetCall) IfNoneMatch(entityTag string) *BiddersEndpointsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersEndpointsGetCall) Context(ctx context.Context) *BiddersEndpointsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersEndpointsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersEndpointsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.endpoints.get" call.
+// Exactly one of *Endpoint or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Endpoint.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *BiddersEndpointsGetCall) Do(opts ...googleapi.CallOption) (*Endpoint, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Endpoint{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a bidder endpoint by its name.",
+	//   "flatPath": "v1/bidders/{biddersId}/endpoints/{endpointsId}",
+	//   "httpMethod": "GET",
+	//   "id": "realtimebidding.bidders.endpoints.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the bidder endpoint to get. Format: `bidders/{bidderAccountId}/endpoints/{endpointId}`",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+/endpoints/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Endpoint"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// method id "realtimebidding.bidders.endpoints.list":
+
+type BiddersEndpointsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the bidder's endpoints.
+//
+// - parent: Name of the bidder whose endpoints will be listed. Format:
+//   `bidders/{bidderAccountId}`.
+func (r *BiddersEndpointsService) List(parent string) *BiddersEndpointsListCall {
+	c := &BiddersEndpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of endpoints to return. If unspecified, at most 100 endpoints will be
+// returned. The maximum value is 500; values above 500 will be coerced
+// to 500.
+func (c *BiddersEndpointsListCall) PageSize(pageSize int64) *BiddersEndpointsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. This value is
+// received from a previous `ListEndpoints` call in
+// ListEndpointsResponse.nextPageToken.
+func (c *BiddersEndpointsListCall) PageToken(pageToken string) *BiddersEndpointsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersEndpointsListCall) Fields(s ...googleapi.Field) *BiddersEndpointsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BiddersEndpointsListCall) IfNoneMatch(entityTag string) *BiddersEndpointsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersEndpointsListCall) Context(ctx context.Context) *BiddersEndpointsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersEndpointsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersEndpointsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/endpoints")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.bidders.endpoints.list" call.
+// Exactly one of *ListEndpointsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListEndpointsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BiddersEndpointsListCall) Do(opts ...googleapi.CallOption) (*ListEndpointsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListEndpointsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the bidder's endpoints.",
+	//   "flatPath": "v1/bidders/{biddersId}/endpoints",
+	//   "httpMethod": "GET",
+	//   "id": "realtimebidding.bidders.endpoints.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of endpoints to return. If unspecified, at most 100 endpoints will be returned. The maximum value is 500; values above 500 will be coerced to 500.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. This value is received from a previous `ListEndpoints` call in ListEndpointsResponse.nextPageToken.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the bidder whose endpoints will be listed. Format: `bidders/{bidderAccountId}`",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/endpoints",
+	//   "response": {
+	//     "$ref": "ListEndpointsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BiddersEndpointsListCall) Pages(ctx context.Context, f func(*ListEndpointsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "realtimebidding.bidders.pretargetingConfigs.activate":
 
 type BiddersPretargetingConfigsActivateCall struct {
@@ -2858,6 +3943,9 @@ type BiddersPretargetingConfigsActivateCall struct {
 }
 
 // Activate: Activates a pretargeting configuration.
+//
+// - name: The name of the pretargeting configuration. Format:
+//   bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) Activate(name string, activatepretargetingconfigrequest *ActivatePretargetingConfigRequest) *BiddersPretargetingConfigsActivateCall {
 	c := &BiddersPretargetingConfigsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2892,7 +3980,7 @@ func (c *BiddersPretargetingConfigsActivateCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2999,6 +4087,9 @@ type BiddersPretargetingConfigsAddTargetedAppsCall struct {
 
 // AddTargetedApps: Adds targeted apps to the pretargeting
 // configuration.
+//
+// - pretargetingConfig: The name of the pretargeting configuration.
+//   Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) AddTargetedApps(pretargetingConfig string, addtargetedappsrequest *AddTargetedAppsRequest) *BiddersPretargetingConfigsAddTargetedAppsCall {
 	c := &BiddersPretargetingConfigsAddTargetedAppsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pretargetingConfig = pretargetingConfig
@@ -3033,7 +4124,7 @@ func (c *BiddersPretargetingConfigsAddTargetedAppsCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsAddTargetedAppsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3140,6 +4231,9 @@ type BiddersPretargetingConfigsAddTargetedPublishersCall struct {
 
 // AddTargetedPublishers: Adds targeted publishers to the pretargeting
 // config.
+//
+// - pretargetingConfig: The name of the pretargeting configuration.
+//   Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) AddTargetedPublishers(pretargetingConfig string, addtargetedpublishersrequest *AddTargetedPublishersRequest) *BiddersPretargetingConfigsAddTargetedPublishersCall {
 	c := &BiddersPretargetingConfigsAddTargetedPublishersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pretargetingConfig = pretargetingConfig
@@ -3174,7 +4268,7 @@ func (c *BiddersPretargetingConfigsAddTargetedPublishersCall) Header() http.Head
 
 func (c *BiddersPretargetingConfigsAddTargetedPublishersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3281,6 +4375,9 @@ type BiddersPretargetingConfigsAddTargetedSitesCall struct {
 
 // AddTargetedSites: Adds targeted sites to the pretargeting
 // configuration.
+//
+// - pretargetingConfig: The name of the pretargeting configuration.
+//   Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) AddTargetedSites(pretargetingConfig string, addtargetedsitesrequest *AddTargetedSitesRequest) *BiddersPretargetingConfigsAddTargetedSitesCall {
 	c := &BiddersPretargetingConfigsAddTargetedSitesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pretargetingConfig = pretargetingConfig
@@ -3315,7 +4412,7 @@ func (c *BiddersPretargetingConfigsAddTargetedSitesCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsAddTargetedSitesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3425,6 +4522,9 @@ type BiddersPretargetingConfigsCreateCall struct {
 // creation, and it will start to affect traffic shortly after. A bidder
 // may create a maximum of 10 pretargeting configurations. Attempts to
 // exceed this maximum results in a 400 bad request error.
+//
+// - parent: Name of the bidder to create the pretargeting configuration
+//   for. Format: bidders/{bidderAccountId}.
 func (r *BiddersPretargetingConfigsService) Create(parent string, pretargetingconfig *PretargetingConfig) *BiddersPretargetingConfigsCreateCall {
 	c := &BiddersPretargetingConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3459,7 +4559,7 @@ func (c *BiddersPretargetingConfigsCreateCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3564,6 +4664,9 @@ type BiddersPretargetingConfigsDeleteCall struct {
 }
 
 // Delete: Deletes a pretargeting configuration.
+//
+// - name: The name of the pretargeting configuration to delete. Format:
+//   bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) Delete(name string) *BiddersPretargetingConfigsDeleteCall {
 	c := &BiddersPretargetingConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3597,7 +4700,7 @@ func (c *BiddersPretargetingConfigsDeleteCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3695,6 +4798,9 @@ type BiddersPretargetingConfigsGetCall struct {
 }
 
 // Get: Gets a pretargeting configuration.
+//
+// - name: Name of the pretargeting configuration to get. Format:
+//   bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) Get(name string) *BiddersPretargetingConfigsGetCall {
 	c := &BiddersPretargetingConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3738,7 +4844,7 @@ func (c *BiddersPretargetingConfigsGetCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3839,6 +4945,9 @@ type BiddersPretargetingConfigsListCall struct {
 }
 
 // List: Lists all pretargeting configurations for a single bidder.
+//
+// - parent: Name of the bidder whose pretargeting configurations will
+//   be listed. Format: bidders/{bidderAccountId}.
 func (r *BiddersPretargetingConfigsService) List(parent string) *BiddersPretargetingConfigsListCall {
 	c := &BiddersPretargetingConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3900,7 +5009,7 @@ func (c *BiddersPretargetingConfigsListCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4033,6 +5142,10 @@ type BiddersPretargetingConfigsPatchCall struct {
 }
 
 // Patch: Updates a pretargeting configuration.
+//
+// - name: Output only. Name of the pretargeting configuration that must
+//   follow the pattern
+//   `bidders/{bidder_account_id}/pretargetingConfigs/{config_id}`.
 func (r *BiddersPretargetingConfigsService) Patch(name string, pretargetingconfig *PretargetingConfig) *BiddersPretargetingConfigsPatchCall {
 	c := &BiddersPretargetingConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4074,7 +5187,7 @@ func (c *BiddersPretargetingConfigsPatchCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4187,6 +5300,9 @@ type BiddersPretargetingConfigsRemoveTargetedAppsCall struct {
 
 // RemoveTargetedApps: Removes targeted apps from the pretargeting
 // configuration.
+//
+// - pretargetingConfig: The name of the pretargeting configuration.
+//   Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) RemoveTargetedApps(pretargetingConfig string, removetargetedappsrequest *RemoveTargetedAppsRequest) *BiddersPretargetingConfigsRemoveTargetedAppsCall {
 	c := &BiddersPretargetingConfigsRemoveTargetedAppsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pretargetingConfig = pretargetingConfig
@@ -4221,7 +5337,7 @@ func (c *BiddersPretargetingConfigsRemoveTargetedAppsCall) Header() http.Header 
 
 func (c *BiddersPretargetingConfigsRemoveTargetedAppsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4328,6 +5444,9 @@ type BiddersPretargetingConfigsRemoveTargetedPublishersCall struct {
 
 // RemoveTargetedPublishers: Removes targeted publishers from the
 // pretargeting config.
+//
+// - pretargetingConfig: The name of the pretargeting configuration.
+//   Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) RemoveTargetedPublishers(pretargetingConfig string, removetargetedpublishersrequest *RemoveTargetedPublishersRequest) *BiddersPretargetingConfigsRemoveTargetedPublishersCall {
 	c := &BiddersPretargetingConfigsRemoveTargetedPublishersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pretargetingConfig = pretargetingConfig
@@ -4362,7 +5481,7 @@ func (c *BiddersPretargetingConfigsRemoveTargetedPublishersCall) Header() http.H
 
 func (c *BiddersPretargetingConfigsRemoveTargetedPublishersCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4469,6 +5588,9 @@ type BiddersPretargetingConfigsRemoveTargetedSitesCall struct {
 
 // RemoveTargetedSites: Removes targeted sites from the pretargeting
 // configuration.
+//
+// - pretargetingConfig: The name of the pretargeting configuration.
+//   Format: bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) RemoveTargetedSites(pretargetingConfig string, removetargetedsitesrequest *RemoveTargetedSitesRequest) *BiddersPretargetingConfigsRemoveTargetedSitesCall {
 	c := &BiddersPretargetingConfigsRemoveTargetedSitesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.pretargetingConfig = pretargetingConfig
@@ -4503,7 +5625,7 @@ func (c *BiddersPretargetingConfigsRemoveTargetedSitesCall) Header() http.Header
 
 func (c *BiddersPretargetingConfigsRemoveTargetedSitesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4609,6 +5731,9 @@ type BiddersPretargetingConfigsSuspendCall struct {
 }
 
 // Suspend: Suspends a pretargeting configuration.
+//
+// - name: The name of the pretargeting configuration. Format:
+//   bidders/{bidderAccountId}/pretargetingConfig/{configId}.
 func (r *BiddersPretargetingConfigsService) Suspend(name string, suspendpretargetingconfigrequest *SuspendPretargetingConfigRequest) *BiddersPretargetingConfigsSuspendCall {
 	c := &BiddersPretargetingConfigsSuspendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4643,7 +5768,7 @@ func (c *BiddersPretargetingConfigsSuspendCall) Header() http.Header {
 
 func (c *BiddersPretargetingConfigsSuspendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4737,6 +5862,152 @@ func (c *BiddersPretargetingConfigsSuspendCall) Do(opts ...googleapi.CallOption)
 
 }
 
+// method id "realtimebidding.buyers.get":
+
+type BuyersGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a buyer account by its name.
+//
+// - name: Name of the buyer to get. Format: `buyers/{buyerId}`.
+func (r *BuyersService) Get(name string) *BuyersGetCall {
+	c := &BuyersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersGetCall) Fields(s ...googleapi.Field) *BuyersGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BuyersGetCall) IfNoneMatch(entityTag string) *BuyersGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersGetCall) Context(ctx context.Context) *BuyersGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.buyers.get" call.
+// Exactly one of *Buyer or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Buyer.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *BuyersGetCall) Do(opts ...googleapi.CallOption) (*Buyer, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Buyer{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a buyer account by its name.",
+	//   "flatPath": "v1/buyers/{buyersId}",
+	//   "httpMethod": "GET",
+	//   "id": "realtimebidding.buyers.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the buyer to get. Format: `buyers/{buyerId}`",
+	//       "location": "path",
+	//       "pattern": "^buyers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Buyer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
 // method id "realtimebidding.buyers.getRemarketingTag":
 
 type BuyersGetRemarketingTagCall struct {
@@ -4752,6 +6023,15 @@ type BuyersGetRemarketingTagCall struct {
 // tag is a piece of JavaScript code that can be placed on a web page.
 // When a user visits a page containing a remarketing tag, Google adds
 // the user to a user list.
+//
+// - name: To fetch remarketing tag for an account, name must follow the
+//   pattern `buyers/{accountId}` where `{accountId}` represents ID of a
+//   buyer that owns the remarketing tag. For a bidder accessing
+//   remarketing tag on behalf of a child seat buyer, `{accountId}`
+//   should represent the ID of the child seat buyer. To fetch
+//   remarketing tag for a specific user list, name must follow the
+//   pattern `buyers/{accountId}/userLists/{userListId}`. See
+//   UserList.name.
 func (r *BuyersService) GetRemarketingTag(name string) *BuyersGetRemarketingTagCall {
 	c := &BuyersGetRemarketingTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4795,7 +6075,7 @@ func (c *BuyersGetRemarketingTagCall) Header() http.Header {
 
 func (c *BuyersGetRemarketingTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4884,6 +6164,187 @@ func (c *BuyersGetRemarketingTagCall) Do(opts ...googleapi.CallOption) (*GetRema
 
 }
 
+// method id "realtimebidding.buyers.list":
+
+type BuyersListCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all buyer account information the calling buyer user or
+// service account is permissioned to manage.
+func (r *BuyersService) List() *BuyersListCall {
+	c := &BuyersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of buyers to return. If unspecified, at most 100 buyers will be
+// returned. The maximum value is 500; values above 500 will be coerced
+// to 500.
+func (c *BuyersListCall) PageSize(pageSize int64) *BuyersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. This value is
+// received from a previous `ListBuyers` call in
+// ListBuyersResponse.nextPageToken.
+func (c *BuyersListCall) PageToken(pageToken string) *BuyersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersListCall) Fields(s ...googleapi.Field) *BuyersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BuyersListCall) IfNoneMatch(entityTag string) *BuyersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersListCall) Context(ctx context.Context) *BuyersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/buyers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.buyers.list" call.
+// Exactly one of *ListBuyersResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListBuyersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BuyersListCall) Do(opts ...googleapi.CallOption) (*ListBuyersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListBuyersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all buyer account information the calling buyer user or service account is permissioned to manage.",
+	//   "flatPath": "v1/buyers",
+	//   "httpMethod": "GET",
+	//   "id": "realtimebidding.buyers.list",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of buyers to return. If unspecified, at most 100 buyers will be returned. The maximum value is 500; values above 500 will be coerced to 500.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. This value is received from a previous `ListBuyers` call in ListBuyersResponse.nextPageToken.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/buyers",
+	//   "response": {
+	//     "$ref": "ListBuyersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/realtime-bidding"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BuyersListCall) Pages(ctx context.Context, f func(*ListBuyersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "realtimebidding.buyers.creatives.create":
 
 type BuyersCreativesCreateCall struct {
@@ -4896,6 +6357,13 @@ type BuyersCreativesCreateCall struct {
 }
 
 // Create: Creates a creative.
+//
+// - parent: The name of the parent buyer that the new creative belongs
+//   to that must follow the pattern `buyers/{buyerAccountId}`, where
+//   `{buyerAccountId}` represents the account ID of the buyer who owns
+//   a creative. For a bidder accessing creatives on behalf of a child
+//   seat buyer, `{buyerAccountId}` should represent the account ID of
+//   the child seat buyer.
 func (r *BuyersCreativesService) Create(parent string, creative *Creative) *BuyersCreativesCreateCall {
 	c := &BuyersCreativesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4930,7 +6398,7 @@ func (c *BuyersCreativesCreateCall) Header() http.Header {
 
 func (c *BuyersCreativesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5036,6 +6504,8 @@ type BuyersCreativesGetCall struct {
 }
 
 // Get: Gets a creative.
+//
+// - name: Name of the creative to retrieve. See creative.name.
 func (r *BuyersCreativesService) Get(name string) *BuyersCreativesGetCall {
 	c := &BuyersCreativesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5097,7 +6567,7 @@ func (c *BuyersCreativesGetCall) Header() http.Header {
 
 func (c *BuyersCreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5213,6 +6683,20 @@ type BuyersCreativesListCall struct {
 }
 
 // List: Lists creatives.
+//
+// - parent: Name of the parent buyer that owns the creatives. The
+//   pattern for this resource is either `buyers/{buyerAccountId}` or
+//   `bidders/{bidderAccountId}`. For `buyers/{buyerAccountId}`, the
+//   `buyerAccountId` can be one of the following: 1. The ID of the
+//   buyer that is accessing their own creatives. 2. The ID of the child
+//   seat buyer under a bidder account. So for listing creatives
+//   pertaining to the child seat buyer (`456`) under bidder account
+//   (`123`), you would use the pattern: `buyers/456`. 3. The ID of the
+//   bidder itself. So for listing creatives pertaining to bidder
+//   (`123`), you would use `buyers/123`. If you want to access all
+//   creatives pertaining to both the bidder and all of its child seat
+//   accounts, you would use `bidders/{bidderAccountId}`, e.g., for all
+//   creatives pertaining to bidder (`123`), use `bidders/123`.
 func (r *BuyersCreativesService) List(parent string) *BuyersCreativesListCall {
 	c := &BuyersCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5303,7 +6787,7 @@ func (c *BuyersCreativesListCall) Header() http.Header {
 
 func (c *BuyersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5456,6 +6940,12 @@ type BuyersCreativesPatchCall struct {
 }
 
 // Patch: Updates a creative.
+//
+// - name: Output only. Name of the creative. Follows the pattern
+//   `buyers/{buyer}/creatives/{creative}`, where `{buyer}` represents
+//   the account ID of the buyer who owns the creative, and `{creative}`
+//   is the buyer-specific creative ID that references this creative in
+//   the bid response.
 func (r *BuyersCreativesService) Patch(name string, creative *Creative) *BuyersCreativesPatchCall {
 	c := &BuyersCreativesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5497,7 +6987,7 @@ func (c *BuyersCreativesPatchCall) Header() http.Header {
 
 func (c *BuyersCreativesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5610,6 +7100,8 @@ type BuyersUserListsCloseCall struct {
 
 // Close: Change the status of a user list to CLOSED. This prevents new
 // users from being added to the user list.
+//
+// - name: The name of the user list to close. See UserList.name.
 func (r *BuyersUserListsService) Close(name string, closeuserlistrequest *CloseUserListRequest) *BuyersUserListsCloseCall {
 	c := &BuyersUserListsCloseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5644,7 +7136,7 @@ func (c *BuyersUserListsCloseCall) Header() http.Header {
 
 func (c *BuyersUserListsCloseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5750,6 +7242,13 @@ type BuyersUserListsCreateCall struct {
 }
 
 // Create: Create a new user list.
+//
+// - parent: The name of the parent buyer of the user list to be
+//   retrieved that must follow the pattern `buyers/{buyerAccountId}`,
+//   where `{buyerAccountId}` represents the account ID of the buyer who
+//   owns user lists. For a bidder accessing user lists on behalf of a
+//   child seat buyer , `{buyerAccountId}` should represent the account
+//   ID of the child seat buyer.
 func (r *BuyersUserListsService) Create(parent string, userlist *UserList) *BuyersUserListsCreateCall {
 	c := &BuyersUserListsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5784,7 +7283,7 @@ func (c *BuyersUserListsCreateCall) Header() http.Header {
 
 func (c *BuyersUserListsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5890,6 +7389,8 @@ type BuyersUserListsGetCall struct {
 }
 
 // Get: Gets a user list by its name.
+//
+// - name: The name of the user list to be retrieved. See UserList.name.
 func (r *BuyersUserListsService) Get(name string) *BuyersUserListsGetCall {
 	c := &BuyersUserListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5933,7 +7434,7 @@ func (c *BuyersUserListsGetCall) Header() http.Header {
 
 func (c *BuyersUserListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6037,6 +7538,15 @@ type BuyersUserListsGetRemarketingTagCall struct {
 // tag is a piece of JavaScript code that can be placed on a web page.
 // When a user visits a page containing a remarketing tag, Google adds
 // the user to a user list.
+//
+// - name: To fetch remarketing tag for an account, name must follow the
+//   pattern `buyers/{accountId}` where `{accountId}` represents ID of a
+//   buyer that owns the remarketing tag. For a bidder accessing
+//   remarketing tag on behalf of a child seat buyer, `{accountId}`
+//   should represent the ID of the child seat buyer. To fetch
+//   remarketing tag for a specific user list, name must follow the
+//   pattern `buyers/{accountId}/userLists/{userListId}`. See
+//   UserList.name.
 func (r *BuyersUserListsService) GetRemarketingTag(name string) *BuyersUserListsGetRemarketingTagCall {
 	c := &BuyersUserListsGetRemarketingTagCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6080,7 +7590,7 @@ func (c *BuyersUserListsGetRemarketingTagCall) Header() http.Header {
 
 func (c *BuyersUserListsGetRemarketingTagCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6181,6 +7691,13 @@ type BuyersUserListsListCall struct {
 }
 
 // List: Lists the user lists visible to the current user.
+//
+// - parent: The name of the parent buyer for the user lists to be
+//   returned that must follow the pattern `buyers/{buyerAccountId}`,
+//   where `{buyerAccountId}` represents the account ID of the buyer who
+//   owns user lists. For a bidder accessing user lists on behalf of a
+//   child seat buyer , `{buyerAccountId}` should represent the account
+//   ID of the child seat buyer.
 func (r *BuyersUserListsService) List(parent string) *BuyersUserListsListCall {
 	c := &BuyersUserListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6238,7 +7755,7 @@ func (c *BuyersUserListsListCall) Header() http.Header {
 
 func (c *BuyersUserListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6372,6 +7889,8 @@ type BuyersUserListsOpenCall struct {
 
 // Open: Change the status of a user list to OPEN. This allows new users
 // to be added to the user list.
+//
+// - name: The name of the user list to open. See UserList.name.
 func (r *BuyersUserListsService) Open(name string, openuserlistrequest *OpenUserListRequest) *BuyersUserListsOpenCall {
 	c := &BuyersUserListsOpenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6406,7 +7925,7 @@ func (c *BuyersUserListsOpenCall) Header() http.Header {
 
 func (c *BuyersUserListsOpenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6513,6 +8032,14 @@ type BuyersUserListsUpdateCall struct {
 
 // Update: Update the given user list. Only user lists with
 // URLRestrictions can be updated.
+//
+// - name: Output only. Name of the user list that must follow the
+//   pattern `buyers/{buyer}/userLists/{user_list}`, where `{buyer}`
+//   represents the account ID of the buyer who owns the user list. For
+//   a bidder accessing user lists on behalf of a child seat buyer,
+//   `{buyer}` represents the account ID of the child seat buyer.
+//   `{user_list}` is an int64 identifier assigned by Google to uniquely
+//   identify a user list.
 func (r *BuyersUserListsService) Update(nameid string, userlist *UserList) *BuyersUserListsUpdateCall {
 	c := &BuyersUserListsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -6547,7 +8074,7 @@ func (c *BuyersUserListsUpdateCall) Header() http.Header {
 
 func (c *BuyersUserListsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

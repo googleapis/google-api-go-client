@@ -79,7 +79,7 @@ const mtlsBasePath = "https://sasportal.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View your email address
+	// See your primary Google Account email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 )
 
@@ -386,10 +386,10 @@ type SasPortalAssignment struct {
 
 	// ForceSendFields is a list of field names (e.g. "Members") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Members") to include in
@@ -407,24 +407,69 @@ func (s *SasPortalAssignment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SasPortalCreateSignedDeviceRequest: Request for CreateSignedDevice
-// method.
+// SasPortalChannelWithScore: The channel with score.
+type SasPortalChannelWithScore struct {
+	// FrequencyRange: The frequency range of the channel.
+	FrequencyRange *SasPortalFrequencyRange `json:"frequencyRange,omitempty"`
+
+	// Score: The channel score, normalized to be in [0,100].
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FrequencyRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FrequencyRange") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SasPortalChannelWithScore) MarshalJSON() ([]byte, error) {
+	type NoMethod SasPortalChannelWithScore
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *SasPortalChannelWithScore) UnmarshalJSON(data []byte) error {
+	type NoMethod SasPortalChannelWithScore
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
+}
+
+// SasPortalCreateSignedDeviceRequest: Request for CreateSignedDevice.
 type SasPortalCreateSignedDeviceRequest struct {
 	// EncodedDevice: Required. JSON Web Token signed using a CPI private
-	// key. Payload must be the JSON encoding of the [Device]. The user_id
+	// key. Payload must be the JSON encoding of the device. The user_id
 	// field must be set.
 	EncodedDevice string `json:"encodedDevice,omitempty"`
 
-	// InstallerId: Required. Unique installer id (cpiId) from the Certified
-	// Professional Installers database.
+	// InstallerId: Required. Unique installer id (CPI ID) from the
+	// Certified Professional Installers database.
 	InstallerId string `json:"installerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EncodedDevice") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EncodedDevice") to include
@@ -460,10 +505,10 @@ type SasPortalCustomer struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -507,11 +552,14 @@ type SasPortalDeployment struct {
 	// DisplayName: The deployment's display name.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// Frns: Output only. The FRNs copied from its direct parent.
+	Frns []string `json:"frns,omitempty"`
+
 	// Name: Output only. Resource name.
 	Name string `json:"name,omitempty"`
 
-	// SasUserIds: User id used by the devices belonging to this deployment.
-	// Each deployment should be associated with one unique user_id.
+	// SasUserIds: User ID used by the devices belonging to this deployment.
+	// Each deployment should be associated with one unique user ID.
 	SasUserIds []string `json:"sasUserIds,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -520,10 +568,10 @@ type SasPortalDeployment struct {
 
 	// ForceSendFields is a list of field names (e.g. "AllowedBillingModes")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllowedBillingModes") to
@@ -547,6 +595,9 @@ type SasPortalDevice struct {
 	// registered to the SAS.
 	ActiveConfig *SasPortalDeviceConfig `json:"activeConfig,omitempty"`
 
+	// CurrentChannels: Output only. Current channels with scores.
+	CurrentChannels []*SasPortalChannelWithScore `json:"currentChannels,omitempty"`
+
 	// DeviceMetadata: Device parameters that can be overridden by both SAS
 	// Portal and SAS registration requests.
 	DeviceMetadata *SasPortalDeviceMetadata `json:"deviceMetadata,omitempty"`
@@ -556,6 +607,10 @@ type SasPortalDevice struct {
 
 	// FccId: The FCC identifier of the device.
 	FccId string `json:"fccId,omitempty"`
+
+	// GrantRangeAllowlists: Only ranges within the allowlists are available
+	// for new grants.
+	GrantRangeAllowlists []*SasPortalFrequencyRange `json:"grantRangeAllowlists,omitempty"`
 
 	// Grants: Output only. Grants held by the device.
 	Grants []*SasPortalDeviceGrant `json:"grants,omitempty"`
@@ -587,10 +642,10 @@ type SasPortalDevice struct {
 
 	// ForceSendFields is a list of field names (e.g. "ActiveConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ActiveConfig") to include
@@ -611,8 +666,8 @@ func (s *SasPortalDevice) MarshalJSON() ([]byte, error) {
 // SasPortalDeviceAirInterface: Information about the device's air
 // interface.
 type SasPortalDeviceAirInterface struct {
-	// RadioTechnology: This field specifies the radio access technology
-	// that is used for the CBSD. Conditional
+	// RadioTechnology: Conditional. This field specifies the radio access
+	// technology that is used for the CBSD.
 	//
 	// Possible values:
 	//   "RADIO_TECHNOLOGY_UNSPECIFIED"
@@ -626,17 +681,17 @@ type SasPortalDeviceAirInterface struct {
 	//   "TARANA_WIRELESS"
 	RadioTechnology string `json:"radioTechnology,omitempty"`
 
-	// SupportedSpec: This field is related to the radioTechnology field and
-	// provides the air interface specification that the CBSD is compliant
-	// with at the time of registration. Optional
+	// SupportedSpec: Optional. This field is related to the
+	// `radioTechnology` and provides the air interface specification that
+	// the CBSD is compliant with at the time of registration.
 	SupportedSpec string `json:"supportedSpec,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RadioTechnology") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "RadioTechnology") to
@@ -674,7 +729,7 @@ type SasPortalDeviceConfig struct {
 	// InstallationParams: Installation parameters for the device.
 	InstallationParams *SasPortalInstallationParams `json:"installationParams,omitempty"`
 
-	// IsSigned: Output-only. Whether the configuration has been signed by a
+	// IsSigned: Output only. Whether the configuration has been signed by a
 	// CPI.
 	IsSigned bool `json:"isSigned,omitempty"`
 
@@ -698,7 +753,7 @@ type SasPortalDeviceConfig struct {
 	//   "FINAL"
 	State string `json:"state,omitempty"`
 
-	// UpdateTime: Output-only. The last time the device configuration was
+	// UpdateTime: Output only. The last time the device configuration was
 	// edited.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -707,10 +762,10 @@ type SasPortalDeviceConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "AirInterface") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AirInterface") to include
@@ -751,7 +806,7 @@ type SasPortalDeviceGrant struct {
 
 	// MaxEirp: Maximum Equivalent Isotropically Radiated Power (EIRP)
 	// permitted by the grant. The maximum EIRP is in units of dBm/MHz. The
-	// value of maxEirp represents the average (RMS) EIRP that would be
+	// value of `maxEirp` represents the average (RMS) EIRP that would be
 	// measured by the procedure defined in FCC part 96.41(e)(3).
 	MaxEirp float64 `json:"maxEirp,omitempty"`
 
@@ -777,10 +832,10 @@ type SasPortalDeviceGrant struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChannelType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelType") to include
@@ -815,6 +870,41 @@ func (s *SasPortalDeviceGrant) UnmarshalJSON(data []byte) error {
 // SasPortalDeviceMetadata: Device data overridable by both SAS Portal
 // and registration requests.
 type SasPortalDeviceMetadata struct {
+	// AntennaModel: If populated, the Antenna Model Pattern to use. Format
+	// is: RecordCreatorId:PatternId
+	AntennaModel string `json:"antennaModel,omitempty"`
+
+	// CommonChannelGroup: CCG. A group of CBSDs in the same ICG requesting
+	// a common primary channel assignment. See CBRSA-TS-2001 V3.0.0 for
+	// more details.
+	CommonChannelGroup string `json:"commonChannelGroup,omitempty"`
+
+	// InterferenceCoordinationGroup: ICG. A group of CBSDs that manage
+	// their own interference with the group. See CBRSA-TS-2001 V3.0.0 for
+	// more details.
+	InterferenceCoordinationGroup string `json:"interferenceCoordinationGroup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AntennaModel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AntennaModel") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SasPortalDeviceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod SasPortalDeviceMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SasPortalDeviceModel: Information about the model of the device.
@@ -836,10 +926,10 @@ type SasPortalDeviceModel struct {
 
 	// ForceSendFields is a list of field names (e.g. "FirmwareVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FirmwareVersion") to
@@ -868,10 +958,10 @@ type SasPortalDpaMoveList struct {
 
 	// ForceSendFields is a list of field names (e.g. "DpaId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DpaId") to include in API
@@ -913,10 +1003,10 @@ type SasPortalFrequencyRange struct {
 
 	// ForceSendFields is a list of field names (e.g. "HighFrequencyMhz") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HighFrequencyMhz") to
@@ -951,15 +1041,14 @@ func (s *SasPortalFrequencyRange) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// SasPortalGenerateSecretRequest: Request for GenerateSecret method]
-// [spectrum.sas.portal.v1alpha1.DeviceManager.GenerateSecret].
+// SasPortalGenerateSecretRequest: Request for GenerateSecret.
 type SasPortalGenerateSecretRequest struct {
 }
 
-// SasPortalGenerateSecretResponse: Response for GenerateSecret method.
+// SasPortalGenerateSecretResponse: Response for GenerateSecret.
 type SasPortalGenerateSecretResponse struct {
 	// Secret: The secret generated by the string and used by
-	// [ValidateInstaller] method.
+	// ValidateInstaller.
 	Secret string `json:"secret,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -968,10 +1057,10 @@ type SasPortalGenerateSecretResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Secret") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Secret") to include in API
@@ -997,10 +1086,10 @@ type SasPortalGetPolicyRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Resource") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Resource") to include in
@@ -1060,10 +1149,10 @@ type SasPortalInstallationParams struct {
 	// allowable EIRP in units of dBm/10MHz for device category.
 	EirpCapability int64 `json:"eirpCapability,omitempty"`
 
-	// Height: Device antenna height in meters. When the heightType
+	// Height: Device antenna height in meters. When the `heightType`
 	// parameter value is "AGL", the antenna height should be given relative
-	// to ground level. When the heightType parameter value is "AMSL", it is
-	// given with respect to WGS84 datum.
+	// to ground level. When the `heightType` parameter value is "AMSL", it
+	// is given with respect to WGS84 datum.
 	Height float64 `json:"height,omitempty"`
 
 	// HeightType: Specifies how the height is measured.
@@ -1082,8 +1171,8 @@ type SasPortalInstallationParams struct {
 	// of 50 meters.
 	HorizontalAccuracy float64 `json:"horizontalAccuracy,omitempty"`
 
-	// IndoorDeployment: Whether the device antenna is indoor or not. True:
-	// indoor. False: outdoor.
+	// IndoorDeployment: Whether the device antenna is indoor or not.
+	// `true`: indoor. `false`: outdoor.
 	IndoorDeployment bool `json:"indoorDeployment,omitempty"`
 
 	// Latitude: Latitude of the device antenna location in degrees relative
@@ -1092,7 +1181,7 @@ type SasPortalInstallationParams struct {
 	// negative values south of the equator.
 	Latitude float64 `json:"latitude,omitempty"`
 
-	// Longitude: Longitude of the device antenna location. in degrees
+	// Longitude: Longitude of the device antenna location in degrees
 	// relative to the WGS 84 datum. The allowed range is from -180.000000
 	// to +180.000000. Positive values represent longitudes east of the
 	// prime meridian; negative values west of the prime meridian.
@@ -1106,10 +1195,10 @@ type SasPortalInstallationParams struct {
 
 	// ForceSendFields is a list of field names (e.g. "AntennaAzimuth") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AntennaAzimuth") to
@@ -1156,9 +1245,8 @@ type SasPortalListCustomersResponse struct {
 	Customers []*SasPortalCustomer `json:"customers,omitempty"`
 
 	// NextPageToken: A pagination token returned from a previous call to
-	// ListCustomers method that indicates from where listing should
-	// continue. If the field is missing or empty, it means there are no
-	// more customers.
+	// ListCustomers that indicates from where listing should continue. If
+	// the field is missing or empty, it means there are no more customers.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1167,10 +1255,10 @@ type SasPortalListCustomersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Customers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Customers") to include in
@@ -1188,15 +1276,14 @@ func (s *SasPortalListCustomersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SasPortalListDeploymentsResponse: Response for ListDeployments
-// method.
+// SasPortalListDeploymentsResponse: Response for ListDeployments.
 type SasPortalListDeploymentsResponse struct {
 	// Deployments: The deployments that match the request.
 	Deployments []*SasPortalDeployment `json:"deployments,omitempty"`
 
 	// NextPageToken: A pagination token returned from a previous call to
-	// ListDeployments method that indicates from where listing should
-	// continue. If the field is missing or empty, it means there is no more
+	// ListDeployments that indicates from where listing should continue. If
+	// the field is missing or empty, it means there are no more
 	// deployments.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
@@ -1206,10 +1293,10 @@ type SasPortalListDeploymentsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Deployments") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Deployments") to include
@@ -1227,14 +1314,14 @@ func (s *SasPortalListDeploymentsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SasPortalListDevicesResponse: Response for ListDevices method.
+// SasPortalListDevicesResponse: Response for ListDevices.
 type SasPortalListDevicesResponse struct {
 	// Devices: The devices that match the request.
 	Devices []*SasPortalDevice `json:"devices,omitempty"`
 
 	// NextPageToken: A pagination token returned from a previous call to
-	// ListDevices method that indicates from where listing should continue.
-	// If the field is missing or empty, it means there is no more devices.
+	// ListDevices that indicates from where listing should continue. If the
+	// field is missing or empty, it means there is no more devices.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1243,10 +1330,10 @@ type SasPortalListDevicesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Devices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Devices") to include in
@@ -1264,11 +1351,11 @@ func (s *SasPortalListDevicesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SasPortalListNodesResponse: Response for ListNodes method.
+// SasPortalListNodesResponse: Response for ListNodes.
 type SasPortalListNodesResponse struct {
 	// NextPageToken: A pagination token returned from a previous call to
-	// ListNodes method that indicates from where listing should continue.
-	// If the field is missing or empty, it means there is no more nodes.
+	// ListNodes that indicates from where listing should continue. If the
+	// field is missing or empty, it means there is no more nodes.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// Nodes: The nodes that match the request.
@@ -1280,10 +1367,10 @@ type SasPortalListNodesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1301,18 +1388,18 @@ func (s *SasPortalListNodesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SasPortalMoveDeploymentRequest: Request for MoveDeployment method.
+// SasPortalMoveDeploymentRequest: Request for MoveDeployment.
 type SasPortalMoveDeploymentRequest struct {
-	// Destination: Required. The name of the new parent resource Node or
-	// Customer to reparent the deployment under.
+	// Destination: Required. The name of the new parent resource node or
+	// customer to reparent the deployment under.
 	Destination string `json:"destination,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Destination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Destination") to include
@@ -1330,18 +1417,18 @@ func (s *SasPortalMoveDeploymentRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SasPortalMoveDeviceRequest: Request for MoveDevice method.
+// SasPortalMoveDeviceRequest: Request for MoveDevice.
 type SasPortalMoveDeviceRequest struct {
-	// Destination: Required. The name of the new parent resource (Node or
-	// Customer) to reparent the device under.
+	// Destination: Required. The name of the new parent resource node or
+	// customer to reparent the device under.
 	Destination string `json:"destination,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Destination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Destination") to include
@@ -1359,18 +1446,18 @@ func (s *SasPortalMoveDeviceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SasPortalMoveNodeRequest: Request for MoveNode method.
+// SasPortalMoveNodeRequest: Request for MoveNode.
 type SasPortalMoveNodeRequest struct {
 	// Destination: Required. The name of the new parent resource node or
-	// Customer) to reparent the node under.
+	// customer to reparent the node under.
 	Destination string `json:"destination,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Destination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Destination") to include
@@ -1405,10 +1492,10 @@ type SasPortalNode struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -1467,10 +1554,10 @@ type SasPortalOperation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -1490,17 +1577,18 @@ func (s *SasPortalOperation) MarshalJSON() ([]byte, error) {
 
 // SasPortalPolicy: Defines an access control policy to the resources.
 type SasPortalPolicy struct {
+	// Assignments: List of assignments
 	Assignments []*SasPortalAssignment `json:"assignments,omitempty"`
 
-	// Etag: The [etag] is used for optimistic concurrency control as a way
-	// to help prevent simultaneous updates of a policy from overwriting
-	// each other. It is strongly suggested that systems make use of the
-	// [etag] in the read-modify-write cycle to perform policy updates in
-	// order to avoid race conditions: An [etag] is returned in the response
-	// to [GetPolicy], and systems are expected to put that etag in the
-	// request to [SetPolicy] to ensure that their change will be applied to
-	// the same version of the policy. If no [etag] is provided in the call
-	// to [SetPolicy], then the existing policy is overwritten blindly.
+	// Etag: The etag is used for optimistic concurrency control as a way to
+	// help prevent simultaneous updates of a policy from overwriting each
+	// other. It is strongly suggested that systems make use of the etag in
+	// the read-modify-write cycle to perform policy updates in order to
+	// avoid race conditions: An etag is returned in the response to
+	// GetPolicy, and systems are expected to put that etag in the request
+	// to SetPolicy to ensure that their change will be applied to the same
+	// version of the policy. If no etag is provided in the call to
+	// GetPolicy, then the existing policy is overwritten blindly.
 	Etag string `json:"etag,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1509,10 +1597,10 @@ type SasPortalPolicy struct {
 
 	// ForceSendFields is a list of field names (e.g. "Assignments") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Assignments") to include
@@ -1532,6 +1620,10 @@ func (s *SasPortalPolicy) MarshalJSON() ([]byte, error) {
 
 // SasPortalSetPolicyRequest: Request message for `SetPolicy` method.
 type SasPortalSetPolicyRequest struct {
+	// DisableNotification: Optional. Set the field as true when we would
+	// like to disable the onboarding notification.
+	DisableNotification bool `json:"disableNotification,omitempty"`
+
 	// Policy: Required. The policy to be applied to the `resource`.
 	Policy *SasPortalPolicy `json:"policy,omitempty"`
 
@@ -1539,20 +1631,21 @@ type SasPortalSetPolicyRequest struct {
 	// specified. This policy replaces any existing policy.
 	Resource string `json:"resource,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Policy") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DisableNotification")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Policy") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisableNotification") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1562,7 +1655,7 @@ func (s *SasPortalSetPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SasPortalSignDeviceRequest: Request for SignDevice method.
+// SasPortalSignDeviceRequest: Request for SignDevice.
 type SasPortalSignDeviceRequest struct {
 	// Device: Required. The device to sign. The device fields name, fcc_id
 	// and serial_number must be set. The user_id field must be set.
@@ -1570,10 +1663,10 @@ type SasPortalSignDeviceRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Device") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Device") to include in API
@@ -1614,10 +1707,10 @@ type SasPortalStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -1647,10 +1740,10 @@ type SasPortalTestPermissionsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -1680,10 +1773,10 @@ type SasPortalTestPermissionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -1701,8 +1794,7 @@ func (s *SasPortalTestPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SasPortalUpdateSignedDeviceRequest: Request for UpdateSignedDevice
-// method.
+// SasPortalUpdateSignedDeviceRequest: Request for UpdateSignedDevice.
 type SasPortalUpdateSignedDeviceRequest struct {
 	// EncodedDevice: Required. The JSON Web Token signed using a CPI
 	// private key. Payload must be the JSON encoding of the device. The
@@ -1715,10 +1807,10 @@ type SasPortalUpdateSignedDeviceRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "EncodedDevice") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EncodedDevice") to include
@@ -1736,26 +1828,25 @@ func (s *SasPortalUpdateSignedDeviceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SasPortalValidateInstallerRequest: Request for ValidateInstaller
-// method.
+// SasPortalValidateInstallerRequest: Request for ValidateInstaller.
 type SasPortalValidateInstallerRequest struct {
 	// EncodedSecret: Required. JSON Web Token signed using a CPI private
 	// key. Payload must include a "secret" claim whose value is the secret.
 	EncodedSecret string `json:"encodedSecret,omitempty"`
 
-	// InstallerId: Required. Unique installer id (cpiId) from the Certified
-	// Professional Installers database.
+	// InstallerId: Required. Unique installer id (CPI ID) from the
+	// Certified Professional Installers database.
 	InstallerId string `json:"installerId,omitempty"`
 
-	// Secret: Required. Secret returned by the GenerateSecret method.
+	// Secret: Required. Secret returned by the GenerateSecret.
 	Secret string `json:"secret,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EncodedSecret") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EncodedSecret") to include
@@ -1773,9 +1864,7 @@ func (s *SasPortalValidateInstallerRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SasPortalValidateInstallerResponse: Response for ValidateInstaller
-// method]
-// [spectrum.sas.portal.v1alpha1.DeviceManager.ValidateInstaller].
+// SasPortalValidateInstallerResponse: Response for ValidateInstaller.
 type SasPortalValidateInstallerResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1794,6 +1883,8 @@ type CustomersGetCall struct {
 }
 
 // Get: Returns a requested customer.
+//
+// - name: The name of the customer.
 func (r *CustomersService) Get(name string) *CustomersGetCall {
 	c := &CustomersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1837,7 +1928,7 @@ func (c *CustomersGetCall) Header() http.Header {
 
 func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1950,8 +2041,8 @@ func (c *CustomersListCall) PageSize(pageSize int64) *CustomersListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListCustomers method that indicates
-// where this listing should continue from.
+// returned from a previous call to ListCustomers that indicates where
+// this listing should continue from.
 func (c *CustomersListCall) PageToken(pageToken string) *CustomersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1994,7 +2085,7 @@ func (c *CustomersListCall) Header() http.Header {
 
 func (c *CustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2066,7 +2157,7 @@ func (c *CustomersListCall) Do(opts ...googleapi.CallOption) (*SasPortalListCust
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListCustomers method that indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListCustomers that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2115,6 +2206,8 @@ type CustomersPatchCall struct {
 }
 
 // Patch: Updates an existing customer.
+//
+// - name: Output only. Resource name of the customer.
 func (r *CustomersService) Patch(name string, sasportalcustomer *SasPortalCustomer) *CustomersPatchCall {
 	c := &CustomersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2156,7 +2249,7 @@ func (c *CustomersPatchCall) Header() http.Header {
 
 func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2268,6 +2361,9 @@ type CustomersDeploymentsCreateCall struct {
 }
 
 // Create: Creates a new deployment.
+//
+// - parent: The parent resource name where the deployment is to be
+//   created.
 func (r *CustomersDeploymentsService) Create(parent string, sasportaldeployment *SasPortalDeployment) *CustomersDeploymentsCreateCall {
 	c := &CustomersDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2302,7 +2398,7 @@ func (c *CustomersDeploymentsCreateCall) Header() http.Header {
 
 func (c *CustomersDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2407,6 +2503,8 @@ type CustomersDeploymentsDeleteCall struct {
 }
 
 // Delete: Deletes a deployment.
+//
+// - name: The name of the deployment.
 func (r *CustomersDeploymentsService) Delete(name string) *CustomersDeploymentsDeleteCall {
 	c := &CustomersDeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2440,7 +2538,7 @@ func (c *CustomersDeploymentsDeleteCall) Header() http.Header {
 
 func (c *CustomersDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2538,6 +2636,8 @@ type CustomersDeploymentsGetCall struct {
 }
 
 // Get: Returns a requested deployment.
+//
+// - name: The name of the deployment.
 func (r *CustomersDeploymentsService) Get(name string) *CustomersDeploymentsGetCall {
 	c := &CustomersDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2581,7 +2681,7 @@ func (c *CustomersDeploymentsGetCall) Header() http.Header {
 
 func (c *CustomersDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2682,9 +2782,21 @@ type CustomersDeploymentsListCall struct {
 }
 
 // List: Lists deployments.
+//
+// - parent: The parent resource name, for example, "nodes/1",
+//   customer/1/nodes/2.
 func (r *CustomersDeploymentsService) List(parent string) *CustomersDeploymentsListCall {
 	c := &CustomersDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression.
+// The filter should have the following format: "DIRECT_CHILDREN" or
+// format: "direct_children". The filter is case insensitive. If empty,
+// then no deployments are filtered.
+func (c *CustomersDeploymentsListCall) Filter(filter string) *CustomersDeploymentsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -2696,8 +2808,8 @@ func (c *CustomersDeploymentsListCall) PageSize(pageSize int64) *CustomersDeploy
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListDeployments method that
-// indicates where this listing should continue from.
+// returned from a previous call to ListDeployments that indicates where
+// this listing should continue from.
 func (c *CustomersDeploymentsListCall) PageToken(pageToken string) *CustomersDeploymentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2740,7 +2852,7 @@ func (c *CustomersDeploymentsListCall) Header() http.Header {
 
 func (c *CustomersDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2810,6 +2922,11 @@ func (c *CustomersDeploymentsListCall) Do(opts ...googleapi.CallOption) (*SasPor
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no deployments are filtered.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of deployments to return in the response.",
 	//       "format": "int32",
@@ -2817,7 +2934,7 @@ func (c *CustomersDeploymentsListCall) Do(opts ...googleapi.CallOption) (*SasPor
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListDeployments method that indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListDeployments that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2873,6 +2990,8 @@ type CustomersDeploymentsMoveCall struct {
 }
 
 // Move: Moves a deployment under another node or customer.
+//
+// - name: The name of the deployment to move.
 func (r *CustomersDeploymentsService) Move(name string, sasportalmovedeploymentrequest *SasPortalMoveDeploymentRequest) *CustomersDeploymentsMoveCall {
 	c := &CustomersDeploymentsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2907,7 +3026,7 @@ func (c *CustomersDeploymentsMoveCall) Header() http.Header {
 
 func (c *CustomersDeploymentsMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3013,6 +3132,8 @@ type CustomersDeploymentsPatchCall struct {
 }
 
 // Patch: Updates an existing deployment.
+//
+// - name: Output only. Resource name.
 func (r *CustomersDeploymentsService) Patch(name string, sasportaldeployment *SasPortalDeployment) *CustomersDeploymentsPatchCall {
 	c := &CustomersDeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3054,7 +3175,7 @@ func (c *CustomersDeploymentsPatchCall) Header() http.Header {
 
 func (c *CustomersDeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3166,6 +3287,8 @@ type CustomersDeploymentsDevicesCreateCall struct {
 }
 
 // Create: Creates a device under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *CustomersDeploymentsDevicesService) Create(parent string, sasportaldevice *SasPortalDevice) *CustomersDeploymentsDevicesCreateCall {
 	c := &CustomersDeploymentsDevicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3200,7 +3323,7 @@ func (c *CustomersDeploymentsDevicesCreateCall) Header() http.Header {
 
 func (c *CustomersDeploymentsDevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3306,6 +3429,8 @@ type CustomersDeploymentsDevicesCreateSignedCall struct {
 }
 
 // CreateSigned: Creates a signed device under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *CustomersDeploymentsDevicesService) CreateSigned(parent string, sasportalcreatesigneddevicerequest *SasPortalCreateSignedDeviceRequest) *CustomersDeploymentsDevicesCreateSignedCall {
 	c := &CustomersDeploymentsDevicesCreateSignedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3340,7 +3465,7 @@ func (c *CustomersDeploymentsDevicesCreateSignedCall) Header() http.Header {
 
 func (c *CustomersDeploymentsDevicesCreateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3446,6 +3571,8 @@ type CustomersDeploymentsDevicesListCall struct {
 }
 
 // List: Lists devices under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *CustomersDeploymentsDevicesService) List(parent string) *CustomersDeploymentsDevicesListCall {
 	c := &CustomersDeploymentsDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3454,7 +3581,7 @@ func (r *CustomersDeploymentsDevicesService) List(parent string) *CustomersDeplo
 
 // Filter sets the optional parameter "filter": The filter expression.
 // The filter should have one of the following formats: "sn=123454" or
-// "display_name=MyDevice". sn corresponds to serial_number of the
+// "display_name=MyDevice". sn corresponds to serial number of the
 // device. The filter is case insensitive.
 func (c *CustomersDeploymentsDevicesListCall) Filter(filter string) *CustomersDeploymentsDevicesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -3514,7 +3641,7 @@ func (c *CustomersDeploymentsDevicesListCall) Header() http.Header {
 
 func (c *CustomersDeploymentsDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3585,7 +3712,7 @@ func (c *CustomersDeploymentsDevicesListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial_number of the device. The filter is case insensitive.",
+	//       "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial number of the device. The filter is case insensitive.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3652,6 +3779,8 @@ type CustomersDevicesCreateCall struct {
 }
 
 // Create: Creates a device under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *CustomersDevicesService) Create(parent string, sasportaldevice *SasPortalDevice) *CustomersDevicesCreateCall {
 	c := &CustomersDevicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3686,7 +3815,7 @@ func (c *CustomersDevicesCreateCall) Header() http.Header {
 
 func (c *CustomersDevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3792,6 +3921,8 @@ type CustomersDevicesCreateSignedCall struct {
 }
 
 // CreateSigned: Creates a signed device under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *CustomersDevicesService) CreateSigned(parent string, sasportalcreatesigneddevicerequest *SasPortalCreateSignedDeviceRequest) *CustomersDevicesCreateSignedCall {
 	c := &CustomersDevicesCreateSignedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3826,7 +3957,7 @@ func (c *CustomersDevicesCreateSignedCall) Header() http.Header {
 
 func (c *CustomersDevicesCreateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3931,6 +4062,8 @@ type CustomersDevicesDeleteCall struct {
 }
 
 // Delete: Deletes a device.
+//
+// - name: The name of the device.
 func (r *CustomersDevicesService) Delete(name string) *CustomersDevicesDeleteCall {
 	c := &CustomersDevicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3964,7 +4097,7 @@ func (c *CustomersDevicesDeleteCall) Header() http.Header {
 
 func (c *CustomersDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4062,6 +4195,8 @@ type CustomersDevicesGetCall struct {
 }
 
 // Get: Gets details about a device.
+//
+// - name: The name of the device.
 func (r *CustomersDevicesService) Get(name string) *CustomersDevicesGetCall {
 	c := &CustomersDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4105,7 +4240,7 @@ func (c *CustomersDevicesGetCall) Header() http.Header {
 
 func (c *CustomersDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4206,6 +4341,8 @@ type CustomersDevicesListCall struct {
 }
 
 // List: Lists devices under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *CustomersDevicesService) List(parent string) *CustomersDevicesListCall {
 	c := &CustomersDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4214,7 +4351,7 @@ func (r *CustomersDevicesService) List(parent string) *CustomersDevicesListCall 
 
 // Filter sets the optional parameter "filter": The filter expression.
 // The filter should have one of the following formats: "sn=123454" or
-// "display_name=MyDevice". sn corresponds to serial_number of the
+// "display_name=MyDevice". sn corresponds to serial number of the
 // device. The filter is case insensitive.
 func (c *CustomersDevicesListCall) Filter(filter string) *CustomersDevicesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -4274,7 +4411,7 @@ func (c *CustomersDevicesListCall) Header() http.Header {
 
 func (c *CustomersDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4345,7 +4482,7 @@ func (c *CustomersDevicesListCall) Do(opts ...googleapi.CallOption) (*SasPortalL
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial_number of the device. The filter is case insensitive.",
+	//       "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial number of the device. The filter is case insensitive.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4412,6 +4549,8 @@ type CustomersDevicesMoveCall struct {
 }
 
 // Move: Moves a device under another node or customer.
+//
+// - name: The name of the device to move.
 func (r *CustomersDevicesService) Move(name string, sasportalmovedevicerequest *SasPortalMoveDeviceRequest) *CustomersDevicesMoveCall {
 	c := &CustomersDevicesMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4446,7 +4585,7 @@ func (c *CustomersDevicesMoveCall) Header() http.Header {
 
 func (c *CustomersDevicesMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4552,6 +4691,8 @@ type CustomersDevicesPatchCall struct {
 }
 
 // Patch: Updates a device.
+//
+// - name: Output only. The resource path name.
 func (r *CustomersDevicesService) Patch(name string, sasportaldevice *SasPortalDevice) *CustomersDevicesPatchCall {
 	c := &CustomersDevicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4593,7 +4734,7 @@ func (c *CustomersDevicesPatchCall) Header() http.Header {
 
 func (c *CustomersDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4705,6 +4846,8 @@ type CustomersDevicesSignDeviceCall struct {
 }
 
 // SignDevice: Signs a device.
+//
+// - name: Output only. The resource path name.
 func (r *CustomersDevicesService) SignDevice(name string, sasportalsigndevicerequest *SasPortalSignDeviceRequest) *CustomersDevicesSignDeviceCall {
 	c := &CustomersDevicesSignDeviceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4739,7 +4882,7 @@ func (c *CustomersDevicesSignDeviceCall) Header() http.Header {
 
 func (c *CustomersDevicesSignDeviceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4845,6 +4988,8 @@ type CustomersDevicesUpdateSignedCall struct {
 }
 
 // UpdateSigned: Updates a signed device.
+//
+// - name: The name of the device to update.
 func (r *CustomersDevicesService) UpdateSigned(name string, sasportalupdatesigneddevicerequest *SasPortalUpdateSignedDeviceRequest) *CustomersDevicesUpdateSignedCall {
 	c := &CustomersDevicesUpdateSignedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4879,7 +5024,7 @@ func (c *CustomersDevicesUpdateSignedCall) Header() http.Header {
 
 func (c *CustomersDevicesUpdateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4985,6 +5130,8 @@ type CustomersNodesCreateCall struct {
 }
 
 // Create: Creates a new node.
+//
+// - parent: The parent resource name where the node is to be created.
 func (r *CustomersNodesService) Create(parent string, sasportalnode *SasPortalNode) *CustomersNodesCreateCall {
 	c := &CustomersNodesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5019,7 +5166,7 @@ func (c *CustomersNodesCreateCall) Header() http.Header {
 
 func (c *CustomersNodesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5124,6 +5271,8 @@ type CustomersNodesDeleteCall struct {
 }
 
 // Delete: Deletes a node.
+//
+// - name: The name of the node.
 func (r *CustomersNodesService) Delete(name string) *CustomersNodesDeleteCall {
 	c := &CustomersNodesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5157,7 +5306,7 @@ func (c *CustomersNodesDeleteCall) Header() http.Header {
 
 func (c *CustomersNodesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5255,6 +5404,8 @@ type CustomersNodesGetCall struct {
 }
 
 // Get: Returns a requested node.
+//
+// - name: The name of the node.
 func (r *CustomersNodesService) Get(name string) *CustomersNodesGetCall {
 	c := &CustomersNodesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5298,7 +5449,7 @@ func (c *CustomersNodesGetCall) Header() http.Header {
 
 func (c *CustomersNodesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5399,9 +5550,20 @@ type CustomersNodesListCall struct {
 }
 
 // List: Lists nodes.
+//
+// - parent: The parent resource name, for example, "nodes/1".
 func (r *CustomersNodesService) List(parent string) *CustomersNodesListCall {
 	c := &CustomersNodesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression.
+// The filter should have the following format: "DIRECT_CHILDREN" or
+// format: "direct_children". The filter is case insensitive. If empty,
+// then no nodes are filtered.
+func (c *CustomersNodesListCall) Filter(filter string) *CustomersNodesListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -5413,8 +5575,8 @@ func (c *CustomersNodesListCall) PageSize(pageSize int64) *CustomersNodesListCal
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListNodes method that indicates
-// where this listing should continue from.
+// returned from a previous call to ListNodes that indicates where this
+// listing should continue from.
 func (c *CustomersNodesListCall) PageToken(pageToken string) *CustomersNodesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5457,7 +5619,7 @@ func (c *CustomersNodesListCall) Header() http.Header {
 
 func (c *CustomersNodesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5527,6 +5689,11 @@ func (c *CustomersNodesListCall) Do(opts ...googleapi.CallOption) (*SasPortalLis
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no nodes are filtered.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of nodes to return in the response.",
 	//       "format": "int32",
@@ -5534,7 +5701,7 @@ func (c *CustomersNodesListCall) Do(opts ...googleapi.CallOption) (*SasPortalLis
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListNodes method that indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListNodes that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5590,6 +5757,8 @@ type CustomersNodesMoveCall struct {
 }
 
 // Move: Moves a node under another node or customer.
+//
+// - name: The name of the node to move.
 func (r *CustomersNodesService) Move(name string, sasportalmovenoderequest *SasPortalMoveNodeRequest) *CustomersNodesMoveCall {
 	c := &CustomersNodesMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5624,7 +5793,7 @@ func (c *CustomersNodesMoveCall) Header() http.Header {
 
 func (c *CustomersNodesMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5730,6 +5899,8 @@ type CustomersNodesPatchCall struct {
 }
 
 // Patch: Updates an existing node.
+//
+// - name: Output only. Resource name.
 func (r *CustomersNodesService) Patch(name string, sasportalnode *SasPortalNode) *CustomersNodesPatchCall {
 	c := &CustomersNodesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5771,7 +5942,7 @@ func (c *CustomersNodesPatchCall) Header() http.Header {
 
 func (c *CustomersNodesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5883,6 +6054,9 @@ type CustomersNodesDeploymentsCreateCall struct {
 }
 
 // Create: Creates a new deployment.
+//
+// - parent: The parent resource name where the deployment is to be
+//   created.
 func (r *CustomersNodesDeploymentsService) Create(parent string, sasportaldeployment *SasPortalDeployment) *CustomersNodesDeploymentsCreateCall {
 	c := &CustomersNodesDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5917,7 +6091,7 @@ func (c *CustomersNodesDeploymentsCreateCall) Header() http.Header {
 
 func (c *CustomersNodesDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6023,9 +6197,21 @@ type CustomersNodesDeploymentsListCall struct {
 }
 
 // List: Lists deployments.
+//
+// - parent: The parent resource name, for example, "nodes/1",
+//   customer/1/nodes/2.
 func (r *CustomersNodesDeploymentsService) List(parent string) *CustomersNodesDeploymentsListCall {
 	c := &CustomersNodesDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression.
+// The filter should have the following format: "DIRECT_CHILDREN" or
+// format: "direct_children". The filter is case insensitive. If empty,
+// then no deployments are filtered.
+func (c *CustomersNodesDeploymentsListCall) Filter(filter string) *CustomersNodesDeploymentsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -6037,8 +6223,8 @@ func (c *CustomersNodesDeploymentsListCall) PageSize(pageSize int64) *CustomersN
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListDeployments method that
-// indicates where this listing should continue from.
+// returned from a previous call to ListDeployments that indicates where
+// this listing should continue from.
 func (c *CustomersNodesDeploymentsListCall) PageToken(pageToken string) *CustomersNodesDeploymentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6081,7 +6267,7 @@ func (c *CustomersNodesDeploymentsListCall) Header() http.Header {
 
 func (c *CustomersNodesDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6151,6 +6337,11 @@ func (c *CustomersNodesDeploymentsListCall) Do(opts ...googleapi.CallOption) (*S
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no deployments are filtered.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of deployments to return in the response.",
 	//       "format": "int32",
@@ -6158,7 +6349,7 @@ func (c *CustomersNodesDeploymentsListCall) Do(opts ...googleapi.CallOption) (*S
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListDeployments method that indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListDeployments that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6214,6 +6405,8 @@ type CustomersNodesDevicesCreateCall struct {
 }
 
 // Create: Creates a device under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *CustomersNodesDevicesService) Create(parent string, sasportaldevice *SasPortalDevice) *CustomersNodesDevicesCreateCall {
 	c := &CustomersNodesDevicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6248,7 +6441,7 @@ func (c *CustomersNodesDevicesCreateCall) Header() http.Header {
 
 func (c *CustomersNodesDevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6354,6 +6547,8 @@ type CustomersNodesDevicesCreateSignedCall struct {
 }
 
 // CreateSigned: Creates a signed device under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *CustomersNodesDevicesService) CreateSigned(parent string, sasportalcreatesigneddevicerequest *SasPortalCreateSignedDeviceRequest) *CustomersNodesDevicesCreateSignedCall {
 	c := &CustomersNodesDevicesCreateSignedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6388,7 +6583,7 @@ func (c *CustomersNodesDevicesCreateSignedCall) Header() http.Header {
 
 func (c *CustomersNodesDevicesCreateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6494,6 +6689,8 @@ type CustomersNodesDevicesListCall struct {
 }
 
 // List: Lists devices under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *CustomersNodesDevicesService) List(parent string) *CustomersNodesDevicesListCall {
 	c := &CustomersNodesDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6502,7 +6699,7 @@ func (r *CustomersNodesDevicesService) List(parent string) *CustomersNodesDevice
 
 // Filter sets the optional parameter "filter": The filter expression.
 // The filter should have one of the following formats: "sn=123454" or
-// "display_name=MyDevice". sn corresponds to serial_number of the
+// "display_name=MyDevice". sn corresponds to serial number of the
 // device. The filter is case insensitive.
 func (c *CustomersNodesDevicesListCall) Filter(filter string) *CustomersNodesDevicesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -6562,7 +6759,7 @@ func (c *CustomersNodesDevicesListCall) Header() http.Header {
 
 func (c *CustomersNodesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6633,7 +6830,7 @@ func (c *CustomersNodesDevicesListCall) Do(opts ...googleapi.CallOption) (*SasPo
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial_number of the device. The filter is case insensitive.",
+	//       "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial number of the device. The filter is case insensitive.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6700,6 +6897,8 @@ type CustomersNodesNodesCreateCall struct {
 }
 
 // Create: Creates a new node.
+//
+// - parent: The parent resource name where the node is to be created.
 func (r *CustomersNodesNodesService) Create(parent string, sasportalnode *SasPortalNode) *CustomersNodesNodesCreateCall {
 	c := &CustomersNodesNodesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6734,7 +6933,7 @@ func (c *CustomersNodesNodesCreateCall) Header() http.Header {
 
 func (c *CustomersNodesNodesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6840,9 +7039,20 @@ type CustomersNodesNodesListCall struct {
 }
 
 // List: Lists nodes.
+//
+// - parent: The parent resource name, for example, "nodes/1".
 func (r *CustomersNodesNodesService) List(parent string) *CustomersNodesNodesListCall {
 	c := &CustomersNodesNodesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression.
+// The filter should have the following format: "DIRECT_CHILDREN" or
+// format: "direct_children". The filter is case insensitive. If empty,
+// then no nodes are filtered.
+func (c *CustomersNodesNodesListCall) Filter(filter string) *CustomersNodesNodesListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -6854,8 +7064,8 @@ func (c *CustomersNodesNodesListCall) PageSize(pageSize int64) *CustomersNodesNo
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListNodes method that indicates
-// where this listing should continue from.
+// returned from a previous call to ListNodes that indicates where this
+// listing should continue from.
 func (c *CustomersNodesNodesListCall) PageToken(pageToken string) *CustomersNodesNodesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6898,7 +7108,7 @@ func (c *CustomersNodesNodesListCall) Header() http.Header {
 
 func (c *CustomersNodesNodesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6968,6 +7178,11 @@ func (c *CustomersNodesNodesListCall) Do(opts ...googleapi.CallOption) (*SasPort
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no nodes are filtered.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of nodes to return in the response.",
 	//       "format": "int32",
@@ -6975,7 +7190,7 @@ func (c *CustomersNodesNodesListCall) Do(opts ...googleapi.CallOption) (*SasPort
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListNodes method that indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListNodes that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7031,6 +7246,8 @@ type DeploymentsGetCall struct {
 }
 
 // Get: Returns a requested deployment.
+//
+// - name: The name of the deployment.
 func (r *DeploymentsService) Get(name string) *DeploymentsGetCall {
 	c := &DeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7074,7 +7291,7 @@ func (c *DeploymentsGetCall) Header() http.Header {
 
 func (c *DeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7174,6 +7391,8 @@ type DeploymentsDevicesDeleteCall struct {
 }
 
 // Delete: Deletes a device.
+//
+// - name: The name of the device.
 func (r *DeploymentsDevicesService) Delete(name string) *DeploymentsDevicesDeleteCall {
 	c := &DeploymentsDevicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7207,7 +7426,7 @@ func (c *DeploymentsDevicesDeleteCall) Header() http.Header {
 
 func (c *DeploymentsDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7305,6 +7524,8 @@ type DeploymentsDevicesGetCall struct {
 }
 
 // Get: Gets details about a device.
+//
+// - name: The name of the device.
 func (r *DeploymentsDevicesService) Get(name string) *DeploymentsDevicesGetCall {
 	c := &DeploymentsDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7348,7 +7569,7 @@ func (c *DeploymentsDevicesGetCall) Header() http.Header {
 
 func (c *DeploymentsDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7449,6 +7670,8 @@ type DeploymentsDevicesMoveCall struct {
 }
 
 // Move: Moves a device under another node or customer.
+//
+// - name: The name of the device to move.
 func (r *DeploymentsDevicesService) Move(name string, sasportalmovedevicerequest *SasPortalMoveDeviceRequest) *DeploymentsDevicesMoveCall {
 	c := &DeploymentsDevicesMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7483,7 +7706,7 @@ func (c *DeploymentsDevicesMoveCall) Header() http.Header {
 
 func (c *DeploymentsDevicesMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7589,6 +7812,8 @@ type DeploymentsDevicesPatchCall struct {
 }
 
 // Patch: Updates a device.
+//
+// - name: Output only. The resource path name.
 func (r *DeploymentsDevicesService) Patch(name string, sasportaldevice *SasPortalDevice) *DeploymentsDevicesPatchCall {
 	c := &DeploymentsDevicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7630,7 +7855,7 @@ func (c *DeploymentsDevicesPatchCall) Header() http.Header {
 
 func (c *DeploymentsDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7742,6 +7967,8 @@ type DeploymentsDevicesSignDeviceCall struct {
 }
 
 // SignDevice: Signs a device.
+//
+// - name: Output only. The resource path name.
 func (r *DeploymentsDevicesService) SignDevice(name string, sasportalsigndevicerequest *SasPortalSignDeviceRequest) *DeploymentsDevicesSignDeviceCall {
 	c := &DeploymentsDevicesSignDeviceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7776,7 +8003,7 @@ func (c *DeploymentsDevicesSignDeviceCall) Header() http.Header {
 
 func (c *DeploymentsDevicesSignDeviceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7882,6 +8109,8 @@ type DeploymentsDevicesUpdateSignedCall struct {
 }
 
 // UpdateSigned: Updates a signed device.
+//
+// - name: The name of the device to update.
 func (r *DeploymentsDevicesService) UpdateSigned(name string, sasportalupdatesigneddevicerequest *SasPortalUpdateSignedDeviceRequest) *DeploymentsDevicesUpdateSignedCall {
 	c := &DeploymentsDevicesUpdateSignedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7916,7 +8145,7 @@ func (c *DeploymentsDevicesUpdateSignedCall) Header() http.Header {
 
 func (c *DeploymentsDevicesUpdateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8021,7 +8250,7 @@ type InstallerGenerateSecretCall struct {
 }
 
 // GenerateSecret: Generates a secret to be used with the
-// ValidateInstaller method
+// ValidateInstaller.
 func (r *InstallerService) GenerateSecret(sasportalgeneratesecretrequest *SasPortalGenerateSecretRequest) *InstallerGenerateSecretCall {
 	c := &InstallerGenerateSecretCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.sasportalgeneratesecretrequest = sasportalgeneratesecretrequest
@@ -8055,7 +8284,7 @@ func (c *InstallerGenerateSecretCall) Header() http.Header {
 
 func (c *InstallerGenerateSecretCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8116,7 +8345,7 @@ func (c *InstallerGenerateSecretCall) Do(opts ...googleapi.CallOption) (*SasPort
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates a secret to be used with the ValidateInstaller method",
+	//   "description": "Generates a secret to be used with the ValidateInstaller.",
 	//   "flatPath": "v1alpha1/installer:generateSecret",
 	//   "httpMethod": "POST",
 	//   "id": "sasportal.installer.generateSecret",
@@ -8181,7 +8410,7 @@ func (c *InstallerValidateCall) Header() http.Header {
 
 func (c *InstallerValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8275,6 +8504,8 @@ type NodesGetCall struct {
 }
 
 // Get: Returns a requested node.
+//
+// - name: The name of the node.
 func (r *NodesService) Get(name string) *NodesGetCall {
 	c := &NodesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8318,7 +8549,7 @@ func (c *NodesGetCall) Header() http.Header {
 
 func (c *NodesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8418,6 +8649,8 @@ type NodesDeploymentsDeleteCall struct {
 }
 
 // Delete: Deletes a deployment.
+//
+// - name: The name of the deployment.
 func (r *NodesDeploymentsService) Delete(name string) *NodesDeploymentsDeleteCall {
 	c := &NodesDeploymentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8451,7 +8684,7 @@ func (c *NodesDeploymentsDeleteCall) Header() http.Header {
 
 func (c *NodesDeploymentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8549,6 +8782,8 @@ type NodesDeploymentsGetCall struct {
 }
 
 // Get: Returns a requested deployment.
+//
+// - name: The name of the deployment.
 func (r *NodesDeploymentsService) Get(name string) *NodesDeploymentsGetCall {
 	c := &NodesDeploymentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8592,7 +8827,7 @@ func (c *NodesDeploymentsGetCall) Header() http.Header {
 
 func (c *NodesDeploymentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8693,9 +8928,21 @@ type NodesDeploymentsListCall struct {
 }
 
 // List: Lists deployments.
+//
+// - parent: The parent resource name, for example, "nodes/1",
+//   customer/1/nodes/2.
 func (r *NodesDeploymentsService) List(parent string) *NodesDeploymentsListCall {
 	c := &NodesDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression.
+// The filter should have the following format: "DIRECT_CHILDREN" or
+// format: "direct_children". The filter is case insensitive. If empty,
+// then no deployments are filtered.
+func (c *NodesDeploymentsListCall) Filter(filter string) *NodesDeploymentsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -8707,8 +8954,8 @@ func (c *NodesDeploymentsListCall) PageSize(pageSize int64) *NodesDeploymentsLis
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListDeployments method that
-// indicates where this listing should continue from.
+// returned from a previous call to ListDeployments that indicates where
+// this listing should continue from.
 func (c *NodesDeploymentsListCall) PageToken(pageToken string) *NodesDeploymentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8751,7 +8998,7 @@ func (c *NodesDeploymentsListCall) Header() http.Header {
 
 func (c *NodesDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8821,6 +9068,11 @@ func (c *NodesDeploymentsListCall) Do(opts ...googleapi.CallOption) (*SasPortalL
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no deployments are filtered.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of deployments to return in the response.",
 	//       "format": "int32",
@@ -8828,7 +9080,7 @@ func (c *NodesDeploymentsListCall) Do(opts ...googleapi.CallOption) (*SasPortalL
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListDeployments method that indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListDeployments that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8884,6 +9136,8 @@ type NodesDeploymentsMoveCall struct {
 }
 
 // Move: Moves a deployment under another node or customer.
+//
+// - name: The name of the deployment to move.
 func (r *NodesDeploymentsService) Move(name string, sasportalmovedeploymentrequest *SasPortalMoveDeploymentRequest) *NodesDeploymentsMoveCall {
 	c := &NodesDeploymentsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8918,7 +9172,7 @@ func (c *NodesDeploymentsMoveCall) Header() http.Header {
 
 func (c *NodesDeploymentsMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9024,6 +9278,8 @@ type NodesDeploymentsPatchCall struct {
 }
 
 // Patch: Updates an existing deployment.
+//
+// - name: Output only. Resource name.
 func (r *NodesDeploymentsService) Patch(name string, sasportaldeployment *SasPortalDeployment) *NodesDeploymentsPatchCall {
 	c := &NodesDeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9065,7 +9321,7 @@ func (c *NodesDeploymentsPatchCall) Header() http.Header {
 
 func (c *NodesDeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9177,6 +9433,8 @@ type NodesDeploymentsDevicesCreateCall struct {
 }
 
 // Create: Creates a device under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *NodesDeploymentsDevicesService) Create(parent string, sasportaldevice *SasPortalDevice) *NodesDeploymentsDevicesCreateCall {
 	c := &NodesDeploymentsDevicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9211,7 +9469,7 @@ func (c *NodesDeploymentsDevicesCreateCall) Header() http.Header {
 
 func (c *NodesDeploymentsDevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9317,6 +9575,8 @@ type NodesDeploymentsDevicesCreateSignedCall struct {
 }
 
 // CreateSigned: Creates a signed device under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *NodesDeploymentsDevicesService) CreateSigned(parent string, sasportalcreatesigneddevicerequest *SasPortalCreateSignedDeviceRequest) *NodesDeploymentsDevicesCreateSignedCall {
 	c := &NodesDeploymentsDevicesCreateSignedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9351,7 +9611,7 @@ func (c *NodesDeploymentsDevicesCreateSignedCall) Header() http.Header {
 
 func (c *NodesDeploymentsDevicesCreateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9457,6 +9717,8 @@ type NodesDeploymentsDevicesListCall struct {
 }
 
 // List: Lists devices under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *NodesDeploymentsDevicesService) List(parent string) *NodesDeploymentsDevicesListCall {
 	c := &NodesDeploymentsDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9465,7 +9727,7 @@ func (r *NodesDeploymentsDevicesService) List(parent string) *NodesDeploymentsDe
 
 // Filter sets the optional parameter "filter": The filter expression.
 // The filter should have one of the following formats: "sn=123454" or
-// "display_name=MyDevice". sn corresponds to serial_number of the
+// "display_name=MyDevice". sn corresponds to serial number of the
 // device. The filter is case insensitive.
 func (c *NodesDeploymentsDevicesListCall) Filter(filter string) *NodesDeploymentsDevicesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -9525,7 +9787,7 @@ func (c *NodesDeploymentsDevicesListCall) Header() http.Header {
 
 func (c *NodesDeploymentsDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9596,7 +9858,7 @@ func (c *NodesDeploymentsDevicesListCall) Do(opts ...googleapi.CallOption) (*Sas
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial_number of the device. The filter is case insensitive.",
+	//       "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial number of the device. The filter is case insensitive.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9663,6 +9925,8 @@ type NodesDevicesCreateCall struct {
 }
 
 // Create: Creates a device under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *NodesDevicesService) Create(parent string, sasportaldevice *SasPortalDevice) *NodesDevicesCreateCall {
 	c := &NodesDevicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9697,7 +9961,7 @@ func (c *NodesDevicesCreateCall) Header() http.Header {
 
 func (c *NodesDevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9803,6 +10067,8 @@ type NodesDevicesCreateSignedCall struct {
 }
 
 // CreateSigned: Creates a signed device under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *NodesDevicesService) CreateSigned(parent string, sasportalcreatesigneddevicerequest *SasPortalCreateSignedDeviceRequest) *NodesDevicesCreateSignedCall {
 	c := &NodesDevicesCreateSignedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9837,7 +10103,7 @@ func (c *NodesDevicesCreateSignedCall) Header() http.Header {
 
 func (c *NodesDevicesCreateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9942,6 +10208,8 @@ type NodesDevicesDeleteCall struct {
 }
 
 // Delete: Deletes a device.
+//
+// - name: The name of the device.
 func (r *NodesDevicesService) Delete(name string) *NodesDevicesDeleteCall {
 	c := &NodesDevicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9975,7 +10243,7 @@ func (c *NodesDevicesDeleteCall) Header() http.Header {
 
 func (c *NodesDevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10073,6 +10341,8 @@ type NodesDevicesGetCall struct {
 }
 
 // Get: Gets details about a device.
+//
+// - name: The name of the device.
 func (r *NodesDevicesService) Get(name string) *NodesDevicesGetCall {
 	c := &NodesDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10116,7 +10386,7 @@ func (c *NodesDevicesGetCall) Header() http.Header {
 
 func (c *NodesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10217,6 +10487,8 @@ type NodesDevicesListCall struct {
 }
 
 // List: Lists devices under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *NodesDevicesService) List(parent string) *NodesDevicesListCall {
 	c := &NodesDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10225,7 +10497,7 @@ func (r *NodesDevicesService) List(parent string) *NodesDevicesListCall {
 
 // Filter sets the optional parameter "filter": The filter expression.
 // The filter should have one of the following formats: "sn=123454" or
-// "display_name=MyDevice". sn corresponds to serial_number of the
+// "display_name=MyDevice". sn corresponds to serial number of the
 // device. The filter is case insensitive.
 func (c *NodesDevicesListCall) Filter(filter string) *NodesDevicesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -10285,7 +10557,7 @@ func (c *NodesDevicesListCall) Header() http.Header {
 
 func (c *NodesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10356,7 +10628,7 @@ func (c *NodesDevicesListCall) Do(opts ...googleapi.CallOption) (*SasPortalListD
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial_number of the device. The filter is case insensitive.",
+	//       "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial number of the device. The filter is case insensitive.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10423,6 +10695,8 @@ type NodesDevicesMoveCall struct {
 }
 
 // Move: Moves a device under another node or customer.
+//
+// - name: The name of the device to move.
 func (r *NodesDevicesService) Move(name string, sasportalmovedevicerequest *SasPortalMoveDeviceRequest) *NodesDevicesMoveCall {
 	c := &NodesDevicesMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10457,7 +10731,7 @@ func (c *NodesDevicesMoveCall) Header() http.Header {
 
 func (c *NodesDevicesMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10563,6 +10837,8 @@ type NodesDevicesPatchCall struct {
 }
 
 // Patch: Updates a device.
+//
+// - name: Output only. The resource path name.
 func (r *NodesDevicesService) Patch(name string, sasportaldevice *SasPortalDevice) *NodesDevicesPatchCall {
 	c := &NodesDevicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10604,7 +10880,7 @@ func (c *NodesDevicesPatchCall) Header() http.Header {
 
 func (c *NodesDevicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10716,6 +10992,8 @@ type NodesDevicesSignDeviceCall struct {
 }
 
 // SignDevice: Signs a device.
+//
+// - name: Output only. The resource path name.
 func (r *NodesDevicesService) SignDevice(name string, sasportalsigndevicerequest *SasPortalSignDeviceRequest) *NodesDevicesSignDeviceCall {
 	c := &NodesDevicesSignDeviceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10750,7 +11028,7 @@ func (c *NodesDevicesSignDeviceCall) Header() http.Header {
 
 func (c *NodesDevicesSignDeviceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10856,6 +11134,8 @@ type NodesDevicesUpdateSignedCall struct {
 }
 
 // UpdateSigned: Updates a signed device.
+//
+// - name: The name of the device to update.
 func (r *NodesDevicesService) UpdateSigned(name string, sasportalupdatesigneddevicerequest *SasPortalUpdateSignedDeviceRequest) *NodesDevicesUpdateSignedCall {
 	c := &NodesDevicesUpdateSignedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10890,7 +11170,7 @@ func (c *NodesDevicesUpdateSignedCall) Header() http.Header {
 
 func (c *NodesDevicesUpdateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10996,6 +11276,8 @@ type NodesNodesCreateCall struct {
 }
 
 // Create: Creates a new node.
+//
+// - parent: The parent resource name where the node is to be created.
 func (r *NodesNodesService) Create(parent string, sasportalnode *SasPortalNode) *NodesNodesCreateCall {
 	c := &NodesNodesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11030,7 +11312,7 @@ func (c *NodesNodesCreateCall) Header() http.Header {
 
 func (c *NodesNodesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11135,6 +11417,8 @@ type NodesNodesDeleteCall struct {
 }
 
 // Delete: Deletes a node.
+//
+// - name: The name of the node.
 func (r *NodesNodesService) Delete(name string) *NodesNodesDeleteCall {
 	c := &NodesNodesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11168,7 +11452,7 @@ func (c *NodesNodesDeleteCall) Header() http.Header {
 
 func (c *NodesNodesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11266,6 +11550,8 @@ type NodesNodesGetCall struct {
 }
 
 // Get: Returns a requested node.
+//
+// - name: The name of the node.
 func (r *NodesNodesService) Get(name string) *NodesNodesGetCall {
 	c := &NodesNodesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11309,7 +11595,7 @@ func (c *NodesNodesGetCall) Header() http.Header {
 
 func (c *NodesNodesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11410,9 +11696,20 @@ type NodesNodesListCall struct {
 }
 
 // List: Lists nodes.
+//
+// - parent: The parent resource name, for example, "nodes/1".
 func (r *NodesNodesService) List(parent string) *NodesNodesListCall {
 	c := &NodesNodesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression.
+// The filter should have the following format: "DIRECT_CHILDREN" or
+// format: "direct_children". The filter is case insensitive. If empty,
+// then no nodes are filtered.
+func (c *NodesNodesListCall) Filter(filter string) *NodesNodesListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -11424,8 +11721,8 @@ func (c *NodesNodesListCall) PageSize(pageSize int64) *NodesNodesListCall {
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListNodes method that indicates
-// where this listing should continue from.
+// returned from a previous call to ListNodes that indicates where this
+// listing should continue from.
 func (c *NodesNodesListCall) PageToken(pageToken string) *NodesNodesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -11468,7 +11765,7 @@ func (c *NodesNodesListCall) Header() http.Header {
 
 func (c *NodesNodesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11538,6 +11835,11 @@ func (c *NodesNodesListCall) Do(opts ...googleapi.CallOption) (*SasPortalListNod
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no nodes are filtered.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of nodes to return in the response.",
 	//       "format": "int32",
@@ -11545,7 +11847,7 @@ func (c *NodesNodesListCall) Do(opts ...googleapi.CallOption) (*SasPortalListNod
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListNodes method that indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListNodes that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11601,6 +11903,8 @@ type NodesNodesMoveCall struct {
 }
 
 // Move: Moves a node under another node or customer.
+//
+// - name: The name of the node to move.
 func (r *NodesNodesService) Move(name string, sasportalmovenoderequest *SasPortalMoveNodeRequest) *NodesNodesMoveCall {
 	c := &NodesNodesMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11635,7 +11939,7 @@ func (c *NodesNodesMoveCall) Header() http.Header {
 
 func (c *NodesNodesMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11741,6 +12045,8 @@ type NodesNodesPatchCall struct {
 }
 
 // Patch: Updates an existing node.
+//
+// - name: Output only. Resource name.
 func (r *NodesNodesService) Patch(name string, sasportalnode *SasPortalNode) *NodesNodesPatchCall {
 	c := &NodesNodesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11782,7 +12088,7 @@ func (c *NodesNodesPatchCall) Header() http.Header {
 
 func (c *NodesNodesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11894,6 +12200,9 @@ type NodesNodesDeploymentsCreateCall struct {
 }
 
 // Create: Creates a new deployment.
+//
+// - parent: The parent resource name where the deployment is to be
+//   created.
 func (r *NodesNodesDeploymentsService) Create(parent string, sasportaldeployment *SasPortalDeployment) *NodesNodesDeploymentsCreateCall {
 	c := &NodesNodesDeploymentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11928,7 +12237,7 @@ func (c *NodesNodesDeploymentsCreateCall) Header() http.Header {
 
 func (c *NodesNodesDeploymentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12034,9 +12343,21 @@ type NodesNodesDeploymentsListCall struct {
 }
 
 // List: Lists deployments.
+//
+// - parent: The parent resource name, for example, "nodes/1",
+//   customer/1/nodes/2.
 func (r *NodesNodesDeploymentsService) List(parent string) *NodesNodesDeploymentsListCall {
 	c := &NodesNodesDeploymentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression.
+// The filter should have the following format: "DIRECT_CHILDREN" or
+// format: "direct_children". The filter is case insensitive. If empty,
+// then no deployments are filtered.
+func (c *NodesNodesDeploymentsListCall) Filter(filter string) *NodesNodesDeploymentsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -12048,8 +12369,8 @@ func (c *NodesNodesDeploymentsListCall) PageSize(pageSize int64) *NodesNodesDepl
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListDeployments method that
-// indicates where this listing should continue from.
+// returned from a previous call to ListDeployments that indicates where
+// this listing should continue from.
 func (c *NodesNodesDeploymentsListCall) PageToken(pageToken string) *NodesNodesDeploymentsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -12092,7 +12413,7 @@ func (c *NodesNodesDeploymentsListCall) Header() http.Header {
 
 func (c *NodesNodesDeploymentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12162,6 +12483,11 @@ func (c *NodesNodesDeploymentsListCall) Do(opts ...googleapi.CallOption) (*SasPo
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no deployments are filtered.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of deployments to return in the response.",
 	//       "format": "int32",
@@ -12169,7 +12495,7 @@ func (c *NodesNodesDeploymentsListCall) Do(opts ...googleapi.CallOption) (*SasPo
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListDeployments method that indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListDeployments that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12225,6 +12551,8 @@ type NodesNodesDevicesCreateCall struct {
 }
 
 // Create: Creates a device under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *NodesNodesDevicesService) Create(parent string, sasportaldevice *SasPortalDevice) *NodesNodesDevicesCreateCall {
 	c := &NodesNodesDevicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12259,7 +12587,7 @@ func (c *NodesNodesDevicesCreateCall) Header() http.Header {
 
 func (c *NodesNodesDevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12365,6 +12693,8 @@ type NodesNodesDevicesCreateSignedCall struct {
 }
 
 // CreateSigned: Creates a signed device under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *NodesNodesDevicesService) CreateSigned(parent string, sasportalcreatesigneddevicerequest *SasPortalCreateSignedDeviceRequest) *NodesNodesDevicesCreateSignedCall {
 	c := &NodesNodesDevicesCreateSignedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12399,7 +12729,7 @@ func (c *NodesNodesDevicesCreateSignedCall) Header() http.Header {
 
 func (c *NodesNodesDevicesCreateSignedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12505,6 +12835,8 @@ type NodesNodesDevicesListCall struct {
 }
 
 // List: Lists devices under a node or customer.
+//
+// - parent: The name of the parent resource.
 func (r *NodesNodesDevicesService) List(parent string) *NodesNodesDevicesListCall {
 	c := &NodesNodesDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12513,7 +12845,7 @@ func (r *NodesNodesDevicesService) List(parent string) *NodesNodesDevicesListCal
 
 // Filter sets the optional parameter "filter": The filter expression.
 // The filter should have one of the following formats: "sn=123454" or
-// "display_name=MyDevice". sn corresponds to serial_number of the
+// "display_name=MyDevice". sn corresponds to serial number of the
 // device. The filter is case insensitive.
 func (c *NodesNodesDevicesListCall) Filter(filter string) *NodesNodesDevicesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -12573,7 +12905,7 @@ func (c *NodesNodesDevicesListCall) Header() http.Header {
 
 func (c *NodesNodesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12644,7 +12976,7 @@ func (c *NodesNodesDevicesListCall) Do(opts ...googleapi.CallOption) (*SasPortal
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial_number of the device. The filter is case insensitive.",
+	//       "description": "The filter expression. The filter should have one of the following formats: \"sn=123454\" or \"display_name=MyDevice\". sn corresponds to serial number of the device. The filter is case insensitive.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12711,6 +13043,8 @@ type NodesNodesNodesCreateCall struct {
 }
 
 // Create: Creates a new node.
+//
+// - parent: The parent resource name where the node is to be created.
 func (r *NodesNodesNodesService) Create(parent string, sasportalnode *SasPortalNode) *NodesNodesNodesCreateCall {
 	c := &NodesNodesNodesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12745,7 +13079,7 @@ func (c *NodesNodesNodesCreateCall) Header() http.Header {
 
 func (c *NodesNodesNodesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12851,9 +13185,20 @@ type NodesNodesNodesListCall struct {
 }
 
 // List: Lists nodes.
+//
+// - parent: The parent resource name, for example, "nodes/1".
 func (r *NodesNodesNodesService) List(parent string) *NodesNodesNodesListCall {
 	c := &NodesNodesNodesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression.
+// The filter should have the following format: "DIRECT_CHILDREN" or
+// format: "direct_children". The filter is case insensitive. If empty,
+// then no nodes are filtered.
+func (c *NodesNodesNodesListCall) Filter(filter string) *NodesNodesNodesListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -12865,8 +13210,8 @@ func (c *NodesNodesNodesListCall) PageSize(pageSize int64) *NodesNodesNodesListC
 }
 
 // PageToken sets the optional parameter "pageToken": A pagination token
-// returned from a previous call to ListNodes method that indicates
-// where this listing should continue from.
+// returned from a previous call to ListNodes that indicates where this
+// listing should continue from.
 func (c *NodesNodesNodesListCall) PageToken(pageToken string) *NodesNodesNodesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -12909,7 +13254,7 @@ func (c *NodesNodesNodesListCall) Header() http.Header {
 
 func (c *NodesNodesNodesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12979,6 +13324,11 @@ func (c *NodesNodesNodesListCall) Do(opts ...googleapi.CallOption) (*SasPortalLi
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter expression. The filter should have the following format: \"DIRECT_CHILDREN\" or format: \"direct_children\". The filter is case insensitive. If empty, then no nodes are filtered.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of nodes to return in the response.",
 	//       "format": "int32",
@@ -12986,7 +13336,7 @@ func (c *NodesNodesNodesListCall) Do(opts ...googleapi.CallOption) (*SasPortalLi
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A pagination token returned from a previous call to ListNodes method that indicates where this listing should continue from.",
+	//       "description": "A pagination token returned from a previous call to ListNodes that indicates where this listing should continue from.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13075,7 +13425,7 @@ func (c *PoliciesGetCall) Header() http.Header {
 
 func (c *PoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13201,7 +13551,7 @@ func (c *PoliciesSetCall) Header() http.Header {
 
 func (c *PoliciesSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13327,7 +13677,7 @@ func (c *PoliciesTestCall) Header() http.Header {
 
 func (c *PoliciesTestCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

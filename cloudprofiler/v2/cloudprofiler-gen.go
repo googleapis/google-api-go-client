@@ -83,7 +83,8 @@ const mtlsBasePath = "https://cloudprofiler.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and write monitoring data for all of your Google and third-party
@@ -175,11 +176,11 @@ type ProjectsProfilesService struct {
 // supported by the agent. The creation call will hang until a profile
 // of one of these types needs to be collected.
 type CreateProfileRequest struct {
-	// Deployment: Deployment details.
+	// Deployment: Required. Deployment details.
 	Deployment *Deployment `json:"deployment,omitempty"`
 
-	// ProfileType: One or more profile types that the agent is capable of
-	// providing.
+	// ProfileType: Required. One or more profile types that the agent is
+	// capable of providing.
 	//
 	// Possible values:
 	//   "PROFILE_TYPE_UNSPECIFIED" - Unspecified profile type.
@@ -202,10 +203,10 @@ type CreateProfileRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Deployment") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Deployment") to include in
@@ -244,18 +245,18 @@ type Deployment struct {
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Target: Target is the service name used to group related deployments:
-	// * Service name for GAE Flex / Standard. * Cluster and container name
-	// for GKE. * User-specified string for direct GCE profiling (e.g.
-	// Java). * Job name for Dataflow. Validation regex: `^a-z
-	// ([-a-z0-9_.]{0,253}[a-z0-9])?$`.
+	// * Service name for App Engine Flex / Standard. * Cluster and
+	// container name for GKE. * User-specified string for direct Compute
+	// Engine profiling (e.g. Java). * Job name for Dataflow. Validation
+	// regex: `^a-z ([-a-z0-9_.]{0,253}[a-z0-9])?$`.
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Labels") to include in API
@@ -330,10 +331,10 @@ type Profile struct {
 
 	// ForceSendFields is a list of field names (e.g. "Deployment") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Deployment") to include in
@@ -373,6 +374,8 @@ type ProjectsProfilesCreateCall struct {
 // response status. To a gRPC client, the extension will be return as a
 // binary-serialized proto in the trailing metadata item named
 // "google.rpc.retryinfo-bin".
+//
+// - parent: Parent project to create the profile in.
 func (r *ProjectsProfilesService) Create(parent string, createprofilerequest *CreateProfileRequest) *ProjectsProfilesCreateCall {
 	c := &ProjectsProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -407,7 +410,7 @@ func (c *ProjectsProfilesCreateCall) Header() http.Header {
 
 func (c *ProjectsProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -517,6 +520,8 @@ type ProjectsProfilesCreateOfflineCall struct {
 // CreateOffline: CreateOfflineProfile creates a new profile resource in
 // the offline mode. The client provides the profile to create along
 // with the profile bytes, the server records it.
+//
+// - parent: Parent project to create the profile in.
 func (r *ProjectsProfilesService) CreateOffline(parent string, profile *Profile) *ProjectsProfilesCreateOfflineCall {
 	c := &ProjectsProfilesCreateOfflineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -551,7 +556,7 @@ func (c *ProjectsProfilesCreateOfflineCall) Header() http.Header {
 
 func (c *ProjectsProfilesCreateOfflineCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -662,6 +667,9 @@ type ProjectsProfilesPatchCall struct {
 // profile resource created in the online mode. Updating the bytes for
 // profiles created in the offline mode is currently not supported: the
 // profile content must be provided at the time of the profile creation.
+//
+// - name: Output only. Opaque, server-assigned, unique ID for this
+//   profile.
 func (r *ProjectsProfilesService) Patch(name string, profile *Profile) *ProjectsProfilesPatchCall {
 	c := &ProjectsProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -706,7 +714,7 @@ func (c *ProjectsProfilesPatchCall) Header() http.Header {
 
 func (c *ProjectsProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

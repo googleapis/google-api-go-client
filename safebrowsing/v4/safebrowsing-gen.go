@@ -226,10 +226,10 @@ type GoogleSecuritySafebrowsingV4Checksum struct {
 
 	// ForceSendFields is a list of field names (e.g. "Sha256") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Sha256") to include in API
@@ -259,10 +259,10 @@ type GoogleSecuritySafebrowsingV4ClientInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClientId") to include in
@@ -294,10 +294,10 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Client") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Client") to include in API
@@ -382,14 +382,16 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequest 
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
 	// safe URL expressions.
+	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
+	// in Chrome. See go/sb-accuracytips.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Constraints") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Constraints") to include
@@ -444,10 +446,10 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesRequestListUpdateRequestC
 
 	// ForceSendFields is a list of field names (e.g. "DeviceLocation") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceLocation") to
@@ -484,10 +486,10 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ListUpdateResponses")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ListUpdateResponses") to
@@ -596,14 +598,16 @@ type GoogleSecuritySafebrowsingV4FetchThreatListUpdatesResponseListUpdateRespons
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
 	// safe URL expressions.
+	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
+	// in Chrome. See go/sb-accuracytips.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Additions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Additions") to include in
@@ -640,10 +644,10 @@ type GoogleSecuritySafebrowsingV4FindFullHashesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApiClient") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApiClient") to include in
@@ -680,10 +684,10 @@ type GoogleSecuritySafebrowsingV4FindFullHashesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Matches") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Matches") to include in
@@ -712,10 +716,10 @@ type GoogleSecuritySafebrowsingV4FindThreatMatchesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Client") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Client") to include in API
@@ -743,10 +747,10 @@ type GoogleSecuritySafebrowsingV4FindThreatMatchesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Matches") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Matches") to include in
@@ -774,10 +778,10 @@ type GoogleSecuritySafebrowsingV4ListThreatListsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ThreatLists") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ThreatLists") to include
@@ -815,10 +819,10 @@ type GoogleSecuritySafebrowsingV4RawHashes struct {
 
 	// ForceSendFields is a list of field names (e.g. "PrefixSize") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PrefixSize") to include in
@@ -845,10 +849,10 @@ type GoogleSecuritySafebrowsingV4RawIndices struct {
 
 	// ForceSendFields is a list of field names (e.g. "Indices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Indices") to include in
@@ -891,10 +895,10 @@ type GoogleSecuritySafebrowsingV4RiceDeltaEncoding struct {
 
 	// ForceSendFields is a list of field names (e.g. "EncodedData") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EncodedData") to include
@@ -931,10 +935,10 @@ type GoogleSecuritySafebrowsingV4ThreatEntry struct {
 
 	// ForceSendFields is a list of field names (e.g. "Digest") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Digest") to include in API
@@ -961,10 +965,10 @@ type GoogleSecuritySafebrowsingV4ThreatEntryMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Entries") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Entries") to include in
@@ -995,10 +999,10 @@ type GoogleSecuritySafebrowsingV4ThreatEntryMetadataMetadataEntry struct {
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -1047,10 +1051,10 @@ type GoogleSecuritySafebrowsingV4ThreatEntrySet struct {
 
 	// ForceSendFields is a list of field names (e.g. "CompressionType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CompressionType") to
@@ -1123,6 +1127,8 @@ type GoogleSecuritySafebrowsingV4ThreatHit struct {
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
 	// safe URL expressions.
+	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
+	// in Chrome. See go/sb-accuracytips.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// UserInfo: Details about the user that encountered the threat.
@@ -1130,10 +1136,10 @@ type GoogleSecuritySafebrowsingV4ThreatHit struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClientInfo") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClientInfo") to include in
@@ -1180,10 +1186,10 @@ type GoogleSecuritySafebrowsingV4ThreatHitThreatSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Referrer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Referrer") to include in
@@ -1213,10 +1219,10 @@ type GoogleSecuritySafebrowsingV4ThreatHitUserInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "RegionCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "RegionCode") to include in
@@ -1296,14 +1302,16 @@ type GoogleSecuritySafebrowsingV4ThreatInfo struct {
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
 	// safe URL expressions.
+	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
+	// in Chrome. See go/sb-accuracytips.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlatformTypes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PlatformTypes") to include
@@ -1381,14 +1389,16 @@ type GoogleSecuritySafebrowsingV4ThreatListDescriptor struct {
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
 	// safe URL expressions.
+	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
+	// in Chrome. See go/sb-accuracytips.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlatformType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PlatformType") to include
@@ -1475,14 +1485,16 @@ type GoogleSecuritySafebrowsingV4ThreatMatch struct {
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
 	// safe URL expressions.
+	//   "ACCURACY_TIPS" - List from the Jigsaw team to show accuracy tips
+	// in Chrome. See go/sb-accuracytips.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CacheDuration") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CacheDuration") to include
@@ -1512,6 +1524,8 @@ type EncodedFullHashesGetCall struct {
 }
 
 // Get:
+//
+// - encodedRequest: A serialized FindFullHashesRequest proto.
 func (r *EncodedFullHashesService) Get(encodedRequest string) *EncodedFullHashesGetCall {
 	c := &EncodedFullHashesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.encodedRequest = encodedRequest
@@ -1570,7 +1584,7 @@ func (c *EncodedFullHashesGetCall) Header() http.Header {
 
 func (c *EncodedFullHashesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1680,6 +1694,8 @@ type EncodedUpdatesGetCall struct {
 }
 
 // Get:
+//
+// - encodedRequest: A serialized FetchThreatListUpdatesRequest proto.
 func (r *EncodedUpdatesService) Get(encodedRequest string) *EncodedUpdatesGetCall {
 	c := &EncodedUpdatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.encodedRequest = encodedRequest
@@ -1738,7 +1754,7 @@ func (c *EncodedUpdatesGetCall) Header() http.Header {
 
 func (c *EncodedUpdatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1881,7 +1897,7 @@ func (c *FullHashesFindCall) Header() http.Header {
 
 func (c *FullHashesFindCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2006,7 +2022,7 @@ func (c *ThreatHitsCreateCall) Header() http.Header {
 
 func (c *ThreatHitsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2129,7 +2145,7 @@ func (c *ThreatListUpdatesFetchCall) Header() http.Header {
 
 func (c *ThreatListUpdatesFetchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2263,7 +2279,7 @@ func (c *ThreatListsListCall) Header() http.Header {
 
 func (c *ThreatListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2382,7 +2398,7 @@ func (c *ThreatMatchesFindCall) Header() http.Header {
 
 func (c *ThreatMatchesFindCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

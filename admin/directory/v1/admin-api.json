@@ -2,6 +2,12 @@
   "auth": {
     "oauth2": {
       "scopes": {
+        "https://www.googleapis.com/auth/admin.chrome.printers": {
+          "description": "See, add, edit, and permanently delete the printers that your organization can use with Chrome"
+        },
+        "https://www.googleapis.com/auth/admin.chrome.printers.readonly": {
+          "description": "See the printers that your organization can use with Chrome"
+        },
         "https://www.googleapis.com/auth/admin.directory.customer": {
           "description": "View and manage customer related information"
         },
@@ -69,7 +75,7 @@
           "description": "View user aliases on your domain"
         },
         "https://www.googleapis.com/auth/admin.directory.user.readonly": {
-          "description": "View users on your domain"
+          "description": "See info about users on your domain"
         },
         "https://www.googleapis.com/auth/admin.directory.user.security": {
           "description": "Manage data access permissions for users on your domain"
@@ -81,7 +87,7 @@
           "description": "View user schemas on your domain"
         },
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -92,7 +98,7 @@
   "canonicalName": "directory",
   "description": "Admin SDK lets administrators of enterprise domains to view and manage resources like user, groups etc. It also provides audit and usage reports of domain.",
   "discoveryVersion": "v1",
-  "documentationLink": "http://developers.google.com/admin-sdk/",
+  "documentationLink": "https://developers.google.com/admin-sdk/",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -187,7 +193,7 @@
     "asps": {
       "methods": {
         "delete": {
-          "description": "Delete an ASP issued by a user.",
+          "description": "Deletes an ASP issued by a user.",
           "flatPath": "admin/directory/v1/users/{userKey}/asps/{codeId}",
           "httpMethod": "DELETE",
           "id": "directory.asps.delete",
@@ -216,7 +222,7 @@
           ]
         },
         "get": {
-          "description": "Get information about an ASP issued by a user.",
+          "description": "Gets information about an ASP issued by a user.",
           "flatPath": "admin/directory/v1/users/{userKey}/asps/{codeId}",
           "httpMethod": "GET",
           "id": "directory.asps.get",
@@ -248,7 +254,7 @@
           ]
         },
         "list": {
-          "description": "List the ASPs issued by a user.",
+          "description": "Lists the ASPs issued by a user.",
           "flatPath": "admin/directory/v1/users/{userKey}/asps",
           "httpMethod": "GET",
           "id": "directory.asps.list",
@@ -276,7 +282,7 @@
     "channels": {
       "methods": {
         "stop": {
-          "description": "Stop watching resources through this channel.",
+          "description": "Stops watching resources through this channel.",
           "flatPath": "admin/directory_v1/channels/stop",
           "httpMethod": "POST",
           "id": "admin.channels.stop",
@@ -354,12 +360,10 @@
             "projection": {
               "description": "Determines whether the response contains the full list of properties or only a subset.",
               "enum": [
-                "PROJECTION_UNDEFINED",
                 "BASIC",
                 "FULL"
               ],
               "enumDescriptions": [
-                "",
                 "Includes only the basic metadata fields (e.g., deviceId, serialNumber, status, and user)",
                 "Includes all metadata fields"
               ],
@@ -402,7 +406,6 @@
             "orderBy": {
               "description": "Device property to use for sorting results.",
               "enum": [
-                "orderByUndefined",
                 "annotatedLocation",
                 "annotatedUser",
                 "lastSync",
@@ -412,7 +415,6 @@
                 "supportEndDate"
               ],
               "enumDescriptions": [
-                "",
                 "Chrome device location as annotated by the administrator.",
                 "Chromebook user as annotated by administrator.",
                 "The date and time the Chrome device was last synchronized with the policy settings in the Admin console.",
@@ -437,12 +439,10 @@
             "projection": {
               "description": "Restrict information returned to a set of selected fields.",
               "enum": [
-                "PROJECTION_UNDEFINED",
                 "BASIC",
                 "FULL"
               ],
               "enumDescriptions": [
-                "",
                 "Includes only the basic metadata fields (e.g., deviceId, serialNumber, status, and user)",
                 "Includes all metadata fields"
               ],
@@ -457,12 +457,10 @@
             "sortOrder": {
               "description": "Whether to return results in ascending or descending order. Must be used with the `orderBy` parameter.",
               "enum": [
-                "SORT_ORDER_UNDEFINED",
                 "ASCENDING",
                 "DESCENDING"
               ],
               "enumDescriptions": [
-                "",
                 "Ascending order.",
                 "Descending order."
               ],
@@ -480,7 +478,7 @@
           ]
         },
         "moveDevicesToOu": {
-          "description": "Move or insert multiple Chrome OS devices to an organizational unit. You can move up to 50 devices at once.",
+          "description": "Moves or inserts multiple Chrome OS devices to an organizational unit. You can move up to 50 devices at once.",
           "flatPath": "admin/directory/v1/customer/{customerId}/devices/chromeos/moveDevicesToOu",
           "httpMethod": "POST",
           "id": "directory.chromeosdevices.moveDevicesToOu",
@@ -535,12 +533,10 @@
             "projection": {
               "description": "Restrict information returned to a set of selected fields.",
               "enum": [
-                "PROJECTION_UNDEFINED",
                 "BASIC",
                 "FULL"
               ],
               "enumDescriptions": [
-                "",
                 "Includes only the basic metadata fields (e.g., deviceId, serialNumber, status, and user)",
                 "Includes all metadata fields"
               ],
@@ -584,12 +580,10 @@
             "projection": {
               "description": "Restrict information returned to a set of selected fields.",
               "enum": [
-                "PROJECTION_UNDEFINED",
                 "BASIC",
                 "FULL"
               ],
               "enumDescriptions": [
-                "",
                 "Includes only the basic metadata fields (e.g., deviceId, serialNumber, status, and user)",
                 "Includes all metadata fields"
               ],
@@ -730,7 +724,7 @@
           ]
         },
         "patch": {
-          "description": "Patch Customers via Apiary Patch Orchestration",
+          "description": "Patches a customer.",
           "flatPath": "admin/directory/v1/customers/{customerKey}",
           "httpMethod": "PATCH",
           "id": "directory.customers.patch",
@@ -782,6 +776,280 @@
           "scopes": [
             "https://www.googleapis.com/auth/admin.directory.customer"
           ]
+        }
+      },
+      "resources": {
+        "chrome": {
+          "resources": {
+            "printers": {
+              "methods": {
+                "batchCreatePrinters": {
+                  "description": "Creates printers under given Organization Unit.",
+                  "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers:batchCreatePrinters",
+                  "httpMethod": "POST",
+                  "id": "admin.customers.chrome.printers.batchCreatePrinters",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The name of the customer. Format: customers/{customer_id}",
+                      "location": "path",
+                      "pattern": "^customers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "admin/directory/v1/{+parent}/chrome/printers:batchCreatePrinters",
+                  "request": {
+                    "$ref": "BatchCreatePrintersRequest"
+                  },
+                  "response": {
+                    "$ref": "BatchCreatePrintersResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers"
+                  ]
+                },
+                "batchDeletePrinters": {
+                  "description": "Deletes printers in batch.",
+                  "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers:batchDeletePrinters",
+                  "httpMethod": "POST",
+                  "id": "admin.customers.chrome.printers.batchDeletePrinters",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The name of the customer. Format: customers/{customer_id}",
+                      "location": "path",
+                      "pattern": "^customers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "admin/directory/v1/{+parent}/chrome/printers:batchDeletePrinters",
+                  "request": {
+                    "$ref": "BatchDeletePrintersRequest"
+                  },
+                  "response": {
+                    "$ref": "BatchDeletePrintersResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers"
+                  ]
+                },
+                "create": {
+                  "description": "Creates a printer under given Organization Unit.",
+                  "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers",
+                  "httpMethod": "POST",
+                  "id": "admin.customers.chrome.printers.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The name of the customer. Format: customers/{customer_id}",
+                      "location": "path",
+                      "pattern": "^customers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "admin/directory/v1/{+parent}/chrome/printers",
+                  "request": {
+                    "$ref": "Printer"
+                  },
+                  "response": {
+                    "$ref": "Printer"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers"
+                  ]
+                },
+                "delete": {
+                  "description": "Deletes a `Printer`.",
+                  "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers/{printersId}",
+                  "httpMethod": "DELETE",
+                  "id": "admin.customers.chrome.printers.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the printer to be updated. Format: customers/{customer_id}/chrome/printers/{printer_id}",
+                      "location": "path",
+                      "pattern": "^customers/[^/]+/chrome/printers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "admin/directory/v1/{+name}",
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers"
+                  ]
+                },
+                "get": {
+                  "description": "Returns a `Printer` resource (printer's config).",
+                  "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers/{printersId}",
+                  "httpMethod": "GET",
+                  "id": "admin.customers.chrome.printers.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the printer to retrieve. Format: customers/{customer_id}/chrome/printers/{printer_id}",
+                      "location": "path",
+                      "pattern": "^customers/[^/]+/chrome/printers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "admin/directory/v1/{+name}",
+                  "response": {
+                    "$ref": "Printer"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers",
+                    "https://www.googleapis.com/auth/admin.chrome.printers.readonly"
+                  ]
+                },
+                "list": {
+                  "description": "List printers configs.",
+                  "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers",
+                  "httpMethod": "GET",
+                  "id": "admin.customers.chrome.printers.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "Search query. Search syntax is shared between this api and Admin Console printers pages.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "orgUnitId": {
+                      "description": "Organization Unit that we want to list the printers for. When org_unit is not present in the request then all printers of the customer are returned (or filtered). When org_unit is present in the request then only printers available to this OU will be returned (owned or inherited). You may see if printer is owned or inherited for this OU by looking at Printer.org_unit_id.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "The maximum number of objects to return. The service may return fewer than this value.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "A page token, received from a previous call.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The name of the customer who owns this collection of printers. Format: customers/{customer_id}",
+                      "location": "path",
+                      "pattern": "^customers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "admin/directory/v1/{+parent}/chrome/printers",
+                  "response": {
+                    "$ref": "ListPrintersResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers",
+                    "https://www.googleapis.com/auth/admin.chrome.printers.readonly"
+                  ]
+                },
+                "listPrinterModels": {
+                  "description": "Lists the supported printer models.",
+                  "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers:listPrinterModels",
+                  "httpMethod": "GET",
+                  "id": "admin.customers.chrome.printers.listPrinterModels",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "Filer to list only models by a given manufacturer in format: \"manufacturer:Brother\". Search syntax is shared between this api and Admin Console printers pages.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "The maximum number of objects to return. The service may return fewer than this value.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "A page token, received from a previous call.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The name of the customer who owns this collection of printers. Format: customers/{customer_id}",
+                      "location": "path",
+                      "pattern": "^customers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "admin/directory/v1/{+parent}/chrome/printers:listPrinterModels",
+                  "response": {
+                    "$ref": "ListPrinterModelsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers",
+                    "https://www.googleapis.com/auth/admin.chrome.printers.readonly"
+                  ]
+                },
+                "patch": {
+                  "description": "Updates a `Printer` resource.",
+                  "flatPath": "admin/directory/v1/customers/{customersId}/chrome/printers/{printersId}",
+                  "httpMethod": "PATCH",
+                  "id": "admin.customers.chrome.printers.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "clearMask": {
+                      "description": "The list of fields to be cleared. Note, some of the fields are read only and cannot be updated. Values for not specified fields will be patched.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "The resource name of the Printer object, in the format customers/{customer-id}/printers/{printer-id} (During printer creation leave empty)",
+                      "location": "path",
+                      "pattern": "^customers/[^/]+/chrome/printers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "The list of fields to be updated. Note, some of the fields are read only and cannot be updated. Values for not specified fields will be patched.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "admin/directory/v1/{+name}",
+                  "request": {
+                    "$ref": "Printer"
+                  },
+                  "response": {
+                    "$ref": "Printer"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.chrome.printers"
+                  ]
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -1089,7 +1357,7 @@
           ]
         },
         "list": {
-          "description": "Retrieve all groups of a domain or of a user given a userKey (paginated)",
+          "description": "Retrieves all groups of a domain or of a user given a userKey (paginated).",
           "flatPath": "admin/directory/v1/groups",
           "httpMethod": "GET",
           "id": "directory.groups.list",
@@ -1116,11 +1384,9 @@
             "orderBy": {
               "description": "Column to use for sorting results",
               "enum": [
-                "orderByUndefined",
                 "email"
               ],
               "enumDescriptions": [
-                "",
                 "Email of the group."
               ],
               "location": "query",
@@ -1139,12 +1405,10 @@
             "sortOrder": {
               "description": "Whether to return results in ascending or descending order. Only of use when orderBy is also used",
               "enum": [
-                "SORT_ORDER_UNDEFINED",
                 "ASCENDING",
                 "DESCENDING"
               ],
               "enumDescriptions": [
-                "",
                 "Ascending order.",
                 "Descending order."
               ],
@@ -1638,12 +1902,10 @@
             "projection": {
               "description": "Restrict information returned to a set of selected fields.",
               "enum": [
-                "PROJECTION_UNDEFINED",
                 "BASIC",
                 "FULL"
               ],
               "enumDescriptions": [
-                "",
                 "Includes only the basic metadata fields (e.g., deviceId, model, status, type, and status)",
                 "Includes all metadata fields"
               ],
@@ -1694,7 +1956,6 @@
             "orderBy": {
               "description": "Device property to use for sorting results.",
               "enum": [
-                "orderByUndefined",
                 "deviceId",
                 "email",
                 "lastSync",
@@ -1705,7 +1966,6 @@
                 "type"
               ],
               "enumDescriptions": [
-                "",
                 "The serial number for a Google Sync mobile device. For Android devices, this is a software generated unique identifier.",
                 "The device owner's email address.",
                 "Last policy settings sync date time of the device.",
@@ -1726,12 +1986,10 @@
             "projection": {
               "description": "Restrict information returned to a set of selected fields.",
               "enum": [
-                "PROJECTION_UNDEFINED",
                 "BASIC",
                 "FULL"
               ],
               "enumDescriptions": [
-                "",
                 "Includes only the basic metadata fields (e.g., deviceId, model, status, type, and status)",
                 "Includes all metadata fields"
               ],
@@ -1746,12 +2004,10 @@
             "sortOrder": {
               "description": "Whether to return results in ascending or descending order. Must be used with the `orderBy` parameter.",
               "enum": [
-                "SORT_ORDER_UNDEFINED",
                 "ASCENDING",
                 "DESCENDING"
               ],
               "enumDescriptions": [
-                "",
                 "Ascending order.",
                 "Descending order."
               ],
@@ -1886,12 +2142,10 @@
             "type": {
               "description": "Whether to return all sub-organizations or just immediate children.",
               "enum": [
-                "typeUndefined",
                 "all",
                 "children"
               ],
               "enumDescriptions": [
-                "",
                 "All sub-organizational units.",
                 "Immediate children only (default)."
               ],
@@ -2086,13 +2340,11 @@
                   "default": "SOURCE_UNSPECIFIED",
                   "description": "Source from which Building.coordinates are derived.",
                   "enum": [
-                    "COORDINATES_SOURCE_UNDEFINED",
                     "CLIENT_SPECIFIED",
                     "RESOLVED_FROM_ADDRESS",
                     "SOURCE_UNSPECIFIED"
                   ],
                   "enumDescriptions": [
-                    "",
                     "Building.coordinates are set to the coordinates included in the request.",
                     "Building.coordinates are automatically populated based on the postal address.",
                     "Defaults to `RESOLVED_FROM_ADDRESS` if postal address is provided. Otherwise, defaults to `CLIENT_SPECIFIED` if coordinates are provided."
@@ -2157,7 +2409,7 @@
               ]
             },
             "patch": {
-              "description": "Patches a building via Apiary Patch Orchestration.",
+              "description": "Patches a building.",
               "flatPath": "admin/directory/v1/customer/{customer}/resources/buildings/{buildingId}",
               "httpMethod": "PATCH",
               "id": "directory.resources.buildings.patch",
@@ -2176,13 +2428,11 @@
                   "default": "SOURCE_UNSPECIFIED",
                   "description": "Source from which Building.coordinates are derived.",
                   "enum": [
-                    "COORDINATES_SOURCE_UNDEFINED",
                     "CLIENT_SPECIFIED",
                     "RESOLVED_FROM_ADDRESS",
                     "SOURCE_UNSPECIFIED"
                   ],
                   "enumDescriptions": [
-                    "",
                     "Building.coordinates are set to the coordinates included in the request.",
                     "Building.coordinates are automatically populated based on the postal address.",
                     "Defaults to `RESOLVED_FROM_ADDRESS` if postal address is provided. Otherwise, defaults to `CLIENT_SPECIFIED` if coordinates are provided."
@@ -2228,13 +2478,11 @@
                   "default": "SOURCE_UNSPECIFIED",
                   "description": "Source from which Building.coordinates are derived.",
                   "enum": [
-                    "COORDINATES_SOURCE_UNDEFINED",
                     "CLIENT_SPECIFIED",
                     "RESOLVED_FROM_ADDRESS",
                     "SOURCE_UNSPECIFIED"
                   ],
                   "enumDescriptions": [
-                    "",
                     "Building.coordinates are set to the coordinates included in the request.",
                     "Building.coordinates are automatically populated based on the postal address.",
                     "Defaults to `RESOLVED_FROM_ADDRESS` if postal address is provided. Otherwise, defaults to `CLIENT_SPECIFIED` if coordinates are provided."
@@ -2400,7 +2648,7 @@
               ]
             },
             "patch": {
-              "description": "Patches a calendar resource via Apiary Patch Orchestration.",
+              "description": "Patches a calendar resource.",
               "flatPath": "admin/directory/v1/customer/{customer}/resources/calendars/{calendarResourceId}",
               "httpMethod": "PATCH",
               "id": "directory.resources.calendars.patch",
@@ -2597,7 +2845,7 @@
               ]
             },
             "patch": {
-              "description": "Patches a feature via Apiary Patch Orchestration.",
+              "description": "Patches a feature.",
               "flatPath": "admin/directory/v1/customer/{customer}/resources/features/{featureKey}",
               "httpMethod": "PATCH",
               "id": "directory.resources.features.patch",
@@ -2730,7 +2978,7 @@
           ]
         },
         "get": {
-          "description": "Retrieve a role assignment.",
+          "description": "Retrieves a role assignment.",
           "flatPath": "admin/directory/v1/customer/{customer}/roleassignments/{roleAssignmentId}",
           "httpMethod": "GET",
           "id": "directory.roleAssignments.get",
@@ -2966,7 +3214,7 @@
           ]
         },
         "patch": {
-          "description": "Patch role via Apiary Patch Orchestration",
+          "description": "Patches a role.",
           "flatPath": "admin/directory/v1/customer/{customer}/roles/{roleId}",
           "httpMethod": "PATCH",
           "id": "directory.roles.patch",
@@ -3038,7 +3286,7 @@
     "schemas": {
       "methods": {
         "delete": {
-          "description": "Delete schema",
+          "description": "Deletes a schema.",
           "flatPath": "admin/directory/v1/customer/{customerId}/schemas/{schemaKey}",
           "httpMethod": "DELETE",
           "id": "directory.schemas.delete",
@@ -3066,7 +3314,7 @@
           ]
         },
         "get": {
-          "description": "Retrieve schema",
+          "description": "Retrieves a schema.",
           "flatPath": "admin/directory/v1/customer/{customerId}/schemas/{schemaKey}",
           "httpMethod": "GET",
           "id": "directory.schemas.get",
@@ -3098,7 +3346,7 @@
           ]
         },
         "insert": {
-          "description": "Create schema.",
+          "description": "Creates a schema.",
           "flatPath": "admin/directory/v1/customer/{customerId}/schemas",
           "httpMethod": "POST",
           "id": "directory.schemas.insert",
@@ -3125,7 +3373,7 @@
           ]
         },
         "list": {
-          "description": "Retrieve all schemas for a customer",
+          "description": "Retrieves all schemas for a customer.",
           "flatPath": "admin/directory/v1/customer/{customerId}/schemas",
           "httpMethod": "GET",
           "id": "directory.schemas.list",
@@ -3150,7 +3398,7 @@
           ]
         },
         "patch": {
-          "description": "Patch Schema via Apiary Patch Orchestration",
+          "description": "Patches a schema.",
           "flatPath": "admin/directory/v1/customer/{customerId}/schemas/{schemaKey}",
           "httpMethod": "PATCH",
           "id": "directory.schemas.patch",
@@ -3184,7 +3432,7 @@
           ]
         },
         "update": {
-          "description": "Update schema",
+          "description": "Updates a schema.",
           "flatPath": "admin/directory/v1/customer/{customerId}/schemas/{schemaKey}",
           "httpMethod": "PUT",
           "id": "directory.schemas.update",
@@ -3222,7 +3470,7 @@
     "tokens": {
       "methods": {
         "delete": {
-          "description": "Delete all access tokens issued by a user for an application.",
+          "description": "Deletes all access tokens issued by a user for an application.",
           "flatPath": "admin/directory/v1/users/{userKey}/tokens/{clientId}",
           "httpMethod": "DELETE",
           "id": "directory.tokens.delete",
@@ -3250,7 +3498,7 @@
           ]
         },
         "get": {
-          "description": "Get information about an access token issued by a user.",
+          "description": "Gets information about an access token issued by a user.",
           "flatPath": "admin/directory/v1/users/{userKey}/tokens/{clientId}",
           "httpMethod": "GET",
           "id": "directory.tokens.get",
@@ -3309,7 +3557,7 @@
     "twoStepVerification": {
       "methods": {
         "turnOff": {
-          "description": "Turn off 2-Step Verification for user.",
+          "description": "Turns off 2-Step Verification for user.",
           "flatPath": "admin/directory/v1/users/{userKey}/twoStepVerification/turnOff",
           "httpMethod": "POST",
           "id": "directory.twoStepVerification.turnOff",
@@ -3372,13 +3620,11 @@
               "default": "basic",
               "description": "What subset of fields to fetch for this user.",
               "enum": [
-                "projectionUndefined",
                 "basic",
                 "custom",
                 "full"
               ],
               "enumDescriptions": [
-                "",
                 "Do not include any custom fields for the user.",
                 "Include custom fields from schemas requested in `customFieldMask`.",
                 "Include all fields associated with this user."
@@ -3396,12 +3642,10 @@
               "default": "admin_view",
               "description": "Whether to fetch the administrator-only or domain-wide public view of the user. For more information, see [Retrieve a user as a non-administrator](/admin-sdk/directory/v1/guides/manage-users#retrieve_users_non_admin).",
               "enum": [
-                "view_type_undefined",
                 "admin_view",
                 "domain_public"
               ],
               "enumDescriptions": [
-                "",
                 "Results include both administrator-only and domain-public fields for the user.",
                 "Results only include fields for the user that are publicly visible to other users in the domain."
               ],
@@ -3458,6 +3702,25 @@
               "location": "query",
               "type": "string"
             },
+            "event": {
+              "description": "Event on which subscription is intended (if subscribing)",
+              "enum": [
+                "add",
+                "delete",
+                "makeAdmin",
+                "undelete",
+                "update"
+              ],
+              "enumDescriptions": [
+                "User Created Event",
+                "User Deleted Event",
+                "User Admin Status Change Event",
+                "User Undeleted Event",
+                "User Updated Event"
+              ],
+              "location": "query",
+              "type": "string"
+            },
             "maxResults": {
               "default": "100",
               "description": "Maximum number of results to return.",
@@ -3470,13 +3733,11 @@
             "orderBy": {
               "description": "Property to use for sorting results.",
               "enum": [
-                "orderByUndefined",
                 "email",
                 "familyName",
                 "givenName"
               ],
               "enumDescriptions": [
-                "",
                 "Primary email of the user.",
                 "User's family name.",
                 "User's given name."
@@ -3493,13 +3754,11 @@
               "default": "basic",
               "description": "What subset of fields to fetch for this user.",
               "enum": [
-                "projectionUndefined",
                 "basic",
                 "custom",
                 "full"
               ],
               "enumDescriptions": [
-                "",
                 "Do not include any custom fields for the user.",
                 "Include custom fields from schemas requested in `customFieldMask`.",
                 "Include all fields associated with this user."
@@ -3520,12 +3779,10 @@
             "sortOrder": {
               "description": "Whether to return results in ascending or descending order.",
               "enum": [
-                "SORT_ORDER_UNDEFINED",
                 "ASCENDING",
                 "DESCENDING"
               ],
               "enumDescriptions": [
-                "",
                 "Ascending order.",
                 "Descending order."
               ],
@@ -3536,12 +3793,10 @@
               "default": "admin_view",
               "description": "Whether to fetch the administrator-only or domain-wide public view of the user. For more information, see [Retrieve a user as a non-administrator](/admin-sdk/directory/v1/guides/manage-users#retrieve_users_non_admin).",
               "enum": [
-                "view_type_undefined",
                 "admin_view",
                 "domain_public"
               ],
               "enumDescriptions": [
-                "",
                 "Results include both administrator-only and domain-public fields for the user.",
                 "Results only include fields for the user that are publicly visible to other users in the domain."
               ],
@@ -3611,7 +3866,7 @@
           ]
         },
         "signOut": {
-          "description": "Sign a user out of all web and device sessions and reset their sign-in cookies. User will have to sign in by authenticating again.",
+          "description": "Signs a user out of all web and device sessions and reset their sign-in cookies. User will have to sign in by authenticating again.",
           "flatPath": "admin/directory/v1/users/{userKey}/signOut",
           "httpMethod": "POST",
           "id": "directory.users.signOut",
@@ -3683,7 +3938,7 @@
           ]
         },
         "watch": {
-          "description": "Watch for changes in users list",
+          "description": "Watches for changes in users list.",
           "flatPath": "admin/directory/v1/users/watch",
           "httpMethod": "POST",
           "id": "directory.users.watch",
@@ -3707,7 +3962,6 @@
             "event": {
               "description": "Events to watch for.",
               "enum": [
-                "eventTypeUnspecified",
                 "add",
                 "delete",
                 "makeAdmin",
@@ -3715,7 +3969,6 @@
                 "update"
               ],
               "enumDescriptions": [
-                "",
                 "User Created Event",
                 "User Deleted Event",
                 "User Admin Status Change Event",
@@ -3737,13 +3990,11 @@
             "orderBy": {
               "description": "Column to use for sorting results",
               "enum": [
-                "orderByUnspecified",
                 "email",
                 "familyName",
                 "givenName"
               ],
               "enumDescriptions": [
-                "",
                 "Primary email of the user.",
                 "User's family name.",
                 "User's given name."
@@ -3760,13 +4011,11 @@
               "default": "basic",
               "description": "What subset of fields to fetch for this user.",
               "enum": [
-                "projectionUnspecified",
                 "basic",
                 "custom",
                 "full"
               ],
               "enumDescriptions": [
-                "",
                 "Do not include any custom fields for the user.",
                 "Include custom fields from schemas mentioned in customFieldMask.",
                 "Include all fields associated with this user."
@@ -3787,12 +4036,10 @@
             "sortOrder": {
               "description": "Whether to return results in ascending or descending order.",
               "enum": [
-                "sortOrderUnspecified",
                 "ASCENDING",
                 "DESCENDING"
               ],
               "enumDescriptions": [
-                "",
                 "Ascending order.",
                 "Descending order."
               ],
@@ -3897,6 +4144,19 @@
                 "userKey"
               ],
               "parameters": {
+                "event": {
+                  "description": "Events to watch for.",
+                  "enum": [
+                    "add",
+                    "delete"
+                  ],
+                  "enumDescriptions": [
+                    "Alias Created Event",
+                    "Alias Deleted Event"
+                  ],
+                  "location": "query",
+                  "type": "string"
+                },
                 "userKey": {
                   "description": "Identifies the user in the API request. The value can be the user's primary email address, alias email address, or unique user ID.",
                   "location": "path",
@@ -3916,7 +4176,7 @@
               ]
             },
             "watch": {
-              "description": "Watch for changes in users list.",
+              "description": "Watches for changes in users list.",
               "flatPath": "admin/directory/v1/users/{userKey}/aliases/watch",
               "httpMethod": "POST",
               "id": "directory.users.aliases.watch",
@@ -3927,12 +4187,10 @@
                 "event": {
                   "description": "Events to watch for.",
                   "enum": [
-                    "eventUndefined",
                     "add",
                     "delete"
                   ],
                   "enumDescriptions": [
-                    "",
                     "Alias Created Event",
                     "Alias Deleted Event"
                   ],
@@ -4071,7 +4329,7 @@
     "verificationCodes": {
       "methods": {
         "generate": {
-          "description": "Generate new backup verification codes for the user.",
+          "description": "Generates new backup verification codes for the user.",
           "flatPath": "admin/directory/v1/users/{userKey}/verificationCodes/generate",
           "httpMethod": "POST",
           "id": "directory.verificationCodes.generate",
@@ -4092,7 +4350,7 @@
           ]
         },
         "invalidate": {
-          "description": "Invalidate the current backup verification codes for the user.",
+          "description": "Invalidates the current backup verification codes for the user.",
           "flatPath": "admin/directory/v1/users/{userKey}/verificationCodes/invalidate",
           "httpMethod": "POST",
           "id": "directory.verificationCodes.invalidate",
@@ -4139,7 +4397,7 @@
       }
     }
   },
-  "revision": "20210105",
+  "revision": "20210928",
   "rootUrl": "https://admin.googleapis.com/",
   "schemas": {
     "Alias": {
@@ -4186,7 +4444,7 @@
       "type": "object"
     },
     "Asp": {
-      "description": "An application-specific password (ASP) is used with applications that do not accept a verification code when logging into the application on certain devices. The ASP access code is used instead of the login and password you commonly use when accessing an application through a browser. For more information about ASPs and how to create one, see the [help center](//http://support.google.com/a/bin/answer.py?amp;answer=1032419).",
+      "description": "An application-specific password (ASP) is used with applications that do not accept a verification code when logging into the application on certain devices. The ASP access code is used instead of the login and password you commonly use when accessing an application through a browser. For more information about ASPs and how to create one, see the [help center](https://support.google.com/a/answer/2537800#asp).",
       "id": "Asp",
       "properties": {
         "codeId": {
@@ -4195,7 +4453,7 @@
           "type": "integer"
         },
         "creationTime": {
-          "description": "The time when the ASP was created. Expressed in [Unix time](http://en.wikipedia.org/wiki/Epoch_time) format.",
+          "description": "The time when the ASP was created. Expressed in [Unix time](https://en.wikipedia.org/wiki/Epoch_time) format.",
           "format": "int64",
           "type": "string"
         },
@@ -4209,7 +4467,7 @@
           "type": "string"
         },
         "lastTimeUsed": {
-          "description": "The time when the ASP was last used. Expressed in [Unix time](http://en.wikipedia.org/wiki/Epoch_time) format.",
+          "description": "The time when the ASP was last used. Expressed in [Unix time](https://en.wikipedia.org/wiki/Epoch_time) format.",
           "format": "int64",
           "type": "string"
         },
@@ -4242,6 +4500,108 @@
           "default": "admin#directory#aspList",
           "description": "The type of the API resource. This is always `admin#directory#aspList`.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AuxiliaryMessage": {
+      "description": "Auxiliary message about issues with printers or settings. Example: {message_type:AUXILIARY_MESSAGE_WARNING, field_mask:make_and_model, message:\"Given printer is invalid or no longer supported.\"}",
+      "id": "AuxiliaryMessage",
+      "properties": {
+        "auxiliaryMessage": {
+          "description": "Human readable message in English. Example: \"Given printer is invalid or no longer supported.\"",
+          "type": "string"
+        },
+        "fieldMask": {
+          "description": "Field that this message concerns.",
+          "format": "google-fieldmask",
+          "type": "string"
+        },
+        "severity": {
+          "description": "Message severity",
+          "enum": [
+            "SEVERITY_UNSPECIFIED",
+            "SEVERITY_INFO",
+            "SEVERITY_WARNING",
+            "SEVERITY_ERROR"
+          ],
+          "enumDescriptions": [
+            "Message type unspecified.",
+            "Message of severity: info.",
+            "Message of severity: warning.",
+            "Message of severity: error."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BatchCreatePrintersRequest": {
+      "description": "Request for adding new printers in batch.",
+      "id": "BatchCreatePrintersRequest",
+      "properties": {
+        "requests": {
+          "description": "A list of Printers to be created. Max 50 at a time.",
+          "items": {
+            "$ref": "CreatePrinterRequest"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "BatchCreatePrintersResponse": {
+      "description": "Response for adding new printers in batch.",
+      "id": "BatchCreatePrintersResponse",
+      "properties": {
+        "failures": {
+          "description": "A list of create failures. Printer IDs are not populated, as printer were not created.",
+          "items": {
+            "$ref": "FailureInfo"
+          },
+          "type": "array"
+        },
+        "printers": {
+          "description": "A list of successfully created printers with their IDs populated.",
+          "items": {
+            "$ref": "Printer"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "BatchDeletePrintersRequest": {
+      "description": "Request for deleting existing printers in batch.",
+      "id": "BatchDeletePrintersRequest",
+      "properties": {
+        "printerIds": {
+          "description": "A list of Printer.id that should be deleted. Max 100 at a time.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "BatchDeletePrintersResponse": {
+      "description": "Response for deleting existing printers in batch.",
+      "id": "BatchDeletePrintersResponse",
+      "properties": {
+        "failedPrinters": {
+          "description": "A list of update failures.",
+          "items": {
+            "$ref": "FailureInfo"
+          },
+          "type": "array"
+        },
+        "printerIds": {
+          "description": "A list of Printer.id that were successfully deleted.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -4530,7 +4890,7 @@
       "type": "object"
     },
     "ChromeOsDevice": {
-      "description": "Google Chrome devices run on the [Chrome OS](http://support.google.com/chromeos). For more information about common API tasks, see the [Developer's Guide](/admin-sdk/directory/v1/guides/manage-chrome-devices).",
+      "description": "Google Chrome devices run on the [Chrome OS](https://support.google.com/chromeos). For more information about common API tasks, see the [Developer's Guide](/admin-sdk/directory/v1/guides/manage-chrome-devices).",
       "id": "ChromeOsDevice",
       "properties": {
         "activeTimeRanges": {
@@ -4570,8 +4930,75 @@
           "type": "string"
         },
         "bootMode": {
-          "description": "The boot mode for the device. The possible values are: * `Verified`: The device is running a valid version of the Chrome OS. * `Dev`: The devices's developer hardware switch is enabled. When booted, the device has a command line shell. For an example of a developer switch, see the [Chromebook developer information](http://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices/samsung-series-5-chromebook#TOC-Developer-switch).",
+          "description": "The boot mode for the device. The possible values are: * `Verified`: The device is running a valid version of the Chrome OS. * `Dev`: The devices's developer hardware switch is enabled. When booted, the device has a command line shell. For an example of a developer switch, see the [Chromebook developer information](https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices/samsung-series-5-chromebook#TOC-Developer-switch).",
           "type": "string"
+        },
+        "cpuInfo": {
+          "description": "Information regarding CPU specs in the device.",
+          "items": {
+            "description": "CPU specs for a CPU.",
+            "properties": {
+              "architecture": {
+                "description": "The CPU architecture.",
+                "type": "string"
+              },
+              "logicalCpus": {
+                "description": "Information for the Logical CPUs",
+                "items": {
+                  "description": "Status of a single logical CPU.",
+                  "properties": {
+                    "cStates": {
+                      "description": "C-States indicate the power consumption state of the CPU. For more information look at documentation published by the CPU maker.",
+                      "items": {
+                        "description": "Status of a single C-state. C-states are various modes the CPU can transition to in order to use more or less power.",
+                        "properties": {
+                          "displayName": {
+                            "description": "Name of the state.",
+                            "type": "string"
+                          },
+                          "sessionDuration": {
+                            "description": "Time spent in the state since the last reboot.",
+                            "format": "google-duration",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    },
+                    "currentScalingFrequencyKhz": {
+                      "description": "Current frequency the CPU is running at.",
+                      "format": "int32",
+                      "type": "integer"
+                    },
+                    "idleDuration": {
+                      "description": "Idle time since last boot.",
+                      "format": "google-duration",
+                      "type": "string"
+                    },
+                    "maxScalingFrequencyKhz": {
+                      "description": "Maximum frequency the CPU is allowed to run at, by policy.",
+                      "format": "int32",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "maxClockSpeedKhz": {
+                "description": "The max CPU clock speed in kHz.",
+                "format": "int32",
+                "type": "integer"
+              },
+              "model": {
+                "description": "The CPU model name.",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
         },
         "cpuStatusReports": {
           "description": "Reports of CPU utilization and temperature (Read-only)",
@@ -4744,7 +5171,7 @@
           "type": "string"
         },
         "notes": {
-          "description": "Notes about this device added by the administrator. This property can be [searched](http://support.google.com/chromeos/a/bin/answer.py?answer=1698333) with the [list](/admin-sdk/directory/v1/reference/chromeosdevices/list) method's `query` parameter. Maximum length is 500 characters. Empty values are allowed.",
+          "description": "Notes about this device added by the administrator. This property can be [searched](https://support.google.com/chrome/a/answer/1698333) with the [list](/admin-sdk/directory/v1/reference/chromeosdevices/list) method's `query` parameter. Maximum length is 500 characters. Empty values are allowed.",
           "type": "string"
         },
         "orderNumber": {
@@ -4752,7 +5179,7 @@
           "type": "string"
         },
         "orgUnitPath": {
-          "description": "The full parent path with the organizational unit's name associated with the device. Path names are case insensitive. If the parent organizational unit is the top-level organization, it is represented as a forward slash, `/`. This property can be [updated](/admin-sdk/directory/v1/guides/manage-chrome-devices#update_chrome_device) using the API. For more information about how to create an organizational structure for your device, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=182433).",
+          "description": "The full parent path with the organizational unit's name associated with the device. Path names are case insensitive. If the parent organizational unit is the top-level organization, it is represented as a forward slash, `/`. This property can be [updated](/admin-sdk/directory/v1/guides/manage-chrome-devices#update_chrome_device) using the API. For more information about how to create an organizational structure for your device, see the [administration help center](https://support.google.com/a/answer/182433).",
           "type": "string"
         },
         "osVersion": {
@@ -4766,7 +5193,44 @@
         "recentUsers": {
           "description": "List of recent device users, in descending order, by last login time.",
           "items": {
-            "$ref": "RecentUsers"
+            "description": "List of recent device users, in descending order, by last login time.",
+            "properties": {
+              "email": {
+                "description": "The user's email address. This is only present if the user type is `USER_TYPE_MANAGED`.",
+                "type": "string"
+              },
+              "type": {
+                "description": "The type of the user.",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "screenshotFiles": {
+          "description": "List of screenshot files to download. Type is always \"SCREENSHOT_FILE\". (Read-only)",
+          "items": {
+            "properties": {
+              "createTime": {
+                "description": "Date and time the file was created",
+                "format": "date-time",
+                "type": "string"
+              },
+              "downloadUrl": {
+                "description": "File download URL",
+                "type": "string"
+              },
+              "name": {
+                "description": "File name",
+                "type": "string"
+              },
+              "type": {
+                "description": "File type",
+                "type": "string"
+              }
+            },
+            "type": "object"
           },
           "type": "array"
         },
@@ -4909,6 +5373,21 @@
       },
       "type": "object"
     },
+    "CreatePrinterRequest": {
+      "description": "Request for adding a new printer.",
+      "id": "CreatePrinterRequest",
+      "properties": {
+        "parent": {
+          "description": "Required. The name of the customer. Format: customers/{customer_id}",
+          "type": "string"
+        },
+        "printer": {
+          "$ref": "Printer",
+          "description": "Required. A printer to create. If you want to place the printer under particular OU then populate printer.org_unit_id filed. Otherwise the printer will be placed under root OU."
+        }
+      },
+      "type": "object"
+    },
     "Customer": {
       "id": "Customer",
       "properties": {
@@ -4943,7 +5422,7 @@
           "type": "string"
         },
         "phoneNumber": {
-          "description": "The customer's contact phone number in [E.164](http://en.wikipedia.org/wiki/E.164) format.",
+          "description": "The customer's contact phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format.",
           "type": "string"
         },
         "postalAddress": {
@@ -4973,7 +5452,7 @@
           "type": "string"
         },
         "countryCode": {
-          "description": "This is a required property. For `countryCode` information see the [ISO 3166 country code elements](http://www.iso.org/iso/country_codes.htm).",
+          "description": "This is a required property. For `countryCode` information see the [ISO 3166 country code elements](https://www.iso.org/iso/country_codes.htm).",
           "type": "string"
         },
         "locality": {
@@ -5205,7 +5684,7 @@
       "id": "Domains",
       "properties": {
         "creationTime": {
-          "description": "Creation time of the domain. Expressed in [Unix time](http://en.wikipedia.org/wiki/Epoch_time) format. (Read-only).",
+          "description": "Creation time of the domain. Expressed in [Unix time](https://en.wikipedia.org/wiki/Epoch_time) format. (Read-only).",
           "format": "int64",
           "type": "string"
         },
@@ -5262,6 +5741,73 @@
         "kind": {
           "default": "admin#directory#domains",
           "description": "Kind of resource this is.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Empty": {
+      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
+      "id": "Empty",
+      "properties": {},
+      "type": "object"
+    },
+    "FailureInfo": {
+      "description": "Info about failures",
+      "id": "FailureInfo",
+      "properties": {
+        "errorCode": {
+          "description": "Canonical code for why the update failed to apply.",
+          "enum": [
+            "OK",
+            "CANCELLED",
+            "UNKNOWN",
+            "INVALID_ARGUMENT",
+            "DEADLINE_EXCEEDED",
+            "NOT_FOUND",
+            "ALREADY_EXISTS",
+            "PERMISSION_DENIED",
+            "UNAUTHENTICATED",
+            "RESOURCE_EXHAUSTED",
+            "FAILED_PRECONDITION",
+            "ABORTED",
+            "OUT_OF_RANGE",
+            "UNIMPLEMENTED",
+            "INTERNAL",
+            "UNAVAILABLE",
+            "DATA_LOSS"
+          ],
+          "enumDescriptions": [
+            "Not an error; returned on success HTTP Mapping: 200 OK",
+            "The operation was cancelled, typically by the caller. HTTP Mapping: 499 Client Closed Request",
+            "Unknown error. For example, this error may be returned when a `Status` value received from another address space belongs to an error space that is not known in this address space. Also errors raised by APIs that do not return enough error information may be converted to this error. HTTP Mapping: 500 Internal Server Error",
+            "The client specified an invalid argument. Note that this differs from `FAILED_PRECONDITION`. `INVALID_ARGUMENT` indicates arguments that are problematic regardless of the state of the system (e.g., a malformed file name). HTTP Mapping: 400 Bad Request",
+            "The deadline expired before the operation could complete. For operations that change the state of the system, this error may be returned even if the operation has completed successfully. For example, a successful response from a server could have been delayed long enough for the deadline to expire. HTTP Mapping: 504 Gateway Timeout",
+            "Some requested entity (e.g., file or directory) was not found. Note to server developers: if a request is denied for an entire class of users, such as gradual feature rollout or undocumented allowlist, `NOT_FOUND` may be used. If a request is denied for some users within a class of users, such as user-based access control, `PERMISSION_DENIED` must be used. HTTP Mapping: 404 Not Found",
+            "The entity that a client attempted to create (e.g., file or directory) already exists. HTTP Mapping: 409 Conflict",
+            "The caller does not have permission to execute the specified operation. `PERMISSION_DENIED` must not be used for rejections caused by exhausting some resource (use `RESOURCE_EXHAUSTED` instead for those errors). `PERMISSION_DENIED` must not be used if the caller can not be identified (use `UNAUTHENTICATED` instead for those errors). This error code does not imply the request is valid or the requested entity exists or satisfies other pre-conditions. HTTP Mapping: 403 Forbidden",
+            "The request does not have valid authentication credentials for the operation. HTTP Mapping: 401 Unauthorized",
+            "Some resource has been exhausted, perhaps a per-user quota, or perhaps the entire file system is out of space. HTTP Mapping: 429 Too Many Requests",
+            "The operation was rejected because the system is not in a state required for the operation's execution. For example, the directory to be deleted is non-empty, an rmdir operation is applied to a non-directory, etc. Service implementors can use the following guidelines to decide between `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`: (a) Use `UNAVAILABLE` if the client can retry just the failing call. (b) Use `ABORTED` if the client should retry at a higher level. For example, when a client-specified test-and-set fails, indicating the client should restart a read-modify-write sequence. (c) Use `FAILED_PRECONDITION` if the client should not retry until the system state has been explicitly fixed. For example, if an \"rmdir\" fails because the directory is non-empty, `FAILED_PRECONDITION` should be returned since the client should not retry unless the files are deleted from the directory. HTTP Mapping: 400 Bad Request",
+            "The operation was aborted, typically due to a concurrency issue such as a sequencer check failure or transaction abort. See the guidelines above for deciding between `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`. HTTP Mapping: 409 Conflict",
+            "The operation was attempted past the valid range. E.g., seeking or reading past end-of-file. Unlike `INVALID_ARGUMENT`, this error indicates a problem that may be fixed if the system state changes. For example, a 32-bit file system will generate `INVALID_ARGUMENT` if asked to read at an offset that is not in the range [0,2^32-1], but it will generate `OUT_OF_RANGE` if asked to read from an offset past the current file size. There is a fair bit of overlap between `FAILED_PRECONDITION` and `OUT_OF_RANGE`. We recommend using `OUT_OF_RANGE` (the more specific error) when it applies so that callers who are iterating through a space can easily look for an `OUT_OF_RANGE` error to detect when they are done. HTTP Mapping: 400 Bad Request",
+            "The operation is not implemented or is not supported/enabled in this service. HTTP Mapping: 501 Not Implemented",
+            "Internal errors. This means that some invariants expected by the underlying system have been broken. This error code is reserved for serious errors. HTTP Mapping: 500 Internal Server Error",
+            "The service is currently unavailable. This is most likely a transient condition, which can be corrected by retrying with a backoff. Note that it is not always safe to retry non-idempotent operations. See the guidelines above for deciding between `FAILED_PRECONDITION`, `ABORTED`, and `UNAVAILABLE`. HTTP Mapping: 503 Service Unavailable",
+            "Unrecoverable data loss or corruption. HTTP Mapping: 500 Internal Server Error"
+          ],
+          "type": "string"
+        },
+        "errorMessage": {
+          "description": "Failure reason message.",
+          "type": "string"
+        },
+        "printer": {
+          "$ref": "Printer",
+          "description": "Failed printer."
+        },
+        "printerId": {
+          "description": "Id of a failed printer.",
           "type": "string"
         }
       },
@@ -5375,7 +5921,7 @@
               "directory.groups.insert"
             ]
           },
-          "description": "The group's email address. If your account has multiple domains, select the appropriate domain for the email address. The `email` must be unique. This property is required when creating a group. Group email addresses are subject to the same character usage rules as usernames, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=33386) for the details.",
+          "description": "The group's email address. If your account has multiple domains, select the appropriate domain for the email address. The `email` must be unique. This property is required when creating a group. Group email addresses are subject to the same character usage rules as usernames, see the [help center](https://support.google.com/a/answer/9193374) for details.",
           "type": "string"
         },
         "etag": {
@@ -5431,6 +5977,42 @@
       },
       "type": "object"
     },
+    "ListPrinterModelsResponse": {
+      "description": "Response for listing allowed printer models.",
+      "id": "ListPrinterModelsResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          "type": "string"
+        },
+        "printerModels": {
+          "description": "Printer models that are currently allowed to be configured for ChromeOs. Some printers may be added or removed over time.",
+          "items": {
+            "$ref": "PrinterModel"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListPrintersResponse": {
+      "description": "Response for listing printers.",
+      "id": "ListPrintersResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          "type": "string"
+        },
+        "printers": {
+          "description": "List of printers. If `org_unit_id` was given in the request, then only printers visible for this OU will be returned. If `org_unit_id` was given in the request, then all printers will be returned.",
+          "items": {
+            "$ref": "Printer"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "Member": {
       "description": "A Google Groups member can be a user or another group. This member can be inside or outside of your account's domains. For more information about common group member tasks, see the [Developer's Guide](/admin-sdk/directory/v1/guides/manage-group-members).",
       "id": "Member",
@@ -5457,7 +6039,7 @@
           "type": "string"
         },
         "role": {
-          "description": "The member's role in a group. The API returns an error for cycles in group memberships. For example, if `group1` is a member of `group2`, `group2` cannot be a member of `group1`. For more information about a member's role, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=167094).",
+          "description": "The member's role in a group. The API returns an error for cycles in group memberships. For example, if `group1` is a member of `group2`, `group2` cannot be a member of `group1`. For more information about a member's role, see the [administration help center](https://support.google.com/a/answer/167094).",
           "type": "string"
         },
         "status": {
@@ -5510,7 +6092,7 @@
       "type": "object"
     },
     "MobileDevice": {
-      "description": "Google Workspace Mobile Management includes Android, [Google Sync](http://support.google.com/a/bin/answer.py?answer=135937), and iOS devices. For more information about common group mobile device API tasks, see the [Developer's Guide](/admin-sdk/directory/v1/guides/manage-mobile-devices.html).",
+      "description": "Google Workspace Mobile Management includes Android, [Google Sync](https://support.google.com/a/answer/135937), and iOS devices. For more information about common group mobile device API tasks, see the [Developer's Guide](/admin-sdk/directory/v1/guides/manage-mobile-devices.html).",
       "id": "MobileDevice",
       "properties": {
         "adbStatus": {
@@ -5530,7 +6112,7 @@
                 "type": "string"
               },
               "permission": {
-                "description": "The list of permissions of this application. These can be either a standard Android permission or one defined by the application, and are found in an application's [Android manifest](http://developer.android.com/guide/topics/manifest/uses-permission-element.html). Examples of a Calendar application's permissions are `READ_CALENDAR`, or `MANAGE_ACCOUNTS`.",
+                "description": "The list of permissions of this application. These can be either a standard Android permission or one defined by the application, and are found in an application's [Android manifest](https://developer.android.com/guide/topics/manifest/uses-permission-element.html). Examples of a Calendar application's permissions are `READ_CALENDAR`, or `MANAGE_ACCOUNTS`.",
                 "items": {
                   "type": "string"
                 },
@@ -5764,7 +6346,7 @@
       "id": "OrgUnit",
       "properties": {
         "blockInheritance": {
-          "description": "Determines if a sub-organizational unit can inherit the settings of the parent organization. The default value is `false`, meaning a sub-organizational unit inherits the settings of the nearest parent organizational unit. For more information on inheritance and users in an organization structure, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=182442\u0026topic=1227584\u0026ctx=topic).",
+          "description": "Determines if a sub-organizational unit can inherit the settings of the parent organization. The default value is `false`, meaning a sub-organizational unit inherits the settings of the nearest parent organizational unit. For more information on inheritance and users in an organization structure, see the [administration help center](https://support.google.com/a/answer/4352075).",
           "type": "boolean"
         },
         "description": {
@@ -5794,7 +6376,7 @@
           "type": "string"
         },
         "orgUnitPath": {
-          "description": "The full path to the organizational unit. The `orgUnitPath` is a derived property. When listed, it is derived from `parentOrgunitPath` and organizational unit's `name`. For example, for an organizational unit named 'apps' under parent organization '/engineering', the orgUnitPath is '/engineering/apps'. In order to edit an `orgUnitPath`, either update the name of the organization or the `parentOrgunitPath`. A user's organizational unit determines which Google Workspace services the user has access to. If the user is moved to a new organization, the user's access changes. For more information about organization structures, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=182433\u0026topic=1227584\u0026ctx=topic). For more information about moving a user to a different organization, see [Update a user](/admin-sdk/directory/v1/guides/manage-users.html#update_user).",
+          "description": "The full path to the organizational unit. The `orgUnitPath` is a derived property. When listed, it is derived from `parentOrgunitPath` and organizational unit's `name`. For example, for an organizational unit named 'apps' under parent organization '/engineering', the orgUnitPath is '/engineering/apps'. In order to edit an `orgUnitPath`, either update the name of the organization or the `parentOrgunitPath`. A user's organizational unit determines which Google Workspace services the user has access to. If the user is moved to a new organization, the user's access changes. For more information about organization structures, see the [administration help center](https://support.google.com/a/answer/4352075). For more information about moving a user to a different organization, see [Update a user](/admin-sdk/directory/v1/guides/manage-users.html#update_user).",
           "type": "string"
         },
         "parentOrgUnitId": {
@@ -5826,6 +6408,78 @@
             "$ref": "OrgUnit"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Printer": {
+      "description": "Printer configuration.",
+      "id": "Printer",
+      "properties": {
+        "auxiliaryMessages": {
+          "description": "Output only. Auxiliary messages about issues with the printer configuration if any.",
+          "items": {
+            "$ref": "AuxiliaryMessage"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "createTime": {
+          "description": "Output only. Time when printer was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "description": {
+          "description": "Editable. Description of printer.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Editable. Name of printer.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Id of the printer. (During printer creation leave empty)",
+          "type": "string"
+        },
+        "makeAndModel": {
+          "description": "Editable. Make and model of printer. e.g. Lexmark MS610de Value must be in format as seen in ListPrinterModels response.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The resource name of the Printer object, in the format customers/{customer-id}/printers/{printer-id} (During printer creation leave empty)",
+          "type": "string"
+        },
+        "orgUnitId": {
+          "description": "Organization Unit that owns this printer (Only can be set during Printer creation)",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Editable. Printer URI.",
+          "type": "string"
+        },
+        "useDriverlessConfig": {
+          "description": "Editable. flag to use driverless configuration or not. If it's set to be true, make_and_model can be ignored",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "PrinterModel": {
+      "description": "Printer manufacturer and model",
+      "id": "PrinterModel",
+      "properties": {
+        "displayName": {
+          "description": "Display name. eq. \"Brother MFC-8840D\"",
+          "type": "string"
+        },
+        "makeAndModel": {
+          "description": "Make and model as represented in \"make_and_model\" field in Printer object. eq. \"brother mfc-8840d\"",
+          "type": "string"
+        },
+        "manufacturer": {
+          "description": "Manufacturer. eq. \"Brother\"",
+          "type": "string"
         }
       },
       "type": "object"
@@ -5885,21 +6539,6 @@
         "kind": {
           "default": "admin#directory#privileges",
           "description": "The type of the API resource. This is always `admin#directory#privileges`.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "RecentUsers": {
-      "description": "List of recent device users, in descending order, by last login time.",
-      "id": "RecentUsers",
-      "properties": {
-        "email": {
-          "description": "The user's email address. This is only present if the user type is `USER_TYPE_MANAGED`.",
-          "type": "string"
-        },
-        "type": {
-          "description": "The type of the user.",
           "type": "string"
         }
       },
@@ -5969,6 +6608,7 @@
       "type": "object"
     },
     "RoleAssignment": {
+      "description": "Defines an assignment of a role.",
       "id": "RoleAssignment",
       "properties": {
         "assignedTo": {
@@ -6100,7 +6740,7 @@
               "directory.schemas.insert"
             ]
           },
-          "description": "The schema's name.",
+          "description": "The schema's name. Each `schema_name` must be unique within a customer. Reusing a name results in a `409: Entity already exists` error.",
           "type": "string"
         }
       },
@@ -6289,7 +6929,7 @@
           "type": "boolean"
         },
         "aliases": {
-          "description": "Output only. List of the user's alias email addresses.",
+          "description": "Output only. A list of the user's alias email addresses.",
           "items": {
             "type": "string"
           },
@@ -6314,7 +6954,7 @@
           "additionalProperties": {
             "$ref": "UserCustomProperties"
           },
-          "description": "Custom fields of the user.",
+          "description": "Custom fields of the user. The key is a `schema_name` and its values are `'field_name': 'field_value'`.",
           "type": "object"
         },
         "customerId": {
@@ -6345,7 +6985,7 @@
           "type": "any"
         },
         "hashFunction": {
-          "description": "Stores the hash format of the password property. We recommend sending the `password` property value as a base 16 bit hexadecimal-encoded hash value. Set the `hashFunction` values as either the [SHA-1](http://wikipedia.org/wiki/SHA-1), [MD5](http://wikipedia.org/wiki/MD5), or [crypt](https://en.wikipedia.org/wiki/Crypt_(C)) hash format.",
+          "description": "Stores the hash format of the password property. We recommend sending the `password` property value as a base 16 bit hexadecimal-encoded hash value. Set the `hashFunction` values as either the [SHA-1](https://wikipedia.org/wiki/SHA-1), [MD5](https://wikipedia.org/wiki/MD5), or [crypt](https://en.wikipedia.org/wiki/Crypt_\\(C\\)) hash format.",
           "type": "string"
         },
         "id": {
@@ -6357,11 +6997,11 @@
           "type": "any"
         },
         "includeInGlobalAddressList": {
-          "description": "Indicates if the user's profile is visible in the Google Workspace global address list when the contact sharing feature is enabled for the domain. For more information about excluding user profiles, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=1285988).",
+          "description": "Indicates if the user's profile is visible in the Google Workspace global address list when the contact sharing feature is enabled for the domain. For more information about excluding user profiles, see the [administration help center](https://support.google.com/a/answer/1285988).",
           "type": "boolean"
         },
         "ipWhitelisted": {
-          "description": "If `true`, the user's IP address is [white listed](http://support.google.com/a/bin/answer.py?answer=60752).",
+          "description": "If `true`, the user's IP address is [whitelisted](https://support.google.com/a/answer/60752).",
           "type": "boolean"
         },
         "isAdmin": {
@@ -6370,7 +7010,7 @@
           "type": "boolean"
         },
         "isDelegatedAdmin": {
-          "description": "Output only. Indicates if the user is a delegated administrator. Delegated administrators are supported by the API but cannot create or undelete users, or make users administrators. These requests are ignored by the API service. Roles and privileges for administrators are assigned using the [Admin console](http://support.google.com/a/bin/answer.py?answer=33325).",
+          "description": "Output only. Indicates if the user is a delegated administrator. Delegated administrators are supported by the API but cannot create or undelete users, or make users administrators. These requests are ignored by the API service. Roles and privileges for administrators are assigned using the [Admin console](https://support.google.com/a/answer/33325).",
           "readOnly": true,
           "type": "boolean"
         },
@@ -6420,7 +7060,7 @@
               "directory.users.insert"
             ]
           },
-          "description": "Holds the given and family names of the user, and the read-only `fullName` value. The maximum number of characters in the `givenName` and in the `familyName` values is 60. In addition, name values support unicode/UTF-8 characters, and can contain spaces, letters (a-z), numbers (0-9), dashes (-), forward slashes (/), and periods (.). For more information about character usage rules, see the [administration help center](http://support.google.com/a/bin/answer.py?answer=33386). Maximum allowed data size for this field is 1Kb."
+          "description": "Holds the given and family names of the user, and the read-only `fullName` value. The maximum number of characters in the `givenName` and in the `familyName` values is 60. In addition, name values support unicode/UTF-8 characters, and can contain spaces, letters (a-z), numbers (0-9), dashes (-), forward slashes (/), and periods (.). For more information about character usage rules, see the [administration help center](https://support.google.com/a/answer/9193374). Maximum allowed data size for this field is 1Kb."
         },
         "nonEditableAliases": {
           "description": "Output only. List of the user's non-editable alias email addresses. These are typically outside the account's primary domain or sub-domain.",
@@ -6456,7 +7096,7 @@
           "type": "any"
         },
         "posixAccounts": {
-          "description": "A list of [POSIX](http://www.opengroup.org/austin/papers/posix_faq.html) account information for the user.",
+          "description": "A list of [POSIX](https://www.opengroup.org/austin/papers/posix_faq.html) account information for the user.",
           "type": "any"
         },
         "primaryEmail": {
@@ -6905,7 +7545,7 @@
               "directory.users.photos.update"
             ]
           },
-          "description": "The user photo's upload data in [web-safe Base64](https://code.google.com/p/stringencoders/wiki/WebSafeBase64) format in bytes. This means: * The slash (/) character is replaced with the underscore (_) character. * The plus sign (+) character is replaced with the hyphen (-) character. * The equals sign (=) character is replaced with the asterisk (*). * For padding, the period (.) character is used instead of the RFC-4648 baseURL definition which uses the equals sign (=) for padding. This is done to simplify URL-parsing. * Whatever the size of the photo being uploaded, the API downsizes it to 96x96 pixels.",
+          "description": "The user photo's upload data in [web-safe Base64](https://en.wikipedia.org/wiki/Base64#URL_applications) format in bytes. This means: * The slash (/) character is replaced with the underscore (_) character. * The plus sign (+) character is replaced with the hyphen (-) character. * The equals sign (=) character is replaced with the asterisk (*). * For padding, the period (.) character is used instead of the RFC-4648 baseURL definition which uses the equals sign (=) for padding. This is done to simplify URL-parsing. * Whatever the size of the photo being uploaded, the API downsizes it to 96x96 pixels.",
           "format": "byte",
           "type": "string"
         },

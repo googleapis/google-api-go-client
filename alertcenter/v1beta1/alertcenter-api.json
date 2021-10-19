@@ -243,7 +243,7 @@
               "type": "string"
             },
             "filter": {
-              "description": "Optional. A query string for filtering alert results. For more details, see [Query filters](/admin-sdk/alertcenter/guides/query-filters) and [Supported query filter fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.list).",
+              "description": "Optional. A query string for filtering alert results. For more details, see [Query filters](https://developers.google.com/admin-sdk/alertcenter/guides/query-filters) and [Supported query filter fields](https://developers.google.com/admin-sdk/alertcenter/reference/filter-fields#alerts.list).",
               "location": "query",
               "type": "string"
             },
@@ -356,7 +356,7 @@
                   "type": "string"
                 },
                 "filter": {
-                  "description": "Optional. A query string for filtering alert feedback results. For more details, see [Query filters](/admin-sdk/alertcenter/guides/query-filters) and [Supported query filter fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.feedback.list).",
+                  "description": "Optional. A query string for filtering alert feedback results. For more details, see [Query filters](https://developers.google.com/admin-sdk/alertcenter/guides/query-filters) and [Supported query filter fields](https://developers.google.com/admin-sdk/alertcenter/reference/filter-fields#alerts.feedback.list).",
                   "location": "query",
                   "type": "string"
                 }
@@ -423,9 +423,81 @@
       }
     }
   },
-  "revision": "20210123",
+  "revision": "20210803",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
+    "AccountSuspensionDetails": {
+      "description": "Details about why an account is receiving an account suspension warning.",
+      "id": "AccountSuspensionDetails",
+      "properties": {
+        "abuseReason": {
+          "description": "The reason why this account is receiving an account suspension warning.",
+          "enum": [
+            "ACCOUNT_SUSPENSION_ABUSE_REASON_UNSPECIFIED",
+            "TOS_VIOLATION",
+            "SPAM",
+            "PHISHING",
+            "TRAFFIC_PUMPING",
+            "FRAUD",
+            "NUMBER_HARVESTING",
+            "PAYMENTS_FRAUD"
+          ],
+          "enumDescriptions": [
+            "Abuse reason is unspecified.",
+            "This account is being suspended for a Terms of Service violation.",
+            "This account is being suspended for spam.",
+            "This account is being suspended for phishing.",
+            "This account is being suspended for artificially boosting traffic to a website.",
+            "This account is being suspended for fraud.",
+            "This account is being suspended for number harvesting.",
+            "This account is being suspended for payments fraud."
+          ],
+          "type": "string"
+        },
+        "productName": {
+          "description": "The name of the product being abused. This is restricted to only the following values: \"Gmail\" \"Payments\" \"Voice\" \"Workspace\" \"Other\"",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AccountSuspensionWarning": {
+      "description": "A warning that the customer's account is about to be suspended.",
+      "id": "AccountSuspensionWarning",
+      "properties": {
+        "appealWindow": {
+          "description": "The amount of time remaining to appeal an imminent suspension. After this window has elapsed, the account will be suspended. Only populated if the account suspension is in WARNING state.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "state": {
+          "description": "Account suspension warning state.",
+          "enum": [
+            "ACCOUNT_SUSPENSION_WARNING_STATE_UNSPECIFIED",
+            "WARNING",
+            "SUSPENDED",
+            "APPEAL_APPROVED",
+            "APPEAL_SUBMITTED"
+          ],
+          "enumDescriptions": [
+            "State is unspecified.",
+            "Customer is receiving a warning about imminent suspension.",
+            "Customer is being notified that their account has been suspended.",
+            "Customer is being notified that their suspension appeal was approved.",
+            "Customer has submitted their appeal, which is pending review."
+          ],
+          "type": "string"
+        },
+        "suspensionDetails": {
+          "description": "Details about why an account is being suspended.",
+          "items": {
+            "$ref": "AccountSuspensionDetails"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "AccountWarning": {
       "description": "Alerts for user account warning events.",
       "id": "AccountWarning",
@@ -441,8 +513,14 @@
       },
       "type": "object"
     },
+    "ActionInfo": {
+      "description": "Metadata related to the action.",
+      "id": "ActionInfo",
+      "properties": {},
+      "type": "object"
+    },
     "ActivityRule": {
-      "description": "Alerts from G Suite Security Center rules service configured by admin.",
+      "description": "Alerts from Google Workspace Security Center rules service configured by an admin.",
       "id": "ActivityRule",
       "properties": {
         "actionNames": {
@@ -552,7 +630,7 @@
           "type": "string"
         },
         "source": {
-          "description": "Required. A unique identifier for the system that reported the alert. This is output only after alert is created. Supported sources are any of the following: * Google Operations * Mobile device management * Gmail phishing * Domain wide takeout * State sponsored attack * Google identity",
+          "description": "Required. A unique identifier for the system that reported the alert. This is output only after alert is created. Supported sources are any of the following: * Google Operations * Mobile device management * Gmail phishing * Data Loss Prevention * Domain wide takeout * State sponsored attack * Google identity * Apps outage",
           "type": "string"
         },
         "startTime": {
@@ -561,7 +639,7 @@
           "type": "string"
         },
         "type": {
-          "description": "Required. The type of the alert. This is output only after alert is created. For a list of available alert types see [Google Workspace Alert types](/admin-sdk/alertcenter/reference/alert-types).",
+          "description": "Required. The type of the alert. This is output only after alert is created. For a list of available alert types see [Google Workspace Alert types](https://developers.google.com/admin-sdk/alertcenter/reference/alert-types).",
           "type": "string"
         },
         "updateTime": {
@@ -662,6 +740,66 @@
             "$ref": "RequestInfo"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "AppSettingsChanged": {
+      "description": "Alerts from AppSettingsChanged bucket Rules configured by Admin which contain the below rules. Calendar settings changed Drive settings changed Email settings changed Mobile settings changed",
+      "id": "AppSettingsChanged",
+      "properties": {
+        "alertDetails": {
+          "description": "Any other associated alert details, for example, AlertConfiguration.",
+          "format": "byte",
+          "type": "string"
+        },
+        "name": {
+          "description": "Rule name",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AppsOutage": {
+      "description": "An outage incident reported for a Google Workspace service.",
+      "id": "AppsOutage",
+      "properties": {
+        "dashboardUri": {
+          "description": "Link to the outage event in Google Workspace Status Dashboard",
+          "type": "string"
+        },
+        "nextUpdateTime": {
+          "description": "Timestamp by which the next update is expected to arrive.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "products": {
+          "description": "List of products impacted by the outage.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "resolutionTime": {
+          "description": "Timestamp when the outage is expected to be resolved, or has confirmed resolution. Provided only when known.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "status": {
+          "description": "Current outage status.",
+          "enum": [
+            "STATUS_UNSPECIFIED",
+            "NEW",
+            "ONGOING",
+            "RESOLVED"
+          ],
+          "enumDescriptions": [
+            "Status is unspecified.",
+            "The incident has just been reported.",
+            "The incident is ongoing.",
+            "The incident has been resolved."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -947,7 +1085,7 @@
           "type": "array"
         },
         "date": {
-          "description": "The date the malicious email was sent.",
+          "description": "The date of the event related to this email.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -979,7 +1117,7 @@
       "type": "object"
     },
     "GoogleOperations": {
-      "description": "An incident reported by Google Operations for a G Suite application.",
+      "description": "An incident reported by Google Operations for a Google Workspace application.",
       "id": "GoogleOperations",
       "properties": {
         "affectedUserEmails": {
@@ -991,14 +1129,14 @@
         },
         "attachmentData": {
           "$ref": "Attachment",
-          "description": "Optional. Application-specific data for an incident, provided when the G Suite application which reported the incident cannot be completely restored to a valid state."
+          "description": "Optional. Application-specific data for an incident, provided when the Google Workspace application which reported the incident cannot be completely restored to a valid state."
         },
         "description": {
           "description": "A detailed, freeform incident description.",
           "type": "string"
         },
         "header": {
-          "description": "A header to display above the incident message. Typcially used to attach a localized notice on the timeline for followup comms translations.",
+          "description": "A header to display above the incident message. Typically used to attach a localized notice on the timeline for followup comms translations.",
           "type": "string"
         },
         "title": {
@@ -1131,7 +1269,7 @@
       "type": "object"
     },
     "Notification": {
-      "description": "Settings for callback notifications. For more details see [Google Workspace Alert Notification](/admin-sdk/alertcenter/guides/notifications).",
+      "description": "Settings for callback notifications. For more details see [Google Workspace Alert Notification](https://developers.google.com/admin-sdk/alertcenter/guides/notifications).",
       "id": "Notification",
       "properties": {
         "cloudPubsubTopic": {
@@ -1173,6 +1311,27 @@
       "properties": {
         "detectorName": {
           "description": "Name that uniquely identifies the detector.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ReportingRule": {
+      "description": "Alerts from Reporting Rules configured by Admin.",
+      "id": "ReportingRule",
+      "properties": {
+        "alertDetails": {
+          "description": "Any other associated alert details, for example, AlertConfiguration.",
+          "format": "byte",
+          "type": "string"
+        },
+        "name": {
+          "description": "Rule name",
+          "type": "string"
+        },
+        "query": {
+          "description": "Alert Rule query Sample Query query { condition { filter { expected_application_id: 777491262838 expected_event_name: \"indexable_content_change\" filter_op: IN } } conjunction_operator: OR }",
+          "format": "byte",
           "type": "string"
         }
       },
@@ -1232,7 +1391,7 @@
       "type": "object"
     },
     "RuleViolationInfo": {
-      "description": "Common alert information about violated rules that are configured by G Suite administrators.",
+      "description": "Common alert information about violated rules that are configured by Google Workspace administrators.",
       "id": "RuleViolationInfo",
       "properties": {
         "dataSource": {
@@ -1303,6 +1462,13 @@
             "A Drive file is shared."
           ],
           "type": "string"
+        },
+        "triggeredActionInfo": {
+          "description": "Metadata related to the triggered actions.",
+          "items": {
+            "$ref": "ActionInfo"
+          },
+          "type": "array"
         },
         "triggeredActionTypes": {
           "description": "Actions applied as a consequence of the rule being triggered.",
@@ -1468,6 +1634,17 @@
         },
         "emailAddress": {
           "description": "Email address of the user.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UserChanges": {
+      "description": "Alerts from UserChanges bucket Rules for predefined rules which contain the below rules. Suspended user made active New user Added User suspended (by admin) User granted admin privileges User admin privileges revoked User deleted Users password changed",
+      "id": "UserChanges",
+      "properties": {
+        "name": {
+          "description": "Rule name",
           "type": "string"
         }
       },

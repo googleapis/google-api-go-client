@@ -21,16 +21,16 @@
           "description": "Manage drafts and send emails"
         },
         "https://www.googleapis.com/auth/gmail.insert": {
-          "description": "Insert mail into your mailbox"
+          "description": "Add emails into your Gmail mailbox"
         },
         "https://www.googleapis.com/auth/gmail.labels": {
-          "description": "Manage mailbox labels"
+          "description": "See and edit your email labels"
         },
         "https://www.googleapis.com/auth/gmail.metadata": {
           "description": "View your email message metadata such as labels and headers, but not the email body"
         },
         "https://www.googleapis.com/auth/gmail.modify": {
-          "description": "View and modify but not delete your email"
+          "description": "Read, compose, and send emails from your Gmail account"
         },
         "https://www.googleapis.com/auth/gmail.readonly": {
           "description": "View your email messages and settings"
@@ -39,7 +39,7 @@
           "description": "Send email on your behalf"
         },
         "https://www.googleapis.com/auth/gmail.settings.basic": {
-          "description": "Manage your basic mail settings"
+          "description": "See, edit, create, or change your email settings and filters in Gmail"
         },
         "https://www.googleapis.com/auth/gmail.settings.sharing": {
           "description": "Manage your sensitive mail settings, including who can manage your mail"
@@ -384,7 +384,7 @@
                 },
                 "maxResults": {
                   "default": "100",
-                  "description": "Maximum number of drafts to return.",
+                  "description": "Maximum number of drafts to return. This field defaults to 100. The maximum allowed value for this field is 500.",
                   "format": "uint32",
                   "location": "query",
                   "type": "integer"
@@ -559,7 +559,7 @@
                 },
                 "maxResults": {
                   "default": "100",
-                  "description": "The maximum number of history records to return.",
+                  "description": "Maximum number of history records to return. This field defaults to 100. The maximum allowed value for this field is 500.",
                   "format": "uint32",
                   "location": "query",
                   "type": "integer"
@@ -1113,7 +1113,7 @@
                 },
                 "maxResults": {
                   "default": "100",
-                  "description": "Maximum number of messages to return.",
+                  "description": "Maximum number of messages to return. This field defaults to 100. The maximum allowed value for this field is 500.",
                   "format": "uint32",
                   "location": "query",
                   "type": "integer"
@@ -2541,7 +2541,7 @@
                 },
                 "maxResults": {
                   "default": "100",
-                  "description": "Maximum number of threads to return.",
+                  "description": "Maximum number of threads to return. This field defaults to 100. The maximum allowed value for this field is 500.",
                   "format": "uint32",
                   "location": "query",
                   "type": "integer"
@@ -2682,7 +2682,7 @@
       }
     }
   },
-  "revision": "20210111",
+  "revision": "20210614",
   "rootUrl": "https://gmail.googleapis.com/",
   "schemas": {
     "AutoForwarding": {
@@ -3064,7 +3064,7 @@
       "type": "object"
     },
     "Label": {
-      "description": "Labels are used to categorize messages and threads within the user's mailbox.",
+      "description": "Labels are used to categorize messages and threads within the user's mailbox. The maximum number of labels supported for a user's mailbox is 10,000.",
       "id": "Label",
       "properties": {
         "color": {
@@ -3620,7 +3620,7 @@
           "type": "string"
         },
         "signature": {
-          "description": "An optional HTML signature that is included in messages composed with this alias in the Gmail web UI.",
+          "description": "An optional HTML signature that is included in messages composed with this alias in the Gmail web UI. This signature is added to new emails only.",
           "type": "string"
         },
         "smtpMsa": {

@@ -558,10 +558,10 @@ type AbsoluteDateRange struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndDate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndDate") to include in
@@ -587,10 +587,10 @@ type AcceptProposalRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ProposalRevision") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ProposalRevision") to
@@ -633,10 +633,10 @@ type AdSize struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -683,10 +683,10 @@ type AdTechnologyProviders struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedProviderIds")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedProviderIds") to
@@ -714,10 +714,10 @@ type AddDealAssociationRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Association") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Association") to include
@@ -743,10 +743,10 @@ type AddNoteRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Note") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Note") to include in API
@@ -776,10 +776,10 @@ type AppContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "AppTypes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppTypes") to include in
@@ -809,10 +809,10 @@ type AuctionContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuctionTypes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuctionTypes") to include
@@ -866,10 +866,10 @@ type BidMetricsRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "Bids") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Bids") to include in API
@@ -921,10 +921,10 @@ type BidResponseWithoutBidsStatusRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "ImpressionCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ImpressionCount") to
@@ -951,10 +951,10 @@ type Buyer struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -991,10 +991,10 @@ type CalloutStatusRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "CalloutStatusId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CalloutStatusId") to
@@ -1031,7 +1031,8 @@ type Client struct {
 	// ClientName: Name used to represent this client to publishers. You may
 	// have multiple clients that map to the same entity, but for each
 	// client the combination of `clientName` and entity must be unique. You
-	// can specify this field as empty.
+	// can specify this field as empty. Maximum length of 255 characters is
+	// allowed.
 	ClientName string `json:"clientName,omitempty"`
 
 	// EntityId: Numerical identifier of the client entity. The entity can
@@ -1117,10 +1118,10 @@ type Client struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClientAccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClientAccountId") to
@@ -1179,10 +1180,10 @@ type ClientUser struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClientAccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClientAccountId") to
@@ -1225,10 +1226,10 @@ type ClientUserInvitation struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClientAccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClientAccountId") to
@@ -1263,10 +1264,10 @@ type ContactInformation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Email") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Email") to include in API
@@ -1325,10 +1326,10 @@ type Correction struct {
 
 	// ForceSendFields is a list of field names (e.g. "Contexts") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Contexts") to include in
@@ -1556,10 +1557,10 @@ type Creative struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -1592,10 +1593,10 @@ type CreativeDealAssociation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -1647,10 +1648,10 @@ type CreativeRestrictions struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreativeFormat") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreativeFormat") to
@@ -1733,10 +1734,10 @@ type CreativeSize struct {
 
 	// ForceSendFields is a list of field names (e.g. "AllowedFormats") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllowedFormats") to
@@ -1768,8 +1769,8 @@ type CreativeSpecification struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CreativeCompanionSizes") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1809,10 +1810,10 @@ type CreativeStatusRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "BidCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BidCount") to include in
@@ -1841,10 +1842,10 @@ type CriteriaTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExcludedCriteriaIds")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExcludedCriteriaIds") to
@@ -1888,10 +1889,10 @@ type Date struct {
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Day") to include in API
@@ -1939,10 +1940,10 @@ type DayPart struct {
 
 	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DayOfWeek") to include in
@@ -1977,10 +1978,10 @@ type DayPartTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g. "DayParts") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DayParts") to include in
@@ -2142,10 +2143,10 @@ type Deal struct {
 
 	// ForceSendFields is a list of field names (e.g. "AvailableEndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AvailableEndTime") to
@@ -2194,10 +2195,10 @@ type DealPauseStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "BuyerPauseReason") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BuyerPauseReason") to
@@ -2225,10 +2226,10 @@ type DealServingMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "DealPauseStatus") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DealPauseStatus") to
@@ -2294,10 +2295,10 @@ type DealTerms struct {
 
 	// ForceSendFields is a list of field names (e.g. "BrandingType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BrandingType") to include
@@ -2347,8 +2348,8 @@ type DeliveryControl struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CreativeBlockingLevel") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2533,7 +2534,7 @@ type Disapproval struct {
 	// unsupported context.
 	//   "MISUSE_BY_OMID_SCRIPT" - Misuse by an Open Measurement SDK script.
 	//   "NON_WHITELISTED_OMID_VENDOR" - Use of an Open Measurement SDK
-	// vendor not on approved whitelist.
+	// vendor not on approved vendor list.
 	//   "DESTINATION_EXPERIENCE" - Unacceptable landing page.
 	//   "UNSUPPORTED_LANGUAGE" - Unsupported language.
 	//   "NON_SSL_COMPLIANT" - Non-SSL compliant.
@@ -2545,10 +2546,10 @@ type Disapproval struct {
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Details") to include in
@@ -2714,10 +2715,10 @@ type FilterSet struct {
 
 	// ForceSendFields is a list of field names (e.g. "AbsoluteDateRange")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AbsoluteDateRange") to
@@ -2751,10 +2752,10 @@ type FilteredBidCreativeRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "BidCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BidCount") to include in
@@ -2798,10 +2799,10 @@ type FilteredBidDetailRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "BidCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BidCount") to include in
@@ -2835,10 +2836,10 @@ type FirstPartyMobileApplicationTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExcludedAppIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExcludedAppIds") to
@@ -2882,14 +2883,16 @@ type FrequencyCap struct {
 	//   "WEEK" - Week
 	//   "MONTH" - Month
 	//   "LIFETIME" - Lifetime
+	//   "POD" - Pod
+	//   "STREAM" - Stream
 	TimeUnitType string `json:"timeUnitType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxImpressions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MaxImpressions") to
@@ -2922,15 +2925,38 @@ type GuaranteedFixedPriceTerms struct {
 	// optional for product.
 	GuaranteedLooks int64 `json:"guaranteedLooks,omitempty,string"`
 
+	// ImpressionCap: The lifetime impression cap for CPM sponsorship deals.
+	// The deal will stop serving when the cap is reached.
+	ImpressionCap int64 `json:"impressionCap,omitempty,string"`
+
 	// MinimumDailyLooks: Daily minimum looks for CPD deal types.
 	MinimumDailyLooks int64 `json:"minimumDailyLooks,omitempty,string"`
 
+	// PercentShareOfVoice: For sponsorship deals, this is the percentage of
+	// the seller's eligible impressions that the deal will serve until the
+	// cap is reached.
+	PercentShareOfVoice int64 `json:"percentShareOfVoice,omitempty,string"`
+
+	// ReservationType: The reservation type for a Programmatic Guaranteed
+	// deal. This indicates whether the number of impressions is fixed, or a
+	// percent of available impressions. If not specified, the default
+	// reservation type is STANDARD.
+	//
+	// Possible values:
+	//   "RESERVATION_TYPE_UNSPECIFIED" - An unspecified reservation type.
+	//   "STANDARD" - Non-sponsorship deal.
+	//   "SPONSORSHIP" - Sponsorship deals don't have impression goal
+	// (guaranteed_looks) and they are served based on the flight dates. For
+	// CPM Sponsorship deals, impression_cap is the lifetime impression
+	// limit.
+	ReservationType string `json:"reservationType,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "FixedPrices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FixedPrices") to include
@@ -2962,10 +2988,10 @@ type HtmlContent struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -2997,10 +3023,10 @@ type Image struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -3050,8 +3076,8 @@ type ImpressionMetricsRow struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AvailableImpressions") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -3086,8 +3112,8 @@ type InventorySizeTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ExcludedInventorySizes") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -3127,10 +3153,10 @@ type ListBidMetricsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "BidMetricsRows") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BidMetricsRows") to
@@ -3168,10 +3194,10 @@ type ListBidResponseErrorsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CalloutStatusRows")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CalloutStatusRows") to
@@ -3210,11 +3236,11 @@ type ListBidResponsesWithoutBidsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "BidResponseWithoutBidsStatusRows") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -3249,10 +3275,10 @@ type ListClientUserInvitationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Invitations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Invitations") to include
@@ -3286,10 +3312,10 @@ type ListClientUsersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -3323,10 +3349,10 @@ type ListClientsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Clients") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Clients") to include in
@@ -3364,11 +3390,11 @@ type ListCreativeStatusBreakdownByCreativeResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "FilteredBidCreativeRows") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FilteredBidCreativeRows")
@@ -3427,6 +3453,9 @@ type ListCreativeStatusBreakdownByDetailResponse struct {
 	// more information.
 	//   "VENDOR_DOMAIN" - Indicates that the detail string refers the
 	// domain of an unknown vendor.
+	//   "GVL_ID" - Indicates that the detail ID refers an IAB GVL ID which
+	// Google did not detect in the latest TCF Vendor List. See [Global
+	// Vendor List] (https://vendor-list.consensu.org/v2/vendor-list.json)
 	DetailType string `json:"detailType,omitempty"`
 
 	// FilteredBidDetailRows: List of rows, with counts of bids with a given
@@ -3446,10 +3475,10 @@ type ListCreativeStatusBreakdownByDetailResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetailType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetailType") to include in
@@ -3484,10 +3513,10 @@ type ListCreativesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Creatives") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Creatives") to include in
@@ -3523,10 +3552,10 @@ type ListDealAssociationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Associations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Associations") to include
@@ -3561,10 +3590,10 @@ type ListFilterSetsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "FilterSets") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FilterSets") to include in
@@ -3601,10 +3630,10 @@ type ListFilteredBidRequestsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CalloutStatusRows")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CalloutStatusRows") to
@@ -3642,10 +3671,10 @@ type ListFilteredBidsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreativeStatusRows")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreativeStatusRows") to
@@ -3683,8 +3712,8 @@ type ListImpressionMetricsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ImpressionMetricsRows") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -3725,10 +3754,10 @@ type ListLosingBidsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreativeStatusRows")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreativeStatusRows") to
@@ -3766,10 +3795,10 @@ type ListNonBillableWinningBidsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -3803,10 +3832,10 @@ type ListProductsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -3839,10 +3868,10 @@ type ListProposalsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -3875,10 +3904,10 @@ type ListPublisherProfilesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -3907,10 +3936,10 @@ type LocationContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "GeoCriteriaIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GeoCriteriaIds") to
@@ -3954,10 +3983,10 @@ type MarketplaceTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g. "GeoTargeting") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GeoTargeting") to include
@@ -3993,10 +4022,10 @@ type MetricValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "Value") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Value") to include in API
@@ -4022,10 +4051,10 @@ type MobileApplicationTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g. "FirstPartyTargeting")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FirstPartyTargeting") to
@@ -4063,10 +4092,10 @@ type Money struct {
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrencyCode") to include
@@ -4133,10 +4162,10 @@ type NativeContent struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserName") to
@@ -4197,10 +4226,10 @@ type NonBillableWinningBidStatusRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "BidCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BidCount") to include in
@@ -4231,11 +4260,11 @@ type NonGuaranteedAuctionTerms struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AutoOptimizePrivateAuction") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -4254,19 +4283,17 @@ func (s *NonGuaranteedAuctionTerms) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// NonGuaranteedFixedPriceTerms: Terms for Preferred Deals. Note that
-// Preferred Deals cannot be created via the API at this time, but can
-// be returned in a get or list request.
+// NonGuaranteedFixedPriceTerms: Terms for Preferred Deals.
 type NonGuaranteedFixedPriceTerms struct {
 	// FixedPrices: Fixed price for the specified buyer.
 	FixedPrices []*PricePerBuyer `json:"fixedPrices,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FixedPrices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FixedPrices") to include
@@ -4319,10 +4346,10 @@ type Note struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -4353,11 +4380,11 @@ type OperatingSystemTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "OperatingSystemCriteria") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OperatingSystemCriteria")
@@ -4376,6 +4403,42 @@ func (s *OperatingSystemTargeting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PauseProposalDealsRequest: Request message to pause serving for
+// finalized deals.
+type PauseProposalDealsRequest struct {
+	// ExternalDealIds: The external_deal_id's of the deals to be paused. If
+	// empty, all the deals in the proposal will be paused.
+	ExternalDealIds []string `json:"externalDealIds,omitempty"`
+
+	// Reason: The reason why the deals are being paused. This human
+	// readable message will be displayed in the seller's UI. (Max length:
+	// 1000 unicode code units.)
+	Reason string `json:"reason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExternalDealIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExternalDealIds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PauseProposalDealsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PauseProposalDealsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PauseProposalRequest: Request message to pause serving for an
 // already-finalized proposal.
 type PauseProposalRequest struct {
@@ -4386,10 +4449,10 @@ type PauseProposalRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Reason") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Reason") to include in API
@@ -4420,11 +4483,11 @@ type PlacementTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "MobileApplicationTargeting") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -4456,10 +4519,10 @@ type PlatformContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "Platforms") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Platforms") to include in
@@ -4494,10 +4557,10 @@ type Price struct {
 
 	// ForceSendFields is a list of field names (e.g. "Amount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Amount") to include in API
@@ -4538,10 +4601,10 @@ type PricePerBuyer struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserIds") to include
@@ -4568,10 +4631,10 @@ type PrivateData struct {
 
 	// ForceSendFields is a list of field names (e.g. "ReferenceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ReferenceId") to include
@@ -4589,11 +4652,9 @@ func (s *PrivateData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Product: Note: this resource requires whitelisting for access. Please
-// contact your account manager for access to Marketplace resources. A
-// product is a segment of inventory that a seller wishes to sell. It is
-// associated with certain terms and targeting information which helps
-// the buyer know more about the inventory.
+// Product: A product is a segment of inventory that a seller wishes to
+// sell. It is associated with certain terms and targeting information
+// which helps the buyer know more about the inventory.
 type Product struct {
 	// AvailableEndTime: The proposed end time for the deal. The field will
 	// be truncated to the order of seconds during serving.
@@ -4667,10 +4728,10 @@ type Product struct {
 
 	// ForceSendFields is a list of field names (e.g. "AvailableEndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AvailableEndTime") to
@@ -4689,13 +4750,11 @@ func (s *Product) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Proposal: Note: this resource requires whitelisting for access.
-// Please contact your account manager for access to Marketplace
-// resources. Represents a proposal in the Marketplace. A proposal is
-// the unit of negotiation between a seller and a buyer and contains
-// deals which are served. Note: you can not update, create, or
-// otherwise modify Private Auction or Preferred Deals deals through the
-// API. Fields are updatable unless noted otherwise.
+// Proposal: Represents a proposal in the Marketplace. A proposal is the
+// unit of negotiation between a seller and a buyer and contains deals
+// which are served. Note: You can't update, create, or otherwise modify
+// Private Auction deals through the API. Fields are updatable unless
+// noted otherwise.
 type Proposal struct {
 	// BilledBuyer: Output only. Reference to the buyer that will get billed
 	// for this proposal.
@@ -4802,10 +4861,10 @@ type Proposal struct {
 
 	// ForceSendFields is a list of field names (e.g. "BilledBuyer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BilledBuyer") to include
@@ -4823,9 +4882,7 @@ func (s *Proposal) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PublisherProfile: Note: this resource requires whitelisting for
-// access. Please contact your account manager for access to Marketplace
-// resources. Represents a publisher profile
+// PublisherProfile: Represents a publisher profile
 // (https://support.google.com/admanager/answer/6035806) in Marketplace.
 // All fields are read only. All string fields are free-form text
 // entered by the publisher unless noted otherwise.
@@ -4907,10 +4964,10 @@ type PublisherProfile struct {
 
 	// ForceSendFields is a list of field names (e.g. "AudienceDescription")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AudienceDescription") to
@@ -4959,10 +5016,10 @@ type PublisherProfileMobileApplication struct {
 
 	// ForceSendFields is a list of field names (e.g. "AppStore") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppStore") to include in
@@ -4991,10 +5048,10 @@ type RealtimeTimeRange struct {
 
 	// ForceSendFields is a list of field names (e.g. "StartTimestamp") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "StartTimestamp") to
@@ -5030,10 +5087,10 @@ type RelativeDateRange struct {
 
 	// ForceSendFields is a list of field names (e.g. "DurationDays") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DurationDays") to include
@@ -5060,10 +5117,10 @@ type RemoveDealAssociationRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Association") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Association") to include
@@ -5077,6 +5134,37 @@ type RemoveDealAssociationRequest struct {
 
 func (s *RemoveDealAssociationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveDealAssociationRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResumeProposalDealsRequest: Request message to resume (unpause)
+// serving for already-finalized deals.
+type ResumeProposalDealsRequest struct {
+	// ExternalDealIds: The external_deal_id's of the deals to resume. If
+	// empty, all the deals in the proposal will be resumed.
+	ExternalDealIds []string `json:"externalDealIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExternalDealIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExternalDealIds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResumeProposalDealsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ResumeProposalDealsRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5101,10 +5189,10 @@ type RowDimensions struct {
 
 	// ForceSendFields is a list of field names (e.g. "PublisherIdentifier")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PublisherIdentifier") to
@@ -5135,10 +5223,10 @@ type SecurityContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "Securities") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Securities") to include in
@@ -5169,10 +5257,10 @@ type Seller struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -5216,10 +5304,10 @@ type ServingContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "All") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "All") to include in API
@@ -5267,10 +5355,10 @@ type ServingRestriction struct {
 
 	// ForceSendFields is a list of field names (e.g. "Contexts") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Contexts") to include in
@@ -5299,10 +5387,10 @@ type Size struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -5347,10 +5435,10 @@ type TargetingCriteria struct {
 
 	// ForceSendFields is a list of field names (e.g. "Exclusions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Exclusions") to include in
@@ -5388,10 +5476,10 @@ type TargetingValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreativeSizeValue")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreativeSizeValue") to
@@ -5427,11 +5515,11 @@ type TechnologyTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DeviceCapabilityTargeting") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -5462,10 +5550,10 @@ type TimeInterval struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -5506,10 +5594,10 @@ type TimeOfDay struct {
 
 	// ForceSendFields is a list of field names (e.g. "Hours") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Hours") to include in API
@@ -5540,10 +5628,10 @@ type UrlTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExcludedUrls") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExcludedUrls") to include
@@ -5572,10 +5660,10 @@ type VideoContent struct {
 
 	// ForceSendFields is a list of field names (e.g. "VideoUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "VideoUrl") to include in
@@ -5620,8 +5708,8 @@ type VideoTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ExcludedPositionTypes") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -5655,10 +5743,10 @@ type WatchCreativeRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Topic") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Topic") to include in API
@@ -5688,6 +5776,10 @@ type AccountsClientsCreateCall struct {
 }
 
 // Create: Creates a new client buyer.
+//
+// - accountId: Unique numerical account ID for the buyer of which the
+//   client buyer is a customer; the sponsor buyer to create a client
+//   for. (required).
 func (r *AccountsClientsService) Create(accountId int64, client *Client) *AccountsClientsCreateCall {
 	c := &AccountsClientsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5722,7 +5814,7 @@ func (c *AccountsClientsCreateCall) Header() http.Header {
 
 func (c *AccountsClientsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5829,6 +5921,11 @@ type AccountsClientsGetCall struct {
 }
 
 // Get: Gets a client buyer with a given client account ID.
+//
+// - accountId: Numerical account ID of the client's sponsor buyer.
+//   (required).
+// - clientAccountId: Numerical account ID of the client buyer to
+//   retrieve. (required).
 func (r *AccountsClientsService) Get(accountId int64, clientAccountId int64) *AccountsClientsGetCall {
 	c := &AccountsClientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -5873,7 +5970,7 @@ func (c *AccountsClientsGetCall) Header() http.Header {
 
 func (c *AccountsClientsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5983,6 +6080,9 @@ type AccountsClientsListCall struct {
 }
 
 // List: Lists all the clients for the current sponsor buyer.
+//
+// - accountId: Unique numerical account ID of the sponsor buyer to list
+//   the clients for.
 func (r *AccountsClientsService) List(accountId int64) *AccountsClientsListCall {
 	c := &AccountsClientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6052,7 +6152,7 @@ func (c *AccountsClientsListCall) Header() http.Header {
 
 func (c *AccountsClientsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6191,6 +6291,12 @@ type AccountsClientsUpdateCall struct {
 }
 
 // Update: Updates an existing client buyer.
+//
+// - accountId: Unique numerical account ID for the buyer of which the
+//   client buyer is a customer; the sponsor buyer to update a client
+//   for. (required).
+// - clientAccountId: Unique numerical account ID of the client to
+//   update. (required).
 func (r *AccountsClientsService) Update(accountId int64, clientAccountId int64, client *Client) *AccountsClientsUpdateCall {
 	c := &AccountsClientsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6226,7 +6332,7 @@ func (c *AccountsClientsUpdateCall) Header() http.Header {
 
 func (c *AccountsClientsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6343,6 +6449,11 @@ type AccountsClientsInvitationsCreateCall struct {
 
 // Create: Creates and sends out an email invitation to access an Ad
 // Exchange client buyer account.
+//
+// - accountId: Numerical account ID of the client's sponsor buyer.
+//   (required).
+// - clientAccountId: Numerical account ID of the client buyer that the
+//   user should be associated with. (required).
 func (r *AccountsClientsInvitationsService) Create(accountId int64, clientAccountId int64, clientuserinvitation *ClientUserInvitation) *AccountsClientsInvitationsCreateCall {
 	c := &AccountsClientsInvitationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6378,7 +6489,7 @@ func (c *AccountsClientsInvitationsCreateCall) Header() http.Header {
 
 func (c *AccountsClientsInvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6495,6 +6606,13 @@ type AccountsClientsInvitationsGetCall struct {
 }
 
 // Get: Retrieves an existing client user invitation.
+//
+// - accountId: Numerical account ID of the client's sponsor buyer.
+//   (required).
+// - clientAccountId: Numerical account ID of the client buyer that the
+//   user invitation to be retrieved is associated with. (required).
+// - invitationId: Numerical identifier of the user invitation to
+//   retrieve. (required).
 func (r *AccountsClientsInvitationsService) Get(accountId int64, clientAccountId int64, invitationId int64) *AccountsClientsInvitationsGetCall {
 	c := &AccountsClientsInvitationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6540,7 +6658,7 @@ func (c *AccountsClientsInvitationsGetCall) Header() http.Header {
 
 func (c *AccountsClientsInvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6661,6 +6779,14 @@ type AccountsClientsInvitationsListCall struct {
 
 // List: Lists all the client users invitations for a client with a
 // given account ID.
+//
+// - accountId: Numerical account ID of the client's sponsor buyer.
+//   (required).
+// - clientAccountId: Numerical account ID of the client buyer to list
+//   invitations for. (required) You must either specify a string
+//   representation of a numerical account identifier or the `-`
+//   character to list all the invitations for all the clients of a
+//   given sponsor buyer.
 func (r *AccountsClientsInvitationsService) List(accountId int64, clientAccountId string) *AccountsClientsInvitationsListCall {
 	c := &AccountsClientsInvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6723,7 +6849,7 @@ func (c *AccountsClientsInvitationsListCall) Header() http.Header {
 
 func (c *AccountsClientsInvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6867,6 +6993,12 @@ type AccountsClientsUsersGetCall struct {
 }
 
 // Get: Retrieves an existing client user.
+//
+// - accountId: Numerical account ID of the client's sponsor buyer.
+//   (required).
+// - clientAccountId: Numerical account ID of the client buyer that the
+//   user to be retrieved is associated with. (required).
+// - userId: Numerical identifier of the user to retrieve. (required).
 func (r *AccountsClientsUsersService) Get(accountId int64, clientAccountId int64, userId int64) *AccountsClientsUsersGetCall {
 	c := &AccountsClientsUsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -6912,7 +7044,7 @@ func (c *AccountsClientsUsersGetCall) Header() http.Header {
 
 func (c *AccountsClientsUsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7033,6 +7165,13 @@ type AccountsClientsUsersListCall struct {
 
 // List: Lists all the known client users for a specified sponsor buyer
 // account ID.
+//
+// - accountId: Numerical account ID of the sponsor buyer of the client
+//   to list users for. (required).
+// - clientAccountId: The account ID of the client buyer to list users
+//   for. (required) You must specify either a string representation of
+//   a numerical account identifier or the `-` character to list all the
+//   client users for all the clients of a given sponsor buyer.
 func (r *AccountsClientsUsersService) List(accountId int64, clientAccountId string) *AccountsClientsUsersListCall {
 	c := &AccountsClientsUsersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7094,7 +7233,7 @@ func (c *AccountsClientsUsersListCall) Header() http.Header {
 
 func (c *AccountsClientsUsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7238,6 +7377,12 @@ type AccountsClientsUsersUpdateCall struct {
 
 // Update: Updates an existing client user. Only the user status can be
 // changed on update.
+//
+// - accountId: Numerical account ID of the client's sponsor buyer.
+//   (required).
+// - clientAccountId: Numerical account ID of the client buyer that the
+//   user to be retrieved is associated with. (required).
+// - userId: Numerical identifier of the user to retrieve. (required).
 func (r *AccountsClientsUsersService) Update(accountId int64, clientAccountId int64, userId int64, clientuser *ClientUser) *AccountsClientsUsersUpdateCall {
 	c := &AccountsClientsUsersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7274,7 +7419,7 @@ func (c *AccountsClientsUsersUpdateCall) Header() http.Header {
 
 func (c *AccountsClientsUsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7398,6 +7543,9 @@ type AccountsCreativesCreateCall struct {
 }
 
 // Create: Creates a creative.
+//
+// - accountId: The account that this creative belongs to. Can be used
+//   to filter the response of the creatives.list method.
 func (r *AccountsCreativesService) Create(accountId string, creative *Creative) *AccountsCreativesCreateCall {
 	c := &AccountsCreativesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7450,7 +7598,7 @@ func (c *AccountsCreativesCreateCall) Header() http.Header {
 
 func (c *AccountsCreativesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7569,6 +7717,9 @@ type AccountsCreativesGetCall struct {
 }
 
 // Get: Gets a creative.
+//
+// - accountId: The account the creative belongs to.
+// - creativeId: The ID of the creative to retrieve.
 func (r *AccountsCreativesService) Get(accountId string, creativeId string) *AccountsCreativesGetCall {
 	c := &AccountsCreativesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7613,7 +7764,7 @@ func (c *AccountsCreativesGetCall) Header() http.Header {
 
 func (c *AccountsCreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7721,6 +7872,9 @@ type AccountsCreativesListCall struct {
 }
 
 // List: Lists creatives.
+//
+// - accountId: The account to list the creatives from. Specify "-" to
+//   list all creatives the current user has access to.
 func (r *AccountsCreativesService) List(accountId string) *AccountsCreativesListCall {
 	c := &AccountsCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7799,7 +7953,7 @@ func (c *AccountsCreativesListCall) Header() http.Header {
 
 func (c *AccountsCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7938,6 +8092,10 @@ type AccountsCreativesStopWatchingCall struct {
 
 // StopWatching: Stops watching a creative. Will stop push notifications
 // being sent to the topics when the creative changes status.
+//
+// - accountId: The account of the creative to stop notifications for.
+// - creativeId: The creative ID of the creative to stop notifications
+//   for. Specify "-" to specify stopping account level notifications.
 func (r *AccountsCreativesService) StopWatching(accountId string, creativeId string, stopwatchingcreativerequest *StopWatchingCreativeRequest) *AccountsCreativesStopWatchingCall {
 	c := &AccountsCreativesStopWatchingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -7973,7 +8131,7 @@ func (c *AccountsCreativesStopWatchingCall) Header() http.Header {
 
 func (c *AccountsCreativesStopWatchingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8087,6 +8245,11 @@ type AccountsCreativesUpdateCall struct {
 }
 
 // Update: Updates a creative.
+//
+// - accountId: The account that this creative belongs to. Can be used
+//   to filter the response of the creatives.list method.
+// - creativeId: The buyer-defined creative ID of this creative. Can be
+//   used to filter the response of the creatives.list method.
 func (r *AccountsCreativesService) Update(accountId string, creativeId string, creative *Creative) *AccountsCreativesUpdateCall {
 	c := &AccountsCreativesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8122,7 +8285,7 @@ func (c *AccountsCreativesUpdateCall) Header() http.Header {
 
 func (c *AccountsCreativesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8237,6 +8400,13 @@ type AccountsCreativesWatchCall struct {
 
 // Watch: Watches a creative. Will result in push notifications being
 // sent to the topic when the creative changes status.
+//
+// - accountId: The account of the creative to watch.
+// - creativeId: The creative ID to watch for status changes. Specify
+//   "-" to watch all creatives under the above account. If both
+//   creative-level and account-level notifications are sent, only a
+//   single notification will be sent to the creative-level notification
+//   topic.
 func (r *AccountsCreativesService) Watch(accountId string, creativeId string, watchcreativerequest *WatchCreativeRequest) *AccountsCreativesWatchCall {
 	c := &AccountsCreativesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8272,7 +8442,7 @@ func (c *AccountsCreativesWatchCall) Header() http.Header {
 
 func (c *AccountsCreativesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8386,6 +8556,9 @@ type AccountsCreativesDealAssociationsAddCall struct {
 }
 
 // Add: Associate an existing deal with a creative.
+//
+// - accountId: The account the creative belongs to.
+// - creativeId: The ID of the creative associated with the deal.
 func (r *AccountsCreativesDealAssociationsService) Add(accountId string, creativeId string, adddealassociationrequest *AddDealAssociationRequest) *AccountsCreativesDealAssociationsAddCall {
 	c := &AccountsCreativesDealAssociationsAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8421,7 +8594,7 @@ func (c *AccountsCreativesDealAssociationsAddCall) Header() http.Header {
 
 func (c *AccountsCreativesDealAssociationsAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8535,6 +8708,11 @@ type AccountsCreativesDealAssociationsListCall struct {
 }
 
 // List: List all creative-deal associations.
+//
+// - accountId: The account to list the associations from. Specify "-"
+//   to list all creatives the current user has access to.
+// - creativeId: The creative ID to list the associations from. Specify
+//   "-" to list all creatives under the above account.
 func (r *AccountsCreativesDealAssociationsService) List(accountId string, creativeId string) *AccountsCreativesDealAssociationsListCall {
 	c := &AccountsCreativesDealAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8609,7 +8787,7 @@ func (c *AccountsCreativesDealAssociationsListCall) Header() http.Header {
 
 func (c *AccountsCreativesDealAssociationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8755,6 +8933,9 @@ type AccountsCreativesDealAssociationsRemoveCall struct {
 }
 
 // Remove: Remove the association between a deal and a creative.
+//
+// - accountId: The account the creative belongs to.
+// - creativeId: The ID of the creative associated with the deal.
 func (r *AccountsCreativesDealAssociationsService) Remove(accountId string, creativeId string, removedealassociationrequest *RemoveDealAssociationRequest) *AccountsCreativesDealAssociationsRemoveCall {
 	c := &AccountsCreativesDealAssociationsRemoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8790,7 +8971,7 @@ func (c *AccountsCreativesDealAssociationsRemoveCall) Header() http.Header {
 
 func (c *AccountsCreativesDealAssociationsRemoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8905,6 +9086,8 @@ type AccountsFinalizedProposalsListCall struct {
 // List: List finalized proposals, regardless if a proposal is being
 // renegotiated. A filter expression (PQL query) may be specified to
 // filter the results. The notes will not be returned.
+//
+// - accountId: Account ID of the buyer.
 func (r *AccountsFinalizedProposalsService) List(accountId string) *AccountsFinalizedProposalsListCall {
 	c := &AccountsFinalizedProposalsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8989,7 +9172,7 @@ func (c *AccountsFinalizedProposalsListCall) Header() http.Header {
 
 func (c *AccountsFinalizedProposalsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9129,6 +9312,324 @@ func (c *AccountsFinalizedProposalsListCall) Pages(ctx context.Context, f func(*
 	}
 }
 
+// method id "adexchangebuyer2.accounts.finalizedProposals.pause":
+
+type AccountsFinalizedProposalsPauseCall struct {
+	s                         *Service
+	accountId                 string
+	proposalId                string
+	pauseproposaldealsrequest *PauseProposalDealsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Pause: Update given deals to pause serving. This method will set the
+// `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to true
+// for all listed deals in the request. Currently, this method only
+// applies to PG and PD deals. For PA deals, please call
+// accounts.proposals.pause endpoint. It is a no-op to pause
+// already-paused deals. It is an error to call PauseProposalDeals for
+// deals which are not part of the proposal of proposal_id or which are
+// not finalized or renegotiating.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The proposal_id of the proposal containing the deals.
+func (r *AccountsFinalizedProposalsService) Pause(accountId string, proposalId string, pauseproposaldealsrequest *PauseProposalDealsRequest) *AccountsFinalizedProposalsPauseCall {
+	c := &AccountsFinalizedProposalsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.proposalId = proposalId
+	c.pauseproposaldealsrequest = pauseproposaldealsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsFinalizedProposalsPauseCall) Fields(s ...googleapi.Field) *AccountsFinalizedProposalsPauseCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsFinalizedProposalsPauseCall) Context(ctx context.Context) *AccountsFinalizedProposalsPauseCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsFinalizedProposalsPauseCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsFinalizedProposalsPauseCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pauseproposaldealsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:pause")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":  c.accountId,
+		"proposalId": c.proposalId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.accounts.finalizedProposals.pause" call.
+// Exactly one of *Proposal or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Proposal.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsFinalizedProposalsPauseCall) Do(opts ...googleapi.CallOption) (*Proposal, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Proposal{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update given deals to pause serving. This method will set the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to true for all listed deals in the request. Currently, this method only applies to PG and PD deals. For PA deals, please call accounts.proposals.pause endpoint. It is a no-op to pause already-paused deals. It is an error to call PauseProposalDeals for deals which are not part of the proposal of proposal_id or which are not finalized or renegotiating.",
+	//   "flatPath": "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:pause",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer2.accounts.finalizedProposals.pause",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "proposalId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID of the buyer.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "proposalId": {
+	//       "description": "The proposal_id of the proposal containing the deals.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:pause",
+	//   "request": {
+	//     "$ref": "PauseProposalDealsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Proposal"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer2.accounts.finalizedProposals.resume":
+
+type AccountsFinalizedProposalsResumeCall struct {
+	s                          *Service
+	accountId                  string
+	proposalId                 string
+	resumeproposaldealsrequest *ResumeProposalDealsRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Resume: Update given deals to resume serving. This method will set
+// the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to
+// false for all listed deals in the request. Currently, this method
+// only applies to PG and PD deals. For PA deals, please call
+// accounts.proposals.resume endpoint. It is a no-op to resume running
+// deals or deals paused by the other party. It is an error to call
+// ResumeProposalDeals for deals which are not part of the proposal of
+// proposal_id or which are not finalized or renegotiating.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The proposal_id of the proposal containing the deals.
+func (r *AccountsFinalizedProposalsService) Resume(accountId string, proposalId string, resumeproposaldealsrequest *ResumeProposalDealsRequest) *AccountsFinalizedProposalsResumeCall {
+	c := &AccountsFinalizedProposalsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.accountId = accountId
+	c.proposalId = proposalId
+	c.resumeproposaldealsrequest = resumeproposaldealsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsFinalizedProposalsResumeCall) Fields(s ...googleapi.Field) *AccountsFinalizedProposalsResumeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsFinalizedProposalsResumeCall) Context(ctx context.Context) *AccountsFinalizedProposalsResumeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsFinalizedProposalsResumeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsFinalizedProposalsResumeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resumeproposaldealsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:resume")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"accountId":  c.accountId,
+		"proposalId": c.proposalId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.accounts.finalizedProposals.resume" call.
+// Exactly one of *Proposal or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Proposal.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsFinalizedProposalsResumeCall) Do(opts ...googleapi.CallOption) (*Proposal, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Proposal{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update given deals to resume serving. This method will set the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to false for all listed deals in the request. Currently, this method only applies to PG and PD deals. For PA deals, please call accounts.proposals.resume endpoint. It is a no-op to resume running deals or deals paused by the other party. It is an error to call ResumeProposalDeals for deals which are not part of the proposal of proposal_id or which are not finalized or renegotiating.",
+	//   "flatPath": "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:resume",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer2.accounts.finalizedProposals.resume",
+	//   "parameterOrder": [
+	//     "accountId",
+	//     "proposalId"
+	//   ],
+	//   "parameters": {
+	//     "accountId": {
+	//       "description": "Account ID of the buyer.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "proposalId": {
+	//       "description": "The proposal_id of the proposal containing the deals.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:resume",
+	//   "request": {
+	//     "$ref": "ResumeProposalDealsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Proposal"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
 // method id "adexchangebuyer2.accounts.products.get":
 
 type AccountsProductsGetCall struct {
@@ -9142,6 +9643,9 @@ type AccountsProductsGetCall struct {
 }
 
 // Get: Gets the requested product by ID.
+//
+// - accountId: Account ID of the buyer.
+// - productId: The ID for the product to get the head revision for.
 func (r *AccountsProductsService) Get(accountId string, productId string) *AccountsProductsGetCall {
 	c := &AccountsProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9186,7 +9690,7 @@ func (c *AccountsProductsGetCall) Header() http.Header {
 
 func (c *AccountsProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9295,6 +9799,8 @@ type AccountsProductsListCall struct {
 
 // List: List all products visible to the buyer (optionally filtered by
 // the specified PQL query).
+//
+// - accountId: Account ID of the buyer.
 func (r *AccountsProductsService) List(accountId string) *AccountsProductsListCall {
 	c := &AccountsProductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9363,7 +9869,7 @@ func (c *AccountsProductsListCall) Header() http.Header {
 
 func (c *AccountsProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9507,6 +10013,9 @@ type AccountsProposalsAcceptCall struct {
 // `SELLER_ACCEPTED` to `FINALIZED`. Upon calling this endpoint, the
 // buyer implicitly agrees to the terms and conditions optionally set
 // within the proposal by the publisher.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The ID of the proposal to accept.
 func (r *AccountsProposalsService) Accept(accountId string, proposalId string, acceptproposalrequest *AcceptProposalRequest) *AccountsProposalsAcceptCall {
 	c := &AccountsProposalsAcceptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9542,7 +10051,7 @@ func (c *AccountsProposalsAcceptCall) Header() http.Header {
 
 func (c *AccountsProposalsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9658,6 +10167,9 @@ type AccountsProposalsAddNoteCall struct {
 // AddNote: Create a new note and attach it to the proposal. The note is
 // assigned a unique ID by the server. The proposal revision number will
 // not increase when associated with a new note.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The ID of the proposal to attach the note to.
 func (r *AccountsProposalsService) AddNote(accountId string, proposalId string, addnoterequest *AddNoteRequest) *AccountsProposalsAddNoteCall {
 	c := &AccountsProposalsAddNoteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9693,7 +10205,7 @@ func (c *AccountsProposalsAddNoteCall) Header() http.Header {
 
 func (c *AccountsProposalsAddNoteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9809,6 +10321,9 @@ type AccountsProposalsCancelNegotiationCall struct {
 // CancelNegotiation: Cancel an ongoing negotiation on a proposal. This
 // does not cancel or end serving for the deals if the proposal has been
 // finalized, but only cancels a negotiation unilaterally.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The ID of the proposal to cancel negotiation for.
 func (r *AccountsProposalsService) CancelNegotiation(accountId string, proposalId string, cancelnegotiationrequest *CancelNegotiationRequest) *AccountsProposalsCancelNegotiationCall {
 	c := &AccountsProposalsCancelNegotiationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9844,7 +10359,7 @@ func (c *AccountsProposalsCancelNegotiationCall) Header() http.Header {
 
 func (c *AccountsProposalsCancelNegotiationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9964,6 +10479,9 @@ type AccountsProposalsCompleteSetupCall struct {
 // This call updates the `is_setup_completed` bit on the proposal and
 // also notifies the seller. The server will advance the revision number
 // of the most recent proposal.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The ID of the proposal to mark as setup completed.
 func (r *AccountsProposalsService) CompleteSetup(accountId string, proposalId string, completesetuprequest *CompleteSetupRequest) *AccountsProposalsCompleteSetupCall {
 	c := &AccountsProposalsCompleteSetupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -9999,7 +10517,7 @@ func (c *AccountsProposalsCompleteSetupCall) Header() http.Header {
 
 func (c *AccountsProposalsCompleteSetupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10113,6 +10631,8 @@ type AccountsProposalsCreateCall struct {
 
 // Create: Create the given proposal. Each created proposal and any
 // deals it contains are assigned a unique ID by the server.
+//
+// - accountId: Account ID of the buyer.
 func (r *AccountsProposalsService) Create(accountId string, proposal *Proposal) *AccountsProposalsCreateCall {
 	c := &AccountsProposalsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10147,7 +10667,7 @@ func (c *AccountsProposalsCreateCall) Header() http.Header {
 
 func (c *AccountsProposalsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10254,6 +10774,9 @@ type AccountsProposalsGetCall struct {
 
 // Get: Gets a proposal given its ID. The proposal is returned at its
 // head revision.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The unique ID of the proposal.
 func (r *AccountsProposalsService) Get(accountId string, proposalId string) *AccountsProposalsGetCall {
 	c := &AccountsProposalsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10298,7 +10821,7 @@ func (c *AccountsProposalsGetCall) Header() http.Header {
 
 func (c *AccountsProposalsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10412,6 +10935,8 @@ type AccountsProposalsListCall struct {
 // differ from the usual behavior. A Bidder account can only see its
 // child seats' proposals by specifying the ChildSeat's accountId in the
 // request path.
+//
+// - accountId: Account ID of the buyer.
 func (r *AccountsProposalsService) List(accountId string) *AccountsProposalsListCall {
 	c := &AccountsProposalsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10496,7 +11021,7 @@ func (c *AccountsProposalsListCall) Header() http.Header {
 
 func (c *AccountsProposalsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10653,6 +11178,9 @@ type AccountsProposalsPauseCall struct {
 // true for all deals in the proposal. It is a no-op to pause an
 // already-paused proposal. It is an error to call PauseProposal for a
 // proposal that is not finalized or renegotiating.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The ID of the proposal to pause.
 func (r *AccountsProposalsService) Pause(accountId string, proposalId string, pauseproposalrequest *PauseProposalRequest) *AccountsProposalsPauseCall {
 	c := &AccountsProposalsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10688,7 +11216,7 @@ func (c *AccountsProposalsPauseCall) Header() http.Header {
 
 func (c *AccountsProposalsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10808,6 +11336,9 @@ type AccountsProposalsResumeCall struct {
 // the seller also resumes. It is a no-op to resume an already-running
 // proposal. It is an error to call ResumeProposal for a proposal that
 // is not finalized or renegotiating.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The ID of the proposal to resume.
 func (r *AccountsProposalsService) Resume(accountId string, proposalId string, resumeproposalrequest *ResumeProposalRequest) *AccountsProposalsResumeCall {
 	c := &AccountsProposalsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -10843,7 +11374,7 @@ func (c *AccountsProposalsResumeCall) Header() http.Header {
 
 func (c *AccountsProposalsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10967,6 +11498,9 @@ type AccountsProposalsUpdateCall struct {
 // passed-in copy. Any existing deals not present in the passed-in
 // proposal will be deleted. It is an error to pass in a deal with a
 // `deal_id` not present at head.
+//
+// - accountId: Account ID of the buyer.
+// - proposalId: The unique ID of the proposal.
 func (r *AccountsProposalsService) Update(accountId string, proposalId string, proposal *Proposal) *AccountsProposalsUpdateCall {
 	c := &AccountsProposalsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -11002,7 +11536,7 @@ func (c *AccountsProposalsUpdateCall) Header() http.Header {
 
 func (c *AccountsProposalsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11116,6 +11650,9 @@ type AccountsPublisherProfilesGetCall struct {
 }
 
 // Get: Gets the requested publisher profile by id.
+//
+// - accountId: Account ID of the buyer.
+// - publisherProfileId: The id for the publisher profile to get.
 func (r *AccountsPublisherProfilesService) Get(accountId string, publisherProfileId string) *AccountsPublisherProfilesGetCall {
 	c := &AccountsPublisherProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -11160,7 +11697,7 @@ func (c *AccountsPublisherProfilesGetCall) Header() http.Header {
 
 func (c *AccountsPublisherProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11268,6 +11805,8 @@ type AccountsPublisherProfilesListCall struct {
 }
 
 // List: List all publisher profiles visible to the buyer
+//
+// - accountId: Account ID of the buyer.
 func (r *AccountsPublisherProfilesService) List(accountId string) *AccountsPublisherProfilesListCall {
 	c := &AccountsPublisherProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -11325,7 +11864,7 @@ func (c *AccountsPublisherProfilesListCall) Header() http.Header {
 
 func (c *AccountsPublisherProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11458,6 +11997,13 @@ type BiddersAccountsFilterSetsCreateCall struct {
 
 // Create: Creates the specified filter set for the account with the
 // given account ID.
+//
+// - ownerName: Name of the owner (bidder or account) of the filter set
+//   to be created. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123` - For an account-level filter set for the
+//   buyer account representing bidder 123: `bidders/123/accounts/123` -
+//   For an account-level filter set for the child seat buyer account
+//   456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersAccountsFilterSetsService) Create(ownerName string, filterset *FilterSet) *BiddersAccountsFilterSetsCreateCall {
 	c := &BiddersAccountsFilterSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -11501,7 +12047,7 @@ func (c *BiddersAccountsFilterSetsCreateCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11612,6 +12158,14 @@ type BiddersAccountsFilterSetsDeleteCall struct {
 
 // Delete: Deletes the requested filter set from the account with the
 // given account ID.
+//
+// - name: Full name of the resource to delete. For example: - For a
+//   bidder-level filter set for bidder 123:
+//   `bidders/123/filterSets/abc` - For an account-level filter set for
+//   the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsService) Delete(name string) *BiddersAccountsFilterSetsDeleteCall {
 	c := &BiddersAccountsFilterSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11645,7 +12199,7 @@ func (c *BiddersAccountsFilterSetsDeleteCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11744,6 +12298,14 @@ type BiddersAccountsFilterSetsGetCall struct {
 
 // Get: Retrieves the requested filter set for the account with the
 // given account ID.
+//
+// - name: Full name of the resource being requested. For example: - For
+//   a bidder-level filter set for bidder 123:
+//   `bidders/123/filterSets/abc` - For an account-level filter set for
+//   the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsService) Get(name string) *BiddersAccountsFilterSetsGetCall {
 	c := &BiddersAccountsFilterSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11787,7 +12349,7 @@ func (c *BiddersAccountsFilterSetsGetCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11889,6 +12451,13 @@ type BiddersAccountsFilterSetsListCall struct {
 
 // List: Lists all filter sets for the account with the given account
 // ID.
+//
+// - ownerName: Name of the owner (bidder or account) of the filter sets
+//   to be listed. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123` - For an account-level filter set for the
+//   buyer account representing bidder 123: `bidders/123/accounts/123` -
+//   For an account-level filter set for the child seat buyer account
+//   456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersAccountsFilterSetsService) List(ownerName string) *BiddersAccountsFilterSetsListCall {
 	c := &BiddersAccountsFilterSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -11949,7 +12518,7 @@ func (c *BiddersAccountsFilterSetsListCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12082,6 +12651,14 @@ type BiddersAccountsFilterSetsBidMetricsListCall struct {
 }
 
 // List: Lists all metrics that are measured in terms of number of bids.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsBidMetricsService) List(filterSetName string) *BiddersAccountsFilterSetsBidMetricsListCall {
 	c := &BiddersAccountsFilterSetsBidMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -12142,7 +12719,7 @@ func (c *BiddersAccountsFilterSetsBidMetricsListCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsBidMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12276,6 +12853,14 @@ type BiddersAccountsFilterSetsBidResponseErrorsListCall struct {
 
 // List: List all errors that occurred in bid responses, with the number
 // of bid responses affected for each reason.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsBidResponseErrorsService) List(filterSetName string) *BiddersAccountsFilterSetsBidResponseErrorsListCall {
 	c := &BiddersAccountsFilterSetsBidResponseErrorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -12336,7 +12921,7 @@ func (c *BiddersAccountsFilterSetsBidResponseErrorsListCall) Header() http.Heade
 
 func (c *BiddersAccountsFilterSetsBidResponseErrorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12471,6 +13056,14 @@ type BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall struct {
 // List: List all reasons for which bid responses were considered to
 // have no applicable bids, with the number of bid responses affected
 // for each reason.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsBidResponsesWithoutBidsService) List(filterSetName string) *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall {
 	c := &BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -12532,7 +13125,7 @@ func (c *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall) Header() http
 
 func (c *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12668,6 +13261,14 @@ type BiddersAccountsFilterSetsFilteredBidRequestsListCall struct {
 // List: List all reasons that caused a bid request not to be sent for
 // an impression, with the number of bid requests not sent for each
 // reason.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidRequestsService) List(filterSetName string) *BiddersAccountsFilterSetsFilteredBidRequestsListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -12729,7 +13330,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidRequestsListCall) Header() http.Hea
 
 func (c *BiddersAccountsFilterSetsFilteredBidRequestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12863,6 +13464,14 @@ type BiddersAccountsFilterSetsFilteredBidsListCall struct {
 
 // List: List all reasons for which bids were filtered, with the number
 // of bids filtered for each reason.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidsService) List(filterSetName string) *BiddersAccountsFilterSetsFilteredBidsListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -12923,7 +13532,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsListCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsFilteredBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13059,6 +13668,17 @@ type BiddersAccountsFilterSetsFilteredBidsCreativesListCall struct {
 // List: List all creatives associated with a specific reason for which
 // bids were filtered, with the number of bids filtered for each
 // creative.
+//
+// - creativeStatusId: The ID of the creative status for which to
+//   retrieve a breakdown by creative. See creative-status-codes
+//   (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidsCreativesService) List(filterSetName string, creativeStatusId int64) *BiddersAccountsFilterSetsFilteredBidsCreativesListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidsCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13121,7 +13741,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsCreativesListCall) Header() http.H
 
 func (c *BiddersAccountsFilterSetsFilteredBidsCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13267,6 +13887,19 @@ type BiddersAccountsFilterSetsFilteredBidsDetailsListCall struct {
 
 // List: List all details associated with a specific reason for which
 // bids were filtered, with the number of bids filtered for each detail.
+//
+// - creativeStatusId: The ID of the creative status for which to
+//   retrieve a breakdown by detail. See creative-status-codes
+//   (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+//   Details are only available for statuses 10, 14, 15, 17, 18, 19, 86,
+//   and 87.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsFilteredBidsDetailsService) List(filterSetName string, creativeStatusId int64) *BiddersAccountsFilterSetsFilteredBidsDetailsListCall {
 	c := &BiddersAccountsFilterSetsFilteredBidsDetailsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13329,7 +13962,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsDetailsListCall) Header() http.Hea
 
 func (c *BiddersAccountsFilterSetsFilteredBidsDetailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13474,6 +14107,14 @@ type BiddersAccountsFilterSetsImpressionMetricsListCall struct {
 
 // List: Lists all metrics that are measured in terms of number of
 // impressions.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsImpressionMetricsService) List(filterSetName string) *BiddersAccountsFilterSetsImpressionMetricsListCall {
 	c := &BiddersAccountsFilterSetsImpressionMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13534,7 +14175,7 @@ func (c *BiddersAccountsFilterSetsImpressionMetricsListCall) Header() http.Heade
 
 func (c *BiddersAccountsFilterSetsImpressionMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13668,6 +14309,14 @@ type BiddersAccountsFilterSetsLosingBidsListCall struct {
 
 // List: List all reasons for which bids lost in the auction, with the
 // number of bids that lost for each reason.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsLosingBidsService) List(filterSetName string) *BiddersAccountsFilterSetsLosingBidsListCall {
 	c := &BiddersAccountsFilterSetsLosingBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13728,7 +14377,7 @@ func (c *BiddersAccountsFilterSetsLosingBidsListCall) Header() http.Header {
 
 func (c *BiddersAccountsFilterSetsLosingBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13862,6 +14511,14 @@ type BiddersAccountsFilterSetsNonBillableWinningBidsListCall struct {
 
 // List: List all reasons for which winning bids were not billable, with
 // the number of bids not billed for each reason.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersAccountsFilterSetsNonBillableWinningBidsService) List(filterSetName string) *BiddersAccountsFilterSetsNonBillableWinningBidsListCall {
 	c := &BiddersAccountsFilterSetsNonBillableWinningBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -13923,7 +14580,7 @@ func (c *BiddersAccountsFilterSetsNonBillableWinningBidsListCall) Header() http.
 
 func (c *BiddersAccountsFilterSetsNonBillableWinningBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14058,6 +14715,13 @@ type BiddersFilterSetsCreateCall struct {
 
 // Create: Creates the specified filter set for the account with the
 // given account ID.
+//
+// - ownerName: Name of the owner (bidder or account) of the filter set
+//   to be created. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123` - For an account-level filter set for the
+//   buyer account representing bidder 123: `bidders/123/accounts/123` -
+//   For an account-level filter set for the child seat buyer account
+//   456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersFilterSetsService) Create(ownerName string, filterset *FilterSet) *BiddersFilterSetsCreateCall {
 	c := &BiddersFilterSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -14101,7 +14765,7 @@ func (c *BiddersFilterSetsCreateCall) Header() http.Header {
 
 func (c *BiddersFilterSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14212,6 +14876,14 @@ type BiddersFilterSetsDeleteCall struct {
 
 // Delete: Deletes the requested filter set from the account with the
 // given account ID.
+//
+// - name: Full name of the resource to delete. For example: - For a
+//   bidder-level filter set for bidder 123:
+//   `bidders/123/filterSets/abc` - For an account-level filter set for
+//   the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsService) Delete(name string) *BiddersFilterSetsDeleteCall {
 	c := &BiddersFilterSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14245,7 +14917,7 @@ func (c *BiddersFilterSetsDeleteCall) Header() http.Header {
 
 func (c *BiddersFilterSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14344,6 +15016,14 @@ type BiddersFilterSetsGetCall struct {
 
 // Get: Retrieves the requested filter set for the account with the
 // given account ID.
+//
+// - name: Full name of the resource being requested. For example: - For
+//   a bidder-level filter set for bidder 123:
+//   `bidders/123/filterSets/abc` - For an account-level filter set for
+//   the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsService) Get(name string) *BiddersFilterSetsGetCall {
 	c := &BiddersFilterSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14387,7 +15067,7 @@ func (c *BiddersFilterSetsGetCall) Header() http.Header {
 
 func (c *BiddersFilterSetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14489,6 +15169,13 @@ type BiddersFilterSetsListCall struct {
 
 // List: Lists all filter sets for the account with the given account
 // ID.
+//
+// - ownerName: Name of the owner (bidder or account) of the filter sets
+//   to be listed. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123` - For an account-level filter set for the
+//   buyer account representing bidder 123: `bidders/123/accounts/123` -
+//   For an account-level filter set for the child seat buyer account
+//   456 whose bidder is 123: `bidders/123/accounts/456`.
 func (r *BiddersFilterSetsService) List(ownerName string) *BiddersFilterSetsListCall {
 	c := &BiddersFilterSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
@@ -14549,7 +15236,7 @@ func (c *BiddersFilterSetsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14682,6 +15369,14 @@ type BiddersFilterSetsBidMetricsListCall struct {
 }
 
 // List: Lists all metrics that are measured in terms of number of bids.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsBidMetricsService) List(filterSetName string) *BiddersFilterSetsBidMetricsListCall {
 	c := &BiddersFilterSetsBidMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -14742,7 +15437,7 @@ func (c *BiddersFilterSetsBidMetricsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsBidMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14876,6 +15571,14 @@ type BiddersFilterSetsBidResponseErrorsListCall struct {
 
 // List: List all errors that occurred in bid responses, with the number
 // of bid responses affected for each reason.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsBidResponseErrorsService) List(filterSetName string) *BiddersFilterSetsBidResponseErrorsListCall {
 	c := &BiddersFilterSetsBidResponseErrorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -14936,7 +15639,7 @@ func (c *BiddersFilterSetsBidResponseErrorsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsBidResponseErrorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15071,6 +15774,14 @@ type BiddersFilterSetsBidResponsesWithoutBidsListCall struct {
 // List: List all reasons for which bid responses were considered to
 // have no applicable bids, with the number of bid responses affected
 // for each reason.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsBidResponsesWithoutBidsService) List(filterSetName string) *BiddersFilterSetsBidResponsesWithoutBidsListCall {
 	c := &BiddersFilterSetsBidResponsesWithoutBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15132,7 +15843,7 @@ func (c *BiddersFilterSetsBidResponsesWithoutBidsListCall) Header() http.Header 
 
 func (c *BiddersFilterSetsBidResponsesWithoutBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15268,6 +15979,14 @@ type BiddersFilterSetsFilteredBidRequestsListCall struct {
 // List: List all reasons that caused a bid request not to be sent for
 // an impression, with the number of bid requests not sent for each
 // reason.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidRequestsService) List(filterSetName string) *BiddersFilterSetsFilteredBidRequestsListCall {
 	c := &BiddersFilterSetsFilteredBidRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15329,7 +16048,7 @@ func (c *BiddersFilterSetsFilteredBidRequestsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsFilteredBidRequestsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15463,6 +16182,14 @@ type BiddersFilterSetsFilteredBidsListCall struct {
 
 // List: List all reasons for which bids were filtered, with the number
 // of bids filtered for each reason.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidsService) List(filterSetName string) *BiddersFilterSetsFilteredBidsListCall {
 	c := &BiddersFilterSetsFilteredBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15523,7 +16250,7 @@ func (c *BiddersFilterSetsFilteredBidsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsFilteredBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15659,6 +16386,17 @@ type BiddersFilterSetsFilteredBidsCreativesListCall struct {
 // List: List all creatives associated with a specific reason for which
 // bids were filtered, with the number of bids filtered for each
 // creative.
+//
+// - creativeStatusId: The ID of the creative status for which to
+//   retrieve a breakdown by creative. See creative-status-codes
+//   (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidsCreativesService) List(filterSetName string, creativeStatusId int64) *BiddersFilterSetsFilteredBidsCreativesListCall {
 	c := &BiddersFilterSetsFilteredBidsCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15721,7 +16459,7 @@ func (c *BiddersFilterSetsFilteredBidsCreativesListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsFilteredBidsCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15867,6 +16605,19 @@ type BiddersFilterSetsFilteredBidsDetailsListCall struct {
 
 // List: List all details associated with a specific reason for which
 // bids were filtered, with the number of bids filtered for each detail.
+//
+// - creativeStatusId: The ID of the creative status for which to
+//   retrieve a breakdown by detail. See creative-status-codes
+//   (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+//   Details are only available for statuses 10, 14, 15, 17, 18, 19, 86,
+//   and 87.
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsFilteredBidsDetailsService) List(filterSetName string, creativeStatusId int64) *BiddersFilterSetsFilteredBidsDetailsListCall {
 	c := &BiddersFilterSetsFilteredBidsDetailsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -15929,7 +16680,7 @@ func (c *BiddersFilterSetsFilteredBidsDetailsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsFilteredBidsDetailsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16074,6 +16825,14 @@ type BiddersFilterSetsImpressionMetricsListCall struct {
 
 // List: Lists all metrics that are measured in terms of number of
 // impressions.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsImpressionMetricsService) List(filterSetName string) *BiddersFilterSetsImpressionMetricsListCall {
 	c := &BiddersFilterSetsImpressionMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16134,7 +16893,7 @@ func (c *BiddersFilterSetsImpressionMetricsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsImpressionMetricsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16268,6 +17027,14 @@ type BiddersFilterSetsLosingBidsListCall struct {
 
 // List: List all reasons for which bids lost in the auction, with the
 // number of bids that lost for each reason.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsLosingBidsService) List(filterSetName string) *BiddersFilterSetsLosingBidsListCall {
 	c := &BiddersFilterSetsLosingBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16328,7 +17095,7 @@ func (c *BiddersFilterSetsLosingBidsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsLosingBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16462,6 +17229,14 @@ type BiddersFilterSetsNonBillableWinningBidsListCall struct {
 
 // List: List all reasons for which winning bids were not billable, with
 // the number of bids not billed for each reason.
+//
+// - filterSetName: Name of the filter set that should be applied to the
+//   requested metrics. For example: - For a bidder-level filter set for
+//   bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//   filter set for the buyer account representing bidder 123:
+//   `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//   filter set for the child seat buyer account 456 whose bidder is
+//   123: `bidders/123/accounts/456/filterSets/abc`.
 func (r *BiddersFilterSetsNonBillableWinningBidsService) List(filterSetName string) *BiddersFilterSetsNonBillableWinningBidsListCall {
 	c := &BiddersFilterSetsNonBillableWinningBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filterSetName = filterSetName
@@ -16523,7 +17298,7 @@ func (c *BiddersFilterSetsNonBillableWinningBidsListCall) Header() http.Header {
 
 func (c *BiddersFilterSetsNonBillableWinningBidsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -79,7 +79,8 @@ const mtlsBasePath = "https://run.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -330,10 +331,10 @@ type Addressable struct {
 
 	// ForceSendFields is a list of field names (e.g. "Url") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Url") to include in API
@@ -381,10 +382,10 @@ type AuditConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuditLogConfigs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuditLogConfigs") to
@@ -426,10 +427,10 @@ type AuditLogConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExemptedMembers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExemptedMembers") to
@@ -464,10 +465,10 @@ type AuthorizedDomain struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -537,10 +538,10 @@ type Binding struct {
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Condition") to include in
@@ -558,29 +559,26 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConfigMapEnvSource: Cloud Run fully managed: not supported Cloud Run
-// for Anthos: supported ConfigMapEnvSource selects a ConfigMap to
-// populate the environment variables with. The contents of the target
-// ConfigMap's Data field will represent the key-value pairs as
-// environment variables.
+// ConfigMapEnvSource: Not supported by Cloud Run ConfigMapEnvSource
+// selects a ConfigMap to populate the environment variables with. The
+// contents of the target ConfigMap's Data field will represent the
+// key-value pairs as environment variables.
 type ConfigMapEnvSource struct {
 	// LocalObjectReference: This field should not be used directly as it is
 	// meant to be inlined directly into the message. Use the "name" field
 	// instead.
 	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The ConfigMap to select from.
+	// Name: The ConfigMap to select from.
 	Name string `json:"name,omitempty"`
 
-	// Optional: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Specify whether the ConfigMap must be defined
+	// Optional: (Optional) Specify whether the ConfigMap must be defined
 	Optional bool `json:"optional,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "LocalObjectReference") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -602,11 +600,10 @@ func (s *ConfigMapEnvSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConfigMapKeySelector: Cloud Run fully managed: not supported Cloud
-// Run for Anthos: supported Selects a key from a ConfigMap.
+// ConfigMapKeySelector: Not supported by Cloud Run Selects a key from a
+// ConfigMap.
 type ConfigMapKeySelector struct {
-	// Key: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The key to select.
+	// Key: The key to select.
 	Key string `json:"key,omitempty"`
 
 	// LocalObjectReference: This field should not be used directly as it is
@@ -614,21 +611,19 @@ type ConfigMapKeySelector struct {
 	// instead.
 	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The ConfigMap to select from.
+	// Name: The ConfigMap to select from.
 	Name string `json:"name,omitempty"`
 
-	// Optional: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Specify whether the ConfigMap or its key must
-	// be defined
+	// Optional: (Optional) Specify whether the ConfigMap or its key must be
+	// defined
 	Optional bool `json:"optional,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -646,46 +641,41 @@ func (s *ConfigMapKeySelector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConfigMapVolumeSource: Cloud Run fully managed: not supported Cloud
-// Run for Anthos: supported Adapts a ConfigMap into a volume. The
-// contents of the target ConfigMap's Data field will be presented in a
-// volume as files using the keys in the Data field as the file names,
-// unless the items element is populated with specific mappings of keys
-// to paths.
+// ConfigMapVolumeSource: Not supported by Cloud Run Adapts a ConfigMap
+// into a volume. The contents of the target ConfigMap's Data field will
+// be presented in a volume as files using the keys in the Data field as
+// the file names, unless the items element is populated with specific
+// mappings of keys to paths.
 type ConfigMapVolumeSource struct {
-	// DefaultMode: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Mode bits to use on created files by
-	// default. Must be a value between 0 and 0777. Defaults to 0644.
-	// Directories within the path are not affected by this setting. This
-	// might be in conflict with other options that affect the file mode,
-	// like fsGroup, and the result can be other mode bits set.
+	// DefaultMode: (Optional) Mode bits to use on created files by default.
+	// Must be a value between 0 and 0777. Defaults to 0644. Directories
+	// within the path are not affected by this setting. This might be in
+	// conflict with other options that affect the file mode, like fsGroup,
+	// and the result can be other mode bits set.
 	DefaultMode int64 `json:"defaultMode,omitempty"`
 
-	// Items: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported If unspecified, each key-value pair in the Data
+	// Items: (Optional) If unspecified, each key-value pair in the Data
 	// field of the referenced Secret will be projected into the volume as a
 	// file whose name is the key and content is the value. If specified,
 	// the listed keys will be projected into the specified paths, and
-	// unlisted keys will not be present. If a key is specified which is not
+	// unlisted keys will not be present. If a key is specified that is not
 	// present in the Secret, the volume setup will error unless it is
 	// marked optional.
 	Items []*KeyToPath `json:"items,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported Name of the config.
+	// Name: Name of the config.
 	Name string `json:"name,omitempty"`
 
-	// Optional: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Specify whether the Secret or its keys must be
+	// Optional: (Optional) Specify whether the Secret or its keys must be
 	// defined.
 	Optional bool `json:"optional,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DefaultMode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DefaultMode") to include
@@ -709,7 +699,7 @@ func (s *ConfigMapVolumeSource) MarshalJSON() ([]byte, error) {
 // the Configuration's spec. The "latest created" revision's name is
 // available under status, as is the "latest ready" revision's name. See
 // also:
-// https://github.com/knative/serving/blob/master/docs/spec/overview.md#configuration
+// https://github.com/knative/serving/blob/main/docs/spec/overview.md#configuration
 type Configuration struct {
 	// ApiVersion: The API version for this call such as
 	// "serving.knative.dev/v1".
@@ -736,10 +726,10 @@ type Configuration struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApiVersion") to include in
@@ -766,10 +756,10 @@ type ConfigurationSpec struct {
 
 	// ForceSendFields is a list of field names (e.g. "Template") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Template") to include in
@@ -816,10 +806,10 @@ type ConfigurationStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "Conditions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Conditions") to include in
@@ -842,8 +832,7 @@ func (s *ConfigurationStatus) MarshalJSON() ([]byte, error) {
 // arguments to supply to it. Note that additional arguments may be
 // supplied by the system to the container at runtime.
 type Container struct {
-	// Args: (Optional) Cloud Run fully managed: supported Cloud Run for
-	// Anthos: supported Arguments to the entrypoint. The docker image's CMD
+	// Args: (Optional) Arguments to the entrypoint. The docker image's CMD
 	// is used if this is not provided. Variable references $(VAR_NAME) are
 	// expanded using the container's environment. If a variable cannot be
 	// resolved, the reference in the input string will be unchanged. The
@@ -855,41 +844,38 @@ type Container struct {
 
 	Command []string `json:"command,omitempty"`
 
-	// Env: (Optional) Cloud Run fully managed: supported Cloud Run for
-	// Anthos: supported List of environment variables to set in the
+	// Env: (Optional) List of environment variables to set in the
 	// container.
 	Env []*EnvVar `json:"env,omitempty"`
 
-	// EnvFrom: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported List of sources to populate environment
-	// variables in the container. The keys defined within a source must be
-	// a C_IDENTIFIER. All invalid keys will be reported as an event when
-	// the container is starting. When a key exists in multiple sources, the
+	// EnvFrom: (Optional) List of sources to populate environment variables
+	// in the container. The keys defined within a source must be a
+	// C_IDENTIFIER. All invalid keys will be reported as an event when the
+	// container is starting. When a key exists in multiple sources, the
 	// value associated with the last source will take precedence. Values
 	// defined by an Env with a duplicate key will take precedence. Cannot
 	// be updated.
 	EnvFrom []*EnvFromSource `json:"envFrom,omitempty"`
 
-	// Image: Cloud Run fully managed: only supports containers from Google
-	// Container Registry Cloud Run for Anthos: supported URL of the
-	// Container image. More info:
+	// Image: Only supports containers from Google Container Registry or
+	// Artifact Registry URL of the Container image. More info:
 	// https://kubernetes.io/docs/concepts/containers/images
 	Image string `json:"image,omitempty"`
 
-	// ImagePullPolicy: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Image pull policy. One of Always,
-	// Never, IfNotPresent. Defaults to Always if :latest tag is specified,
-	// or IfNotPresent otherwise. More info:
+	// ImagePullPolicy: (Optional) Image pull policy. One of Always, Never,
+	// IfNotPresent. Defaults to Always if :latest tag is specified, or
+	// IfNotPresent otherwise. More info:
 	// https://kubernetes.io/docs/concepts/containers/images#updating-images
 	ImagePullPolicy string `json:"imagePullPolicy,omitempty"`
 
-	// LivenessProbe: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Periodic probe of container liveness.
+	// LivenessProbe: (Optional) Periodic probe of container liveness.
 	// Container will be restarted if the probe fails. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	LivenessProbe *Probe `json:"livenessProbe,omitempty"`
 
 	// Name: (Optional) Name of the container specified as a DNS_LABEL.
+	// Currently unused in Cloud Run. More info:
+	// https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#dns-label-names
 	Name string `json:"name,omitempty"`
 
 	// Ports: (Optional) List of ports to expose from the container. Only a
@@ -899,41 +885,43 @@ type Container struct {
 	// through the PORT environment variable for the container to listen on.
 	Ports []*ContainerPort `json:"ports,omitempty"`
 
-	// ReadinessProbe: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Periodic probe of container service
+	// ReadinessProbe: (Optional) Periodic probe of container service
 	// readiness. Container will be removed from service endpoints if the
 	// probe fails. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	ReadinessProbe *Probe `json:"readinessProbe,omitempty"`
 
-	// Resources: (Optional) Cloud Run fully managed: supported Cloud Run
-	// for Anthos: supported Compute Resources required by this container.
+	// Resources: (Optional) Compute Resources required by this container.
 	// More info:
 	// https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
 	Resources *ResourceRequirements `json:"resources,omitempty"`
 
-	// SecurityContext: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Security options the pod should run
-	// with. More info:
+	// SecurityContext: (Optional) Security options the pod should run with.
+	// More info:
 	// https://kubernetes.io/docs/concepts/policy/security-context/ More
 	// info:
 	// https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 	SecurityContext *SecurityContext `json:"securityContext,omitempty"`
 
-	// TerminationMessagePath: (Optional) Cloud Run fully managed: not
-	// supported Cloud Run for Anthos: supported Path at which the file to
-	// which the container's termination message will be written is mounted
-	// into the container's filesystem. Message written is intended to be
-	// brief final status, such as an assertion failure message. Will be
-	// truncated by the node if greater than 4096 bytes. The total message
-	// length across all containers will be limited to 12kb. Defaults to
+	// StartupProbe: (Optional) Startup probe of application within the
+	// container. All other probes are disabled if a startup probe is
+	// provided, until it succeeds. Container will not be added to service
+	// endpoints if the probe fails. More info:
+	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
+	StartupProbe *Probe `json:"startupProbe,omitempty"`
+
+	// TerminationMessagePath: (Optional) Path at which the file to which
+	// the container's termination message will be written is mounted into
+	// the container's filesystem. Message written is intended to be brief
+	// final status, such as an assertion failure message. Will be truncated
+	// by the node if greater than 4096 bytes. The total message length
+	// across all containers will be limited to 12kb. Defaults to
 	// /dev/termination-log.
 	TerminationMessagePath string `json:"terminationMessagePath,omitempty"`
 
-	// TerminationMessagePolicy: (Optional) Cloud Run fully managed: not
-	// supported Cloud Run for Anthos: supported Indicate how the
-	// termination message should be populated. File will use the contents
-	// of terminationMessagePath to populate the container status message on
+	// TerminationMessagePolicy: (Optional) Indicate how the termination
+	// message should be populated. File will use the contents of
+	// terminationMessagePath to populate the container status message on
 	// both success and failure. FallbackToLogsOnError will use the last
 	// chunk of container log output if the termination message file is
 	// empty and the container exited with an error. The log output is
@@ -941,23 +929,22 @@ type Container struct {
 	// File. Cannot be updated.
 	TerminationMessagePolicy string `json:"terminationMessagePolicy,omitempty"`
 
-	// VolumeMounts: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Pod volumes to mount into the container's
-	// filesystem.
+	// VolumeMounts: (Optional) Volume to mount into the container's
+	// filesystem. Only supports SecretVolumeSources. Pod volumes to mount
+	// into the container's filesystem.
 	VolumeMounts []*VolumeMount `json:"volumeMounts,omitempty"`
 
-	// WorkingDir: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Container's working directory. If not
+	// WorkingDir: (Optional) Container's working directory. If not
 	// specified, the container runtime's default will be used, which might
 	// be configured in the container image.
 	WorkingDir string `json:"workingDir,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Args") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Args") to include in API
@@ -982,22 +969,20 @@ type ContainerPort struct {
 	// must be a valid port number, 0 < x < 65536.
 	ContainerPort int64 `json:"containerPort,omitempty"`
 
-	// Name: (Optional) Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported If specified, used to specify which protocol to
-	// use. Allowed values are "http1" and "h2c".
+	// Name: (Optional) If specified, used to specify which protocol to use.
+	// Allowed values are "http1" and "h2c".
 	Name string `json:"name,omitempty"`
 
-	// Protocol: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Protocol for port. Must be "TCP". Defaults to
+	// Protocol: (Optional) Protocol for port. Must be "TCP". Defaults to
 	// "TCP".
 	Protocol string `json:"protocol,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContainerPort") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContainerPort") to include
@@ -1040,10 +1025,10 @@ type DomainMapping struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApiVersion") to include in
@@ -1084,10 +1069,10 @@ type DomainMappingSpec struct {
 
 	// ForceSendFields is a list of field names (e.g. "CertificateMode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CertificateMode") to
@@ -1129,17 +1114,17 @@ type DomainMappingStatus struct {
 	// mapping.
 	ResourceRecords []*ResourceRecord `json:"resourceRecords,omitempty"`
 
-	// Url: Cloud Run fully managed: not supported Cloud Run on GKE:
-	// supported Holds the URL that will serve the traffic of the
-	// DomainMapping. +optional
+	// Url: Optional. Cloud Run fully managed: not supported Cloud Run on
+	// GKE: supported Holds the URL that will serve the traffic of the
+	// DomainMapping.
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Conditions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Conditions") to include in
@@ -1157,29 +1142,25 @@ func (s *DomainMappingStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// EnvFromSource: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported EnvFromSource represents the source of a set of
-// ConfigMaps
+// EnvFromSource: Not supported by Cloud Run EnvFromSource represents
+// the source of a set of ConfigMaps
 type EnvFromSource struct {
-	// ConfigMapRef: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported The ConfigMap to select from
+	// ConfigMapRef: (Optional) The ConfigMap to select from
 	ConfigMapRef *ConfigMapEnvSource `json:"configMapRef,omitempty"`
 
-	// Prefix: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported An optional identifier to prepend to each key
-	// in the ConfigMap. Must be a C_IDENTIFIER.
+	// Prefix: (Optional) An optional identifier to prepend to each key in
+	// the ConfigMap. Must be a C_IDENTIFIER.
 	Prefix string `json:"prefix,omitempty"`
 
-	// SecretRef: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported The Secret to select from
+	// SecretRef: (Optional) The Secret to select from
 	SecretRef *SecretEnvSource `json:"secretRef,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConfigMapRef") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ConfigMapRef") to include
@@ -1212,17 +1193,17 @@ type EnvVar struct {
 	// exists or not. Defaults to "".
 	Value string `json:"value,omitempty"`
 
-	// ValueFrom: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Source for the environment variable's
+	// ValueFrom: (Optional) Source for the environment variable's value.
+	// Only supports secret_key_ref. Source for the environment variable's
 	// value. Cannot be used if value is not empty.
 	ValueFrom *EnvVarSource `json:"valueFrom,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -1240,25 +1221,23 @@ func (s *EnvVar) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// EnvVarSource: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported EnvVarSource represents a source for the value of
-// an EnvVar.
+// EnvVarSource: EnvVarSource represents a source for the value of an
+// EnvVar.
 type EnvVarSource struct {
-	// ConfigMapKeyRef: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Selects a key of a ConfigMap.
+	// ConfigMapKeyRef: (Optional) Not supported by Cloud Run Selects a key
+	// of a ConfigMap.
 	ConfigMapKeyRef *ConfigMapKeySelector `json:"configMapKeyRef,omitempty"`
 
-	// SecretKeyRef: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Selects a key of a secret in the pod's
-	// namespace
+	// SecretKeyRef: (Optional) Selects a key (version) of a secret in
+	// Secret Manager.
 	SecretKeyRef *SecretKeySelector `json:"secretKeyRef,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConfigMapKeyRef") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ConfigMapKeyRef") to
@@ -1277,25 +1256,24 @@ func (s *EnvVarSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ExecAction: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported ExecAction describes a "run in container" action.
+// ExecAction: Not supported by Cloud Run ExecAction describes a "run in
+// container" action.
 type ExecAction struct {
-	// Command: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Command is the command line to execute inside
-	// the container, the working directory for the command is root ('/') in
-	// the container's filesystem. The command is simply exec'd, it is not
-	// run inside a shell, so traditional shell instructions ('|', etc)
-	// won't work. To use a shell, you need to explicitly call out to that
-	// shell. Exit status of 0 is treated as live/healthy and non-zero is
+	// Command: (Optional) Command is the command line to execute inside the
+	// container, the working directory for the command is root ('/') in the
+	// container's filesystem. The command is simply exec'd, it is not run
+	// inside a shell, so traditional shell instructions ('|', etc) won't
+	// work. To use a shell, you need to explicitly call out to that shell.
+	// Exit status of 0 is treated as live/healthy and non-zero is
 	// unhealthy.
 	Command []string `json:"command,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Command") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Command") to include in
@@ -1352,10 +1330,10 @@ type Expr struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -1397,17 +1375,17 @@ type GoogleCloudRunV1Condition struct {
 
 	// Type: type is used to communicate the status of the reconciliation
 	// process. See also:
-	// https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting
+	// https://github.com/knative/serving/blob/main/docs/spec/errors.md#error-conditions-and-reporting
 	// Types common to all resources include: * "Ready": True when the
 	// Resource is ready.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LastTransitionTime")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LastTransitionTime") to
@@ -1426,35 +1404,30 @@ func (s *GoogleCloudRunV1Condition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HTTPGetAction: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported HTTPGetAction describes an action based on HTTP Get
-// requests.
+// HTTPGetAction: Not supported by Cloud Run HTTPGetAction describes an
+// action based on HTTP Get requests.
 type HTTPGetAction struct {
-	// Host: (Optional) Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Host name to connect to, defaults to the pod IP.
-	// You probably want to set "Host" in httpHeaders instead.
+	// Host: (Optional) Host name to connect to, defaults to the pod IP. You
+	// probably want to set "Host" in httpHeaders instead.
 	Host string `json:"host,omitempty"`
 
-	// HttpHeaders: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Custom headers to set in the request. HTTP
+	// HttpHeaders: (Optional) Custom headers to set in the request. HTTP
 	// allows repeated headers.
 	HttpHeaders []*HTTPHeader `json:"httpHeaders,omitempty"`
 
-	// Path: (Optional) Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Path to access on the HTTP server.
+	// Path: (Optional) Path to access on the HTTP server.
 	Path string `json:"path,omitempty"`
 
-	// Scheme: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Scheme to use for connecting to the host.
-	// Defaults to HTTP.
+	// Scheme: (Optional) Scheme to use for connecting to the host. Defaults
+	// to HTTP.
 	Scheme string `json:"scheme,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Host") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Host") to include in API
@@ -1472,24 +1445,21 @@ func (s *HTTPGetAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HTTPHeader: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported HTTPHeader describes a custom header to be used in
-// HTTP probes
+// HTTPHeader: Not supported by Cloud Run HTTPHeader describes a custom
+// header to be used in HTTP probes
 type HTTPHeader struct {
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The header field name
+	// Name: The header field name
 	Name string `json:"name,omitempty"`
 
-	// Value: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The header field value
+	// Value: The header field value
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -1507,32 +1477,30 @@ func (s *HTTPHeader) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// KeyToPath: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported Maps a string key to a path within a volume.
+// KeyToPath: Maps a string key to a path within a volume.
 type KeyToPath struct {
-	// Key: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The key to project.
+	// Key: The Cloud Secret Manager secret version. Can be 'latest' for the
+	// latest value or an integer for a specific version. The key to
+	// project.
 	Key string `json:"key,omitempty"`
 
-	// Mode: (Optional) Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Mode bits to use on this file, must be a value
+	// Mode: (Optional) Mode bits to use on this file, must be a value
 	// between 0000 and 0777. If not specified, the volume defaultMode will
 	// be used. This might be in conflict with other options that affect the
 	// file mode, like fsGroup, and the result can be other mode bits set.
 	Mode int64 `json:"mode,omitempty"`
 
-	// Path: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The relative path of the file to map the key to. May not be
-	// an absolute path. May not contain the path element '..'. May not
-	// start with the string '..'.
+	// Path: The relative path of the file to map the key to. May not be an
+	// absolute path. May not contain the path element '..'. May not start
+	// with the string '..'.
 	Path string `json:"path,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -1565,10 +1533,10 @@ type ListAuthorizedDomainsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Domains") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Domains") to include in
@@ -1611,10 +1579,10 @@ type ListConfigurationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApiVersion") to include in
@@ -1657,10 +1625,10 @@ type ListDomainMappingsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApiVersion") to include in
@@ -1694,10 +1662,10 @@ type ListLocationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Locations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Locations") to include in
@@ -1744,10 +1712,10 @@ type ListMeta struct {
 
 	// ForceSendFields is a list of field names (e.g. "Continue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Continue") to include in
@@ -1790,10 +1758,10 @@ type ListRevisionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApiVersion") to include in
@@ -1835,10 +1803,10 @@ type ListRoutesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApiVersion") to include in
@@ -1880,10 +1848,10 @@ type ListServicesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApiVersion") to include in
@@ -1901,22 +1869,20 @@ func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// LocalObjectReference: Cloud Run fully managed: not supported Cloud
-// Run for Anthos: supported LocalObjectReference contains enough
-// information to let you locate the referenced object inside the same
-// namespace.
+// LocalObjectReference: Not supported by Cloud Run LocalObjectReference
+// contains enough information to let you locate the referenced object
+// inside the same namespace.
 type LocalObjectReference struct {
-	// Name: (Optional) Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Name of the referent. More info:
+	// Name: (Optional) Name of the referent. More info:
 	// https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -1959,10 +1925,10 @@ type Location struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -1991,12 +1957,11 @@ type ObjectMeta struct {
 	// http://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
 
-	// ClusterName: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported The name of the cluster which the object
-	// belongs to. This is used to distinguish resources with same name and
-	// namespace in different clusters. This field is not set anywhere right
-	// now and apiserver is going to ignore it if set in create or update
-	// request.
+	// ClusterName: (Optional) Not supported by Cloud Run The name of the
+	// cluster which the object belongs to. This is used to distinguish
+	// resources with same name and namespace in different clusters. This
+	// field is not set anywhere right now and apiserver is going to ignore
+	// it if set in create or update request.
 	ClusterName string `json:"clusterName,omitempty"`
 
 	// CreationTimestamp: (Optional) CreationTimestamp is a timestamp
@@ -2008,59 +1973,57 @@ type ObjectMeta struct {
 	// https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
-	// DeletionGracePeriodSeconds: (Optional) Cloud Run fully managed: not
-	// supported Cloud Run for Anthos: supported Number of seconds allowed
-	// for this object to gracefully terminate before it will be removed
-	// from the system. Only set when deletionTimestamp is also set. May
-	// only be shortened. Read-only.
+	// DeletionGracePeriodSeconds: (Optional) Not supported by Cloud Run
+	// Number of seconds allowed for this object to gracefully terminate
+	// before it will be removed from the system. Only set when
+	// deletionTimestamp is also set. May only be shortened. Read-only.
 	DeletionGracePeriodSeconds int64 `json:"deletionGracePeriodSeconds,omitempty"`
 
-	// DeletionTimestamp: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported DeletionTimestamp is RFC 3339 date
-	// and time at which this resource will be deleted. This field is set by
-	// the server when a graceful deletion is requested by the user, and is
-	// not directly settable by a client. The resource is expected to be
-	// deleted (no longer visible from resource lists, and not reachable by
-	// name) after the time in this field, once the finalizers list is
-	// empty. As long as the finalizers list contains items, deletion is
-	// blocked. Once the deletionTimestamp is set, this value may not be
-	// unset or be set further into the future, although it may be shortened
-	// or the resource may be deleted prior to this time. For example, a
-	// user may request that a pod is deleted in 30 seconds. The Kubelet
-	// will react by sending a graceful termination signal to the containers
-	// in the pod. After that 30 seconds, the Kubelet will send a hard
-	// termination signal (SIGKILL) to the container and after cleanup,
-	// remove the pod from the API. In the presence of network partitions,
-	// this object may still exist after this timestamp, until an
-	// administrator or automated process can determine the resource is
-	// fully terminated. If not set, graceful deletion of the object has not
-	// been requested. Populated by the system when a graceful deletion is
-	// requested. Read-only. More info:
+	// DeletionTimestamp: (Optional) Not supported by Cloud Run
+	// DeletionTimestamp is RFC 3339 date and time at which this resource
+	// will be deleted. This field is set by the server when a graceful
+	// deletion is requested by the user, and is not directly settable by a
+	// client. The resource is expected to be deleted (no longer visible
+	// from resource lists, and not reachable by name) after the time in
+	// this field, once the finalizers list is empty. As long as the
+	// finalizers list contains items, deletion is blocked. Once the
+	// deletionTimestamp is set, this value may not be unset or be set
+	// further into the future, although it may be shortened or the resource
+	// may be deleted prior to this time. For example, a user may request
+	// that a pod is deleted in 30 seconds. The Kubelet will react by
+	// sending a graceful termination signal to the containers in the pod.
+	// After that 30 seconds, the Kubelet will send a hard termination
+	// signal (SIGKILL) to the container and after cleanup, remove the pod
+	// from the API. In the presence of network partitions, this object may
+	// still exist after this timestamp, until an administrator or automated
+	// process can determine the resource is fully terminated. If not set,
+	// graceful deletion of the object has not been requested. Populated by
+	// the system when a graceful deletion is requested. Read-only. More
+	// info:
 	// https://git.k8s.io/community/contributors/devel/api-conventions.md#metadata
 	DeletionTimestamp string `json:"deletionTimestamp,omitempty"`
 
-	// Finalizers: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Must be empty before the object is deleted
-	// from the registry. Each entry is an identifier for the responsible
-	// component that will remove the entry from the list. If the
-	// deletionTimestamp of the object is non-nil, entries in this list can
-	// only be removed. +patchStrategy=merge
+	// Finalizers: (Optional) Not supported by Cloud Run Must be empty
+	// before the object is deleted from the registry. Each entry is an
+	// identifier for the responsible component that will remove the entry
+	// from the list. If the deletionTimestamp of the object is non-nil,
+	// entries in this list can only be removed. +patchStrategy=merge
 	Finalizers []string `json:"finalizers,omitempty"`
 
-	// GenerateName: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported GenerateName is an optional prefix, used by
-	// the server, to generate a unique name ONLY IF the Name field has not
-	// been provided. If this field is used, the name returned to the client
-	// will be different than the name passed. This value will also be
-	// combined with a unique suffix. The provided value has the same
-	// validation rules as the Name field, and may be truncated by the
-	// length of the suffix required to make the value unique on the server.
-	// If this field is specified and the generated name exists, the server
-	// will NOT return a 409 - instead, it will either return 201 Created or
-	// 500 with Reason ServerTimeout indicating a unique name could not be
-	// found in the time allotted, and the client should retry (optionally
-	// after the time indicated in the Retry-After header). Applied only if
-	// Name is not specified. More info:
+	// GenerateName: (Optional) Not supported by Cloud Run GenerateName is
+	// an optional prefix, used by the server, to generate a unique name
+	// ONLY IF the Name field has not been provided. If this field is used,
+	// the name returned to the client will be different than the name
+	// passed. This value will also be combined with a unique suffix. The
+	// provided value has the same validation rules as the Name field, and
+	// may be truncated by the length of the suffix required to make the
+	// value unique on the server. If this field is specified and the
+	// generated name exists, the server will NOT return a 409 - instead, it
+	// will either return 201 Created or 500 with Reason ServerTimeout
+	// indicating a unique name could not be found in the time allotted, and
+	// the client should retry (optionally after the time indicated in the
+	// Retry-After header). Applied only if Name is not specified. More
+	// info:
 	// https://git.k8s.io/community/contributors/devel/api-conventions.md#idempotency
 	// string generateName = 2;
 	GenerateName string `json:"generateName,omitempty"`
@@ -2088,20 +2051,20 @@ type ObjectMeta struct {
 	// equal to either the project ID or project number.
 	Namespace string `json:"namespace,omitempty"`
 
-	// OwnerReferences: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported List of objects that own this object.
-	// If ALL objects in the list have been deleted, this object will be
-	// garbage collected.
+	// OwnerReferences: (Optional) Not supported by Cloud Run List of
+	// objects that own this object. If ALL objects in the list have been
+	// deleted, this object will be garbage collected.
 	OwnerReferences []*OwnerReference `json:"ownerReferences,omitempty"`
 
-	// ResourceVersion: (Optional) An opaque value that represents the
+	// ResourceVersion: Optional. An opaque value that represents the
 	// internal version of this object that can be used by clients to
 	// determine when objects have changed. May be used for optimistic
 	// concurrency, change detection, and the watch operation on a resource
 	// or set of resources. Clients must treat these values as opaque and
-	// passed unmodified back to the server. They may only be valid for a
-	// particular resource or set of resources. Populated by the system.
-	// Read-only. Value must be treated as opaque by clients. More info:
+	// passed unmodified back to the server or omit the value to disable
+	// conflict-detection. They may only be valid for a particular resource
+	// or set of resources. Populated by the system. Read-only. Value must
+	// be treated as opaque by clients or omitted. More info:
 	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#concurrency-control-and-consistency
 	ResourceVersion string `json:"resourceVersion,omitempty"`
 
@@ -2118,10 +2081,10 @@ type ObjectMeta struct {
 
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Annotations") to include
@@ -2159,7 +2122,7 @@ type OwnerReference struct {
 	Controller bool `json:"controller,omitempty"`
 
 	// Kind: Kind of the referent. More info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
+	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Name of the referent. More info:
@@ -2172,10 +2135,10 @@ type OwnerReference struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApiVersion") to include in
@@ -2224,9 +2187,9 @@ func (s *OwnerReference) MarshalJSON() ([]byte, error) {
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
-// 3 For a description of IAM and its features, see the IAM
-// documentation (https://cloud.google.com/iam/docs/).
+// timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
+// For a description of IAM and its features, see the IAM documentation
+// (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -2276,10 +2239,10 @@ type Policy struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuditConfigs") to include
@@ -2297,64 +2260,54 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Probe: Cloud Run fully managed: not supported Cloud Run for Anthos:
-// supported Probe describes a health check to be performed against a
-// container to determine whether it is alive or ready to receive
-// traffic.
+// Probe: Not supported by Cloud Run Probe describes a health check to
+// be performed against a container to determine whether it is alive or
+// ready to receive traffic.
 type Probe struct {
-	// Exec: (Optional) Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported One and only one of the following should be
+	// Exec: (Optional) One and only one of the following should be
 	// specified. Exec specifies the action to take. A field inlined from
 	// the Handler message.
 	Exec *ExecAction `json:"exec,omitempty"`
 
-	// FailureThreshold: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Minimum consecutive failures for the
+	// FailureThreshold: (Optional) Minimum consecutive failures for the
 	// probe to be considered failed after having succeeded. Defaults to 3.
 	// Minimum value is 1.
 	FailureThreshold int64 `json:"failureThreshold,omitempty"`
 
-	// HttpGet: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported HTTPGet specifies the http request to perform.
-	// A field inlined from the Handler message.
+	// HttpGet: (Optional) HTTPGet specifies the http request to perform. A
+	// field inlined from the Handler message.
 	HttpGet *HTTPGetAction `json:"httpGet,omitempty"`
 
-	// InitialDelaySeconds: (Optional) Cloud Run fully managed: not
-	// supported Cloud Run for Anthos: supported Number of seconds after the
-	// container has started before liveness probes are initiated. More
-	// info:
+	// InitialDelaySeconds: (Optional) Number of seconds after the container
+	// has started before liveness probes are initiated. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	InitialDelaySeconds int64 `json:"initialDelaySeconds,omitempty"`
 
-	// PeriodSeconds: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported How often (in seconds) to perform the
+	// PeriodSeconds: (Optional) How often (in seconds) to perform the
 	// probe. Default to 10 seconds. Minimum value is 1.
 	PeriodSeconds int64 `json:"periodSeconds,omitempty"`
 
-	// SuccessThreshold: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Minimum consecutive successes for the
+	// SuccessThreshold: (Optional) Minimum consecutive successes for the
 	// probe to be considered successful after having failed. Defaults to 1.
 	// Must be 1 for liveness. Minimum value is 1.
 	SuccessThreshold int64 `json:"successThreshold,omitempty"`
 
-	// TcpSocket: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported TCPSocket specifies an action involving a
-	// TCP port. TCP hooks not yet supported A field inlined from the
-	// Handler message.
+	// TcpSocket: (Optional) TCPSocket specifies an action involving a TCP
+	// port. TCP hooks not yet supported A field inlined from the Handler
+	// message.
 	TcpSocket *TCPSocketAction `json:"tcpSocket,omitempty"`
 
-	// TimeoutSeconds: (Optional) Cloud Run fully managed: not supported
-	// Cloud Run for Anthos: supported Number of seconds after which the
-	// probe times out. Defaults to 1 second. Minimum value is 1. More info:
+	// TimeoutSeconds: (Optional) Number of seconds after which the probe
+	// times out. Defaults to 1 second. Minimum value is 1. More info:
 	// https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Exec") to include in API
@@ -2394,10 +2347,10 @@ type ResourceRecord struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -2418,31 +2371,29 @@ func (s *ResourceRecord) MarshalJSON() ([]byte, error) {
 // ResourceRequirements: ResourceRequirements describes the compute
 // resource requirements.
 type ResourceRequirements struct {
-	// Limits: (Optional) Cloud Run fully managed: Only memory and CPU are
-	// supported. Note: The only supported values for CPU are '1', '2', and
-	// '4'. Setting 4 CPU requires at least 2Gi of memory. Cloud Run for
-	// Anthos: supported Limits describes the maximum amount of compute
-	// resources allowed. The values of the map is string form of the
-	// 'quantity' k8s type:
+	// Limits: (Optional) Only memory and CPU are supported. Note: The only
+	// supported values for CPU are '1', '2', and '4'. Setting 4 CPU
+	// requires at least 2Gi of memory. Limits describes the maximum amount
+	// of compute resources allowed. The values of the map is string form of
+	// the 'quantity' k8s type:
 	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
 	Limits map[string]string `json:"limits,omitempty"`
 
-	// Requests: (Optional) Cloud Run fully managed: Only memory and CPU are
-	// supported. Note: The only supported values for CPU are '1' and '2'.
-	// Cloud Run for Anthos: supported Requests describes the minimum amount
-	// of compute resources required. If Requests is omitted for a
-	// container, it defaults to Limits if that is explicitly specified,
-	// otherwise to an implementation-defined value. The values of the map
-	// is string form of the 'quantity' k8s type:
+	// Requests: (Optional) Only memory and CPU are supported. Note: The
+	// only supported values for CPU are '1' and '2'. Requests describes the
+	// minimum amount of compute resources required. If Requests is omitted
+	// for a container, it defaults to Limits if that is explicitly
+	// specified, otherwise to an implementation-defined value. The values
+	// of the map is string form of the 'quantity' k8s type:
 	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
 	Requests map[string]string `json:"requests,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Limits") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Limits") to include in API
@@ -2463,7 +2414,7 @@ func (s *ResourceRequirements) MarshalJSON() ([]byte, error) {
 // Revision: Revision is an immutable snapshot of code and
 // configuration. A revision references a container image. Revisions are
 // created by updates to a Configuration. See also:
-// https://github.com/knative/serving/blob/master/docs/spec/overview.md#revision
+// https://github.com/knative/serving/blob/main/docs/spec/overview.md#revision
 type Revision struct {
 	// ApiVersion: The API version for this call such as
 	// "serving.knative.dev/v1".
@@ -2489,10 +2440,10 @@ type Revision struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApiVersion") to include in
@@ -2513,7 +2464,7 @@ func (s *Revision) MarshalJSON() ([]byte, error) {
 // RevisionSpec: RevisionSpec holds the desired state of the Revision
 // (from the client).
 type RevisionSpec struct {
-	// ContainerConcurrency: (Optional) ContainerConcurrency specifies the
+	// ContainerConcurrency: Optional. ContainerConcurrency specifies the
 	// maximum allowed in-flight (concurrent) requests per container
 	// instance of the Revision. Cloud Run fully managed: supported,
 	// defaults to 80 Cloud Run for Anthos: supported, defaults to 0, which
@@ -2526,7 +2477,7 @@ type RevisionSpec struct {
 	// disallow a number of fields on this Container, including: name and
 	// lifecycle. In Cloud Run, only a single container may be provided. The
 	// runtime contract is documented here:
-	// https://github.com/knative/serving/blob/master/docs/runtime-contract.md
+	// https://github.com/knative/serving/blob/main/docs/runtime-contract.md
 	Containers []*Container `json:"containers,omitempty"`
 
 	// ServiceAccountName: Email address of the IAM service account
@@ -2538,9 +2489,9 @@ type RevisionSpec struct {
 
 	// TimeoutSeconds: TimeoutSeconds holds the max duration the instance is
 	// allowed for responding to a request. Cloud Run fully managed:
-	// defaults to 300 seconds (5 minutes). Maximum allowed value is 900
-	// seconds (15 minutes). Cloud Run for Anthos: defaults to 300 seconds
-	// (5 minutes). Maximum allowed value is configurable by the cluster
+	// defaults to 300 seconds (5 minutes). Maximum allowed value is 3600
+	// seconds (1 hour). Cloud Run for Anthos: defaults to 300 seconds (5
+	// minutes). Maximum allowed value is configurable by the cluster
 	// operator.
 	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
 
@@ -2548,8 +2499,8 @@ type RevisionSpec struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ContainerConcurrency") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2591,9 +2542,9 @@ type RevisionStatus struct {
 	// Container object.
 	ImageDigest string `json:"imageDigest,omitempty"`
 
-	// LogUrl: Specifies the generated logging url for this particular
-	// revision based on the revision url template specified in the
-	// controller's config. +optional
+	// LogUrl: Optional. Specifies the generated logging url for this
+	// particular revision based on the revision url template specified in
+	// the controller's config.
 	LogUrl string `json:"logUrl,omitempty"`
 
 	// ObservedGeneration: ObservedGeneration is the 'Generation' of the
@@ -2608,10 +2559,10 @@ type RevisionStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "Conditions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Conditions") to include in
@@ -2642,7 +2593,10 @@ type RevisionTemplate struct {
 	// Cloud SQL connections. Multiple values should be comma separated. *
 	// `run.googleapis.com/vpc-access-connector` sets a Serverless VPC
 	// Access connector. * `run.googleapis.com/vpc-access-egress` sets VPC
-	// egress. Supported values are `all` and `private-ranges-only`.
+	// egress. Supported values are `all-traffic`, `all` (deprecated), and
+	// `private-ranges-only`. `all-traffic` and `all` provide the same
+	// functionality. `all` is deprecated but will continue to be supported.
+	// Prefer `all-traffic`.
 	Metadata *ObjectMeta `json:"metadata,omitempty"`
 
 	// Spec: RevisionSpec holds the desired state of the Revision (from the
@@ -2651,10 +2605,10 @@ type RevisionTemplate struct {
 
 	// ForceSendFields is a list of field names (e.g. "Metadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Metadata") to include in
@@ -2678,7 +2632,7 @@ func (s *RevisionTemplate) MarshalJSON() ([]byte, error) {
 // creating them; in these cases the Route is additionally responsible
 // for monitoring the Configuration for "latest ready" revision changes,
 // and smoothly rolling out latest revisions. See also:
-// https://github.com/knative/serving/blob/master/docs/spec/overview.md#route
+// https://github.com/knative/serving/blob/main/docs/spec/overview.md#route
 // Cloud Run currently supports referencing a single Configuration to
 // automatically deploy the "latest ready" Revision from that
 // Configuration.
@@ -2707,10 +2661,10 @@ type Route struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApiVersion") to include in
@@ -2738,10 +2692,10 @@ type RouteSpec struct {
 
 	// ForceSendFields is a list of field names (e.g. "Traffic") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Traffic") to include in
@@ -2795,10 +2749,10 @@ type RouteStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Address") to include in
@@ -2816,28 +2770,26 @@ func (s *RouteStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SecretEnvSource: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported SecretEnvSource selects a Secret to populate the
-// environment variables with. The contents of the target Secret's Data
-// field will represent the key-value pairs as environment variables.
+// SecretEnvSource: Not supported by Cloud Run SecretEnvSource selects a
+// Secret to populate the environment variables with. The contents of
+// the target Secret's Data field will represent the key-value pairs as
+// environment variables.
 type SecretEnvSource struct {
 	// LocalObjectReference: This field should not be used directly as it is
 	// meant to be inlined directly into the message. Use the "name" field
 	// instead.
 	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The Secret to select from.
+	// Name: The Secret to select from.
 	Name string `json:"name,omitempty"`
 
-	// Optional: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Specify whether the Secret must be defined
+	// Optional: (Optional) Specify whether the Secret must be defined
 	Optional bool `json:"optional,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "LocalObjectReference") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2859,12 +2811,11 @@ func (s *SecretEnvSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SecretKeySelector: Cloud Run fully managed: not supported Cloud Run
-// for Anthos: supported SecretKeySelector selects a key of a Secret.
+// SecretKeySelector: SecretKeySelector selects a key of a Secret.
 type SecretKeySelector struct {
-	// Key: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The key of the secret to select from. Must be a valid
-	// secret key.
+	// Key: A Cloud Secret Manager secret version. Must be 'latest' for the
+	// latest version or an integer for a specific version. The key of the
+	// secret to select from. Must be a valid secret key.
 	Key string `json:"key,omitempty"`
 
 	// LocalObjectReference: This field should not be used directly as it is
@@ -2872,22 +2823,25 @@ type SecretKeySelector struct {
 	// instead.
 	LocalObjectReference *LocalObjectReference `json:"localObjectReference,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported The name of the secret in the pod's namespace to select
-	// from.
+	// Name: The name of the secret in Cloud Secret Manager. By default, the
+	// secret is assumed to be in the same project. If the secret is in
+	// another project, you must define an alias. An alias definition has
+	// the form: :projects//secrets/. If multiple alias definitions are
+	// needed, they must be separated by commas. The alias definitions must
+	// be set on the run.googleapis.com/secrets annotation. The name of the
+	// secret in the pod's namespace to select from.
 	Name string `json:"name,omitempty"`
 
-	// Optional: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Specify whether the Secret or its key must be
+	// Optional: (Optional) Specify whether the Secret or its key must be
 	// defined
 	Optional bool `json:"optional,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -2905,48 +2859,54 @@ func (s *SecretKeySelector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SecretVolumeSource: Cloud Run fully managed: not supported Cloud Run
-// for Anthos: supported The contents of the target Secret's Data field
-// will be presented in a volume as files using the keys in the Data
-// field as the file names.
+// SecretVolumeSource: The secret's value will be presented as the
+// content of a file whose name is defined in the item path. If no items
+// are defined, the name of the file is the secret_name. The contents of
+// the target Secret's Data field will be presented in a volume as files
+// using the keys in the Data field as the file names.
 type SecretVolumeSource struct {
-	// DefaultMode: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported Mode bits to use on created files by
-	// default. Must be a value between 0000 and 0777. Defaults to 0644.
-	// Directories within the path are not affected by this setting. This
-	// might be in conflict with other options that affect the file mode,
-	// like fsGroup, and the result can be other mode bits set. NOTE: This
-	// is an integer representation of the mode bits. So, the integer value
-	// should look exactly as the chmod numeric notation, i.e. Unix chmod
-	// "777" (a=rwx) should have the integer value 777.
+	// DefaultMode: (Optional) Mode bits to use on created files by default.
+	// Must be a value between 0000 and 0777. Defaults to 0644. Directories
+	// within the path are not affected by this setting. This might be in
+	// conflict with other options that affect the file mode, like fsGroup,
+	// and the result can be other mode bits set. NOTE: This is an integer
+	// representation of the mode bits. So, the integer value should look
+	// exactly as the chmod numeric notation, i.e. Unix chmod "777" (a=rwx)
+	// should have the integer value 777.
 	DefaultMode int64 `json:"defaultMode,omitempty"`
 
-	// Items: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported If unspecified, each key-value pair in the Data
-	// field of the referenced Secret will be projected into the volume as a
-	// file whose name is the key and content is the value. If specified,
-	// the listed keys will be projected into the specified paths, and
-	// unlisted keys will not be present. If a key is specified which is not
-	// present in the Secret, the volume setup will error unless it is
-	// marked optional.
+	// Items: (Optional) If unspecified, the volume will expose a file whose
+	// name is the secret_name. If specified, the key will be used as the
+	// version to fetch from Cloud Secret Manager and the path will be the
+	// name of the file exposed in the volume. When items are defined, they
+	// must specify a key and a path. If unspecified, each key-value pair in
+	// the Data field of the referenced Secret will be projected into the
+	// volume as a file whose name is the key and content is the value. If
+	// specified, the listed keys will be projected into the specified
+	// paths, and unlisted keys will not be present. If a key is specified
+	// that is not present in the Secret, the volume setup will error unless
+	// it is marked optional.
 	Items []*KeyToPath `json:"items,omitempty"`
 
-	// Optional: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Specify whether the Secret or its keys must be
+	// Optional: (Optional) Specify whether the Secret or its keys must be
 	// defined.
 	Optional bool `json:"optional,omitempty"`
 
-	// SecretName: Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Name of the secret in the container's namespace to
-	// use.
+	// SecretName: The name of the secret in Cloud Secret Manager. By
+	// default, the secret is assumed to be in the same project. If the
+	// secret is in another project, you must define an alias. An alias
+	// definition has the form: :projects//secrets/. If multiple alias
+	// definitions are needed, they must be separated by commas. The alias
+	// definitions must be set on the run.googleapis.com/secrets annotation.
+	// Name of the secret in the container's namespace to use.
 	SecretName string `json:"secretName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DefaultMode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DefaultMode") to include
@@ -2964,26 +2924,24 @@ func (s *SecretVolumeSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SecurityContext: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported SecurityContext holds security configuration that
-// will be applied to a container. Some fields are present in both
-// SecurityContext and PodSecurityContext. When both are set, the values
-// in SecurityContext take precedence.
+// SecurityContext: Not supported by Cloud Run SecurityContext holds
+// security configuration that will be applied to a container. Some
+// fields are present in both SecurityContext and PodSecurityContext.
+// When both are set, the values in SecurityContext take precedence.
 type SecurityContext struct {
-	// RunAsUser: (Optional) Cloud Run fully managed: not supported Cloud
-	// Run for Anthos: supported The UID to run the entrypoint of the
-	// container process. Defaults to user specified in image metadata if
-	// unspecified. May also be set in PodSecurityContext. If set in both
-	// SecurityContext and PodSecurityContext, the value specified in
-	// SecurityContext takes precedence.
+	// RunAsUser: (Optional) The UID to run the entrypoint of the container
+	// process. Defaults to user specified in image metadata if unspecified.
+	// May also be set in PodSecurityContext. If set in both SecurityContext
+	// and PodSecurityContext, the value specified in SecurityContext takes
+	// precedence.
 	RunAsUser int64 `json:"runAsUser,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RunAsUser") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "RunAsUser") to include in
@@ -3011,7 +2969,7 @@ func (s *SecurityContext) MarshalJSON() ([]byte, error) {
 // ReplicaSets). The Service's controller will track the statuses of its
 // owned Configuration and Route, reflecting their statuses and
 // conditions as its own. See also:
-// https://github.com/knative/serving/blob/master/docs/spec/overview.md#service
+// https://github.com/knative/serving/blob/main/docs/spec/overview.md#service
 type Service struct {
 	// ApiVersion: The API version for this call such as
 	// "serving.knative.dev/v1".
@@ -3021,7 +2979,19 @@ type Service struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Metadata: Metadata associated with this Service, including name,
-	// namespace, labels, and annotations.
+	// namespace, labels, and annotations. Cloud Run (fully managed) uses
+	// the following annotation keys to configure features on a Service: *
+	// `run.googleapis.com/ingress` sets the ingress settings for the
+	// Service. See the ingress settings documentation
+	// (/run/docs/securing/ingress) for details on configuring ingress
+	// settings. * `run.googleapis.com/ingress-status` is output-only and
+	// contains the currently active ingress settings for the Service.
+	// `run.googleapis.com/ingress-status` may differ from
+	// `run.googleapis.com/ingress` while the system is processing a change
+	// to `run.googleapis.com/ingress` or if the system failed to process a
+	// change to `run.googleapis.com/ingress`. When the system has processed
+	// all changes successfully `run.googleapis.com/ingress-status` and
+	// `run.googleapis.com/ingress` are equal.
 	Metadata *ObjectMeta `json:"metadata,omitempty"`
 
 	// Spec: Spec holds the desired state of the Service (from the client).
@@ -3037,10 +3007,10 @@ type Service struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApiVersion") to include in
@@ -3072,10 +3042,10 @@ type ServiceSpec struct {
 
 	// ForceSendFields is a list of field names (e.g. "Template") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Template") to include in
@@ -3140,10 +3110,10 @@ type ServiceStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Address") to include in
@@ -3177,10 +3147,10 @@ type SetIamPolicyRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Policy") to include in API
@@ -3216,7 +3186,7 @@ type Status struct {
 	Message string `json:"message,omitempty"`
 
 	// Metadata: Standard list metadata. More info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
+	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 	// +optional
 	Metadata *ListMeta `json:"metadata,omitempty"`
 
@@ -3228,7 +3198,7 @@ type Status struct {
 
 	// Status: Status of the operation. One of: "Success" or "Failure". More
 	// info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.md#spec-and-status
+	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#spec-and-status
 	// +optional
 	Status string `json:"status,omitempty"`
 
@@ -3238,10 +3208,10 @@ type Status struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -3282,10 +3252,10 @@ type StatusCause struct {
 
 	// ForceSendFields is a list of field names (e.g. "Field") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Field") to include in API
@@ -3322,7 +3292,7 @@ type StatusDetails struct {
 	// Kind: The kind attribute of the resource associated with the status
 	// StatusReason. On some operations may differ from the requested
 	// resource Kind. More info:
-	// https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds
+	// https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
 	// +optional
 	Kind string `json:"kind,omitempty"`
 
@@ -3344,10 +3314,10 @@ type StatusDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Causes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Causes") to include in API
@@ -3365,29 +3335,25 @@ func (s *StatusDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TCPSocketAction: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported TCPSocketAction describes an action based on
-// opening a socket
+// TCPSocketAction: Not supported by Cloud Run TCPSocketAction describes
+// an action based on opening a socket
 type TCPSocketAction struct {
-	// Host: (Optional) Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Optional: Host name to connect to, defaults to the
+	// Host: (Optional) Optional: Host name to connect to, defaults to the
 	// pod IP.
 	Host string `json:"host,omitempty"`
 
-	// Port: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported Number or name of the port to access on the container.
-	// Number must be in the range 1 to 65535. Name must be an
-	// IANA_SVC_NAME. This field is currently limited to integer types only
-	// because of proto's inability to properly support the IntOrString
-	// golang type.
+	// Port: Number or name of the port to access on the container. Number
+	// must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. This
+	// field is currently limited to integer types only because of proto's
+	// inability to properly support the IntOrString golang type.
 	Port int64 `json:"port,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Host") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Host") to include in API
@@ -3416,10 +3382,10 @@ type TestIamPermissionsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -3450,10 +3416,10 @@ type TestIamPermissionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -3483,11 +3449,11 @@ type TrafficTarget struct {
 	// Cloud Run currently supports a single ConfigurationName.
 	ConfigurationName string `json:"configurationName,omitempty"`
 
-	// LatestRevision: LatestRevision may be optionally provided to indicate
+	// LatestRevision: Optional. LatestRevision may be provided to indicate
 	// that the latest ready Revision of the Configuration should be used
 	// for this traffic target. When provided LatestRevision must be true if
 	// RevisionName is empty; it must be false when RevisionName is
-	// non-empty. +optional
+	// non-empty.
 	LatestRevision bool `json:"latestRevision,omitempty"`
 
 	// Percent: Percent specifies percent of the traffic to this Revision or
@@ -3502,23 +3468,22 @@ type TrafficTarget struct {
 	// supported by Cloud Run.
 	RevisionName string `json:"revisionName,omitempty"`
 
-	// Tag: Tag is optionally used to expose a dedicated url for referencing
-	// this target exclusively. +optional
+	// Tag: Optional. Tag is used to expose a dedicated url for referencing
+	// this target exclusively.
 	Tag string `json:"tag,omitempty"`
 
 	// Url: Output only. URL displays the URL for accessing tagged traffic
 	// targets. URL is displayed in status, and is disallowed on spec. URL
 	// must contain a scheme (e.g. http://) and a hostname, but may not
-	// contain anything else (e.g. basic auth, url path, etc. Not currently
-	// supported in Cloud Run.
+	// contain anything else (e.g. basic auth, url path, etc.)
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConfigurationName")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ConfigurationName") to
@@ -3537,27 +3502,22 @@ func (s *TrafficTarget) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Volume: Cloud Run fully managed: not supported Cloud Run for Anthos:
-// supported Volume represents a named volume in a container.
+// Volume: Volume represents a named volume in a container.
 type Volume struct {
-	// ConfigMap: Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported
 	ConfigMap *ConfigMapVolumeSource `json:"configMap,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported Volume's name.
+	// Name: Volume's name. In Cloud Run Fully Managed, the name 'cloudsql'
+	// is reserved.
 	Name string `json:"name,omitempty"`
 
-	// Secret: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported
 	Secret *SecretVolumeSource `json:"secret,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConfigMap") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ConfigMap") to include in
@@ -3575,34 +3535,30 @@ func (s *Volume) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// VolumeMount: Cloud Run fully managed: not supported Cloud Run for
-// Anthos: supported VolumeMount describes a mounting of a Volume within
-// a container.
+// VolumeMount: VolumeMount describes a mounting of a Volume within a
+// container.
 type VolumeMount struct {
-	// MountPath: Cloud Run fully managed: not supported Cloud Run for
-	// Anthos: supported Path within the container at which the volume
-	// should be mounted. Must not contain ':'.
+	// MountPath: Path within the container at which the volume should be
+	// mounted. Must not contain ':'.
 	MountPath string `json:"mountPath,omitempty"`
 
-	// Name: Cloud Run fully managed: not supported Cloud Run for Anthos:
-	// supported This must match the Name of a Volume.
+	// Name: The name of the volume. There must be a corresponding Volume
+	// with the same name.
 	Name string `json:"name,omitempty"`
 
-	// ReadOnly: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Only true is accepted. Defaults to true.
+	// ReadOnly: (Optional) Only true is accepted. Defaults to true.
 	ReadOnly bool `json:"readOnly,omitempty"`
 
-	// SubPath: (Optional) Cloud Run fully managed: not supported Cloud Run
-	// for Anthos: supported Path within the volume from which the
-	// container's volume should be mounted. Defaults to "" (volume's root).
+	// SubPath: (Optional) Path within the volume from which the container's
+	// volume should be mounted. Defaults to "" (volume's root).
 	SubPath string `json:"subPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MountPath") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MountPath") to include in
@@ -3632,6 +3588,9 @@ type NamespacesAuthorizeddomainsListCall struct {
 }
 
 // List: List authorized domains.
+//
+// - parent: Name of the parent Project resource. Example:
+//   `projects/myproject`.
 func (r *NamespacesAuthorizeddomainsService) List(parent string) *NamespacesAuthorizeddomainsListCall {
 	c := &NamespacesAuthorizeddomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3689,7 +3648,7 @@ func (c *NamespacesAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *NamespacesAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3822,6 +3781,10 @@ type NamespacesConfigurationsGetCall struct {
 }
 
 // Get: Get information about a configuration.
+//
+// - name: The name of the configuration to retrieve. For Cloud Run
+//   (fully managed), replace {namespace_id} with the project ID or
+//   number.
 func (r *NamespacesConfigurationsService) Get(name string) *NamespacesConfigurationsGetCall {
 	c := &NamespacesConfigurationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3865,7 +3828,7 @@ func (c *NamespacesConfigurationsGetCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3966,14 +3929,18 @@ type NamespacesConfigurationsListCall struct {
 }
 
 // List: List configurations.
+//
+// - parent: The namespace from which the configurations should be
+//   listed. For Cloud Run (fully managed), replace {namespace_id} with
+//   the project ID or number.
 func (r *NamespacesConfigurationsService) List(parent string) *NamespacesConfigurationsListCall {
 	c := &NamespacesConfigurationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *NamespacesConfigurationsListCall) Continue(continue_ string) *NamespacesConfigurationsListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -4063,7 +4030,7 @@ func (c *NamespacesConfigurationsListCall) Header() http.Header {
 
 func (c *NamespacesConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4134,7 +4101,7 @@ func (c *NamespacesConfigurationsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4154,7 +4121,7 @@ func (c *NamespacesConfigurationsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4200,10 +4167,22 @@ type NamespacesDomainmappingsCreateCall struct {
 }
 
 // Create: Create a new domain mapping.
+//
+// - parent: The namespace in which the domain mapping should be
+//   created. For Cloud Run (fully managed), replace {namespace_id} with
+//   the project ID or number.
 func (r *NamespacesDomainmappingsService) Create(parent string, domainmapping *DomainMapping) *NamespacesDomainmappingsCreateCall {
 	c := &NamespacesDomainmappingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.domainmapping = domainmapping
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
+func (c *NamespacesDomainmappingsCreateCall) DryRun(dryRun string) *NamespacesDomainmappingsCreateCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -4234,7 +4213,7 @@ func (c *NamespacesDomainmappingsCreateCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4306,6 +4285,11 @@ func (c *NamespacesDomainmappingsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "The namespace in which the domain mapping should be created. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
 	//       "location": "path",
@@ -4339,6 +4323,10 @@ type NamespacesDomainmappingsDeleteCall struct {
 }
 
 // Delete: Delete a domain mapping.
+//
+// - name: The name of the domain mapping to delete. For Cloud Run
+//   (fully managed), replace {namespace_id} with the project ID or
+//   number.
 func (r *NamespacesDomainmappingsService) Delete(name string) *NamespacesDomainmappingsDeleteCall {
 	c := &NamespacesDomainmappingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4349,6 +4337,14 @@ func (r *NamespacesDomainmappingsService) Delete(name string) *NamespacesDomainm
 // currently ignores this parameter.
 func (c *NamespacesDomainmappingsDeleteCall) ApiVersion(apiVersion string) *NamespacesDomainmappingsDeleteCall {
 	c.urlParams_.Set("apiVersion", apiVersion)
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
+func (c *NamespacesDomainmappingsDeleteCall) DryRun(dryRun string) *NamespacesDomainmappingsDeleteCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -4396,7 +4392,7 @@ func (c *NamespacesDomainmappingsDeleteCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4468,6 +4464,11 @@ func (c *NamespacesDomainmappingsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "dryRun": {
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "kind": {
 	//       "description": "Cloud Run currently ignores this parameter.",
 	//       "location": "query",
@@ -4509,6 +4510,10 @@ type NamespacesDomainmappingsGetCall struct {
 }
 
 // Get: Get information about a domain mapping.
+//
+// - name: The name of the domain mapping to retrieve. For Cloud Run
+//   (fully managed), replace {namespace_id} with the project ID or
+//   number.
 func (r *NamespacesDomainmappingsService) Get(name string) *NamespacesDomainmappingsGetCall {
 	c := &NamespacesDomainmappingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4552,7 +4557,7 @@ func (c *NamespacesDomainmappingsGetCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4653,14 +4658,18 @@ type NamespacesDomainmappingsListCall struct {
 }
 
 // List: List domain mappings.
+//
+// - parent: The namespace from which the domain mappings should be
+//   listed. For Cloud Run (fully managed), replace {namespace_id} with
+//   the project ID or number.
 func (r *NamespacesDomainmappingsService) List(parent string) *NamespacesDomainmappingsListCall {
 	c := &NamespacesDomainmappingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *NamespacesDomainmappingsListCall) Continue(continue_ string) *NamespacesDomainmappingsListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -4750,7 +4759,7 @@ func (c *NamespacesDomainmappingsListCall) Header() http.Header {
 
 func (c *NamespacesDomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4821,7 +4830,7 @@ func (c *NamespacesDomainmappingsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4841,7 +4850,7 @@ func (c *NamespacesDomainmappingsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -4886,6 +4895,9 @@ type NamespacesRevisionsDeleteCall struct {
 }
 
 // Delete: Delete a revision.
+//
+// - name: The name of the revision to delete. For Cloud Run (fully
+//   managed), replace {namespace_id} with the project ID or number.
 func (r *NamespacesRevisionsService) Delete(name string) *NamespacesRevisionsDeleteCall {
 	c := &NamespacesRevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4896,6 +4908,14 @@ func (r *NamespacesRevisionsService) Delete(name string) *NamespacesRevisionsDel
 // currently ignores this parameter.
 func (c *NamespacesRevisionsDeleteCall) ApiVersion(apiVersion string) *NamespacesRevisionsDeleteCall {
 	c.urlParams_.Set("apiVersion", apiVersion)
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
+func (c *NamespacesRevisionsDeleteCall) DryRun(dryRun string) *NamespacesRevisionsDeleteCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -4943,7 +4963,7 @@ func (c *NamespacesRevisionsDeleteCall) Header() http.Header {
 
 func (c *NamespacesRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5015,6 +5035,11 @@ func (c *NamespacesRevisionsDeleteCall) Do(opts ...googleapi.CallOption) (*Statu
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "dryRun": {
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "kind": {
 	//       "description": "Cloud Run currently ignores this parameter.",
 	//       "location": "query",
@@ -5056,6 +5081,9 @@ type NamespacesRevisionsGetCall struct {
 }
 
 // Get: Get information about a revision.
+//
+// - name: The name of the revision to retrieve. For Cloud Run (fully
+//   managed), replace {namespace_id} with the project ID or number.
 func (r *NamespacesRevisionsService) Get(name string) *NamespacesRevisionsGetCall {
 	c := &NamespacesRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5099,7 +5127,7 @@ func (c *NamespacesRevisionsGetCall) Header() http.Header {
 
 func (c *NamespacesRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5200,14 +5228,18 @@ type NamespacesRevisionsListCall struct {
 }
 
 // List: List revisions.
+//
+// - parent: The namespace from which the revisions should be listed.
+//   For Cloud Run (fully managed), replace {namespace_id} with the
+//   project ID or number.
 func (r *NamespacesRevisionsService) List(parent string) *NamespacesRevisionsListCall {
 	c := &NamespacesRevisionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *NamespacesRevisionsListCall) Continue(continue_ string) *NamespacesRevisionsListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -5297,7 +5329,7 @@ func (c *NamespacesRevisionsListCall) Header() http.Header {
 
 func (c *NamespacesRevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5368,7 +5400,7 @@ func (c *NamespacesRevisionsListCall) Do(opts ...googleapi.CallOption) (*ListRev
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5388,7 +5420,7 @@ func (c *NamespacesRevisionsListCall) Do(opts ...googleapi.CallOption) (*ListRev
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5434,6 +5466,9 @@ type NamespacesRoutesGetCall struct {
 }
 
 // Get: Get information about a route.
+//
+// - name: The name of the route to retrieve. For Cloud Run (fully
+//   managed), replace {namespace_id} with the project ID or number.
 func (r *NamespacesRoutesService) Get(name string) *NamespacesRoutesGetCall {
 	c := &NamespacesRoutesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5477,7 +5512,7 @@ func (c *NamespacesRoutesGetCall) Header() http.Header {
 
 func (c *NamespacesRoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5578,14 +5613,18 @@ type NamespacesRoutesListCall struct {
 }
 
 // List: List routes.
+//
+// - parent: The namespace from which the routes should be listed. For
+//   Cloud Run (fully managed), replace {namespace_id} with the project
+//   ID or number.
 func (r *NamespacesRoutesService) List(parent string) *NamespacesRoutesListCall {
 	c := &NamespacesRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *NamespacesRoutesListCall) Continue(continue_ string) *NamespacesRoutesListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -5675,7 +5714,7 @@ func (c *NamespacesRoutesListCall) Header() http.Header {
 
 func (c *NamespacesRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5746,7 +5785,7 @@ func (c *NamespacesRoutesListCall) Do(opts ...googleapi.CallOption) (*ListRoutes
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5766,7 +5805,7 @@ func (c *NamespacesRoutesListCall) Do(opts ...googleapi.CallOption) (*ListRoutes
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5812,10 +5851,22 @@ type NamespacesServicesCreateCall struct {
 }
 
 // Create: Create a service.
+//
+// - parent: The namespace in which the service should be created. For
+//   Cloud Run (fully managed), replace {namespace_id} with the project
+//   ID or number.
 func (r *NamespacesServicesService) Create(parent string, service *Service) *NamespacesServicesCreateCall {
 	c := &NamespacesServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.service = service
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
+func (c *NamespacesServicesCreateCall) DryRun(dryRun string) *NamespacesServicesCreateCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -5846,7 +5897,7 @@ func (c *NamespacesServicesCreateCall) Header() http.Header {
 
 func (c *NamespacesServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5918,6 +5969,11 @@ func (c *NamespacesServicesCreateCall) Do(opts ...googleapi.CallOption) (*Servic
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "The namespace in which the service should be created. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
 	//       "location": "path",
@@ -5953,6 +6009,9 @@ type NamespacesServicesDeleteCall struct {
 // Delete: Delete a service. This will cause the Service to stop serving
 // traffic and will delete the child entities like Routes,
 // Configurations and Revisions.
+//
+// - name: The name of the service to delete. For Cloud Run (fully
+//   managed), replace {namespace_id} with the project ID or number.
 func (r *NamespacesServicesService) Delete(name string) *NamespacesServicesDeleteCall {
 	c := &NamespacesServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5963,6 +6022,14 @@ func (r *NamespacesServicesService) Delete(name string) *NamespacesServicesDelet
 // currently ignores this parameter.
 func (c *NamespacesServicesDeleteCall) ApiVersion(apiVersion string) *NamespacesServicesDeleteCall {
 	c.urlParams_.Set("apiVersion", apiVersion)
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
+func (c *NamespacesServicesDeleteCall) DryRun(dryRun string) *NamespacesServicesDeleteCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -6010,7 +6077,7 @@ func (c *NamespacesServicesDeleteCall) Header() http.Header {
 
 func (c *NamespacesServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6082,6 +6149,11 @@ func (c *NamespacesServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Status
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "dryRun": {
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "kind": {
 	//       "description": "Cloud Run currently ignores this parameter.",
 	//       "location": "query",
@@ -6123,6 +6195,9 @@ type NamespacesServicesGetCall struct {
 }
 
 // Get: Get information about a service.
+//
+// - name: The name of the service to retrieve. For Cloud Run (fully
+//   managed), replace {namespace_id} with the project ID or number.
 func (r *NamespacesServicesService) Get(name string) *NamespacesServicesGetCall {
 	c := &NamespacesServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6166,7 +6241,7 @@ func (c *NamespacesServicesGetCall) Header() http.Header {
 
 func (c *NamespacesServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6267,14 +6342,18 @@ type NamespacesServicesListCall struct {
 }
 
 // List: List services.
+//
+// - parent: The namespace from which the services should be listed. For
+//   Cloud Run (fully managed), replace {namespace_id} with the project
+//   ID or number.
 func (r *NamespacesServicesService) List(parent string) *NamespacesServicesListCall {
 	c := &NamespacesServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *NamespacesServicesListCall) Continue(continue_ string) *NamespacesServicesListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -6364,7 +6443,7 @@ func (c *NamespacesServicesListCall) Header() http.Header {
 
 func (c *NamespacesServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6435,7 +6514,7 @@ func (c *NamespacesServicesListCall) Do(opts ...googleapi.CallOption) (*ListServ
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6455,7 +6534,7 @@ func (c *NamespacesServicesListCall) Do(opts ...googleapi.CallOption) (*ListServ
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -6505,10 +6584,21 @@ type NamespacesServicesReplaceServiceCall struct {
 // will work to make the 'status' match the requested 'spec'. May
 // provide metadata.resourceVersion to enforce update from last read for
 // optimistic concurrency control.
+//
+// - name: The name of the service being replaced. For Cloud Run (fully
+//   managed), replace {namespace_id} with the project ID or number.
 func (r *NamespacesServicesService) ReplaceService(name string, service *Service) *NamespacesServicesReplaceServiceCall {
 	c := &NamespacesServicesReplaceServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.service = service
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
+func (c *NamespacesServicesReplaceServiceCall) DryRun(dryRun string) *NamespacesServicesReplaceServiceCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -6539,7 +6629,7 @@ func (c *NamespacesServicesReplaceServiceCall) Header() http.Header {
 
 func (c *NamespacesServicesReplaceServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6611,6 +6701,11 @@ func (c *NamespacesServicesReplaceServiceCall) Do(opts ...googleapi.CallOption) 
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "The name of the service being replaced. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
 	//       "location": "path",
@@ -6645,6 +6740,9 @@ type ProjectsAuthorizeddomainsListCall struct {
 }
 
 // List: List authorized domains.
+//
+// - parent: Name of the parent Project resource. Example:
+//   `projects/myproject`.
 func (r *ProjectsAuthorizeddomainsService) List(parent string) *ProjectsAuthorizeddomainsListCall {
 	c := &ProjectsAuthorizeddomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6702,7 +6800,7 @@ func (c *ProjectsAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *ProjectsAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6836,28 +6934,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6900,7 +7004,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6971,7 +7075,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6983,13 +7087,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7038,6 +7142,9 @@ type ProjectsLocationsAuthorizeddomainsListCall struct {
 }
 
 // List: List authorized domains.
+//
+// - parent: Name of the parent Project resource. Example:
+//   `projects/myproject`.
 func (r *ProjectsLocationsAuthorizeddomainsService) List(parent string) *ProjectsLocationsAuthorizeddomainsListCall {
 	c := &ProjectsLocationsAuthorizeddomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7095,7 +7202,7 @@ func (c *ProjectsLocationsAuthorizeddomainsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsAuthorizeddomainsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7228,6 +7335,10 @@ type ProjectsLocationsConfigurationsGetCall struct {
 }
 
 // Get: Get information about a configuration.
+//
+// - name: The name of the configuration to retrieve. For Cloud Run
+//   (fully managed), replace {namespace_id} with the project ID or
+//   number.
 func (r *ProjectsLocationsConfigurationsService) Get(name string) *ProjectsLocationsConfigurationsGetCall {
 	c := &ProjectsLocationsConfigurationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7271,7 +7382,7 @@ func (c *ProjectsLocationsConfigurationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7372,14 +7483,18 @@ type ProjectsLocationsConfigurationsListCall struct {
 }
 
 // List: List configurations.
+//
+// - parent: The namespace from which the configurations should be
+//   listed. For Cloud Run (fully managed), replace {namespace_id} with
+//   the project ID or number.
 func (r *ProjectsLocationsConfigurationsService) List(parent string) *ProjectsLocationsConfigurationsListCall {
 	c := &ProjectsLocationsConfigurationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *ProjectsLocationsConfigurationsListCall) Continue(continue_ string) *ProjectsLocationsConfigurationsListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -7469,7 +7584,7 @@ func (c *ProjectsLocationsConfigurationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7540,7 +7655,7 @@ func (c *ProjectsLocationsConfigurationsListCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7560,7 +7675,7 @@ func (c *ProjectsLocationsConfigurationsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7606,10 +7721,22 @@ type ProjectsLocationsDomainmappingsCreateCall struct {
 }
 
 // Create: Create a new domain mapping.
+//
+// - parent: The namespace in which the domain mapping should be
+//   created. For Cloud Run (fully managed), replace {namespace_id} with
+//   the project ID or number.
 func (r *ProjectsLocationsDomainmappingsService) Create(parent string, domainmapping *DomainMapping) *ProjectsLocationsDomainmappingsCreateCall {
 	c := &ProjectsLocationsDomainmappingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.domainmapping = domainmapping
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
+func (c *ProjectsLocationsDomainmappingsCreateCall) DryRun(dryRun string) *ProjectsLocationsDomainmappingsCreateCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -7640,7 +7767,7 @@ func (c *ProjectsLocationsDomainmappingsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7712,6 +7839,11 @@ func (c *ProjectsLocationsDomainmappingsCreateCall) Do(opts ...googleapi.CallOpt
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "The namespace in which the domain mapping should be created. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
 	//       "location": "path",
@@ -7745,6 +7877,10 @@ type ProjectsLocationsDomainmappingsDeleteCall struct {
 }
 
 // Delete: Delete a domain mapping.
+//
+// - name: The name of the domain mapping to delete. For Cloud Run
+//   (fully managed), replace {namespace_id} with the project ID or
+//   number.
 func (r *ProjectsLocationsDomainmappingsService) Delete(name string) *ProjectsLocationsDomainmappingsDeleteCall {
 	c := &ProjectsLocationsDomainmappingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7755,6 +7891,14 @@ func (r *ProjectsLocationsDomainmappingsService) Delete(name string) *ProjectsLo
 // currently ignores this parameter.
 func (c *ProjectsLocationsDomainmappingsDeleteCall) ApiVersion(apiVersion string) *ProjectsLocationsDomainmappingsDeleteCall {
 	c.urlParams_.Set("apiVersion", apiVersion)
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
+func (c *ProjectsLocationsDomainmappingsDeleteCall) DryRun(dryRun string) *ProjectsLocationsDomainmappingsDeleteCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -7802,7 +7946,7 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7874,6 +8018,11 @@ func (c *ProjectsLocationsDomainmappingsDeleteCall) Do(opts ...googleapi.CallOpt
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "dryRun": {
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "kind": {
 	//       "description": "Cloud Run currently ignores this parameter.",
 	//       "location": "query",
@@ -7915,6 +8064,10 @@ type ProjectsLocationsDomainmappingsGetCall struct {
 }
 
 // Get: Get information about a domain mapping.
+//
+// - name: The name of the domain mapping to retrieve. For Cloud Run
+//   (fully managed), replace {namespace_id} with the project ID or
+//   number.
 func (r *ProjectsLocationsDomainmappingsService) Get(name string) *ProjectsLocationsDomainmappingsGetCall {
 	c := &ProjectsLocationsDomainmappingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7958,7 +8111,7 @@ func (c *ProjectsLocationsDomainmappingsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8059,14 +8212,18 @@ type ProjectsLocationsDomainmappingsListCall struct {
 }
 
 // List: List domain mappings.
+//
+// - parent: The namespace from which the domain mappings should be
+//   listed. For Cloud Run (fully managed), replace {namespace_id} with
+//   the project ID or number.
 func (r *ProjectsLocationsDomainmappingsService) List(parent string) *ProjectsLocationsDomainmappingsListCall {
 	c := &ProjectsLocationsDomainmappingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *ProjectsLocationsDomainmappingsListCall) Continue(continue_ string) *ProjectsLocationsDomainmappingsListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -8156,7 +8313,7 @@ func (c *ProjectsLocationsDomainmappingsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsDomainmappingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8227,7 +8384,7 @@ func (c *ProjectsLocationsDomainmappingsListCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8247,7 +8404,7 @@ func (c *ProjectsLocationsDomainmappingsListCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -8292,6 +8449,9 @@ type ProjectsLocationsRevisionsDeleteCall struct {
 }
 
 // Delete: Delete a revision.
+//
+// - name: The name of the revision to delete. For Cloud Run (fully
+//   managed), replace {namespace_id} with the project ID or number.
 func (r *ProjectsLocationsRevisionsService) Delete(name string) *ProjectsLocationsRevisionsDeleteCall {
 	c := &ProjectsLocationsRevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8302,6 +8462,14 @@ func (r *ProjectsLocationsRevisionsService) Delete(name string) *ProjectsLocatio
 // currently ignores this parameter.
 func (c *ProjectsLocationsRevisionsDeleteCall) ApiVersion(apiVersion string) *ProjectsLocationsRevisionsDeleteCall {
 	c.urlParams_.Set("apiVersion", apiVersion)
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
+func (c *ProjectsLocationsRevisionsDeleteCall) DryRun(dryRun string) *ProjectsLocationsRevisionsDeleteCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -8349,7 +8517,7 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8421,6 +8589,11 @@ func (c *ProjectsLocationsRevisionsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "dryRun": {
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "kind": {
 	//       "description": "Cloud Run currently ignores this parameter.",
 	//       "location": "query",
@@ -8462,6 +8635,9 @@ type ProjectsLocationsRevisionsGetCall struct {
 }
 
 // Get: Get information about a revision.
+//
+// - name: The name of the revision to retrieve. For Cloud Run (fully
+//   managed), replace {namespace_id} with the project ID or number.
 func (r *ProjectsLocationsRevisionsService) Get(name string) *ProjectsLocationsRevisionsGetCall {
 	c := &ProjectsLocationsRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8505,7 +8681,7 @@ func (c *ProjectsLocationsRevisionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8606,14 +8782,18 @@ type ProjectsLocationsRevisionsListCall struct {
 }
 
 // List: List revisions.
+//
+// - parent: The namespace from which the revisions should be listed.
+//   For Cloud Run (fully managed), replace {namespace_id} with the
+//   project ID or number.
 func (r *ProjectsLocationsRevisionsService) List(parent string) *ProjectsLocationsRevisionsListCall {
 	c := &ProjectsLocationsRevisionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *ProjectsLocationsRevisionsListCall) Continue(continue_ string) *ProjectsLocationsRevisionsListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -8703,7 +8883,7 @@ func (c *ProjectsLocationsRevisionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRevisionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8774,7 +8954,7 @@ func (c *ProjectsLocationsRevisionsListCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8794,7 +8974,7 @@ func (c *ProjectsLocationsRevisionsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -8840,6 +9020,9 @@ type ProjectsLocationsRoutesGetCall struct {
 }
 
 // Get: Get information about a route.
+//
+// - name: The name of the route to retrieve. For Cloud Run (fully
+//   managed), replace {namespace_id} with the project ID or number.
 func (r *ProjectsLocationsRoutesService) Get(name string) *ProjectsLocationsRoutesGetCall {
 	c := &ProjectsLocationsRoutesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8883,7 +9066,7 @@ func (c *ProjectsLocationsRoutesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8984,14 +9167,18 @@ type ProjectsLocationsRoutesListCall struct {
 }
 
 // List: List routes.
+//
+// - parent: The namespace from which the routes should be listed. For
+//   Cloud Run (fully managed), replace {namespace_id} with the project
+//   ID or number.
 func (r *ProjectsLocationsRoutesService) List(parent string) *ProjectsLocationsRoutesListCall {
 	c := &ProjectsLocationsRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *ProjectsLocationsRoutesListCall) Continue(continue_ string) *ProjectsLocationsRoutesListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -9081,7 +9268,7 @@ func (c *ProjectsLocationsRoutesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9152,7 +9339,7 @@ func (c *ProjectsLocationsRoutesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9172,7 +9359,7 @@ func (c *ProjectsLocationsRoutesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9218,10 +9405,22 @@ type ProjectsLocationsServicesCreateCall struct {
 }
 
 // Create: Create a service.
+//
+// - parent: The namespace in which the service should be created. For
+//   Cloud Run (fully managed), replace {namespace_id} with the project
+//   ID or number.
 func (r *ProjectsLocationsServicesService) Create(parent string, service *Service) *ProjectsLocationsServicesCreateCall {
 	c := &ProjectsLocationsServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.service = service
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
+func (c *ProjectsLocationsServicesCreateCall) DryRun(dryRun string) *ProjectsLocationsServicesCreateCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -9252,7 +9451,7 @@ func (c *ProjectsLocationsServicesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9324,6 +9523,11 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "The namespace in which the service should be created. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
 	//       "location": "path",
@@ -9359,6 +9563,9 @@ type ProjectsLocationsServicesDeleteCall struct {
 // Delete: Delete a service. This will cause the Service to stop serving
 // traffic and will delete the child entities like Routes,
 // Configurations and Revisions.
+//
+// - name: The name of the service to delete. For Cloud Run (fully
+//   managed), replace {namespace_id} with the project ID or number.
 func (r *ProjectsLocationsServicesService) Delete(name string) *ProjectsLocationsServicesDeleteCall {
 	c := &ProjectsLocationsServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9369,6 +9576,14 @@ func (r *ProjectsLocationsServicesService) Delete(name string) *ProjectsLocation
 // currently ignores this parameter.
 func (c *ProjectsLocationsServicesDeleteCall) ApiVersion(apiVersion string) *ProjectsLocationsServicesDeleteCall {
 	c.urlParams_.Set("apiVersion", apiVersion)
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
+func (c *ProjectsLocationsServicesDeleteCall) DryRun(dryRun string) *ProjectsLocationsServicesDeleteCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -9416,7 +9631,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9488,6 +9703,11 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "dryRun": {
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "kind": {
 	//       "description": "Cloud Run currently ignores this parameter.",
 	//       "location": "query",
@@ -9529,6 +9749,9 @@ type ProjectsLocationsServicesGetCall struct {
 }
 
 // Get: Get information about a service.
+//
+// - name: The name of the service to retrieve. For Cloud Run (fully
+//   managed), replace {namespace_id} with the project ID or number.
 func (r *ProjectsLocationsServicesService) Get(name string) *ProjectsLocationsServicesGetCall {
 	c := &ProjectsLocationsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9572,7 +9795,7 @@ func (c *ProjectsLocationsServicesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9675,6 +9898,10 @@ type ProjectsLocationsServicesGetIamPolicyCall struct {
 // GetIamPolicy: Get the IAM Access Control policy currently in effect
 // for the given Cloud Run service. This result does not include any
 // inherited policies.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsServicesService) GetIamPolicy(resource string) *ProjectsLocationsServicesGetIamPolicyCall {
 	c := &ProjectsLocationsServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9732,7 +9959,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9839,14 +10066,18 @@ type ProjectsLocationsServicesListCall struct {
 }
 
 // List: List services.
+//
+// - parent: The namespace from which the services should be listed. For
+//   Cloud Run (fully managed), replace {namespace_id} with the project
+//   ID or number.
 func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocationsServicesListCall {
 	c := &ProjectsLocationsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Continue sets the optional parameter "continue": Optional encoded
-// string to continue paging.
+// Continue sets the optional parameter "continue": Encoded string to
+// continue paging.
 func (c *ProjectsLocationsServicesListCall) Continue(continue_ string) *ProjectsLocationsServicesListCall {
 	c.urlParams_.Set("continue", continue_)
 	return c
@@ -9936,7 +10167,7 @@ func (c *ProjectsLocationsServicesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10007,7 +10238,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*L
 	//   ],
 	//   "parameters": {
 	//     "continue": {
-	//       "description": "Optional encoded string to continue paging.",
+	//       "description": "Optional. Encoded string to continue paging.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10027,7 +10258,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "limit": {
-	//       "description": "The maximum number of records that should be returned.",
+	//       "description": "Optional. The maximum number of records that should be returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -10077,10 +10308,21 @@ type ProjectsLocationsServicesReplaceServiceCall struct {
 // will work to make the 'status' match the requested 'spec'. May
 // provide metadata.resourceVersion to enforce update from last read for
 // optimistic concurrency control.
+//
+// - name: The name of the service being replaced. For Cloud Run (fully
+//   managed), replace {namespace_id} with the project ID or number.
 func (r *ProjectsLocationsServicesService) ReplaceService(name string, service *Service) *ProjectsLocationsServicesReplaceServiceCall {
 	c := &ProjectsLocationsServicesReplaceServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.service = service
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Indicates that the
+// server should validate the request and populate default values
+// without persisting the request. Supported values: `all`
+func (c *ProjectsLocationsServicesReplaceServiceCall) DryRun(dryRun string) *ProjectsLocationsServicesReplaceServiceCall {
+	c.urlParams_.Set("dryRun", dryRun)
 	return c
 }
 
@@ -10111,7 +10353,7 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesReplaceServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10183,6 +10425,11 @@ func (c *ProjectsLocationsServicesReplaceServiceCall) Do(opts ...googleapi.CallO
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "dryRun": {
+	//       "description": "Indicates that the server should validate the request and populate default values without persisting the request. Supported values: `all`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "The name of the service being replaced. For Cloud Run (fully managed), replace {namespace_id} with the project ID or number.",
 	//       "location": "path",
@@ -10218,6 +10465,10 @@ type ProjectsLocationsServicesSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the IAM Access control policy for the specified
 // Service. Overwrites any existing policy.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsServicesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServicesSetIamPolicyCall {
 	c := &ProjectsLocationsServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10252,7 +10503,7 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10360,6 +10611,10 @@ type ProjectsLocationsServicesTestIamPermissionsCall struct {
 // TestIamPermissions: Returns permissions that a caller has on the
 // specified Project. There are no permissions required for making this
 // API call.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsServicesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServicesTestIamPermissionsCall {
 	c := &ProjectsLocationsServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10394,7 +10649,7 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

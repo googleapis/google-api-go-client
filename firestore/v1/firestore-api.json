@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         },
         "https://www.googleapis.com/auth/datastore": {
           "description": "View and manage your Google Cloud Datastore data"
@@ -113,7 +113,7 @@
         "databases": {
           "methods": {
             "exportDocuments": {
-              "description": "Exports a copy of all or a subset of documents from Google Cloud Firestore to another storage system, such as Google Cloud Storage. Recent updates to documents may not be reflected in the export. The export occurs in the background and its progress can be monitored and managed via the Operation resource that is created. The output of an export may only be used once the associated operation is done. If an export operation is cancelled before completion it may leave partial data behind in Google Cloud Storage.",
+              "description": "Exports a copy of all or a subset of documents from Google Cloud Firestore to another storage system, such as Google Cloud Storage. Recent updates to documents may not be reflected in the export. The export occurs in the background and its progress can be monitored and managed via the Operation resource that is created. The output of an export may only be used once the associated operation is done. If an export operation is cancelled before completion it may leave partial data behind in Google Cloud Storage. For more details on export behavior and output format, refer to: https://cloud.google.com/firestore/docs/manage-data/export-import",
               "flatPath": "v1/projects/{projectsId}/databases/{databasesId}:exportDocuments",
               "httpMethod": "POST",
               "id": "firestore.projects.databases.exportDocuments",
@@ -141,6 +141,32 @@
                 "https://www.googleapis.com/auth/datastore"
               ]
             },
+            "get": {
+              "description": "Gets information about a database.",
+              "flatPath": "v1/projects/{projectsId}/databases/{databasesId}",
+              "httpMethod": "GET",
+              "id": "firestore.projects.databases.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. A name of the form `projects/{project_id}/databases/{database_id}`",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/databases/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "GoogleFirestoreAdminV1Database"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/datastore"
+              ]
+            },
             "importDocuments": {
               "description": "Imports documents into Google Cloud Firestore. Existing documents with the same name are overwritten. The import occurs in the background and its progress can be monitored and managed via the Operation resource that is created. If an ImportDocuments operation is cancelled, it is possible that a subset of the data has already been imported to Cloud Firestore.",
               "flatPath": "v1/projects/{projectsId}/databases/{databasesId}:importDocuments",
@@ -161,6 +187,67 @@
               "path": "v1/{+name}:importDocuments",
               "request": {
                 "$ref": "GoogleFirestoreAdminV1ImportDocumentsRequest"
+              },
+              "response": {
+                "$ref": "GoogleLongrunningOperation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/datastore"
+              ]
+            },
+            "list": {
+              "description": "List all the databases in the project.",
+              "flatPath": "v1/projects/{projectsId}/databases",
+              "httpMethod": "GET",
+              "id": "firestore.projects.databases.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. A parent name of the form `projects/{project_id}`",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/databases",
+              "response": {
+                "$ref": "GoogleFirestoreAdminV1ListDatabasesResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/datastore"
+              ]
+            },
+            "patch": {
+              "description": "Updates a database.",
+              "flatPath": "v1/projects/{projectsId}/databases/{databasesId}",
+              "httpMethod": "PATCH",
+              "id": "firestore.projects.databases.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The resource name of the Database. Format: `projects/{project}/databases/{database}`",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/databases/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "The list of fields to be updated.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "GoogleFirestoreAdminV1Database"
               },
               "response": {
                 "$ref": "GoogleLongrunningOperation"
@@ -203,7 +290,7 @@
                       ]
                     },
                     "list": {
-                      "description": "Lists the field configuration and metadata for this database. Currently, FirestoreAdmin.ListFields only supports listing fields that have been explicitly overridden. To issue this query, call FirestoreAdmin.ListFields with the filter set to `indexConfig.usesAncestorConfig:false`.",
+                      "description": "Lists the field configuration and metadata for this database. Currently, FirestoreAdmin.ListFields only supports listing fields that have been explicitly overridden. To issue this query, call FirestoreAdmin.ListFields with the filter set to `indexConfig.usesAncestorConfig:false` .",
                       "flatPath": "v1/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/fields",
                       "httpMethod": "GET",
                       "id": "firestore.projects.databases.collectionGroups.fields.list",
@@ -212,7 +299,7 @@
                       ],
                       "parameters": {
                         "filter": {
-                          "description": "The filter to apply to list results. Currently, FirestoreAdmin.ListFields only supports listing fields that have been explicitly overridden. To issue this query, call FirestoreAdmin.ListFields with the filter set to `indexConfig.usesAncestorConfig:false`.",
+                          "description": "The filter to apply to list results. Currently, FirestoreAdmin.ListFields only supports listing fields that have been explicitly overridden. To issue this query, call FirestoreAdmin.ListFields with a filter that includes `indexConfig.usesAncestorConfig:false` .",
                           "location": "query",
                           "type": "string"
                         },
@@ -254,7 +341,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "A field name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/fields/{field_path}` A field path may be a simple field name, e.g. `address` or a path to fields within map_value , e.g. `address.city`, or a special field path. The only valid special field is `*`, which represents any field. Field paths may be quoted using ` (backtick). The only character that needs to be escaped within a quoted field path is the backtick character itself, escaped using a backslash. Special characters in field paths that must be quoted include: `*`, `.`, ``` (backtick), `[`, `]`, as well as any ascii symbolic characters. Examples: (Note: Comments here are written in markdown syntax, so there is an additional layer of backticks to represent a code block) `\\`address.city\\`` represents a field named `address.city`, not the map key `city` in the field `address`. `\\`*\\`` represents a field named `*`, not any field. A special `Field` contains the default indexing settings for all fields. This field's resource name is: `projects/{project_id}/databases/{database_id}/collectionGroups/__default__/fields/*` Indexes defined on this `Field` will be applied to all fields which do not have their own `Field` index configuration.",
+                          "description": "Required. A field name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/fields/{field_path}` A field path may be a simple field name, e.g. `address` or a path to fields within map_value , e.g. `address.city`, or a special field path. The only valid special field is `*`, which represents any field. Field paths may be quoted using ` (backtick). The only character that needs to be escaped within a quoted field path is the backtick character itself, escaped using a backslash. Special characters in field paths that must be quoted include: `*`, `.`, ``` (backtick), `[`, `]`, as well as any ascii symbolic characters. Examples: (Note: Comments here are written in markdown syntax, so there is an additional layer of backticks to represent a code block) `\\`address.city\\`` represents a field named `address.city`, not the map key `city` in the field `address`. `\\`*\\`` represents a field named `*`, not any field. A special `Field` contains the default indexing settings for all fields. This field's resource name is: `projects/{project_id}/databases/{database_id}/collectionGroups/__default__/fields/*` Indexes defined on this `Field` will be applied to all fields which do not have their own `Field` index configuration.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+/fields/[^/]+$",
                           "required": true,
@@ -1123,7 +1210,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "The standard list filter.",
+                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
                   "location": "query",
                   "type": "string"
                 },
@@ -1135,13 +1222,13 @@
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "The standard list page size.",
+                  "description": "The maximum number of results to return. If not set, the service selects a default.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "The standard list page token.",
+                  "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
                   "location": "query",
                   "type": "string"
                 }
@@ -1160,7 +1247,7 @@
       }
     }
   },
-  "revision": "20201016",
+  "revision": "20210916",
   "rootUrl": "https://firestore.googleapis.com/",
   "schemas": {
     "ArrayValue": {
@@ -1685,6 +1772,55 @@
       },
       "type": "object"
     },
+    "GoogleFirestoreAdminV1Database": {
+      "description": "A Cloud Firestore Database in Native Mode. Currently one database is allowed per cloud project. It is named '(default)'",
+      "id": "GoogleFirestoreAdminV1Database",
+      "properties": {
+        "concurrencyMode": {
+          "description": "The concurrency control mode to use for this database.",
+          "enum": [
+            "CONCURRENCY_MODE_UNSPECIFIED",
+            "OPTIMISTIC",
+            "PESSIMISTIC",
+            "OPTIMISTIC_WITH_ENTITY_GROUPS"
+          ],
+          "enumDescriptions": [
+            "Not used.",
+            "Use optimistic concurrency control by default. This is the setting for Cloud Firestore customers.",
+            "Use pessimistic concurrency control by default. This is the setting for Cloud Firestore customers.",
+            "Use optimistic concurrency control with entity groups by default. This is the setting for Cloud Datastore customers."
+          ],
+          "type": "string"
+        },
+        "etag": {
+          "description": "This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.",
+          "type": "string"
+        },
+        "locationId": {
+          "description": "The location of the database. Available databases are listed at https://cloud.google.com/firestore/docs/locations.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The resource name of the Database. Format: `projects/{project}/databases/{database}`",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type of the database. See https://cloud.google.com/datastore/docs/firestore-or-datastore for information about how to choose.",
+          "enum": [
+            "DATABASE_TYPE_UNSPECIFIED",
+            "FIRESTORE_NATIVE",
+            "DATASTORE_MODE"
+          ],
+          "enumDescriptions": [
+            "The default value. This value is used if the database type is omitted.",
+            "Firestore Native Mode",
+            "Firestore in Datastore Mode."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleFirestoreAdminV1ExportDocumentsMetadata": {
       "description": "Metadata for google.longrunning.Operation results from FirestoreAdmin.ExportDocuments.",
       "id": "GoogleFirestoreAdminV1ExportDocumentsMetadata",
@@ -1783,7 +1919,7 @@
           "description": "The index configuration for this field. If unset, field indexing will revert to the configuration defined by the `ancestor_field`. To explicitly remove all indexes for this field, specify an index config with an empty list of indexes."
         },
         "name": {
-          "description": "A field name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/fields/{field_path}` A field path may be a simple field name, e.g. `address` or a path to fields within map_value , e.g. `address.city`, or a special field path. The only valid special field is `*`, which represents any field. Field paths may be quoted using ` (backtick). The only character that needs to be escaped within a quoted field path is the backtick character itself, escaped using a backslash. Special characters in field paths that must be quoted include: `*`, `.`, ``` (backtick), `[`, `]`, as well as any ascii symbolic characters. Examples: (Note: Comments here are written in markdown syntax, so there is an additional layer of backticks to represent a code block) `\\`address.city\\`` represents a field named `address.city`, not the map key `city` in the field `address`. `\\`*\\`` represents a field named `*`, not any field. A special `Field` contains the default indexing settings for all fields. This field's resource name is: `projects/{project_id}/databases/{database_id}/collectionGroups/__default__/fields/*` Indexes defined on this `Field` will be applied to all fields which do not have their own `Field` index configuration.",
+          "description": "Required. A field name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/fields/{field_path}` A field path may be a simple field name, e.g. `address` or a path to fields within map_value , e.g. `address.city`, or a special field path. The only valid special field is `*`, which represents any field. Field paths may be quoted using ` (backtick). The only character that needs to be escaped within a quoted field path is the backtick character itself, escaped using a backslash. Special characters in field paths that must be quoted include: `*`, `.`, ``` (backtick), `[`, `]`, as well as any ascii symbolic characters. Examples: (Note: Comments here are written in markdown syntax, so there is an additional layer of backticks to represent a code block) `\\`address.city\\`` represents a field named `address.city`, not the map key `city` in the field `address`. `\\`*\\`` represents a field named `*`, not any field. A special `Field` contains the default indexing settings for all fields. This field's resource name is: `projects/{project_id}/databases/{database_id}/collectionGroups/__default__/fields/*` Indexes defined on this `Field` will be applied to all fields which do not have their own `Field` index configuration.",
           "type": "string"
         }
       },
@@ -2047,7 +2183,7 @@
           "type": "string"
         },
         "order": {
-          "description": "Indicates that this field supports ordering by the specified order or comparing using =, \u003c, \u003c=, \u003e, \u003e=.",
+          "description": "Indicates that this field supports ordering by the specified order or comparing using =, !=, \u003c, \u003c=, \u003e, \u003e=.",
           "enum": [
             "ORDER_UNSPECIFIED",
             "ASCENDING",
@@ -2112,6 +2248,20 @@
             "Request has finished being cancelled after user called google.longrunning.Operations.CancelOperation."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleFirestoreAdminV1ListDatabasesResponse": {
+      "description": "The list of databases for a project.",
+      "id": "GoogleFirestoreAdminV1ListDatabasesResponse",
+      "properties": {
+        "databases": {
+          "description": "The databases in the project.",
+          "items": {
+            "$ref": "GoogleFirestoreAdminV1Database"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2235,7 +2385,7 @@
       "type": "object"
     },
     "LatLng": {
-      "description": "An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this must conform to the WGS84 standard. Values must be within normalized ranges.",
+      "description": "An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this object must conform to the WGS84 standard. Values must be within normalized ranges.",
       "id": "LatLng",
       "properties": {
         "latitude": {

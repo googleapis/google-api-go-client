@@ -7,15 +7,9 @@
 # Fail on error, and display commands being run.
 set -ex
 
-# Only run the linter on go1.13, since it needs type aliases (and we only care
-# about its output once).
-if [[ $(go version) != *"go1.15"* ]]; then
+if [[ $(go version) != *"go1.17"* ]]; then
   exit 0
 fi
-
-go install \
-  golang.org/x/lint/golint \
-  golang.org/x/tools/cmd/goimports
 
 # Fail if a dependency was added without the necessary go.mod/go.sum change
 # being part of the commit.

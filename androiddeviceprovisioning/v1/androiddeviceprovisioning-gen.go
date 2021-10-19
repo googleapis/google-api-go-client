@@ -266,10 +266,10 @@ type ClaimDeviceRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "CustomerId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CustomerId") to include in
@@ -303,10 +303,10 @@ type ClaimDeviceResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceId") to include in
@@ -333,10 +333,10 @@ type ClaimDevicesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Claims") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Claims") to include in API
@@ -370,6 +370,20 @@ type Company struct {
 	// enrollment portal.
 	CompanyName string `json:"companyName,omitempty"`
 
+	// LanguageCode: Input only. The preferred locale of the customer
+	// represented as a BCP47 language code. This field is validated on
+	// input and requests containing unsupported language codes will be
+	// rejected. Supported language codes: Arabic (ar) Chinese (Hong Kong)
+	// (zh-HK) Chinese (Simplified) (zh-CN) Chinese (Traditional) (zh-TW)
+	// Czech (cs) Danish (da) Dutch (nl) English (UK) (en-GB) English (US)
+	// (en-US) Filipino (fil) Finnish (fi) French (fr) German (de) Hebrew
+	// (iw) Hindi (hi) Hungarian (hu) Indonesian (id) Italian (it) Japanese
+	// (ja) Korean (ko) Norwegian (Bokmal) (no) Polish (pl) Portuguese
+	// (Brazil) (pt-BR) Portuguese (Portugal) (pt-PT) Russian (ru) Spanish
+	// (es) Spanish (Latin America) (es-419) Swedish (sv) Thai (th) Turkish
+	// (tr) Ukrainian (uk) Vietnamese (vi)
+	LanguageCode string `json:"languageCode,omitempty"`
+
 	// Name: Output only. The API resource name of the company. The resource
 	// name is one of the following formats: *
 	// `partners/[PARTNER_ID]/customers/[CUSTOMER_ID]` *
@@ -379,11 +393,17 @@ type Company struct {
 	Name string `json:"name,omitempty"`
 
 	// OwnerEmails: Required. Input only. Email address of customer's users
-	// in the owner role. At least one `owner_email` is required. Each email
-	// address must be associated with a Google Account. Owners share the
-	// same access as admins but can also add, delete, and edit your
-	// organization's portal users.
+	// in the owner role. At least one `owner_email` is required. Owners
+	// share the same access as admins but can also add, delete, and edit
+	// your organization's portal users.
 	OwnerEmails []string `json:"ownerEmails,omitempty"`
+
+	// SkipWelcomeEmail: Input only. If set to true, welcome email will not
+	// be sent to the customer. It is recommended to skip the welcome email
+	// if devices will be claimed with additional DEVICE_PROTECTION service,
+	// as the customer will receive separate emails at device claim time.
+	// This field is ignored if this is not a Zero-touch customer.
+	SkipWelcomeEmail bool `json:"skipWelcomeEmail,omitempty"`
 
 	// TermsStatus: Output only. Whether any user from the company has
 	// accepted the latest Terms of Service (ToS). See TermsStatus.
@@ -405,10 +425,10 @@ type Company struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdminEmails") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdminEmails") to include
@@ -496,10 +516,10 @@ type Configuration struct {
 
 	// ForceSendFields is a list of field names (e.g. "CompanyName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CompanyName") to include
@@ -527,10 +547,10 @@ type CreateCustomerRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Customer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Customer") to include in
@@ -561,10 +581,10 @@ type CustomerApplyConfigurationRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Configuration") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Configuration") to include
@@ -594,10 +614,10 @@ type CustomerListConfigurationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Configurations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Configurations") to
@@ -632,10 +652,10 @@ type CustomerListCustomersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Customers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Customers") to include in
@@ -669,10 +689,10 @@ type CustomerListDevicesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Devices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Devices") to include in
@@ -703,10 +723,10 @@ type CustomerListDpcsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dpcs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dpcs") to include in API
@@ -732,10 +752,10 @@ type CustomerRemoveConfigurationRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Device") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Device") to include in API
@@ -761,10 +781,10 @@ type CustomerUnclaimDeviceRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Device") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Device") to include in API
@@ -817,10 +837,10 @@ type Device struct {
 
 	// ForceSendFields is a list of field names (e.g. "Claims") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Claims") to include in API
@@ -843,6 +863,15 @@ func (s *Device) MarshalJSON() ([]byte, error) {
 // the type `SECTION_TYPE_ZERO_TOUCH`. To learn more, read Claim devices
 // for customers (/zero-touch/guides/how-it-works#claim).
 type DeviceClaim struct {
+	// AdditionalService: The Additional service registered for the device.
+	//
+	// Possible values:
+	//   "ADDITIONAL_SERVICE_UNSPECIFIED" - No additional service.
+	//   "DEVICE_PROTECTION" - Device protection service, also known as
+	// Android Enterprise Essentials. To claim a device with the device
+	// protection service you must enroll with the partnership team.
+	AdditionalService string `json:"additionalService,omitempty"`
+
 	// OwnerCompanyId: The ID of the Customer that purchased the device.
 	OwnerCompanyId int64 `json:"ownerCompanyId,omitempty,string"`
 
@@ -867,15 +896,15 @@ type DeviceClaim struct {
 	// 'vacation mode'.
 	VacationModeStartTime string `json:"vacationModeStartTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "OwnerCompanyId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdditionalService")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OwnerCompanyId") to
+	// NullFields is a list of field names (e.g. "AdditionalService") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -919,10 +948,10 @@ type DeviceIdentifier struct {
 
 	// ForceSendFields is a list of field names (e.g. "Imei") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Imei") to include in API
@@ -953,10 +982,10 @@ type DeviceMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Entries") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Entries") to include in
@@ -991,10 +1020,10 @@ type DeviceReference struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceId") to include in
@@ -1041,10 +1070,10 @@ type DevicesLongRunningOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "DevicesCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DevicesCount") to include
@@ -1078,10 +1107,10 @@ type DevicesLongRunningOperationResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "PerDeviceStatus") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PerDeviceStatus") to
@@ -1125,10 +1154,10 @@ type Dpc struct {
 
 	// ForceSendFields is a list of field names (e.g. "DpcName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DpcName") to include in
@@ -1173,10 +1202,10 @@ type FindDevicesByDeviceIdentifierRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceIdentifier") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceIdentifier") to
@@ -1215,10 +1244,10 @@ type FindDevicesByDeviceIdentifierResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Devices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Devices") to include in
@@ -1259,10 +1288,10 @@ type FindDevicesByOwnerRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "CustomerId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CustomerId") to include in
@@ -1299,10 +1328,10 @@ type FindDevicesByOwnerResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Devices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Devices") to include in
@@ -1340,10 +1369,10 @@ type ListCustomersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Customers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Customers") to include in
@@ -1381,10 +1410,10 @@ type ListVendorCustomersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Customers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Customers") to include in
@@ -1422,10 +1451,10 @@ type ListVendorsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1479,10 +1508,10 @@ type Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -1520,10 +1549,10 @@ type OperationPerDevice struct {
 
 	// ForceSendFields is a list of field names (e.g. "Claim") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Claim") to include in API
@@ -1566,10 +1595,10 @@ type PartnerClaim struct {
 
 	// ForceSendFields is a list of field names (e.g. "CustomerId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CustomerId") to include in
@@ -1615,10 +1644,10 @@ type PartnerUnclaim struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceId") to include in
@@ -1669,10 +1698,10 @@ type PerDeviceStatusInBatch struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceId") to include in
@@ -1713,10 +1742,10 @@ type Status struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -1761,10 +1790,10 @@ type UnclaimDeviceRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceId") to include in
@@ -1790,10 +1819,10 @@ type UnclaimDevicesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Unclaims") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Unclaims") to include in
@@ -1819,10 +1848,10 @@ type UpdateDeviceMetadataInBatchRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Updates") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Updates") to include in
@@ -1847,10 +1876,10 @@ type UpdateDeviceMetadataRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceMetadata") to
@@ -1882,10 +1911,10 @@ type UpdateMetadataArguments struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceId") to include in
@@ -1971,7 +2000,7 @@ func (c *CustomersListCall) Header() http.Header {
 
 func (c *CustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2090,6 +2119,9 @@ type CustomersConfigurationsCreateCall struct {
 
 // Create: Creates a new configuration. Once created, a customer can
 // apply the configuration to devices.
+//
+// - parent: The customer that manages the configuration. An API
+//   resource name in the format `customers/[CUSTOMER_ID]`.
 func (r *CustomersConfigurationsService) Create(parent string, configuration *Configuration) *CustomersConfigurationsCreateCall {
 	c := &CustomersConfigurationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2124,7 +2156,7 @@ func (c *CustomersConfigurationsCreateCall) Header() http.Header {
 
 func (c *CustomersConfigurationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2227,6 +2259,10 @@ type CustomersConfigurationsDeleteCall struct {
 
 // Delete: Deletes an unused configuration. The API call fails if the
 // customer has devices with the configuration applied.
+//
+// - name: The configuration to delete. An API resource name in the
+//   format `customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`.
+//   If the configuration is applied to any devices, the API call fails.
 func (r *CustomersConfigurationsService) Delete(name string) *CustomersConfigurationsDeleteCall {
 	c := &CustomersConfigurationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2260,7 +2296,7 @@ func (c *CustomersConfigurationsDeleteCall) Header() http.Header {
 
 func (c *CustomersConfigurationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2355,6 +2391,9 @@ type CustomersConfigurationsGetCall struct {
 }
 
 // Get: Gets the details of a configuration.
+//
+// - name: The configuration to get. An API resource name in the format
+//   `customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`.
 func (r *CustomersConfigurationsService) Get(name string) *CustomersConfigurationsGetCall {
 	c := &CustomersConfigurationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2398,7 +2437,7 @@ func (c *CustomersConfigurationsGetCall) Header() http.Header {
 
 func (c *CustomersConfigurationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2496,6 +2535,9 @@ type CustomersConfigurationsListCall struct {
 }
 
 // List: Lists a customer's configurations.
+//
+// - parent: The customer that manages the listed configurations. An API
+//   resource name in the format `customers/[CUSTOMER_ID]`.
 func (r *CustomersConfigurationsService) List(parent string) *CustomersConfigurationsListCall {
 	c := &CustomersConfigurationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2539,7 +2581,7 @@ func (c *CustomersConfigurationsListCall) Header() http.Header {
 
 func (c *CustomersConfigurationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2638,6 +2680,10 @@ type CustomersConfigurationsPatchCall struct {
 }
 
 // Patch: Updates a configuration's field values.
+//
+// - name: Output only. The API resource name in the format
+//   `customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`.
+//   Assigned by the server.
 func (r *CustomersConfigurationsService) Patch(name string, configuration *Configuration) *CustomersConfigurationsPatchCall {
 	c := &CustomersConfigurationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2682,7 +2728,7 @@ func (c *CustomersConfigurationsPatchCall) Header() http.Header {
 
 func (c *CustomersConfigurationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2794,6 +2840,9 @@ type CustomersDevicesApplyConfigurationCall struct {
 // the device for zero-touch enrollment. After applying a configuration
 // to a device, the device automatically provisions itself on first
 // boot, or next factory reset.
+//
+// - parent: The customer managing the device. An API resource name in
+//   the format `customers/[CUSTOMER_ID]`.
 func (r *CustomersDevicesService) ApplyConfiguration(parent string, customerapplyconfigurationrequest *CustomerApplyConfigurationRequest) *CustomersDevicesApplyConfigurationCall {
 	c := &CustomersDevicesApplyConfigurationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2828,7 +2877,7 @@ func (c *CustomersDevicesApplyConfigurationCall) Header() http.Header {
 
 func (c *CustomersDevicesApplyConfigurationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2931,6 +2980,9 @@ type CustomersDevicesGetCall struct {
 }
 
 // Get: Gets the details of a device.
+//
+// - name: The device to get. An API resource name in the format
+//   `customers/[CUSTOMER_ID]/devices/[DEVICE_ID]`.
 func (r *CustomersDevicesService) Get(name string) *CustomersDevicesGetCall {
 	c := &CustomersDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2974,7 +3026,7 @@ func (c *CustomersDevicesGetCall) Header() http.Header {
 
 func (c *CustomersDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3072,6 +3124,9 @@ type CustomersDevicesListCall struct {
 }
 
 // List: Lists a customer's devices.
+//
+// - parent: The customer managing the devices. An API resource name in
+//   the format `customers/[CUSTOMER_ID]`.
 func (r *CustomersDevicesService) List(parent string) *CustomersDevicesListCall {
 	c := &CustomersDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3130,7 +3185,7 @@ func (c *CustomersDevicesListCall) Header() http.Header {
 
 func (c *CustomersDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3260,6 +3315,9 @@ type CustomersDevicesRemoveConfigurationCall struct {
 }
 
 // RemoveConfiguration: Removes a configuration from device.
+//
+// - parent: The customer managing the device in the format
+//   `customers/[CUSTOMER_ID]`.
 func (r *CustomersDevicesService) RemoveConfiguration(parent string, customerremoveconfigurationrequest *CustomerRemoveConfigurationRequest) *CustomersDevicesRemoveConfigurationCall {
 	c := &CustomersDevicesRemoveConfigurationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3294,7 +3352,7 @@ func (c *CustomersDevicesRemoveConfigurationCall) Header() http.Header {
 
 func (c *CustomersDevicesRemoveConfigurationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3400,6 +3458,9 @@ type CustomersDevicesUnclaimCall struct {
 // zero-touch enrollment. After removing a device, a customer must
 // contact their reseller to register the device into zero-touch
 // enrollment again.
+//
+// - parent: The customer managing the device. An API resource name in
+//   the format `customers/[CUSTOMER_ID]`.
 func (r *CustomersDevicesService) Unclaim(parent string, customerunclaimdevicerequest *CustomerUnclaimDeviceRequest) *CustomersDevicesUnclaimCall {
 	c := &CustomersDevicesUnclaimCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3434,7 +3495,7 @@ func (c *CustomersDevicesUnclaimCall) Header() http.Header {
 
 func (c *CustomersDevicesUnclaimCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3538,6 +3599,9 @@ type CustomersDpcsListCall struct {
 
 // List: Lists the DPCs (device policy controllers) that support
 // zero-touch enrollment.
+//
+// - parent: The customer that can use the DPCs in configurations. An
+//   API resource name in the format `customers/[CUSTOMER_ID]`.
 func (r *CustomersDpcsService) List(parent string) *CustomersDpcsListCall {
 	c := &CustomersDpcsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3581,7 +3645,7 @@ func (c *CustomersDpcsListCall) Header() http.Header {
 
 func (c *CustomersDpcsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3681,6 +3745,8 @@ type OperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3724,7 +3790,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3826,6 +3892,9 @@ type PartnersCustomersCreateCall struct {
 // and EMM configs by calling API methods or using their zero-touch
 // enrollment portal. The customer receives an email that welcomes them
 // to zero-touch enrollment and explains how to sign into the portal.
+//
+// - parent: The parent resource ID in the format
+//   `partners/[PARTNER_ID]` that identifies the reseller.
 func (r *PartnersCustomersService) Create(parent string, createcustomerrequest *CreateCustomerRequest) *PartnersCustomersCreateCall {
 	c := &PartnersCustomersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3860,7 +3929,7 @@ func (c *PartnersCustomersCreateCall) Header() http.Header {
 
 func (c *PartnersCustomersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3966,6 +4035,8 @@ type PartnersCustomersListCall struct {
 // identified by the `partnerId` argument. This list includes customers
 // that the reseller created and customers that enrolled themselves
 // using the portal.
+//
+// - partnerId: The ID of the reseller partner.
 func (r *PartnersCustomersService) List(partnerId int64) *PartnersCustomersListCall {
 	c := &PartnersCustomersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -4024,7 +4095,7 @@ func (c *PartnersCustomersListCall) Header() http.Header {
 
 func (c *PartnersCustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4157,6 +4228,8 @@ type PartnersDevicesClaimCall struct {
 // Claim: Claims a device for a customer and adds it to zero-touch
 // enrollment. If the device is already claimed by another customer, the
 // call returns an error.
+//
+// - partnerId: The ID of the reseller partner.
 func (r *PartnersDevicesService) Claim(partnerId int64, claimdevicerequest *ClaimDeviceRequest) *PartnersDevicesClaimCall {
 	c := &PartnersDevicesClaimCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -4191,7 +4264,7 @@ func (c *PartnersDevicesClaimCall) Header() http.Header {
 
 func (c *PartnersDevicesClaimCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4298,6 +4371,8 @@ type PartnersDevicesClaimAsyncCall struct {
 // Adds the devices to zero-touch enrollment. To learn more, read
 // Long‑running batch operations
 // (/zero-touch/guides/how-it-works#operations).
+//
+// - partnerId: The ID of the reseller partner.
 func (r *PartnersDevicesService) ClaimAsync(partnerId int64, claimdevicesrequest *ClaimDevicesRequest) *PartnersDevicesClaimAsyncCall {
 	c := &PartnersDevicesClaimAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -4332,7 +4407,7 @@ func (c *PartnersDevicesClaimAsyncCall) Header() http.Header {
 
 func (c *PartnersDevicesClaimAsyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4437,6 +4512,8 @@ type PartnersDevicesFindByIdentifierCall struct {
 
 // FindByIdentifier: Finds devices by hardware identifiers, such as
 // IMEI.
+//
+// - partnerId: The ID of the reseller partner.
 func (r *PartnersDevicesService) FindByIdentifier(partnerId int64, finddevicesbydeviceidentifierrequest *FindDevicesByDeviceIdentifierRequest) *PartnersDevicesFindByIdentifierCall {
 	c := &PartnersDevicesFindByIdentifierCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -4471,7 +4548,7 @@ func (c *PartnersDevicesFindByIdentifierCall) Header() http.Header {
 
 func (c *PartnersDevicesFindByIdentifierCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4600,6 +4677,8 @@ type PartnersDevicesFindByOwnerCall struct {
 // contain devices registered to the reseller that's identified by the
 // `partnerId` argument. The customer's devices purchased from other
 // resellers don't appear in the results.
+//
+// - partnerId: The ID of the reseller partner.
 func (r *PartnersDevicesService) FindByOwner(partnerId int64, finddevicesbyownerrequest *FindDevicesByOwnerRequest) *PartnersDevicesFindByOwnerCall {
 	c := &PartnersDevicesFindByOwnerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -4634,7 +4713,7 @@ func (c *PartnersDevicesFindByOwnerCall) Header() http.Header {
 
 func (c *PartnersDevicesFindByOwnerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4759,6 +4838,9 @@ type PartnersDevicesGetCall struct {
 }
 
 // Get: Gets a device.
+//
+// - name: The device API resource name in the format
+//   `partners/[PARTNER_ID]/devices/[DEVICE_ID]`.
 func (r *PartnersDevicesService) Get(name string) *PartnersDevicesGetCall {
 	c := &PartnersDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4802,7 +4884,7 @@ func (c *PartnersDevicesGetCall) Header() http.Header {
 
 func (c *PartnersDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4901,6 +4983,10 @@ type PartnersDevicesMetadataCall struct {
 }
 
 // Metadata: Updates reseller metadata associated with the device.
+//
+// - deviceId: The ID of the device.
+// - metadataOwnerId: The owner of the newly set metadata. Set this to
+//   the partner ID.
 func (r *PartnersDevicesService) Metadata(metadataOwnerId int64, deviceId int64, updatedevicemetadatarequest *UpdateDeviceMetadataRequest) *PartnersDevicesMetadataCall {
 	c := &PartnersDevicesMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.metadataOwnerId = metadataOwnerId
@@ -4936,7 +5022,7 @@ func (c *PartnersDevicesMetadataCall) Header() http.Header {
 
 func (c *PartnersDevicesMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5051,6 +5137,8 @@ type PartnersDevicesUnclaimCall struct {
 
 // Unclaim: Unclaims a device from a customer and removes it from
 // zero-touch enrollment.
+//
+// - partnerId: The ID of the reseller partner.
 func (r *PartnersDevicesService) Unclaim(partnerId int64, unclaimdevicerequest *UnclaimDeviceRequest) *PartnersDevicesUnclaimCall {
 	c := &PartnersDevicesUnclaimCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -5085,7 +5173,7 @@ func (c *PartnersDevicesUnclaimCall) Header() http.Header {
 
 func (c *PartnersDevicesUnclaimCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5192,6 +5280,8 @@ type PartnersDevicesUnclaimAsyncCall struct {
 // asynchronously. Removes the devices from zero-touch enrollment. To
 // learn more, read Long‑running batch operations
 // (/zero-touch/guides/how-it-works#operations).
+//
+// - partnerId: The reseller partner ID.
 func (r *PartnersDevicesService) UnclaimAsync(partnerId int64, unclaimdevicesrequest *UnclaimDevicesRequest) *PartnersDevicesUnclaimAsyncCall {
 	c := &PartnersDevicesUnclaimAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -5226,7 +5316,7 @@ func (c *PartnersDevicesUnclaimAsyncCall) Header() http.Header {
 
 func (c *PartnersDevicesUnclaimAsyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5334,6 +5424,8 @@ type PartnersDevicesUpdateMetadataAsyncCall struct {
 // returns an `Operation` that can be used to track progress. Read
 // Long‑running batch operations
 // (/zero-touch/guides/how-it-works#operations).
+//
+// - partnerId: The reseller partner ID.
 func (r *PartnersDevicesService) UpdateMetadataAsync(partnerId int64, updatedevicemetadatainbatchrequest *UpdateDeviceMetadataInBatchRequest) *PartnersDevicesUpdateMetadataAsyncCall {
 	c := &PartnersDevicesUpdateMetadataAsyncCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -5368,7 +5460,7 @@ func (c *PartnersDevicesUpdateMetadataAsyncCall) Header() http.Header {
 
 func (c *PartnersDevicesUpdateMetadataAsyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5472,6 +5564,8 @@ type PartnersVendorsListCall struct {
 }
 
 // List: Lists the vendors of the partner.
+//
+// - parent: The resource name in the format `partners/[PARTNER_ID]`.
 func (r *PartnersVendorsService) List(parent string) *PartnersVendorsListCall {
 	c := &PartnersVendorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5529,7 +5623,7 @@ func (c *PartnersVendorsListCall) Header() http.Header {
 
 func (c *PartnersVendorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5659,6 +5753,9 @@ type PartnersVendorsCustomersListCall struct {
 }
 
 // List: Lists the customers of the vendor.
+//
+// - parent: The resource name in the format
+//   `partners/[PARTNER_ID]/vendors/[VENDOR_ID]`.
 func (r *PartnersVendorsCustomersService) List(parent string) *PartnersVendorsCustomersListCall {
 	c := &PartnersVendorsCustomersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5716,7 +5813,7 @@ func (c *PartnersVendorsCustomersListCall) Header() http.Header {
 
 func (c *PartnersVendorsCustomersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

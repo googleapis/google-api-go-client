@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         },
         "https://www.googleapis.com/auth/compute": {
           "description": "View and manage your Google Compute Engine resources"
@@ -12,7 +12,7 @@
           "description": "View your Google Compute Engine resources"
         },
         "https://www.googleapis.com/auth/userinfo.email": {
-          "description": "View your email address"
+          "description": "See your primary Google Account email address"
         }
       }
     }
@@ -185,184 +185,6 @@
         }
       },
       "resources": {
-        "catalogTemplates": {
-          "methods": {
-            "commit": {
-              "description": "Creates a new TemplateVersion (Important: not new Template) entry in the spanner table. Requires project_id and display_name (template).",
-              "flatPath": "v1b3/projects/{projectsId}/catalogTemplates/{catalogTemplatesId}:commit",
-              "httpMethod": "POST",
-              "id": "dataflow.projects.catalogTemplates.commit",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "The location of the template, name includes project_id and display_name. Commit using project_id(pid1) and display_name(tid1). Format: projects/{pid1}/catalogTemplates/{tid1}",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/catalogTemplates/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1b3/{+name}:commit",
-              "request": {
-                "$ref": "CommitTemplateVersionRequest"
-              },
-              "response": {
-                "$ref": "TemplateVersion"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
-            },
-            "delete": {
-              "description": "Deletes an existing Template. Do nothing if Template does not exist.",
-              "flatPath": "v1b3/projects/{projectsId}/catalogTemplates/{catalogTemplatesId}",
-              "httpMethod": "DELETE",
-              "id": "dataflow.projects.catalogTemplates.delete",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "name includes project_id and display_name. Delete by project_id(pid1) and display_name(tid1). Format: projects/{pid1}/catalogTemplates/{tid1}",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/catalogTemplates/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1b3/{+name}",
-              "response": {
-                "$ref": "Empty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
-            },
-            "get": {
-              "description": "Get TemplateVersion using project_id and display_name with an optional version_id field. Get latest (has tag \"latest\") TemplateVersion if version_id not set.",
-              "flatPath": "v1b3/projects/{projectsId}/catalogTemplates/{catalogTemplatesId}",
-              "httpMethod": "GET",
-              "id": "dataflow.projects.catalogTemplates.get",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Resource name includes project_id and display_name. version_id is optional. Get the latest TemplateVersion if version_id not set. Get by project_id(pid1) and display_name(tid1): Format: projects/{pid1}/catalogTemplates/{tid1} Get by project_id(pid1), display_name(tid1), and version_id(vid1): Format: projects/{pid1}/catalogTemplates/{tid1@vid}",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/catalogTemplates/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1b3/{+name}",
-              "response": {
-                "$ref": "TemplateVersion"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
-            },
-            "label": {
-              "description": "Updates the label of the TemplateVersion. Label can be duplicated in Template, so either add or remove the label in the TemplateVersion.",
-              "flatPath": "v1b3/projects/{projectsId}/catalogTemplates/{catalogTemplatesId}:label",
-              "httpMethod": "POST",
-              "id": "dataflow.projects.catalogTemplates.label",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Resource name includes project_id, display_name, and version_id. Updates by project_id(pid1), display_name(tid1), and version_id(vid1): Format: projects/{pid1}/catalogTemplates/{tid1@vid}",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/catalogTemplates/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1b3/{+name}:label",
-              "request": {
-                "$ref": "ModifyTemplateVersionLabelRequest"
-              },
-              "response": {
-                "$ref": "ModifyTemplateVersionLabelResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
-            },
-            "tag": {
-              "description": "Updates the tag of the TemplateVersion, and tag is unique in Template. If tag exists in another TemplateVersion in the Template, updates the tag to this TemplateVersion will remove it from the old TemplateVersion and add it to this TemplateVersion. If request is remove_only (remove_only = true), remove the tag from this TemplateVersion.",
-              "flatPath": "v1b3/projects/{projectsId}/catalogTemplates/{catalogTemplatesId}:tag",
-              "httpMethod": "POST",
-              "id": "dataflow.projects.catalogTemplates.tag",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Resource name includes project_id, display_name, and version_id. Updates by project_id(pid1), display_name(tid1), and version_id(vid1): Format: projects/{pid1}/catalogTemplates/{tid1@vid}",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/catalogTemplates/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1b3/{+name}:tag",
-              "request": {
-                "$ref": "ModifyTemplateVersionTagRequest"
-              },
-              "response": {
-                "$ref": "ModifyTemplateVersionTagResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
-            }
-          },
-          "resources": {
-            "templateVersions": {
-              "methods": {
-                "create": {
-                  "description": "Creates a new Template with TemplateVersion. Requires project_id(projects) and template display_name(catalogTemplates). The template display_name is set by the user.",
-                  "flatPath": "v1b3/projects/{projectsId}/catalogTemplates/{catalogTemplatesId}/templateVersions",
-                  "httpMethod": "POST",
-                  "id": "dataflow.projects.catalogTemplates.templateVersions.create",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "parent": {
-                      "description": "The parent project and template that the TemplateVersion will be created under. Create using project_id(pid1) and display_name(tid1). Format: projects/{pid1}/catalogTemplates/{tid1}",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/catalogTemplates/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1b3/{+parent}/templateVersions",
-                  "request": {
-                    "$ref": "CreateTemplateVersionRequest"
-                  },
-                  "response": {
-                    "$ref": "TemplateVersion"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/userinfo.email"
-                  ]
-                }
-              }
-            }
-          }
-        },
         "jobs": {
           "methods": {
             "aggregated": {
@@ -2133,7 +1955,7 @@
                   ],
                   "parameters": {
                     "dynamicTemplate.gcsPath": {
-                      "description": "Path to dynamic template spec file on GCS. The file must be a Json serialized DynamicTemplateFieSpec object.",
+                      "description": "Path to dynamic template spec file on Cloud Storage. The file must be a Json serialized DynamicTemplateFieSpec object.",
                       "location": "query",
                       "type": "string"
                     },
@@ -2263,47 +2085,6 @@
             }
           }
         },
-        "templateVersions": {
-          "methods": {
-            "list": {
-              "description": "List TemplateVersions using project_id and an optional display_name field. List all the TemplateVersions in the Template if display set. List all the TemplateVersions in the Project if display_name not set.",
-              "flatPath": "v1b3/projects/{projectsId}/templateVersions",
-              "httpMethod": "GET",
-              "id": "dataflow.projects.templateVersions.list",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "pageSize": {
-                  "description": "The maximum number of TemplateVersions to return per page.",
-                  "format": "int32",
-                  "location": "query",
-                  "type": "integer"
-                },
-                "pageToken": {
-                  "description": "The page token, received from a previous ListTemplateVersions call. Provide this to retrieve the subsequent page.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "parent": {
-                  "description": "parent includes project_id, and display_name is optional. List by project_id(pid1) and display_name(tid1). Format: projects/{pid1}/catalogTemplates/{tid1} List by project_id(pid1). Format: projects/{pid1}",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1b3/{+parent}/templateVersions",
-              "response": {
-                "$ref": "ListTemplateVersionsResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/userinfo.email"
-              ]
-            }
-          }
-        },
         "templates": {
           "methods": {
             "create": {
@@ -2394,7 +2175,7 @@
               ],
               "parameters": {
                 "dynamicTemplate.gcsPath": {
-                  "description": "Path to dynamic template spec file on GCS. The file must be a Json serialized DynamicTemplateFieSpec object.",
+                  "description": "Path to dynamic template spec file on Cloud Storage. The file must be a Json serialized DynamicTemplateFieSpec object.",
                   "location": "query",
                   "type": "string"
                 },
@@ -2444,7 +2225,7 @@
       }
     }
   },
-  "revision": "20210106",
+  "revision": "20210825",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {
@@ -2513,25 +2294,6 @@
       },
       "type": "object"
     },
-    "Artifact": {
-      "description": "Job information for templates.",
-      "id": "Artifact",
-      "properties": {
-        "containerSpec": {
-          "$ref": "ContainerSpec",
-          "description": "Container image path set for flex Template."
-        },
-        "jobGraphGcsPath": {
-          "description": "job_graph_gcs_path set for legacy Template.",
-          "type": "string"
-        },
-        "metadata": {
-          "$ref": "TemplateMetadata",
-          "description": "Metadata set for legacy Template."
-        }
-      },
-      "type": "object"
-    },
     "AutoscalingEvent": {
       "description": "A structured message reporting an autoscaling decision made by the Dataflow service.",
       "id": "AutoscalingEvent",
@@ -2574,7 +2336,7 @@
           "type": "string"
         },
         "workerPool": {
-          "description": "A short and friendly name for the worker pool this event refers to, populated from the value of PoolStageRelation::user_pool_name.",
+          "description": "A short and friendly name for the worker pool this event refers to.",
           "type": "string"
         }
       },
@@ -2630,7 +2392,7 @@
       "type": "object"
     },
     "BigTableIODetails": {
-      "description": "Metadata for a BigTable connector used by the job.",
+      "description": "Metadata for a Cloud Bigtable connector used by the job.",
       "id": "BigTableIODetails",
       "properties": {
         "instanceId": {
@@ -2666,17 +2428,6 @@
           "description": "Total active CPU time across all cores (ie., non-idle) in milliseconds since start-up.",
           "format": "uint64",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "CommitTemplateVersionRequest": {
-      "description": "Commit will add a new TemplateVersion to an existing template.",
-      "id": "CommitTemplateVersionRequest",
-      "properties": {
-        "templateVersion": {
-          "$ref": "TemplateVersion",
-          "description": "TemplateVersion obejct to create."
         }
       },
       "type": "object"
@@ -3048,17 +2799,6 @@
       },
       "type": "object"
     },
-    "CreateTemplateVersionRequest": {
-      "description": "Creates a new Template with TemplateVersions.",
-      "id": "CreateTemplateVersionRequest",
-      "properties": {
-        "templateVersion": {
-          "$ref": "TemplateVersion",
-          "description": "The TemplateVersion object to create."
-        }
-      },
-      "type": "object"
-    },
     "CustomSourceLocation": {
       "description": "Identifies the location of a custom souce.",
       "id": "CustomSourceLocation",
@@ -3099,6 +2839,17 @@
         "projectId": {
           "description": "ProjectId accessed in the connection.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DebugOptions": {
+      "description": "Describes any options that have an effect on the debugging of pipelines.",
+      "id": "DebugOptions",
+      "properties": {
+        "enableHotKeyLogging": {
+          "description": "When true, enables the logging of the literal hot key to the user's Cloud Logging.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -3262,12 +3013,6 @@
       },
       "type": "object"
     },
-    "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
-      "id": "Empty",
-      "properties": {},
-      "type": "object"
-    },
     "Environment": {
       "description": "Describes the environment in which a Dataflow Job runs.",
       "id": "Environment",
@@ -3280,8 +3025,12 @@
           "description": "The dataset for the current project where various workflow related tables are stored. The supported resource type is: Google BigQuery: bigquery.googleapis.com/{dataset}",
           "type": "string"
         },
+        "debugOptions": {
+          "$ref": "DebugOptions",
+          "description": "Any debugging options to be supplied to the job."
+        },
         "experiments": {
-          "description": "The list of experiments to enable.",
+          "description": "The list of experiments to enable. This field should be used for SDK related experiments and not for service related experiments. The proper field for service related experiments is service_options.",
           "items": {
             "type": "string"
           },
@@ -3323,6 +3072,28 @@
         },
         "serviceKmsKeyName": {
           "description": "If set, contains the Cloud KMS key identifier used to encrypt data at rest, AKA a Customer Managed Encryption Key (CMEK). Format: projects/PROJECT_ID/locations/LOCATION/keyRings/KEY_RING/cryptoKeys/KEY",
+          "type": "string"
+        },
+        "serviceOptions": {
+          "description": "The list of service options to enable. This field should be used for service related experiments only. These experiments, when graduating to GA, should be replaced by dedicated fields or become default (i.e. always on).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "shuffleMode": {
+          "description": "Output only. The shuffle mode used for the job.",
+          "enum": [
+            "SHUFFLE_MODE_UNSPECIFIED",
+            "VM_BASED",
+            "SERVICE_BASED"
+          ],
+          "enumDescriptions": [
+            "Shuffle mode information is not available.",
+            "Shuffle is done on the worker VMs.",
+            "Shuffle is done on the service side."
+          ],
+          "readOnly": true,
           "type": "string"
         },
         "tempStoragePrefix": {
@@ -3406,7 +3177,7 @@
             "`JOB_STATE_PENDING` indicates that the job has been created but is not yet running. Jobs that are pending may only transition to `JOB_STATE_RUNNING`, or `JOB_STATE_FAILED`.",
             "`JOB_STATE_CANCELLING` indicates that the job has been explicitly cancelled and is in the process of stopping. Jobs that are cancelling may only transition to `JOB_STATE_CANCELLED` or `JOB_STATE_FAILED`.",
             "`JOB_STATE_QUEUED` indicates that the job has been created but is being delayed until launch. Jobs that are queued may only transition to `JOB_STATE_PENDING` or `JOB_STATE_CANCELLED`.",
-            "`JOB_STATE_RESOURCE_CLEANING_UP` indicates that the batch job's associated resources are currently being cleaned up after a successful run. Currently, this is an opt-in feature, please reach out to Cloud support team if you are intersted."
+            "`JOB_STATE_RESOURCE_CLEANING_UP` indicates that the batch job's associated resources are currently being cleaned up after a successful run. Currently, this is an opt-in feature, please reach out to Cloud support team if you are interested."
           ],
           "type": "string"
         }
@@ -3443,7 +3214,7 @@
           "type": "array"
         },
         "kind": {
-          "description": "Type of tranform this stage is executing.",
+          "description": "Type of transform this stage is executing.",
           "enum": [
             "UNKNOWN_KIND",
             "PAR_DO_KIND",
@@ -3543,6 +3314,29 @@
           "description": "Additional user labels to be specified for the job. Keys and values must follow the restrictions specified in the [labeling restrictions](https://cloud.google.com/compute/docs/labeling-resources#restrictions) page. An object containing a list of \"key\": value pairs. Example: { \"name\": \"wrench\", \"mass\": \"1kg\", \"count\": \"3\" }.",
           "type": "object"
         },
+        "autoscalingAlgorithm": {
+          "description": "The algorithm to use for autoscaling",
+          "enum": [
+            "AUTOSCALING_ALGORITHM_UNKNOWN",
+            "AUTOSCALING_ALGORITHM_NONE",
+            "AUTOSCALING_ALGORITHM_BASIC"
+          ],
+          "enumDescriptions": [
+            "The algorithm is unknown, or unspecified.",
+            "Disable autoscaling.",
+            "Increase worker count over time to reduce job execution time."
+          ],
+          "type": "string"
+        },
+        "diskSizeGb": {
+          "description": "Worker disk size, in gigabytes.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "dumpHeapOnOom": {
+          "description": "If true, save a heap dump before killing a thread or process which is GC thrashing or out of memory. The location of the heap file will either be echoed back to the user, or the user will be given the opportunity to download the heap file.",
+          "type": "boolean"
+        },
         "enableStreamingEngine": {
           "description": "Whether to enable Streaming Engine for the job.",
           "type": "boolean"
@@ -3579,6 +3373,10 @@
           "description": "Name for the Cloud KMS key for the job. Key format is: projects//locations//keyRings//cryptoKeys/",
           "type": "string"
         },
+        "launcherMachineType": {
+          "description": "The machine type to use for launching the job. The default is n1-standard-1.",
+          "type": "string"
+        },
         "machineType": {
           "description": "The machine type to use for the job. Defaults to the value from the template if not specified.",
           "type": "string"
@@ -3597,8 +3395,20 @@
           "format": "int32",
           "type": "integer"
         },
+        "saveHeapDumpsToGcsPath": {
+          "description": "Cloud Storage bucket (directory) to upload heap dumps to the given location. Enabling this implies that heap dumps should be generated on OOM (dump_heap_on_oom is set to true).",
+          "type": "string"
+        },
+        "sdkContainerImage": {
+          "description": "Docker registry location of container image to use for the 'worker harness. Default is the container for the version of the SDK. Note this field is only valid for portable pipelines.",
+          "type": "string"
+        },
         "serviceAccountEmail": {
           "description": "The email address of the service account to run the job as.",
+          "type": "string"
+        },
+        "stagingLocation": {
+          "description": "The Cloud Storage path for staging local files. Must be a valid Cloud Storage URL, beginning with `gs://`.",
           "type": "string"
         },
         "subnetwork": {
@@ -3902,7 +3712,7 @@
             "`JOB_STATE_PENDING` indicates that the job has been created but is not yet running. Jobs that are pending may only transition to `JOB_STATE_RUNNING`, or `JOB_STATE_FAILED`.",
             "`JOB_STATE_CANCELLING` indicates that the job has been explicitly cancelled and is in the process of stopping. Jobs that are cancelling may only transition to `JOB_STATE_CANCELLED` or `JOB_STATE_FAILED`.",
             "`JOB_STATE_QUEUED` indicates that the job has been created but is being delayed until launch. Jobs that are queued may only transition to `JOB_STATE_PENDING` or `JOB_STATE_CANCELLED`.",
-            "`JOB_STATE_RESOURCE_CLEANING_UP` indicates that the batch job's associated resources are currently being cleaned up after a successful run. Currently, this is an opt-in feature, please reach out to Cloud support team if you are intersted."
+            "`JOB_STATE_RESOURCE_CLEANING_UP` indicates that the batch job's associated resources are currently being cleaned up after a successful run. Currently, this is an opt-in feature, please reach out to Cloud support team if you are interested."
           ],
           "type": "string"
         },
@@ -3988,7 +3798,7 @@
             "`JOB_STATE_PENDING` indicates that the job has been created but is not yet running. Jobs that are pending may only transition to `JOB_STATE_RUNNING`, or `JOB_STATE_FAILED`.",
             "`JOB_STATE_CANCELLING` indicates that the job has been explicitly cancelled and is in the process of stopping. Jobs that are cancelling may only transition to `JOB_STATE_CANCELLED` or `JOB_STATE_FAILED`.",
             "`JOB_STATE_QUEUED` indicates that the job has been created but is being delayed until launch. Jobs that are queued may only transition to `JOB_STATE_PENDING` or `JOB_STATE_CANCELLED`.",
-            "`JOB_STATE_RESOURCE_CLEANING_UP` indicates that the batch job's associated resources are currently being cleaned up after a successful run. Currently, this is an opt-in feature, please reach out to Cloud support team if you are intersted."
+            "`JOB_STATE_RESOURCE_CLEANING_UP` indicates that the batch job's associated resources are currently being cleaned up after a successful run. Currently, this is an opt-in feature, please reach out to Cloud support team if you are interested."
           ],
           "type": "string"
         },
@@ -4016,7 +3826,7 @@
           "type": "array"
         },
         "stepsLocation": {
-          "description": "The GCS location where the steps are stored.",
+          "description": "The Cloud Storage location where the steps are stored.",
           "type": "string"
         },
         "tempFiles": {
@@ -4141,7 +3951,7 @@
       "id": "JobMetadata",
       "properties": {
         "bigTableDetails": {
-          "description": "Identification of a BigTable source used in the Dataflow job.",
+          "description": "Identification of a Cloud Bigtable source used in the Dataflow job.",
           "items": {
             "$ref": "BigTableIODetails"
           },
@@ -4169,7 +3979,7 @@
           "type": "array"
         },
         "pubsubDetails": {
-          "description": "Identification of a PubSub source used in the Dataflow job.",
+          "description": "Identification of a Pub/Sub source used in the Dataflow job.",
           "items": {
             "$ref": "PubSubIODetails"
           },
@@ -4263,7 +4073,7 @@
           "description": "Spec about the container image to launch."
         },
         "containerSpecGcsPath": {
-          "description": "Gcs path to a file with json serialized ContainerSpec as content.",
+          "description": "Cloud Storage path to a file with json serialized ContainerSpec as content.",
           "type": "string"
         },
         "environment": {
@@ -4505,24 +4315,6 @@
       },
       "type": "object"
     },
-    "ListTemplateVersionsResponse": {
-      "description": "Respond a list of TemplateVersions.",
-      "id": "ListTemplateVersionsResponse",
-      "properties": {
-        "nextPageToken": {
-          "description": "A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
-          "type": "string"
-        },
-        "templateVersions": {
-          "description": "A list of TemplateVersions.",
-          "items": {
-            "$ref": "TemplateVersion"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "MapTask": {
       "description": "MapTask consists of an ordered set of instructions, each of which describes one particular low-level operation for the worker to perform in order to accomplish the MapTask's WorkItem. Each instruction must appear in the list before any instructions which depends on its output.",
       "id": "MapTask",
@@ -4663,78 +4455,6 @@
           "description": "Timestamp associated with the metric value. Optional when workers are reporting work progress; it will be filled in responses from the metrics API.",
           "format": "google-datetime",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "ModifyTemplateVersionLabelRequest": {
-      "description": "Either add the label to TemplateVersion or remove it from the TemplateVersion.",
-      "id": "ModifyTemplateVersionLabelRequest",
-      "properties": {
-        "key": {
-          "description": "The label key for update.",
-          "type": "string"
-        },
-        "op": {
-          "description": "Requests for add label to TemplateVersion or remove label from TemplateVersion.",
-          "enum": [
-            "OPERATION_UNSPECIFIED",
-            "ADD",
-            "REMOVE"
-          ],
-          "enumDescriptions": [
-            "Default value.",
-            "Add the label to the TemplateVersion object.",
-            "Remove the label from the TemplateVersion object."
-          ],
-          "type": "string"
-        },
-        "value": {
-          "description": "The label value for update.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "ModifyTemplateVersionLabelResponse": {
-      "description": "Respond the labels in the TemplateVersion.",
-      "id": "ModifyTemplateVersionLabelResponse",
-      "properties": {
-        "labels": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "All the label in the TemplateVersion.",
-          "type": "object"
-        }
-      },
-      "type": "object"
-    },
-    "ModifyTemplateVersionTagRequest": {
-      "description": "Add a tag to the current TemplateVersion. If tag exist in another TemplateVersion in the Template, remove the tag before add it to the current TemplateVersion. If remove_only set, remove the tag from the current TemplateVersion.",
-      "id": "ModifyTemplateVersionTagRequest",
-      "properties": {
-        "removeOnly": {
-          "description": "The flag that indicates if the request is only for remove tag from TemplateVersion.",
-          "type": "boolean"
-        },
-        "tag": {
-          "description": "The tag for update.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "ModifyTemplateVersionTagResponse": {
-      "description": "Respond the current tags in the TemplateVersion.",
-      "id": "ModifyTemplateVersionTagResponse",
-      "properties": {
-        "tags": {
-          "description": "All the tags in the TemplateVersion.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -4918,6 +4638,13 @@
       "description": "Metadata for a specific parameter.",
       "id": "ParameterMetadata",
       "properties": {
+        "customMetadata": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. Additional metadata for describing this parameter.",
+          "type": "object"
+        },
         "helpText": {
           "description": "Required. The help text to display for the parameter.",
           "type": "string"
@@ -4951,12 +4678,12 @@
           "enumDescriptions": [
             "Default input type.",
             "The parameter specifies generic text input.",
-            "The parameter specifies a GCS Bucket to read from.",
-            "The parameter specifies a GCS Bucket to write to.",
-            "The parameter specifies a GCS file path to read from.",
-            "The parameter specifies a GCS file path to write to.",
-            "The parameter specifies a GCS folder path to read from.",
-            "The parameter specifies a GCS folder to write to.",
+            "The parameter specifies a Cloud Storage Bucket to read from.",
+            "The parameter specifies a Cloud Storage Bucket to write to.",
+            "The parameter specifies a Cloud Storage file path to read from.",
+            "The parameter specifies a Cloud Storage file path to write to.",
+            "The parameter specifies a Cloud Storage folder path to read from.",
+            "The parameter specifies a Cloud Storage folder to write to.",
             "The parameter specifies a Pub/Sub Topic.",
             "The parameter specifies a Pub/Sub Subscription."
           ],
@@ -5112,7 +4839,7 @@
       "type": "object"
     },
     "PubSubIODetails": {
-      "description": "Metadata for a PubSub connector used by the job.",
+      "description": "Metadata for a Pub/Sub connector used by the job.",
       "id": "PubSubIODetails",
       "properties": {
         "subscription": {
@@ -5326,7 +5053,7 @@
       "id": "RuntimeEnvironment",
       "properties": {
         "additionalExperiments": {
-          "description": "Additional experiment flags for the job.",
+          "description": "Additional experiment flags for the job, specified with the `--experiments` option.",
           "items": {
             "type": "string"
           },
@@ -5461,6 +5188,10 @@
           "description": "A docker container image that resides in Google Container Registry.",
           "type": "string"
         },
+        "environmentId": {
+          "description": "Environment ID for the Beam runner API proto Environment that corresponds to the current SDK Harness.",
+          "type": "string"
+        },
         "useSingleCorePerContainer": {
           "description": "If true, recommends the Dataflow service to use only one core per SDK container instance with this image. If false (or unset) recommends using more than one core per SDK container instance with this image for efficiency. Note that Dataflow service may choose to override this property if needed.",
           "type": "boolean"
@@ -5485,7 +5216,7 @@
             "Cloud Dataflow is unaware of this version.",
             "This is a known version of an SDK, and is supported.",
             "A newer version of the SDK family exists, and an update is recommended.",
-            "This version of the SDK is deprecated and will eventually be no longer supported.",
+            "This version of the SDK is deprecated and will eventually be unsupported.",
             "Support for this SDK version has ended and it should no longer be used."
           ],
           "type": "string"
@@ -5710,11 +5441,15 @@
           "type": "string"
         },
         "pubsubMetadata": {
-          "description": "PubSub snapshot metadata.",
+          "description": "Pub/Sub snapshot metadata.",
           "items": {
             "$ref": "PubsubSnapshotMetadata"
           },
           "type": "array"
+        },
+        "region": {
+          "description": "Cloud region where this snapshot lives in, e.g., \"us-central1\".",
+          "type": "string"
         },
         "sourceJobId": {
           "description": "The job this snapshot was created from.",
@@ -6582,66 +6317,6 @@
       },
       "type": "object"
     },
-    "TemplateVersion": {
-      "description": "///////////////////////////////////////////////////////////////////////////// //// Template Catalog is used to organize user TemplateVersions. //// TemplateVersions that have the same project_id and display_name are //// belong to the same Template. //// Templates with the same project_id belong to the same Project. //// TemplateVersion may have labels and multiple labels are allowed. //// Duplicated labels in the same `TemplateVersion` are not allowed. //// TemplateVersion may have tags and multiple tags are allowed. Duplicated //// tags in the same `Template` are not allowed!",
-      "id": "TemplateVersion",
-      "properties": {
-        "artifact": {
-          "$ref": "Artifact",
-          "description": "Job graph and metadata if it is a legacy Template. Container image path and metadata if it is flex Template."
-        },
-        "createTime": {
-          "description": "Creation time of this TemplateVersion.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "description": {
-          "description": "Template description from the user.",
-          "type": "string"
-        },
-        "displayName": {
-          "description": "A customized name for Template. Multiple TemplateVersions per Template.",
-          "type": "string"
-        },
-        "labels": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Labels for the Template Version. Labels can be duplicate within Template.",
-          "type": "object"
-        },
-        "projectId": {
-          "description": "A unique project_id. Multiple Templates per Project.",
-          "type": "string"
-        },
-        "tags": {
-          "description": "Alias for version_id, helps locate a TemplateVersion.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "type": {
-          "description": "Either LEGACY or FLEX. This should match with the type of artifact.",
-          "enum": [
-            "TEMPLATE_TYPE_UNSPECIFIED",
-            "LEGACY",
-            "FLEX"
-          ],
-          "enumDescriptions": [
-            "Default value. Not a useful zero case.",
-            "Legacy Template.",
-            "Flex Template."
-          ],
-          "type": "string"
-        },
-        "versionId": {
-          "description": "An auto generated version_id for TemplateVersion.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "TopologyConfig": {
       "description": "Global topology of the streaming Dataflow job, including all computations and their sharded locations.",
       "id": "TopologyConfig",
@@ -7042,7 +6717,7 @@
       "id": "WorkerHealthReport",
       "properties": {
         "msg": {
-          "description": "A message describing any unusual health reports.",
+          "description": "Message describing any unusual health reports.",
           "type": "string"
         },
         "pods": {
@@ -7059,6 +6734,10 @@
         "reportInterval": {
           "description": "The interval at which the worker is sending health reports. The default value of 0 should be interpreted as the field is not being explicitly set by the worker.",
           "format": "google-duration",
+          "type": "string"
+        },
+        "vmBrokenCode": {
+          "description": "Code to describe a specific reason, if known, that a VM has reported broken state.",
           "type": "string"
         },
         "vmIsBroken": {
@@ -7176,7 +6855,7 @@
       "id": "WorkerMessageCode",
       "properties": {
         "code": {
-          "description": "The code is a string intended for consumption by a machine that identifies the type of message being sent. Examples: 1. \"HARNESS_STARTED\" might be used to indicate the worker harness has started. 2. \"GCS_DOWNLOAD_ERROR\" might be used to indicate an error downloading a GCS file as part of the boot process of one of the worker containers. This is a string and not an enum to make it easy to add new codes without waiting for an API change.",
+          "description": "The code is a string intended for consumption by a machine that identifies the type of message being sent. Examples: 1. \"HARNESS_STARTED\" might be used to indicate the worker harness has started. 2. \"GCS_DOWNLOAD_ERROR\" might be used to indicate an error downloading a Cloud Storage file as part of the boot process of one of the worker containers. This is a string and not an enum to make it easy to add new codes without waiting for an API change.",
           "type": "string"
         },
         "parameters": {
@@ -7184,7 +6863,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Parameters contains specific information about the code. This is a struct to allow parameters of different types. Examples: 1. For a \"HARNESS_STARTED\" message parameters might provide the name of the worker and additional data like timing information. 2. For a \"GCS_DOWNLOAD_ERROR\" parameters might contain fields listing the GCS objects being downloaded and fields containing errors. In general complex data structures should be avoided. If a worker needs to send a specific and complicated data structure then please consider defining a new proto and adding it to the data oneof in WorkerMessageResponse. Conventions: Parameters should only be used for information that isn't typically passed as a label. hostname and other worker identifiers should almost always be passed as labels since they will be included on most messages.",
+          "description": "Parameters contains specific information about the code. This is a struct to allow parameters of different types. Examples: 1. For a \"HARNESS_STARTED\" message parameters might provide the name of the worker and additional data like timing information. 2. For a \"GCS_DOWNLOAD_ERROR\" parameters might contain fields listing the Cloud Storage objects being downloaded and fields containing errors. In general complex data structures should be avoided. If a worker needs to send a specific and complicated data structure then please consider defining a new proto and adding it to the data oneof in WorkerMessageResponse. Conventions: Parameters should only be used for information that isn't typically passed as a label. hostname and other worker identifiers should almost always be passed as labels since they will be included on most messages.",
           "type": "object"
         }
       },
@@ -7236,7 +6915,7 @@
             "The default set of packages to stage is unknown, or unspecified.",
             "Indicates that no packages should be staged at the worker unless explicitly specified by the job.",
             "Stage packages typically useful to workers written in Java.",
-            "Stage pacakges typically useful to workers written in Python."
+            "Stage packages typically useful to workers written in Python."
           ],
           "type": "string"
         },

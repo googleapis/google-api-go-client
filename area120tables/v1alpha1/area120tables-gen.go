@@ -86,17 +86,17 @@ const (
 	// See, edit, create, and delete all of your Google Drive files
 	DriveScope = "https://www.googleapis.com/auth/drive"
 
-	// View and manage Google Drive files and folders that you have opened
-	// or created with this app
+	// See, edit, create, and delete only the specific Google Drive files
+	// you use with this app
 	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
 
 	// See and download all your Google Drive files
 	DriveReadonlyScope = "https://www.googleapis.com/auth/drive.readonly"
 
-	// See, edit, create, and delete your spreadsheets in Google Drive
+	// See, edit, create, and delete all your Google Sheets spreadsheets
 	SpreadsheetsScope = "https://www.googleapis.com/auth/spreadsheets"
 
-	// View your Google Spreadsheets
+	// See all your Google Sheets spreadsheets
 	SpreadsheetsReadonlyScope = "https://www.googleapis.com/auth/spreadsheets.readonly"
 
 	// See, edit, create, and delete your tables in Tables by Area 120
@@ -202,10 +202,10 @@ type BatchCreateRowsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Requests") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Requests") to include in
@@ -235,10 +235,10 @@ type BatchCreateRowsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Rows") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Rows") to include in API
@@ -267,10 +267,10 @@ type BatchDeleteRowsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Names") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Names") to include in API
@@ -297,10 +297,10 @@ type BatchUpdateRowsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Requests") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Requests") to include in
@@ -330,10 +330,10 @@ type BatchUpdateRowsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Rows") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Rows") to include in API
@@ -376,8 +376,17 @@ type ColumnDescription struct {
 	// value you must update the associated relationship column.
 	LookupDetails *LookupDetails `json:"lookupDetails,omitempty"`
 
+	// MultipleValuesDisallowed: Optional. Indicates whether or not multiple
+	// values are allowed for array types where such a restriction is
+	// possible.
+	MultipleValuesDisallowed bool `json:"multipleValuesDisallowed,omitempty"`
+
 	// Name: column name
 	Name string `json:"name,omitempty"`
+
+	// Readonly: Optional. Indicates that values for the column cannot be
+	// set by the user.
+	Readonly bool `json:"readonly,omitempty"`
 
 	// RelationshipDetails: Optional. Additional details about a
 	// relationship column. Specified when data_type is relationship.
@@ -385,10 +394,10 @@ type ColumnDescription struct {
 
 	// ForceSendFields is a list of field names (e.g. "DataType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DataType") to include in
@@ -426,10 +435,10 @@ type CreateRowRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Parent") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Parent") to include in API
@@ -469,10 +478,10 @@ type LabeledItem struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -505,10 +514,10 @@ type ListRowsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -541,10 +550,10 @@ type ListTablesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -578,10 +587,10 @@ type ListWorkspacesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -611,10 +620,10 @@ type LookupDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "RelationshipColumn")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "RelationshipColumn") to
@@ -640,10 +649,10 @@ type RelationshipDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "LinkedTable") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LinkedTable") to include
@@ -663,9 +672,15 @@ func (s *RelationshipDetails) MarshalJSON() ([]byte, error) {
 
 // Row: A single row in a table.
 type Row struct {
+	// CreateTime: Time when the row was created.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// Name: The resource name of the row. Row names have the form
 	// `tables/{table}/rows/{row}`. The name is ignored when creating a row.
 	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Time when the row was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// Values: The values of the row. This is a map of column key to value.
 	// Key is user entered name(default) or the internal column id based on
@@ -676,16 +691,16 @@ type Row struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -699,11 +714,45 @@ func (s *Row) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Table: A single table.
+// SavedView: A saved view of a table. NextId: 3
+type SavedView struct {
+	// Id: Internal id associated with the saved view.
+	Id string `json:"id,omitempty"`
+
+	// Name: Display name of the saved view.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SavedView) MarshalJSON() ([]byte, error) {
+	type NoMethod SavedView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Table: A single table. NextId: 7
 type Table struct {
 	// Columns: List of columns in this table. Order of columns matches the
 	// display order.
 	Columns []*ColumnDescription `json:"columns,omitempty"`
+
+	// CreateTime: Time when the table was created.
+	CreateTime string `json:"createTime,omitempty"`
 
 	// DisplayName: The human readable title of the table.
 	DisplayName string `json:"displayName,omitempty"`
@@ -712,16 +761,23 @@ type Table struct {
 	// `tables/{table}`.
 	Name string `json:"name,omitempty"`
 
+	// SavedViews: Saved views for this table.
+	SavedViews []*SavedView `json:"savedViews,omitempty"`
+
+	// UpdateTime: Time when the table was last updated excluding updates to
+	// individual rows
+	UpdateTime string `json:"updateTime,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Columns") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Columns") to include in
@@ -758,10 +814,10 @@ type UpdateRowRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Row") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Row") to include in API
@@ -781,6 +837,9 @@ func (s *UpdateRowRequest) MarshalJSON() ([]byte, error) {
 
 // Workspace: A single workspace.
 type Workspace struct {
+	// CreateTime: Time when the workspace was created.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// DisplayName: The human readable title of the workspace.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -791,22 +850,25 @@ type Workspace struct {
 	// Tables: The list of tables in the workspace.
 	Tables []*Table `json:"tables,omitempty"`
 
+	// UpdateTime: Time when the workspace was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -830,6 +892,8 @@ type TablesGetCall struct {
 }
 
 // Get: Gets a table. Returns NOT_FOUND if the table does not exist.
+//
+// - name: The name of the table to retrieve. Format: tables/{table}.
 func (r *TablesService) Get(name string) *TablesGetCall {
 	c := &TablesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -873,7 +937,7 @@ func (c *TablesGetCall) Header() http.Header {
 
 func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -983,6 +1047,13 @@ func (r *TablesService) List() *TablesListCall {
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Sorting order for the
+// list of tables on createTime/updateTime.
+func (c *TablesListCall) OrderBy(orderBy string) *TablesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of tables to return. The service may return fewer than this value. If
 // unspecified, at most 20 tables are returned. The maximum value is
@@ -1038,7 +1109,7 @@ func (c *TablesListCall) Header() http.Header {
 
 func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1103,6 +1174,11 @@ func (c *TablesListCall) Do(opts ...googleapi.CallOption) (*ListTablesResponse, 
 	//   "id": "area120tables.tables.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
+	//     "orderBy": {
+	//       "description": "Optional. Sorting order for the list of tables on createTime/updateTime.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of tables to return. The service may return fewer than this value. If unspecified, at most 20 tables are returned. The maximum value is 100; values above 100 are coerced to 100.",
 	//       "format": "int32",
@@ -1164,6 +1240,9 @@ type TablesRowsBatchCreateCall struct {
 }
 
 // BatchCreate: Creates multiple rows.
+//
+// - parent: The parent table where the rows will be created. Format:
+//   tables/{table}.
 func (r *TablesRowsService) BatchCreate(parent string, batchcreaterowsrequest *BatchCreateRowsRequest) *TablesRowsBatchCreateCall {
 	c := &TablesRowsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1198,7 +1277,7 @@ func (c *TablesRowsBatchCreateCall) Header() http.Header {
 
 func (c *TablesRowsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1307,6 +1386,9 @@ type TablesRowsBatchDeleteCall struct {
 }
 
 // BatchDelete: Deletes multiple rows.
+//
+// - parent: The parent table shared by all rows being deleted. Format:
+//   tables/{table}.
 func (r *TablesRowsService) BatchDelete(parent string, batchdeleterowsrequest *BatchDeleteRowsRequest) *TablesRowsBatchDeleteCall {
 	c := &TablesRowsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1341,7 +1423,7 @@ func (c *TablesRowsBatchDeleteCall) Header() http.Header {
 
 func (c *TablesRowsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1450,6 +1532,9 @@ type TablesRowsBatchUpdateCall struct {
 }
 
 // BatchUpdate: Updates multiple rows.
+//
+// - parent: The parent table shared by all rows being updated. Format:
+//   tables/{table}.
 func (r *TablesRowsService) BatchUpdate(parent string, batchupdaterowsrequest *BatchUpdateRowsRequest) *TablesRowsBatchUpdateCall {
 	c := &TablesRowsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1484,7 +1569,7 @@ func (c *TablesRowsBatchUpdateCall) Header() http.Header {
 
 func (c *TablesRowsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1593,6 +1678,9 @@ type TablesRowsCreateCall struct {
 }
 
 // Create: Creates a row.
+//
+// - parent: The parent table where this row will be created. Format:
+//   tables/{table}.
 func (r *TablesRowsService) Create(parent string, row *Row) *TablesRowsCreateCall {
 	c := &TablesRowsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1639,7 +1727,7 @@ func (c *TablesRowsCreateCall) Header() http.Header {
 
 func (c *TablesRowsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1760,6 +1848,9 @@ type TablesRowsDeleteCall struct {
 }
 
 // Delete: Deletes a row.
+//
+// - name: The name of the row to delete. Format:
+//   tables/{table}/rows/{row}.
 func (r *TablesRowsService) Delete(name string) *TablesRowsDeleteCall {
 	c := &TablesRowsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1793,7 +1884,7 @@ func (c *TablesRowsDeleteCall) Header() http.Header {
 
 func (c *TablesRowsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1895,6 +1986,9 @@ type TablesRowsGetCall struct {
 
 // Get: Gets a row. Returns NOT_FOUND if the row does not exist in the
 // table.
+//
+// - name: The name of the row to retrieve. Format:
+//   tables/{table}/rows/{row}.
 func (r *TablesRowsService) Get(name string) *TablesRowsGetCall {
 	c := &TablesRowsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1950,7 +2044,7 @@ func (c *TablesRowsGetCall) Header() http.Header {
 
 func (c *TablesRowsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2070,9 +2164,27 @@ type TablesRowsListCall struct {
 
 // List: Lists rows in a table. Returns NOT_FOUND if the table does not
 // exist.
+//
+// - parent: The parent table. Format: tables/{table}.
 func (r *TablesRowsService) List(parent string) *TablesRowsListCall {
 	c := &TablesRowsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter to only include
+// resources matching the requirements. For more information, see
+// Filtering list results
+// (https://support.google.com/area120-tables/answer/10503371).
+func (c *TablesRowsListCall) Filter(filter string) *TablesRowsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorting order for the
+// list of rows on createTime/updateTime.
+func (c *TablesRowsListCall) OrderBy(orderBy string) *TablesRowsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
@@ -2143,7 +2255,7 @@ func (c *TablesRowsListCall) Header() http.Header {
 
 func (c *TablesRowsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2213,6 +2325,16 @@ func (c *TablesRowsListCall) Do(opts ...googleapi.CallOption) (*ListRowsResponse
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter to only include resources matching the requirements. For more information, see [Filtering list results](https://support.google.com/area120-tables/answer/10503371).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Sorting order for the list of rows on createTime/updateTime.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of rows to return. The service may return fewer than this value. If unspecified, at most 50 rows are returned. The maximum value is 1,000; values above 1,000 are coerced to 1,000.",
 	//       "format": "int32",
@@ -2294,6 +2416,10 @@ type TablesRowsPatchCall struct {
 }
 
 // Patch: Updates a row.
+//
+// - name: The resource name of the row. Row names have the form
+//   `tables/{table}/rows/{row}`. The name is ignored when creating a
+//   row.
 func (r *TablesRowsService) Patch(name string, row *Row) *TablesRowsPatchCall {
 	c := &TablesRowsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2347,7 +2473,7 @@ func (c *TablesRowsPatchCall) Header() http.Header {
 
 func (c *TablesRowsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2476,6 +2602,9 @@ type WorkspacesGetCall struct {
 
 // Get: Gets a workspace. Returns NOT_FOUND if the workspace does not
 // exist.
+//
+// - name: The name of the workspace to retrieve. Format:
+//   workspaces/{workspace}.
 func (r *WorkspacesService) Get(name string) *WorkspacesGetCall {
 	c := &WorkspacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2519,7 +2648,7 @@ func (c *WorkspacesGetCall) Header() http.Header {
 
 func (c *WorkspacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2685,7 +2814,7 @@ func (c *WorkspacesListCall) Header() http.Header {
 
 func (c *WorkspacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

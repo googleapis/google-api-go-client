@@ -79,7 +79,8 @@ const mtlsBasePath = "https://documentai.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -204,6 +205,72 @@ type ProjectsLocationsProcessorsProcessorVersionsService struct {
 	s *Service
 }
 
+type GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsResponse: Response
+// of the delete documents operation.
+type GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsResponse struct {
+}
+
+type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsResponse: Response of
+// the batch move documents operation.
+type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsResponse struct {
+}
+
 // GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata: The common
 // metadata for long running operations.
 type GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata struct {
@@ -230,10 +297,10 @@ type GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -259,10 +326,10 @@ type GoogleCloudDocumentaiUiv1beta3CreateLabelerPoolOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonMetadata") to
@@ -289,10 +356,10 @@ type GoogleCloudDocumentaiUiv1beta3DeleteLabelerPoolOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonMetadata") to
@@ -319,10 +386,10 @@ type GoogleCloudDocumentaiUiv1beta3DeleteProcessorMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonMetadata") to
@@ -349,10 +416,10 @@ type GoogleCloudDocumentaiUiv1beta3DeleteProcessorVersionMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonMetadata") to
@@ -379,10 +446,10 @@ type GoogleCloudDocumentaiUiv1beta3DeployProcessorVersionMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonMetadata") to
@@ -414,10 +481,10 @@ type GoogleCloudDocumentaiUiv1beta3DisableProcessorMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonMetadata") to
@@ -450,10 +517,10 @@ type GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonMetadata") to
@@ -486,10 +553,10 @@ type GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonMetadata") to
@@ -511,15 +578,15 @@ func (s *GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionMetadata) Marshal
 // GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse:
 // Metadata of the EvaluateProcessorVersion method.
 type GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse struct {
-	// Evaluation: The evaluation result.
-	Evaluation *GoogleCloudDocumentaiUiv1beta3Evaluation `json:"evaluation,omitempty"`
+	// Evaluation: The resource name of the created evaluation.
+	Evaluation string `json:"evaluation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Evaluation") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Evaluation") to include in
@@ -537,33 +604,22 @@ func (s *GoogleCloudDocumentaiUiv1beta3EvaluateProcessorVersionResponse) Marshal
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiUiv1beta3Evaluation: An evaluation of a
-// ProcessorVersion's performance.
-type GoogleCloudDocumentaiUiv1beta3Evaluation struct {
-	// AllEntitiesMetrics: Metrics for all the entities in aggregate.
-	AllEntitiesMetrics *GoogleCloudDocumentaiUiv1beta3EvaluationMultiConfidenceMetrics `json:"allEntitiesMetrics,omitempty"`
+// GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionMetadata:
+// Metadata message associated with the ExportProcessorVersion
+// operation.
+type GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionMetadata struct {
+	// CommonMetadata: The common metadata about the operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
-	// CreateTime: The time that the evaluation was created.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// EntityMetrics: Metrics across confidence levels, for different
-	// entities.
-	EntityMetrics map[string]GoogleCloudDocumentaiUiv1beta3EvaluationMultiConfidenceMetrics `json:"entityMetrics,omitempty"`
-
-	// Name: The resource name of the evaluation. Format:
-	// projects/{project}/locations/{location}/processors/{processor}/process
-	// orVersions/{processor_version}/evaluations/{evaluation}
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AllEntitiesMetrics")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AllEntitiesMetrics") to
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -573,30 +629,57 @@ type GoogleCloudDocumentaiUiv1beta3Evaluation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3Evaluation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiUiv1beta3Evaluation
+func (s *GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiUiv1beta3EvaluationConfidenceLevelMetrics:
-// Evaluations metrics, at a specific confidence level.
-type GoogleCloudDocumentaiUiv1beta3EvaluationConfidenceLevelMetrics struct {
-	// ConfidenceLevel: The confidence level.
-	ConfidenceLevel float64 `json:"confidenceLevel,omitempty"`
+// GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse:
+// Response message associated with the ExportProcessorVersion
+// operation.
+type GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse struct {
+	// GcsUri: The Cloud Storage URI containing the output artifacts.
+	GcsUri string `json:"gcsUri,omitempty"`
 
-	// Metrics: The metrics at the specific confidence level.
-	Metrics *GoogleCloudDocumentaiUiv1beta3EvaluationMetrics `json:"metrics,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConfidenceLevel") to
+	// ForceSendFields is a list of field names (e.g. "GcsUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ConfidenceLevel") to
+	// NullFields is a list of field names (e.g. "GcsUri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata: Metadata of
+// the import document operation.
+type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -606,275 +689,51 @@ type GoogleCloudDocumentaiUiv1beta3EvaluationConfidenceLevelMetrics struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3EvaluationConfidenceLevelMetrics) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiUiv1beta3EvaluationConfidenceLevelMetrics
+func (s *GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3EvaluationConfidenceLevelMetrics) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudDocumentaiUiv1beta3EvaluationConfidenceLevelMetrics
-	var s1 struct {
-		ConfidenceLevel gensupport.JSONFloat64 `json:"confidenceLevel"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.ConfidenceLevel = float64(s1.ConfidenceLevel)
-	return nil
+// GoogleCloudDocumentaiUiv1beta3ImportDocumentsResponse: Response of
+// the import document operation.
+type GoogleCloudDocumentaiUiv1beta3ImportDocumentsResponse struct {
 }
 
-// GoogleCloudDocumentaiUiv1beta3EvaluationMetrics: Evaluation metrics,
-// either in aggregate or about a specific entity.
-type GoogleCloudDocumentaiUiv1beta3EvaluationMetrics struct {
-	// F1Score: The calculated f1 score.
-	F1Score float64 `json:"f1Score,omitempty"`
+// GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata: The
+// long running operation metadata for set default processor version
+// method.
+type GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
-	// Precision: The calculated precision.
-	Precision float64 `json:"precision,omitempty"`
-
-	// Recall: The calculated recall.
-	Recall float64 `json:"recall,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "F1Score") to
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "F1Score") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiUiv1beta3EvaluationMetrics) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiUiv1beta3EvaluationMetrics
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudDocumentaiUiv1beta3EvaluationMetrics) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudDocumentaiUiv1beta3EvaluationMetrics
-	var s1 struct {
-		F1Score   gensupport.JSONFloat64 `json:"f1Score"`
-		Precision gensupport.JSONFloat64 `json:"precision"`
-		Recall    gensupport.JSONFloat64 `json:"recall"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.F1Score = float64(s1.F1Score)
-	s.Precision = float64(s1.Precision)
-	s.Recall = float64(s1.Recall)
-	return nil
-}
-
-// GoogleCloudDocumentaiUiv1beta3EvaluationMultiConfidenceMetrics:
-// Metrics across multiple confidence levels.
-type GoogleCloudDocumentaiUiv1beta3EvaluationMultiConfidenceMetrics struct {
-	// ConfidenceLevelMetrics: Metrics across confidence levels.
-	ConfidenceLevelMetrics []*GoogleCloudDocumentaiUiv1beta3EvaluationConfidenceLevelMetrics `json:"confidenceLevelMetrics,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ConfidenceLevelMetrics") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConfidenceLevelMetrics")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiUiv1beta3EvaluationMultiConfidenceMetrics) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiUiv1beta3EvaluationMultiConfidenceMetrics
+func (s *GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiUiv1beta3ProcessorVersion: A processor version
-// is an implementation of a processor. Each processor can have multiple
-// versions, pre-trained by Google internally or up-trained by the
-// customer. At a time, a processor can only have one default version
-// version. So the processor's behavior (when processing documents) is
-// defined by a default version.
-type GoogleCloudDocumentaiUiv1beta3ProcessorVersion struct {
-	// CreateTime: The time the processor version was created.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// DisplayName: The display name of the processor version.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Name: The resource name of the processor version. Format:
-	// projects/{project}/locations/{location}/processors/{processor}/process
-	// orVersions/{processor_version}
-	Name string `json:"name,omitempty"`
-
-	// Schema: The schema of the processor version. Describes the output.
-	Schema *GoogleCloudDocumentaiUiv1beta3Schema `json:"schema,omitempty"`
-
-	// State: The state of the processor version.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - The processor version is in an unspecified
-	// state.
-	//   "DEPLOYED" - The processor version is deployed and can be used for
-	// processing.
-	//   "DEPLOYING" - The processor version is being deployed.
-	//   "UNDEPLOYED" - The processor version is not deployed and cannot be
-	// used for processing.
-	//   "UNDEPLOYING" - The processor version is being undeployed.
-	//   "CREATING" - The processor version is being created.
-	//   "DELETING" - The processor version is being deleted.
-	//   "FAILED" - The processor version failed and is in an indeterminate
-	// state.
-	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiUiv1beta3ProcessorVersion) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiUiv1beta3ProcessorVersion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDocumentaiUiv1beta3Schema: The schema defines the output
-// of the processed document by a processor.
-type GoogleCloudDocumentaiUiv1beta3Schema struct {
-	// Description: Description of the schema.
-	Description string `json:"description,omitempty"`
-
-	// DisplayName: Display name to show to users.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// EntityTypes: Entity types of the schema.
-	EntityTypes []*GoogleCloudDocumentaiUiv1beta3SchemaEntityType `json:"entityTypes,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiUiv1beta3Schema) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiUiv1beta3Schema
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDocumentaiUiv1beta3SchemaEntityType: EntityType is the
-// wrapper of a label of the corresponding model with detailed
-// attributes and limitations for entity-based processors. Multiple
-// types can also compose a dependency tree to represent nested types.
-type GoogleCloudDocumentaiUiv1beta3SchemaEntityType struct {
-	// BaseType: Type of the entity. It can be either a value type (such as
-	// "text", "numeric", "date" and "address"), or an object type which may
-	// contain nested entities (such as "document" and "table").
-	BaseType string `json:"baseType,omitempty"`
-
-	// Description: Description of the entity type.
-	Description string `json:"description,omitempty"`
-
-	// OccurrenceType: Occurrence type limits the number of times an entity
-	// type appears in the document.
-	//
-	// Possible values:
-	//   "OCCURRENCE_TYPE_UNSPECIFIED" - Unspecified occurrence type.
-	//   "OPTIONAL_ONCE" - The entity type will appear zero times or once.
-	//   "OPTIONAL_MULTIPLE" - The entity type will appear zero or multiple
-	// times.
-	//   "REQUIRED_ONCE" - The entity type will only appear exactly once.
-	//   "REQUIRED_MULTIPLE" - The entity type will appear once or more
-	// times.
-	OccurrenceType string `json:"occurrenceType,omitempty"`
-
-	// Properties: Describing the nested structure of an entity. An
-	// EntityType may consist of several other EntityTypes. For example, in
-	// a document there can be an EntityType 'ID', which consists of
-	// EntityType 'name' and 'address', with corresponding attributes, such
-	// as TEXT for both types and ONCE for occurrence types.
-	Properties []*GoogleCloudDocumentaiUiv1beta3SchemaEntityType `json:"properties,omitempty"`
-
-	// Source: Source of this entity type.
-	//
-	// Possible values:
-	//   "SOURCE_UNSPECIFIED" - Unspecified source.
-	//   "PREDEFINED" - The entity type is in the predefined schema of a
-	// pretrained version of a processor.
-	//   "USER_INPUT" - The entity type is added by the users either: -
-	// during an uptraining of an existing processor, or - during the
-	// process of creating a customized processor.
-	Source string `json:"source,omitempty"`
-
-	// Type: Name of the type. It must be unique within the set of same
-	// level types.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BaseType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BaseType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiUiv1beta3SchemaEntityType) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiUiv1beta3SchemaEntityType
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+// GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionResponse:
+// Response message for set default processor version method.
+type GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionResponse struct {
 }
 
 // GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata: The
@@ -883,12 +742,19 @@ type GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata struct {
 	// CommonMetadata: The basic metadata of the long running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
+	// TestDatasetValidation: The test dataset validation information.
+	TestDatasetValidation *GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadataDatasetValidation `json:"testDatasetValidation,omitempty"`
+
+	// TrainingDatasetValidation: The training dataset validation
+	// information.
+	TrainingDatasetValidation *GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadataDatasetValidation `json:"trainingDatasetValidation,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonMetadata") to
@@ -907,18 +773,63 @@ func (s *GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadata) MarshalJSO
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadataDatasetVali
+// dation: The dataset validation information. This includes any and all
+// errors with documents and the dataset.
+type GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadataDatasetValidation struct {
+	// DatasetErrorCount: The total number of dataset errors.
+	DatasetErrorCount int64 `json:"datasetErrorCount,omitempty"`
+
+	// DatasetErrors: Error information for the dataset as a whole. A
+	// maximum of 10 dataset errors will be returned. A single dataset error
+	// is terminal for training.
+	DatasetErrors []*GoogleRpcStatus `json:"datasetErrors,omitempty"`
+
+	// DocumentErrorCount: The total number of document errors.
+	DocumentErrorCount int64 `json:"documentErrorCount,omitempty"`
+
+	// DocumentErrors: Error information pertaining to specific documents. A
+	// maximum of 10 document errors will be returned. Any document with
+	// errors will not be used throughout training.
+	DocumentErrors []*GoogleRpcStatus `json:"documentErrors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatasetErrorCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatasetErrorCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadataDatasetValidation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionMetadataDatasetValidation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionResponse: The
 // response for the TrainProcessorVersion method.
 type GoogleCloudDocumentaiUiv1beta3TrainProcessorVersionResponse struct {
-	// ProcessorVersion: The processor version produced by training.
-	ProcessorVersion *GoogleCloudDocumentaiUiv1beta3ProcessorVersion `json:"processorVersion,omitempty"`
+	// ProcessorVersion: The resource name of the processor version produced
+	// by training.
+	ProcessorVersion string `json:"processorVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProcessorVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ProcessorVersion") to
@@ -946,10 +857,10 @@ type GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonMetadata") to
@@ -973,6 +884,34 @@ func (s *GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionMetadata) Marshal
 type GoogleCloudDocumentaiUiv1beta3UndeployProcessorVersionResponse struct {
 }
 
+type GoogleCloudDocumentaiUiv1beta3UpdateDatasetOperationMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3UpdateDatasetOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3UpdateDatasetOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiUiv1beta3UpdateHumanReviewConfigMetadata: The
 // long running operation metadata for updating the human review
 // configuration.
@@ -982,10 +921,10 @@ type GoogleCloudDocumentaiUiv1beta3UpdateHumanReviewConfigMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonMetadata") to
@@ -1012,10 +951,10 @@ type GoogleCloudDocumentaiUiv1beta3UpdateLabelerPoolOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonMetadata") to
@@ -1067,10 +1006,10 @@ type GoogleCloudDocumentaiV1BatchProcessMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -1112,10 +1051,10 @@ type GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "HumanReviewStatus")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HumanReviewStatus") to
@@ -1165,10 +1104,10 @@ type GoogleCloudDocumentaiV1CommonOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -1186,11 +1125,178 @@ func (s *GoogleCloudDocumentaiV1CommonOperationMetadata) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1DeleteProcessorMetadata: The long running
+// operation metadata for delete processor method.
+type GoogleCloudDocumentaiV1DeleteProcessorMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1DeleteProcessorMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DeleteProcessorMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1DeleteProcessorVersionMetadata: The long
+// running operation metadata for delete processor version method.
+type GoogleCloudDocumentaiV1DeleteProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1DeleteProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DeleteProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1DeployProcessorVersionMetadata: The long
+// running operation metadata for deploy processor version method.
+type GoogleCloudDocumentaiV1DeployProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1DeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DeployProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1DeployProcessorVersionResponse: Response
+// message for the deploy processor version method.
+type GoogleCloudDocumentaiV1DeployProcessorVersionResponse struct {
+}
+
+// GoogleCloudDocumentaiV1DisableProcessorMetadata: The long running
+// operation metadata for disable processor method.
+type GoogleCloudDocumentaiV1DisableProcessorMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1DisableProcessorMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1DisableProcessorMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1DisableProcessorResponse: Response message for
+// the disable processor method. Intentionally empty proto for adding
+// fields in future.
+type GoogleCloudDocumentaiV1DisableProcessorResponse struct {
+}
+
+// GoogleCloudDocumentaiV1EnableProcessorMetadata: The long running
+// operation metadata for enable processor method.
+type GoogleCloudDocumentaiV1EnableProcessorMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1EnableProcessorMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1EnableProcessorMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1EnableProcessorResponse: Response message for
+// the enable processor method. Intentionally empty proto for adding
+// fields in future.
+type GoogleCloudDocumentaiV1EnableProcessorResponse struct {
+}
+
 // GoogleCloudDocumentaiV1HumanReviewStatus: The status of human review
 // on a processed document.
 type GoogleCloudDocumentaiV1HumanReviewStatus struct {
 	// HumanReviewOperation: The name of the operation triggered by the
-	// processed document. Non-empty only when the [state] is
+	// processed document. This field is populated only when the [state] is
 	// [HUMAN_REVIEW_IN_PROGRESS]. It has the same response type and
 	// metadata as the long running operation returned by [ReviewDocument]
 	// method.
@@ -1199,16 +1305,17 @@ type GoogleCloudDocumentaiV1HumanReviewStatus struct {
 	// State: The state of human review on the processing request.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - State unspecified.
-	//   "HUMAN_REVIEW_SKIPPED" - Human review is skipped for the document,
-	// it's either due to the human review is not enabled on the processor
-	// or the processing request sets to skip it.
-	//   "HUMAN_REVIEW_VALIDATION_PASSED" - Human review validation is
-	// triggered and passed, so no review is needed.
-	//   "HUMAN_REVIEW_IN_PROGRESS" - Human review validation is triggered
-	// and the document is under review.
-	//   "HUMAN_REVIEW_ERROR" - Some error happened during triggering human
-	// review, see the [state_message] for details.
+	//   "STATE_UNSPECIFIED" - Human review state is unspecified. Most
+	// likely due to an internal error.
+	//   "SKIPPED" - Human review is skipped for the document. This can
+	// happen because human review is not enabled on the processor or the
+	// processing request has been set to skip this document.
+	//   "VALIDATION_PASSED" - Human review validation is triggered and
+	// passed, so no review is needed.
+	//   "IN_PROGRESS" - Human review validation is triggered and the
+	// document is under review.
+	//   "ERROR" - Some error happened during triggering human review, see
+	// the [state_message] for details.
 	State string `json:"state,omitempty"`
 
 	// StateMessage: A message providing more details about the human review
@@ -1217,8 +1324,8 @@ type GoogleCloudDocumentaiV1HumanReviewStatus struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "HumanReviewOperation") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1248,10 +1355,10 @@ type GoogleCloudDocumentaiV1ReviewDocumentOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonMetadata") to
@@ -1279,10 +1386,10 @@ type GoogleCloudDocumentaiV1ReviewDocumentResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsDestination") to
@@ -1301,6 +1408,76 @@ func (s *GoogleCloudDocumentaiV1ReviewDocumentResponse) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata: The long
+// running operation metadata for set default processor version method.
+type GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1SetDefaultProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1SetDefaultProcessorVersionResponse: Response
+// message for set default processor version method.
+type GoogleCloudDocumentaiV1SetDefaultProcessorVersionResponse struct {
+}
+
+// GoogleCloudDocumentaiV1UndeployProcessorVersionMetadata: The long
+// running operation metadata for the undeploy processor version method.
+type GoogleCloudDocumentaiV1UndeployProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1UndeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1UndeployProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1UndeployProcessorVersionResponse: Response
+// message for the undeploy processor version method.
+type GoogleCloudDocumentaiV1UndeployProcessorVersionResponse struct {
+}
+
 // GoogleCloudDocumentaiV1beta1BatchProcessDocumentsResponse: Response
 // to an batch document processing request. This is returned in the LRO
 // Operation after the operation is complete.
@@ -1310,10 +1487,10 @@ type GoogleCloudDocumentaiV1beta1BatchProcessDocumentsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Responses") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Responses") to include in
@@ -1342,10 +1519,10 @@ type GoogleCloudDocumentaiV1beta1BoundingPoly struct {
 
 	// ForceSendFields is a list of field names (e.g. "NormalizedVertices")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NormalizedVertices") to
@@ -1370,9 +1547,9 @@ func (s *GoogleCloudDocumentaiV1beta1BoundingPoly) MarshalJSON() ([]byte, error)
 // for collaboration between users and Document Understanding AI to
 // iterate and optimize for quality.
 type GoogleCloudDocumentaiV1beta1Document struct {
-	// Content: Inline document content, represented as a stream of bytes.
-	// Note: As with all `bytes` fields, protobuffers use a pure binary
-	// representation, whereas JSON representations use base64.
+	// Content: Optional. Inline document content, represented as a stream
+	// of bytes. Note: As with all `bytes` fields, protobuffers use a pure
+	// binary representation, whereas JSON representations use base64.
 	Content string `json:"content,omitempty"`
 
 	// Entities: A list of entities detected on Document.text. For document
@@ -1401,7 +1578,8 @@ type GoogleCloudDocumentaiV1beta1Document struct {
 	// message is not specified.
 	ShardInfo *GoogleCloudDocumentaiV1beta1DocumentShardInfo `json:"shardInfo,omitempty"`
 
-	// Text: UTF-8 encoded text in reading order from the document.
+	// Text: Optional. UTF-8 encoded text in reading order from the
+	// document.
 	Text string `json:"text,omitempty"`
 
 	// TextChanges: A list of text corrections made to [Document.text]. This
@@ -1412,22 +1590,18 @@ type GoogleCloudDocumentaiV1beta1Document struct {
 	// TextStyles: Styles for the Document.text.
 	TextStyles []*GoogleCloudDocumentaiV1beta1DocumentStyle `json:"textStyles,omitempty"`
 
-	// Translations: A list of translations on Document.text. For document
-	// shards, translations in this list may cross shard boundaries.
-	Translations []*GoogleCloudDocumentaiV1beta1DocumentTranslation `json:"translations,omitempty"`
-
-	// Uri: Currently supports Google Cloud Storage URI of the form
-	// `gs://bucket_name/object_name`. Object versioning is not supported.
-	// See Google Cloud Storage Request URIs
+	// Uri: Optional. Currently supports Google Cloud Storage URI of the
+	// form `gs://bucket_name/object_name`. Object versioning is not
+	// supported. See Google Cloud Storage Request URIs
 	// (https://cloud.google.com/storage/docs/reference-uris) for more info.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -1445,9 +1619,9 @@ func (s *GoogleCloudDocumentaiV1beta1Document) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta1DocumentEntity: A phrase in the text that
-// is a known entity type, such as a person, an organization, or
-// location.
+// GoogleCloudDocumentaiV1beta1DocumentEntity: An entity that could be a
+// phrase in the text or a property belongs to the document. It is a
+// known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
 	// 1].
@@ -1457,11 +1631,12 @@ type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	// list for this document.
 	Id string `json:"id,omitempty"`
 
-	// MentionId: Deprecated. Use `id` field instead.
+	// MentionId: Optional. Deprecated. Use `id` field instead.
 	MentionId string `json:"mentionId,omitempty"`
 
-	// MentionText: Text value in the document e.g. `1600 Amphitheatre
-	// Pkwy`.
+	// MentionText: Optional. Text value in the document e.g. `1600
+	// Amphitheatre Pkwy`. If the entity is not present in the document,
+	// this field will be empty.
 	MentionText string `json:"mentionText,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
@@ -1485,8 +1660,8 @@ type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	// de-identification purposes.
 	Redacted bool `json:"redacted,omitempty"`
 
-	// TextAnchor: Provenance of the entity. Text anchor indexing into the
-	// Document.text.
+	// TextAnchor: Optional. Provenance of the entity. Text anchor indexing
+	// into the Document.text.
 	TextAnchor *GoogleCloudDocumentaiV1beta1DocumentTextAnchor `json:"textAnchor,omitempty"`
 
 	// Type: Entity type from a schema e.g. `Address`.
@@ -1494,10 +1669,10 @@ type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Confidence") to include in
@@ -1536,6 +1711,10 @@ type GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue struct {
 	// https://github.com/googleapis/googleapis/blob/master/google/type/postal_address.proto
 	AddressValue *GoogleTypePostalAddress `json:"addressValue,omitempty"`
 
+	// BooleanValue: Boolean value. Can be used for entities with binary
+	// values, or for checkboxes.
+	BooleanValue bool `json:"booleanValue,omitempty"`
+
 	// DateValue: Date value. Includes year, month, day. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/date.proto
 	DateValue *GoogleTypeDate `json:"dateValue,omitempty"`
@@ -1545,14 +1724,22 @@ type GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue struct {
 	// https://github.com/googleapis/googleapis/blob/master/google/type/datetime.proto
 	DatetimeValue *GoogleTypeDateTime `json:"datetimeValue,omitempty"`
 
+	// FloatValue: Float value.
+	FloatValue float64 `json:"floatValue,omitempty"`
+
+	// IntegerValue: Integer value.
+	IntegerValue int64 `json:"integerValue,omitempty"`
+
 	// MoneyValue: Money value. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/money.proto
 	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
 
-	// Text: Required. Normalized entity value stored as a string. This
-	// field is populated for supported document type (e.g. Invoice). For
+	// Text: Optional. An optional field to store a normalized string. For
 	// some entity types, one of respective 'structured_value' fields may
-	// also be populated. - Money/Currency type (`money_value`) is in the
+	// also be populated. Also not all the types of 'structured_value' will
+	// be normalized. For example, some processors may not generate float or
+	// int normalized text by default. Below are sample formats mapped to
+	// structured values. - Money/Currency type (`money_value`) is in the
 	// ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601
 	// text format. - Datetime type (`datetime_value`) is in the ISO 8601
 	// text format.
@@ -1560,10 +1747,10 @@ type GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "AddressValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AddressValue") to include
@@ -1581,6 +1768,20 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue
+	var s1 struct {
+		FloatValue gensupport.JSONFloat64 `json:"floatValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FloatValue = float64(s1.FloatValue)
+	return nil
+}
+
 // GoogleCloudDocumentaiV1beta1DocumentEntityRelation: Relationship
 // between Entities.
 type GoogleCloudDocumentaiV1beta1DocumentEntityRelation struct {
@@ -1595,10 +1796,10 @@ type GoogleCloudDocumentaiV1beta1DocumentEntityRelation struct {
 
 	// ForceSendFields is a list of field names (e.g. "ObjectId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ObjectId") to include in
@@ -1654,6 +1855,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPage struct {
 	// A collection of lines that a human would perceive as a paragraph.
 	Paragraphs []*GoogleCloudDocumentaiV1beta1DocumentPageParagraph `json:"paragraphs,omitempty"`
 
+	// Provenance: The history of this page.
+	Provenance *GoogleCloudDocumentaiV1beta1DocumentProvenance `json:"provenance,omitempty"`
+
 	// Tables: A list of visually detected tables on the page.
 	Tables []*GoogleCloudDocumentaiV1beta1DocumentPageTable `json:"tables,omitempty"`
 
@@ -1670,10 +1874,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Blocks") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Blocks") to include in API
@@ -1701,10 +1905,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageAnchor struct {
 
 	// ForceSendFields is a list of field names (e.g. "PageRefs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PageRefs") to include in
@@ -1729,6 +1933,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef struct {
 	// element on the page.
 	BoundingPoly *GoogleCloudDocumentaiV1beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
+	// Confidence: Optional. Confidence of detected page element, if
+	// applicable. Range [0, 1].
+	Confidence float64 `json:"confidence,omitempty"`
+
 	// LayoutId: Optional. Deprecated. Use PageRef.bounding_poly instead.
 	LayoutId string `json:"layoutId,omitempty"`
 
@@ -1747,15 +1955,17 @@ type GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef struct {
 	LayoutType string `json:"layoutType,omitempty"`
 
 	// Page: Required. Index into the Document.pages element, for example
-	// using Document.pages to locate the related page element.
+	// using Document.pages to locate the related page element. This field
+	// is skipped when its value is the default 0. See
+	// https://developers.google.com/protocol-buffers/docs/proto3#json.
 	Page int64 `json:"page,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -1771,6 +1981,20 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef) MarshalJSON() ([
 	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentPageBlock: A block has a set of
@@ -1789,10 +2013,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageBlock struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedLanguages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedLanguages") to
@@ -1824,10 +2048,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Confidence") to include in
@@ -1873,10 +2097,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageDimension struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -1913,6 +2137,16 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageDimension) UnmarshalJSON(data [
 // GoogleCloudDocumentaiV1beta1DocumentPageFormField: A form field
 // detected on the page.
 type GoogleCloudDocumentaiV1beta1DocumentPageFormField struct {
+	// CorrectedKeyText: Created for Labeling UI to export key text. If
+	// corrections were made to the text identified by the
+	// `field_name.text_anchor`, this field will contain the correction.
+	CorrectedKeyText string `json:"correctedKeyText,omitempty"`
+
+	// CorrectedValueText: Created for Labeling UI to export value text. If
+	// corrections were made to the text identified by the
+	// `field_value.text_anchor`, this field will contain the correction.
+	CorrectedValueText string `json:"correctedValueText,omitempty"`
+
 	// FieldName: Layout for the FormField name. e.g. `Address`, `Email`,
 	// `Grand total`, `Phone number`, etc.
 	FieldName *GoogleCloudDocumentaiV1beta1DocumentPageLayout `json:"fieldName,omitempty"`
@@ -1924,6 +2158,9 @@ type GoogleCloudDocumentaiV1beta1DocumentPageFormField struct {
 	// with confidence.
 	NameDetectedLanguages []*GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage `json:"nameDetectedLanguages,omitempty"`
 
+	// Provenance: The history of this annotation.
+	Provenance *GoogleCloudDocumentaiV1beta1DocumentProvenance `json:"provenance,omitempty"`
+
 	// ValueDetectedLanguages: A list of detected languages for value
 	// together with confidence.
 	ValueDetectedLanguages []*GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage `json:"valueDetectedLanguages,omitempty"`
@@ -1933,20 +2170,21 @@ type GoogleCloudDocumentaiV1beta1DocumentPageFormField struct {
 	// field_value is normal text) - "unfilled_checkbox" - "filled_checkbox"
 	ValueType string `json:"valueType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FieldName") to
+	// ForceSendFields is a list of field names (e.g. "CorrectedKeyText") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FieldName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CorrectedKeyText") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1973,10 +2211,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -2023,10 +2261,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageLayout struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -2074,10 +2312,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageLine struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedLanguages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedLanguages") to
@@ -2117,10 +2355,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageMatrix struct {
 
 	// ForceSendFields is a list of field names (e.g. "Cols") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Cols") to include in API
@@ -2153,10 +2391,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageParagraph struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedLanguages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedLanguages") to
@@ -2193,10 +2431,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageTable struct {
 
 	// ForceSendFields is a list of field names (e.g. "BodyRows") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BodyRows") to include in
@@ -2232,10 +2470,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageTableTableCell struct {
 
 	// ForceSendFields is a list of field names (e.g. "ColSpan") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ColSpan") to include in
@@ -2261,10 +2499,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageTableTableRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "Cells") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Cells") to include in API
@@ -2299,10 +2537,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageToken struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedBreak") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedBreak") to include
@@ -2335,10 +2573,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageTokenDetectedBreak struct {
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Type") to include in API
@@ -2371,10 +2609,10 @@ type GoogleCloudDocumentaiV1beta1DocumentPageVisualElement struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedLanguages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedLanguages") to
@@ -2416,16 +2654,17 @@ type GoogleCloudDocumentaiV1beta1DocumentProvenance struct {
 	//   "REPLACE" - Explicitly replaces the element(s) identified by
 	// `parents`.
 	//   "EVAL_REQUESTED" - Element is requested for human review.
-	//   "EVAL_APPROVED" - Element is review and approved at human review,
-	// confidence will be set to 1.0
+	//   "EVAL_APPROVED" - Element is reviewed and approved at human review,
+	// confidence will be set to 1.0.
+	//   "EVAL_SKIPPED" - Element is skipped in the validation process.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -2451,16 +2690,21 @@ type GoogleCloudDocumentaiV1beta1DocumentProvenanceParent struct {
 	// Id: The id of the parent provenance.
 	Id int64 `json:"id,omitempty"`
 
+	// Index: The index of the parent item in the corresponding item list
+	// (eg. list of entities, properties within entities, etc.) on parent
+	// revision.
+	Index int64 `json:"index,omitempty"`
+
 	// Revision: The index of the [Document.revisions] identifying the
 	// parent revision.
 	Revision int64 `json:"revision,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -2505,10 +2749,10 @@ type GoogleCloudDocumentaiV1beta1DocumentRevision struct {
 
 	// ForceSendFields is a list of field names (e.g. "Agent") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Agent") to include in API
@@ -2539,10 +2783,10 @@ type GoogleCloudDocumentaiV1beta1DocumentRevisionHumanReview struct {
 
 	// ForceSendFields is a list of field names (e.g. "State") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "State") to include in API
@@ -2576,10 +2820,10 @@ type GoogleCloudDocumentaiV1beta1DocumentShardInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "ShardCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ShardCount") to include in
@@ -2627,10 +2871,10 @@ type GoogleCloudDocumentaiV1beta1DocumentStyle struct {
 
 	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BackgroundColor") to
@@ -2660,10 +2904,10 @@ type GoogleCloudDocumentaiV1beta1DocumentStyleFontSize struct {
 
 	// ForceSendFields is a list of field names (e.g. "Size") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Size") to include in API
@@ -2707,10 +2951,10 @@ type GoogleCloudDocumentaiV1beta1DocumentTextAnchor struct {
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -2742,10 +2986,10 @@ type GoogleCloudDocumentaiV1beta1DocumentTextAnchorTextSegment struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndIndex") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndIndex") to include in
@@ -2782,10 +3026,10 @@ type GoogleCloudDocumentaiV1beta1DocumentTextChange struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChangedText") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChangedText") to include
@@ -2803,50 +3047,6 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentTextChange) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta1DocumentTranslation: A translation of the
-// text segment.
-type GoogleCloudDocumentaiV1beta1DocumentTranslation struct {
-	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more information, see
-	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
-	LanguageCode string `json:"languageCode,omitempty"`
-
-	// Provenance: The history of this annotation.
-	Provenance []*GoogleCloudDocumentaiV1beta1DocumentProvenance `json:"provenance,omitempty"`
-
-	// TextAnchor: Provenance of the translation. Text anchor indexing into
-	// the Document.text. There can only be a single
-	// `TextAnchor.text_segments` element. If the start and end index of the
-	// text segment are the same, the text change is inserted before that
-	// index.
-	TextAnchor *GoogleCloudDocumentaiV1beta1DocumentTextAnchor `json:"textAnchor,omitempty"`
-
-	// TranslatedText: Text translated into the target language.
-	TranslatedText string `json:"translatedText,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LanguageCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1beta1DocumentTranslation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta1DocumentTranslation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDocumentaiV1beta1GcsDestination: The Google Cloud Storage
 // location where the output file will be written to.
 type GoogleCloudDocumentaiV1beta1GcsDestination struct {
@@ -2854,10 +3054,10 @@ type GoogleCloudDocumentaiV1beta1GcsDestination struct {
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Uri") to include in API
@@ -2882,10 +3082,10 @@ type GoogleCloudDocumentaiV1beta1GcsSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Uri") to include in API
@@ -2919,10 +3119,10 @@ type GoogleCloudDocumentaiV1beta1InputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsSource") to include in
@@ -2947,15 +3147,15 @@ type GoogleCloudDocumentaiV1beta1NormalizedVertex struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y float64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -3017,10 +3217,10 @@ type GoogleCloudDocumentaiV1beta1OperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -3059,10 +3259,10 @@ type GoogleCloudDocumentaiV1beta1OutputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsDestination") to
@@ -3095,10 +3295,10 @@ type GoogleCloudDocumentaiV1beta1ProcessDocumentResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "InputConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "InputConfig") to include
@@ -3123,15 +3323,15 @@ type GoogleCloudDocumentaiV1beta1Vertex struct {
 	// X: X coordinate.
 	X int64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y int64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -3158,10 +3358,10 @@ type GoogleCloudDocumentaiV1beta2BatchProcessDocumentsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Responses") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Responses") to include in
@@ -3190,10 +3390,10 @@ type GoogleCloudDocumentaiV1beta2BoundingPoly struct {
 
 	// ForceSendFields is a list of field names (e.g. "NormalizedVertices")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NormalizedVertices") to
@@ -3218,9 +3418,9 @@ func (s *GoogleCloudDocumentaiV1beta2BoundingPoly) MarshalJSON() ([]byte, error)
 // for collaboration between users and Document Understanding AI to
 // iterate and optimize for quality.
 type GoogleCloudDocumentaiV1beta2Document struct {
-	// Content: Inline document content, represented as a stream of bytes.
-	// Note: As with all `bytes` fields, protobuffers use a pure binary
-	// representation, whereas JSON representations use base64.
+	// Content: Optional. Inline document content, represented as a stream
+	// of bytes. Note: As with all `bytes` fields, protobuffers use a pure
+	// binary representation, whereas JSON representations use base64.
 	Content string `json:"content,omitempty"`
 
 	// Entities: A list of entities detected on Document.text. For document
@@ -3252,7 +3452,8 @@ type GoogleCloudDocumentaiV1beta2Document struct {
 	// message is not specified.
 	ShardInfo *GoogleCloudDocumentaiV1beta2DocumentShardInfo `json:"shardInfo,omitempty"`
 
-	// Text: UTF-8 encoded text in reading order from the document.
+	// Text: Optional. UTF-8 encoded text in reading order from the
+	// document.
 	Text string `json:"text,omitempty"`
 
 	// TextChanges: A list of text corrections made to [Document.text]. This
@@ -3263,22 +3464,18 @@ type GoogleCloudDocumentaiV1beta2Document struct {
 	// TextStyles: Styles for the Document.text.
 	TextStyles []*GoogleCloudDocumentaiV1beta2DocumentStyle `json:"textStyles,omitempty"`
 
-	// Translations: A list of translations on Document.text. For document
-	// shards, translations in this list may cross shard boundaries.
-	Translations []*GoogleCloudDocumentaiV1beta2DocumentTranslation `json:"translations,omitempty"`
-
-	// Uri: Currently supports Google Cloud Storage URI of the form
-	// `gs://bucket_name/object_name`. Object versioning is not supported.
-	// See Google Cloud Storage Request URIs
+	// Uri: Optional. Currently supports Google Cloud Storage URI of the
+	// form `gs://bucket_name/object_name`. Object versioning is not
+	// supported. See Google Cloud Storage Request URIs
 	// (https://cloud.google.com/storage/docs/reference-uris) for more info.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -3296,9 +3493,9 @@ func (s *GoogleCloudDocumentaiV1beta2Document) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta2DocumentEntity: A phrase in the text that
-// is a known entity type, such as a person, an organization, or
-// location.
+// GoogleCloudDocumentaiV1beta2DocumentEntity: An entity that could be a
+// phrase in the text or a property belongs to the document. It is a
+// known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
 	// 1].
@@ -3308,11 +3505,12 @@ type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	// list for this document.
 	Id string `json:"id,omitempty"`
 
-	// MentionId: Deprecated. Use `id` field instead.
+	// MentionId: Optional. Deprecated. Use `id` field instead.
 	MentionId string `json:"mentionId,omitempty"`
 
-	// MentionText: Text value in the document e.g. `1600 Amphitheatre
-	// Pkwy`.
+	// MentionText: Optional. Text value in the document e.g. `1600
+	// Amphitheatre Pkwy`. If the entity is not present in the document,
+	// this field will be empty.
 	MentionText string `json:"mentionText,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
@@ -3336,8 +3534,8 @@ type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	// de-identification purposes.
 	Redacted bool `json:"redacted,omitempty"`
 
-	// TextAnchor: Provenance of the entity. Text anchor indexing into the
-	// Document.text.
+	// TextAnchor: Optional. Provenance of the entity. Text anchor indexing
+	// into the Document.text.
 	TextAnchor *GoogleCloudDocumentaiV1beta2DocumentTextAnchor `json:"textAnchor,omitempty"`
 
 	// Type: Entity type from a schema e.g. `Address`.
@@ -3345,10 +3543,10 @@ type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Confidence") to include in
@@ -3387,6 +3585,10 @@ type GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue struct {
 	// https://github.com/googleapis/googleapis/blob/master/google/type/postal_address.proto
 	AddressValue *GoogleTypePostalAddress `json:"addressValue,omitempty"`
 
+	// BooleanValue: Boolean value. Can be used for entities with binary
+	// values, or for checkboxes.
+	BooleanValue bool `json:"booleanValue,omitempty"`
+
 	// DateValue: Date value. Includes year, month, day. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/date.proto
 	DateValue *GoogleTypeDate `json:"dateValue,omitempty"`
@@ -3396,14 +3598,22 @@ type GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue struct {
 	// https://github.com/googleapis/googleapis/blob/master/google/type/datetime.proto
 	DatetimeValue *GoogleTypeDateTime `json:"datetimeValue,omitempty"`
 
+	// FloatValue: Float value.
+	FloatValue float64 `json:"floatValue,omitempty"`
+
+	// IntegerValue: Integer value.
+	IntegerValue int64 `json:"integerValue,omitempty"`
+
 	// MoneyValue: Money value. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/money.proto
 	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
 
-	// Text: Required. Normalized entity value stored as a string. This
-	// field is populated for supported document type (e.g. Invoice). For
+	// Text: Optional. An optional field to store a normalized string. For
 	// some entity types, one of respective 'structured_value' fields may
-	// also be populated. - Money/Currency type (`money_value`) is in the
+	// also be populated. Also not all the types of 'structured_value' will
+	// be normalized. For example, some processors may not generate float or
+	// int normalized text by default. Below are sample formats mapped to
+	// structured values. - Money/Currency type (`money_value`) is in the
 	// ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601
 	// text format. - Datetime type (`datetime_value`) is in the ISO 8601
 	// text format.
@@ -3411,10 +3621,10 @@ type GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "AddressValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AddressValue") to include
@@ -3432,6 +3642,20 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue
+	var s1 struct {
+		FloatValue gensupport.JSONFloat64 `json:"floatValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FloatValue = float64(s1.FloatValue)
+	return nil
+}
+
 // GoogleCloudDocumentaiV1beta2DocumentEntityRelation: Relationship
 // between Entities.
 type GoogleCloudDocumentaiV1beta2DocumentEntityRelation struct {
@@ -3446,10 +3670,10 @@ type GoogleCloudDocumentaiV1beta2DocumentEntityRelation struct {
 
 	// ForceSendFields is a list of field names (e.g. "ObjectId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ObjectId") to include in
@@ -3487,10 +3711,10 @@ type GoogleCloudDocumentaiV1beta2DocumentLabel struct {
 
 	// ForceSendFields is a list of field names (e.g. "AutomlModel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AutomlModel") to include
@@ -3560,6 +3784,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPage struct {
 	// A collection of lines that a human would perceive as a paragraph.
 	Paragraphs []*GoogleCloudDocumentaiV1beta2DocumentPageParagraph `json:"paragraphs,omitempty"`
 
+	// Provenance: The history of this page.
+	Provenance *GoogleCloudDocumentaiV1beta2DocumentProvenance `json:"provenance,omitempty"`
+
 	// Tables: A list of visually detected tables on the page.
 	Tables []*GoogleCloudDocumentaiV1beta2DocumentPageTable `json:"tables,omitempty"`
 
@@ -3576,10 +3803,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Blocks") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Blocks") to include in API
@@ -3607,10 +3834,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageAnchor struct {
 
 	// ForceSendFields is a list of field names (e.g. "PageRefs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PageRefs") to include in
@@ -3635,6 +3862,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef struct {
 	// element on the page.
 	BoundingPoly *GoogleCloudDocumentaiV1beta2BoundingPoly `json:"boundingPoly,omitempty"`
 
+	// Confidence: Optional. Confidence of detected page element, if
+	// applicable. Range [0, 1].
+	Confidence float64 `json:"confidence,omitempty"`
+
 	// LayoutId: Optional. Deprecated. Use PageRef.bounding_poly instead.
 	LayoutId string `json:"layoutId,omitempty"`
 
@@ -3653,15 +3884,17 @@ type GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef struct {
 	LayoutType string `json:"layoutType,omitempty"`
 
 	// Page: Required. Index into the Document.pages element, for example
-	// using Document.pages to locate the related page element.
+	// using Document.pages to locate the related page element. This field
+	// is skipped when its value is the default 0. See
+	// https://developers.google.com/protocol-buffers/docs/proto3#json.
 	Page int64 `json:"page,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -3677,6 +3910,20 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef) MarshalJSON() ([
 	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentPageBlock: A block has a set of
@@ -3695,10 +3942,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageBlock struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedLanguages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedLanguages") to
@@ -3730,10 +3977,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Confidence") to include in
@@ -3779,10 +4026,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageDimension struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -3819,6 +4066,16 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageDimension) UnmarshalJSON(data [
 // GoogleCloudDocumentaiV1beta2DocumentPageFormField: A form field
 // detected on the page.
 type GoogleCloudDocumentaiV1beta2DocumentPageFormField struct {
+	// CorrectedKeyText: Created for Labeling UI to export key text. If
+	// corrections were made to the text identified by the
+	// `field_name.text_anchor`, this field will contain the correction.
+	CorrectedKeyText string `json:"correctedKeyText,omitempty"`
+
+	// CorrectedValueText: Created for Labeling UI to export value text. If
+	// corrections were made to the text identified by the
+	// `field_value.text_anchor`, this field will contain the correction.
+	CorrectedValueText string `json:"correctedValueText,omitempty"`
+
 	// FieldName: Layout for the FormField name. e.g. `Address`, `Email`,
 	// `Grand total`, `Phone number`, etc.
 	FieldName *GoogleCloudDocumentaiV1beta2DocumentPageLayout `json:"fieldName,omitempty"`
@@ -3830,6 +4087,9 @@ type GoogleCloudDocumentaiV1beta2DocumentPageFormField struct {
 	// with confidence.
 	NameDetectedLanguages []*GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage `json:"nameDetectedLanguages,omitempty"`
 
+	// Provenance: The history of this annotation.
+	Provenance *GoogleCloudDocumentaiV1beta2DocumentProvenance `json:"provenance,omitempty"`
+
 	// ValueDetectedLanguages: A list of detected languages for value
 	// together with confidence.
 	ValueDetectedLanguages []*GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage `json:"valueDetectedLanguages,omitempty"`
@@ -3839,20 +4099,21 @@ type GoogleCloudDocumentaiV1beta2DocumentPageFormField struct {
 	// field_value is normal text) - "unfilled_checkbox" - "filled_checkbox"
 	ValueType string `json:"valueType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FieldName") to
+	// ForceSendFields is a list of field names (e.g. "CorrectedKeyText") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FieldName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CorrectedKeyText") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3879,10 +4140,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -3929,10 +4190,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageLayout struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -3980,10 +4241,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageLine struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedLanguages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedLanguages") to
@@ -4023,10 +4284,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageMatrix struct {
 
 	// ForceSendFields is a list of field names (e.g. "Cols") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Cols") to include in API
@@ -4059,10 +4320,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageParagraph struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedLanguages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedLanguages") to
@@ -4099,10 +4360,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageTable struct {
 
 	// ForceSendFields is a list of field names (e.g. "BodyRows") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BodyRows") to include in
@@ -4138,10 +4399,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageTableTableCell struct {
 
 	// ForceSendFields is a list of field names (e.g. "ColSpan") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ColSpan") to include in
@@ -4167,10 +4428,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageTableTableRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "Cells") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Cells") to include in API
@@ -4205,10 +4466,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageToken struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedBreak") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedBreak") to include
@@ -4241,10 +4502,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageTokenDetectedBreak struct {
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Type") to include in API
@@ -4277,10 +4538,10 @@ type GoogleCloudDocumentaiV1beta2DocumentPageVisualElement struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedLanguages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedLanguages") to
@@ -4322,16 +4583,17 @@ type GoogleCloudDocumentaiV1beta2DocumentProvenance struct {
 	//   "REPLACE" - Explicitly replaces the element(s) identified by
 	// `parents`.
 	//   "EVAL_REQUESTED" - Element is requested for human review.
-	//   "EVAL_APPROVED" - Element is review and approved at human review,
-	// confidence will be set to 1.0
+	//   "EVAL_APPROVED" - Element is reviewed and approved at human review,
+	// confidence will be set to 1.0.
+	//   "EVAL_SKIPPED" - Element is skipped in the validation process.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -4357,16 +4619,21 @@ type GoogleCloudDocumentaiV1beta2DocumentProvenanceParent struct {
 	// Id: The id of the parent provenance.
 	Id int64 `json:"id,omitempty"`
 
+	// Index: The index of the parent item in the corresponding item list
+	// (eg. list of entities, properties within entities, etc.) on parent
+	// revision.
+	Index int64 `json:"index,omitempty"`
+
 	// Revision: The index of the [Document.revisions] identifying the
 	// parent revision.
 	Revision int64 `json:"revision,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -4411,10 +4678,10 @@ type GoogleCloudDocumentaiV1beta2DocumentRevision struct {
 
 	// ForceSendFields is a list of field names (e.g. "Agent") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Agent") to include in API
@@ -4445,10 +4712,10 @@ type GoogleCloudDocumentaiV1beta2DocumentRevisionHumanReview struct {
 
 	// ForceSendFields is a list of field names (e.g. "State") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "State") to include in API
@@ -4482,10 +4749,10 @@ type GoogleCloudDocumentaiV1beta2DocumentShardInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "ShardCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ShardCount") to include in
@@ -4533,10 +4800,10 @@ type GoogleCloudDocumentaiV1beta2DocumentStyle struct {
 
 	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BackgroundColor") to
@@ -4566,10 +4833,10 @@ type GoogleCloudDocumentaiV1beta2DocumentStyleFontSize struct {
 
 	// ForceSendFields is a list of field names (e.g. "Size") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Size") to include in API
@@ -4613,10 +4880,10 @@ type GoogleCloudDocumentaiV1beta2DocumentTextAnchor struct {
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -4648,10 +4915,10 @@ type GoogleCloudDocumentaiV1beta2DocumentTextAnchorTextSegment struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndIndex") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndIndex") to include in
@@ -4688,10 +4955,10 @@ type GoogleCloudDocumentaiV1beta2DocumentTextChange struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChangedText") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChangedText") to include
@@ -4709,50 +4976,6 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentTextChange) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta2DocumentTranslation: A translation of the
-// text segment.
-type GoogleCloudDocumentaiV1beta2DocumentTranslation struct {
-	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more information, see
-	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
-	LanguageCode string `json:"languageCode,omitempty"`
-
-	// Provenance: The history of this annotation.
-	Provenance []*GoogleCloudDocumentaiV1beta2DocumentProvenance `json:"provenance,omitempty"`
-
-	// TextAnchor: Provenance of the translation. Text anchor indexing into
-	// the Document.text. There can only be a single
-	// `TextAnchor.text_segments` element. If the start and end index of the
-	// text segment are the same, the text change is inserted before that
-	// index.
-	TextAnchor *GoogleCloudDocumentaiV1beta2DocumentTextAnchor `json:"textAnchor,omitempty"`
-
-	// TranslatedText: Text translated into the target language.
-	TranslatedText string `json:"translatedText,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LanguageCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1beta2DocumentTranslation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta2DocumentTranslation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDocumentaiV1beta2GcsDestination: The Google Cloud Storage
 // location where the output file will be written to.
 type GoogleCloudDocumentaiV1beta2GcsDestination struct {
@@ -4760,10 +4983,10 @@ type GoogleCloudDocumentaiV1beta2GcsDestination struct {
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Uri") to include in API
@@ -4788,10 +5011,10 @@ type GoogleCloudDocumentaiV1beta2GcsSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Uri") to include in API
@@ -4831,10 +5054,10 @@ type GoogleCloudDocumentaiV1beta2InputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "Contents") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Contents") to include in
@@ -4859,15 +5082,15 @@ type GoogleCloudDocumentaiV1beta2NormalizedVertex struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y float64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -4929,10 +5152,10 @@ type GoogleCloudDocumentaiV1beta2OperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -4971,10 +5194,10 @@ type GoogleCloudDocumentaiV1beta2OutputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsDestination") to
@@ -5007,10 +5230,10 @@ type GoogleCloudDocumentaiV1beta2ProcessDocumentResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "InputConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "InputConfig") to include
@@ -5035,15 +5258,15 @@ type GoogleCloudDocumentaiV1beta2Vertex struct {
 	// X: X coordinate.
 	X int64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y int64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -5057,6 +5280,40 @@ type GoogleCloudDocumentaiV1beta2Vertex struct {
 
 func (s *GoogleCloudDocumentaiV1beta2Vertex) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta2Vertex
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig: The common
+// config to specify a set of documents used as input.
+type GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig struct {
+	// GcsDocuments: The set of documents individually specified on Cloud
+	// Storage.
+	GcsDocuments *GoogleCloudDocumentaiV1beta3GcsDocuments `json:"gcsDocuments,omitempty"`
+
+	// GcsPrefix: The set of documents that match the specified Cloud
+	// Storage [gcs_prefix].
+	GcsPrefix *GoogleCloudDocumentaiV1beta3GcsPrefix `json:"gcsPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsDocuments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsDocuments") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5094,10 +5351,10 @@ type GoogleCloudDocumentaiV1beta3BatchProcessMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -5121,7 +5378,7 @@ type GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus str
 	// HumanReviewOperation: The name of the operation triggered by the
 	// processed document. If the human review process is not triggered,
 	// this field will be empty. It has the same response type and metadata
-	// as the long running operation returned by ReviewDocument method. .
+	// as the long running operation returned by ReviewDocument method.
 	HumanReviewOperation string `json:"humanReviewOperation,omitempty"`
 
 	// HumanReviewStatus: The status of human review on the processed
@@ -5145,8 +5402,8 @@ type GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus str
 
 	// ForceSendFields is a list of field names (e.g.
 	// "HumanReviewOperation") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -5171,9 +5428,15 @@ func (s *GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus
 // GoogleCloudDocumentaiV1beta3BatchProcessRequest: Request message for
 // batch process document method.
 type GoogleCloudDocumentaiV1beta3BatchProcessRequest struct {
+	// DocumentOutputConfig: The overall output config for batch process.
+	DocumentOutputConfig *GoogleCloudDocumentaiV1beta3DocumentOutputConfig `json:"documentOutputConfig,omitempty"`
+
 	// InputConfigs: The input config for each single document in the batch
 	// process.
 	InputConfigs []*GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchInputConfig `json:"inputConfigs,omitempty"`
+
+	// InputDocuments: The input documents for batch process.
+	InputDocuments *GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig `json:"inputDocuments,omitempty"`
 
 	// OutputConfig: The overall output config for batch process.
 	OutputConfig *GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchOutputConfig `json:"outputConfig,omitempty"`
@@ -5182,20 +5445,22 @@ type GoogleCloudDocumentaiV1beta3BatchProcessRequest struct {
 	// this request. Default to false.
 	SkipHumanReview bool `json:"skipHumanReview,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InputConfigs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DocumentOutputConfig") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InputConfigs") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DocumentOutputConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5219,10 +5484,10 @@ type GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchInputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsSource") to include in
@@ -5249,10 +5514,10 @@ type GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchOutputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsDestination") to
@@ -5287,10 +5552,10 @@ type GoogleCloudDocumentaiV1beta3BoundingPoly struct {
 
 	// ForceSendFields is a list of field names (e.g. "NormalizedVertices")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NormalizedVertices") to
@@ -5335,10 +5600,10 @@ type GoogleCloudDocumentaiV1beta3CommonOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -5356,15 +5621,156 @@ func (s *GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta3DeleteProcessorMetadata: The long running
+// operation metadata for delete processor method.
+type GoogleCloudDocumentaiV1beta3DeleteProcessorMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3DeleteProcessorMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DeleteProcessorMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DeleteProcessorVersionMetadata: The long
+// running operation metadata for delete processor version method.
+type GoogleCloudDocumentaiV1beta3DeleteProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3DeleteProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DeleteProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DeployProcessorVersionMetadata: The long
+// running operation metadata for deploy processor version method.
+type GoogleCloudDocumentaiV1beta3DeployProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3DeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DeployProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DeployProcessorVersionRequest: Request
+// message for the deploy processor version method.
+type GoogleCloudDocumentaiV1beta3DeployProcessorVersionRequest struct {
+}
+
+// GoogleCloudDocumentaiV1beta3DeployProcessorVersionResponse: Response
+// message for the deploy processor version method.
+type GoogleCloudDocumentaiV1beta3DeployProcessorVersionResponse struct {
+}
+
+// GoogleCloudDocumentaiV1beta3DisableProcessorMetadata: The long
+// running operation metadata for disable processor method.
+type GoogleCloudDocumentaiV1beta3DisableProcessorMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3DisableProcessorMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DisableProcessorMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DisableProcessorRequest: Request message
+// for the disable processor method.
+type GoogleCloudDocumentaiV1beta3DisableProcessorRequest struct {
+}
+
+// GoogleCloudDocumentaiV1beta3DisableProcessorResponse: Response
+// message for the disable processor method. Intentionally empty proto
+// for adding fields in future.
+type GoogleCloudDocumentaiV1beta3DisableProcessorResponse struct {
+}
+
 // GoogleCloudDocumentaiV1beta3Document: Document represents the
 // canonical document resource in Document Understanding AI. It is an
 // interchange format that provides insights into documents and allows
 // for collaboration between users and Document Understanding AI to
 // iterate and optimize for quality.
 type GoogleCloudDocumentaiV1beta3Document struct {
-	// Content: Inline document content, represented as a stream of bytes.
-	// Note: As with all `bytes` fields, protobuffers use a pure binary
-	// representation, whereas JSON representations use base64.
+	// Content: Optional. Inline document content, represented as a stream
+	// of bytes. Note: As with all `bytes` fields, protobuffers use a pure
+	// binary representation, whereas JSON representations use base64.
 	Content string `json:"content,omitempty"`
 
 	// Entities: A list of entities detected on Document.text. For document
@@ -5393,7 +5799,8 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	// message is not specified.
 	ShardInfo *GoogleCloudDocumentaiV1beta3DocumentShardInfo `json:"shardInfo,omitempty"`
 
-	// Text: UTF-8 encoded text in reading order from the document.
+	// Text: Optional. UTF-8 encoded text in reading order from the
+	// document.
 	Text string `json:"text,omitempty"`
 
 	// TextChanges: A list of text corrections made to [Document.text]. This
@@ -5404,22 +5811,18 @@ type GoogleCloudDocumentaiV1beta3Document struct {
 	// TextStyles: Styles for the Document.text.
 	TextStyles []*GoogleCloudDocumentaiV1beta3DocumentStyle `json:"textStyles,omitempty"`
 
-	// Translations: A list of translations on Document.text. For document
-	// shards, translations in this list may cross shard boundaries.
-	Translations []*GoogleCloudDocumentaiV1beta3DocumentTranslation `json:"translations,omitempty"`
-
-	// Uri: Currently supports Google Cloud Storage URI of the form
-	// `gs://bucket_name/object_name`. Object versioning is not supported.
-	// See Google Cloud Storage Request URIs
+	// Uri: Optional. Currently supports Google Cloud Storage URI of the
+	// form `gs://bucket_name/object_name`. Object versioning is not
+	// supported. See Google Cloud Storage Request URIs
 	// (https://cloud.google.com/storage/docs/reference-uris) for more info.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -5437,9 +5840,9 @@ func (s *GoogleCloudDocumentaiV1beta3Document) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta3DocumentEntity: A phrase in the text that
-// is a known entity type, such as a person, an organization, or
-// location.
+// GoogleCloudDocumentaiV1beta3DocumentEntity: An entity that could be a
+// phrase in the text or a property belongs to the document. It is a
+// known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta3DocumentEntity struct {
 	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
 	// 1].
@@ -5449,11 +5852,12 @@ type GoogleCloudDocumentaiV1beta3DocumentEntity struct {
 	// list for this document.
 	Id string `json:"id,omitempty"`
 
-	// MentionId: Deprecated. Use `id` field instead.
+	// MentionId: Optional. Deprecated. Use `id` field instead.
 	MentionId string `json:"mentionId,omitempty"`
 
-	// MentionText: Text value in the document e.g. `1600 Amphitheatre
-	// Pkwy`.
+	// MentionText: Optional. Text value in the document e.g. `1600
+	// Amphitheatre Pkwy`. If the entity is not present in the document,
+	// this field will be empty.
 	MentionText string `json:"mentionText,omitempty"`
 
 	// NormalizedValue: Optional. Normalized entity value. Absent if the
@@ -5477,8 +5881,8 @@ type GoogleCloudDocumentaiV1beta3DocumentEntity struct {
 	// de-identification purposes.
 	Redacted bool `json:"redacted,omitempty"`
 
-	// TextAnchor: Provenance of the entity. Text anchor indexing into the
-	// Document.text.
+	// TextAnchor: Optional. Provenance of the entity. Text anchor indexing
+	// into the Document.text.
 	TextAnchor *GoogleCloudDocumentaiV1beta3DocumentTextAnchor `json:"textAnchor,omitempty"`
 
 	// Type: Entity type from a schema e.g. `Address`.
@@ -5486,10 +5890,10 @@ type GoogleCloudDocumentaiV1beta3DocumentEntity struct {
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Confidence") to include in
@@ -5528,6 +5932,10 @@ type GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue struct {
 	// https://github.com/googleapis/googleapis/blob/master/google/type/postal_address.proto
 	AddressValue *GoogleTypePostalAddress `json:"addressValue,omitempty"`
 
+	// BooleanValue: Boolean value. Can be used for entities with binary
+	// values, or for checkboxes.
+	BooleanValue bool `json:"booleanValue,omitempty"`
+
 	// DateValue: Date value. Includes year, month, day. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/date.proto
 	DateValue *GoogleTypeDate `json:"dateValue,omitempty"`
@@ -5537,14 +5945,22 @@ type GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue struct {
 	// https://github.com/googleapis/googleapis/blob/master/google/type/datetime.proto
 	DatetimeValue *GoogleTypeDateTime `json:"datetimeValue,omitempty"`
 
+	// FloatValue: Float value.
+	FloatValue float64 `json:"floatValue,omitempty"`
+
+	// IntegerValue: Integer value.
+	IntegerValue int64 `json:"integerValue,omitempty"`
+
 	// MoneyValue: Money value. See also:
 	// https://github.com/googleapis/googleapis/blob/master/google/type/money.proto
 	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
 
-	// Text: Required. Normalized entity value stored as a string. This
-	// field is populated for supported document type (e.g. Invoice). For
+	// Text: Optional. An optional field to store a normalized string. For
 	// some entity types, one of respective 'structured_value' fields may
-	// also be populated. - Money/Currency type (`money_value`) is in the
+	// also be populated. Also not all the types of 'structured_value' will
+	// be normalized. For example, some processors may not generate float or
+	// int normalized text by default. Below are sample formats mapped to
+	// structured values. - Money/Currency type (`money_value`) is in the
 	// ISO 4217 text format. - Date type (`date_value`) is in the ISO 8601
 	// text format. - Datetime type (`datetime_value`) is in the ISO 8601
 	// text format.
@@ -5552,10 +5968,10 @@ type GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "AddressValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AddressValue") to include
@@ -5573,6 +5989,20 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue
+	var s1 struct {
+		FloatValue gensupport.JSONFloat64 `json:"floatValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.FloatValue = float64(s1.FloatValue)
+	return nil
+}
+
 // GoogleCloudDocumentaiV1beta3DocumentEntityRelation: Relationship
 // between Entities.
 type GoogleCloudDocumentaiV1beta3DocumentEntityRelation struct {
@@ -5587,10 +6017,10 @@ type GoogleCloudDocumentaiV1beta3DocumentEntityRelation struct {
 
 	// ForceSendFields is a list of field names (e.g. "ObjectId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ObjectId") to include in
@@ -5604,6 +6034,66 @@ type GoogleCloudDocumentaiV1beta3DocumentEntityRelation struct {
 
 func (s *GoogleCloudDocumentaiV1beta3DocumentEntityRelation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentEntityRelation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DocumentOutputConfig: Config that
+// controls the output of documents. All documents will be written as a
+// JSON file.
+type GoogleCloudDocumentaiV1beta3DocumentOutputConfig struct {
+	// GcsOutputConfig: Output config to write the results to Cloud Storage.
+	GcsOutputConfig *GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig `json:"gcsOutputConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsOutputConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsOutputConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3DocumentOutputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentOutputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig: The
+// configuration used when outputting documents.
+type GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig struct {
+	// GcsUri: The Cloud Storage uri (a directory) of the output.
+	GcsUri string `json:"gcsUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsUri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentOutputConfigGcsOutputConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5646,6 +6136,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPage struct {
 	// A collection of lines that a human would perceive as a paragraph.
 	Paragraphs []*GoogleCloudDocumentaiV1beta3DocumentPageParagraph `json:"paragraphs,omitempty"`
 
+	// Provenance: The history of this page.
+	Provenance *GoogleCloudDocumentaiV1beta3DocumentProvenance `json:"provenance,omitempty"`
+
 	// Tables: A list of visually detected tables on the page.
 	Tables []*GoogleCloudDocumentaiV1beta3DocumentPageTable `json:"tables,omitempty"`
 
@@ -5662,10 +6155,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Blocks") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Blocks") to include in API
@@ -5693,10 +6186,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageAnchor struct {
 
 	// ForceSendFields is a list of field names (e.g. "PageRefs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PageRefs") to include in
@@ -5721,6 +6214,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageAnchorPageRef struct {
 	// element on the page.
 	BoundingPoly *GoogleCloudDocumentaiV1beta3BoundingPoly `json:"boundingPoly,omitempty"`
 
+	// Confidence: Optional. Confidence of detected page element, if
+	// applicable. Range [0, 1].
+	Confidence float64 `json:"confidence,omitempty"`
+
 	// LayoutId: Optional. Deprecated. Use PageRef.bounding_poly instead.
 	LayoutId string `json:"layoutId,omitempty"`
 
@@ -5739,15 +6236,17 @@ type GoogleCloudDocumentaiV1beta3DocumentPageAnchorPageRef struct {
 	LayoutType string `json:"layoutType,omitempty"`
 
 	// Page: Required. Index into the Document.pages element, for example
-	// using Document.pages to locate the related page element.
+	// using Document.pages to locate the related page element. This field
+	// is skipped when its value is the default 0. See
+	// https://developers.google.com/protocol-buffers/docs/proto3#json.
 	Page int64 `json:"page,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -5763,6 +6262,20 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentPageAnchorPageRef) MarshalJSON() ([
 	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageAnchorPageRef
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta3DocumentPageAnchorPageRef) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta3DocumentPageAnchorPageRef
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentPageBlock: A block has a set of
@@ -5781,10 +6294,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageBlock struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedLanguages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedLanguages") to
@@ -5816,10 +6329,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageDetectedLanguage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Confidence") to include in
@@ -5865,10 +6378,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageDimension struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -5905,6 +6418,16 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentPageDimension) UnmarshalJSON(data [
 // GoogleCloudDocumentaiV1beta3DocumentPageFormField: A form field
 // detected on the page.
 type GoogleCloudDocumentaiV1beta3DocumentPageFormField struct {
+	// CorrectedKeyText: Created for Labeling UI to export key text. If
+	// corrections were made to the text identified by the
+	// `field_name.text_anchor`, this field will contain the correction.
+	CorrectedKeyText string `json:"correctedKeyText,omitempty"`
+
+	// CorrectedValueText: Created for Labeling UI to export value text. If
+	// corrections were made to the text identified by the
+	// `field_value.text_anchor`, this field will contain the correction.
+	CorrectedValueText string `json:"correctedValueText,omitempty"`
+
 	// FieldName: Layout for the FormField name. e.g. `Address`, `Email`,
 	// `Grand total`, `Phone number`, etc.
 	FieldName *GoogleCloudDocumentaiV1beta3DocumentPageLayout `json:"fieldName,omitempty"`
@@ -5916,6 +6439,9 @@ type GoogleCloudDocumentaiV1beta3DocumentPageFormField struct {
 	// with confidence.
 	NameDetectedLanguages []*GoogleCloudDocumentaiV1beta3DocumentPageDetectedLanguage `json:"nameDetectedLanguages,omitempty"`
 
+	// Provenance: The history of this annotation.
+	Provenance *GoogleCloudDocumentaiV1beta3DocumentProvenance `json:"provenance,omitempty"`
+
 	// ValueDetectedLanguages: A list of detected languages for value
 	// together with confidence.
 	ValueDetectedLanguages []*GoogleCloudDocumentaiV1beta3DocumentPageDetectedLanguage `json:"valueDetectedLanguages,omitempty"`
@@ -5925,20 +6451,21 @@ type GoogleCloudDocumentaiV1beta3DocumentPageFormField struct {
 	// field_value is normal text) - "unfilled_checkbox" - "filled_checkbox"
 	ValueType string `json:"valueType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FieldName") to
+	// ForceSendFields is a list of field names (e.g. "CorrectedKeyText") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FieldName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CorrectedKeyText") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5965,10 +6492,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -6015,10 +6542,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageLayout struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -6066,10 +6593,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageLine struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedLanguages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedLanguages") to
@@ -6109,10 +6636,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageMatrix struct {
 
 	// ForceSendFields is a list of field names (e.g. "Cols") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Cols") to include in API
@@ -6145,10 +6672,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageParagraph struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedLanguages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedLanguages") to
@@ -6185,10 +6712,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageTable struct {
 
 	// ForceSendFields is a list of field names (e.g. "BodyRows") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BodyRows") to include in
@@ -6224,10 +6751,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageTableTableCell struct {
 
 	// ForceSendFields is a list of field names (e.g. "ColSpan") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ColSpan") to include in
@@ -6253,10 +6780,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageTableTableRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "Cells") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Cells") to include in API
@@ -6291,10 +6818,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageToken struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedBreak") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedBreak") to include
@@ -6327,10 +6854,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageTokenDetectedBreak struct {
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Type") to include in API
@@ -6363,10 +6890,10 @@ type GoogleCloudDocumentaiV1beta3DocumentPageVisualElement struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetectedLanguages")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetectedLanguages") to
@@ -6408,16 +6935,17 @@ type GoogleCloudDocumentaiV1beta3DocumentProvenance struct {
 	//   "REPLACE" - Explicitly replaces the element(s) identified by
 	// `parents`.
 	//   "EVAL_REQUESTED" - Element is requested for human review.
-	//   "EVAL_APPROVED" - Element is review and approved at human review,
-	// confidence will be set to 1.0
+	//   "EVAL_APPROVED" - Element is reviewed and approved at human review,
+	// confidence will be set to 1.0.
+	//   "EVAL_SKIPPED" - Element is skipped in the validation process.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -6443,16 +6971,21 @@ type GoogleCloudDocumentaiV1beta3DocumentProvenanceParent struct {
 	// Id: The id of the parent provenance.
 	Id int64 `json:"id,omitempty"`
 
+	// Index: The index of the parent item in the corresponding item list
+	// (eg. list of entities, properties within entities, etc.) on parent
+	// revision.
+	Index int64 `json:"index,omitempty"`
+
 	// Revision: The index of the [Document.revisions] identifying the
 	// parent revision.
 	Revision int64 `json:"revision,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -6497,10 +7030,10 @@ type GoogleCloudDocumentaiV1beta3DocumentRevision struct {
 
 	// ForceSendFields is a list of field names (e.g. "Agent") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Agent") to include in API
@@ -6531,10 +7064,10 @@ type GoogleCloudDocumentaiV1beta3DocumentRevisionHumanReview struct {
 
 	// ForceSendFields is a list of field names (e.g. "State") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "State") to include in API
@@ -6568,10 +7101,10 @@ type GoogleCloudDocumentaiV1beta3DocumentShardInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "ShardCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ShardCount") to include in
@@ -6619,10 +7152,10 @@ type GoogleCloudDocumentaiV1beta3DocumentStyle struct {
 
 	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BackgroundColor") to
@@ -6652,10 +7185,10 @@ type GoogleCloudDocumentaiV1beta3DocumentStyleFontSize struct {
 
 	// ForceSendFields is a list of field names (e.g. "Size") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Size") to include in API
@@ -6699,10 +7232,10 @@ type GoogleCloudDocumentaiV1beta3DocumentTextAnchor struct {
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -6734,10 +7267,10 @@ type GoogleCloudDocumentaiV1beta3DocumentTextAnchorTextSegment struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndIndex") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndIndex") to include in
@@ -6774,10 +7307,10 @@ type GoogleCloudDocumentaiV1beta3DocumentTextChange struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChangedText") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChangedText") to include
@@ -6795,36 +7328,268 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentTextChange) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta3DocumentTranslation: A translation of the
-// text segment.
-type GoogleCloudDocumentaiV1beta3DocumentTranslation struct {
-	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
-	// For more information, see
-	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
-	LanguageCode string `json:"languageCode,omitempty"`
+// GoogleCloudDocumentaiV1beta3EnableProcessorMetadata: The long running
+// operation metadata for enable processor method.
+type GoogleCloudDocumentaiV1beta3EnableProcessorMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
-	// Provenance: The history of this annotation.
-	Provenance []*GoogleCloudDocumentaiV1beta3DocumentProvenance `json:"provenance,omitempty"`
-
-	// TextAnchor: Provenance of the translation. Text anchor indexing into
-	// the Document.text. There can only be a single
-	// `TextAnchor.text_segments` element. If the start and end index of the
-	// text segment are the same, the text change is inserted before that
-	// index.
-	TextAnchor *GoogleCloudDocumentaiV1beta3DocumentTextAnchor `json:"textAnchor,omitempty"`
-
-	// TranslatedText: Text translated into the target language.
-	TranslatedText string `json:"translatedText,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EnableProcessorMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EnableProcessorMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3EnableProcessorRequest: Request message
+// for the enable processor method.
+type GoogleCloudDocumentaiV1beta3EnableProcessorRequest struct {
+}
+
+// GoogleCloudDocumentaiV1beta3EnableProcessorResponse: Response message
+// for the enable processor method. Intentionally empty proto for adding
+// fields in future.
+type GoogleCloudDocumentaiV1beta3EnableProcessorResponse struct {
+}
+
+// GoogleCloudDocumentaiV1beta3EvaluationMetrics: Evaluation metrics,
+// either in aggregate or about a specific entity.
+type GoogleCloudDocumentaiV1beta3EvaluationMetrics struct {
+	// F1Score: The calculated f1 score.
+	F1Score float64 `json:"f1Score,omitempty"`
+
+	// FalseNegativesCount: The amount of false negatives.
+	FalseNegativesCount int64 `json:"falseNegativesCount,omitempty"`
+
+	// FalsePositivesCount: The amount of false positives.
+	FalsePositivesCount int64 `json:"falsePositivesCount,omitempty"`
+
+	// GroundTruthOccurrencesCount: The amount of occurrences in ground
+	// truth documents.
+	GroundTruthOccurrencesCount int64 `json:"groundTruthOccurrencesCount,omitempty"`
+
+	// Precision: The calculated precision.
+	Precision float64 `json:"precision,omitempty"`
+
+	// PredictedOccurrencesCount: The amount of occurrences in predicted
+	// documents.
+	PredictedOccurrencesCount int64 `json:"predictedOccurrencesCount,omitempty"`
+
+	// Recall: The calculated recall.
+	Recall float64 `json:"recall,omitempty"`
+
+	// TotalDocumentsCount: The amount of documents that had an occurrence
+	// of this label.
+	TotalDocumentsCount int64 `json:"totalDocumentsCount,omitempty"`
+
+	// TruePositivesCount: The amount of true positives.
+	TruePositivesCount int64 `json:"truePositivesCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "F1Score") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "F1Score") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EvaluationMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EvaluationMetrics) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationMetrics
+	var s1 struct {
+		F1Score   gensupport.JSONFloat64 `json:"f1Score"`
+		Precision gensupport.JSONFloat64 `json:"precision"`
+		Recall    gensupport.JSONFloat64 `json:"recall"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.F1Score = float64(s1.F1Score)
+	s.Precision = float64(s1.Precision)
+	s.Recall = float64(s1.Recall)
+	return nil
+}
+
+// GoogleCloudDocumentaiV1beta3EvaluationReference: Gives a short
+// summary of an evaluation, and links to the evaluation itself.
+type GoogleCloudDocumentaiV1beta3EvaluationReference struct {
+	// AggregateMetrics: An aggregate of the statistics for the evaluation.
+	AggregateMetrics *GoogleCloudDocumentaiV1beta3EvaluationMetrics `json:"aggregateMetrics,omitempty"`
+
+	// Evaluation: The resource name of the evaluation.
+	Evaluation string `json:"evaluation,omitempty"`
+
+	// Operation: The resource name of the Long Running Operation for the
+	// evaluation.
+	Operation string `json:"operation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregateMetrics") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregateMetrics") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3EvaluationReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3EvaluationReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse: Response
+// message for fetch processor types.
+type GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse struct {
+	// ProcessorTypes: The list of processor types.
+	ProcessorTypes []*GoogleCloudDocumentaiV1beta3ProcessorType `json:"processorTypes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ProcessorTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProcessorTypes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3GcsDocument: Specifies a document stored
+// on Cloud Storage.
+type GoogleCloudDocumentaiV1beta3GcsDocument struct {
+	// GcsUri: The Cloud Storage object uri.
+	GcsUri string `json:"gcsUri,omitempty"`
+
+	// MimeType: An IANA MIME type (RFC6838) of the content.
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsUri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3GcsDocument) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3GcsDocument
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3GcsDocuments: Specifies a set of
+// documents on Cloud Storage.
+type GoogleCloudDocumentaiV1beta3GcsDocuments struct {
+	// Documents: The list of documents.
+	Documents []*GoogleCloudDocumentaiV1beta3GcsDocument `json:"documents,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Documents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Documents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3GcsDocuments) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3GcsDocuments
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3GcsPrefix: Specifies all documents on
+// Cloud Storage with a common prefix.
+type GoogleCloudDocumentaiV1beta3GcsPrefix struct {
+	// GcsUriPrefix: The URI prefix.
+	GcsUriPrefix string `json:"gcsUriPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsUriPrefix") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsUriPrefix") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -6833,8 +7598,8 @@ type GoogleCloudDocumentaiV1beta3DocumentTranslation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudDocumentaiV1beta3DocumentTranslation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1beta3DocumentTranslation
+func (s *GoogleCloudDocumentaiV1beta3GcsPrefix) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3GcsPrefix
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6843,7 +7608,7 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentTranslation) MarshalJSON() ([]byte,
 // review on a processed document.
 type GoogleCloudDocumentaiV1beta3HumanReviewStatus struct {
 	// HumanReviewOperation: The name of the operation triggered by the
-	// processed document. Non-empty only when the [state] is
+	// processed document. This field is populated only when the [state] is
 	// [HUMAN_REVIEW_IN_PROGRESS]. It has the same response type and
 	// metadata as the long running operation returned by [ReviewDocument]
 	// method.
@@ -6852,16 +7617,17 @@ type GoogleCloudDocumentaiV1beta3HumanReviewStatus struct {
 	// State: The state of human review on the processing request.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - State unspecified.
-	//   "HUMAN_REVIEW_SKIPPED" - Human review is skipped for the document,
-	// it's either due to the human review is not enabled on the processor
-	// or the processing request sets to skip it.
-	//   "HUMAN_REVIEW_VALIDATION_PASSED" - Human review validation is
-	// triggered and passed, so no review is needed.
-	//   "HUMAN_REVIEW_IN_PROGRESS" - Human review validation is triggered
-	// and the document is under review.
-	//   "HUMAN_REVIEW_ERROR" - Some error happened during triggering human
-	// review, see the [state_message] for details.
+	//   "STATE_UNSPECIFIED" - Human review state is unspecified. Most
+	// likely due to an internal error.
+	//   "SKIPPED" - Human review is skipped for the document. This can
+	// happen because human review is not enabled on the processor or the
+	// processing request has been set to skip this document.
+	//   "VALIDATION_PASSED" - Human review validation is triggered and
+	// passed, so no review is needed.
+	//   "IN_PROGRESS" - Human review validation is triggered and the
+	// document is under review.
+	//   "ERROR" - Some error happened during triggering human review, see
+	// the [state_message] for details.
 	State string `json:"state,omitempty"`
 
 	// StateMessage: A message providing more details about the human review
@@ -6870,8 +7636,8 @@ type GoogleCloudDocumentaiV1beta3HumanReviewStatus struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "HumanReviewOperation") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -6893,6 +7659,78 @@ func (s *GoogleCloudDocumentaiV1beta3HumanReviewStatus) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta3ListProcessorVersionsResponse: Response
+// message for list processors.
+type GoogleCloudDocumentaiV1beta3ListProcessorVersionsResponse struct {
+	// NextPageToken: Points to the next processor, otherwise empty.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ProcessorVersions: The list of processors.
+	ProcessorVersions []*GoogleCloudDocumentaiV1beta3ProcessorVersion `json:"processorVersions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3ListProcessorVersionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ListProcessorVersionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ListProcessorsResponse: Response message
+// for list processors.
+type GoogleCloudDocumentaiV1beta3ListProcessorsResponse struct {
+	// NextPageToken: Points to the next processor, otherwise empty.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Processors: The list of processors.
+	Processors []*GoogleCloudDocumentaiV1beta3Processor `json:"processors,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3ListProcessorsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ListProcessorsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3NormalizedVertex: A vertex represents a
 // 2D point in the image. NOTE: the normalized vertex coordinates are
 // relative to the original image and range from 0 to 1.
@@ -6900,15 +7738,15 @@ type GoogleCloudDocumentaiV1beta3NormalizedVertex struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y float64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -6949,16 +7787,22 @@ type GoogleCloudDocumentaiV1beta3ProcessRequest struct {
 	// must be set.
 	Document *GoogleCloudDocumentaiV1beta3Document `json:"document,omitempty"`
 
+	// InlineDocument: An inline document proto.
+	InlineDocument *GoogleCloudDocumentaiV1beta3Document `json:"inlineDocument,omitempty"`
+
+	// RawDocument: A raw document content (bytes).
+	RawDocument *GoogleCloudDocumentaiV1beta3RawDocument `json:"rawDocument,omitempty"`
+
 	// SkipHumanReview: Whether Human Review feature should be skipped for
 	// this request. Default to false.
 	SkipHumanReview bool `json:"skipHumanReview,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Document") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Document") to include in
@@ -6986,7 +7830,7 @@ type GoogleCloudDocumentaiV1beta3ProcessResponse struct {
 	// HumanReviewOperation: The name of the operation triggered by the
 	// processed document. If the human review process is not triggered,
 	// this field will be empty. It has the same response type and metadata
-	// as the long running operation returned by ReviewDocument method. .
+	// as the long running operation returned by ReviewDocument method.
 	HumanReviewOperation string `json:"humanReviewOperation,omitempty"`
 
 	// HumanReviewStatus: The status of human review on the processed
@@ -6999,10 +7843,10 @@ type GoogleCloudDocumentaiV1beta3ProcessResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Document") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Document") to include in
@@ -7016,6 +7860,281 @@ type GoogleCloudDocumentaiV1beta3ProcessResponse struct {
 
 func (s *GoogleCloudDocumentaiV1beta3ProcessResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ProcessResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3Processor: The first-class citizen for
+// DAI. Each processor defines how to extract structural information
+// from a document.
+type GoogleCloudDocumentaiV1beta3Processor struct {
+	// CreateTime: The time the processor was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DefaultProcessorVersion: The default processor version.
+	DefaultProcessorVersion string `json:"defaultProcessorVersion,omitempty"`
+
+	// DisplayName: The display name of the processor.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// KmsKeyName: The KMS key used for encryption/decryption in CMEK
+	// scenarios. See https://cloud.google.com/security-key-management.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// Name: Output only. Immutable. The resource name of the processor.
+	// Format:
+	// projects/{project}/locations/{location}/processors/{processor}
+	Name string `json:"name,omitempty"`
+
+	// ProcessEndpoint: Output only. Immutable. The http endpoint that can
+	// be called to invoke processing.
+	ProcessEndpoint string `json:"processEndpoint,omitempty"`
+
+	// State: Output only. The state of the processor.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The processor is in an unspecified state.
+	//   "ENABLED" - The processor is enabled, i.e, has an enabled version
+	// which can currently serve processing requests and all the feature
+	// dependencies have been successfully initialized.
+	//   "DISABLED" - The processor is disabled.
+	//   "ENABLING" - The processor is being enabled, will become ENABLED if
+	// successful.
+	//   "DISABLING" - The processor is being disabled, will become DISABLED
+	// if successful.
+	//   "CREATING" - The processor is being created, will become either
+	// ENABLED (for successful creation) or FAILED (for failed ones). Once a
+	// processor is in this state, it can then be used for document
+	// processing, but the feature dependencies of the processor might not
+	// be fully created yet.
+	//   "FAILED" - The processor failed during creation or initialization
+	// of feature dependencies. The user should delete the processor and
+	// recreate one as all the functionalities of the processor are
+	// disabled.
+	//   "DELETING" - The processor is being deleted, will be removed if
+	// successful.
+	State string `json:"state,omitempty"`
+
+	// Type: The processor type, e.g., INVOICE_PARSING, W2_PARSING, etc.
+	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3Processor) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3Processor
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ProcessorType: A processor type is
+// responsible for performing a certain document understanding task on a
+// certain type of document. All processor types are created by the
+// documentai service internally. User will only list all available
+// processor types via UI. For different users (projects), the available
+// processor types may be different since we'll expose the access of
+// some types via EAP whitelisting. We make the ProcessorType a resource
+// under location so we have a unified API and keep the possibility that
+// UI will load different available processor types from different
+// regions. But for alpha the behavior is that the user will always get
+// the union of all available processor types among all regions no
+// matter which regionalized endpoint is called, and then we use the
+// 'available_locations' field to show under which regions a processor
+// type is available. For example, users can call either the 'US' or
+// 'EU' endpoint to feach processor types. In the return, we will have
+// an 'invoice parsing' processor with 'available_locations' field only
+// containing 'US'. So the user can try to create an 'invoice parsing'
+// processor under the location 'US'. Such attempt of creating under the
+// location 'EU' will fail. Next ID: 8.
+type GoogleCloudDocumentaiV1beta3ProcessorType struct {
+	// AllowCreation: Whether the processor type allows creation. If yes,
+	// user can create a processor of this processor type. Otherwise, user
+	// needs to request access.
+	AllowCreation bool `json:"allowCreation,omitempty"`
+
+	// AvailableLocations: The locations in which this processor is
+	// available.
+	AvailableLocations []*GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo `json:"availableLocations,omitempty"`
+
+	// Category: The processor category, used by UI to group processor
+	// types.
+	Category string `json:"category,omitempty"`
+
+	// Name: The resource name of the processor type. Format:
+	// projects/{project}/processorTypes/{processor_type}
+	Name string `json:"name,omitempty"`
+
+	// Type: The type of the processor, e.g, "invoice_parsing".
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowCreation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowCreation") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3ProcessorType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo: The location
+// information about where the processor is available.
+type GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo struct {
+	// LocationId: The location id, currently must be one of [us, eu].
+	LocationId string `json:"locationId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LocationId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LocationId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorTypeLocationInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ProcessorVersion: A processor version is
+// an implementation of a processor. Each processor can have multiple
+// versions, pre-trained by Google internally or up-trained by the
+// customer. At a time, a processor can only have one default version
+// version. So the processor's behavior (when processing documents) is
+// defined by a default version.
+type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
+	// CreateTime: The time the processor version was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: The display name of the processor version.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// LatestEvaluation: The most recently invoked evaluation for the
+	// processor version.
+	LatestEvaluation *GoogleCloudDocumentaiV1beta3EvaluationReference `json:"latestEvaluation,omitempty"`
+
+	// Name: The resource name of the processor version. Format:
+	// projects/{project}/locations/{location}/processors/{processor}/process
+	// orVersions/{processor_version}
+	Name string `json:"name,omitempty"`
+
+	// Schema: The schema of the processor version. Describes the output.
+	Schema *GoogleCloudDocumentaiV1beta3Schema `json:"schema,omitempty"`
+
+	// State: The state of the processor version.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The processor version is in an unspecified
+	// state.
+	//   "DEPLOYED" - The processor version is deployed and can be used for
+	// processing.
+	//   "DEPLOYING" - The processor version is being deployed.
+	//   "UNDEPLOYED" - The processor version is not deployed and cannot be
+	// used for processing.
+	//   "UNDEPLOYING" - The processor version is being undeployed.
+	//   "CREATING" - The processor version is being created.
+	//   "DELETING" - The processor version is being deleted.
+	//   "FAILED" - The processor version failed and is in an indeterminate
+	// state.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3ProcessorVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3RawDocument: Payload message of raw
+// document content (bytes).
+type GoogleCloudDocumentaiV1beta3RawDocument struct {
+	// Content: Inline document content.
+	Content string `json:"content,omitempty"`
+
+	// MimeType: An IANA MIME type (RFC6838) indicating the nature and
+	// format of the [content].
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3RawDocument) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3RawDocument
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7050,10 +8169,10 @@ type GoogleCloudDocumentaiV1beta3ReviewDocumentOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonMetadata") to
@@ -7073,17 +8192,33 @@ func (s *GoogleCloudDocumentaiV1beta3ReviewDocumentOperationMetadata) MarshalJSO
 }
 
 // GoogleCloudDocumentaiV1beta3ReviewDocumentRequest: Request message
-// for review document method.
+// for review document method. Next Id: 6.
 type GoogleCloudDocumentaiV1beta3ReviewDocumentRequest struct {
 	// Document: The document that needs human review.
 	Document *GoogleCloudDocumentaiV1beta3Document `json:"document,omitempty"`
 
+	// EnableSchemaValidation: Whether the validation should be performed on
+	// the ad-hoc review request.
+	EnableSchemaValidation bool `json:"enableSchemaValidation,omitempty"`
+
+	// InlineDocument: An inline document proto.
+	InlineDocument *GoogleCloudDocumentaiV1beta3Document `json:"inlineDocument,omitempty"`
+
+	// Priority: The priority of the human review task.
+	//
+	// Possible values:
+	//   "DEFAULT" - The default priority level.
+	//   "URGENT" - The urgent priority level. The labeling manager should
+	// allocate labeler resource to the urgent task queue to respect this
+	// priority level.
+	Priority string `json:"priority,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Document") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Document") to include in
@@ -7110,10 +8245,10 @@ type GoogleCloudDocumentaiV1beta3ReviewDocumentResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsDestination") to
@@ -7132,6 +8267,231 @@ func (s *GoogleCloudDocumentaiV1beta3ReviewDocumentResponse) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta3Schema: The schema defines the output of
+// the processed document by a processor.
+type GoogleCloudDocumentaiV1beta3Schema struct {
+	// Description: Description of the schema.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Display name to show to users.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EntityTypes: Entity types of the schema.
+	EntityTypes []*GoogleCloudDocumentaiV1beta3SchemaEntityType `json:"entityTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3Schema) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3Schema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3SchemaEntityType: EntityType is the
+// wrapper of a label of the corresponding model with detailed
+// attributes and limitations for entity-based processors. Multiple
+// types can also compose a dependency tree to represent nested types.
+type GoogleCloudDocumentaiV1beta3SchemaEntityType struct {
+	// BaseType: Type of the entity. It must be one of the following:
+	// `document` - the entity represents a classification of a logical
+	// document. `object` - if the entity has properties it is likely an
+	// object (or or a document.) `datetime` - the entity is a date or time
+	// value. `money` - the entity represents a money value amount. `number`
+	// - the entity is a number - integer or floating point. `string` - the
+	// entity is a string value. `boolean` - the entity is a boolean value.
+	// `address` - the entity is a location address. `duration` - the entity
+	// is a duration.
+	BaseType string `json:"baseType,omitempty"`
+
+	// Description: Description of the entity type.
+	Description string `json:"description,omitempty"`
+
+	// EnumValues: If specified, lists all the possible values for this
+	// entity.
+	EnumValues []string `json:"enumValues,omitempty"`
+
+	// OccurrenceType: Occurrence type limits the number of times an entity
+	// type appears in the document.
+	//
+	// Possible values:
+	//   "OCCURRENCE_TYPE_UNSPECIFIED" - Unspecified occurrence type.
+	//   "OPTIONAL_ONCE" - The entity type will appear zero times or once.
+	//   "OPTIONAL_MULTIPLE" - The entity type will appear zero or multiple
+	// times.
+	//   "REQUIRED_ONCE" - The entity type will only appear exactly once.
+	//   "REQUIRED_MULTIPLE" - The entity type will appear once or more
+	// times.
+	OccurrenceType string `json:"occurrenceType,omitempty"`
+
+	// Properties: Describing the nested structure of an entity. An
+	// EntityType may consist of several other EntityTypes. For example, in
+	// a document there can be an EntityType 'ID', which consists of
+	// EntityType 'name' and 'address', with corresponding attributes, such
+	// as TEXT for both types and ONCE for occurrence types.
+	Properties []*GoogleCloudDocumentaiV1beta3SchemaEntityType `json:"properties,omitempty"`
+
+	// Source: Source of this entity type.
+	//
+	// Possible values:
+	//   "SOURCE_UNSPECIFIED" - Unspecified source.
+	//   "PREDEFINED" - The entity type is in the predefined schema of a
+	// pretrained version of a processor.
+	//   "USER_INPUT" - The entity type is added by the users either: -
+	// during an uptraining of an existing processor, or - during the
+	// process of creating a customized processor.
+	Source string `json:"source,omitempty"`
+
+	// Type: Name of the type. It must be unique within the set of same
+	// level types.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3SchemaEntityType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3SchemaEntityType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionMetadata: The
+// long running operation metadata for set default processor version
+// method.
+type GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest:
+// Request message for the set default processor version method.
+type GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest struct {
+	// DefaultProcessorVersion: Required. The resource name of child
+	// ProcessorVersion to use as default.
+	DefaultProcessorVersion string `json:"defaultProcessorVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultProcessorVersion") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultProcessorVersion")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionResponse:
+// Response message for set default processor version method.
+type GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionResponse struct {
+}
+
+// GoogleCloudDocumentaiV1beta3UndeployProcessorVersionMetadata: The
+// long running operation metadata for the undeploy processor version
+// method.
+type GoogleCloudDocumentaiV1beta3UndeployProcessorVersionMetadata struct {
+	// CommonMetadata: The basic metadata of the long running operation.
+	CommonMetadata *GoogleCloudDocumentaiV1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CommonMetadata") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1beta3UndeployProcessorVersionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3UndeployProcessorVersionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3UndeployProcessorVersionRequest: Request
+// message for the undeploy processor version method.
+type GoogleCloudDocumentaiV1beta3UndeployProcessorVersionRequest struct {
+}
+
+// GoogleCloudDocumentaiV1beta3UndeployProcessorVersionResponse:
+// Response message for the undeploy processor version method.
+type GoogleCloudDocumentaiV1beta3UndeployProcessorVersionResponse struct {
+}
+
 // GoogleCloudDocumentaiV1beta3Vertex: A vertex represents a 2D point in
 // the image. NOTE: the vertex coordinates are in the same scale as the
 // original image.
@@ -7139,15 +8499,15 @@ type GoogleCloudDocumentaiV1beta3Vertex struct {
 	// X: X coordinate.
 	X int64 `json:"x,omitempty"`
 
-	// Y: Y coordinate.
+	// Y: Y coordinate (starts from the top of the image).
 	Y int64 `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -7181,10 +8541,10 @@ type GoogleCloudLocationListLocationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Locations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Locations") to include in
@@ -7232,10 +8592,10 @@ type GoogleCloudLocationLocation struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -7249,6 +8609,43 @@ type GoogleCloudLocationLocation struct {
 
 func (s *GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudLocationLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleLongrunningListOperationsResponse: The response message for
+// Operations.ListOperations.
+type GoogleLongrunningListOperationsResponse struct {
+	// NextPageToken: The standard List next-page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Operations: A list of operations that matches the specified filter in
+	// the request.
+	Operations []*GoogleLongrunningOperation `json:"operations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleLongrunningListOperationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleLongrunningListOperationsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7294,10 +8691,10 @@ type GoogleLongrunningOperation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -7322,6 +8719,9 @@ func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 // returns (google.protobuf.Empty); } The JSON representation for
 // `Empty` is empty JSON object `{}`.
 type GoogleProtobufEmpty struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // GoogleRpcStatus: The `Status` type defines a logical error model that
@@ -7347,10 +8747,10 @@ type GoogleRpcStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -7370,19 +8770,19 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 
 // GoogleTypeColor: Represents a color in the RGBA color space. This
 // representation is designed for simplicity of conversion to/from color
-// representations in various languages over compactness; for example,
+// representations in various languages over compactness. For example,
 // the fields of this representation can be trivially provided to the
-// constructor of "java.awt.Color" in Java; it can also be trivially
-// provided to UIColor's "+colorWithRed:green:blue:alpha" method in iOS;
+// constructor of `java.awt.Color` in Java; it can also be trivially
+// provided to UIColor's `+colorWithRed:green:blue:alpha` method in iOS;
 // and, with just a little work, it can be easily formatted into a CSS
-// "rgba()" string in JavaScript, as well. Note: this proto does not
-// carry information about the absolute color space that should be used
-// to interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020,
-// etc.). By default, applications SHOULD assume the sRGB color space.
-// Note: when color equality needs to be decided, implementations,
-// unless documented otherwise, will treat two colors to be equal if all
-// their red, green, blue and alpha values each differ by at most 1e-5.
-// Example (Java): import com.google.type.Color; // ... public static
+// `rgba()` string in JavaScript. This reference page doesn't carry
+// information about the absolute color space that should be used to
+// interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020,
+// etc.). By default, applications should assume the sRGB color space.
+// When color equality needs to be decided, implementations, unless
+// documented otherwise, treat two colors as equal if all their red,
+// green, blue, and alpha values each differ by at most 1e-5. Example
+// (Java): import com.google.type.Color; // ... public static
 // java.awt.Color fromProto(Color protocolor) { float alpha =
 // protocolor.hasAlpha() ? protocolor.getAlpha().getValue() : 1.0;
 // return new java.awt.Color( protocolor.getRed(),
@@ -7411,27 +8811,27 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // || 0.0; var greenFrac = rgb_color.green || 0.0; var blueFrac =
 // rgb_color.blue || 0.0; var red = Math.floor(redFrac * 255); var green
 // = Math.floor(greenFrac * 255); var blue = Math.floor(blueFrac * 255);
-// if (!('alpha' in rgb_color)) { return rgbToCssColor_(red, green,
+// if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green,
 // blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams
 // = [red, green, blue].join(','); return ['rgba(', rgbParams, ',',
-// alphaFrac, ')'].join(''); }; var rgbToCssColor_ = function(red,
-// green, blue) { var rgbNumber = new Number((red << 16) | (green << 8)
-// | blue); var hexString = rgbNumber.toString(16); var missingZeros = 6
-// - hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
+// alphaFrac, ')'].join(''); }; var rgbToCssColor = function(red, green,
+// blue) { var rgbNumber = new Number((red << 16) | (green << 8) |
+// blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 -
+// hexString.length; var resultBuilder = ['#']; for (var i = 0; i <
 // missingZeros; i++) { resultBuilder.push('0'); }
 // resultBuilder.push(hexString); return resultBuilder.join(''); }; //
 // ...
 type GoogleTypeColor struct {
 	// Alpha: The fraction of this color that should be applied to the
 	// pixel. That is, the final pixel color is defined by the equation:
-	// pixel color = alpha * (this color) + (1.0 - alpha) * (background
-	// color) This means that a value of 1.0 corresponds to a solid color,
+	// `pixel color = alpha * (this color) + (1.0 - alpha) * (background
+	// color)` This means that a value of 1.0 corresponds to a solid color,
 	// whereas a value of 0.0 corresponds to a completely transparent color.
 	// This uses a wrapper message rather than a simple float scalar so that
 	// it is possible to distinguish between a default value and the value
-	// being unset. If omitted, this color object is to be rendered as a
-	// solid color (as if the alpha value had been explicitly given with a
-	// value of 1.0).
+	// being unset. If omitted, this color object is rendered as a solid
+	// color (as if the alpha value had been explicitly given a value of
+	// 1.0).
 	Alpha float64 `json:"alpha,omitempty"`
 
 	// Blue: The amount of blue in the color as a value in the interval [0,
@@ -7448,10 +8848,10 @@ type GoogleTypeColor struct {
 
 	// ForceSendFields is a list of field names (e.g. "Alpha") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Alpha") to include in API
@@ -7514,10 +8914,10 @@ type GoogleTypeDate struct {
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Day") to include in API
@@ -7590,10 +8990,10 @@ type GoogleTypeDateTime struct {
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Day") to include in API
@@ -7631,10 +9031,10 @@ type GoogleTypeMoney struct {
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrencyCode") to include
@@ -7752,10 +9152,10 @@ type GoogleTypePostalAddress struct {
 
 	// ForceSendFields is a list of field names (e.g. "AddressLines") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AddressLines") to include
@@ -7785,10 +9185,10 @@ type GoogleTypeTimeZone struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -7806,6 +9206,157 @@ func (s *GoogleTypeTimeZone) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "documentai.projects.locations.fetchProcessorTypes":
+
+type ProjectsLocationsFetchProcessorTypesCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchProcessorTypes: Fetches processor types.
+//
+// - parent: The project of processor type to list. The available
+//   processor types may depend on the whitelisting on projects. Format:
+//   projects/{project}/locations/{location}.
+func (r *ProjectsLocationsService) FetchProcessorTypes(parent string) *ProjectsLocationsFetchProcessorTypesCall {
+	c := &ProjectsLocationsFetchProcessorTypesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFetchProcessorTypesCall) Fields(s ...googleapi.Field) *ProjectsLocationsFetchProcessorTypesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsFetchProcessorTypesCall) IfNoneMatch(entityTag string) *ProjectsLocationsFetchProcessorTypesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFetchProcessorTypesCall) Context(ctx context.Context) *ProjectsLocationsFetchProcessorTypesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFetchProcessorTypesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFetchProcessorTypesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+parent}:fetchProcessorTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.fetchProcessorTypes" call.
+// Exactly one of
+// *GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse.ServerRespons
+// e.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsFetchProcessorTypesCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Fetches processor types.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}:fetchProcessorTypes",
+	//   "httpMethod": "GET",
+	//   "id": "documentai.projects.locations.fetchProcessorTypes",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The project of processor type to list. The available processor types may depend on the whitelisting on projects. Format: projects/{project}/locations/{location}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+parent}:fetchProcessorTypes",
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3FetchProcessorTypesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "documentai.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
@@ -7818,6 +9369,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7861,7 +9414,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7963,28 +9516,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8027,7 +9586,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8100,7 +9659,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8112,13 +9671,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -8155,6 +9714,147 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*GoogleClo
 	}
 }
 
+// method id "documentai.projects.locations.operations.cancel":
+
+type ProjectsLocationsOperationsCancelCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Cancel: Starts asynchronous cancellation on a long-running operation.
+// The server makes a best effort to cancel the operation, but success
+// is not guaranteed. If the server doesn't support this method, it
+// returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+// Operations.GetOperation or other methods to check whether the
+// cancellation succeeded or whether the operation completed despite
+// cancellation. On successful cancellation, the operation is not
+// deleted; instead, it becomes an operation with an Operation.error
+// value with a google.rpc.Status.code of 1, corresponding to
+// `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
+func (r *ProjectsLocationsOperationsService) Cancel(name string) *ProjectsLocationsOperationsCancelCall {
+	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOperationsCancelCall) Context(ctx context.Context) *ProjectsLocationsOperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.operations.cancel" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.operations.cancel",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource to be cancelled.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+name}:cancel",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "documentai.projects.locations.operations.get":
 
 type ProjectsLocationsOperationsGetCall struct {
@@ -8169,6 +9869,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8212,7 +9914,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8301,6 +10003,220 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 
 }
 
+// method id "documentai.projects.locations.operations.list":
+
+type ProjectsLocationsOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the
+// request. If the server doesn't support this method, it returns
+// `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to
+// override the binding to use different resource name schemes, such as
+// `users/*/operations`. To override the binding, API services can add a
+// binding such as "/v1/{name=users/*}/operations" to their service
+// configuration. For backwards compatibility, the default name includes
+// the operations collection id, however overriding users must ensure
+// the name binding is the parent resource, without the operations
+// collection id.
+//
+// - name: The name of the operation's parent resource.
+func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
+	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *ProjectsLocationsOperationsListCall) Filter(filter string) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOperationsListCall) Context(ctx context.Context) *ProjectsLocationsOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.operations.list" call.
+// Exactly one of *GoogleLongrunningListOperationsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleLongrunningListOperationsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name` binding allows API services to override the binding to use different resource name schemes, such as `users/*/operations`. To override the binding, API services can add a binding such as `\"/v1/{name=users/*}/operations\"` to their service configuration. For backwards compatibility, the default name includes the operations collection id, however overriding users must ensure the name binding is the parent resource, without the operations collection id.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/operations",
+	//   "httpMethod": "GET",
+	//   "id": "documentai.projects.locations.operations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The name of the operation's parent resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningListOperationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "documentai.projects.locations.processors.batchProcess":
 
 type ProjectsLocationsProcessorsBatchProcessCall struct {
@@ -8314,6 +10230,11 @@ type ProjectsLocationsProcessorsBatchProcessCall struct {
 
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
+//
+// - name: The resource name of Processor or ProcessorVersion. Format:
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsService) BatchProcess(name string, googleclouddocumentaiv1beta3batchprocessrequest *GoogleCloudDocumentaiV1beta3BatchProcessRequest) *ProjectsLocationsProcessorsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8348,7 +10269,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8421,7 +10342,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of Processor or ProcessorVersion. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVerions/{processorVersion}",
+	//       "description": "Required. The resource name of Processor or ProcessorVersion. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
 	//       "required": true,
@@ -8442,6 +10363,916 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Do(opts ...googleapi.CallO
 
 }
 
+// method id "documentai.projects.locations.processors.create":
+
+type ProjectsLocationsProcessorsCreateCall struct {
+	s                                     *Service
+	parent                                string
+	googleclouddocumentaiv1beta3processor *GoogleCloudDocumentaiV1beta3Processor
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Create: Creates a processor from the type processor that the user
+// chose. The processor will be at "ENABLED" state by default after its
+// creation.
+//
+// - parent: The parent (project and location) under which to create the
+//   processor. Format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsProcessorsService) Create(parent string, googleclouddocumentaiv1beta3processor *GoogleCloudDocumentaiV1beta3Processor) *ProjectsLocationsProcessorsCreateCall {
+	c := &ProjectsLocationsProcessorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddocumentaiv1beta3processor = googleclouddocumentaiv1beta3processor
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsCreateCall) Context(ctx context.Context) *ProjectsLocationsProcessorsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1beta3processor)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+parent}/processors")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.create" call.
+// Exactly one of *GoogleCloudDocumentaiV1beta3Processor or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudDocumentaiV1beta3Processor.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1beta3Processor, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDocumentaiV1beta3Processor{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a processor from the type processor that the user chose. The processor will be at \"ENABLED\" state by default after its creation.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent (project and location) under which to create the processor. Format: projects/{project}/locations/{location}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+parent}/processors",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3Processor"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3Processor"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.delete":
+
+type ProjectsLocationsProcessorsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the processor, unloads all deployed model artifacts
+// if it was enabled and then deletes all artifacts associated with this
+// processor.
+//
+// - name: The processor resource name to be deleted.
+func (r *ProjectsLocationsProcessorsService) Delete(name string) *ProjectsLocationsProcessorsDeleteCall {
+	c := &ProjectsLocationsProcessorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsDeleteCall) Context(ctx context.Context) *ProjectsLocationsProcessorsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the processor, unloads all deployed model artifacts if it was enabled and then deletes all artifacts associated with this processor.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "documentai.projects.locations.processors.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor resource name to be deleted.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.disable":
+
+type ProjectsLocationsProcessorsDisableCall struct {
+	s                                                   *Service
+	name                                                string
+	googleclouddocumentaiv1beta3disableprocessorrequest *GoogleCloudDocumentaiV1beta3DisableProcessorRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// Disable: Disables a processor
+//
+// - name: The processor resource name to be disabled.
+func (r *ProjectsLocationsProcessorsService) Disable(name string, googleclouddocumentaiv1beta3disableprocessorrequest *GoogleCloudDocumentaiV1beta3DisableProcessorRequest) *ProjectsLocationsProcessorsDisableCall {
+	c := &ProjectsLocationsProcessorsDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddocumentaiv1beta3disableprocessorrequest = googleclouddocumentaiv1beta3disableprocessorrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsDisableCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsDisableCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsDisableCall) Context(ctx context.Context) *ProjectsLocationsProcessorsDisableCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsDisableCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsDisableCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1beta3disableprocessorrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+name}:disable")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.disable" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsDisableCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Disables a processor",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}:disable",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.disable",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor resource name to be disabled.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+name}:disable",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3DisableProcessorRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.enable":
+
+type ProjectsLocationsProcessorsEnableCall struct {
+	s                                                  *Service
+	name                                               string
+	googleclouddocumentaiv1beta3enableprocessorrequest *GoogleCloudDocumentaiV1beta3EnableProcessorRequest
+	urlParams_                                         gensupport.URLParams
+	ctx_                                               context.Context
+	header_                                            http.Header
+}
+
+// Enable: Enables a processor
+//
+// - name: The processor resource name to be enabled.
+func (r *ProjectsLocationsProcessorsService) Enable(name string, googleclouddocumentaiv1beta3enableprocessorrequest *GoogleCloudDocumentaiV1beta3EnableProcessorRequest) *ProjectsLocationsProcessorsEnableCall {
+	c := &ProjectsLocationsProcessorsEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddocumentaiv1beta3enableprocessorrequest = googleclouddocumentaiv1beta3enableprocessorrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsEnableCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsEnableCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsEnableCall) Context(ctx context.Context) *ProjectsLocationsProcessorsEnableCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsEnableCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsEnableCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1beta3enableprocessorrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+name}:enable")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.enable" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsEnableCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Enables a processor",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}:enable",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.enable",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor resource name to be enabled.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+name}:enable",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3EnableProcessorRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.get":
+
+type ProjectsLocationsProcessorsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a processor detail.
+//
+// - name: The processor resource name.
+func (r *ProjectsLocationsProcessorsService) Get(name string) *ProjectsLocationsProcessorsGetCall {
+	c := &ProjectsLocationsProcessorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProcessorsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessorsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsGetCall) Context(ctx context.Context) *ProjectsLocationsProcessorsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.get" call.
+// Exactly one of *GoogleCloudDocumentaiV1beta3Processor or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudDocumentaiV1beta3Processor.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1beta3Processor, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDocumentaiV1beta3Processor{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a processor detail.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}",
+	//   "httpMethod": "GET",
+	//   "id": "documentai.projects.locations.processors.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor resource name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3Processor"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.list":
+
+type ProjectsLocationsProcessorsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all processors which belong to this project.
+//
+// - parent: The parent (project and location) which owns this
+//   collection of Processors. Format:
+//   projects/{project}/locations/{location}.
+func (r *ProjectsLocationsProcessorsService) List(parent string) *ProjectsLocationsProcessorsListCall {
+	c := &ProjectsLocationsProcessorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of processors to return. If unspecified, at most 50 processors will
+// be returned. The maximum value is 100; values above 100 will be
+// coerced to 100.
+func (c *ProjectsLocationsProcessorsListCall) PageSize(pageSize int64) *ProjectsLocationsProcessorsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": We will return the
+// processors sorted by creation time. The page token will point to the
+// next processor.
+func (c *ProjectsLocationsProcessorsListCall) PageToken(pageToken string) *ProjectsLocationsProcessorsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProcessorsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessorsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsListCall) Context(ctx context.Context) *ProjectsLocationsProcessorsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+parent}/processors")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.list" call.
+// Exactly one of *GoogleCloudDocumentaiV1beta3ListProcessorsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDocumentaiV1beta3ListProcessorsResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsProcessorsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1beta3ListProcessorsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDocumentaiV1beta3ListProcessorsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all processors which belong to this project.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors",
+	//   "httpMethod": "GET",
+	//   "id": "documentai.projects.locations.processors.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of processors to return. If unspecified, at most 50 processors will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "We will return the processors sorted by creation time. The page token will point to the next processor.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent (project and location) which owns this collection of Processors. Format: projects/{project}/locations/{location}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+parent}/processors",
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3ListProcessorsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsProcessorsListCall) Pages(ctx context.Context, f func(*GoogleCloudDocumentaiV1beta3ListProcessorsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "documentai.projects.locations.processors.process":
 
 type ProjectsLocationsProcessorsProcessCall struct {
@@ -8454,6 +11285,13 @@ type ProjectsLocationsProcessorsProcessCall struct {
 }
 
 // Process: Processes a single document.
+//
+// - name: The resource name of the Processor or ProcessorVersion to use
+//   for processing. If a Processor is specified, the server will use
+//   its default version. Format:
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsService) Process(name string, googleclouddocumentaiv1beta3processrequest *GoogleCloudDocumentaiV1beta3ProcessRequest) *ProjectsLocationsProcessorsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8488,7 +11326,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8563,7 +11401,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Processor or ProcessorVersion to use for processing. If a Processor is specified, the server will use its default version. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVerions/{processorVersion}",
+	//       "description": "Required. The resource name of the Processor or ProcessorVersion to use for processing. If a Processor is specified, the server will use its default version. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
 	//       "required": true,
@@ -8576,6 +11414,151 @@ func (c *ProjectsLocationsProcessorsProcessCall) Do(opts ...googleapi.CallOption
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudDocumentaiV1beta3ProcessResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.setDefaultProcessorVersion":
+
+type ProjectsLocationsProcessorsSetDefaultProcessorVersionCall struct {
+	s                                                             *Service
+	processor                                                     string
+	googleclouddocumentaiv1beta3setdefaultprocessorversionrequest *GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest
+	urlParams_                                                    gensupport.URLParams
+	ctx_                                                          context.Context
+	header_                                                       http.Header
+}
+
+// SetDefaultProcessorVersion: Set the default (active) version of a
+// Processor that will be used in ProcessDocument and
+// BatchProcessDocuments.
+//
+// - processor: The resource name of the Processor to change default
+//   version.
+func (r *ProjectsLocationsProcessorsService) SetDefaultProcessorVersion(processor string, googleclouddocumentaiv1beta3setdefaultprocessorversionrequest *GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest) *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall {
+	c := &ProjectsLocationsProcessorsSetDefaultProcessorVersionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.processor = processor
+	c.googleclouddocumentaiv1beta3setdefaultprocessorversionrequest = googleclouddocumentaiv1beta3setdefaultprocessorversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) Context(ctx context.Context) *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1beta3setdefaultprocessorversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+processor}:setDefaultProcessorVersion")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"processor": c.processor,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.setDefaultProcessorVersion" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Set the default (active) version of a Processor that will be used in ProcessDocument and BatchProcessDocuments.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}:setDefaultProcessorVersion",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.setDefaultProcessorVersion",
+	//   "parameterOrder": [
+	//     "processor"
+	//   ],
+	//   "parameters": {
+	//     "processor": {
+	//       "description": "Required. The resource name of the Processor to change default version.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+processor}:setDefaultProcessorVersion",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3SetDefaultProcessorVersionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -8597,6 +11580,9 @@ type ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall struct {
 
 // ReviewDocument: Send a document for Human Review. The input document
 // should be processed by the specified processor.
+//
+// - humanReviewConfig: The resource name of the HumanReviewConfig that
+//   the document will be reviewed with.
 func (r *ProjectsLocationsProcessorsHumanReviewConfigService) ReviewDocument(humanReviewConfig string, googleclouddocumentaiv1beta3reviewdocumentrequest *GoogleCloudDocumentaiV1beta3ReviewDocumentRequest) *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall {
 	c := &ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.humanReviewConfig = humanReviewConfig
@@ -8631,7 +11617,7 @@ func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) Header(
 
 func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8738,6 +11724,11 @@ type ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall struct {
 
 // BatchProcess: LRO endpoint to batch process many documents. The
 // output is written to Cloud Storage as JSON in the [Document] format.
+//
+// - name: The resource name of Processor or ProcessorVersion. Format:
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) BatchProcess(name string, googleclouddocumentaiv1beta3batchprocessrequest *GoogleCloudDocumentaiV1beta3BatchProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8772,7 +11763,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Header() 
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8845,7 +11836,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of Processor or ProcessorVersion. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVerions/{processorVersion}",
+	//       "description": "Required. The resource name of Processor or ProcessorVersion. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
 	//       "required": true,
@@ -8866,6 +11857,629 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Do(opts .
 
 }
 
+// method id "documentai.projects.locations.processors.processorVersions.delete":
+
+type ProjectsLocationsProcessorsProcessorVersionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the processor version, all artifacts under the
+// processor version will be deleted.
+//
+// - name: The processor version resource name to be deleted.
+func (r *ProjectsLocationsProcessorsProcessorVersionsService) Delete(name string) *ProjectsLocationsProcessorsProcessorVersionsDeleteCall {
+	c := &ProjectsLocationsProcessorsProcessorVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsProcessorVersionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsProcessorsProcessorVersionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.processorVersions.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the processor version, all artifacts under the processor version will be deleted.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/processorVersions/{processorVersionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "documentai.projects.locations.processors.processorVersions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor version resource name to be deleted.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.processorVersions.deploy":
+
+type ProjectsLocationsProcessorsProcessorVersionsDeployCall struct {
+	s                                                         *Service
+	name                                                      string
+	googleclouddocumentaiv1beta3deployprocessorversionrequest *GoogleCloudDocumentaiV1beta3DeployProcessorVersionRequest
+	urlParams_                                                gensupport.URLParams
+	ctx_                                                      context.Context
+	header_                                                   http.Header
+}
+
+// Deploy: Deploys the processor version.
+//
+// - name: The processor version resource name to be deployed.
+func (r *ProjectsLocationsProcessorsProcessorVersionsService) Deploy(name string, googleclouddocumentaiv1beta3deployprocessorversionrequest *GoogleCloudDocumentaiV1beta3DeployProcessorVersionRequest) *ProjectsLocationsProcessorsProcessorVersionsDeployCall {
+	c := &ProjectsLocationsProcessorsProcessorVersionsDeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddocumentaiv1beta3deployprocessorversionrequest = googleclouddocumentaiv1beta3deployprocessorversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsProcessorVersionsDeployCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) Context(ctx context.Context) *ProjectsLocationsProcessorsProcessorVersionsDeployCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1beta3deployprocessorversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+name}:deploy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.processorVersions.deploy" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deploys the processor version.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/processorVersions/{processorVersionsId}:deploy",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.processorVersions.deploy",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor version resource name to be deployed.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+name}:deploy",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3DeployProcessorVersionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.processorVersions.get":
+
+type ProjectsLocationsProcessorsProcessorVersionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a processor version detail.
+//
+// - name: The processor resource name.
+func (r *ProjectsLocationsProcessorsProcessorVersionsService) Get(name string) *ProjectsLocationsProcessorsProcessorVersionsGetCall {
+	c := &ProjectsLocationsProcessorsProcessorVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsProcessorVersionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessorsProcessorVersionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) Context(ctx context.Context) *ProjectsLocationsProcessorsProcessorVersionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.processorVersions.get" call.
+// Exactly one of *GoogleCloudDocumentaiV1beta3ProcessorVersion or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDocumentaiV1beta3ProcessorVersion.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1beta3ProcessorVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDocumentaiV1beta3ProcessorVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a processor version detail.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/processorVersions/{processorVersionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "documentai.projects.locations.processors.processorVersions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor resource name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3ProcessorVersion"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.processorVersions.list":
+
+type ProjectsLocationsProcessorsProcessorVersionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all versions of a processor.
+//
+// - parent: The parent (project, location and processor) to list all
+//   versions. Format:
+//   projects/{project}/locations/{location}/processors/{processor}.
+func (r *ProjectsLocationsProcessorsProcessorVersionsService) List(parent string) *ProjectsLocationsProcessorsProcessorVersionsListCall {
+	c := &ProjectsLocationsProcessorsProcessorVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of processor versions to return. If unspecified, at most 10 processor
+// versions will be returned. The maximum value is 20; values above 20
+// will be coerced to 20.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) PageSize(pageSize int64) *ProjectsLocationsProcessorsProcessorVersionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": We will return the
+// processor versions sorted by creation time. The page token will point
+// to the next processor version.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) PageToken(pageToken string) *ProjectsLocationsProcessorsProcessorVersionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsProcessorVersionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProcessorsProcessorVersionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) Context(ctx context.Context) *ProjectsLocationsProcessorsProcessorVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+parent}/processorVersions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.processorVersions.list" call.
+// Exactly one of
+// *GoogleCloudDocumentaiV1beta3ListProcessorVersionsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDocumentaiV1beta3ListProcessorVersionsResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDocumentaiV1beta3ListProcessorVersionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDocumentaiV1beta3ListProcessorVersionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all versions of a processor.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/processorVersions",
+	//   "httpMethod": "GET",
+	//   "id": "documentai.projects.locations.processors.processorVersions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of processor versions to return. If unspecified, at most 10 processor versions will be returned. The maximum value is 20; values above 20 will be coerced to 20.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "We will return the processor versions sorted by creation time. The page token will point to the next processor version.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent (project, location and processor) to list all versions. Format: projects/{project}/locations/{location}/processors/{processor}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+parent}/processorVersions",
+	//   "response": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3ListProcessorVersionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) Pages(ctx context.Context, f func(*GoogleCloudDocumentaiV1beta3ListProcessorVersionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "documentai.projects.locations.processors.processorVersions.process":
 
 type ProjectsLocationsProcessorsProcessorVersionsProcessCall struct {
@@ -8878,6 +12492,13 @@ type ProjectsLocationsProcessorsProcessorVersionsProcessCall struct {
 }
 
 // Process: Processes a single document.
+//
+// - name: The resource name of the Processor or ProcessorVersion to use
+//   for processing. If a Processor is specified, the server will use
+//   its default version. Format:
+//   projects/{project}/locations/{location}/processors/{processor}, or
+//   projects/{project}/locations/{location}/processors/{processor}/proce
+//   ssorVersions/{processorVersion}.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) Process(name string, googleclouddocumentaiv1beta3processrequest *GoogleCloudDocumentaiV1beta3ProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8912,7 +12533,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Header() http.
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8987,7 +12608,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Processor or ProcessorVersion to use for processing. If a Processor is specified, the server will use its default version. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVerions/{processorVersion}",
+	//       "description": "Required. The resource name of the Processor or ProcessorVersion to use for processing. If a Processor is specified, the server will use its default version. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
 	//       "required": true,
@@ -9000,6 +12621,148 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Do(opts ...goo
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudDocumentaiV1beta3ProcessResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "documentai.projects.locations.processors.processorVersions.undeploy":
+
+type ProjectsLocationsProcessorsProcessorVersionsUndeployCall struct {
+	s                                                           *Service
+	name                                                        string
+	googleclouddocumentaiv1beta3undeployprocessorversionrequest *GoogleCloudDocumentaiV1beta3UndeployProcessorVersionRequest
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// Undeploy: Undeploys the processor version.
+//
+// - name: The processor version resource name to be undeployed.
+func (r *ProjectsLocationsProcessorsProcessorVersionsService) Undeploy(name string, googleclouddocumentaiv1beta3undeployprocessorversionrequest *GoogleCloudDocumentaiV1beta3UndeployProcessorVersionRequest) *ProjectsLocationsProcessorsProcessorVersionsUndeployCall {
+	c := &ProjectsLocationsProcessorsProcessorVersionsUndeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddocumentaiv1beta3undeployprocessorversionrequest = googleclouddocumentaiv1beta3undeployprocessorversionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) Fields(s ...googleapi.Field) *ProjectsLocationsProcessorsProcessorVersionsUndeployCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) Context(ctx context.Context) *ProjectsLocationsProcessorsProcessorVersionsUndeployCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddocumentaiv1beta3undeployprocessorversionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta3/{+name}:undeploy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "documentai.projects.locations.processors.processorVersions.undeploy" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Undeploys the processor version.",
+	//   "flatPath": "v1beta3/projects/{projectsId}/locations/{locationsId}/processors/{processorsId}/processorVersions/{processorVersionsId}:undeploy",
+	//   "httpMethod": "POST",
+	//   "id": "documentai.projects.locations.processors.processorVersions.undeploy",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The processor version resource name to be undeployed.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta3/{+name}:undeploy",
+	//   "request": {
+	//     "$ref": "GoogleCloudDocumentaiV1beta3UndeployProcessorVersionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

@@ -24,10 +24,10 @@
           "description": "Administer your Cloud Bigtable tables"
         },
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         },
         "https://www.googleapis.com/auth/cloud-platform.read-only": {
-          "description": "View your data across Google Cloud Platform services"
+          "description": "View your data across Google Cloud services and see the email address of your Google Account"
         }
       }
     }
@@ -923,8 +923,47 @@
                     "https://www.googleapis.com/auth/cloud-platform.read-only"
                   ]
                 },
+                "partialUpdateCluster": {
+                  "description": "Partially updates a cluster within a project. This method is the preferred way to update a Cluster. ",
+                  "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}",
+                  "httpMethod": "PATCH",
+                  "id": "bigtableadmin.projects.instances.clusters.partialUpdateCluster",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The unique name of the cluster. Values are of the form `projects/{project}/instances/{instance}/clusters/a-z*`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/instances/[^/]+/clusters/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Required. The subset of Cluster fields which should be replaced. Must be explicitly set.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+name}",
+                  "request": {
+                    "$ref": "Cluster"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/bigtable.admin",
+                    "https://www.googleapis.com/auth/bigtable.admin.cluster",
+                    "https://www.googleapis.com/auth/bigtable.admin.instance",
+                    "https://www.googleapis.com/auth/cloud-bigtable.admin",
+                    "https://www.googleapis.com/auth/cloud-bigtable.admin.cluster",
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "update": {
-                  "description": "Updates a cluster within an instance.",
+                  "description": "Updates a cluster within an instance. UpdateCluster is deprecated. Please use PartialUpdateCluster instead.",
                   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/clusters/{clustersId}",
                   "httpMethod": "PUT",
                   "id": "bigtableadmin.projects.instances.clusters.update",
@@ -1425,6 +1464,7 @@
                         "NAME_ONLY",
                         "SCHEMA_VIEW",
                         "REPLICATION_VIEW",
+                        "ENCRYPTION_VIEW",
                         "FULL"
                       ],
                       "enumDescriptions": [
@@ -1432,6 +1472,7 @@
                         "Only populates `name`.",
                         "Only populates `name` and fields related to the table's schema.",
                         "Only populates `name` and fields related to the table's replication state.",
+                        "Only populates `name` and fields related to the table's encryption state.",
                         "Populates all fields."
                       ],
                       "location": "query",
@@ -1517,6 +1558,7 @@
                         "NAME_ONLY",
                         "SCHEMA_VIEW",
                         "REPLICATION_VIEW",
+                        "ENCRYPTION_VIEW",
                         "FULL"
                       ],
                       "enumDescriptions": [
@@ -1524,6 +1566,7 @@
                         "Only populates `name`.",
                         "Only populates `name` and fields related to the table's schema.",
                         "Only populates `name` and fields related to the table's replication state.",
+                        "Only populates `name` and fields related to the table's encryption state.",
                         "Populates all fields."
                       ],
                       "location": "query",
@@ -1576,7 +1619,7 @@
                   ]
                 },
                 "restore": {
-                  "description": "Create a new table by restoring from a completed backup. The new table must be in the same instance as the instance containing the backup. The returned table long-running operation can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreTableMetadata. The response type is Table, if successful.",
+                  "description": "Create a new table by restoring from a completed backup. The new table must be in the same project as the instance containing the backup. The returned table long-running operation can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreTableMetadata. The response type is Table, if successful.",
                   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables:restore",
                   "httpMethod": "POST",
                   "id": "bigtableadmin.projects.instances.tables.restore",
@@ -1585,7 +1628,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The name of the instance in which to create the restored table. This instance must be the parent of the source backup. Values are of the form `projects//instances/`.",
+                      "description": "Required. The name of the instance in which to create the restored table. This instance must be in the same project as the source backup. Values are of the form `projects//instances/`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -1718,7 +1761,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "The standard list filter.",
+                  "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
                   "location": "query",
                   "type": "string"
                 },
@@ -1730,13 +1773,13 @@
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "The standard list page size.",
+                  "description": "The maximum number of results to return. If not set, the service selects a default.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "The standard list page token.",
+                  "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
                   "location": "query",
                   "type": "string"
                 }
@@ -1760,7 +1803,7 @@
       }
     }
   },
-  "revision": "20200821",
+  "revision": "20210921",
   "rootUrl": "https://bigtableadmin.googleapis.com/",
   "schemas": {
     "AppProfile": {
@@ -1842,6 +1885,11 @@
       "description": "A backup of a Cloud Bigtable table.",
       "id": "Backup",
       "properties": {
+        "encryptionInfo": {
+          "$ref": "EncryptionInfo",
+          "description": "Output only. The encryption information for the backup.",
+          "readOnly": true
+        },
         "endTime": {
           "description": "Output only. `end_time` is the time that the backup was finished. The row data in the backup will be no newer than this timestamp.",
           "format": "google-datetime",
@@ -1982,6 +2030,10 @@
           ],
           "type": "string"
         },
+        "encryptionConfig": {
+          "$ref": "EncryptionConfig",
+          "description": "Immutable. The encryption configuration for CMEK-protected clusters."
+        },
         "location": {
           "description": "Immutable. The location where this cluster's nodes and storage reside. For best performance, clients should be located as close as possible to this cluster. Currently only zones are supported, so values should be of the form `projects/{project}/locations/{zone}`.",
           "type": "string"
@@ -2021,6 +2073,14 @@
       "description": "The state of a table's data in a particular cluster.",
       "id": "ClusterState",
       "properties": {
+        "encryptionInfo": {
+          "description": "Output only. The encryption information for the table in this cluster. If the encryption key protecting this resource is customer managed, then its version can be rotated in Cloud Key Management Service (Cloud KMS). The primary version of the key and its status will be reflected here when changes propagate from Cloud KMS.",
+          "items": {
+            "$ref": "EncryptionInfo"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "replicationState": {
           "description": "Output only. The state of replication for the table in this cluster.",
           "enum": [
@@ -2219,6 +2279,49 @@
       "properties": {},
       "type": "object"
     },
+    "EncryptionConfig": {
+      "description": "Cloud Key Management Service (Cloud KMS) settings for a CMEK-protected cluster.",
+      "id": "EncryptionConfig",
+      "properties": {
+        "kmsKeyName": {
+          "description": "Describes the Cloud KMS encryption key that will be used to protect the destination Bigtable cluster. The requirements for this key are: 1) The Cloud Bigtable service account associated with the project that contains this cluster must be granted the `cloudkms.cryptoKeyEncrypterDecrypter` role on the CMEK key. 2) Only regional keys can be used and the region of the CMEK key must match the region of the cluster. 3) All clusters within an instance must use the same CMEK key. Values are of the form `projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{key}`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "EncryptionInfo": {
+      "description": "Encryption information for a given resource. If this resource is protected with customer managed encryption, the in-use Cloud Key Management Service (Cloud KMS) key version is specified along with its status.",
+      "id": "EncryptionInfo",
+      "properties": {
+        "encryptionStatus": {
+          "$ref": "Status",
+          "description": "Output only. The status of encrypt/decrypt calls on underlying data for this resource. Regardless of status, the existing data is always encrypted at rest.",
+          "readOnly": true
+        },
+        "encryptionType": {
+          "description": "Output only. The type of encryption used to protect this resource.",
+          "enum": [
+            "ENCRYPTION_TYPE_UNSPECIFIED",
+            "GOOGLE_DEFAULT_ENCRYPTION",
+            "CUSTOMER_MANAGED_ENCRYPTION"
+          ],
+          "enumDescriptions": [
+            "Encryption type was not specified, though data at rest remains encrypted.",
+            "The data backing this resource is encrypted at rest with a key that is fully managed by Google. No key version or status will be populated. This is the default state.",
+            "The data backing this resource is encrypted at rest with a key that is managed by the customer. The in-use version of the key and its status are populated for CMEK-protected tables. CMEK-protected backups are pinned to the key version that was in use at the time the backup was taken. This key version is populated but its status is not tracked and is reported as `UNKNOWN`."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "kmsKeyVersion": {
+          "description": "Output only. The version of the Cloud KMS key specified in the parent cluster that is in use for the data underlying this table.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Expr": {
       "description": "Represents a textual expression in the Common Expression Language (CEL) syntax. CEL is a C-like expression language. The syntax and semantics of CEL are documented at https://github.com/google/cel-spec. Example (Comparison): title: \"Summary size limit\" description: \"Determines if a summary is less than 100 chars\" expression: \"document.summary.size() \u003c 100\" Example (Equality): title: \"Requestor is owner\" description: \"Determines if requestor is the document owner\" expression: \"document.owner == request.auth.claims.email\" Example (Logic): title: \"Public documents\" description: \"Determine whether the document should be publicly visible\" expression: \"document.type != 'private' \u0026\u0026 document.type != 'internal'\" Example (Data Manipulation): title: \"Notification string\" description: \"Create a notification string with a timestamp.\" expression: \"'New message received at ' + string(document.create_time)\" The exact variables and functions that may be referenced within an expression are determined by the service that evaluates it. See the service documentation for additional information.",
       "id": "Expr",
@@ -2339,6 +2442,12 @@
       "description": "A collection of Bigtable Tables and the resources that serve them. All tables in an instance are served from all Clusters in the instance.",
       "id": "Instance",
       "properties": {
+        "createTime": {
+          "description": "Output only. A server-assigned timestamp representing when this Instance was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
         "displayName": {
           "description": "Required. The descriptive name for this instance as it appears in UIs. Can be changed at any time, but should be kept globally unique to avoid confusion.",
           "type": "string"
@@ -2621,7 +2730,15 @@
     "MultiClusterRoutingUseAny": {
       "description": "Read/write requests are routed to the nearest cluster in the instance, and will fail over to the nearest cluster that is available in the event of transient errors or delays. Clusters in a region are considered equidistant. Choosing this option sacrifices read-your-writes consistency to improve availability.",
       "id": "MultiClusterRoutingUseAny",
-      "properties": {},
+      "properties": {
+        "clusterIds": {
+          "description": "The set of clusters to route to. The order is ignored; clusters will be tried in order of distance. If left empty, all clusters are eligible.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
       "type": "object"
     },
     "Operation": {
@@ -2713,7 +2830,7 @@
       "type": "object"
     },
     "Policy": {
-      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
+      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
       "id": "Policy",
       "properties": {
         "auditConfigs": {
@@ -2893,7 +3010,7 @@
           "additionalProperties": {
             "$ref": "ClusterState"
           },
-          "description": "Output only. Map from cluster ID to per-cluster table state. If it could not be determined whether or not the table has data in a particular cluster (for example, if its zone is unavailable), then there will be an entry for the cluster with UNKNOWN `replication_status`. Views: `REPLICATION_VIEW`, `FULL`",
+          "description": "Output only. Map from cluster ID to per-cluster table state. If it could not be determined whether or not the table has data in a particular cluster (for example, if its zone is unavailable), then there will be an entry for the cluster with UNKNOWN `replication_status`. Views: `REPLICATION_VIEW`, `ENCRYPTION_VIEW`, `FULL`",
           "readOnly": true,
           "type": "object"
         },

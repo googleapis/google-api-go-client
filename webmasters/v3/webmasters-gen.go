@@ -187,10 +187,10 @@ type ApiDataRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "Clicks") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Clicks") to include in API
@@ -237,10 +237,10 @@ type ApiDimensionFilter struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dimension") to include in
@@ -265,10 +265,10 @@ type ApiDimensionFilterGroup struct {
 
 	// ForceSendFields is a list of field names (e.g. "Filters") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Filters") to include in
@@ -346,10 +346,10 @@ type SearchAnalyticsQueryRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AggregationType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AggregationType") to
@@ -386,11 +386,11 @@ type SearchAnalyticsQueryResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ResponseAggregationType") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResponseAggregationType")
@@ -421,10 +421,10 @@ type SitemapsListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Sitemap") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Sitemap") to include in
@@ -455,10 +455,10 @@ type SitesListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "SiteEntry") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SiteEntry") to include in
@@ -491,10 +491,10 @@ type WmxSite struct {
 
 	// ForceSendFields is a list of field names (e.g. "PermissionLevel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PermissionLevel") to
@@ -554,10 +554,10 @@ type WmxSitemap struct {
 
 	// ForceSendFields is a list of field names (e.g. "Contents") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Contents") to include in
@@ -590,10 +590,10 @@ type WmxSitemapContent struct {
 
 	// ForceSendFields is a list of field names (e.g. "Indexed") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Indexed") to include in
@@ -630,6 +630,9 @@ type SearchanalyticsQueryCall struct {
 // omitted from the result list. If you need to know which days have
 // data, issue a broad date range query grouped by date for any metric,
 // and see which day rows are returned.
+//
+// - siteUrl: The site's URL, including protocol. For example:
+//   http://www.example.com/.
 func (r *SearchanalyticsService) Query(siteUrl string, searchanalyticsqueryrequest *SearchAnalyticsQueryRequest) *SearchanalyticsQueryCall {
 	c := &SearchanalyticsQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -664,7 +667,7 @@ func (c *SearchanalyticsQueryCall) Header() http.Header {
 
 func (c *SearchanalyticsQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -769,6 +772,11 @@ type SitemapsDeleteCall struct {
 }
 
 // Delete: Deletes a sitemap from this site.
+//
+// - feedpath: The URL of the actual sitemap. For example:
+//   http://www.example.com/sitemap.xml.
+// - siteUrl: The site's URL, including protocol. For example:
+//   http://www.example.com/.
 func (r *SitemapsService) Delete(siteUrl string, feedpath string) *SitemapsDeleteCall {
 	c := &SitemapsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -803,7 +811,7 @@ func (c *SitemapsDeleteCall) Header() http.Header {
 
 func (c *SitemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -880,6 +888,11 @@ type SitemapsGetCall struct {
 }
 
 // Get: Retrieves information about a specific sitemap.
+//
+// - feedpath: The URL of the actual sitemap. For example:
+//   http://www.example.com/sitemap.xml.
+// - siteUrl: The site's URL, including protocol. For example:
+//   http://www.example.com/.
 func (r *SitemapsService) Get(siteUrl string, feedpath string) *SitemapsGetCall {
 	c := &SitemapsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -924,7 +937,7 @@ func (c *SitemapsGetCall) Header() http.Header {
 
 func (c *SitemapsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1034,6 +1047,9 @@ type SitemapsListCall struct {
 // List: Lists the sitemaps-entries submitted for this site, or included
 // in the sitemap index file (if sitemapIndex is specified in the
 // request).
+//
+// - siteUrl: The site's URL, including protocol. For example:
+//   http://www.example.com/.
 func (r *SitemapsService) List(siteUrl string) *SitemapsListCall {
 	c := &SitemapsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1085,7 +1101,7 @@ func (c *SitemapsListCall) Header() http.Header {
 
 func (c *SitemapsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1190,6 +1206,11 @@ type SitemapsSubmitCall struct {
 }
 
 // Submit: Submits a sitemap for a site.
+//
+// - feedpath: The URL of the sitemap to add. For example:
+//   http://www.example.com/sitemap.xml.
+// - siteUrl: The site's URL, including protocol. For example:
+//   http://www.example.com/.
 func (r *SitemapsService) Submit(siteUrl string, feedpath string) *SitemapsSubmitCall {
 	c := &SitemapsSubmitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1224,7 +1245,7 @@ func (c *SitemapsSubmitCall) Header() http.Header {
 
 func (c *SitemapsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1299,6 +1320,8 @@ type SitesAddCall struct {
 }
 
 // Add: Adds a site to the set of the user's sites in Search Console.
+//
+// - siteUrl: The URL of the site to add.
 func (r *SitesService) Add(siteUrl string) *SitesAddCall {
 	c := &SitesAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1332,7 +1355,7 @@ func (c *SitesAddCall) Header() http.Header {
 
 func (c *SitesAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1400,6 +1423,11 @@ type SitesDeleteCall struct {
 
 // Delete: Removes a site from the set of the user's Search Console
 // sites.
+//
+// - siteUrl: The URI of the property as defined in Search Console.
+//   Examples: http://www.example.com/ or android-app://com.example/
+//   Note: for property-sets, use the URI that starts with sc-set: which
+//   is used in Search Console URLs.
 func (r *SitesService) Delete(siteUrl string) *SitesDeleteCall {
 	c := &SitesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1433,7 +1461,7 @@ func (c *SitesDeleteCall) Header() http.Header {
 
 func (c *SitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1501,6 +1529,11 @@ type SitesGetCall struct {
 }
 
 // Get: Retrieves information about specific site.
+//
+// - siteUrl: The URI of the property as defined in Search Console.
+//   Examples: http://www.example.com/ or android-app://com.example/
+//   Note: for property-sets, use the URI that starts with sc-set: which
+//   is used in Search Console URLs.
 func (r *SitesService) Get(siteUrl string) *SitesGetCall {
 	c := &SitesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteUrl = siteUrl
@@ -1544,7 +1577,7 @@ func (c *SitesGetCall) Header() http.Header {
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1685,7 +1718,7 @@ func (c *SitesListCall) Header() http.Header {
 
 func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

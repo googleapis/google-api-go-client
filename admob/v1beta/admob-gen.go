@@ -239,10 +239,10 @@ type AdUnit struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdFormat") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdFormat") to include in
@@ -290,10 +290,10 @@ type App struct {
 
 	// ForceSendFields is a list of field names (e.g. "AppId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppId") to include in API
@@ -331,10 +331,10 @@ type AppLinkedAppInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "AppStoreId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppStoreId") to include in
@@ -362,10 +362,10 @@ type AppManualAppInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -408,10 +408,10 @@ type Date struct {
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Day") to include in API
@@ -442,10 +442,10 @@ type DateRange struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndDate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndDate") to include in
@@ -471,10 +471,10 @@ type GenerateMediationReportRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ReportSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ReportSpec") to include in
@@ -522,10 +522,10 @@ type GenerateMediationReportResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Footer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Footer") to include in API
@@ -551,10 +551,10 @@ type GenerateNetworkReportRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ReportSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ReportSpec") to include in
@@ -601,10 +601,10 @@ type GenerateNetworkReportResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Footer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Footer") to include in API
@@ -638,10 +638,10 @@ type ListAdUnitsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdUnits") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdUnits") to include in
@@ -675,10 +675,10 @@ type ListAppsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Apps") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Apps") to include in API
@@ -713,10 +713,10 @@ type ListPublisherAccountsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Account") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Account") to include in
@@ -750,10 +750,10 @@ type LocalizationSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrencyCode") to include
@@ -775,7 +775,7 @@ func (s *LocalizationSettings) MarshalJSON() ([]byte, error) {
 // Mediation report. For example, the specification to get observed ECPM
 // sliced by ad source and app for the 'US' and 'CN' countries can look
 // like the following example: { "date_range": { "start_date": {"year":
-// 2018, "month": 9, "day": 1}, "end_date": {"year": 2018, "month": 9,
+// 2021, "month": 9, "day": 1}, "end_date": {"year": 2021, "month": 9,
 // "day": 30} }, "dimensions": ["AD_SOURCE", "APP", "COUNTRY"],
 // "metrics": ["OBSERVED_ECPM"], "dimension_filters": [ { "dimension":
 // "COUNTRY", "matches_any": {"values": [{"value": "US", "value":
@@ -784,7 +784,7 @@ func (s *LocalizationSettings) MarshalJSON() ([]byte, error) {
 // "language_code": "en-US" } } For a better understanding, you can
 // treat the preceding specification like the following pseudo SQL:
 // SELECT AD_SOURCE, APP, COUNTRY, OBSERVED_ECPM FROM MEDIATION_REPORT
-// WHERE DATE >= '2018-09-01' AND DATE <= '2018-09-30' AND COUNTRY IN
+// WHERE DATE >= '2021-09-01' AND DATE <= '2021-09-30' AND COUNTRY IN
 // ('US', 'CN') GROUP BY AD_SOURCE, APP, COUNTRY ORDER BY APP ASC;
 type MediationReportSpec struct {
 	// DateRange: The date range for which the report is generated.
@@ -802,18 +802,18 @@ type MediationReportSpec struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_SOURCE" - The [unique ID of the ad
 	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
 	// and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
-	// example, "ca-app-pub-1234#5678" and "AdMob (default)" as label
+	// example, "ca-app-pub-1234:asi:5678" and "AdMob (default)" as label
 	// value).
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
 	// "ca-app-pub-1234/8790"). If AD_UNIT dimension is specified, then APP
@@ -830,6 +830,24 @@ type MediationReportSpec struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1". **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	// **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString. **Warning:** The dimension is
+	// incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads"). **Warning:** The dimension is incompatible
+	// with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
+	// metric.
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// LocalizationSettings: Localization settings of the report.
@@ -892,10 +910,10 @@ type MediationReportSpec struct {
 
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DateRange") to include in
@@ -921,18 +939,18 @@ type MediationReportSpecDimensionFilter struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_SOURCE" - The [unique ID of the ad
 	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
 	// and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
-	// example, "ca-app-pub-1234#5678" and "AdMob (default)" as label
+	// example, "ca-app-pub-1234:asi:5678" and "AdMob (default)" as label
 	// value).
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
 	// "ca-app-pub-1234/8790"). If AD_UNIT dimension is specified, then APP
@@ -949,6 +967,24 @@ type MediationReportSpecDimensionFilter struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1". **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	// **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString. **Warning:** The dimension is
+	// incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads"). **Warning:** The dimension is incompatible
+	// with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
+	// metric.
 	Dimension string `json:"dimension,omitempty"`
 
 	// MatchesAny: Matches a row if its value for the specified dimension is
@@ -957,10 +993,10 @@ type MediationReportSpecDimensionFilter struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dimension") to include in
@@ -986,18 +1022,18 @@ type MediationReportSpecSortCondition struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_SOURCE" - The [unique ID of the ad
 	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
 	// and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
-	// example, "ca-app-pub-1234#5678" and "AdMob (default)" as label
+	// example, "ca-app-pub-1234:asi:5678" and "AdMob (default)" as label
 	// value).
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
 	// "ca-app-pub-1234/8790"). If AD_UNIT dimension is specified, then APP
@@ -1014,6 +1050,24 @@ type MediationReportSpecSortCondition struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1". **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	// **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString. **Warning:** The dimension is
+	// incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads"). **Warning:** The dimension is incompatible
+	// with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
+	// metric.
 	Dimension string `json:"dimension,omitempty"`
 
 	// Metric: Sort by the specified metric.
@@ -1064,10 +1118,10 @@ type MediationReportSpecSortCondition struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dimension") to include in
@@ -1088,8 +1142,8 @@ func (s *MediationReportSpecSortCondition) MarshalJSON() ([]byte, error) {
 // NetworkReportSpec: The specification for generating an AdMob Network
 // report. For example, the specification to get clicks and estimated
 // earnings for only the 'US' and 'CN' countries can look like the
-// following example: { 'date_range': { 'start_date': {'year': 2018,
-// 'month': 9, 'day': 1}, 'end_date': {'year': 2018, 'month': 9, 'day':
+// following example: { 'date_range': { 'start_date': {'year': 2021,
+// 'month': 9, 'day': 1}, 'end_date': {'year': 2021, 'month': 9, 'day':
 // 30} }, 'dimensions': ['DATE', 'APP', 'COUNTRY'], 'metrics':
 // ['CLICKS', 'ESTIMATED_EARNINGS'], 'dimension_filters': [ {
 // 'dimension': 'COUNTRY', 'matches_any': {'values': [{'value': 'US',
@@ -1099,7 +1153,7 @@ func (s *MediationReportSpecSortCondition) MarshalJSON() ([]byte, error) {
 // 'en-US' } } For a better understanding, you can treat the preceding
 // specification like the following pseudo SQL: SELECT DATE, APP,
 // COUNTRY, CLICKS, ESTIMATED_EARNINGS FROM NETWORK_REPORT WHERE DATE >=
-// '2018-09-01' AND DATE <= '2018-09-30' AND COUNTRY IN ('US', 'CN')
+// '2021-09-01' AND DATE <= '2021-09-30' AND COUNTRY IN ('US', 'CN')
 // GROUP BY DATE, APP, COUNTRY ORDER BY APP ASC, CLICKS DESC;
 type NetworkReportSpec struct {
 	// DateRange: The date range for which the report is generated.
@@ -1117,13 +1171,13 @@ type NetworkReportSpec struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
 	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP
 	// is included automatically.
@@ -1141,6 +1195,14 @@ type NetworkReportSpec struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1".
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads").
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// LocalizationSettings: Localization settings of the report.
@@ -1203,10 +1265,10 @@ type NetworkReportSpec struct {
 
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DateRange") to include in
@@ -1232,13 +1294,13 @@ type NetworkReportSpecDimensionFilter struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
 	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP
 	// is included automatically.
@@ -1256,6 +1318,14 @@ type NetworkReportSpecDimensionFilter struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1".
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
 
 	// MatchesAny: Matches a row if its value for the specified dimension is
@@ -1264,10 +1334,10 @@ type NetworkReportSpecDimensionFilter struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dimension") to include in
@@ -1293,13 +1363,13 @@ type NetworkReportSpecSortCondition struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
 	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP
 	// is included automatically.
@@ -1317,6 +1387,14 @@ type NetworkReportSpecSortCondition struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1".
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
 
 	// Metric: Sort by the specified metric.
@@ -1367,10 +1445,10 @@ type NetworkReportSpecSortCondition struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dimension") to include in
@@ -1415,10 +1493,10 @@ type PublisherAccount struct {
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrencyCode") to include
@@ -1450,10 +1528,10 @@ type ReportFooter struct {
 
 	// ForceSendFields is a list of field names (e.g. "MatchingRowCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MatchingRowCount") to
@@ -1489,10 +1567,10 @@ type ReportHeader struct {
 
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DateRange") to include in
@@ -1523,10 +1601,10 @@ type ReportRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "DimensionValues") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DimensionValues") to
@@ -1557,10 +1635,10 @@ type ReportRowDimensionValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayLabel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayLabel") to include
@@ -1594,10 +1672,10 @@ type ReportRowMetricValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "DoubleValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DoubleValue") to include
@@ -1658,10 +1736,10 @@ type ReportWarning struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -1686,10 +1764,10 @@ type StringList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Values") to include in API
@@ -1719,6 +1797,9 @@ type AccountsGetCall struct {
 }
 
 // Get: Gets information about the specified AdMob publisher account.
+//
+// - name: Resource name of the publisher account to retrieve. Example:
+//   accounts/pub-9876543210987654.
 func (r *AccountsService) Get(name string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1762,7 +1843,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1863,9 +1944,9 @@ type AccountsListCall struct {
 	header_      http.Header
 }
 
-// List: List the AdMob publisher account accessible with the client
-// credential. Currently, all credentials have access to at most one
-// AdMob account.
+// List: Lists the AdMob publisher account that was most recently signed
+// in to from the AdMob UI. For more information, see
+// https://support.google.com/admob/answer/10243672.
 func (r *AccountsService) List() *AccountsListCall {
 	c := &AccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1924,7 +2005,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1983,7 +2064,7 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListPublisherAccou
 	}
 	return ret, nil
 	// {
-	//   "description": "List the AdMob publisher account accessible with the client credential. Currently, all credentials have access to at most one AdMob account.",
+	//   "description": "Lists the AdMob publisher account that was most recently signed in to from the AdMob UI. For more information, see https://support.google.com/admob/answer/10243672.",
 	//   "flatPath": "v1beta/accounts",
 	//   "httpMethod": "GET",
 	//   "id": "admob.accounts.list",
@@ -2047,6 +2128,9 @@ type AccountsAdUnitsListCall struct {
 }
 
 // List: List the ad units under the specified AdMob account.
+//
+// - parent: Resource name of the account to list ad units for. Example:
+//   accounts/pub-9876543210987654.
 func (r *AccountsAdUnitsService) List(parent string) *AccountsAdUnitsListCall {
 	c := &AccountsAdUnitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2108,7 +2192,7 @@ func (c *AccountsAdUnitsListCall) Header() http.Header {
 
 func (c *AccountsAdUnitsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2242,6 +2326,9 @@ type AccountsAppsListCall struct {
 }
 
 // List: List the apps under the specified AdMob account.
+//
+// - parent: Resource name of the account to list apps for. Example:
+//   accounts/pub-9876543210987654.
 func (r *AccountsAppsService) List(parent string) *AccountsAppsListCall {
 	c := &AccountsAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2303,7 +2390,7 @@ func (c *AccountsAppsListCall) Header() http.Header {
 
 func (c *AccountsAppsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2439,6 +2526,9 @@ type AccountsMediationReportGenerateCall struct {
 // Generate: Generates an AdMob Mediation report based on the provided
 // report specification. Returns result of a server-side streaming RPC.
 // The result is returned in a sequence of responses.
+//
+// - parent: Resource name of the account to generate the report for.
+//   Example: accounts/pub-9876543210987654.
 func (r *AccountsMediationReportService) Generate(parent string, generatemediationreportrequest *GenerateMediationReportRequest) *AccountsMediationReportGenerateCall {
 	c := &AccountsMediationReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2473,7 +2563,7 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2583,6 +2673,9 @@ type AccountsNetworkReportGenerateCall struct {
 // Generate: Generates an AdMob Network report based on the provided
 // report specification. Returns result of a server-side streaming RPC.
 // The result is returned in a sequence of responses.
+//
+// - parent: Resource name of the account to generate the report for.
+//   Example: accounts/pub-9876543210987654.
 func (r *AccountsNetworkReportService) Generate(parent string, generatenetworkreportrequest *GenerateNetworkReportRequest) *AccountsNetworkReportGenerateCall {
 	c := &AccountsNetworkReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2617,7 +2710,7 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

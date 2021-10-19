@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "See, edit, configure, and delete your Google Cloud Platform data"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         },
         "https://www.googleapis.com/auth/sqlservice.admin": {
           "description": "Manage your Google SQL Service instances"
@@ -122,7 +122,7 @@
           ],
           "parameters": {
             "id": {
-              "description": "The ID of the Backup Run to delete. To find a Backup Run ID, use the list method.",
+              "description": "The ID of the backup run to delete. To find a backup run ID, use the list method.",
               "format": "int64",
               "location": "path",
               "required": true,
@@ -162,7 +162,7 @@
           ],
           "parameters": {
             "id": {
-              "description": "The ID of this Backup Run.",
+              "description": "The ID of this backup run.",
               "format": "int64",
               "location": "path",
               "required": true,
@@ -191,7 +191,7 @@
           ]
         },
         "insert": {
-          "description": "Creates a new backup run on demand. This method is applicable only to Second Generation instances.",
+          "description": "Creates a new backup run on demand.",
           "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns",
           "httpMethod": "POST",
           "id": "sql.backupRuns.insert",
@@ -226,7 +226,7 @@
           ]
         },
         "list": {
-          "description": "Lists all backup runs associated with a given instance and configuration in the reverse chronological order of the backup initiation time.",
+          "description": "Lists all backup runs associated with the project or a given instance and configuration in the reverse chronological order of the backup initiation time.",
           "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns",
           "httpMethod": "GET",
           "id": "sql.backupRuns.list",
@@ -236,7 +236,7 @@
           ],
           "parameters": {
             "instance": {
-              "description": "Cloud SQL instance ID. This does not include the project ID.",
+              "description": "Cloud SQL instance ID, or \"-\" for all instances. This does not include the project ID.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -262,6 +262,83 @@
           "path": "sql/v1beta4/projects/{project}/instances/{instance}/backupRuns",
           "response": {
             "$ref": "BackupRunsListResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin"
+          ]
+        }
+      }
+    },
+    "connect": {
+      "methods": {
+        "generateEphemeralCert": {
+          "description": "Generates a short-lived X509 certificate containing the provided public key and signed by a private key specific to the target instance. Users may use the certificate to authenticate as themselves when connecting to the database.",
+          "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}:generateEphemeralCert",
+          "httpMethod": "POST",
+          "id": "sql.connect.generateEphemeral",
+          "parameterOrder": [
+            "project",
+            "instance"
+          ],
+          "parameters": {
+            "instance": {
+              "description": "Cloud SQL instance ID. This does not include the project ID.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID of the project that contains the instance.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "sql/v1beta4/projects/{project}/instances/{instance}:generateEphemeralCert",
+          "request": {
+            "$ref": "GenerateEphemeralCertRequest"
+          },
+          "response": {
+            "$ref": "GenerateEphemeralCertResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/sqlservice.admin"
+          ]
+        },
+        "get": {
+          "description": "Retrieves connect settings about a Cloud SQL instance.",
+          "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/connectSettings",
+          "httpMethod": "GET",
+          "id": "sql.connect.get",
+          "parameterOrder": [
+            "project",
+            "instance"
+          ],
+          "parameters": {
+            "instance": {
+              "description": "Cloud SQL instance ID. This does not include the project ID.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID of the project that contains the instance.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "readTime": {
+              "description": "Optional. Optional snapshot read timestamp to trade freshness for performance.",
+              "format": "google-datetime",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "sql/v1beta4/projects/{project}/instances/{instance}/connectSettings",
+          "response": {
+            "$ref": "ConnectSettings"
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
@@ -506,7 +583,7 @@
     "flags": {
       "methods": {
         "list": {
-          "description": "List all available database flags for Cloud SQL instances.",
+          "description": "Lists all available database flags for Cloud SQL instances.",
           "flatPath": "sql/v1beta4/flags",
           "httpMethod": "GET",
           "id": "sql.flags.list",
@@ -700,7 +777,7 @@
           ]
         },
         "failover": {
-          "description": "Failover the instance to its failover replica instance. Using this operation might cause your instance to restart.",
+          "description": "Initiates a manual failover of a high availability (HA) primary instance to a standby instance, which becomes the primary instance. Users are then rerouted to the new primary. For more information, see the Overview of high availability page in the Cloud SQL documentation. If using Legacy HA (MySQL only), this causes the instance to failover to its failover replica instance.",
           "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/failover",
           "httpMethod": "POST",
           "id": "sql.instances.failover",
@@ -1167,7 +1244,7 @@
           ]
         },
         "truncateLog": {
-          "description": "Truncate MySQL general and slow query log tables",
+          "description": "Truncate MySQL general and slow query log tables MySQL only.",
           "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/truncateLog",
           "httpMethod": "POST",
           "id": "sql.instances.truncateLog",
@@ -1375,29 +1452,12 @@
                   "location": "path",
                   "required": true,
                   "type": "string"
-                },
-                "skipVerification": {
-                  "description": "Whether to skip the verification step (VESS).",
-                  "location": "query",
-                  "type": "boolean"
-                },
-                "syncMode": {
-                  "description": "External sync mode.",
-                  "enum": [
-                    "EXTERNAL_SYNC_MODE_UNSPECIFIED",
-                    "ONLINE",
-                    "OFFLINE"
-                  ],
-                  "enumDescriptions": [
-                    "Unknown external sync mode, will be defaulted to ONLINE mode",
-                    "Online external sync will set up replication after initial data external sync",
-                    "Offline external sync only dumps and loads a one-time snapshot of the primary instance's data"
-                  ],
-                  "location": "query",
-                  "type": "string"
                 }
               },
               "path": "sql/v1beta4/projects/{project}/instances/{instance}/startExternalSync",
+              "request": {
+                "$ref": "SqlInstancesStartExternalSyncRequest"
+              },
               "response": {
                 "$ref": "Operation"
               },
@@ -1427,29 +1487,12 @@
                   "location": "path",
                   "required": true,
                   "type": "string"
-                },
-                "syncMode": {
-                  "description": "External sync mode",
-                  "enum": [
-                    "EXTERNAL_SYNC_MODE_UNSPECIFIED",
-                    "ONLINE",
-                    "OFFLINE"
-                  ],
-                  "enumDescriptions": [
-                    "Unknown external sync mode, will be defaulted to ONLINE mode",
-                    "Online external sync will set up replication after initial data external sync",
-                    "Offline external sync only dumps and loads a one-time snapshot of the primary instance's data"
-                  ],
-                  "location": "query",
-                  "type": "string"
-                },
-                "verifyConnectionOnly": {
-                  "description": "Flag to enable verifying connection only",
-                  "location": "query",
-                  "type": "boolean"
                 }
               },
               "path": "sql/v1beta4/projects/{project}/instances/{instance}/verifyExternalSyncSettings",
+              "request": {
+                "$ref": "SqlInstancesVerifyExternalSyncSettingsRequest"
+              },
               "response": {
                 "$ref": "SqlInstancesVerifyExternalSyncSettingsResponse"
               },
@@ -1649,7 +1692,7 @@
     "tiers": {
       "methods": {
         "list": {
-          "description": "Lists all available machine types (tiers) for Cloud SQL, for example, db-n1-standard-1. For related information, see Pricing.",
+          "description": "Lists all available machine types (tiers) for Cloud SQL, for example, db-custom-1-3840. For related information, see Pricing.",
           "flatPath": "sql/v1beta4/projects/{project}/tiers",
           "httpMethod": "GET",
           "id": "sql.tiers.list",
@@ -1834,7 +1877,7 @@
       }
     }
   },
-  "revision": "20210119",
+  "revision": "20210913",
   "rootUrl": "https://sqladmin.googleapis.com/",
   "schemas": {
     "AclEntry": {
@@ -1842,12 +1885,12 @@
       "id": "AclEntry",
       "properties": {
         "expirationTime": {
-          "description": "The time when this access control entry expires in RFC 3339 format, for example *2012-11-15T16:19:00.094Z*.",
+          "description": "The time when this access control entry expires in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example **2012-11-15T16:19:00.094Z**.",
           "format": "google-datetime",
           "type": "string"
         },
         "kind": {
-          "description": "This is always *sql#aclEntry*.",
+          "description": "This is always **sql#aclEntry**.",
           "type": "string"
         },
         "name": {
@@ -1905,7 +1948,7 @@
           "type": "boolean"
         },
         "kind": {
-          "description": "This is always *sql#backupConfiguration*.",
+          "description": "This is always **sql#backupConfiguration**.",
           "type": "string"
         },
         "location": {
@@ -1913,7 +1956,7 @@
           "type": "string"
         },
         "pointInTimeRecoveryEnabled": {
-          "description": "Reserved for future use.",
+          "description": "(Postgres only) Whether point in time recovery is enabled.",
           "type": "boolean"
         },
         "replicationLogArchivingEnabled": {
@@ -1942,7 +1985,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "This is always *sql#backupContext*.",
+          "description": "This is always **sql#backupContext**.",
           "type": "string"
         }
       },
@@ -1996,19 +2039,19 @@
         },
         "diskEncryptionConfiguration": {
           "$ref": "DiskEncryptionConfiguration",
-          "description": "Encryption configuration specific to a backup. Applies only to Second Generation instances."
+          "description": "Encryption configuration specific to a backup."
         },
         "diskEncryptionStatus": {
           "$ref": "DiskEncryptionStatus",
-          "description": "Encryption status specific to a backup. Applies only to Second Generation instances."
+          "description": "Encryption status specific to a backup."
         },
         "endTime": {
-          "description": "The time the backup operation completed in UTC timezone in RFC 3339 format, for example *2012-11-15T16:19:00.094Z*.",
+          "description": "The time the backup operation completed in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example **2012-11-15T16:19:00.094Z**.",
           "format": "google-datetime",
           "type": "string"
         },
         "enqueuedTime": {
-          "description": "The time the run was enqueued in UTC timezone in RFC 3339 format, for example *2012-11-15T16:19:00.094Z*.",
+          "description": "The time the run was enqueued in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example **2012-11-15T16:19:00.094Z**.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -2038,7 +2081,7 @@
           "type": "string"
         },
         "startTime": {
-          "description": "The time the backup operation actually started in UTC timezone in RFC 3339 format, for example *2012-11-15T16:19:00.094Z*.",
+          "description": "The time the backup operation actually started in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example **2012-11-15T16:19:00.094Z**.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -2085,7 +2128,7 @@
           "type": "string"
         },
         "windowStartTime": {
-          "description": "The start time of the backup window during which this the backup was attempted in RFC 3339 format, for example *2012-11-15T16:19:00.094Z*.",
+          "description": "The start time of the backup window during which this the backup was attempted in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example **2012-11-15T16:19:00.094Z**.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -2156,9 +2199,97 @@
           "type": "string"
         },
         "pointInTime": {
-          "description": "Reserved for future use.",
+          "description": "Timestamp, if specified, identifies the time to which the source instance is cloned.",
           "format": "google-datetime",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ConnectSettings": {
+      "description": "Connect settings retrieval response.",
+      "id": "ConnectSettings",
+      "properties": {
+        "backendType": {
+          "description": "**SECOND_GEN**: Cloud SQL database instance. **EXTERNAL**: A database server that is not managed by Google. This property is read-only; use the **tier** property in the **settings** object to determine the database type.",
+          "enum": [
+            "SQL_BACKEND_TYPE_UNSPECIFIED",
+            "FIRST_GEN",
+            "SECOND_GEN",
+            "EXTERNAL"
+          ],
+          "enumDescriptions": [
+            "This is an unknown backend type for instance.",
+            "V1 speckle instance.",
+            "V2 speckle instance.",
+            "On premises instance."
+          ],
+          "type": "string"
+        },
+        "databaseVersion": {
+          "description": "The database engine type and version. The **databaseVersion** field cannot be changed after instance creation. MySQL instances: **MYSQL_8_0**, **MYSQL_5_7** (default), or **MYSQL_5_6**. PostgreSQL instances: **POSTGRES_9_6**, **POSTGRES_10**, **POSTGRES_11** or **POSTGRES_12** (default). SQL Server instances: **SQLSERVER_2017_STANDARD** (default), **SQLSERVER_2017_ENTERPRISE**, **SQLSERVER_2017_EXPRESS**, or **SQLSERVER_2017_WEB**.",
+          "enum": [
+            "SQL_DATABASE_VERSION_UNSPECIFIED",
+            "MYSQL_5_1",
+            "MYSQL_5_5",
+            "MYSQL_5_6",
+            "MYSQL_5_7",
+            "POSTGRES_9_6",
+            "POSTGRES_11",
+            "SQLSERVER_2017_STANDARD",
+            "SQLSERVER_2017_ENTERPRISE",
+            "SQLSERVER_2017_EXPRESS",
+            "SQLSERVER_2017_WEB",
+            "POSTGRES_10",
+            "POSTGRES_12",
+            "MYSQL_8_0",
+            "POSTGRES_13",
+            "SQLSERVER_2019_STANDARD",
+            "SQLSERVER_2019_ENTERPRISE",
+            "SQLSERVER_2019_EXPRESS",
+            "SQLSERVER_2019_WEB"
+          ],
+          "enumDescriptions": [
+            "This is an unknown database version.",
+            "The database version is MySQL 5.1.",
+            "The database version is MySQL 5.5.",
+            "The database version is MySQL 5.6.",
+            "The database version is MySQL 5.7.",
+            "The database version is PostgreSQL 9.6.",
+            "The database version is PostgreSQL 11.",
+            "The database version is SQL Server 2017 Standard.",
+            "The database version is SQL Server 2017 Enterprise.",
+            "The database version is SQL Server 2017 Express.",
+            "The database version is SQL Server 2017 Web.",
+            "The database version is PostgreSQL 10.",
+            "The database version is PostgreSQL 12.",
+            "The database version is MySQL 8.",
+            "The database version is PostgreSQL 13.",
+            "The database version is SQL Server 2019 Standard.",
+            "The database version is SQL Server 2019 Enterprise.",
+            "The database version is SQL Server 2019 Express.",
+            "The database version is SQL Server 2019 Web."
+          ],
+          "type": "string"
+        },
+        "ipAddresses": {
+          "description": "The assigned IP addresses for the instance.",
+          "items": {
+            "$ref": "IpMapping"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "description": "This is always `sql#connectSettings`.",
+          "type": "string"
+        },
+        "region": {
+          "description": "The cloud region for the instance. e.g. **us-central1**, **europe-west1**. The region cannot be changed after instance creation.",
+          "type": "string"
+        },
+        "serverCaCert": {
+          "$ref": "SslCert",
+          "description": "SSL configuration."
         }
       },
       "type": "object"
@@ -2184,7 +2315,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "This is always *sql#database*.",
+          "description": "This is always **sql#database**.",
           "type": "string"
         },
         "name": {
@@ -2210,18 +2341,18 @@
       "id": "DatabaseFlags",
       "properties": {
         "name": {
-          "description": "The name of the flag. These flags are passed at instance startup, so include both server options and system variables for MySQL. Flags are specified with underscores, not hyphens. For more information, see Configuring Database Flags in the Cloud SQL documentation.",
+          "description": "The name of the flag. These flags are passed at instance startup, so include both server options and system variables. Flags are specified with underscores, not hyphens. For more information, see Configuring Database Flags in the Cloud SQL documentation.",
           "type": "string"
         },
         "value": {
-          "description": "The value of the flag. Booleans are set to *on* for true and *off* for false. This field must be omitted if the flag doesn't take a value.",
+          "description": "The value of the flag. Booleans are set to **on** for true and **off** for false. This field must be omitted if the flag doesn't take a value.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "DatabaseInstance": {
-      "description": "A Cloud SQL instance resource. Next field: 36",
+      "description": "A Cloud SQL instance resource.",
       "id": "DatabaseInstance",
       "properties": {
         "backendType": {
@@ -2244,13 +2375,19 @@
           "description": "Connection name of the Cloud SQL instance used in connection strings.",
           "type": "string"
         },
+        "createTime": {
+          "description": "Output only. The time when the instance was created in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example **2012-11-15T16:19:00.094Z**.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
         "currentDiskSize": {
           "description": "The current disk usage of the instance in bytes. This property has been deprecated. Use the \"cloudsql.googleapis.com/database/disk/bytes_used\" metric in Cloud Monitoring API instead. Please see this announcement for details.",
           "format": "int64",
           "type": "string"
         },
         "databaseVersion": {
-          "description": "The database engine type and version. The *databaseVersion* field cannot be changed after instance creation. MySQL instances: *MYSQL_8_0*, *MYSQL_5_7* (default), or *MYSQL_5_6*. PostgreSQL instances: *POSTGRES_9_6*, *POSTGRES_10*, *POSTGRES_11* or *POSTGRES_12* (default). SQL Server instances: *SQLSERVER_2017_STANDARD* (default), *SQLSERVER_2017_ENTERPRISE*, *SQLSERVER_2017_EXPRESS*, or *SQLSERVER_2017_WEB*.",
+          "description": "The database engine type and version. The *databaseVersion* field cannot be changed after instance creation. MySQL instances: *MYSQL_8_0*, *MYSQL_5_7* (default), or *MYSQL_5_6*. PostgreSQL instances: *POSTGRES_9_6*, *POSTGRES_10*, *POSTGRES_11*, *POSTGRES_12*, *POSTGRES_13* (default). SQL Server instances: *SQLSERVER_2019_STANDARD*, *SQLSERVER_2019_ENTERPRISE*, *SQLSERVER_2019_EXPRESS*, or *SQLSERVER_2019_WEB*, *SQLSERVER_2017_STANDARD* (default), *SQLSERVER_2017_ENTERPRISE*, *SQLSERVER_2017_EXPRESS*, or *SQLSERVER_2017_WEB*.",
           "enum": [
             "SQL_DATABASE_VERSION_UNSPECIFIED",
             "MYSQL_5_1",
@@ -2266,7 +2403,11 @@
             "POSTGRES_10",
             "POSTGRES_12",
             "MYSQL_8_0",
-            "POSTGRES_13"
+            "POSTGRES_13",
+            "SQLSERVER_2019_STANDARD",
+            "SQLSERVER_2019_ENTERPRISE",
+            "SQLSERVER_2019_EXPRESS",
+            "SQLSERVER_2019_WEB"
           ],
           "enumDescriptions": [
             "This is an unknown database version.",
@@ -2283,31 +2424,35 @@
             "The database version is PostgreSQL 10.",
             "The database version is PostgreSQL 12.",
             "The database version is MySQL 8.",
-            "The database version is PostgreSQL 13."
+            "The database version is PostgreSQL 13.",
+            "The database version is SQL Server 2019 Standard.",
+            "The database version is SQL Server 2019 Enterprise.",
+            "The database version is SQL Server 2019 Express.",
+            "The database version is SQL Server 2019 Web."
           ],
           "type": "string"
         },
         "diskEncryptionConfiguration": {
           "$ref": "DiskEncryptionConfiguration",
-          "description": "Disk encryption configuration specific to an instance. Applies only to Second Generation instances."
+          "description": "Disk encryption configuration specific to an instance."
         },
         "diskEncryptionStatus": {
           "$ref": "DiskEncryptionStatus",
-          "description": "Disk encryption status specific to an instance. Applies only to Second Generation instances."
+          "description": "Disk encryption status specific to an instance."
         },
         "etag": {
           "description": "This field is deprecated and will be removed from a future version of the API. Use the *settings.settingsVersion* field instead.",
           "type": "string"
         },
         "failoverReplica": {
-          "description": "The name and status of the failover replica. This property is applicable only to Second Generation instances.",
+          "description": "The name and status of the failover replica.",
           "properties": {
             "available": {
               "description": "The availability status of the failover replica. A false status indicates that the failover replica is out of sync. The primary instance can only failover to the failover replica when the status is true.",
               "type": "boolean"
             },
             "name": {
-              "description": "The name of the failover replica. If specified at instance creation, a failover replica is created for the instance. The name doesn't include the project ID. This property is applicable only to Second Generation instances.",
+              "description": "The name of the failover replica. If specified at instance creation, a failover replica is created for the instance. The name doesn't include the project ID.",
               "type": "string"
             }
           },
@@ -2365,6 +2510,10 @@
           "$ref": "OnPremisesConfiguration",
           "description": "Configuration specific to on-premises instances."
         },
+        "outOfDiskReport": {
+          "$ref": "SqlOutOfDiskReport",
+          "description": "This field represents the report generated by the proactive database wellness job for OutOfDisk issues. * Writers: * the proactive database wellness job for OOD. * Readers: * the proactive database wellness job"
+        },
         "project": {
           "description": "The project ID of the project containing the Cloud SQL instance. The Google apps domain is prefixed if applicable.",
           "type": "string"
@@ -2389,7 +2538,7 @@
           "type": "string"
         },
         "satisfiesPzs": {
-          "description": "The status indicating if instance satisfies physical zone separation. Reserved for future use.",
+          "description": "The status indicating if instance satisfiesPzs. Reserved for future use.",
           "type": "boolean"
         },
         "scheduledMaintenance": {
@@ -2409,7 +2558,7 @@
           "description": "SSL configuration."
         },
         "serviceAccountEmailAddress": {
-          "description": "The service account email address assigned to the instance. This property is applicable only to Second Generation instances.",
+          "description": "The service account email address assigned to the instance. This property is read-only.",
           "type": "string"
         },
         "settings": {
@@ -2417,7 +2566,7 @@
           "description": "The user settings."
         },
         "state": {
-          "description": "The current serving state of the Cloud SQL instance. This can be one of the following. *SQL_INSTANCE_STATE_UNSPECIFIED*: The state of the instance is unknown. *RUNNABLE*: The instance is running, or has been stopped by owner. *SUSPENDED*: The instance is not available, for example due to problems with billing. for example due to problems with billing. *PENDING_DELETE*: The instance is being deleted. *PENDING_CREATE*: The instance is being created. *MAINTENANCE*: The instance is down for maintenance. *FAILED*: The instance creation failed.",
+          "description": "The current serving state of the Cloud SQL instance. This can be one of the following. *SQL_INSTANCE_STATE_UNSPECIFIED*: The state of the instance is unknown. *RUNNABLE*: The instance is running, or has been stopped by owner. *SUSPENDED*: The instance is not available, for example due to problems with billing. *PENDING_DELETE*: The instance is being deleted. *PENDING_CREATE*: The instance is being created. *MAINTENANCE*: The instance is down for maintenance. *FAILED*: The instance creation failed.",
           "enum": [
             "SQL_INSTANCE_STATE_UNSPECIFIED",
             "RUNNABLE",
@@ -2425,7 +2574,8 @@
             "PENDING_DELETE",
             "PENDING_CREATE",
             "MAINTENANCE",
-            "FAILED"
+            "FAILED",
+            "ONLINE_MAINTENANCE"
           ],
           "enumDescriptions": [
             "The state of the instance is unknown.",
@@ -2434,7 +2584,8 @@
             "The instance is being deleted.",
             "The instance is being created.",
             "The instance is down for maintenance.",
-            "The creation of the instance failed or a fatal error occurred during maintenance."
+            "The creation of the instance failed or a fatal error occurred during maintenance.",
+            "The instance is under maintenance operations and the database is available."
           ],
           "type": "string"
         },
@@ -2485,12 +2636,12 @@
       "id": "DemoteMasterConfiguration",
       "properties": {
         "kind": {
-          "description": "This is always *sql#demoteMasterConfiguration*.",
+          "description": "This is always **sql#demoteMasterConfiguration**.",
           "type": "string"
         },
         "mysqlReplicaConfiguration": {
           "$ref": "DemoteMasterMySqlReplicaConfiguration",
-          "description": "MySQL specific configuration when replicating from a MySQL on-premises primary instance. Replication configuration information such as the username, password, certificates, and keys are not stored in the instance metadata. The configuration information is used only to set up the replication connection and is stored by MySQL in a file named *master.info* in the data directory."
+          "description": "MySQL specific configuration when replicating from a MySQL on-premises primary instance. Replication configuration information such as the username, password, certificates, and keys are not stored in the instance metadata. The configuration information is used only to set up the replication connection and is stored by MySQL in a file named **master.info** in the data directory."
         }
       },
       "type": "object"
@@ -2511,8 +2662,12 @@
           "$ref": "DemoteMasterConfiguration",
           "description": "Configuration specific to read-replicas replicating from the on-premises primary instance."
         },
+        "skipReplicationSetup": {
+          "description": "Flag to skip replication setup on the instance.",
+          "type": "boolean"
+        },
         "verifyGtidConsistency": {
-          "description": "Verify GTID consistency for demote operation. Default value: *True*. Second Generation instances only. Setting this flag to false enables you to bypass GTID consistency check between on-premises primary instance and Cloud SQL instance during the demotion operation but also exposes you to the risk of future replication failures. Change the value only if you know the reason for the GTID divergence and are confident that doing so will not cause any replication issues.",
+          "description": "Verify GTID consistency for demote operation. Default value: **True**. Setting this flag to false enables you to bypass GTID consistency check between on-premises primary instance and Cloud SQL instance during the demotion operation but also exposes you to the risk of future replication failures. Change the value only if you know the reason for the GTID divergence and are confident that doing so will not cause any replication issues.",
           "type": "boolean"
         }
       },
@@ -2535,7 +2690,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "This is always *sql#demoteMasterMysqlReplicaConfiguration*.",
+          "description": "This is always **sql#demoteMasterMysqlReplicaConfiguration**.",
           "type": "string"
         },
         "password": {
@@ -2573,7 +2728,7 @@
       "id": "DiskEncryptionConfiguration",
       "properties": {
         "kind": {
-          "description": "This is always *sql#diskEncryptionConfiguration*.",
+          "description": "This is always **sql#diskEncryptionConfiguration**.",
           "type": "string"
         },
         "kmsKeyName": {
@@ -2588,7 +2743,7 @@
       "id": "DiskEncryptionStatus",
       "properties": {
         "kind": {
-          "description": "This is always *sql#diskEncryptionStatus*.",
+          "description": "This is always **sql#diskEncryptionStatus**.",
           "type": "string"
         },
         "kmsKeyVersionName": {
@@ -2603,8 +2758,24 @@
       "id": "ExportContext",
       "properties": {
         "csvExportOptions": {
-          "description": "Options for exporting data as CSV. *MySQL* and *PostgreSQL* instances only.",
+          "description": "Options for exporting data as CSV. **MySQL** and **PostgreSQL** instances only.",
           "properties": {
+            "escapeCharacter": {
+              "description": "Specifies the character that should appear before a data character that needs to be escaped.",
+              "type": "string"
+            },
+            "fieldsTerminatedBy": {
+              "description": "Specifies the character that separates columns within each row (line) of the file.",
+              "type": "string"
+            },
+            "linesTerminatedBy": {
+              "description": "This is used to separate lines. If a line does not contain all fields, the rest of the columns are set to their default values.",
+              "type": "string"
+            },
+            "quoteCharacter": {
+              "description": "Specifies the quoting character to be used when a data value is quoted.",
+              "type": "string"
+            },
             "selectQuery": {
               "description": "The select query used to extract the data.",
               "type": "string"
@@ -2613,14 +2784,14 @@
           "type": "object"
         },
         "databases": {
-          "description": "Databases to be exported. *MySQL instances:* If *fileType* is *SQL* and no database is specified, all databases are exported, except for the *mysql* system database. If *fileType* is *CSV*, you can specify one database, either by using this property or by using the *csvExportOptions.selectQuery* property, which takes precedence over this property. *PostgreSQL instances:* You must specify one database to be exported. If *fileType* is *CSV*, this database must match the one specified in the *csvExportOptions.selectQuery* property.",
+          "description": "Databases to be exported. * **MySQL instances:** If **fileType** is **SQL** and no database is specified, all databases are exported, except for the **mysql** system database. If **fileType** is **CSV**, you can specify one database, either by using this property or by using the **csvExportOptions.selectQuery** property, which takes precedence over this property. * **PostgreSQL instances:** You must specify one database to be exported. If **fileType** is **CSV**, this database must match the one specified in the **csvExportOptions.selectQuery** property. * **SQL Server instances:** You must specify one database to be exported, and the **fileType** must be **BAK**.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "fileType": {
-          "description": "The file type for the specified uri. *SQL*: The file contains SQL statements. *CSV*: The file contains CSV data. *BAK*: The file contains backup data for a SQL Server instance.",
+          "description": "The file type for the specified uri. * **SQL**: The file contains SQL statements. * **CSV**: The file contains CSV data. * **BAK**: The file contains backup data for a SQL Server instance.",
           "enum": [
             "SQL_FILE_TYPE_UNSPECIFIED",
             "SQL",
@@ -2650,7 +2821,7 @@
               "description": "Options for exporting from MySQL.",
               "properties": {
                 "masterData": {
-                  "description": "Option to include SQL statement required to set up replication. If set to *1*, the dump file includes a CHANGE MASTER TO statement with the binary log coordinates, and --set-gtid-purged is set to ON. If set to *2*, the CHANGE MASTER TO statement is written as a SQL comment and has no effect. If set to any value other than *1*, --set-gtid-purged is set to OFF.",
+                  "description": "Option to include SQL statement required to set up replication. * If set to **1**, the dump file includes a CHANGE MASTER TO statement with the binary log coordinates, and --set-gtid-purged is set to ON. * If set to **2**, the CHANGE MASTER TO statement is written as a SQL comment and has no effect. * If set to any value other than **1**, --set-gtid-purged is set to OFF.",
                   "format": "int32",
                   "type": "integer"
                 }
@@ -2672,7 +2843,7 @@
           "type": "object"
         },
         "uri": {
-          "description": "The path to the file in Google Cloud Storage where the export will be stored. The URI is in the form *gs://bucketName/fileName*. If the file already exists, the request succeeds, but the operation fails. If *fileType* is *SQL* and the filename ends with .gz, the contents are compressed.",
+          "description": "The path to the file in Google Cloud Storage where the export will be stored. The URI is in the form **gs://bucketName/fileName**. If the file already exists, the request succeeds, but the operation fails. If **fileType** is **SQL** and the filename ends with .gz, the contents are compressed.",
           "type": "string"
         }
       },
@@ -2707,14 +2878,14 @@
           "type": "array"
         },
         "allowedStringValues": {
-          "description": "For *STRING* flags, a list of strings that the value can be set to.",
+          "description": "For **STRING** flags, a list of strings that the value can be set to.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "appliesTo": {
-          "description": "The database version this flag applies to. Can be *MYSQL_8_0*, *MYSQL_5_6*, or *MYSQL_5_7*.",
+          "description": "The database version this flag applies to. Can be **MYSQL_8_0**, **MYSQL_5_6**, or **MYSQL_5_7**.",
           "items": {
             "enum": [
               "SQL_DATABASE_VERSION_UNSPECIFIED",
@@ -2731,7 +2902,11 @@
               "POSTGRES_10",
               "POSTGRES_12",
               "MYSQL_8_0",
-              "POSTGRES_13"
+              "POSTGRES_13",
+              "SQLSERVER_2019_STANDARD",
+              "SQLSERVER_2019_ENTERPRISE",
+              "SQLSERVER_2019_EXPRESS",
+              "SQLSERVER_2019_WEB"
             ],
             "enumDescriptions": [
               "This is an unknown database version.",
@@ -2748,7 +2923,11 @@
               "The database version is PostgreSQL 10.",
               "The database version is PostgreSQL 12.",
               "The database version is MySQL 8.",
-              "The database version is PostgreSQL 13."
+              "The database version is PostgreSQL 13.",
+              "The database version is SQL Server 2019 Standard.",
+              "The database version is SQL Server 2019 Enterprise.",
+              "The database version is SQL Server 2019 Express.",
+              "The database version is SQL Server 2019 Web."
             ],
             "type": "string"
           },
@@ -2759,21 +2938,21 @@
           "type": "boolean"
         },
         "kind": {
-          "description": "This is always *sql#flag*.",
+          "description": "This is always **sql#flag**.",
           "type": "string"
         },
         "maxValue": {
-          "description": "For *INTEGER* flags, the maximum allowed value.",
+          "description": "For **INTEGER** flags, the maximum allowed value.",
           "format": "int64",
           "type": "string"
         },
         "minValue": {
-          "description": "For *INTEGER* flags, the minimum allowed value.",
+          "description": "For **INTEGER** flags, the minimum allowed value.",
           "format": "int64",
           "type": "string"
         },
         "name": {
-          "description": "This is the name of the flag. Flag names always use underscores, not hyphens, for example: *max_allowed_packet*",
+          "description": "This is the name of the flag. Flag names always use underscores, not hyphens, for example: **max_allowed_packet**",
           "type": "string"
         },
         "requiresRestart": {
@@ -2781,7 +2960,7 @@
           "type": "boolean"
         },
         "type": {
-          "description": "The type of the flag. Flags are typed to being *BOOLEAN*, *STRING*, *INTEGER* or *NONE*. *NONE* is used for flags which do not take a value, such as *skip_grant_tables*.",
+          "description": "The type of the flag. Flags are typed to being **BOOLEAN**, **STRING**, **INTEGER** or **NONE**. **NONE** is used for flags which do not take a value, such as **skip_grant_tables**.",
           "enum": [
             "SQL_FLAG_TYPE_UNSPECIFIED",
             "BOOLEAN",
@@ -2798,7 +2977,7 @@
             "String type flag.",
             "Integer type flag.",
             "Flag type used for a server startup option.",
-            "Type introduced specically for MySQL TimeZone offset. Accept a string value with the format [-12:59, 13:00].",
+            "Type introduced specially for MySQL TimeZone offset. Accept a string value with the format [-12:59, 13:00].",
             "Float type flag.",
             "Comma-separated list of the strings in a SqlFlagType enum."
           ],
@@ -2819,8 +2998,39 @@
           "type": "array"
         },
         "kind": {
-          "description": "This is always *sql#flagsList*.",
+          "description": "This is always **sql#flagsList**.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GenerateEphemeralCertRequest": {
+      "description": "Ephemeral certificate creation request.",
+      "id": "GenerateEphemeralCertRequest",
+      "properties": {
+        "access_token": {
+          "description": "Optional. Access token to include in the signed certificate.",
+          "type": "string"
+        },
+        "public_key": {
+          "description": "PEM encoded public key to include in the signed certificate.",
+          "type": "string"
+        },
+        "readTime": {
+          "description": "Optional. Optional snapshot read timestamp to trade freshness for performance.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GenerateEphemeralCertResponse": {
+      "description": "Ephemeral certificate creation request.",
+      "id": "GenerateEphemeralCertResponse",
+      "properties": {
+        "ephemeralCert": {
+          "$ref": "SslCert",
+          "description": "Generated cert"
         }
       },
       "type": "object"
@@ -2835,7 +3045,7 @@
             "encryptionOptions": {
               "properties": {
                 "certPath": {
-                  "description": "Path to the Certificate (.cer) in Cloud Storage, in the form *gs://bucketName/fileName*. The instance must have write permissions to the bucket and read access to the file.",
+                  "description": "Path to the Certificate (.cer) in Cloud Storage, in the form **gs://bucketName/fileName**. The instance must have write permissions to the bucket and read access to the file.",
                   "type": "string"
                 },
                 "pvkPassword": {
@@ -2862,6 +3072,22 @@
               },
               "type": "array"
             },
+            "escapeCharacter": {
+              "description": "Specifies the character that should appear before a data character that needs to be escaped.",
+              "type": "string"
+            },
+            "fieldsTerminatedBy": {
+              "description": "Specifies the character that separates columns within each row (line) of the file.",
+              "type": "string"
+            },
+            "linesTerminatedBy": {
+              "description": "This is used to separate lines. If a line does not contain all fields, the rest of the columns are set to their default values.",
+              "type": "string"
+            },
+            "quoteCharacter": {
+              "description": "Specifies the quoting character to be used when a data value is quoted.",
+              "type": "string"
+            },
             "table": {
               "description": "The table to which CSV data is imported.",
               "type": "string"
@@ -2870,11 +3096,11 @@
           "type": "object"
         },
         "database": {
-          "description": "The target database for the import. If *fileType* is *SQL*, this field is required only if the import file does not specify a database, and is overridden by any database specification in the import file. If *fileType* is *CSV*, one database must be specified.",
+          "description": "The target database for the import. If **fileType** is **SQL**, this field is required only if the import file does not specify a database, and is overridden by any database specification in the import file. If **fileType** is **CSV**, one database must be specified.",
           "type": "string"
         },
         "fileType": {
-          "description": "The file type for the specified uri. *SQL*: The file contains SQL statements. *CSV*: The file contains CSV data.",
+          "description": "The file type for the specified uri. * **SQL**: The file contains SQL statements. * **CSV**: The file contains CSV data. * **BAK**: The file contains backup data for a SQL Server instance.",
           "enum": [
             "SQL_FILE_TYPE_UNSPECIFIED",
             "SQL",
@@ -2894,11 +3120,11 @@
           "type": "string"
         },
         "kind": {
-          "description": "This is always *sql#importContext*.",
+          "description": "This is always **sql#importContext**.",
           "type": "string"
         },
         "uri": {
-          "description": "Path to the import file in Cloud Storage, in the form *gs://bucketName/fileName*. Compressed gzip files (.gz) are supported when *fileType* is *SQL*. The instance must have write permissions to the bucket and read access to the file.",
+          "description": "Path to the import file in Cloud Storage, in the form **gs://bucketName/fileName**. Compressed gzip files (.gz) are supported when **fileType** is **SQL**. The instance must have write permissions to the bucket and read access to the file.",
           "type": "string"
         }
       },
@@ -2912,8 +3138,13 @@
           "description": "Whether Query Insights feature is enabled.",
           "type": "boolean"
         },
+        "queryPlansPerMinute": {
+          "description": "Number of query execution plans captured by Insights per minute for all queries combined. Default is 5.",
+          "format": "int32",
+          "type": "integer"
+        },
         "queryStringLength": {
-          "description": "Maximum query length stored in bytes. Default value: 1024 bytes. Range: 256-4500 bytes. Query length more than this field value will be truncated to this value. When unset, query length will be the default value.",
+          "description": "Maximum query length stored in bytes. Default value: 1024 bytes. Range: 256-4500 bytes. Query length more than this field value will be truncated to this value. When unset, query length will be the default value. Changing query length will restart the database.",
           "format": "int32",
           "type": "integer"
         },
@@ -2924,6 +3155,25 @@
         "recordClientAddress": {
           "description": "Whether Query Insights will record client address when enabled.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "InstanceReference": {
+      "description": "Reference to another Cloud SQL instance.",
+      "id": "InstanceReference",
+      "properties": {
+        "name": {
+          "description": "The name of the Cloud SQL instance being referenced. This does not include the project ID.",
+          "type": "string"
+        },
+        "project": {
+          "description": "The project ID of the Cloud SQL instance being referenced. The default is the same project ID as the instance references it.",
+          "type": "string"
+        },
+        "region": {
+          "description": "The region of the Cloud SQL instance being referenced.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3070,8 +3320,12 @@
       "description": "IP Management configuration.",
       "id": "IpConfiguration",
       "properties": {
+        "allocatedIpRange": {
+          "description": "The name of the allocated ip range for the private ip CloudSQL instance. For example: \"google-managed-services-default\". If set, the instance ip will be created in the allocated range. The range name must comply with [RFC 1035](https://tools.ietf.org/html/rfc1035). Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?.` Reserved for future use.",
+          "type": "string"
+        },
         "authorizedNetworks": {
-          "description": "The list of external networks that are allowed to connect to the instance using the IP. In 'CIDR' notation, also known as 'slash' notation (for example: *192.168.100.0/24*).",
+          "description": "The list of external networks that are allowed to connect to the instance using the IP. In 'CIDR' notation, also known as 'slash' notation (for example: **192.168.100.0/24**).",
           "items": {
             "$ref": "AclEntry"
           },
@@ -3082,7 +3336,7 @@
           "type": "boolean"
         },
         "privateNetwork": {
-          "description": "The resource link for the VPC network from which the Cloud SQL instance is accessible for private IP. For example, */projects/myProject/global/networks/default*. This setting can be updated, but it cannot be removed after it is set.",
+          "description": "The resource link for the VPC network from which the Cloud SQL instance is accessible for private IP. For example, **/projects/myProject/global/networks/default**. This setting can be updated, but it cannot be removed after it is set.",
           "type": "string"
         },
         "requireSsl": {
@@ -3101,12 +3355,12 @@
           "type": "string"
         },
         "timeToRetire": {
-          "description": "The due time for this IP to be retired in RFC 3339 format, for example *2012-11-15T16:19:00.094Z*. This field is only available when the IP is scheduled to be retired.",
+          "description": "The due time for this IP to be retired in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example **2012-11-15T16:19:00.094Z**. This field is only available when the IP is scheduled to be retired.",
           "format": "google-datetime",
           "type": "string"
         },
         "type": {
-          "description": "The type of this IP address. A *PRIMARY* address is a public address that can accept incoming connections. A *PRIVATE* address is a private address that can accept incoming connections. An *OUTGOING* address is the source address of connections originating from the instance, if supported.",
+          "description": "The type of this IP address. A **PRIMARY** address is a public address that can accept incoming connections. A **PRIVATE** address is a private address that can accept incoming connections. An **OUTGOING** address is the source address of connections originating from the instance, if supported.",
           "enum": [
             "SQL_IP_ADDRESS_TYPE_UNSPECIFIED",
             "PRIMARY",
@@ -3127,7 +3381,7 @@
       "type": "object"
     },
     "LocationPreference": {
-      "description": "Preferred location. This specifies where a Cloud SQL instance is located, either in a specific Compute Engine zone, or co-located with an App Engine application. Note that if the preferred location is not available, the instance will be located as close as possible within the region. Only one location may be specified.",
+      "description": "Preferred location. This specifies where a Cloud SQL instance is located. Note that if the preferred location is not available, the instance will be located as close as possible within the region. Only one location may be specified.",
       "id": "LocationPreference",
       "properties": {
         "followGaeApplication": {
@@ -3135,7 +3389,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "This is always *sql#locationPreference*.",
+          "description": "This is always **sql#locationPreference**.",
           "type": "string"
         },
         "secondaryZone": {
@@ -3164,11 +3418,11 @@
           "type": "integer"
         },
         "kind": {
-          "description": "This is always *sql#maintenanceWindow*.",
+          "description": "This is always **sql#maintenanceWindow**.",
           "type": "string"
         },
         "updateTrack": {
-          "description": "Maintenance timing setting: *canary* (Earlier) or *stable* (Later). Learn more.",
+          "description": "Maintenance timing setting: **canary** (Earlier) or **stable** (Later). [Learn more](https://cloud.google.com/sql/docs/mysql/instance-settings#maintenance-timing-2ndgen).",
           "enum": [
             "SQL_UPDATE_TRACK_UNSPECIFIED",
             "canary",
@@ -3210,7 +3464,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "This is always *sql#mysqlReplicaConfiguration*.",
+          "description": "This is always **sql#mysqlReplicaConfiguration**.",
           "type": "string"
         },
         "masterHeartbeatPeriod": {
@@ -3233,6 +3487,20 @@
         "verifyServerCertificate": {
           "description": "Whether or not to check the primary instance's Common Name value in the certificate that it sends during the SSL handshake.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "MySqlSyncConfig": {
+      "description": "MySQL-specific external server sync settings.",
+      "id": "MySqlSyncConfig",
+      "properties": {
+        "initialSyncFlags": {
+          "description": "Flags to use for the initial dump.",
+          "items": {
+            "$ref": "SyncFlags"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -3269,6 +3537,10 @@
           "description": "The password for connecting to on-premises instance.",
           "type": "string"
         },
+        "sourceInstance": {
+          "$ref": "InstanceReference",
+          "description": "The reference to Cloud SQL instance if the source is Cloud SQL."
+        },
         "username": {
           "description": "The username for connecting to on-premises instance.",
           "type": "string"
@@ -3277,7 +3549,7 @@
       "type": "object"
     },
     "Operation": {
-      "description": "An Operation resource. For successful operations that return an Operation resource, only the fields relevant to the operation are populated in the resource. Next field: 18",
+      "description": "An Operation resource. For successful operations that return an Operation resource, only the fields relevant to the operation are populated in the resource.",
       "id": "Operation",
       "properties": {
         "backupContext": {
@@ -3285,7 +3557,7 @@
           "description": "The context for backup operation, if applicable."
         },
         "endTime": {
-          "description": "The time this operation finished in UTC timezone in RFC 3339 format, for example *2012-11-15T16:19:00.094Z*.",
+          "description": "The time this operation finished in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example **2012-11-15T16:19:00.094Z**.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -3302,12 +3574,12 @@
           "description": "The context for import operation, if applicable."
         },
         "insertTime": {
-          "description": "The time this operation was enqueued in UTC timezone in RFC 3339 format, for example *2012-11-15T16:19:00.094Z*.",
+          "description": "The time this operation was enqueued in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example **2012-11-15T16:19:00.094Z**.",
           "format": "google-datetime",
           "type": "string"
         },
         "kind": {
-          "description": "This is always *sql#operation*.",
+          "description": "This is always **sql#operation**.",
           "type": "string"
         },
         "name": {
@@ -3315,7 +3587,7 @@
           "type": "string"
         },
         "operationType": {
-          "description": "The type of the operation. Valid values are: *CREATE* *DELETE* *UPDATE* *RESTART* *IMPORT* *EXPORT* *BACKUP_VOLUME* *RESTORE_VOLUME* *CREATE_USER* *DELETE_USER* *CREATE_DATABASE* *DELETE_DATABASE*",
+          "description": "The type of the operation. Valid values are: * **CREATE** * **DELETE** * **UPDATE** * **RESTART** * **IMPORT** * **EXPORT** * **BACKUP_VOLUME** * **RESTORE_VOLUME** * **CREATE_USER** * **DELETE_USER** * **CREATE_DATABASE** * **DELETE_DATABASE**",
           "enum": [
             "SQL_OPERATION_TYPE_UNSPECIFIED",
             "IMPORT",
@@ -3397,12 +3669,12 @@
           "type": "string"
         },
         "startTime": {
-          "description": "The time this operation actually started in UTC timezone in RFC 3339 format, for example *2012-11-15T16:19:00.094Z*.",
+          "description": "The time this operation actually started in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example **2012-11-15T16:19:00.094Z**.",
           "format": "google-datetime",
           "type": "string"
         },
         "status": {
-          "description": "The status of an operation. Valid values are: *PENDING* *RUNNING* *DONE* *SQL_OPERATION_STATUS_UNSPECIFIED*",
+          "description": "The status of an operation. Valid values are: * **PENDING** * **RUNNING** * **DONE** * **SQL_OPERATION_STATUS_UNSPECIFIED**",
           "enum": [
             "SQL_OPERATION_STATUS_UNSPECIFIED",
             "PENDING",
@@ -3444,7 +3716,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "This is always *sql#operationError*.",
+          "description": "This is always **sql#operationError**.",
           "type": "string"
         },
         "message": {
@@ -3466,14 +3738,14 @@
           "type": "array"
         },
         "kind": {
-          "description": "This is always *sql#operationErrors*.",
+          "description": "This is always **sql#operationErrors**.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "OperationsListResponse": {
-      "description": "Database instance list operations response.",
+      "description": "Operations list response.",
       "id": "OperationsListResponse",
       "properties": {
         "items": {
@@ -3508,7 +3780,7 @@
         },
         "mysqlReplicaConfiguration": {
           "$ref": "MySqlReplicaConfiguration",
-          "description": "MySQL specific configuration when replicating from a MySQL on-premises primary instance. Replication configuration information such as the username, password, certificates, and keys are not stored in the instance metadata. The configuration information is used only to set up the replication connection and is stored by MySQL in a file named *master.info* in the data directory."
+          "description": "MySQL specific configuration when replicating from a MySQL on-premises primary instance. Replication configuration information such as the username, password, certificates, and keys are not stored in the instance metadata. The configuration information is used only to set up the replication connection and is stored by MySQL in a file named **master.info** in the data directory."
         }
       },
       "type": "object"
@@ -3526,14 +3798,14 @@
           ],
           "enumDescriptions": [
             "",
-            "If the user wants to schedule the maintenance to happen now.",
-            "If the user wants to use the existing maintenance policy to find the next available window.",
-            "If the user wants to reschedule the maintenance to a specific time."
+            "Reschedules maintenance to happen now (within 5 minutes).",
+            "Reschedules maintenance to occur within one week from the originally scheduled day and time.",
+            "Reschedules maintenance to a specific time and day."
           ],
           "type": "string"
         },
         "scheduleTime": {
-          "description": "Optional. Timestamp when the maintenance shall be rescheduled to if reschedule_type=SPECIFIC_TIME, in RFC 3339 format, for example *2012-11-15T16:19:00.094Z*.",
+          "description": "Optional. Timestamp when the maintenance shall be rescheduled to if reschedule_type=SPECIFIC_TIME, in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example **2012-11-15T16:19:00.094Z**.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -3584,7 +3856,7 @@
       "id": "Settings",
       "properties": {
         "activationPolicy": {
-          "description": "The activation policy specifies when the instance is activated; it is applicable only when the instance state is RUNNABLE. Valid values: *ALWAYS*: The instance is on, and remains so even in the absence of connection requests. *NEVER*: The instance is off; it is not activated, even if a connection request arrives.",
+          "description": "The activation policy specifies when the instance is activated; it is applicable only when the instance state is RUNNABLE. Valid values: * **ALWAYS**: The instance is on, and remains so even in the absence of connection requests. * **NEVER**: The instance is off; it is not activated, even if a connection request arrives.",
           "enum": [
             "SQL_ACTIVATION_POLICY_UNSPECIFIED",
             "ALWAYS",
@@ -3611,7 +3883,7 @@
           "type": "array"
         },
         "availabilityType": {
-          "description": "Availability type. Potential values: *ZONAL*: The instance serves data from only one zone. Outages in that zone affect data accessibility. *REGIONAL*: The instance can serve data from more than one zone in a region (it is highly available). For more information, see Overview of the High Availability Configuration.",
+          "description": "Availability type. Potential values: * **ZONAL**: The instance serves data from only one zone. Outages in that zone affect data accessibility. * **REGIONAL**: The instance can serve data from more than one zone in a region (it is highly available)./ For more information, see [Overview of the High Availability Configuration](https://cloud.google.com/sql/docs/mysql/high-availability).",
           "enum": [
             "SQL_AVAILABILITY_TYPE_UNSPECIFIED",
             "ZONAL",
@@ -3642,7 +3914,7 @@
           "type": "string"
         },
         "dataDiskType": {
-          "description": "The type of data disk: PD_SSD (default) or PD_HDD. Not used for First Generation instances.",
+          "description": "The type of data disk: **PD_SSD** (default) or **PD_HDD**. Not used for First Generation instances.",
           "enum": [
             "SQL_DATA_DISK_TYPE_UNSPECIFIED",
             "PD_SSD",
@@ -3684,7 +3956,7 @@
           "description": "The settings for IP Management. This allows to enable or disable the instance IP and manage which external networks can connect to the instance. The IPv4 address cannot be disabled for Second Generation instances."
         },
         "kind": {
-          "description": "This is always *sql#settings*.",
+          "description": "This is always **sql#settings**.",
           "type": "string"
         },
         "locationPreference": {
@@ -3696,7 +3968,7 @@
           "description": "The maintenance window for this instance. This specifies when the instance can be restarted for maintenance purposes."
         },
         "pricingPlan": {
-          "description": "The pricing plan for this instance. This can be either *PER_USE* or *PACKAGE*. Only *PER_USE* is supported for Second Generation instances.",
+          "description": "The pricing plan for this instance. This can be either **PER_USE** or **PACKAGE**. Only **PER_USE** is supported for Second Generation instances.",
           "enum": [
             "SQL_PRICING_PLAN_UNSPECIFIED",
             "PACKAGE",
@@ -3710,7 +3982,7 @@
           "type": "string"
         },
         "replicationType": {
-          "description": "The type of replication this instance uses. This can be either *ASYNCHRONOUS* or *SYNCHRONOUS*. (Deprecated_ This property was only applicable to First Generation instances.",
+          "description": "The type of replication this instance uses. This can be either **ASYNCHRONOUS** or **SYNCHRONOUS**. (Deprecated) This property was only applicable to First Generation instances.",
           "enum": [
             "SQL_REPLICATION_TYPE_UNSPECIFIED",
             "SYNCHRONOUS",
@@ -3728,6 +4000,10 @@
           "format": "int64",
           "type": "string"
         },
+        "sqlServerAuditConfig": {
+          "$ref": "SqlServerAuditConfig",
+          "description": "SQL Server specific audit configuration."
+        },
         "storageAutoResize": {
           "description": "Configuration to increase storage size automatically. The default value is true.",
           "type": "boolean"
@@ -3738,7 +4014,7 @@
           "type": "string"
         },
         "tier": {
-          "description": "The tier (or machine type) for this instance, for example *db-n1-standard-1* (MySQL instances) or *db-custom-1-3840* (PostgreSQL instances).",
+          "description": "The tier (or machine type) for this instance, for example **db-custom-1-3840**.",
           "type": "string"
         },
         "userLabels": {
@@ -3767,7 +4043,7 @@
       "type": "object"
     },
     "SqlExternalSyncSettingError": {
-      "description": "External primary instance migration setting error.",
+      "description": "External primary instance migration setting error/warning.",
       "id": "SqlExternalSyncSettingError",
       "properties": {
         "detail": {
@@ -3775,7 +4051,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "This is always *sql#migrationSettingError*.",
+          "description": "Can be *sql#externalSyncSettingError* or *sql#externalSyncSettingWarning*.",
           "type": "string"
         },
         "type": {
@@ -3802,7 +4078,9 @@
             "UNSUPPORTED_GTID_MODE",
             "SQLSERVER_AGENT_NOT_RUNNING",
             "UNSUPPORTED_TABLE_DEFINITION",
-            "UNSUPPORTED_DEFINER"
+            "UNSUPPORTED_DEFINER",
+            "SQLSERVER_SERVERNAME_MISMATCH",
+            "PRIMARY_ALREADY_SETUP"
           ],
           "enumDescriptions": [
             "",
@@ -3826,7 +4104,9 @@
             "The gtid_mode is not supported, applicable for MySQL.",
             "SQL Server Agent is not running.",
             "The table definition is not support due to missing primary key or replica identity, applicable for postgres.",
-            "The customer has a definer that will break EM setup."
+            "The customer has a definer that will break EM setup.",
+            "SQL Server @@SERVERNAME does not match actual host name",
+            "The primary instance has been setup and will fail the setup."
           ],
           "type": "string"
         }
@@ -3840,6 +4120,66 @@
         "reschedule": {
           "$ref": "Reschedule",
           "description": "Required. The type of the reschedule the user wants."
+        }
+      },
+      "type": "object"
+    },
+    "SqlInstancesStartExternalSyncRequest": {
+      "id": "SqlInstancesStartExternalSyncRequest",
+      "properties": {
+        "mysqlSyncConfig": {
+          "$ref": "MySqlSyncConfig",
+          "description": "MySQL-specific settings for start external sync."
+        },
+        "skipVerification": {
+          "description": "Whether to skip the verification step (VESS).",
+          "type": "boolean"
+        },
+        "syncMode": {
+          "description": "External sync mode.",
+          "enum": [
+            "EXTERNAL_SYNC_MODE_UNSPECIFIED",
+            "ONLINE",
+            "OFFLINE"
+          ],
+          "enumDescriptions": [
+            "Unknown external sync mode, will be defaulted to ONLINE mode",
+            "Online external sync will set up replication after initial data external sync",
+            "Offline external sync only dumps and loads a one-time snapshot of the primary instance's data"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SqlInstancesVerifyExternalSyncSettingsRequest": {
+      "id": "SqlInstancesVerifyExternalSyncSettingsRequest",
+      "properties": {
+        "mysqlSyncConfig": {
+          "$ref": "MySqlSyncConfig",
+          "description": "Optional. MySQL-specific settings for start external sync."
+        },
+        "syncMode": {
+          "description": "External sync mode",
+          "enum": [
+            "EXTERNAL_SYNC_MODE_UNSPECIFIED",
+            "ONLINE",
+            "OFFLINE"
+          ],
+          "enumDescriptions": [
+            "Unknown external sync mode, will be defaulted to ONLINE mode",
+            "Online external sync will set up replication after initial data external sync",
+            "Offline external sync only dumps and loads a one-time snapshot of the primary instance's data"
+          ],
+          "type": "string"
+        },
+        "verifyConnectionOnly": {
+          "description": "Flag to enable verifying connection only",
+          "type": "boolean"
+        },
+        "verifyReplicationOnly": {
+          "description": "Optional. Flag to verify settings required by replication setup only",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -3858,6 +4198,39 @@
         "kind": {
           "description": "This is always *sql#migrationSettingErrorList*.",
           "type": "string"
+        },
+        "warnings": {
+          "description": "List of migration warnings.",
+          "items": {
+            "$ref": "SqlExternalSyncSettingError"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SqlOutOfDiskReport": {
+      "description": "This message wraps up the information written by out-of-disk detection job.",
+      "id": "SqlOutOfDiskReport",
+      "properties": {
+        "sqlMinRecommendedIncreaseSizeGb": {
+          "description": "The minimum recommended increase size in GigaBytes This field is consumed by the frontend * Writers: * the proactive database wellness job for OOD. * Readers:",
+          "format": "int32",
+          "type": "integer"
+        },
+        "sqlOutOfDiskState": {
+          "description": "This field represents the state generated by the proactive database wellness job for OutOfDisk issues. * Writers: * the proactive database wellness job for OOD. * Readers: * the proactive database wellness job",
+          "enum": [
+            "SQL_OUT_OF_DISK_STATE_UNSPECIFIED",
+            "NORMAL",
+            "SOFT_SHUTDOWN"
+          ],
+          "enumDescriptions": [
+            "Unspecified state",
+            "The instance has plenty space on data disk",
+            "Data disk is almost used up. It is shutdown to prevent data corruption."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -3873,9 +4246,29 @@
           "description": "If the scheduled maintenance can be rescheduled.",
           "type": "boolean"
         },
+        "scheduleDeadlineTime": {
+          "description": "Maintenance cannot be rescheduled to start beyond this deadline.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "startTime": {
           "description": "The start time of any upcoming scheduled maintenance for this instance.",
           "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SqlServerAuditConfig": {
+      "description": "SQL Server specific audit configuration.",
+      "id": "SqlServerAuditConfig",
+      "properties": {
+        "bucket": {
+          "description": "The name of the destination bucket (e.g., gs://mybucket).",
+          "type": "string"
+        },
+        "kind": {
+          "description": "This is always sql#sqlServerAuditConfig",
           "type": "string"
         }
       },
@@ -3932,12 +4325,12 @@
           "type": "string"
         },
         "createTime": {
-          "description": "The time when the certificate was created in RFC 3339 format, for example *2012-11-15T16:19:00.094Z*",
+          "description": "The time when the certificate was created in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example **2012-11-15T16:19:00.094Z**.",
           "format": "google-datetime",
           "type": "string"
         },
         "expirationTime": {
-          "description": "The time when the certificate expires in RFC 3339 format, for example *2012-11-15T16:19:00.094Z*.",
+          "description": "The time when the certificate expires in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example **2012-11-15T16:19:00.094Z**.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -3946,7 +4339,7 @@
           "type": "string"
         },
         "kind": {
-          "description": "This is always *sql#sslCert*.",
+          "description": "This is always **sql#sslCert**.",
           "type": "string"
         },
         "selfLink": {
@@ -4042,6 +4435,21 @@
       },
       "type": "object"
     },
+    "SyncFlags": {
+      "description": "Initial sync flags for certain Cloud SQL APIs. Currently used for the MySQL external server initial dump.",
+      "id": "SyncFlags",
+      "properties": {
+        "name": {
+          "description": "The name of the flag.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value of the flag. This field must be omitted if the flag doesn't take a value.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Tier": {
       "description": "A Google Cloud SQL service tier resource.",
       "id": "Tier",
@@ -4068,7 +4476,7 @@
           "type": "array"
         },
         "tier": {
-          "description": "An identifier for the machine type, for example, db-n1-standard-1. For related information, see Pricing.",
+          "description": "An identifier for the machine type, for example, db-custom-1-3840. For related information, see Pricing.",
           "type": "string"
         }
       },

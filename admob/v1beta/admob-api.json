@@ -138,7 +138,7 @@
           "streamingType": "NONE"
         },
         "list": {
-          "description": "List the AdMob publisher account accessible with the client credential. Currently, all credentials have access to at most one AdMob account.",
+          "description": "Lists the AdMob publisher account that was most recently signed in to from the AdMob UI. For more information, see https://support.google.com/admob/answer/10243672.",
           "flatPath": "v1beta/accounts",
           "httpMethod": "GET",
           "id": "admob.accounts.list",
@@ -321,7 +321,7 @@
       }
     }
   },
-  "revision": "20201231",
+  "revision": "20210803",
   "rootUrl": "https://admob.googleapis.com/",
   "schemas": {
     "AdUnit": {
@@ -579,7 +579,7 @@
       "type": "object"
     },
     "MediationReportSpec": {
-      "description": "The specification for generating an AdMob Mediation report. For example, the specification to get observed ECPM sliced by ad source and app for the 'US' and 'CN' countries can look like the following example: { \"date_range\": { \"start_date\": {\"year\": 2018, \"month\": 9, \"day\": 1}, \"end_date\": {\"year\": 2018, \"month\": 9, \"day\": 30} }, \"dimensions\": [\"AD_SOURCE\", \"APP\", \"COUNTRY\"], \"metrics\": [\"OBSERVED_ECPM\"], \"dimension_filters\": [ { \"dimension\": \"COUNTRY\", \"matches_any\": {\"values\": [{\"value\": \"US\", \"value\": \"CN\"}]} } ], \"sort_conditions\": [ {\"dimension\":\"APP\", order: \"ASCENDING\"} ], \"localization_settings\": { \"currency_code\": \"USD\", \"language_code\": \"en-US\" } } For a better understanding, you can treat the preceding specification like the following pseudo SQL: SELECT AD_SOURCE, APP, COUNTRY, OBSERVED_ECPM FROM MEDIATION_REPORT WHERE DATE \u003e= '2018-09-01' AND DATE \u003c= '2018-09-30' AND COUNTRY IN ('US', 'CN') GROUP BY AD_SOURCE, APP, COUNTRY ORDER BY APP ASC;",
+      "description": "The specification for generating an AdMob Mediation report. For example, the specification to get observed ECPM sliced by ad source and app for the 'US' and 'CN' countries can look like the following example: { \"date_range\": { \"start_date\": {\"year\": 2021, \"month\": 9, \"day\": 1}, \"end_date\": {\"year\": 2021, \"month\": 9, \"day\": 30} }, \"dimensions\": [\"AD_SOURCE\", \"APP\", \"COUNTRY\"], \"metrics\": [\"OBSERVED_ECPM\"], \"dimension_filters\": [ { \"dimension\": \"COUNTRY\", \"matches_any\": {\"values\": [{\"value\": \"US\", \"value\": \"CN\"}]} } ], \"sort_conditions\": [ {\"dimension\":\"APP\", order: \"ASCENDING\"} ], \"localization_settings\": { \"currency_code\": \"USD\", \"language_code\": \"en-US\" } } For a better understanding, you can treat the preceding specification like the following pseudo SQL: SELECT AD_SOURCE, APP, COUNTRY, OBSERVED_ECPM FROM MEDIATION_REPORT WHERE DATE \u003e= '2021-09-01' AND DATE \u003c= '2021-09-30' AND COUNTRY IN ('US', 'CN') GROUP BY AD_SOURCE, APP, COUNTRY ORDER BY APP ASC;",
       "id": "MediationReportSpec",
       "properties": {
         "dateRange": {
@@ -608,21 +608,29 @@
               "MEDIATION_GROUP",
               "COUNTRY",
               "FORMAT",
-              "PLATFORM"
+              "PLATFORM",
+              "MOBILE_OS_VERSION",
+              "GMA_SDK_VERSION",
+              "APP_VERSION_NAME",
+              "SERVING_RESTRICTION"
             ],
             "enumDescriptions": [
               "Default value for an unset field. Do not use.",
-              "A date in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
-              "A month in the YYYY-MM format (for example, \"2018-12\"). Requests can specify at most one time dimension.",
-              "The date of the first day of a week in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
+              "A date in the YYYYMMDD format (for example, \"20210701\"). Requests can specify at most one time dimension.",
+              "A month in the YYYYMM format (for example, \"202107\"). Requests can specify at most one time dimension.",
+              "The date of the first day of a week in the YYYYMMDD format (for example, \"20210701\"). Requests can specify at most one time dimension.",
               "The [unique ID of the ad source](/admob/api/v1/ad_sources) (for example, \"5450213213286189855\" and \"AdMob Network\" as label value).",
-              "The unique ID of the ad source instance (for example, \"ca-app-pub-1234#5678\" and \"AdMob (default)\" as label value).",
+              "The unique ID of the ad source instance (for example, \"ca-app-pub-1234:asi:5678\" and \"AdMob (default)\" as label value).",
               "The unique ID of the ad unit (for example, \"ca-app-pub-1234/8790\"). If AD_UNIT dimension is specified, then APP is included automatically.",
               "The unique ID of the mobile application (for example, \"ca-app-pub-1234~1234\").",
               "The unique ID of the mediation group (for example, \"ca-app-pub-1234:mg:1234\" and \"AdMob (default)\" as label value).",
               "CLDR country code of the place where the ad views/clicks occur (for example, \"US\" or \"FR\"). This is a geography dimension.",
               "Format of the ad unit (for example, \"banner\", \"native\"), an ad delivery dimension.",
-              "Mobile OS platform of the app (for example, \"Android\" or \"iOS\")."
+              "Mobile OS platform of the app (for example, \"Android\" or \"iOS\").",
+              "Mobile operating system version, e.g. \"iOS 13.5.1\". **Warning:** The dimension is incompatible with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS), [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.",
+              "GMA SDK version, e.g. \"iOS 7.62.0\". **Warning:** The dimension is incompatible with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS), [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.",
+              "For Android, the app version name can be found in versionName in PackageInfo. For iOS, the app version name can be found in CFBundleShortVersionString. **Warning:** The dimension is incompatible with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS), [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.",
+              "Restriction mode for ads serving (e.g. \"Non-personalized ads\"). **Warning:** The dimension is incompatible with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS) metric."
             ],
             "type": "string"
           },
@@ -698,21 +706,29 @@
             "MEDIATION_GROUP",
             "COUNTRY",
             "FORMAT",
-            "PLATFORM"
+            "PLATFORM",
+            "MOBILE_OS_VERSION",
+            "GMA_SDK_VERSION",
+            "APP_VERSION_NAME",
+            "SERVING_RESTRICTION"
           ],
           "enumDescriptions": [
             "Default value for an unset field. Do not use.",
-            "A date in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
-            "A month in the YYYY-MM format (for example, \"2018-12\"). Requests can specify at most one time dimension.",
-            "The date of the first day of a week in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
+            "A date in the YYYYMMDD format (for example, \"20210701\"). Requests can specify at most one time dimension.",
+            "A month in the YYYYMM format (for example, \"202107\"). Requests can specify at most one time dimension.",
+            "The date of the first day of a week in the YYYYMMDD format (for example, \"20210701\"). Requests can specify at most one time dimension.",
             "The [unique ID of the ad source](/admob/api/v1/ad_sources) (for example, \"5450213213286189855\" and \"AdMob Network\" as label value).",
-            "The unique ID of the ad source instance (for example, \"ca-app-pub-1234#5678\" and \"AdMob (default)\" as label value).",
+            "The unique ID of the ad source instance (for example, \"ca-app-pub-1234:asi:5678\" and \"AdMob (default)\" as label value).",
             "The unique ID of the ad unit (for example, \"ca-app-pub-1234/8790\"). If AD_UNIT dimension is specified, then APP is included automatically.",
             "The unique ID of the mobile application (for example, \"ca-app-pub-1234~1234\").",
             "The unique ID of the mediation group (for example, \"ca-app-pub-1234:mg:1234\" and \"AdMob (default)\" as label value).",
             "CLDR country code of the place where the ad views/clicks occur (for example, \"US\" or \"FR\"). This is a geography dimension.",
             "Format of the ad unit (for example, \"banner\", \"native\"), an ad delivery dimension.",
-            "Mobile OS platform of the app (for example, \"Android\" or \"iOS\")."
+            "Mobile OS platform of the app (for example, \"Android\" or \"iOS\").",
+            "Mobile operating system version, e.g. \"iOS 13.5.1\". **Warning:** The dimension is incompatible with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS), [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.",
+            "GMA SDK version, e.g. \"iOS 7.62.0\". **Warning:** The dimension is incompatible with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS), [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.",
+            "For Android, the app version name can be found in versionName in PackageInfo. For iOS, the app version name can be found in CFBundleShortVersionString. **Warning:** The dimension is incompatible with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS), [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.",
+            "Restriction mode for ads serving (e.g. \"Non-personalized ads\"). **Warning:** The dimension is incompatible with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS) metric."
           ],
           "type": "string"
         },
@@ -741,21 +757,29 @@
             "MEDIATION_GROUP",
             "COUNTRY",
             "FORMAT",
-            "PLATFORM"
+            "PLATFORM",
+            "MOBILE_OS_VERSION",
+            "GMA_SDK_VERSION",
+            "APP_VERSION_NAME",
+            "SERVING_RESTRICTION"
           ],
           "enumDescriptions": [
             "Default value for an unset field. Do not use.",
-            "A date in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
-            "A month in the YYYY-MM format (for example, \"2018-12\"). Requests can specify at most one time dimension.",
-            "The date of the first day of a week in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
+            "A date in the YYYYMMDD format (for example, \"20210701\"). Requests can specify at most one time dimension.",
+            "A month in the YYYYMM format (for example, \"202107\"). Requests can specify at most one time dimension.",
+            "The date of the first day of a week in the YYYYMMDD format (for example, \"20210701\"). Requests can specify at most one time dimension.",
             "The [unique ID of the ad source](/admob/api/v1/ad_sources) (for example, \"5450213213286189855\" and \"AdMob Network\" as label value).",
-            "The unique ID of the ad source instance (for example, \"ca-app-pub-1234#5678\" and \"AdMob (default)\" as label value).",
+            "The unique ID of the ad source instance (for example, \"ca-app-pub-1234:asi:5678\" and \"AdMob (default)\" as label value).",
             "The unique ID of the ad unit (for example, \"ca-app-pub-1234/8790\"). If AD_UNIT dimension is specified, then APP is included automatically.",
             "The unique ID of the mobile application (for example, \"ca-app-pub-1234~1234\").",
             "The unique ID of the mediation group (for example, \"ca-app-pub-1234:mg:1234\" and \"AdMob (default)\" as label value).",
             "CLDR country code of the place where the ad views/clicks occur (for example, \"US\" or \"FR\"). This is a geography dimension.",
             "Format of the ad unit (for example, \"banner\", \"native\"), an ad delivery dimension.",
-            "Mobile OS platform of the app (for example, \"Android\" or \"iOS\")."
+            "Mobile OS platform of the app (for example, \"Android\" or \"iOS\").",
+            "Mobile operating system version, e.g. \"iOS 13.5.1\". **Warning:** The dimension is incompatible with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS), [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.",
+            "GMA SDK version, e.g. \"iOS 7.62.0\". **Warning:** The dimension is incompatible with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS), [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.",
+            "For Android, the app version name can be found in versionName in PackageInfo. For iOS, the app version name can be found in CFBundleShortVersionString. **Warning:** The dimension is incompatible with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS), [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.",
+            "Restriction mode for ads serving (e.g. \"Non-personalized ads\"). **Warning:** The dimension is incompatible with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS) metric."
           ],
           "type": "string"
         },
@@ -803,7 +827,7 @@
       "type": "object"
     },
     "NetworkReportSpec": {
-      "description": "The specification for generating an AdMob Network report. For example, the specification to get clicks and estimated earnings for only the 'US' and 'CN' countries can look like the following example: { 'date_range': { 'start_date': {'year': 2018, 'month': 9, 'day': 1}, 'end_date': {'year': 2018, 'month': 9, 'day': 30} }, 'dimensions': ['DATE', 'APP', 'COUNTRY'], 'metrics': ['CLICKS', 'ESTIMATED_EARNINGS'], 'dimension_filters': [ { 'dimension': 'COUNTRY', 'matches_any': {'values': [{'value': 'US', 'value': 'CN'}]} } ], 'sort_conditions': [ {'dimension':'APP', order: 'ASCENDING'}, {'metric':'CLICKS', order: 'DESCENDING'} ], 'localization_settings': { 'currency_code': 'USD', 'language_code': 'en-US' } } For a better understanding, you can treat the preceding specification like the following pseudo SQL: SELECT DATE, APP, COUNTRY, CLICKS, ESTIMATED_EARNINGS FROM NETWORK_REPORT WHERE DATE \u003e= '2018-09-01' AND DATE \u003c= '2018-09-30' AND COUNTRY IN ('US', 'CN') GROUP BY DATE, APP, COUNTRY ORDER BY APP ASC, CLICKS DESC;",
+      "description": "The specification for generating an AdMob Network report. For example, the specification to get clicks and estimated earnings for only the 'US' and 'CN' countries can look like the following example: { 'date_range': { 'start_date': {'year': 2021, 'month': 9, 'day': 1}, 'end_date': {'year': 2021, 'month': 9, 'day': 30} }, 'dimensions': ['DATE', 'APP', 'COUNTRY'], 'metrics': ['CLICKS', 'ESTIMATED_EARNINGS'], 'dimension_filters': [ { 'dimension': 'COUNTRY', 'matches_any': {'values': [{'value': 'US', 'value': 'CN'}]} } ], 'sort_conditions': [ {'dimension':'APP', order: 'ASCENDING'}, {'metric':'CLICKS', order: 'DESCENDING'} ], 'localization_settings': { 'currency_code': 'USD', 'language_code': 'en-US' } } For a better understanding, you can treat the preceding specification like the following pseudo SQL: SELECT DATE, APP, COUNTRY, CLICKS, ESTIMATED_EARNINGS FROM NETWORK_REPORT WHERE DATE \u003e= '2021-09-01' AND DATE \u003c= '2021-09-30' AND COUNTRY IN ('US', 'CN') GROUP BY DATE, APP, COUNTRY ORDER BY APP ASC, CLICKS DESC;",
       "id": "NetworkReportSpec",
       "properties": {
         "dateRange": {
@@ -830,19 +854,27 @@
               "AD_TYPE",
               "COUNTRY",
               "FORMAT",
-              "PLATFORM"
+              "PLATFORM",
+              "MOBILE_OS_VERSION",
+              "GMA_SDK_VERSION",
+              "APP_VERSION_NAME",
+              "SERVING_RESTRICTION"
             ],
             "enumDescriptions": [
               "Default value for an unset field. Do not use.",
-              "A date in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
-              "A month in the YYYY-MM format (for example, \"2018-12\"). Requests can specify at most one time dimension.",
-              "The date of the first day of a week in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
+              "A date in the YYYYMMDD format (for example, \"20210701\"). Requests can specify at most one time dimension.",
+              "A month in the YYYYMM format (for example, \"202107\"). Requests can specify at most one time dimension.",
+              "The date of the first day of a week in the YYYYMMDD format (for example, \"20210701\"). Requests can specify at most one time dimension.",
               "The unique ID of the ad unit (for example, \"ca-app-pub-1234/1234\"). If AD_UNIT dimension is specified, then APP is included automatically.",
               "The unique ID of the mobile application (for example, \"ca-app-pub-1234~1234\").",
               "Type of the ad (for example, \"text\" or \"image\"), an ad delivery dimension. **Warning:** The dimension is incompatible with [AD_REQUESTS](#Metric.ENUM_VALUES.AD_REQUESTS), [MATCH_RATE](#Metric.ENUM_VALUES.MATCH_RATE) and [IMPRESSION_RPM](#Metric.ENUM_VALUES.IMPRESSION_RPM) metrics.",
               "CLDR country code of the place where the ad views/clicks occur (for example, \"US\" or \"FR\"). This is a geography dimension.",
               "Format of the ad unit (for example, \"banner\", \"native\"), an ad delivery dimension.",
-              "Mobile OS platform of the app (for example, \"Android\" or \"iOS\")."
+              "Mobile OS platform of the app (for example, \"Android\" or \"iOS\").",
+              "Mobile operating system version, e.g. \"iOS 13.5.1\".",
+              "GMA SDK version, e.g. \"iOS 7.62.0\".",
+              "For Android, the app version name can be found in versionName in PackageInfo. For iOS, the app version name can be found in CFBundleShortVersionString.",
+              "Restriction mode for ads serving (e.g. \"Non-personalized ads\")."
             ],
             "type": "string"
           },
@@ -918,19 +950,27 @@
             "AD_TYPE",
             "COUNTRY",
             "FORMAT",
-            "PLATFORM"
+            "PLATFORM",
+            "MOBILE_OS_VERSION",
+            "GMA_SDK_VERSION",
+            "APP_VERSION_NAME",
+            "SERVING_RESTRICTION"
           ],
           "enumDescriptions": [
             "Default value for an unset field. Do not use.",
-            "A date in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
-            "A month in the YYYY-MM format (for example, \"2018-12\"). Requests can specify at most one time dimension.",
-            "The date of the first day of a week in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
+            "A date in the YYYYMMDD format (for example, \"20210701\"). Requests can specify at most one time dimension.",
+            "A month in the YYYYMM format (for example, \"202107\"). Requests can specify at most one time dimension.",
+            "The date of the first day of a week in the YYYYMMDD format (for example, \"20210701\"). Requests can specify at most one time dimension.",
             "The unique ID of the ad unit (for example, \"ca-app-pub-1234/1234\"). If AD_UNIT dimension is specified, then APP is included automatically.",
             "The unique ID of the mobile application (for example, \"ca-app-pub-1234~1234\").",
             "Type of the ad (for example, \"text\" or \"image\"), an ad delivery dimension. **Warning:** The dimension is incompatible with [AD_REQUESTS](#Metric.ENUM_VALUES.AD_REQUESTS), [MATCH_RATE](#Metric.ENUM_VALUES.MATCH_RATE) and [IMPRESSION_RPM](#Metric.ENUM_VALUES.IMPRESSION_RPM) metrics.",
             "CLDR country code of the place where the ad views/clicks occur (for example, \"US\" or \"FR\"). This is a geography dimension.",
             "Format of the ad unit (for example, \"banner\", \"native\"), an ad delivery dimension.",
-            "Mobile OS platform of the app (for example, \"Android\" or \"iOS\")."
+            "Mobile OS platform of the app (for example, \"Android\" or \"iOS\").",
+            "Mobile operating system version, e.g. \"iOS 13.5.1\".",
+            "GMA SDK version, e.g. \"iOS 7.62.0\".",
+            "For Android, the app version name can be found in versionName in PackageInfo. For iOS, the app version name can be found in CFBundleShortVersionString.",
+            "Restriction mode for ads serving (e.g. \"Non-personalized ads\")."
           ],
           "type": "string"
         },
@@ -957,19 +997,27 @@
             "AD_TYPE",
             "COUNTRY",
             "FORMAT",
-            "PLATFORM"
+            "PLATFORM",
+            "MOBILE_OS_VERSION",
+            "GMA_SDK_VERSION",
+            "APP_VERSION_NAME",
+            "SERVING_RESTRICTION"
           ],
           "enumDescriptions": [
             "Default value for an unset field. Do not use.",
-            "A date in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
-            "A month in the YYYY-MM format (for example, \"2018-12\"). Requests can specify at most one time dimension.",
-            "The date of the first day of a week in the YYYY-MM-DD format (for example, \"2018-12-21\"). Requests can specify at most one time dimension.",
+            "A date in the YYYYMMDD format (for example, \"20210701\"). Requests can specify at most one time dimension.",
+            "A month in the YYYYMM format (for example, \"202107\"). Requests can specify at most one time dimension.",
+            "The date of the first day of a week in the YYYYMMDD format (for example, \"20210701\"). Requests can specify at most one time dimension.",
             "The unique ID of the ad unit (for example, \"ca-app-pub-1234/1234\"). If AD_UNIT dimension is specified, then APP is included automatically.",
             "The unique ID of the mobile application (for example, \"ca-app-pub-1234~1234\").",
             "Type of the ad (for example, \"text\" or \"image\"), an ad delivery dimension. **Warning:** The dimension is incompatible with [AD_REQUESTS](#Metric.ENUM_VALUES.AD_REQUESTS), [MATCH_RATE](#Metric.ENUM_VALUES.MATCH_RATE) and [IMPRESSION_RPM](#Metric.ENUM_VALUES.IMPRESSION_RPM) metrics.",
             "CLDR country code of the place where the ad views/clicks occur (for example, \"US\" or \"FR\"). This is a geography dimension.",
             "Format of the ad unit (for example, \"banner\", \"native\"), an ad delivery dimension.",
-            "Mobile OS platform of the app (for example, \"Android\" or \"iOS\")."
+            "Mobile OS platform of the app (for example, \"Android\" or \"iOS\").",
+            "Mobile operating system version, e.g. \"iOS 13.5.1\".",
+            "GMA SDK version, e.g. \"iOS 7.62.0\".",
+            "For Android, the app version name can be found in versionName in PackageInfo. For iOS, the app version name can be found in CFBundleShortVersionString.",
+            "Restriction mode for ads serving (e.g. \"Non-personalized ads\")."
           ],
           "type": "string"
         },

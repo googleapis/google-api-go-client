@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         },
         "https://www.googleapis.com/auth/pubsub": {
           "description": "View and manage Pub/Sub topics and subscriptions"
@@ -109,6 +109,311 @@
   "resources": {
     "projects": {
       "resources": {
+        "schemas": {
+          "methods": {
+            "create": {
+              "description": "Creates a schema.",
+              "flatPath": "v1/projects/{projectsId}/schemas",
+              "httpMethod": "POST",
+              "id": "pubsub.projects.schemas.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. The name of the project in which to create the schema. Format is `projects/{project-id}`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "schemaId": {
+                  "description": "The ID to use for the schema, which will become the final component of the schema's resource name. See https://cloud.google.com/pubsub/docs/admin#resource_names for resource name constraints.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/schemas",
+              "request": {
+                "$ref": "Schema"
+              },
+              "response": {
+                "$ref": "Schema"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/pubsub"
+              ]
+            },
+            "delete": {
+              "description": "Deletes a schema.",
+              "flatPath": "v1/projects/{projectsId}/schemas/{schemasId}",
+              "httpMethod": "DELETE",
+              "id": "pubsub.projects.schemas.delete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the schema to delete. Format is `projects/{project}/schemas/{schema}`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/schemas/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "Empty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/pubsub"
+              ]
+            },
+            "get": {
+              "description": "Gets a schema.",
+              "flatPath": "v1/projects/{projectsId}/schemas/{schemasId}",
+              "httpMethod": "GET",
+              "id": "pubsub.projects.schemas.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The name of the schema to get. Format is `projects/{project}/schemas/{schema}`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/schemas/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "view": {
+                  "description": "The set of fields to return in the response. If not set, returns a Schema with all fields filled out. Set to `BASIC` to omit the `definition`.",
+                  "enum": [
+                    "SCHEMA_VIEW_UNSPECIFIED",
+                    "BASIC",
+                    "FULL"
+                  ],
+                  "enumDescriptions": [
+                    "The default / unset value. The API will default to the BASIC view.",
+                    "Include the name and type of the schema, but not the definition.",
+                    "Include all Schema object fields."
+                  ],
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "Schema"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/pubsub"
+              ]
+            },
+            "getIamPolicy": {
+              "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+              "flatPath": "v1/projects/{projectsId}/schemas/{schemasId}:getIamPolicy",
+              "httpMethod": "GET",
+              "id": "pubsub.projects.schemas.getIamPolicy",
+              "parameterOrder": [
+                "resource"
+              ],
+              "parameters": {
+                "options.requestedPolicyVersion": {
+                  "description": "Optional. The policy format version to be returned. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional bindings must specify version 3. Policies without any conditional bindings may specify any valid value or leave the field unset. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "resource": {
+                  "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/schemas/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+resource}:getIamPolicy",
+              "response": {
+                "$ref": "Policy"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/pubsub"
+              ]
+            },
+            "list": {
+              "description": "Lists schemas in a project.",
+              "flatPath": "v1/projects/{projectsId}/schemas",
+              "httpMethod": "GET",
+              "id": "pubsub.projects.schemas.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "pageSize": {
+                  "description": "Maximum number of schemas to return.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "The value returned by the last `ListSchemasResponse`; indicates that this is a continuation of a prior `ListSchemas` call, and that the system should return the next page of data.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "Required. The name of the project in which to list schemas. Format is `projects/{project-id}`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "view": {
+                  "description": "The set of Schema fields to return in the response. If not set, returns Schemas with `name` and `type`, but not `definition`. Set to `FULL` to retrieve all fields.",
+                  "enum": [
+                    "SCHEMA_VIEW_UNSPECIFIED",
+                    "BASIC",
+                    "FULL"
+                  ],
+                  "enumDescriptions": [
+                    "The default / unset value. The API will default to the BASIC view.",
+                    "Include the name and type of the schema, but not the definition.",
+                    "Include all Schema object fields."
+                  ],
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/schemas",
+              "response": {
+                "$ref": "ListSchemasResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/pubsub"
+              ]
+            },
+            "setIamPolicy": {
+              "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+              "flatPath": "v1/projects/{projectsId}/schemas/{schemasId}:setIamPolicy",
+              "httpMethod": "POST",
+              "id": "pubsub.projects.schemas.setIamPolicy",
+              "parameterOrder": [
+                "resource"
+              ],
+              "parameters": {
+                "resource": {
+                  "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/schemas/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+resource}:setIamPolicy",
+              "request": {
+                "$ref": "SetIamPolicyRequest"
+              },
+              "response": {
+                "$ref": "Policy"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/pubsub"
+              ]
+            },
+            "testIamPermissions": {
+              "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+              "flatPath": "v1/projects/{projectsId}/schemas/{schemasId}:testIamPermissions",
+              "httpMethod": "POST",
+              "id": "pubsub.projects.schemas.testIamPermissions",
+              "parameterOrder": [
+                "resource"
+              ],
+              "parameters": {
+                "resource": {
+                  "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/schemas/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+resource}:testIamPermissions",
+              "request": {
+                "$ref": "TestIamPermissionsRequest"
+              },
+              "response": {
+                "$ref": "TestIamPermissionsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/pubsub"
+              ]
+            },
+            "validate": {
+              "description": "Validates a schema.",
+              "flatPath": "v1/projects/{projectsId}/schemas:validate",
+              "httpMethod": "POST",
+              "id": "pubsub.projects.schemas.validate",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. The name of the project in which to validate schemas. Format is `projects/{project-id}`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/schemas:validate",
+              "request": {
+                "$ref": "ValidateSchemaRequest"
+              },
+              "response": {
+                "$ref": "ValidateSchemaResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/pubsub"
+              ]
+            },
+            "validateMessage": {
+              "description": "Validates a message against a schema.",
+              "flatPath": "v1/projects/{projectsId}/schemas:validateMessage",
+              "httpMethod": "POST",
+              "id": "pubsub.projects.schemas.validateMessage",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Required. The name of the project in which to validate schemas. Format is `projects/{project-id}`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/schemas:validateMessage",
+              "request": {
+                "$ref": "ValidateMessageRequest"
+              },
+              "response": {
+                "$ref": "ValidateMessageResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/pubsub"
+              ]
+            }
+          }
+        },
         "snapshots": {
           "methods": {
             "create": {
@@ -1119,7 +1424,7 @@
       }
     }
   },
-  "revision": "20201201",
+  "revision": "20210824",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {
@@ -1235,6 +1540,24 @@
         "title": {
           "description": "Optional. Title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ListSchemasResponse": {
+      "description": "Response for the `ListSchemas` method.",
+      "id": "ListSchemasResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "If not empty, indicates that there may be more schemas that match the request; this value should be passed in a new `ListSchemasRequest`.",
+          "type": "string"
+        },
+        "schemas": {
+          "description": "The resulting schemas.",
+          "items": {
+            "$ref": "Schema"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1389,7 +1712,7 @@
       "type": "object"
     },
     "Policy": {
-      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
+      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
       "id": "Policy",
       "properties": {
         "bindings": {
@@ -1561,6 +1884,60 @@
       },
       "type": "object"
     },
+    "Schema": {
+      "description": "A schema resource.",
+      "id": "Schema",
+      "properties": {
+        "definition": {
+          "description": "The definition of the schema. This should contain a string representing the full definition of the schema that is a valid schema definition of the type specified in `type`.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Required. Name of the schema. Format is `projects/{project}/schemas/{schema}`.",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type of the schema definition.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "PROTOCOL_BUFFER",
+            "AVRO"
+          ],
+          "enumDescriptions": [
+            "Default value. This value is unused.",
+            "A Protocol Buffer schema definition.",
+            "An Avro schema definition."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SchemaSettings": {
+      "description": "Settings for validating messages published against a schema.",
+      "id": "SchemaSettings",
+      "properties": {
+        "encoding": {
+          "description": "The encoding of messages validated against `schema`.",
+          "enum": [
+            "ENCODING_UNSPECIFIED",
+            "JSON",
+            "BINARY"
+          ],
+          "enumDescriptions": [
+            "Unspecified",
+            "JSON encoding",
+            "Binary encoding, as defined by the schema type. For some schema types, binary encoding may not be available."
+          ],
+          "type": "string"
+        },
+        "schema": {
+          "description": "Required. The name of the schema that messages published should be validated against. Format is `projects/{project}/schemas/{schema}`. The value of this field will be `_deleted-schema_` if the schema has been deleted.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "SeekRequest": {
       "description": "Request for the `Seek` method.",
       "id": "SeekRequest",
@@ -1644,7 +2021,7 @@
         },
         "expirationPolicy": {
           "$ref": "ExpirationPolicy",
-          "description": "A policy that specifies the conditions for this subscription's expiration. A subscription is considered active as long as any connected subscriber is successfully consuming messages from the subscription or is issuing operations on the subscription. If `expiration_policy` is not set, a *default policy* with `ttl` of 31 days will be used. The minimum allowed value for `expiration_policy.ttl` is 1 day."
+          "description": "A policy that specifies the conditions for this subscription's expiration. A subscription is considered active as long as any connected subscriber is successfully consuming messages from the subscription or is issuing operations on the subscription. If `expiration_policy` is not set, a *default policy* with `ttl` of 31 days will be used. The minimum allowed value for `expiration_policy.ttl` is 1 day. If `expiration_policy` is set, but `expiration_policy.ttl` is not set, the subscription never expires."
         },
         "filter": {
           "description": "An expression written in the Pub/Sub [filter language](https://cloud.google.com/pubsub/docs/filtering). If non-empty, then only `PubsubMessage`s whose `attributes` field matches the filter are delivered on this subscription. If empty, then no messages are filtered out.",
@@ -1671,7 +2048,7 @@
           "description": "If push delivery is used with this subscription, this field is used to configure it. An empty `pushConfig` signifies that the subscriber will pull and ack messages using API methods."
         },
         "retainAckedMessages": {
-          "description": "Indicates whether to retain acknowledged messages. If true, then messages are not expunged from the subscription's backlog, even if they are acknowledged, until they fall out of the `message_retention_duration` window. This must be true if you would like to [Seek to a timestamp] (https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_time).",
+          "description": "Indicates whether to retain acknowledged messages. If true, then messages are not expunged from the subscription's backlog, even if they are acknowledged, until they fall out of the `message_retention_duration` window. This must be true if you would like to [`Seek` to a timestamp] (https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_time) in the past to replay previously-acknowledged messages.",
           "type": "boolean"
         },
         "retryPolicy": {
@@ -1680,6 +2057,12 @@
         },
         "topic": {
           "description": "Required. The name of the topic from which this subscription is receiving messages. Format is `projects/{project}/topics/{topic}`. The value of this field will be `_deleted-topic_` if the topic has been deleted.",
+          "type": "string"
+        },
+        "topicMessageRetentionDuration": {
+          "description": "Output only. Indicates the minimum duration for which a message is retained after it is published to the subscription's topic. If this field is set, messages published to the subscription's topic in the last `topic_message_retention_duration` are always available to subscribers. See the `message_retention_duration` field in `Topic`. This field is set only in responses from the server; it is ignored if it is set in any requests.",
+          "format": "google-duration",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -1728,6 +2111,11 @@
           "description": "See [Creating and managing labels] (https://cloud.google.com/pubsub/docs/labels).",
           "type": "object"
         },
+        "messageRetentionDuration": {
+          "description": "Indicates the minimum duration to retain a message after it is published to the topic. If this field is set, messages published to the topic in the last `message_retention_duration` are always available to subscribers. For instance, it allows any attached subscription to [seek to a timestamp](https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_time) that is up to `message_retention_duration` in the past. If this field is not set, message retention is controlled by settings on individual subscriptions. Cannot be more than 7 days or less than 10 minutes.",
+          "format": "google-duration",
+          "type": "string"
+        },
         "messageStoragePolicy": {
           "$ref": "MessageStoragePolicy",
           "description": "Policy constraining the set of Google Cloud Platform regions where messages published to the topic may be stored. If not present, then no constraints are in effect."
@@ -1739,6 +2127,10 @@
         "satisfiesPzs": {
           "description": "Reserved for future use. This field is set only in responses from the server; it is ignored if it is set in any requests.",
           "type": "boolean"
+        },
+        "schemaSettings": {
+          "$ref": "SchemaSettings",
+          "description": "Settings for validating messages published against a schema."
         }
       },
       "type": "object"
@@ -1789,6 +2181,63 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "ValidateMessageRequest": {
+      "description": "Request for the `ValidateMessage` method.",
+      "id": "ValidateMessageRequest",
+      "properties": {
+        "encoding": {
+          "description": "The encoding expected for messages",
+          "enum": [
+            "ENCODING_UNSPECIFIED",
+            "JSON",
+            "BINARY"
+          ],
+          "enumDescriptions": [
+            "Unspecified",
+            "JSON encoding",
+            "Binary encoding, as defined by the schema type. For some schema types, binary encoding may not be available."
+          ],
+          "type": "string"
+        },
+        "message": {
+          "description": "Message to validate against the provided `schema_spec`.",
+          "format": "byte",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the schema against which to validate. Format is `projects/{project}/schemas/{schema}`.",
+          "type": "string"
+        },
+        "schema": {
+          "$ref": "Schema",
+          "description": "Ad-hoc schema against which to validate"
+        }
+      },
+      "type": "object"
+    },
+    "ValidateMessageResponse": {
+      "description": "Response for the `ValidateMessage` method. Empty for now.",
+      "id": "ValidateMessageResponse",
+      "properties": {},
+      "type": "object"
+    },
+    "ValidateSchemaRequest": {
+      "description": "Request for the `ValidateSchema` method.",
+      "id": "ValidateSchemaRequest",
+      "properties": {
+        "schema": {
+          "$ref": "Schema",
+          "description": "Required. The schema object to validate."
+        }
+      },
+      "type": "object"
+    },
+    "ValidateSchemaResponse": {
+      "description": "Response for the `ValidateSchema` method. Empty for now.",
+      "id": "ValidateSchemaResponse",
+      "properties": {},
       "type": "object"
     }
   },

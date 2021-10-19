@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         },
         "https://www.googleapis.com/auth/datastore": {
           "description": "View and manage your Google Cloud Datastore data"
@@ -17,6 +17,7 @@
   "description": "Accesses the schemaless NoSQL database to provide fully managed, robust, scalable storage for your application. ",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/datastore/",
+  "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -625,7 +626,7 @@
       }
     }
   },
-  "revision": "20201017",
+  "revision": "20210901",
   "rootUrl": "https://datastore.googleapis.com/",
   "schemas": {
     "AllocateIdsRequest": {
@@ -1460,7 +1461,7 @@
       "type": "object"
     },
     "LatLng": {
-      "description": "An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this must conform to the WGS84 standard. Values must be within normalized ranges.",
+      "description": "An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this object must conform to the WGS84 standard. Values must be within normalized ranges.",
       "id": "LatLng",
       "properties": {
         "latitude": {
@@ -1633,12 +1634,12 @@
           ],
           "enumDescriptions": [
             "Unspecified. This value must not be used.",
-            "Less than.",
-            "Less than or equal.",
-            "Greater than.",
-            "Greater than or equal.",
-            "Equal.",
-            "Has ancestor."
+            "The given `property` is less than the given `value`. Requires: * That `property` comes first in `order_by`.",
+            "The given `property` is less than or equal to the given `value`. Requires: * That `property` comes first in `order_by`.",
+            "The given `property` is greater than the given `value`. Requires: * That `property` comes first in `order_by`.",
+            "The given `property` is greater than or equal to the given `value`. Requires: * That `property` comes first in `order_by`.",
+            "The given `property` is equal to the given `value`.",
+            "Limit the result set to the given entity and its descendants. Requires: * That `value` is an entity key."
           ],
           "type": "string"
         },

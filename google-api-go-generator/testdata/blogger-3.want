@@ -280,10 +280,10 @@ type Blog struct {
 
 	// ForceSendFields is a list of field names (e.g. "CustomMetaData") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CustomMetaData") to
@@ -315,10 +315,10 @@ type BlogLocale struct {
 
 	// ForceSendFields is a list of field names (e.g. "Country") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Country") to include in
@@ -346,10 +346,10 @@ type BlogPages struct {
 
 	// ForceSendFields is a list of field names (e.g. "SelfLink") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SelfLink") to include in
@@ -380,10 +380,10 @@ type BlogPosts struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -418,10 +418,10 @@ type BlogList struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlogUserInfos") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlogUserInfos") to include
@@ -458,10 +458,10 @@ type BlogPerUserInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlogId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlogId") to include in API
@@ -495,10 +495,10 @@ type BlogUserInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Blog") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Blog") to include in API
@@ -556,10 +556,10 @@ type Comment struct {
 
 	// ForceSendFields is a list of field names (e.g. "Author") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Author") to include in API
@@ -593,10 +593,10 @@ type CommentAuthor struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -621,10 +621,10 @@ type CommentAuthorImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Url") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Url") to include in API
@@ -649,10 +649,10 @@ type CommentBlog struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -677,10 +677,10 @@ type CommentInReplyTo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -705,10 +705,10 @@ type CommentPost struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -747,10 +747,10 @@ type CommentList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -810,10 +810,10 @@ type Page struct {
 
 	// ForceSendFields is a list of field names (e.g. "Author") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Author") to include in API
@@ -847,10 +847,10 @@ type PageAuthor struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -875,10 +875,10 @@ type PageAuthorImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Url") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Url") to include in API
@@ -903,10 +903,10 @@ type PageBlog struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -937,10 +937,10 @@ type PageList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -974,10 +974,10 @@ type Pageviews struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlogId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlogId") to include in API
@@ -1004,10 +1004,10 @@ type PageviewsCounts struct {
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Count") to include in API
@@ -1083,10 +1083,10 @@ type Post struct {
 
 	// ForceSendFields is a list of field names (e.g. "Author") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Author") to include in API
@@ -1120,10 +1120,10 @@ type PostAuthor struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -1148,10 +1148,10 @@ type PostAuthorImage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Url") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Url") to include in API
@@ -1176,10 +1176,10 @@ type PostBlog struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -1202,10 +1202,10 @@ type PostImages struct {
 
 	// ForceSendFields is a list of field names (e.g. "Url") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Url") to include in API
@@ -1240,10 +1240,10 @@ type PostLocation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Lat") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Lat") to include in API
@@ -1290,10 +1290,10 @@ type PostReplies struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1328,10 +1328,10 @@ type PostList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1367,10 +1367,10 @@ type PostPerUserInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlogId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlogId") to include in API
@@ -1404,10 +1404,10 @@ type PostUserInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -1443,10 +1443,10 @@ type PostUserInfosList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Items") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Items") to include in API
@@ -1499,10 +1499,10 @@ type User struct {
 
 	// ForceSendFields is a list of field names (e.g. "About") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "About") to include in API
@@ -1527,10 +1527,10 @@ type UserBlogs struct {
 
 	// ForceSendFields is a list of field names (e.g. "SelfLink") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SelfLink") to include in
@@ -1561,10 +1561,10 @@ type UserLocale struct {
 
 	// ForceSendFields is a list of field names (e.g. "Country") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Country") to include in
@@ -1595,6 +1595,10 @@ type BlogUserInfosGetCall struct {
 }
 
 // Get: Gets one blog and user info pair by blogId and userId.
+//
+// - blogId: The ID of the blog to get.
+// - userId: ID of the user whose blogs are to be fetched. Either the
+//   word 'self' (sans quote marks) or the user's profile identifier.
 func (r *BlogUserInfosService) Get(userId string, blogId string) *BlogUserInfosGetCall {
 	c := &BlogUserInfosGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1760,6 +1764,8 @@ type BlogsGetCall struct {
 }
 
 // Get: Gets one blog by id.
+//
+// - blogId: The ID of the blog to get.
 func (r *BlogsService) Get(blogId string) *BlogsGetCall {
 	c := &BlogsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -1915,6 +1921,8 @@ type BlogsGetByUrlCall struct {
 }
 
 // GetByUrl: Retrieve a Blog by URL.
+//
+// - url: The URL of the blog to retrieve.
 func (r *BlogsService) GetByUrl(url string) *BlogsGetByUrlCall {
 	c := &BlogsGetByUrlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("url", url)
@@ -2055,6 +2063,9 @@ type BlogsListByUserCall struct {
 }
 
 // ListByUser: Retrieves a list of blogs, possibly filtered.
+//
+// - userId: ID of the user whose blogs are to be fetched. Either the
+//   word 'self' (sans quote marks) or the user's profile identifier.
 func (r *BlogsService) ListByUser(userId string) *BlogsListByUserCall {
 	c := &BlogsListByUserCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2237,6 +2248,10 @@ type CommentsApproveCall struct {
 }
 
 // Approve: Marks a comment as not spam.
+//
+// - blogId: The Id of the Blog.
+// - commentId: The ID of the comment to mark as not spam.
+// - postId: The ID of the Post.
 func (r *CommentsService) Approve(blogId string, postId string, commentId string) *CommentsApproveCall {
 	c := &CommentsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2385,6 +2400,10 @@ type CommentsDeleteCall struct {
 }
 
 // Delete: Delete a comment by id.
+//
+// - blogId: The Id of the Blog.
+// - commentId: The ID of the comment to delete.
+// - postId: The ID of the Post.
 func (r *CommentsService) Delete(blogId string, postId string, commentId string) *CommentsDeleteCall {
 	c := &CommentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2506,6 +2525,10 @@ type CommentsGetCall struct {
 }
 
 // Get: Gets one comment by id.
+//
+// - blogId: ID of the blog to containing the comment.
+// - commentId: The ID of the comment to get.
+// - postId: ID of the post to fetch posts from.
 func (r *CommentsService) Get(blogId string, postId string, commentId string) *CommentsGetCall {
 	c := &CommentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2668,6 +2691,9 @@ type CommentsListCall struct {
 }
 
 // List: Retrieves the comments for a post, possibly filtered.
+//
+// - blogId: ID of the blog to fetch comments from.
+// - postId: ID of the post to fetch posts from.
 func (r *CommentsService) List(blogId string, postId string) *CommentsListCall {
 	c := &CommentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -2959,6 +2985,8 @@ type CommentsListByBlogCall struct {
 
 // ListByBlog: Retrieves the comments for a blog, across all posts,
 // possibly filtered.
+//
+// - blogId: ID of the blog to fetch comments from.
 func (r *CommentsService) ListByBlog(blogId string) *CommentsListByBlogCall {
 	c := &CommentsListByBlogCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3187,6 +3215,10 @@ type CommentsMarkAsSpamCall struct {
 }
 
 // MarkAsSpam: Marks a comment as spam.
+//
+// - blogId: The Id of the Blog.
+// - commentId: The ID of the comment to mark as spam.
+// - postId: The ID of the Post.
 func (r *CommentsService) MarkAsSpam(blogId string, postId string, commentId string) *CommentsMarkAsSpamCall {
 	c := &CommentsMarkAsSpamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3335,6 +3367,10 @@ type CommentsRemoveContentCall struct {
 }
 
 // RemoveContent: Removes the content of a comment.
+//
+// - blogId: The Id of the Blog.
+// - commentId: The ID of the comment to delete content from.
+// - postId: The ID of the Post.
 func (r *CommentsService) RemoveContent(blogId string, postId string, commentId string) *CommentsRemoveContentCall {
 	c := &CommentsRemoveContentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3482,6 +3518,8 @@ type PageViewsGetCall struct {
 }
 
 // Get: Retrieve pageview stats for a Blog.
+//
+// - blogId: The ID of the blog to get.
 func (r *PageViewsService) Get(blogId string) *PageViewsGetCall {
 	c := &PageViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3650,6 +3688,9 @@ type PagesDeleteCall struct {
 }
 
 // Delete: Delete a page by id.
+//
+// - blogId: The Id of the Blog.
+// - pageId: The ID of the Page.
 func (r *PagesService) Delete(blogId string, pageId string) *PagesDeleteCall {
 	c := &PagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3761,6 +3802,9 @@ type PagesGetCall struct {
 }
 
 // Get: Gets one blog page by id.
+//
+// - blogId: ID of the blog containing the page.
+// - pageId: The ID of the page to get.
 func (r *PagesService) Get(blogId string, pageId string) *PagesGetCall {
 	c := &PagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -3938,6 +3982,8 @@ type PagesInsertCall struct {
 }
 
 // Insert: Add a page.
+//
+// - blogId: ID of the blog to add the page to.
 func (r *PagesService) Insert(blogId string, page *Page) *PagesInsertCall {
 	c := &PagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -4077,6 +4123,8 @@ type PagesListCall struct {
 
 // List: Retrieves the pages for a blog, optionally including non-LIVE
 // statuses.
+//
+// - blogId: ID of the blog to fetch pages from.
 func (r *PagesService) List(blogId string) *PagesListCall {
 	c := &PagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -4284,6 +4332,9 @@ type PagesPatchCall struct {
 }
 
 // Patch: Update a page. This method supports patch semantics.
+//
+// - blogId: The ID of the Blog.
+// - pageId: The ID of the Page.
 func (r *PagesService) Patch(blogId string, pageId string, page *Page) *PagesPatchCall {
 	c := &PagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -4432,6 +4483,9 @@ type PagesUpdateCall struct {
 }
 
 // Update: Update a page.
+//
+// - blogId: The ID of the Blog.
+// - pageId: The ID of the Page.
 func (r *PagesService) Update(blogId string, pageId string, page *Page) *PagesUpdateCall {
 	c := &PagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -4581,6 +4635,12 @@ type PostUserInfosGetCall struct {
 }
 
 // Get: Gets one post and user info pair by postId and userId.
+//
+// - blogId: The ID of the blog.
+// - postId: The ID of the post to get.
+// - userId: ID of the user for the per-user information to be fetched.
+//   Either the word 'self' (sans quote marks) or the user's profile
+//   identifier.
 func (r *PostUserInfosService) Get(userId string, blogId string, postId string) *PostUserInfosGetCall {
 	c := &PostUserInfosGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4757,6 +4817,11 @@ type PostUserInfosListCall struct {
 
 // List: Retrieves a list of post and user info pairs, possibly
 // filtered.
+//
+// - blogId: ID of the blog to fetch posts from.
+// - userId: ID of the user for the per-user information to be fetched.
+//   Either the word 'self' (sans quote marks) or the user's profile
+//   identifier.
 func (r *PostUserInfosService) List(userId string, blogId string) *PostUserInfosListCall {
 	c := &PostUserInfosListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5080,6 +5145,9 @@ type PostsDeleteCall struct {
 }
 
 // Delete: Delete a post by id.
+//
+// - blogId: The Id of the Blog.
+// - postId: The ID of the Post.
 func (r *PostsService) Delete(blogId string, postId string) *PostsDeleteCall {
 	c := &PostsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -5191,6 +5259,9 @@ type PostsGetCall struct {
 }
 
 // Get: Get a post by id.
+//
+// - blogId: ID of the blog to fetch the post from.
+// - postId: The ID of the post.
 func (r *PostsService) Get(blogId string, postId string) *PostsGetCall {
 	c := &PostsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -5381,6 +5452,9 @@ type PostsGetByPathCall struct {
 }
 
 // GetByPath: Retrieve a Post by Path.
+//
+// - blogId: ID of the blog to fetch the post from.
+// - path: Path of the Post to retrieve.
 func (r *PostsService) GetByPath(blogId string, path string) *PostsGetByPathCall {
 	c := &PostsGetByPathCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -5570,6 +5644,8 @@ type PostsInsertCall struct {
 }
 
 // Insert: Add a post.
+//
+// - blogId: ID of the blog to add the post to.
 func (r *PostsService) Insert(blogId string, post *Post) *PostsInsertCall {
 	c := &PostsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -5720,6 +5796,8 @@ type PostsListCall struct {
 }
 
 // List: Retrieves a list of posts, possibly filtered.
+//
+// - blogId: ID of the blog to fetch posts from.
 func (r *PostsService) List(blogId string) *PostsListCall {
 	c := &PostsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6050,6 +6128,9 @@ type PostsPatchCall struct {
 }
 
 // Patch: Update a post. This method supports patch semantics.
+//
+// - blogId: The ID of the Blog.
+// - postId: The ID of the Post.
 func (r *PostsService) Patch(blogId string, postId string, post *Post) *PostsPatchCall {
 	c := &PostsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6197,6 +6278,9 @@ type PostsPublishCall struct {
 }
 
 // Publish: Publish a draft post.
+//
+// - blogId: The ID of the Blog.
+// - postId: The ID of the Post.
 func (r *PostsService) Publish(blogId string, postId string) *PostsPublishCall {
 	c := &PostsPublishCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6348,6 +6432,9 @@ type PostsRevertCall struct {
 }
 
 // Revert: Revert a published or scheduled post to draft state.
+//
+// - blogId: The ID of the Blog.
+// - postId: The ID of the Post.
 func (r *PostsService) Revert(blogId string, postId string) *PostsRevertCall {
 	c := &PostsRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6486,6 +6573,9 @@ type PostsSearchCall struct {
 }
 
 // Search: Search for a post.
+//
+// - blogId: ID of the blog to fetch the post from.
+// - q: Query terms to search this blog for matching posts.
 func (r *PostsService) Search(blogId string, q string) *PostsSearchCall {
 	c := &PostsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6677,6 +6767,9 @@ type PostsUpdateCall struct {
 }
 
 // Update: Update a post.
+//
+// - blogId: The ID of the Blog.
+// - postId: The ID of the Post.
 func (r *PostsService) Update(blogId string, postId string, post *Post) *PostsUpdateCall {
 	c := &PostsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.blogId = blogId
@@ -6824,6 +6917,8 @@ type UsersGetCall struct {
 }
 
 // Get: Gets one user by id.
+//
+// - userId: The ID of the user to get.
 func (r *UsersService) Get(userId string) *UsersGetCall {
 	c := &UsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId

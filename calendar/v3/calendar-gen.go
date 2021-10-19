@@ -275,10 +275,10 @@ type Acl struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -300,7 +300,8 @@ type AclRule struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: Identifier of the ACL rule.
+	// Id: Identifier of the Access Control List (ACL) rule. See Sharing
+	// calendars.
 	Id string `json:"id,omitempty"`
 
 	// Kind: Type of the resource ("calendar#aclRule").
@@ -321,7 +322,8 @@ type AclRule struct {
 	// and manipulate ACLs.
 	Role string `json:"role,omitempty"`
 
-	// Scope: The scope of the rule.
+	// Scope: The extent to which calendar access is granted by this ACL
+	// rule.
 	Scope *AclRuleScope `json:"scope,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -330,10 +332,10 @@ type AclRule struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -351,7 +353,8 @@ func (s *AclRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AclRuleScope: The scope of the rule.
+// AclRuleScope: The extent to which calendar access is granted by this
+// ACL rule.
 type AclRuleScope struct {
 	// Type: The type of the scope. Possible values are:
 	// - "default" - The public scope. This is the default value.
@@ -368,10 +371,10 @@ type AclRuleScope struct {
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Type") to include in API
@@ -424,8 +427,8 @@ type Calendar struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ConferenceProperties") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -474,10 +477,10 @@ type CalendarList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -593,10 +596,10 @@ type CalendarListEntry struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccessRole") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccessRole") to include in
@@ -622,10 +625,10 @@ type CalendarListEntryNotificationSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "Notifications") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Notifications") to include
@@ -665,10 +668,10 @@ type CalendarNotification struct {
 
 	// ForceSendFields is a list of field names (e.g. "Method") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Method") to include in API
@@ -721,7 +724,9 @@ type Channel struct {
 	// notification delivered over this channel. Optional.
 	Token string `json:"token,omitempty"`
 
-	// Type: The type of delivery mechanism used for this channel.
+	// Type: The type of delivery mechanism used for this channel. Valid
+	// values are "web_hook" (or "webhook"). Both values refer to a channel
+	// where Http requests are used to deliver messages.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -730,10 +735,10 @@ type Channel struct {
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Address") to include in
@@ -762,10 +767,10 @@ type ColorDefinition struct {
 
 	// ForceSendFields is a list of field names (e.g. "Background") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Background") to include in
@@ -786,12 +791,12 @@ func (s *ColorDefinition) MarshalJSON() ([]byte, error) {
 type Colors struct {
 	// Calendar: A global palette of calendar colors, mapping from the color
 	// ID to its definition. A calendarListEntry resource refers to one of
-	// these color IDs in its color field. Read-only.
+	// these color IDs in its colorId field. Read-only.
 	Calendar map[string]ColorDefinition `json:"calendar,omitempty"`
 
 	// Event: A global palette of event colors, mapping from the color ID to
 	// its definition. An event resource may refer to one of these color IDs
-	// in its color field. Read-only.
+	// in its colorId field. Read-only.
 	Event map[string]ColorDefinition `json:"event,omitempty"`
 
 	// Kind: Type of the resource ("calendar#colors").
@@ -807,10 +812,10 @@ type Colors struct {
 
 	// ForceSendFields is a list of field names (e.g. "Calendar") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Calendar") to include in
@@ -832,16 +837,19 @@ type ConferenceData struct {
 	// ConferenceId: The ID of the conference.
 	// Can be used by developers to keep track of conferences, should not be
 	// displayed to users.
-	// Values for solution types:
-	// - "eventHangout": unset.
-	// - "eventNamedHangout": the name of the Hangout.
-	// - "hangoutsMeet": the 10-letter meeting code, for example
-	// "aaa-bbbb-ccc".
-	// - "addOn": defined by 3P conference provider.  Optional.
+	// The ID value is formed differently for each conference solution type:
+	//
+	// - eventHangout: ID is not set. (This conference type is
+	// deprecated.)
+	// - eventNamedHangout: ID is the name of the Hangout. (This conference
+	// type is deprecated.)
+	// - hangoutsMeet: ID is the 10-letter meeting code, for example
+	// aaa-bbbb-ccc.
+	// - addOn: ID is defined by the third-party provider.  Optional.
 	ConferenceId string `json:"conferenceId,omitempty"`
 
-	// ConferenceSolution: The conference solution, such as Hangouts or
-	// Google Meet.
+	// ConferenceSolution: The conference solution, such as Google
+	// Meet.
 	// Unset for a conference with a failed create request.
 	// Either conferenceSolution and at least one entryPoint, or
 	// createRequest is required.
@@ -880,10 +888,10 @@ type ConferenceData struct {
 
 	// ForceSendFields is a list of field names (e.g. "ConferenceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ConferenceId") to include
@@ -907,10 +915,10 @@ type ConferenceParameters struct {
 
 	// ForceSendFields is a list of field names (e.g. "AddOnParameters") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AddOnParameters") to
@@ -934,10 +942,10 @@ type ConferenceParametersAddOnParameters struct {
 
 	// ForceSendFields is a list of field names (e.g. "Parameters") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Parameters") to include in
@@ -966,11 +974,11 @@ type ConferenceProperties struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowedConferenceSolutionTypes") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -1003,10 +1011,10 @@ type ConferenceRequestStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "StatusCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "StatusCode") to include in
@@ -1037,10 +1045,10 @@ type ConferenceSolution struct {
 
 	// ForceSendFields is a list of field names (e.g. "IconUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IconUri") to include in
@@ -1064,20 +1072,22 @@ type ConferenceSolutionKey struct {
 	// be able to display the entry points. However, it should disallow
 	// modifications.
 	// The possible values are:
-	// - "eventHangout" for Hangouts for consumers
-	// (http://hangouts.google.com)
+	// - "eventHangout" for Hangouts for consumers (deprecated; existing
+	// events may show this conference solution type but new conferences
+	// cannot be created)
 	// - "eventNamedHangout" for classic Hangouts for Google Workspace users
-	// (http://hangouts.google.com)
+	// (deprecated; existing events may show this conference solution type
+	// but new conferences cannot be created)
 	// - "hangoutsMeet" for Google Meet (http://meet.google.com)
 	// - "addOn" for 3P conference providers
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Type") to include in API
@@ -1111,8 +1121,8 @@ type CreateConferenceRequest struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ConferenceSolutionKey") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1227,10 +1237,10 @@ type EntryPoint struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccessCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccessCode") to include in
@@ -1267,10 +1277,10 @@ type Error struct {
 
 	// ForceSendFields is a list of field names (e.g. "Domain") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Domain") to include in API
@@ -1290,8 +1300,7 @@ func (s *Error) MarshalJSON() ([]byte, error) {
 
 type Event struct {
 	// AnyoneCanAddSelf: Whether anyone can invite themselves to the event
-	// (currently works for Google+ events only). Optional. The default is
-	// False.
+	// (deprecated). Optional. The default is False.
 	AnyoneCanAddSelf bool `json:"anyoneCanAddSelf,omitempty"`
 
 	// Attachments: File attachments for the event. Currently only Google
@@ -1348,6 +1357,12 @@ type Event struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 
+	// EventType: Specific type of the event. Read-only. Possible values
+	// are:
+	// - "default" - A regular event or not further specified.
+	// - "outOfOffice" - An out-of-office event.
+	EventType string `json:"eventType,omitempty"`
+
 	// ExtendedProperties: Extended properties of the event.
 	ExtendedProperties *EventExtendedProperties `json:"extendedProperties,omitempty"`
 
@@ -1372,7 +1387,7 @@ type Event struct {
 	// Default: true
 	GuestsCanSeeOtherGuests *bool `json:"guestsCanSeeOtherGuests,omitempty"`
 
-	// HangoutLink: An absolute link to the Google+ hangout associated with
+	// HangoutLink: An absolute link to the Google Hangout associated with
 	// this event. Read-only.
 	HangoutLink string `json:"hangoutLink,omitempty"`
 
@@ -1535,10 +1550,10 @@ type Event struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnyoneCanAddSelf") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnyoneCanAddSelf") to
@@ -1565,8 +1580,7 @@ type EventCreator struct {
 	// Email: The creator's email address, if available.
 	Email string `json:"email,omitempty"`
 
-	// Id: The creator's Profile ID, if available. It corresponds to the id
-	// field in the People collection of the Google+ API
+	// Id: The creator's Profile ID, if available.
 	Id string `json:"id,omitempty"`
 
 	// Self: Whether the creator corresponds to the calendar on which this
@@ -1575,10 +1589,10 @@ type EventCreator struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -1608,10 +1622,10 @@ type EventExtendedProperties struct {
 
 	// ForceSendFields is a list of field names (e.g. "Private") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Private") to include in
@@ -1666,10 +1680,10 @@ type EventGadget struct {
 
 	// ForceSendFields is a list of field names (e.g. "Display") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Display") to include in
@@ -1699,8 +1713,7 @@ type EventOrganizer struct {
 	// valid email address as per RFC5322.
 	Email string `json:"email,omitempty"`
 
-	// Id: The organizer's Profile ID, if available. It corresponds to the
-	// id field in the People collection of the Google+ API
+	// Id: The organizer's Profile ID, if available.
 	Id string `json:"id,omitempty"`
 
 	// Self: Whether the organizer corresponds to the calendar on which this
@@ -1709,10 +1722,10 @@ type EventOrganizer struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -1745,10 +1758,10 @@ type EventReminders struct {
 
 	// ForceSendFields is a list of field names (e.g. "Overrides") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Overrides") to include in
@@ -1781,10 +1794,10 @@ type EventSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Title") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Title") to include in API
@@ -1826,10 +1839,10 @@ type EventAttachment struct {
 
 	// ForceSendFields is a list of field names (e.g. "FileId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FileId") to include in API
@@ -1864,8 +1877,7 @@ type EventAttendee struct {
 	// Required when adding an attendee.
 	Email string `json:"email,omitempty"`
 
-	// Id: The attendee's Profile ID, if available. It corresponds to the id
-	// field in the People collection of the Google+ API
+	// Id: The attendee's Profile ID, if available.
 	Id string `json:"id,omitempty"`
 
 	// Optional: Whether this is an optional attendee. Optional. The default
@@ -1897,10 +1909,10 @@ type EventAttendee struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdditionalGuests") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdditionalGuests") to
@@ -1938,10 +1950,10 @@ type EventDateTime struct {
 
 	// ForceSendFields is a list of field names (e.g. "Date") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Date") to include in API
@@ -1974,10 +1986,10 @@ type EventReminder struct {
 
 	// ForceSendFields is a list of field names (e.g. "Method") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Method") to include in API
@@ -2057,10 +2069,10 @@ type Events struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccessRole") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccessRole") to include in
@@ -2088,10 +2100,10 @@ type FreeBusyCalendar struct {
 
 	// ForceSendFields is a list of field names (e.g. "Busy") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Busy") to include in API
@@ -2118,10 +2130,10 @@ type FreeBusyGroup struct {
 
 	// ForceSendFields is a list of field names (e.g. "Calendars") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Calendars") to include in
@@ -2166,8 +2178,8 @@ type FreeBusyRequest struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CalendarExpansionMax") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2195,10 +2207,10 @@ type FreeBusyRequestItem struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -2238,10 +2250,10 @@ type FreeBusyResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Calendars") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Calendars") to include in
@@ -2280,10 +2292,10 @@ type Setting struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -2328,10 +2340,10 @@ type Settings struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -2358,10 +2370,10 @@ type TimePeriod struct {
 
 	// ForceSendFields is a list of field names (e.g. "End") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "End") to include in API
@@ -2391,6 +2403,12 @@ type AclDeleteCall struct {
 }
 
 // Delete: Deletes an access control rule.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
+// - ruleId: ACL rule identifier.
 func (r *AclService) Delete(calendarId string, ruleId string) *AclDeleteCall {
 	c := &AclDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -2425,7 +2443,7 @@ func (c *AclDeleteCall) Header() http.Header {
 
 func (c *AclDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2502,6 +2520,12 @@ type AclGetCall struct {
 }
 
 // Get: Returns an access control rule.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
+// - ruleId: ACL rule identifier.
 func (r *AclService) Get(calendarId string, ruleId string) *AclGetCall {
 	c := &AclGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -2546,7 +2570,7 @@ func (c *AclGetCall) Header() http.Header {
 
 func (c *AclGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2654,6 +2678,11 @@ type AclInsertCall struct {
 }
 
 // Insert: Creates an access control rule.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *AclService) Insert(calendarId string, aclrule *AclRule) *AclInsertCall {
 	c := &AclInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -2696,7 +2725,7 @@ func (c *AclInsertCall) Header() http.Header {
 
 func (c *AclInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2805,6 +2834,11 @@ type AclListCall struct {
 }
 
 // List: Returns the rules in the access control list for the calendar.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *AclService) List(calendarId string) *AclListCall {
 	c := &AclListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -2888,7 +2922,7 @@ func (c *AclListCall) Header() http.Header {
 
 func (c *AclListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3033,6 +3067,12 @@ type AclPatchCall struct {
 
 // Patch: Updates an access control rule. This method supports patch
 // semantics.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
+// - ruleId: ACL rule identifier.
 func (r *AclService) Patch(calendarId string, ruleId string, aclrule *AclRule) *AclPatchCall {
 	c := &AclPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -3077,7 +3117,7 @@ func (c *AclPatchCall) Header() http.Header {
 
 func (c *AclPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3195,6 +3235,12 @@ type AclUpdateCall struct {
 }
 
 // Update: Updates an access control rule.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
+// - ruleId: ACL rule identifier.
 func (r *AclService) Update(calendarId string, ruleId string, aclrule *AclRule) *AclUpdateCall {
 	c := &AclUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -3239,7 +3285,7 @@ func (c *AclUpdateCall) Header() http.Header {
 
 func (c *AclUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3356,6 +3402,11 @@ type AclWatchCall struct {
 }
 
 // Watch: Watch for changes to ACL resources.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *AclService) Watch(calendarId string, channel *Channel) *AclWatchCall {
 	c := &AclWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -3430,7 +3481,7 @@ func (c *AclWatchCall) Header() http.Header {
 
 func (c *AclWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3557,6 +3608,11 @@ type CalendarListDeleteCall struct {
 }
 
 // Delete: Removes a calendar from the user's calendar list.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarListService) Delete(calendarId string) *CalendarListDeleteCall {
 	c := &CalendarListDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -3590,7 +3646,7 @@ func (c *CalendarListDeleteCall) Header() http.Header {
 
 func (c *CalendarListDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3658,6 +3714,11 @@ type CalendarListGetCall struct {
 }
 
 // Get: Returns a calendar from the user's calendar list.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarListService) Get(calendarId string) *CalendarListGetCall {
 	c := &CalendarListGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -3701,7 +3762,7 @@ func (c *CalendarListGetCall) Header() http.Header {
 
 func (c *CalendarListGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3843,7 +3904,7 @@ func (c *CalendarListInsertCall) Header() http.Header {
 
 func (c *CalendarListInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4046,7 +4107,7 @@ func (c *CalendarListListCall) Header() http.Header {
 
 func (c *CalendarListListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4201,6 +4262,11 @@ type CalendarListPatchCall struct {
 
 // Patch: Updates an existing calendar on the user's calendar list. This
 // method supports patch semantics.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarListService) Patch(calendarId string, calendarlistentry *CalendarListEntry) *CalendarListPatchCall {
 	c := &CalendarListPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -4245,7 +4311,7 @@ func (c *CalendarListPatchCall) Header() http.Header {
 
 func (c *CalendarListPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4354,6 +4420,11 @@ type CalendarListUpdateCall struct {
 }
 
 // Update: Updates an existing calendar on the user's calendar list.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarListService) Update(calendarId string, calendarlistentry *CalendarListEntry) *CalendarListUpdateCall {
 	c := &CalendarListUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -4398,7 +4469,7 @@ func (c *CalendarListUpdateCall) Header() http.Header {
 
 func (c *CalendarListUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4604,7 +4675,7 @@ func (c *CalendarListWatchCall) Header() http.Header {
 
 func (c *CalendarListWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4743,6 +4814,11 @@ type CalendarsClearCall struct {
 
 // Clear: Clears a primary calendar. This operation deletes all events
 // associated with the primary calendar of an account.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarsService) Clear(calendarId string) *CalendarsClearCall {
 	c := &CalendarsClearCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -4776,7 +4852,7 @@ func (c *CalendarsClearCall) Header() http.Header {
 
 func (c *CalendarsClearCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4844,6 +4920,11 @@ type CalendarsDeleteCall struct {
 
 // Delete: Deletes a secondary calendar. Use calendars.clear for
 // clearing all events on primary calendars.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarsService) Delete(calendarId string) *CalendarsDeleteCall {
 	c := &CalendarsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -4877,7 +4958,7 @@ func (c *CalendarsDeleteCall) Header() http.Header {
 
 func (c *CalendarsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4945,6 +5026,11 @@ type CalendarsGetCall struct {
 }
 
 // Get: Returns metadata for a calendar.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarsService) Get(calendarId string) *CalendarsGetCall {
 	c := &CalendarsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -4988,7 +5074,7 @@ func (c *CalendarsGetCall) Header() http.Header {
 
 func (c *CalendarsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5120,7 +5206,7 @@ func (c *CalendarsInsertCall) Header() http.Header {
 
 func (c *CalendarsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5211,6 +5297,11 @@ type CalendarsPatchCall struct {
 
 // Patch: Updates metadata for a calendar. This method supports patch
 // semantics.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarsService) Patch(calendarId string, calendar *Calendar) *CalendarsPatchCall {
 	c := &CalendarsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -5245,7 +5336,7 @@ func (c *CalendarsPatchCall) Header() http.Header {
 
 func (c *CalendarsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5349,6 +5440,11 @@ type CalendarsUpdateCall struct {
 }
 
 // Update: Updates metadata for a calendar.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *CalendarsService) Update(calendarId string, calendar *Calendar) *CalendarsUpdateCall {
 	c := &CalendarsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -5383,7 +5479,7 @@ func (c *CalendarsUpdateCall) Header() http.Header {
 
 func (c *CalendarsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5519,7 +5615,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5627,7 +5723,7 @@ func (c *ColorsGetCall) Header() http.Header {
 
 func (c *ColorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5713,6 +5809,12 @@ type EventsDeleteCall struct {
 }
 
 // Delete: Deletes an event.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
+// - eventId: Event identifier.
 func (r *EventsService) Delete(calendarId string, eventId string) *EventsDeleteCall {
 	c := &EventsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -5738,9 +5840,8 @@ func (c *EventsDeleteCall) SendNotifications(sendNotifications bool) *EventsDele
 //   "all" - Notifications are sent to all guests.
 //   "externalOnly" - Notifications are sent to non-Google Calendar
 // guests only.
-//   "none" - No notifications are sent. This value should only be used
-// for migration use cases (note that in most migration cases the import
-// method should be used).
+//   "none" - No notifications are sent. For calendar migration tasks,
+// consider using the Events.import method instead.
 func (c *EventsDeleteCall) SendUpdates(sendUpdates string) *EventsDeleteCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
 	return c
@@ -5773,7 +5874,7 @@ func (c *EventsDeleteCall) Header() http.Header {
 
 func (c *EventsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5843,7 +5944,7 @@ func (c *EventsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "enumDescriptions": [
 	//         "Notifications are sent to all guests.",
 	//         "Notifications are sent to non-Google Calendar guests only.",
-	//         "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+	//         "No notifications are sent. For calendar migration tasks, consider using the Events.import method instead."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -5871,6 +5972,12 @@ type EventsGetCall struct {
 }
 
 // Get: Returns an event.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
+// - eventId: Event identifier.
 func (r *EventsService) Get(calendarId string, eventId string) *EventsGetCall {
 	c := &EventsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -5941,7 +6048,7 @@ func (c *EventsGetCall) Header() http.Header {
 
 func (c *EventsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6069,6 +6176,11 @@ type EventsImportCall struct {
 
 // Import: Imports an event. This operation is used to add a private
 // copy of an existing event to a calendar.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *EventsService) Import(calendarId string, event *Event) *EventsImportCall {
 	c := &EventsImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -6123,7 +6235,7 @@ func (c *EventsImportCall) Header() http.Header {
 
 func (c *EventsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6241,6 +6353,11 @@ type EventsInsertCall struct {
 }
 
 // Insert: Creates an event.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *EventsService) Insert(calendarId string, event *Event) *EventsInsertCall {
 	c := &EventsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -6288,9 +6405,8 @@ func (c *EventsInsertCall) SendNotifications(sendNotifications bool) *EventsInse
 //   "all" - Notifications are sent to all guests.
 //   "externalOnly" - Notifications are sent to non-Google Calendar
 // guests only.
-//   "none" - No notifications are sent. This value should only be used
-// for migration use cases (note that in most migration cases the import
-// method should be used).
+//   "none" - No notifications are sent. For calendar migration tasks,
+// consider using the Events.import method instead.
 func (c *EventsInsertCall) SendUpdates(sendUpdates string) *EventsInsertCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
 	return c
@@ -6331,7 +6447,7 @@ func (c *EventsInsertCall) Header() http.Header {
 
 func (c *EventsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6438,7 +6554,7 @@ func (c *EventsInsertCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//       "enumDescriptions": [
 	//         "Notifications are sent to all guests.",
 	//         "Notifications are sent to non-Google Calendar guests only.",
-	//         "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+	//         "No notifications are sent. For calendar migration tasks, consider using the Events.import method instead."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -6477,6 +6593,12 @@ type EventsInstancesCall struct {
 }
 
 // Instances: Returns instances of the specified recurring event.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
+// - eventId: Recurring event identifier.
 func (r *EventsService) Instances(calendarId string, eventId string) *EventsInstancesCall {
 	c := &EventsInstancesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -6596,7 +6718,7 @@ func (c *EventsInstancesCall) Header() http.Header {
 
 func (c *EventsInstancesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6779,6 +6901,11 @@ type EventsListCall struct {
 }
 
 // List: Returns events on the specified calendar.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *EventsService) List(calendarId string) *EventsListCall {
 	c := &EventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -7004,7 +7131,7 @@ func (c *EventsListCall) Header() http.Header {
 
 func (c *EventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7232,6 +7359,12 @@ type EventsMoveCall struct {
 
 // Move: Moves an event to another calendar, i.e. changes an event's
 // organizer.
+//
+// - calendarId: Calendar identifier of the source calendar where the
+//   event currently is on.
+// - destination: Calendar identifier of the target calendar where the
+//   event is to be moved to.
+// - eventId: Event identifier.
 func (r *EventsService) Move(calendarId string, eventId string, destinationid string) *EventsMoveCall {
 	c := &EventsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -7259,9 +7392,8 @@ func (c *EventsMoveCall) SendNotifications(sendNotifications bool) *EventsMoveCa
 //   "all" - Notifications are sent to all guests.
 //   "externalOnly" - Notifications are sent to non-Google Calendar
 // guests only.
-//   "none" - No notifications are sent. This value should only be used
-// for migration use cases (note that in most migration cases the import
-// method should be used).
+//   "none" - No notifications are sent. For calendar migration tasks,
+// consider using the Events.import method instead.
 func (c *EventsMoveCall) SendUpdates(sendUpdates string) *EventsMoveCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
 	return c
@@ -7294,7 +7426,7 @@ func (c *EventsMoveCall) Header() http.Header {
 
 func (c *EventsMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7396,7 +7528,7 @@ func (c *EventsMoveCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//       "enumDescriptions": [
 	//         "Notifications are sent to all guests.",
 	//         "Notifications are sent to non-Google Calendar guests only.",
-	//         "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+	//         "No notifications are sent. For calendar migration tasks, consider using the Events.import method instead."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -7427,6 +7559,12 @@ type EventsPatchCall struct {
 }
 
 // Patch: Updates an event. This method supports patch semantics.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
+// - eventId: Event identifier.
 func (r *EventsService) Patch(calendarId string, eventId string, event *Event) *EventsPatchCall {
 	c := &EventsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -7485,9 +7623,8 @@ func (c *EventsPatchCall) SendNotifications(sendNotifications bool) *EventsPatch
 //   "all" - Notifications are sent to all guests.
 //   "externalOnly" - Notifications are sent to non-Google Calendar
 // guests only.
-//   "none" - No notifications are sent. This value should only be used
-// for migration use cases (note that in most migration cases the import
-// method should be used).
+//   "none" - No notifications are sent. For calendar migration tasks,
+// consider using the Events.import method instead.
 func (c *EventsPatchCall) SendUpdates(sendUpdates string) *EventsPatchCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
 	return c
@@ -7528,7 +7665,7 @@ func (c *EventsPatchCall) Header() http.Header {
 
 func (c *EventsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7648,7 +7785,7 @@ func (c *EventsPatchCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//       "enumDescriptions": [
 	//         "Notifications are sent to all guests.",
 	//         "Notifications are sent to non-Google Calendar guests only.",
-	//         "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+	//         "No notifications are sent. For calendar migration tasks, consider using the Events.import method instead."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -7685,6 +7822,12 @@ type EventsQuickAddCall struct {
 }
 
 // QuickAdd: Creates an event based on a simple text string.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
+// - text: The text describing the event to be created.
 func (r *EventsService) QuickAdd(calendarId string, text string) *EventsQuickAddCall {
 	c := &EventsQuickAddCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -7710,9 +7853,8 @@ func (c *EventsQuickAddCall) SendNotifications(sendNotifications bool) *EventsQu
 //   "all" - Notifications are sent to all guests.
 //   "externalOnly" - Notifications are sent to non-Google Calendar
 // guests only.
-//   "none" - No notifications are sent. This value should only be used
-// for migration use cases (note that in most migration cases the import
-// method should be used).
+//   "none" - No notifications are sent. For calendar migration tasks,
+// consider using the Events.import method instead.
 func (c *EventsQuickAddCall) SendUpdates(sendUpdates string) *EventsQuickAddCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
 	return c
@@ -7745,7 +7887,7 @@ func (c *EventsQuickAddCall) Header() http.Header {
 
 func (c *EventsQuickAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7833,7 +7975,7 @@ func (c *EventsQuickAddCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//       "enumDescriptions": [
 	//         "Notifications are sent to all guests.",
 	//         "Notifications are sent to non-Google Calendar guests only.",
-	//         "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+	//         "No notifications are sent. For calendar migration tasks, consider using the Events.import method instead."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -7870,6 +8012,12 @@ type EventsUpdateCall struct {
 }
 
 // Update: Updates an event.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
+// - eventId: Event identifier.
 func (r *EventsService) Update(calendarId string, eventId string, event *Event) *EventsUpdateCall {
 	c := &EventsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -7928,9 +8076,8 @@ func (c *EventsUpdateCall) SendNotifications(sendNotifications bool) *EventsUpda
 //   "all" - Notifications are sent to all guests.
 //   "externalOnly" - Notifications are sent to non-Google Calendar
 // guests only.
-//   "none" - No notifications are sent. This value should only be used
-// for migration use cases (note that in most migration cases the import
-// method should be used).
+//   "none" - No notifications are sent. For calendar migration tasks,
+// consider using the Events.import method instead.
 func (c *EventsUpdateCall) SendUpdates(sendUpdates string) *EventsUpdateCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
 	return c
@@ -7971,7 +8118,7 @@ func (c *EventsUpdateCall) Header() http.Header {
 
 func (c *EventsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8091,7 +8238,7 @@ func (c *EventsUpdateCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//       "enumDescriptions": [
 	//         "Notifications are sent to all guests.",
 	//         "Notifications are sent to non-Google Calendar guests only.",
-	//         "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+	//         "No notifications are sent. For calendar migration tasks, consider using the Events.import method instead."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -8129,6 +8276,11 @@ type EventsWatchCall struct {
 }
 
 // Watch: Watch for changes to Events resources.
+//
+// - calendarId: Calendar identifier. To retrieve calendar IDs call the
+//   calendarList.list method. If you want to access the primary
+//   calendar of the currently logged in user, use the "primary"
+//   keyword.
 func (r *EventsService) Watch(calendarId string, channel *Channel) *EventsWatchCall {
 	c := &EventsWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.calendarId = calendarId
@@ -8345,7 +8497,7 @@ func (c *EventsWatchCall) Header() http.Header {
 
 func (c *EventsWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8589,7 +8741,7 @@ func (c *FreebusyQueryCall) Header() http.Header {
 
 func (c *FreebusyQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8680,6 +8832,8 @@ type SettingsGetCall struct {
 }
 
 // Get: Returns a single user setting.
+//
+// - setting: The id of the user setting.
 func (r *SettingsService) Get(setting string) *SettingsGetCall {
 	c := &SettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.setting = setting
@@ -8723,7 +8877,7 @@ func (c *SettingsGetCall) Header() http.Header {
 
 func (c *SettingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8894,7 +9048,7 @@ func (c *SettingsListCall) Header() http.Header {
 
 func (c *SettingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9083,7 +9237,7 @@ func (c *SettingsWatchCall) Header() http.Header {
 
 func (c *SettingsWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

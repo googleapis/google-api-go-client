@@ -966,34 +966,6 @@
           "scopes": [
             "https://www.googleapis.com/auth/youtube.force-ssl"
           ]
-        },
-        "update": {
-          "description": "Updates an existing resource.",
-          "flatPath": "youtube/v3/commentThreads",
-          "httpMethod": "PUT",
-          "id": "youtube.commentThreads.update",
-          "parameterOrder": [
-            "part"
-          ],
-          "parameters": {
-            "part": {
-              "description": "The *part* parameter specifies a comma-separated list of commentThread resource properties that the API response will include. You must at least include the snippet part in the parameter value since that part contains all of the properties that the API request can update.",
-              "location": "query",
-              "repeated": true,
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "youtube/v3/commentThreads",
-          "request": {
-            "$ref": "CommentThread"
-          },
-          "response": {
-            "$ref": "CommentThread"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/youtube.force-ssl"
-          ]
         }
       }
     },
@@ -1328,66 +1300,6 @@
             }
           },
           "path": "youtube/v3/liveBroadcasts/bind",
-          "response": {
-            "$ref": "LiveBroadcast"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/youtube",
-            "https://www.googleapis.com/auth/youtube.force-ssl"
-          ]
-        },
-        "control": {
-          "description": "Slate and recording control of the live broadcast. Support actions: slate on/off, recording start/stop/pause/resume. Design doc: goto/yt-api-liveBroadcast-control",
-          "flatPath": "youtube/v3/liveBroadcasts/control",
-          "httpMethod": "POST",
-          "id": "youtube.liveBroadcasts.control",
-          "parameterOrder": [
-            "id",
-            "part"
-          ],
-          "parameters": {
-            "displaySlate": {
-              "description": "Whether display or hide slate.",
-              "location": "query",
-              "type": "boolean"
-            },
-            "id": {
-              "description": "Broadcast to operate.",
-              "location": "query",
-              "required": true,
-              "type": "string"
-            },
-            "offsetTimeMs": {
-              "description": "The exact time when the actions (e.g. slate on) are executed. It is an offset from the first frame of the monitor stream. If not set, it means \"now\" or ASAP. This field should not be set if the monitor stream is disabled, otherwise an error will be returned.",
-              "format": "uint64",
-              "location": "query",
-              "type": "string"
-            },
-            "onBehalfOfContentOwner": {
-              "description": "*Note:* This parameter is intended exclusively for YouTube content partners. The *onBehalfOfContentOwner* parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
-              "location": "query",
-              "type": "string"
-            },
-            "onBehalfOfContentOwnerChannel": {
-              "description": "This parameter can only be used in a properly authorized request. *Note:* This parameter is intended exclusively for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID of the channel to which a video is being added. This parameter is required when a request specifies a value for the onBehalfOfContentOwner parameter, and it can only be used in conjunction with that parameter. In addition, the request must be authorized using a CMS account that is linked to the content owner that the onBehalfOfContentOwner parameter specifies. Finally, the channel that the onBehalfOfContentOwnerChannel parameter value specifies must be linked to the content owner that the onBehalfOfContentOwner parameter specifies. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and perform actions on behalf of the channel specified in the parameter value, without having to provide authentication credentials for each separate channel.",
-              "location": "query",
-              "type": "string"
-            },
-            "part": {
-              "description": "The *part* parameter specifies a comma-separated list of one or more liveBroadcast resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, and status.",
-              "location": "query",
-              "repeated": true,
-              "required": true,
-              "type": "string"
-            },
-            "walltime": {
-              "description": "The wall clock time at which the action should be executed. Only one of offset_time_ms and walltime may be set at a time.",
-              "format": "google-datetime",
-              "location": "query",
-              "type": "string"
-            }
-          },
-          "path": "youtube/v3/liveBroadcasts/control",
           "response": {
             "$ref": "LiveBroadcast"
           },
@@ -2732,7 +2644,6 @@
               "type": "string"
             },
             "type": {
-              "default": "video,channel,playlist",
               "description": "Restrict results to a particular set of resource types from One Platform.",
               "location": "query",
               "repeated": true,
@@ -2783,7 +2694,7 @@
                 "3d"
               ],
               "enumDescriptions": [
-                "",
+                "Include both 3D and non-3D videos in returned results. This is the default value.",
                 "Restrict search results to exclude 3D videos.",
                 "Restrict search results to only include 3D videos."
               ],
@@ -3072,7 +2983,7 @@
               "type": "string"
             },
             "part": {
-              "description": "The *part* parameter specifies the superChatEvent resource parts that the API response will include. Supported values are id and snippet.",
+              "description": "The *part* parameter specifies the superChatEvent resource parts that the API response will include. This parameter is currently not supported.",
               "location": "query",
               "repeated": true,
               "required": true,
@@ -3102,6 +3013,10 @@
             "part"
           ],
           "parameters": {
+            "externalChannelId": {
+              "location": "query",
+              "type": "string"
+            },
             "part": {
               "location": "query",
               "repeated": true,
@@ -3134,6 +3049,11 @@
             "type"
           ],
           "parameters": {
+            "externalChannelId": {
+              "description": "Channel ID to which changes should be applied, for delegation.",
+              "location": "query",
+              "type": "string"
+            },
             "linkingToken": {
               "description": "Delete the partner links with the given linking token.",
               "location": "query",
@@ -3172,6 +3092,11 @@
             "part"
           ],
           "parameters": {
+            "externalChannelId": {
+              "description": "Channel ID to which changes should be applied, for delegation.",
+              "location": "query",
+              "type": "string"
+            },
             "part": {
               "description": "The *part* parameter specifies the thirdPartyLink resource parts that the API request and response will include. Supported values are linkingToken, status, and snippet.",
               "location": "query",
@@ -3197,6 +3122,11 @@
             "part"
           ],
           "parameters": {
+            "externalChannelId": {
+              "description": "Channel ID to which changes should be applied, for delegation.",
+              "location": "query",
+              "type": "string"
+            },
             "linkingToken": {
               "description": "Get a third party link with the given linking token.",
               "location": "query",
@@ -3237,6 +3167,11 @@
             "part"
           ],
           "parameters": {
+            "externalChannelId": {
+              "description": "Channel ID to which changes should be applied, for delegation.",
+              "location": "query",
+              "type": "string"
+            },
             "part": {
               "description": "The *part* parameter specifies the thirdPartyLink resource parts that the API request and response will include. Supported values are linkingToken, status, and snippet.",
               "location": "query",
@@ -3445,7 +3380,7 @@
           },
           "path": "youtube/v3/videos/getRating",
           "response": {
-            "$ref": "VideoRatingListResponse"
+            "$ref": "VideoGetRatingResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/youtube",
@@ -3822,9 +3757,39 @@
           ]
         }
       }
+    },
+    "youtube": {
+      "resources": {
+        "v3": {
+          "methods": {
+            "updateCommentThreads": {
+              "description": "Updates an existing resource.",
+              "flatPath": "youtube/v3/commentThreads",
+              "httpMethod": "PUT",
+              "id": "youtube.youtube.v3.updateCommentThreads",
+              "parameterOrder": [],
+              "parameters": {
+                "part": {
+                  "description": "The *part* parameter specifies a comma-separated list of commentThread resource properties that the API response will include. You must at least include the snippet part in the parameter value since that part contains all of the properties that the API request can update.",
+                  "location": "query",
+                  "repeated": true,
+                  "type": "string"
+                }
+              },
+              "path": "youtube/v3/commentThreads",
+              "request": {
+                "$ref": "CommentThread"
+              },
+              "response": {
+                "$ref": "CommentThread"
+              }
+            }
+          }
+        }
+      }
     }
   },
-  "revision": "20210126",
+  "revision": "20210915",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -4146,7 +4111,7 @@
         "type": {
           "description": "The name of the social network.",
           "enum": [
-            "typeUnspecified",
+            "unspecified",
             "googlePlus",
             "facebook",
             "twitter"
@@ -4410,6 +4375,11 @@
           "type": "boolean"
         },
         "language": {
+          "annotations": {
+            "required": [
+              "youtube.captions.insert"
+            ]
+          },
           "description": "The language of the caption track. The property value is a BCP-47 language tag.",
           "type": "string"
         },
@@ -4419,6 +4389,11 @@
           "type": "string"
         },
         "name": {
+          "annotations": {
+            "required": [
+              "youtube.captions.insert"
+            ]
+          },
           "description": "The name of the caption track. The name is intended to be visible to the user as an option during playback.",
           "type": "string"
         },
@@ -4467,6 +4442,12 @@
       "id": "CdnSettings",
       "properties": {
         "format": {
+          "annotations": {
+            "required": [
+              "youtube.liveStreams.insert",
+              "youtube.liveStreams.update"
+            ]
+          },
           "description": "The format of the video stream that you are sending to Youtube. ",
           "type": "string"
         },
@@ -4489,6 +4470,12 @@
           "description": "The ingestionInfo object contains information that YouTube provides that you need to transmit your RTMP or HTTP stream to YouTube."
         },
         "ingestionType": {
+          "annotations": {
+            "required": [
+              "youtube.liveStreams.insert",
+              "youtube.liveStreams.update"
+            ]
+          },
           "description": " The method or protocol used to transmit the video stream.",
           "enum": [
             "rtmp",
@@ -4968,7 +4955,7 @@
         "type": {
           "description": "The type of the channel section.",
           "enum": [
-            "channelsectionTypeUnspecified",
+            "channelsectionTypeUndefined",
             "singlePlaylist",
             "multiplePlaylists",
             "popularUploads",
@@ -7695,6 +7682,11 @@
           "type": "string"
         },
         "id": {
+          "annotations": {
+            "required": [
+              "youtube.liveBroadcasts.update"
+            ]
+          },
           "description": "The ID that YouTube assigns to uniquely identify the broadcast.",
           "type": "string"
         },
@@ -7948,12 +7940,18 @@
           "type": "string"
         },
         "scheduledEndTime": {
-          "description": "The date and time that the broadcast is scheduled to start.",
+          "description": "The date and time that the broadcast is scheduled to end.",
           "format": "date-time",
           "type": "string"
         },
         "scheduledStartTime": {
-          "description": "The date and time that the broadcast is scheduled to end.",
+          "annotations": {
+            "required": [
+              "youtube.liveBroadcasts.insert",
+              "youtube.liveBroadcasts.update"
+            ]
+          },
+          "description": "The date and time that the broadcast is scheduled to start.",
           "format": "date-time",
           "type": "string"
         },
@@ -7962,6 +7960,12 @@
           "description": "A map of thumbnail images associated with the broadcast. For each nested object in this object, the key is the name of the thumbnail image, and the value is an object that contains other information about the thumbnail."
         },
         "title": {
+          "annotations": {
+            "required": [
+              "youtube.liveBroadcasts.insert",
+              "youtube.liveBroadcasts.update"
+            ]
+          },
           "description": "The broadcast's title. Note that the broadcast represents exactly one YouTube video. You can set this field by modifying the broadcast resource or by setting the title field of the corresponding video resource.",
           "type": "string"
         }
@@ -8031,6 +8035,12 @@
           "type": "boolean"
         },
         "privacyStatus": {
+          "annotations": {
+            "required": [
+              "youtube.liveBroadcasts.insert",
+              "youtube.liveBroadcasts.update"
+            ]
+          },
           "description": "The broadcast's privacy status. Note that the broadcast represents exactly one YouTube video, so the privacy settings are identical to those supported for videos. In addition, you can set this field by modifying the broadcast resource or by setting the privacyStatus field of the corresponding video resource.",
           "enum": [
             "public",
@@ -8141,6 +8151,25 @@
         },
         "userComment": {
           "description": "The comment added by the user to this fan funding event.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LiveChatMemberMilestoneChatDetails": {
+      "id": "LiveChatMemberMilestoneChatDetails",
+      "properties": {
+        "memberLevelName": {
+          "description": "The name of the Level at which the viever is a member. The Level names are defined by the YouTube channel offering the Membership. In some situations this field isn't filled.",
+          "type": "string"
+        },
+        "memberMonth": {
+          "description": "The total amount of months (rounded up) the viewer has been a member that granted them this Member Milestone Chat. This is the same number of months as is being displayed to YouTube users.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "userComment": {
+          "description": "The comment added by the member to this Member Milestone Chat. This field is empty for messages without a comment from the member.",
           "type": "string"
         }
       },
@@ -8280,10 +8309,11 @@
       "type": "object"
     },
     "LiveChatMessageSnippet": {
+      "description": "Next ID: 31",
       "id": "LiveChatMessageSnippet",
       "properties": {
         "authorChannelId": {
-          "description": "The ID of the user that authored this message, this field is not always filled. textMessageEvent - the user that wrote the message fanFundingEvent - the user that funded the broadcast newSponsorEvent - the user that just became a sponsor messageDeletedEvent - the moderator that took the action messageRetractedEvent - the author that retracted their message userBannedEvent - the moderator that took the action superChatEvent - the user that made the purchase",
+          "description": "The ID of the user that authored this message, this field is not always filled. textMessageEvent - the user that wrote the message fanFundingEvent - the user that funded the broadcast newSponsorEvent - the user that just became a sponsor memberMilestoneChatEvent - the member that sent the message messageDeletedEvent - the moderator that took the action messageRetractedEvent - the author that retracted their message userBannedEvent - the moderator that took the action superChatEvent - the user that made the purchase superStickerEvent - the user that made the purchase",
           "type": "string"
         },
         "displayMessage": {
@@ -8301,11 +8331,19 @@
         "liveChatId": {
           "type": "string"
         },
+        "memberMilestoneChatDetails": {
+          "$ref": "LiveChatMemberMilestoneChatDetails",
+          "description": "Details about the Member Milestone Chat event, this is only set if the type is 'memberMilestoneChatEvent'."
+        },
         "messageDeletedDetails": {
           "$ref": "LiveChatMessageDeletedDetails"
         },
         "messageRetractedDetails": {
           "$ref": "LiveChatMessageRetractedDetails"
+        },
+        "newSponsorDetails": {
+          "$ref": "LiveChatNewSponsorDetails",
+          "description": "Details about the New Member Announcement event, this is only set if the type is 'newSponsorEvent'. Please note that \"member\" is the new term for \"sponsor\"."
         },
         "publishedAt": {
           "description": "The date and time when the message was orignally published.",
@@ -8335,6 +8373,7 @@
             "sponsorOnlyModeStartedEvent",
             "sponsorOnlyModeEndedEvent",
             "newSponsorEvent",
+            "memberMilestoneChatEvent",
             "messageDeletedEvent",
             "messageRetractedEvent",
             "userBannedEvent",
@@ -8342,6 +8381,7 @@
             "superStickerEvent"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -8443,6 +8483,20 @@
         "moderatorDetails": {
           "$ref": "ChannelProfileDetails",
           "description": "Details about the moderator."
+        }
+      },
+      "type": "object"
+    },
+    "LiveChatNewSponsorDetails": {
+      "id": "LiveChatNewSponsorDetails",
+      "properties": {
+        "isUpgrade": {
+          "description": "If the viewer just had upgraded from a lower level. For viewers that were not members at the time of purchase, this field is false.",
+          "type": "boolean"
+        },
+        "memberLevelName": {
+          "description": "The name of the Level that the viewer just had joined. The Level names are defined by the YouTube channel offering the Membership. In some situations this field isn't filled.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -8557,6 +8611,11 @@
           "type": "string"
         },
         "id": {
+          "annotations": {
+            "required": [
+              "youtube.liveStreams.update"
+            ]
+          },
           "description": "The ID that YouTube assigns to uniquely identify the stream.",
           "type": "string"
         },
@@ -8795,6 +8854,12 @@
           "type": "string"
         },
         "title": {
+          "annotations": {
+            "required": [
+              "youtube.liveStreams.insert",
+              "youtube.liveStreams.update"
+            ]
+          },
           "description": "The stream's title. The value must be between 1 and 128 characters long.",
           "type": "string"
         }
@@ -9277,7 +9342,7 @@
       "type": "object"
     },
     "PlaylistItemSnippet": {
-      "description": "Basic details about a playlist, including title, description and thumbnails. Basic details of a YouTube Playlist item provided by the author. Next ID: 13",
+      "description": "Basic details about a playlist, including title, description and thumbnails. Basic details of a YouTube Playlist item provided by the author. Next ID: 15",
       "id": "PlaylistItemSnippet",
       "properties": {
         "channelId": {
@@ -9293,6 +9358,12 @@
           "type": "string"
         },
         "playlistId": {
+          "annotations": {
+            "required": [
+              "youtube.playlistItems.insert",
+              "youtube.playlistItems.update"
+            ]
+          },
           "description": "The ID that YouTube uses to uniquely identify thGe playlist that the playlist item is in.",
           "type": "string"
         },
@@ -9308,6 +9379,12 @@
         },
         "resourceId": {
           "$ref": "ResourceId",
+          "annotations": {
+            "required": [
+              "youtube.playlistItems.insert",
+              "youtube.playlistItems.update"
+            ]
+          },
           "description": "The id object contains information that can be used to uniquely identify the resource that is included in the playlist as the playlist item."
         },
         "thumbnails": {
@@ -9316,6 +9393,14 @@
         },
         "title": {
           "description": "The item's title.",
+          "type": "string"
+        },
+        "videoOwnerChannelId": {
+          "description": "Channel id for the channel this video belongs to.",
+          "type": "string"
+        },
+        "videoOwnerChannelTitle": {
+          "description": "Channel title for the channel this video belongs to.",
           "type": "string"
         }
       },
@@ -9448,11 +9533,21 @@
           },
           "type": "array"
         },
+        "thumbnailVideoId": {
+          "description": "Note: if the playlist has a custom thumbnail, this field will not be populated. The video id selected by the user that will be used as the thumbnail of this playlist. This field defaults to the first publicly viewable video in the playlist, if: 1. The user has never selected a video to be the thumbnail of the playlist. 2. The user selects a video to be the thumbnail, and then removes that video from the playlist. 3. The user selects a non-owned video to be the thumbnail, but that video becomes private, or gets deleted.",
+          "type": "string"
+        },
         "thumbnails": {
           "$ref": "ThumbnailDetails",
           "description": "A map of thumbnail images associated with the playlist. For each object in the map, the key is the name of the thumbnail image, and the value is an object that contains other information about the thumbnail."
         },
         "title": {
+          "annotations": {
+            "required": [
+              "youtube.playlists.insert",
+              "youtube.playlists.update"
+            ]
+          },
           "description": "The playlist's title.",
           "type": "string"
         }
@@ -9951,6 +10046,9 @@
     "TestItem": {
       "id": "TestItem",
       "properties": {
+        "featuredPart": {
+          "type": "boolean"
+        },
         "gaia": {
           "format": "int64",
           "type": "string"
@@ -10147,6 +10245,11 @@
           "description": "The fileDetails object encapsulates information about the video file that was uploaded to YouTube, including the file's resolution, duration, audio and video codecs, stream bitrates, and more. This data can only be retrieved by the video owner."
         },
         "id": {
+          "annotations": {
+            "required": [
+              "youtube.videos.update"
+            ]
+          },
           "description": "The ID that YouTube uses to uniquely identify the video.",
           "type": "string"
         },
@@ -10684,6 +10787,36 @@
       },
       "type": "object"
     },
+    "VideoGetRatingResponse": {
+      "id": "VideoGetRatingResponse",
+      "properties": {
+        "etag": {
+          "description": "Etag of this resource.",
+          "type": "string"
+        },
+        "eventId": {
+          "description": "Serialized EventId of the request which produced this response.",
+          "type": "string"
+        },
+        "items": {
+          "description": "A list of ratings that match the request criteria.",
+          "items": {
+            "$ref": "VideoRating"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "default": "youtube#videoGetRatingResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#videoGetRatingResponse\".",
+          "type": "string"
+        },
+        "visitorId": {
+          "description": "The visitorId identifies the visitor.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "VideoListResponse": {
       "id": "VideoListResponse",
       "properties": {
@@ -10921,36 +11054,6 @@
         },
         "videoId": {
           "description": "The ID that YouTube uses to uniquely identify the video.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "VideoRatingListResponse": {
-      "id": "VideoRatingListResponse",
-      "properties": {
-        "etag": {
-          "description": "Etag of this resource.",
-          "type": "string"
-        },
-        "eventId": {
-          "description": "Serialized EventId of the request which produced this response.",
-          "type": "string"
-        },
-        "items": {
-          "description": "A list of ratings that match the request criteria.",
-          "items": {
-            "$ref": "VideoRating"
-          },
-          "type": "array"
-        },
-        "kind": {
-          "default": "youtube#videoGetRatingResponse",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"youtube#videoGetRatingResponse\".",
-          "type": "string"
-        },
-        "visitorId": {
-          "description": "The visitorId identifies the visitor.",
           "type": "string"
         }
       },

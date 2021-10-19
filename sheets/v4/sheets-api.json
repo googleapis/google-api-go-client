@@ -6,16 +6,16 @@
           "description": "See, edit, create, and delete all of your Google Drive files"
         },
         "https://www.googleapis.com/auth/drive.file": {
-          "description": "View and manage Google Drive files and folders that you have opened or created with this app"
+          "description": "See, edit, create, and delete only the specific Google Drive files you use with this app"
         },
         "https://www.googleapis.com/auth/drive.readonly": {
           "description": "See and download all your Google Drive files"
         },
         "https://www.googleapis.com/auth/spreadsheets": {
-          "description": "See, edit, create, and delete your spreadsheets in Google Drive"
+          "description": "See, edit, create, and delete all your Google Sheets spreadsheets"
         },
         "https://www.googleapis.com/auth/spreadsheets.readonly": {
-          "description": "View your Google Spreadsheets"
+          "description": "See all your Google Sheets spreadsheets"
         }
       }
     }
@@ -383,7 +383,7 @@
                   "type": "string"
                 },
                 "responseDateTimeRenderOption": {
-                  "description": "Determines how dates, times, and durations in the response should be rendered. This is ignored if response_value_render_option is FORMATTED_VALUE. The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
+                  "description": "Determines how dates, times, and durations in the response should be rendered. This is ignored if response_value_render_option is FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.",
                   "enum": [
                     "SERIAL_NUMBER",
                     "FORMATTED_STRING"
@@ -396,7 +396,7 @@
                   "type": "string"
                 },
                 "responseValueRenderOption": {
-                  "description": "Determines how values in the response should be rendered. The default render option is ValueRenderOption.FORMATTED_VALUE.",
+                  "description": "Determines how values in the response should be rendered. The default render option is FORMATTED_VALUE.",
                   "enum": [
                     "FORMATTED_VALUE",
                     "UNFORMATTED_VALUE",
@@ -513,7 +513,7 @@
               ],
               "parameters": {
                 "dateTimeRenderOption": {
-                  "description": "How dates, times, and durations should be represented in the output. This is ignored if value_render_option is FORMATTED_VALUE. The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
+                  "description": "How dates, times, and durations should be represented in the output. This is ignored if value_render_option is FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.",
                   "enum": [
                     "SERIAL_NUMBER",
                     "FORMATTED_STRING"
@@ -541,7 +541,7 @@
                   "type": "string"
                 },
                 "ranges": {
-                  "description": "The A1 notation of the values to retrieve.",
+                  "description": "The A1 notation or R1C1 notation of the range to retrieve values from.",
                   "location": "query",
                   "repeated": true,
                   "type": "string"
@@ -678,7 +678,7 @@
               ],
               "parameters": {
                 "range": {
-                  "description": "The A1 notation of the values to clear.",
+                  "description": "The A1 notation or R1C1 notation of the values to clear.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -714,7 +714,7 @@
               ],
               "parameters": {
                 "dateTimeRenderOption": {
-                  "description": "How dates, times, and durations should be represented in the output. This is ignored if value_render_option is FORMATTED_VALUE. The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
+                  "description": "How dates, times, and durations should be represented in the output. This is ignored if value_render_option is FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.",
                   "enum": [
                     "SERIAL_NUMBER",
                     "FORMATTED_STRING"
@@ -742,7 +742,7 @@
                   "type": "string"
                 },
                 "range": {
-                  "description": "The A1 notation of the values to retrieve.",
+                  "description": "The A1 notation or R1C1 notation of the range to retrieve values from.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -754,7 +754,7 @@
                   "type": "string"
                 },
                 "valueRenderOption": {
-                  "description": "How values should be represented in the output. The default render option is ValueRenderOption.FORMATTED_VALUE.",
+                  "description": "How values should be represented in the output. The default render option is FORMATTED_VALUE.",
                   "enum": [
                     "FORMATTED_VALUE",
                     "UNFORMATTED_VALUE",
@@ -803,7 +803,7 @@
                   "type": "string"
                 },
                 "responseDateTimeRenderOption": {
-                  "description": "Determines how dates, times, and durations in the response should be rendered. This is ignored if response_value_render_option is FORMATTED_VALUE. The default dateTime render option is DateTimeRenderOption.SERIAL_NUMBER.",
+                  "description": "Determines how dates, times, and durations in the response should be rendered. This is ignored if response_value_render_option is FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.",
                   "enum": [
                     "SERIAL_NUMBER",
                     "FORMATTED_STRING"
@@ -816,7 +816,7 @@
                   "type": "string"
                 },
                 "responseValueRenderOption": {
-                  "description": "Determines how values in the response should be rendered. The default render option is ValueRenderOption.FORMATTED_VALUE.",
+                  "description": "Determines how values in the response should be rendered. The default render option is FORMATTED_VALUE.",
                   "enum": [
                     "FORMATTED_VALUE",
                     "UNFORMATTED_VALUE",
@@ -870,7 +870,7 @@
       }
     }
   },
-  "revision": "20201130",
+  "revision": "20210629",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {
@@ -1309,7 +1309,7 @@
         },
         "textFormat": {
           "$ref": "TextFormat",
-          "description": "Text formatting options for baseline value."
+          "description": "Text formatting options for baseline value. The link field is not supported."
         }
       },
       "type": "object"
@@ -1320,7 +1320,7 @@
       "properties": {
         "format": {
           "$ref": "TextFormat",
-          "description": "The format of the title. Only valid if the axis is not associated with the domain."
+          "description": "The format of the title. Only valid if the axis is not associated with the domain. The link field is not supported."
         },
         "position": {
           "description": "The position of this axis.",
@@ -1662,7 +1662,7 @@
       "id": "BatchClearValuesRequest",
       "properties": {
         "ranges": {
-          "description": "The ranges to clear, in A1 notation.",
+          "description": "The ranges to clear, in A1 or R1C1 notation.",
           "items": {
             "type": "string"
           },
@@ -1701,7 +1701,7 @@
           "type": "array"
         },
         "dateTimeRenderOption": {
-          "description": "How dates, times, and durations should be represented in the output. This is ignored if value_render_option is FORMATTED_VALUE. The default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
+          "description": "How dates, times, and durations should be represented in the output. This is ignored if value_render_option is FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.",
           "enum": [
             "SERIAL_NUMBER",
             "FORMATTED_STRING"
@@ -1727,7 +1727,7 @@
           "type": "string"
         },
         "valueRenderOption": {
-          "description": "How values should be represented in the output. The default render option is ValueRenderOption.FORMATTED_VALUE.",
+          "description": "How values should be represented in the output. The default render option is FORMATTED_VALUE.",
           "enum": [
             "FORMATTED_VALUE",
             "UNFORMATTED_VALUE",
@@ -1825,7 +1825,7 @@
         },
         "updatedSpreadsheet": {
           "$ref": "Spreadsheet",
-          "description": "The spreadsheet after updates were applied. This is only set if [BatchUpdateSpreadsheetRequest.include_spreadsheet_in_response] is `true`."
+          "description": "The spreadsheet after updates were applied. This is only set if BatchUpdateSpreadsheetRequest.include_spreadsheet_in_response is `true`."
         }
       },
       "type": "object"
@@ -1846,7 +1846,7 @@
           "type": "boolean"
         },
         "responseDateTimeRenderOption": {
-          "description": "Determines how dates, times, and durations in the response should be rendered. This is ignored if response_value_render_option is FORMATTED_VALUE. The default dateTime render option is DateTimeRenderOption.SERIAL_NUMBER.",
+          "description": "Determines how dates, times, and durations in the response should be rendered. This is ignored if response_value_render_option is FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.",
           "enum": [
             "SERIAL_NUMBER",
             "FORMATTED_STRING"
@@ -1858,7 +1858,7 @@
           "type": "string"
         },
         "responseValueRenderOption": {
-          "description": "Determines how values in the response should be rendered. The default render option is ValueRenderOption.FORMATTED_VALUE.",
+          "description": "Determines how values in the response should be rendered. The default render option is FORMATTED_VALUE.",
           "enum": [
             "FORMATTED_VALUE",
             "UNFORMATTED_VALUE",
@@ -1942,7 +1942,7 @@
           "type": "boolean"
         },
         "responseDateTimeRenderOption": {
-          "description": "Determines how dates, times, and durations in the response should be rendered. This is ignored if response_value_render_option is FORMATTED_VALUE. The default dateTime render option is DateTimeRenderOption.SERIAL_NUMBER.",
+          "description": "Determines how dates, times, and durations in the response should be rendered. This is ignored if response_value_render_option is FORMATTED_VALUE. The default dateTime render option is SERIAL_NUMBER.",
           "enum": [
             "SERIAL_NUMBER",
             "FORMATTED_STRING"
@@ -1954,7 +1954,7 @@
           "type": "string"
         },
         "responseValueRenderOption": {
-          "description": "Determines how values in the response should be rendered. The default render option is ValueRenderOption.FORMATTED_VALUE.",
+          "description": "Determines how values in the response should be rendered. The default render option is FORMATTED_VALUE.",
           "enum": [
             "FORMATTED_VALUE",
             "UNFORMATTED_VALUE",
@@ -2272,11 +2272,11 @@
         },
         "bubbleSizes": {
           "$ref": "ChartData",
-          "description": "The data contianing the bubble sizes. Bubble sizes are used to draw the bubbles at different sizes relative to each other. If specified, group_ids must also be specified. This field is optional."
+          "description": "The data containing the bubble sizes. Bubble sizes are used to draw the bubbles at different sizes relative to each other. If specified, group_ids must also be specified. This field is optional."
         },
         "bubbleTextStyle": {
           "$ref": "TextFormat",
-          "description": "The format of the text inside the bubbles. Strikethrough and underline are not supported."
+          "description": "The format of the text inside the bubbles. Strikethrough, underline, and link are not supported."
         },
         "domain": {
           "$ref": "ChartData",
@@ -2310,7 +2310,7 @@
         },
         "series": {
           "$ref": "ChartData",
-          "description": "The data contianing the bubble y-values. These values locate the bubbles in the chart vertically."
+          "description": "The data containing the bubble y-values. These values locate the bubbles in the chart vertically."
         }
       },
       "type": "object"
@@ -2388,7 +2388,7 @@
       "properties": {
         "dataSourceFormula": {
           "$ref": "DataSourceFormula",
-          "description": "Output only. Information about a data source formula on the cell. The field is set if user_entered_value is a formula referencing some DATA_SOURCE sheet, e.g `=SUM(DataSheet!Column)`.",
+          "description": "Output only. Information about a data source formula on the cell. The field is set if user_entered_value is a formula referencing some DATA_SOURCE sheet, e.g. `=SUM(DataSheet!Column)`.",
           "readOnly": true
         },
         "dataSourceTable": {
@@ -2412,7 +2412,7 @@
           "type": "string"
         },
         "hyperlink": {
-          "description": "A hyperlink this cell points to, if any. If the cell contains multiple hyperlinks, this field will be empty. This field is read-only. To set it, use a `=HYPERLINK` formula in the userEnteredValue.formulaValue field.",
+          "description": "A hyperlink this cell points to, if any. If the cell contains multiple hyperlinks, this field will be empty. This field is read-only. To set it, use a `=HYPERLINK` formula in the userEnteredValue.formulaValue field. A cell-level link can also be set from the userEnteredFormat.textFormat field. Alternatively, set a hyperlink in the textFormatRun.format.link field that spans the entire cell.",
           "type": "string"
         },
         "note": {
@@ -2511,7 +2511,7 @@
         },
         "textFormat": {
           "$ref": "TextFormat",
-          "description": "The format of the text in the cell (unless overridden by a format run)."
+          "description": "The format of the text in the cell (unless overridden by a format run). Setting a cell-level link here will clear the cell's existing links. Setting the link field in a TextFormatRun will take precedence over the cell-level link."
         },
         "textRotation": {
           "$ref": "TextRotation",
@@ -2544,7 +2544,7 @@
           ],
           "enumDescriptions": [
             "The default value, do not use.",
-            "Lines that are longer than the cell width will be written in the next cell over, so long as that cell is empty. If the next cell over is non-empty, this behaves the same as CLIP. The text will never wrap to the next line unless the user manually inserts a new line. Example: | First sentence. | | Manual newline that is very long. \u003c- Text continues into next cell | Next newline. |",
+            "Lines that are longer than the cell width will be written in the next cell over, so long as that cell is empty. If the next cell over is non-empty, this behaves the same as `CLIP`. The text will never wrap to the next line unless the user manually inserts a new line. Example: | First sentence. | | Manual newline that is very long. \u003c- Text continues into next cell | Next newline. |",
             "This wrap strategy represents the old Google Sheets wrap strategy where words that are longer than a line are clipped rather than broken. This strategy is not supported on all platforms and is being phased out. Example: | Cell has a | | loooooooooo| \u003c- Word is clipped. | word. |",
             "Lines that are longer than the cell width will be clipped. The text will never wrap to the next line unless the user manually inserts a new line. Example: | First sentence. | | Manual newline t| \u003c- Text is clipped | Next newline. |",
             "Words that are longer than a line are wrapped at the character level rather than clipped. Example: | Cell has a | | loooooooooo| \u003c- Word is broken. | ong word. |"
@@ -2607,7 +2607,7 @@
       "id": "ChartData",
       "properties": {
         "aggregateType": {
-          "description": "The aggregation type for the series of a data source chart. Not supported for regular charts.",
+          "description": "The aggregation type for the series of a data source chart. Only supported for data source charts.",
           "enum": [
             "CHART_AGGREGATE_TYPE_UNSPECIFIED",
             "AVERAGE",
@@ -2634,7 +2634,7 @@
         },
         "groupRule": {
           "$ref": "ChartGroupRule",
-          "description": "The rule to group the data by if the ChartData backs the domain of a data source chart. Not supported for regular charts."
+          "description": "The rule to group the data by if the ChartData backs the domain of a data source chart. Only supported for data source charts."
         },
         "sourceRange": {
           "$ref": "ChartSourceRange",
@@ -2835,7 +2835,7 @@
         },
         "subtitleTextFormat": {
           "$ref": "TextFormat",
-          "description": "The subtitle text format. Strikethrough and underline are not supported."
+          "description": "The subtitle text format. Strikethrough, underline, and link are not supported."
         },
         "subtitleTextPosition": {
           "$ref": "TextPosition",
@@ -2847,7 +2847,7 @@
         },
         "titleTextFormat": {
           "$ref": "TextFormat",
-          "description": "The title text format. Strikethrough and underline are not supported."
+          "description": "The title text format. Strikethrough, underline, and link are not supported."
         },
         "titleTextPosition": {
           "$ref": "TextPosition",
@@ -2898,11 +2898,11 @@
       "type": "object"
     },
     "Color": {
-      "description": "Represents a color in the RGBA color space. This representation is designed for simplicity of conversion to/from color representations in various languages over compactness; for example, the fields of this representation can be trivially provided to the constructor of \"java.awt.Color\" in Java; it can also be trivially provided to UIColor's \"+colorWithRed:green:blue:alpha\" method in iOS; and, with just a little work, it can be easily formatted into a CSS \"rgba()\" string in JavaScript, as well. Note: this proto does not carry information about the absolute color space that should be used to interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020, etc.). By default, applications SHOULD assume the sRGB color space. Note: when color equality needs to be decided, implementations, unless documented otherwise, will treat two colors to be equal if all their red, green, blue and alpha values each differ by at most 1e-5. Example (Java): import com.google.type.Color; // ... public static java.awt.Color fromProto(Color protocolor) { float alpha = protocolor.hasAlpha() ? protocolor.getAlpha().getValue() : 1.0; return new java.awt.Color( protocolor.getRed(), protocolor.getGreen(), protocolor.getBlue(), alpha); } public static Color toProto(java.awt.Color color) { float red = (float) color.getRed(); float green = (float) color.getGreen(); float blue = (float) color.getBlue(); float denominator = 255.0; Color.Builder resultBuilder = Color .newBuilder() .setRed(red / denominator) .setGreen(green / denominator) .setBlue(blue / denominator); int alpha = color.getAlpha(); if (alpha != 255) { result.setAlpha( FloatValue .newBuilder() .setValue(((float) alpha) / denominator) .build()); } return resultBuilder.build(); } // ... Example (iOS / Obj-C): // ... static UIColor* fromProto(Color* protocolor) { float red = [protocolor red]; float green = [protocolor green]; float blue = [protocolor blue]; FloatValue* alpha_wrapper = [protocolor alpha]; float alpha = 1.0; if (alpha_wrapper != nil) { alpha = [alpha_wrapper value]; } return [UIColor colorWithRed:red green:green blue:blue alpha:alpha]; } static Color* toProto(UIColor* color) { CGFloat red, green, blue, alpha; if (![color getRed:\u0026red green:\u0026green blue:\u0026blue alpha:\u0026alpha]) { return nil; } Color* result = [[Color alloc] init]; [result setRed:red]; [result setGreen:green]; [result setBlue:blue]; if (alpha \u003c= 0.9999) { [result setAlpha:floatWrapperWithValue(alpha)]; } [result autorelease]; return result; } // ... Example (JavaScript): // ... var protoToCssColor = function(rgb_color) { var redFrac = rgb_color.red || 0.0; var greenFrac = rgb_color.green || 0.0; var blueFrac = rgb_color.blue || 0.0; var red = Math.floor(redFrac * 255); var green = Math.floor(greenFrac * 255); var blue = Math.floor(blueFrac * 255); if (!('alpha' in rgb_color)) { return rgbToCssColor_(red, green, blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams = [red, green, blue].join(','); return ['rgba(', rgbParams, ',', alphaFrac, ')'].join(''); }; var rgbToCssColor_ = function(red, green, blue) { var rgbNumber = new Number((red \u003c\u003c 16) | (green \u003c\u003c 8) | blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 - hexString.length; var resultBuilder = ['#']; for (var i = 0; i \u003c missingZeros; i++) { resultBuilder.push('0'); } resultBuilder.push(hexString); return resultBuilder.join(''); }; // ...",
+      "description": "Represents a color in the RGBA color space. This representation is designed for simplicity of conversion to/from color representations in various languages over compactness. For example, the fields of this representation can be trivially provided to the constructor of `java.awt.Color` in Java; it can also be trivially provided to UIColor's `+colorWithRed:green:blue:alpha` method in iOS; and, with just a little work, it can be easily formatted into a CSS `rgba()` string in JavaScript. This reference page doesn't carry information about the absolute color space that should be used to interpret the RGB value (e.g. sRGB, Adobe RGB, DCI-P3, BT.2020, etc.). By default, applications should assume the sRGB color space. When color equality needs to be decided, implementations, unless documented otherwise, treat two colors as equal if all their red, green, blue, and alpha values each differ by at most 1e-5. Example (Java): import com.google.type.Color; // ... public static java.awt.Color fromProto(Color protocolor) { float alpha = protocolor.hasAlpha() ? protocolor.getAlpha().getValue() : 1.0; return new java.awt.Color( protocolor.getRed(), protocolor.getGreen(), protocolor.getBlue(), alpha); } public static Color toProto(java.awt.Color color) { float red = (float) color.getRed(); float green = (float) color.getGreen(); float blue = (float) color.getBlue(); float denominator = 255.0; Color.Builder resultBuilder = Color .newBuilder() .setRed(red / denominator) .setGreen(green / denominator) .setBlue(blue / denominator); int alpha = color.getAlpha(); if (alpha != 255) { result.setAlpha( FloatValue .newBuilder() .setValue(((float) alpha) / denominator) .build()); } return resultBuilder.build(); } // ... Example (iOS / Obj-C): // ... static UIColor* fromProto(Color* protocolor) { float red = [protocolor red]; float green = [protocolor green]; float blue = [protocolor blue]; FloatValue* alpha_wrapper = [protocolor alpha]; float alpha = 1.0; if (alpha_wrapper != nil) { alpha = [alpha_wrapper value]; } return [UIColor colorWithRed:red green:green blue:blue alpha:alpha]; } static Color* toProto(UIColor* color) { CGFloat red, green, blue, alpha; if (![color getRed:\u0026red green:\u0026green blue:\u0026blue alpha:\u0026alpha]) { return nil; } Color* result = [[Color alloc] init]; [result setRed:red]; [result setGreen:green]; [result setBlue:blue]; if (alpha \u003c= 0.9999) { [result setAlpha:floatWrapperWithValue(alpha)]; } [result autorelease]; return result; } // ... Example (JavaScript): // ... var protoToCssColor = function(rgb_color) { var redFrac = rgb_color.red || 0.0; var greenFrac = rgb_color.green || 0.0; var blueFrac = rgb_color.blue || 0.0; var red = Math.floor(redFrac * 255); var green = Math.floor(greenFrac * 255); var blue = Math.floor(blueFrac * 255); if (!('alpha' in rgb_color)) { return rgbToCssColor(red, green, blue); } var alphaFrac = rgb_color.alpha.value || 0.0; var rgbParams = [red, green, blue].join(','); return ['rgba(', rgbParams, ',', alphaFrac, ')'].join(''); }; var rgbToCssColor = function(red, green, blue) { var rgbNumber = new Number((red \u003c\u003c 16) | (green \u003c\u003c 8) | blue); var hexString = rgbNumber.toString(16); var missingZeros = 6 - hexString.length; var resultBuilder = ['#']; for (var i = 0; i \u003c missingZeros; i++) { resultBuilder.push('0'); } resultBuilder.push(hexString); return resultBuilder.join(''); }; // ...",
       "id": "Color",
       "properties": {
         "alpha": {
-          "description": "The fraction of this color that should be applied to the pixel. That is, the final pixel color is defined by the equation: pixel color = alpha * (this color) + (1.0 - alpha) * (background color) This means that a value of 1.0 corresponds to a solid color, whereas a value of 0.0 corresponds to a completely transparent color. This uses a wrapper message rather than a simple float scalar so that it is possible to distinguish between a default value and the value being unset. If omitted, this color object is to be rendered as a solid color (as if the alpha value had been explicitly given with a value of 1.0).",
+          "description": "The fraction of this color that should be applied to the pixel. That is, the final pixel color is defined by the equation: `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)` This means that a value of 1.0 corresponds to a solid color, whereas a value of 0.0 corresponds to a completely transparent color. This uses a wrapper message rather than a simple float scalar so that it is possible to distinguish between a default value and the value being unset. If omitted, this color object is rendered as a solid color (as if the alpha value had been explicitly given a value of 1.0).",
           "format": "float",
           "type": "number"
         },
@@ -3053,7 +3053,7 @@
             "Paste values, formulas, formats, and merges.",
             "Paste the values ONLY without formats, formulas, or merges.",
             "Paste the format and data validation only.",
-            "Like PASTE_NORMAL but without borders.",
+            "Like `PASTE_NORMAL` but without borders.",
             "Paste the formulas only.",
             "Paste the data validation only.",
             "Paste the conditional formatting rules only."
@@ -3123,7 +3123,7 @@
             "Paste values, formulas, formats, and merges.",
             "Paste the values ONLY without formats, formulas, or merges.",
             "Paste the format and data validation only.",
-            "Like PASTE_NORMAL but without borders.",
+            "Like `PASTE_NORMAL` but without borders.",
             "Paste the formulas only.",
             "Paste the data validation only.",
             "Paste the conditional formatting rules only."
@@ -3305,7 +3305,7 @@
         },
         "textFormat": {
           "$ref": "TextFormat",
-          "description": "The text format used for the data label."
+          "description": "The text format used for the data label. The link field is not supported."
         },
         "type": {
           "description": "The type of the data label.",
@@ -3984,7 +3984,7 @@
       "id": "DeleteSheetRequest",
       "properties": {
         "sheetId": {
-          "description": "The ID of the sheet to delete. If the sheet is of SheetType.DATA_SOURCE type, the associated DataSource is also deleted.",
+          "description": "The ID of the sheet to delete. If the sheet is of DATA_SOURCE type, the associated DataSource is also deleted.",
           "format": "int32",
           "type": "integer"
         }
@@ -4425,7 +4425,7 @@
           "type": "string"
         },
         "numberValue": {
-          "description": "Represents a double value. Note: Dates, Times and DateTimes are represented as doubles in \"serial number\" format.",
+          "description": "Represents a double value. Note: Dates, Times and DateTimes are represented as doubles in SERIAL_NUMBER format.",
           "format": "double",
           "type": "number"
         },
@@ -4937,8 +4937,8 @@
             "The interpolation point uses the minimum value in the cells over the range of the conditional format.",
             "The interpolation point uses the maximum value in the cells over the range of the conditional format.",
             "The interpolation point uses exactly the value in InterpolationPoint.value.",
-            "The interpolation point is the given percentage over all the cells in the range of the conditional format. This is equivalent to NUMBER if the value was: `=(MAX(FLATTEN(range)) * (value / 100)) + (MIN(FLATTEN(range)) * (1 - (value / 100)))` (where errors in the range are ignored when flattening).",
-            "The interpolation point is the given percentile over all the cells in the range of the conditional format. This is equivalent to NUMBER if the value was: `=PERCENTILE(FLATTEN(range), value / 100)` (where errors in the range are ignored when flattening)."
+            "The interpolation point is the given percentage over all the cells in the range of the conditional format. This is equivalent to `NUMBER` if the value was: `=(MAX(FLATTEN(range)) * (value / 100)) + (MIN(FLATTEN(range)) * (1 - (value / 100)))` (where errors in the range are ignored when flattening).",
+            "The interpolation point is the given percentile over all the cells in the range of the conditional format. This is equivalent to `NUMBER` if the value was: `=PERCENTILE(FLATTEN(range), value / 100)` (where errors in the range are ignored when flattening)."
           ],
           "type": "string"
         },
@@ -4993,7 +4993,7 @@
         },
         "textFormat": {
           "$ref": "TextFormat",
-          "description": "Text formatting options for key value."
+          "description": "Text formatting options for key value. The link field is not supported."
         }
       },
       "type": "object"
@@ -5032,6 +5032,17 @@
           "description": "The thickness of the line, in px.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "Link": {
+      "description": "An external or local reference.",
+      "id": "Link",
+      "properties": {
+        "uri": {
+          "description": "The link identifier.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -5345,7 +5356,7 @@
             "Paste values, formulas, formats, and merges.",
             "Paste the values ONLY without formats, formulas, or merges.",
             "Paste the format and data validation only.",
-            "Like PASTE_NORMAL but without borders.",
+            "Like `PASTE_NORMAL` but without borders.",
             "Paste the formulas only.",
             "Paste the data validation only.",
             "Paste the conditional formatting rules only."
@@ -5464,7 +5475,7 @@
           "type": "string"
         },
         "repeatHeadings": {
-          "description": "True if the headings in this pivot group should be repeated. This is only valid for row groupings and is ignored by columns. By default, we minimize repitition of headings by not showing higher level headings where they are the same. For example, even though the third row below corresponds to \"Q1 Mar\", \"Q1\" is not shown because it is redundant with previous rows. Setting repeat_headings to true would cause \"Q1\" to be repeated for \"Feb\" and \"Mar\". +--------------+ | Q1 | Jan | | | Feb | | | Mar | +--------+-----+ | Q1 Total | +--------------+",
+          "description": "True if the headings in this pivot group should be repeated. This is only valid for row groupings and is ignored by columns. By default, we minimize repetition of headings by not showing higher level headings where they are the same. For example, even though the third row below corresponds to \"Q1 Mar\", \"Q1\" is not shown because it is redundant with previous rows. Setting repeat_headings to true would cause \"Q1\" to be repeated for \"Feb\" and \"Mar\". +--------------+ | Q1 | Jan | | | Feb | | | Mar | +--------+-----+ | Q1 Total | +--------------+",
           "type": "boolean"
         },
         "showTotals": {
@@ -6606,7 +6617,7 @@
         },
         "textFormat": {
           "$ref": "TextFormat",
-          "description": "The text format of title in the slicer."
+          "description": "The text format of title in the slicer. The link field is not supported."
         },
         "title": {
           "description": "The title of the slicer.",
@@ -6857,6 +6868,10 @@
         "italic": {
           "description": "True if the text is italicized.",
           "type": "boolean"
+        },
+        "link": {
+          "$ref": "Link",
+          "description": "The link destination of the text, if any. Setting the link field in a TextFormatRun will clear the cell's existing links or a cell-level link set in the same request. When a link is set, the text foreground color will be set to the default link color and the text will be underlined. If these fields are modified in the same request, those values will be used instead of the link defaults."
         },
         "strikethrough": {
           "description": "True if the text has a strikethrough.",
@@ -7124,7 +7139,7 @@
         },
         "textFormat": {
           "$ref": "TextFormat",
-          "description": "The text format for all labels on the chart."
+          "description": "The text format for all labels on the chart. The link field is not supported."
         }
       },
       "type": "object"

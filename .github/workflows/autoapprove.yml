@@ -15,7 +15,7 @@ jobs:
       ENABLE_AUTO_APPROVE: ${{ secrets.ENABLE_AUTO_APPROVE }}
     steps:
       - name: AutoApprove
-        uses: actions/github-script@v2
+        uses: actions/github-script@v4
         with:
           github-token: ${{secrets.YOSHI_APPROVER_TOKEN}}
           script: |

@@ -6,19 +6,19 @@
           "description": "See, edit, create, and delete all of your Google Drive files"
         },
         "https://www.googleapis.com/auth/drive.appdata": {
-          "description": "View and manage its own configuration data in your Google Drive"
+          "description": "See, create, and delete its own configuration data in your Google Drive"
         },
         "https://www.googleapis.com/auth/drive.apps.readonly": {
           "description": "View your Google Drive apps"
         },
         "https://www.googleapis.com/auth/drive.file": {
-          "description": "View and manage Google Drive files and folders that you have opened or created with this app"
+          "description": "See, edit, create, and delete only the specific Google Drive files you use with this app"
         },
         "https://www.googleapis.com/auth/drive.metadata": {
           "description": "View and manage metadata of files in your Google Drive"
         },
         "https://www.googleapis.com/auth/drive.metadata.readonly": {
-          "description": "View metadata for files in your Google Drive"
+          "description": "See information about your Google Drive files"
         },
         "https://www.googleapis.com/auth/drive.photos.readonly": {
           "description": "View the photos, videos and albums in your Google Photos"
@@ -38,7 +38,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"-2NioU2H8y8siEzrBOV_qzRI6kQ/XkRrOs2KP594IVgdIkVeFYOCw00\"",
+  "etag": "\"uWj2hSb4GVjzdDlAnRd2gbM1ZQ8/1zEdrQsJh-Ob8KbDsrp0vIynqK0\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -1030,7 +1030,7 @@
           "parameters": {
             "maxResults": {
               "default": "10",
-              "description": "Maximum number of shared drives to return.",
+              "description": "Maximum number of shared drives to return per page.",
               "format": "int32",
               "location": "query",
               "maximum": "100",
@@ -1325,7 +1325,13 @@
             },
             "space": {
               "default": "drive",
-              "description": "The space in which the IDs can be used to create new files. Supported values are 'drive' and 'appDataFolder'.",
+              "description": "The space in which the IDs can be used to create new files. Supported values are 'drive' and 'appDataFolder'. (Default: 'drive')",
+              "location": "query",
+              "type": "string"
+            },
+            "type": {
+              "default": "files",
+              "description": "The type of items which the IDs can be used for. Supported values are 'files' and 'shortcuts'. Note that 'shortcuts' are only supported in the drive 'space'. (Default: 'files')",
               "location": "query",
               "type": "string"
             }
@@ -1341,7 +1347,7 @@
           ]
         },
         "get": {
-          "description": "Gets a file's metadata by ID.",
+          "description": "Gets a file's metadata or content by ID.",
           "httpMethod": "GET",
           "id": "drive.files.get",
           "parameterOrder": [
@@ -1615,7 +1621,7 @@
               "type": "string"
             },
             "spaces": {
-              "description": "A comma-separated list of spaces to query. Supported values are 'drive', 'appDataFolder' and 'photos'.",
+              "description": "A comma-separated list of spaces to query. Supported values are 'drive' and 'appDataFolder'.",
               "location": "query",
               "type": "string"
             },
@@ -1653,7 +1659,7 @@
           ]
         },
         "patch": {
-          "description": "Updates file metadata and/or content. This method supports patch semantics.",
+          "description": "Updates a file's metadata and/or content. When calling this method, only populate fields in the request that you want to modify. When updating fields, some fields might might change automatically, such as modifiedDate. This method supports patch semantics.",
           "httpMethod": "PATCH",
           "id": "drive.files.patch",
           "parameterOrder": [
@@ -1925,7 +1931,7 @@
           ]
         },
         "update": {
-          "description": "Updates file metadata and/or content.",
+          "description": "Updates a file's metadata and/or content. When calling this method, only populate fields in the request that you want to modify. When updating fields, some fields might be changed automatically, such as modifiedDate. This method supports patch semantics.",
           "httpMethod": "PUT",
           "id": "drive.files.update",
           "mediaUpload": {
@@ -2685,7 +2691,7 @@
             },
             "transferOwnership": {
               "default": "false",
-              "description": "Whether changing a role to 'owner' downgrades the current owners to writers. Does nothing if the specified role is not 'owner'.",
+              "description": "Whether to transfer ownership to the specified user and downgrade the current owner to a writer. This parameter is required as an acknowledgement of the side effect. File owners can only transfer ownership of files existing on My Drive. Files existing in a shared drive are owned by the organization that owns that shared drive. Ownership transfers are not supported for files and folders in shared drives. Organizers of a shared drive can move items from that shared drive into their My Drive which transfers the ownership to them.",
               "location": "query",
               "type": "boolean"
             },
@@ -3521,7 +3527,7 @@
       }
     }
   },
-  "revision": "20201130",
+  "revision": "20210921",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -4111,7 +4117,7 @@
           "type": "string"
         },
         "type": {
-          "description": "The type of delivery mechanism used for this channel.",
+          "description": "The type of delivery mechanism used for this channel. Valid values are \"web_hook\" (or \"webhook\"). Both values refer to a channel where Http requests are used to deliver messages.",
           "type": "string"
         }
       },
@@ -4186,7 +4192,7 @@
       "id": "Comment",
       "properties": {
         "anchor": {
-          "description": "A region of the document represented as a JSON string. See anchor documentation for details on how to define and interpret anchor properties.",
+          "description": "A region of the document represented as a JSON string. For details on defining anchor properties, refer to  Add comments and replies.",
           "type": "string"
         },
         "author": {
@@ -4650,6 +4656,10 @@
               "description": "Deprecated",
               "type": "boolean"
             },
+            "canChangeSecurityUpdateEnabled": {
+              "description": "Whether the current user can change the securityUpdateEnabled field on link share metadata.",
+              "type": "boolean"
+            },
             "canComment": {
               "description": "Whether the current user can comment on this file.",
               "type": "boolean"
@@ -4827,6 +4837,7 @@
             "type": "string"
           },
           "description": "Links for exporting Docs Editors files to specific formats.",
+          "readOnly": true,
           "type": "object"
         },
         "fileExtension": {
@@ -4839,7 +4850,7 @@
           "type": "string"
         },
         "folderColorRgb": {
-          "description": "Folder color as an RGB hex string if the file is a folder. The list of supported colors is available in the folderColorPalette field of the About resource. If an unsupported color is specified, it will be changed to the closest color in the palette. Not populated for items in shared drives.",
+          "description": "Folder color as an RGB hex string if the file is a folder or a shortcut to a folder. The list of supported colors is available in the folderColorPalette field of the About resource. If an unsupported color is specified, it will be changed to the closest color in the palette.",
           "type": "string"
         },
         "fullFileExtension": {
@@ -5045,6 +5056,20 @@
           "format": "date-time",
           "type": "string"
         },
+        "linkShareMetadata": {
+          "description": "Contains details about the link URLs that clients are using to refer to this item.",
+          "properties": {
+            "securityUpdateEligible": {
+              "description": "Whether the file is eligible for security update.",
+              "type": "boolean"
+            },
+            "securityUpdateEnabled": {
+              "description": "Whether the security update is enabled for this file.",
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
         "markedViewedByMeDate": {
           "description": "Deprecated.",
           "format": "date-time",
@@ -5091,7 +5116,7 @@
           "type": "array"
         },
         "owners": {
-          "description": "The owner(s) of this file. Not populated for items in shared drives.",
+          "description": "The owner of this file. Only certain legacy files may have more than one owner. This field isn't populated for items in shared drives.",
           "items": {
             "$ref": "User"
           },
@@ -5130,6 +5155,10 @@
           "format": "int64",
           "type": "string"
         },
+        "resourceKey": {
+          "description": "A key needed to access the item via a shared link.",
+          "type": "string"
+        },
         "selfLink": {
           "description": "A link back to this file.",
           "type": "string"
@@ -5160,6 +5189,10 @@
             },
             "targetMimeType": {
               "description": "The MIME type of the file that this shortcut points to. The value of this field is a snapshot of the target's MIME type, captured when the shortcut is created.",
+              "type": "string"
+            },
+            "targetResourceKey": {
+              "description": "The ResourceKey for the target file.",
               "type": "string"
             }
           },
@@ -5459,6 +5492,7 @@
             },
             "type": "object"
           },
+          "readOnly": true,
           "type": "array"
         },
         "photoLink": {
@@ -5508,6 +5542,7 @@
             },
             "type": "object"
           },
+          "readOnly": true,
           "type": "array"
         },
         "type": {
@@ -5704,7 +5739,7 @@
           "type": "string"
         },
         "pinned": {
-          "description": "Whether this revision is pinned to prevent automatic purging. This will only be populated and can only be modified on files with content stored in Drive, excluding Docs Editors files. Revisions can also be pinned when they are created through the drive.files.insert/update/copy by using the pinned query parameter. Pinned revisions are stored indefinitely using additional storage quota, up to a maximum of 200 revisions.",
+          "description": "Whether this revision is pinned to prevent automatic purging. If not set, the revision is automatically purged 30 days after newer content is uploaded. This field can only be modified on files with content stored in Drive, excluding Docs Editors files. Revisions can also be pinned when they are created through the drive.files.insert/update/copy by using the pinned query parameter. Pinned revisions are stored indefinitely using additional storage quota, up to a maximum of 200 revisions.",
           "type": "boolean"
         },
         "publishAuto": {

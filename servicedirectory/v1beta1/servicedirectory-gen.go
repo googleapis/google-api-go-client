@@ -79,7 +79,8 @@ const mtlsBasePath = "https://servicedirectory.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -244,10 +245,10 @@ type Binding struct {
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Condition") to include in
@@ -280,36 +281,50 @@ type Empty struct {
 // Endpoint: An individual endpoint that provides a service. The service
 // must already exist to create an endpoint.
 type Endpoint struct {
-	// Address: Optional. An IPv4 or IPv6 address. Service Directory will
-	// reject bad addresses like: "8.8.8" "8.8.8.8:53" "test:bad:address"
-	// "[::1]" "[::1]:8080" Limited to 45 characters.
+	// Address: Optional. An IPv4 or IPv6 address. Service Directory rejects
+	// bad addresses like: * `8.8.8` * `8.8.8.8:53` * `test:bad:address` *
+	// `[::1]` * `[::1]:8080` Limited to 45 characters.
 	Address string `json:"address,omitempty"`
 
+	// CreateTime: Output only. The timestamp when the endpoint was created.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// Metadata: Optional. Metadata for the endpoint. This data can be
-	// consumed by service clients. Restrictions: - The entire metadata
+	// consumed by service clients. Restrictions: * The entire metadata
 	// dictionary may contain up to 512 characters, spread accoss all
-	// key-value pairs. Metadata that goes beyond any these limits will be
-	// rejected. - Valid metadata keys have two segments: an optional prefix
-	// and name, separated by a slash (/). The name segment is required and
-	// must be 63 characters or less, beginning and ending with an
-	// alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores
-	// (_), dots (.), and alphanumerics between. The prefix is optional. If
-	// specified, the prefix must be a DNS subdomain: a series of DNS labels
-	// separated by dots (.), not longer than 253 characters in total,
-	// followed by a slash (/). Metadata that fails to meet these
-	// requirements will be rejected. - The '(*.)google.com/' and
-	// '(*.)googleapis.com/' prefixes are reserved for system metadata
-	// managed by Service Directory. If the user tries to write to these
-	// keyspaces, those entries will be silently ignored by the system.
+	// key-value pairs. Metadata that goes beyond this limit are rejected *
+	// Valid metadata keys have two segments: an optional prefix and name,
+	// separated by a slash (/). The name segment is required and must be 63
+	// characters or less, beginning and ending with an alphanumeric
+	// character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.),
+	// and alphanumerics between. The prefix is optional. If specified, the
+	// prefix must be a DNS subdomain: a series of DNS labels separated by
+	// dots (.), not longer than 253 characters in total, followed by a
+	// slash (/). Metadata that fails to meet these requirements are
+	// rejected Note: This field is equivalent to the `annotations` field in
+	// the v1 API. They have the same syntax and read/write to the same
+	// location in Service Directory.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
 	// Name: Immutable. The resource name for the endpoint in the format
-	// 'projects/*/locations/*/namespaces/*/services/*/endpoints/*'.
+	// `projects/*/locations/*/namespaces/*/services/*/endpoints/*`.
 	Name string `json:"name,omitempty"`
 
-	// Port: Optional. Service Directory will reject values outside of [0,
-	// 65535].
+	// Network: Immutable. The Google Compute Engine network (VPC) of the
+	// endpoint in the format `projects//locations/global/networks/*`. The
+	// project must be specified by project number (project id is rejected).
+	// Incorrectly formatted networks are rejected, but no other validation
+	// is performed on this field (ex. network or project existence,
+	// reachability, or permissions).
+	Network string `json:"network,omitempty"`
+
+	// Port: Optional. Service Directory rejects values outside of `[0,
+	// 65535]`.
 	Port int64 `json:"port,omitempty"`
+
+	// UpdateTime: Output only. The timestamp when the endpoint was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -317,10 +332,10 @@ type Endpoint struct {
 
 	// ForceSendFields is a list of field names (e.g. "Address") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Address") to include in
@@ -377,10 +392,10 @@ type Expr struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -406,10 +421,10 @@ type GetIamPolicyRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Options") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Options") to include in
@@ -441,8 +456,8 @@ type GetPolicyOptions struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "RequestedPolicyVersion") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -480,10 +495,10 @@ type ListEndpointsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Endpoints") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Endpoints") to include in
@@ -517,10 +532,10 @@ type ListLocationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Locations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Locations") to include in
@@ -554,10 +569,10 @@ type ListNamespacesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Namespaces") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Namespaces") to include in
@@ -591,10 +606,10 @@ type ListServicesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -641,10 +656,10 @@ type Location struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -666,29 +681,37 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // to group services together and define permissions for a collection of
 // services.
 type Namespace struct {
-	// Labels: Optional. Resource labels associated with this Namespace. No
+	// CreateTime: Output only. The timestamp when the namespace was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Labels: Optional. Resource labels associated with this namespace. No
 	// more than 64 user labels can be associated with a given resource.
 	// Label keys and values can be no longer than 63 characters.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Immutable. The resource name for the namespace in the format
-	// 'projects/*/locations/*/namespaces/*'.
+	// `projects/*/locations/*/namespaces/*`.
 	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. The timestamp when the namespace was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Labels") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -733,9 +756,9 @@ func (s *Namespace) MarshalJSON() ([]byte, error) {
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
-// 3 For a description of IAM and its features, see the IAM
-// documentation (https://cloud.google.com/iam/docs/).
+// timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
+// For a description of IAM and its features, see the IAM documentation
+// (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// Bindings: Associates a list of `members` to a `role`. Optionally, may
 	// specify a `condition` that determines how and when the `bindings` are
@@ -781,10 +804,10 @@ type Policy struct {
 
 	// ForceSendFields is a list of field names (e.g. "Bindings") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Bindings") to include in
@@ -807,16 +830,27 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // the service and its endpoints.
 type ResolveServiceRequest struct {
 	// EndpointFilter: Optional. The filter applied to the endpoints of the
-	// resolved service. General filter string syntax: () can be "name" or
-	// "metadata." for map field. can be "<, >, <=, >=, !=, =, :". Of which
-	// ":" means HAS and is roughly the same as "=". must be the same data
-	// type as the field. can be "AND, OR, NOT". Examples of valid filters:
-	// * "metadata.owner" returns Endpoints that have a label with the key
-	// "owner", this is the same as "metadata:owner" *
-	// "metadata.protocol=gRPC" returns Endpoints that have key/value
-	// "protocol=gRPC" * "metadata.owner!=sd AND metadata.foo=bar" returns
-	// Endpoints that have "owner" field in metadata with a value that is
-	// not "sd" AND have the key/value foo=bar.
+	// resolved service. General `filter` string syntax: ` ()` * `` can be
+	// `name`, `address`, `port`, or `metadata.` for map field * `` can be
+	// `<`, `>`, `<=`, `>=`, `!=`, `=`, `:`. Of which `:` means `HAS`, and
+	// is roughly the same as `=` * `` must be the same data type as field *
+	// `` can be `AND`, `OR`, `NOT` Examples of valid filters: *
+	// `metadata.owner` returns endpoints that have a annotation with the
+	// key `owner`, this is the same as `metadata:owner` *
+	// `metadata.protocol=gRPC` returns endpoints that have key/value
+	// `protocol=gRPC` * `address=192.108.1.105` returns endpoints that have
+	// this address * `port>8080` returns endpoints that have port number
+	// larger than 8080 *
+	// `name>projects/my-project/locations/us-east1/namespaces/my-namespace/s
+	// ervices/my-service/endpoints/endpoint-c` returns endpoints that have
+	// name that is alphabetically later than the string, so "endpoint-e" is
+	// returned but "endpoint-a" is not * `metadata.owner!=sd AND
+	// metadata.foo=bar` returns endpoints that have `owner` in annotation
+	// key but value is not `sd` AND have key/value `foo=bar` *
+	// `doesnotexist.foo=bar` returns an empty list. Note that endpoint
+	// doesn't have a field called "doesnotexist". Since the filter does not
+	// match any endpoint, it returns no results For more information about
+	// filtering, see API Filtering (https://aip.dev/160).
 	EndpointFilter string `json:"endpointFilter,omitempty"`
 
 	// MaxEndpoints: Optional. The maximum number of endpoints to return.
@@ -827,10 +861,10 @@ type ResolveServiceRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndpointFilter") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndpointFilter") to
@@ -860,10 +894,10 @@ type ResolveServiceResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Service") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Service") to include in
@@ -885,46 +919,54 @@ func (s *ResolveServiceResponse) MarshalJSON() ([]byte, error) {
 // optional metadata. A service must exist before endpoints can be added
 // to it.
 type Service struct {
+	// CreateTime: Output only. The timestamp when the service was created.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// Endpoints: Output only. Endpoints associated with this service.
-	// Returned on LookupService.Resolve. Control plane clients should use
-	// RegistrationService.ListEndpoints.
+	// Returned on LookupService.ResolveService. Control plane clients
+	// should use RegistrationService.ListEndpoints.
 	Endpoints []*Endpoint `json:"endpoints,omitempty"`
 
 	// Metadata: Optional. Metadata for the service. This data can be
-	// consumed by service clients. Restrictions: - The entire metadata
+	// consumed by service clients. Restrictions: * The entire metadata
 	// dictionary may contain up to 2000 characters, spread accoss all
-	// key-value pairs. Metadata that goes beyond any these limits will be
-	// rejected. - Valid metadata keys have two segments: an optional prefix
-	// and name, separated by a slash (/). The name segment is required and
-	// must be 63 characters or less, beginning and ending with an
-	// alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores
-	// (_), dots (.), and alphanumerics between. The prefix is optional. If
-	// specified, the prefix must be a DNS subdomain: a series of DNS labels
-	// separated by dots (.), not longer than 253 characters in total,
-	// followed by a slash (/). Metadata that fails to meet these
-	// requirements will be rejected. - The '(*.)google.com/' and
-	// '(*.)googleapis.com/' prefixes are reserved for system metadata
-	// managed by Service Directory. If the user tries to write to these
-	// keyspaces, those entries will be silently ignored by the system.
+	// key-value pairs. Metadata that goes beyond this limit are rejected *
+	// Valid metadata keys have two segments: an optional prefix and name,
+	// separated by a slash (/). The name segment is required and must be 63
+	// characters or less, beginning and ending with an alphanumeric
+	// character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.),
+	// and alphanumerics between. The prefix is optional. If specified, the
+	// prefix must be a DNS subdomain: a series of DNS labels separated by
+	// dots (.), not longer than 253 characters in total, followed by a
+	// slash (/). Metadata that fails to meet these requirements are
+	// rejected Note: This field is equivalent to the `annotations` field in
+	// the v1 API. They have the same syntax and read/write to the same
+	// location in Service Directory.
 	Metadata map[string]string `json:"metadata,omitempty"`
 
 	// Name: Immutable. The resource name for the service in the format
-	// 'projects/*/locations/*/namespaces/*/services/*'.
+	// `projects/*/locations/*/namespaces/*/services/*`.
 	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. The timestamp when the service was last
+	// updated. Note: endpoints being created/deleted/updated within the
+	// service are not considered service updates for the purpose of this
+	// timestamp.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Endpoints") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Endpoints") to include in
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -949,10 +991,10 @@ type SetIamPolicyRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Policy") to include in API
@@ -981,10 +1023,10 @@ type TestIamPermissionsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -1015,10 +1057,10 @@ type TestIamPermissionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -1048,6 +1090,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1091,7 +1135,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1193,28 +1237,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1257,7 +1307,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1328,7 +1378,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1340,13 +1390,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1394,7 +1444,10 @@ type ProjectsLocationsNamespacesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a namespace, and returns the new Namespace.
+// Create: Creates a namespace, and returns the new namespace.
+//
+// - parent: The resource name of the project and location the namespace
+//   will be created in.
 func (r *ProjectsLocationsNamespacesService) Create(parent string, namespace *Namespace) *ProjectsLocationsNamespacesCreateCall {
 	c := &ProjectsLocationsNamespacesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1441,7 +1494,7 @@ func (c *ProjectsLocationsNamespacesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsNamespacesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1505,7 +1558,7 @@ func (c *ProjectsLocationsNamespacesCreateCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a namespace, and returns the new Namespace.",
+	//   "description": "Creates a namespace, and returns the new namespace.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces",
 	//   "httpMethod": "POST",
 	//   "id": "servicedirectory.projects.locations.namespaces.create",
@@ -1552,6 +1605,8 @@ type ProjectsLocationsNamespacesDeleteCall struct {
 
 // Delete: Deletes a namespace. This also deletes all services and
 // endpoints in the namespace.
+//
+// - name: The name of the namespace to delete.
 func (r *ProjectsLocationsNamespacesService) Delete(name string) *ProjectsLocationsNamespacesDeleteCall {
 	c := &ProjectsLocationsNamespacesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1585,7 +1640,7 @@ func (c *ProjectsLocationsNamespacesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsNamespacesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1683,6 +1738,8 @@ type ProjectsLocationsNamespacesGetCall struct {
 }
 
 // Get: Gets a namespace.
+//
+// - name: The name of the namespace to retrieve.
 func (r *ProjectsLocationsNamespacesService) Get(name string) *ProjectsLocationsNamespacesGetCall {
 	c := &ProjectsLocationsNamespacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1726,7 +1783,7 @@ func (c *ProjectsLocationsNamespacesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsNamespacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1828,6 +1885,10 @@ type ProjectsLocationsNamespacesGetIamPolicyCall struct {
 
 // GetIamPolicy: Gets the IAM Policy for a resource (namespace or
 // service only).
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsNamespacesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsNamespacesGetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1862,7 +1923,7 @@ func (c *ProjectsLocationsNamespacesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsNamespacesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1968,6 +2029,9 @@ type ProjectsLocationsNamespacesListCall struct {
 }
 
 // List: Lists all namespaces.
+//
+// - parent: The resource name of the project and location whose
+//   namespaces you'd like to list.
 func (r *ProjectsLocationsNamespacesService) List(parent string) *ProjectsLocationsNamespacesListCall {
 	c := &ProjectsLocationsNamespacesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1975,31 +2039,34 @@ func (r *ProjectsLocationsNamespacesService) List(parent string) *ProjectsLocati
 }
 
 // Filter sets the optional parameter "filter": The filter to list
-// result by. General filter string syntax: () can be "name", or
-// "labels." for map field. can be "<, >, <=, >=, !=, =, :". Of which
-// ":" means HAS, and is roughly the same as "=". must be the same data
-// type as field. can be "AND, OR, NOT". Examples of valid filters: *
-// "labels.owner" returns Namespaces that have a label with the key
-// "owner" this is the same as "labels:owner". * "labels.protocol=gRPC"
-// returns Namespaces that have key/value "protocol=gRPC". *
-// "name>projects/my-project/locations/us-east/namespaces/namespace-c"
-// returns Namespaces that have name that is alphabetically later than
-// the string, so "namespace-e" will be returned but "namespace-a" will
-// not be. * "labels.owner!=sd AND labels.foo=bar" returns Namespaces
-// that have "owner" in label key but value is not "sd" AND have
-// key/value foo=bar. * "doesnotexist.foo=bar" returns an empty list.
-// Note that Namespace doesn't have a field called "doesnotexist". Since
-// the filter does not match any Namespaces, it returns no results.
+// results by. General `filter` string syntax: ` ()` * `` can be `name`
+// or `labels.` for map field * `` can be `<`, `>`, `<=`, `>=`, `!=`,
+// `=`, `:`. Of which `:` means `HAS`, and is roughly the same as `=` *
+// `` must be the same data type as field * `` can be `AND`, `OR`, `NOT`
+// Examples of valid filters: * `labels.owner` returns namespaces that
+// have a label with the key `owner`, this is the same as `labels:owner`
+// * `labels.owner=sd` returns namespaces that have key/value `owner=sd`
+// *
+// `name>projects/my-project/locations/us-east1/namespaces/namespace-c`
+// returns namespaces that have name that is alphabetically later than
+// the string, so "namespace-e" is returned but "namespace-a" is not *
+// `labels.owner!=sd AND labels.foo=bar` returns namespaces that have
+// `owner` in label key but value is not `sd` AND have key/value
+// `foo=bar` * `doesnotexist.foo=bar` returns an empty list. Note that
+// namespace doesn't have a field called "doesnotexist". Since the
+// filter does not match any namespaces, it returns no results For more
+// information about filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsLocationsNamespacesListCall) Filter(filter string) *ProjectsLocationsNamespacesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": The order to list
-// result by. General order by string syntax: () (,) allows values
-// {"name"} ascending or descending order by . If this is left blank,
-// "asc" is used. Note that an empty order_by string result in default
-// order, which is order by name in ascending order.
+// results by. General `order_by` string syntax: ` () (,)` * `` allows
+// value: `name` * `` ascending or descending order by ``. If this is
+// left blank, `asc` is used Note that an empty `order_by` string
+// results in default order, which is order by `name` in ascending
+// order.
 func (c *ProjectsLocationsNamespacesListCall) OrderBy(orderBy string) *ProjectsLocationsNamespacesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -2056,7 +2123,7 @@ func (c *ProjectsLocationsNamespacesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsNamespacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2127,12 +2194,12 @@ func (c *ProjectsLocationsNamespacesListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter to list result by. General filter string syntax: () can be \"name\", or \"labels.\" for map field. can be \"\u003c, \u003e, \u003c=, \u003e=, !=, =, :\". Of which \":\" means HAS, and is roughly the same as \"=\". must be the same data type as field. can be \"AND, OR, NOT\". Examples of valid filters: * \"labels.owner\" returns Namespaces that have a label with the key \"owner\" this is the same as \"labels:owner\". * \"labels.protocol=gRPC\" returns Namespaces that have key/value \"protocol=gRPC\". * \"name\u003eprojects/my-project/locations/us-east/namespaces/namespace-c\" returns Namespaces that have name that is alphabetically later than the string, so \"namespace-e\" will be returned but \"namespace-a\" will not be. * \"labels.owner!=sd AND labels.foo=bar\" returns Namespaces that have \"owner\" in label key but value is not \"sd\" AND have key/value foo=bar. * \"doesnotexist.foo=bar\" returns an empty list. Note that Namespace doesn't have a field called \"doesnotexist\". Since the filter does not match any Namespaces, it returns no results.",
+	//       "description": "Optional. The filter to list results by. General `filter` string syntax: ` ()` * `` can be `name` or `labels.` for map field * `` can be `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, `:`. Of which `:` means `HAS`, and is roughly the same as `=` * `` must be the same data type as field * `` can be `AND`, `OR`, `NOT` Examples of valid filters: * `labels.owner` returns namespaces that have a label with the key `owner`, this is the same as `labels:owner` * `labels.owner=sd` returns namespaces that have key/value `owner=sd` * `name\u003eprojects/my-project/locations/us-east1/namespaces/namespace-c` returns namespaces that have name that is alphabetically later than the string, so \"namespace-e\" is returned but \"namespace-a\" is not * `labels.owner!=sd AND labels.foo=bar` returns namespaces that have `owner` in label key but value is not `sd` AND have key/value `foo=bar` * `doesnotexist.foo=bar` returns an empty list. Note that namespace doesn't have a field called \"doesnotexist\". Since the filter does not match any namespaces, it returns no results For more information about filtering, see [API Filtering](https://aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. The order to list result by. General order by string syntax: () (,) allows values {\"name\"} ascending or descending order by . If this is left blank, \"asc\" is used. Note that an empty order_by string result in default order, which is order by name in ascending order.",
+	//       "description": "Optional. The order to list results by. General `order_by` string syntax: ` () (,)` * `` allows value: `name` * `` ascending or descending order by ``. If this is left blank, `asc` is used Note that an empty `order_by` string results in default order, which is order by `name` in ascending order.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2148,7 +2215,7 @@ func (c *ProjectsLocationsNamespacesListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the project and location whose namespaces we'd like to list.",
+	//       "description": "Required. The resource name of the project and location whose namespaces you'd like to list.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2199,6 +2266,9 @@ type ProjectsLocationsNamespacesPatchCall struct {
 }
 
 // Patch: Updates a namespace.
+//
+// - name: Immutable. The resource name for the namespace in the format
+//   `projects/*/locations/*/namespaces/*`.
 func (r *ProjectsLocationsNamespacesService) Patch(name string, namespace *Namespace) *ProjectsLocationsNamespacesPatchCall {
 	c := &ProjectsLocationsNamespacesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2240,7 +2310,7 @@ func (c *ProjectsLocationsNamespacesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsNamespacesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2313,7 +2383,7 @@ func (c *ProjectsLocationsNamespacesPatchCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. The resource name for the namespace in the format 'projects/*/locations/*/namespaces/*'.",
+	//       "description": "Immutable. The resource name for the namespace in the format `projects/*/locations/*/namespaces/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+$",
 	//       "required": true,
@@ -2353,6 +2423,10 @@ type ProjectsLocationsNamespacesSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the IAM Policy for a resource (namespace or
 // service only).
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsNamespacesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsNamespacesSetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2387,7 +2461,7 @@ func (c *ProjectsLocationsNamespacesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsNamespacesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2494,6 +2568,10 @@ type ProjectsLocationsNamespacesTestIamPermissionsCall struct {
 
 // TestIamPermissions: Tests IAM permissions for a resource (namespace
 // or service only).
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsNamespacesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsNamespacesTestIamPermissionsCall {
 	c := &ProjectsLocationsNamespacesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2528,7 +2606,7 @@ func (c *ProjectsLocationsNamespacesTestIamPermissionsCall) Header() http.Header
 
 func (c *ProjectsLocationsNamespacesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2633,7 +2711,10 @@ type ProjectsLocationsNamespacesServicesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a service, and returns the new Service.
+// Create: Creates a service, and returns the new service.
+//
+// - parent: The resource name of the namespace this service will belong
+//   to.
 func (r *ProjectsLocationsNamespacesServicesService) Create(parent string, service *Service) *ProjectsLocationsNamespacesServicesCreateCall {
 	c := &ProjectsLocationsNamespacesServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2680,7 +2761,7 @@ func (c *ProjectsLocationsNamespacesServicesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsNamespacesServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2744,7 +2825,7 @@ func (c *ProjectsLocationsNamespacesServicesCreateCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a service, and returns the new Service.",
+	//   "description": "Creates a service, and returns the new service.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}/services",
 	//   "httpMethod": "POST",
 	//   "id": "servicedirectory.projects.locations.namespaces.services.create",
@@ -2791,6 +2872,8 @@ type ProjectsLocationsNamespacesServicesDeleteCall struct {
 
 // Delete: Deletes a service. This also deletes all endpoints associated
 // with the service.
+//
+// - name: The name of the service to delete.
 func (r *ProjectsLocationsNamespacesServicesService) Delete(name string) *ProjectsLocationsNamespacesServicesDeleteCall {
 	c := &ProjectsLocationsNamespacesServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2824,7 +2907,7 @@ func (c *ProjectsLocationsNamespacesServicesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsNamespacesServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2922,6 +3005,8 @@ type ProjectsLocationsNamespacesServicesGetCall struct {
 }
 
 // Get: Gets a service.
+//
+// - name: The name of the service to get.
 func (r *ProjectsLocationsNamespacesServicesService) Get(name string) *ProjectsLocationsNamespacesServicesGetCall {
 	c := &ProjectsLocationsNamespacesServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2965,7 +3050,7 @@ func (c *ProjectsLocationsNamespacesServicesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsNamespacesServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3067,6 +3152,10 @@ type ProjectsLocationsNamespacesServicesGetIamPolicyCall struct {
 
 // GetIamPolicy: Gets the IAM Policy for a resource (namespace or
 // service only).
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsNamespacesServicesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsNamespacesServicesGetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3101,7 +3190,7 @@ func (c *ProjectsLocationsNamespacesServicesGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsNamespacesServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3207,6 +3296,9 @@ type ProjectsLocationsNamespacesServicesListCall struct {
 }
 
 // List: Lists all services belonging to a namespace.
+//
+// - parent: The resource name of the namespace whose services you'd
+//   like to list.
 func (r *ProjectsLocationsNamespacesServicesService) List(parent string) *ProjectsLocationsNamespacesServicesListCall {
 	c := &ProjectsLocationsNamespacesServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3214,30 +3306,35 @@ func (r *ProjectsLocationsNamespacesServicesService) List(parent string) *Projec
 }
 
 // Filter sets the optional parameter "filter": The filter to list
-// result by. General filter string syntax: () can be "name", or
-// "metadata." for map field. can be "<, >, <=, >=, !=, =, :". Of which
-// ":" means HAS, and is roughly the same as "=". must be the same data
-// type as field. can be "AND, OR, NOT". Examples of valid filters: *
-// "metadata.owner" returns Services that have a label with the key
-// "owner" this is the same as "metadata:owner". *
-// "metadata.protocol=gRPC" returns Services that have key/value
-// "protocol=gRPC". *
-// "name>projects/my-project/locations/us-east/namespaces/my-namespace/se
-// rvices/service-c" returns Services that have name that is
-// alphabetically later than the string, so "service-e" will be returned
-// but "service-a" will not be. * "metadata.owner!=sd AND
-// metadata.foo=bar" returns Services that have "owner" in label key but
-// value is not "sd" AND have key/value foo=bar. *
-// "doesnotexist.foo=bar" returns an empty list. Note that Service
-// doesn't have a field called "doesnotexist". Since the filter does not
-// match any Services, it returns no results.
+// results by. General `filter` string syntax: ` ()` * `` can be `name`
+// or `metadata.` for map field * `` can be `<`, `>`, `<=`, `>=`, `!=`,
+// `=`, `:`. Of which `:` means `HAS`, and is roughly the same as `=` *
+// `` must be the same data type as field * `` can be `AND`, `OR`, `NOT`
+// Examples of valid filters: * `metadata.owner` returns services that
+// have a metadata with the key `owner`, this is the same as
+// `metadata:owner` * `metadata.protocol=gRPC` returns services that
+// have key/value `protocol=gRPC` *
+// `name>projects/my-project/locations/us-east1/namespaces/my-namespace/s
+// ervices/service-c` returns services that have name that is
+// alphabetically later than the string, so "service-e" is returned but
+// "service-a" is not * `metadata.owner!=sd AND metadata.foo=bar`
+// returns services that have `owner` in metadata key but value is not
+// `sd` AND have key/value `foo=bar` * `doesnotexist.foo=bar` returns an
+// empty list. Note that service doesn't have a field called
+// "doesnotexist". Since the filter does not match any services, it
+// returns no results For more information about filtering, see API
+// Filtering (https://aip.dev/160).
 func (c *ProjectsLocationsNamespacesServicesListCall) Filter(filter string) *ProjectsLocationsNamespacesServicesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": The order to list
-// result by.
+// results by. General `order_by` string syntax: ` () (,)` * `` allows
+// value: `name` * `` ascending or descending order by ``. If this is
+// left blank, `asc` is used Note that an empty `order_by` string
+// results in default order, which is order by `name` in ascending
+// order.
 func (c *ProjectsLocationsNamespacesServicesListCall) OrderBy(orderBy string) *ProjectsLocationsNamespacesServicesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -3294,7 +3391,7 @@ func (c *ProjectsLocationsNamespacesServicesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsNamespacesServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3365,12 +3462,12 @@ func (c *ProjectsLocationsNamespacesServicesListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter to list result by. General filter string syntax: () can be \"name\", or \"metadata.\" for map field. can be \"\u003c, \u003e, \u003c=, \u003e=, !=, =, :\". Of which \":\" means HAS, and is roughly the same as \"=\". must be the same data type as field. can be \"AND, OR, NOT\". Examples of valid filters: * \"metadata.owner\" returns Services that have a label with the key \"owner\" this is the same as \"metadata:owner\". * \"metadata.protocol=gRPC\" returns Services that have key/value \"protocol=gRPC\". * \"name\u003eprojects/my-project/locations/us-east/namespaces/my-namespace/services/service-c\" returns Services that have name that is alphabetically later than the string, so \"service-e\" will be returned but \"service-a\" will not be. * \"metadata.owner!=sd AND metadata.foo=bar\" returns Services that have \"owner\" in label key but value is not \"sd\" AND have key/value foo=bar. * \"doesnotexist.foo=bar\" returns an empty list. Note that Service doesn't have a field called \"doesnotexist\". Since the filter does not match any Services, it returns no results.",
+	//       "description": "Optional. The filter to list results by. General `filter` string syntax: ` ()` * `` can be `name` or `metadata.` for map field * `` can be `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, `:`. Of which `:` means `HAS`, and is roughly the same as `=` * `` must be the same data type as field * `` can be `AND`, `OR`, `NOT` Examples of valid filters: * `metadata.owner` returns services that have a metadata with the key `owner`, this is the same as `metadata:owner` * `metadata.protocol=gRPC` returns services that have key/value `protocol=gRPC` * `name\u003eprojects/my-project/locations/us-east1/namespaces/my-namespace/services/service-c` returns services that have name that is alphabetically later than the string, so \"service-e\" is returned but \"service-a\" is not * `metadata.owner!=sd AND metadata.foo=bar` returns services that have `owner` in metadata key but value is not `sd` AND have key/value `foo=bar` * `doesnotexist.foo=bar` returns an empty list. Note that service doesn't have a field called \"doesnotexist\". Since the filter does not match any services, it returns no results For more information about filtering, see [API Filtering](https://aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. The order to list result by.",
+	//       "description": "Optional. The order to list results by. General `order_by` string syntax: ` () (,)` * `` allows value: `name` * `` ascending or descending order by ``. If this is left blank, `asc` is used Note that an empty `order_by` string results in default order, which is order by `name` in ascending order.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3386,7 +3483,7 @@ func (c *ProjectsLocationsNamespacesServicesListCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the namespace whose services we'd like to list.",
+	//       "description": "Required. The resource name of the namespace whose services you'd like to list.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+$",
 	//       "required": true,
@@ -3437,6 +3534,9 @@ type ProjectsLocationsNamespacesServicesPatchCall struct {
 }
 
 // Patch: Updates a service.
+//
+// - name: Immutable. The resource name for the service in the format
+//   `projects/*/locations/*/namespaces/*/services/*`.
 func (r *ProjectsLocationsNamespacesServicesService) Patch(name string, service *Service) *ProjectsLocationsNamespacesServicesPatchCall {
 	c := &ProjectsLocationsNamespacesServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3478,7 +3578,7 @@ func (c *ProjectsLocationsNamespacesServicesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsNamespacesServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3551,7 +3651,7 @@ func (c *ProjectsLocationsNamespacesServicesPatchCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. The resource name for the service in the format 'projects/*/locations/*/namespaces/*/services/*'.",
+	//       "description": "Immutable. The resource name for the service in the format `projects/*/locations/*/namespaces/*/services/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -3591,6 +3691,8 @@ type ProjectsLocationsNamespacesServicesResolveCall struct {
 
 // Resolve: Returns a service and its associated endpoints. Resolving a
 // service is not considered an active developer method.
+//
+// - name: The name of the service to resolve.
 func (r *ProjectsLocationsNamespacesServicesService) Resolve(name string, resolveservicerequest *ResolveServiceRequest) *ProjectsLocationsNamespacesServicesResolveCall {
 	c := &ProjectsLocationsNamespacesServicesResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3625,7 +3727,7 @@ func (c *ProjectsLocationsNamespacesServicesResolveCall) Header() http.Header {
 
 func (c *ProjectsLocationsNamespacesServicesResolveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3732,6 +3834,10 @@ type ProjectsLocationsNamespacesServicesSetIamPolicyCall struct {
 
 // SetIamPolicy: Sets the IAM Policy for a resource (namespace or
 // service only).
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *ProjectsLocationsNamespacesServicesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsNamespacesServicesSetIamPolicyCall {
 	c := &ProjectsLocationsNamespacesServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3766,7 +3872,7 @@ func (c *ProjectsLocationsNamespacesServicesSetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsNamespacesServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3873,6 +3979,10 @@ type ProjectsLocationsNamespacesServicesTestIamPermissionsCall struct {
 
 // TestIamPermissions: Tests IAM permissions for a resource (namespace
 // or service only).
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *ProjectsLocationsNamespacesServicesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsNamespacesServicesTestIamPermissionsCall {
 	c := &ProjectsLocationsNamespacesServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3907,7 +4017,7 @@ func (c *ProjectsLocationsNamespacesServicesTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsNamespacesServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4012,7 +4122,10 @@ type ProjectsLocationsNamespacesServicesEndpointsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a endpoint, and returns the new Endpoint.
+// Create: Creates an endpoint, and returns the new endpoint.
+//
+// - parent: The resource name of the service that this endpoint
+//   provides.
 func (r *ProjectsLocationsNamespacesServicesEndpointsService) Create(parent string, endpoint *Endpoint) *ProjectsLocationsNamespacesServicesEndpointsCreateCall {
 	c := &ProjectsLocationsNamespacesServicesEndpointsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4059,7 +4172,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsCreateCall) Header() http.H
 
 func (c *ProjectsLocationsNamespacesServicesEndpointsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4123,7 +4236,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsCreateCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a endpoint, and returns the new Endpoint.",
+	//   "description": "Creates an endpoint, and returns the new endpoint.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}/services/{servicesId}/endpoints",
 	//   "httpMethod": "POST",
 	//   "id": "servicedirectory.projects.locations.namespaces.services.endpoints.create",
@@ -4168,7 +4281,9 @@ type ProjectsLocationsNamespacesServicesEndpointsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a endpoint.
+// Delete: Deletes an endpoint.
+//
+// - name: The name of the endpoint to delete.
 func (r *ProjectsLocationsNamespacesServicesEndpointsService) Delete(name string) *ProjectsLocationsNamespacesServicesEndpointsDeleteCall {
 	c := &ProjectsLocationsNamespacesServicesEndpointsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4202,7 +4317,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsDeleteCall) Header() http.H
 
 func (c *ProjectsLocationsNamespacesServicesEndpointsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4261,7 +4376,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsDeleteCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a endpoint.",
+	//   "description": "Deletes an endpoint.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}/services/{servicesId}/endpoints/{endpointsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "servicedirectory.projects.locations.namespaces.services.endpoints.delete",
@@ -4299,7 +4414,9 @@ type ProjectsLocationsNamespacesServicesEndpointsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a endpoint.
+// Get: Gets an endpoint.
+//
+// - name: The name of the endpoint to get.
 func (r *ProjectsLocationsNamespacesServicesEndpointsService) Get(name string) *ProjectsLocationsNamespacesServicesEndpointsGetCall {
 	c := &ProjectsLocationsNamespacesServicesEndpointsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4343,7 +4460,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsGetCall) Header() http.Head
 
 func (c *ProjectsLocationsNamespacesServicesEndpointsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4405,7 +4522,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsGetCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a endpoint.",
+	//   "description": "Gets an endpoint.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}/services/{servicesId}/endpoints/{endpointsId}",
 	//   "httpMethod": "GET",
 	//   "id": "servicedirectory.projects.locations.namespaces.services.endpoints.get",
@@ -4444,6 +4561,9 @@ type ProjectsLocationsNamespacesServicesEndpointsListCall struct {
 }
 
 // List: Lists all endpoints.
+//
+// - parent: The resource name of the service whose endpoints you'd like
+//   to list.
 func (r *ProjectsLocationsNamespacesServicesEndpointsService) List(parent string) *ProjectsLocationsNamespacesServicesEndpointsListCall {
 	c := &ProjectsLocationsNamespacesServicesEndpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4451,32 +4571,38 @@ func (r *ProjectsLocationsNamespacesServicesEndpointsService) List(parent string
 }
 
 // Filter sets the optional parameter "filter": The filter to list
-// result by. General filter string syntax: () can be "name", "address",
-// "port" or "metadata." for map field. can be "<, >, <=, >=, !=, =, :".
-// Of which ":" means HAS, and is roughly the same as "=". must be the
-// same data type as field. can be "AND, OR, NOT". Examples of valid
-// filters: * "metadata.owner" returns Endpoints that have a label with
-// the key "owner" this is the same as "metadata:owner". *
-// "metadata.protocol=gRPC" returns Endpoints that have key/value
-// "protocol=gRPC". * "address=192.108.1.105" returns Endpoints that
-// have this address. * "port>8080" returns Endpoints that have port
-// number larger than 8080. *
-// "name>projects/my-project/locations/us-east/namespaces/my-namespace/se
-// rvices/my-service/endpoints/endpoint-c" returns Endpoints that have
-// name that is alphabetically later than the string, so "endpoint-e"
-// will be returned but "endpoint-a" will not be. * "metadata.owner!=sd
-// AND metadata.foo=bar" returns Endpoints that have "owner" in label
-// key but value is not "sd" AND have key/value foo=bar. *
-// "doesnotexist.foo=bar" returns an empty list. Note that Endpoint
+// results by. General `filter` string syntax: ` ()` * `` can be `name`,
+// `address`, `port`, or `metadata.` for map field * `` can be `<`, `>`,
+// `<=`, `>=`, `!=`, `=`, `:`. Of which `:` means `HAS`, and is roughly
+// the same as `=` * `` must be the same data type as field * `` can be
+// `AND`, `OR`, `NOT` Examples of valid filters: * `metadata.owner`
+// returns endpoints that have a metadata with the key `owner`, this is
+// the same as `metadata:owner` * `metadata.protocol=gRPC` returns
+// endpoints that have key/value `protocol=gRPC` *
+// `address=192.108.1.105` returns endpoints that have this address *
+// `port>8080` returns endpoints that have port number larger than 8080
+// *
+// `name>projects/my-project/locations/us-east1/namespaces/my-namespace/s
+// ervices/my-service/endpoints/endpoint-c` returns endpoints that have
+// name that is alphabetically later than the string, so "endpoint-e" is
+// returned but "endpoint-a" is not * `metadata.owner!=sd AND
+// metadata.foo=bar` returns endpoints that have `owner` in metadata key
+// but value is not `sd` AND have key/value `foo=bar` *
+// `doesnotexist.foo=bar` returns an empty list. Note that endpoint
 // doesn't have a field called "doesnotexist". Since the filter does not
-// match any Endpoints, it returns no results.
+// match any endpoints, it returns no results For more information about
+// filtering, see API Filtering (https://aip.dev/160).
 func (c *ProjectsLocationsNamespacesServicesEndpointsListCall) Filter(filter string) *ProjectsLocationsNamespacesServicesEndpointsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": The order to list
-// result by.
+// results by. General `order_by` string syntax: ` () (,)` * `` allows
+// values: `name`, `address`, `port` * `` ascending or descending order
+// by ``. If this is left blank, `asc` is used Note that an empty
+// `order_by` string results in default order, which is order by `name`
+// in ascending order.
 func (c *ProjectsLocationsNamespacesServicesEndpointsListCall) OrderBy(orderBy string) *ProjectsLocationsNamespacesServicesEndpointsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -4533,7 +4659,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsListCall) Header() http.Hea
 
 func (c *ProjectsLocationsNamespacesServicesEndpointsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4604,12 +4730,12 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. The filter to list result by. General filter string syntax: () can be \"name\", \"address\", \"port\" or \"metadata.\" for map field. can be \"\u003c, \u003e, \u003c=, \u003e=, !=, =, :\". Of which \":\" means HAS, and is roughly the same as \"=\". must be the same data type as field. can be \"AND, OR, NOT\". Examples of valid filters: * \"metadata.owner\" returns Endpoints that have a label with the key \"owner\" this is the same as \"metadata:owner\". * \"metadata.protocol=gRPC\" returns Endpoints that have key/value \"protocol=gRPC\". * \"address=192.108.1.105\" returns Endpoints that have this address. * \"port\u003e8080\" returns Endpoints that have port number larger than 8080. * \"name\u003eprojects/my-project/locations/us-east/namespaces/my-namespace/services/my-service/endpoints/endpoint-c\" returns Endpoints that have name that is alphabetically later than the string, so \"endpoint-e\" will be returned but \"endpoint-a\" will not be. * \"metadata.owner!=sd AND metadata.foo=bar\" returns Endpoints that have \"owner\" in label key but value is not \"sd\" AND have key/value foo=bar. * \"doesnotexist.foo=bar\" returns an empty list. Note that Endpoint doesn't have a field called \"doesnotexist\". Since the filter does not match any Endpoints, it returns no results.",
+	//       "description": "Optional. The filter to list results by. General `filter` string syntax: ` ()` * `` can be `name`, `address`, `port`, or `metadata.` for map field * `` can be `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, `:`. Of which `:` means `HAS`, and is roughly the same as `=` * `` must be the same data type as field * `` can be `AND`, `OR`, `NOT` Examples of valid filters: * `metadata.owner` returns endpoints that have a metadata with the key `owner`, this is the same as `metadata:owner` * `metadata.protocol=gRPC` returns endpoints that have key/value `protocol=gRPC` * `address=192.108.1.105` returns endpoints that have this address * `port\u003e8080` returns endpoints that have port number larger than 8080 * `name\u003eprojects/my-project/locations/us-east1/namespaces/my-namespace/services/my-service/endpoints/endpoint-c` returns endpoints that have name that is alphabetically later than the string, so \"endpoint-e\" is returned but \"endpoint-a\" is not * `metadata.owner!=sd AND metadata.foo=bar` returns endpoints that have `owner` in metadata key but value is not `sd` AND have key/value `foo=bar` * `doesnotexist.foo=bar` returns an empty list. Note that endpoint doesn't have a field called \"doesnotexist\". Since the filter does not match any endpoints, it returns no results For more information about filtering, see [API Filtering](https://aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. The order to list result by.",
+	//       "description": "Optional. The order to list results by. General `order_by` string syntax: ` () (,)` * `` allows values: `name`, `address`, `port` * `` ascending or descending order by ``. If this is left blank, `asc` is used Note that an empty `order_by` string results in default order, which is order by `name` in ascending order.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4625,7 +4751,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsListCall) Do(opts ...google
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the service whose endpoints we'd like to list.",
+	//       "description": "Required. The resource name of the service whose endpoints you'd like to list.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -4675,7 +4801,10 @@ type ProjectsLocationsNamespacesServicesEndpointsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a endpoint.
+// Patch: Updates an endpoint.
+//
+// - name: Immutable. The resource name for the endpoint in the format
+//   `projects/*/locations/*/namespaces/*/services/*/endpoints/*`.
 func (r *ProjectsLocationsNamespacesServicesEndpointsService) Patch(name string, endpoint *Endpoint) *ProjectsLocationsNamespacesServicesEndpointsPatchCall {
 	c := &ProjectsLocationsNamespacesServicesEndpointsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4717,7 +4846,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsPatchCall) Header() http.He
 
 func (c *ProjectsLocationsNamespacesServicesEndpointsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4781,7 +4910,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsPatchCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a endpoint.",
+	//   "description": "Updates an endpoint.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/namespaces/{namespacesId}/services/{servicesId}/endpoints/{endpointsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "servicedirectory.projects.locations.namespaces.services.endpoints.patch",
@@ -4790,7 +4919,7 @@ func (c *ProjectsLocationsNamespacesServicesEndpointsPatchCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. The resource name for the endpoint in the format 'projects/*/locations/*/namespaces/*/services/*/endpoints/*'.",
+	//       "description": "Immutable. The resource name for the endpoint in the format `projects/*/locations/*/namespaces/*/services/*/endpoints/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/namespaces/[^/]+/services/[^/]+/endpoints/[^/]+$",
 	//       "required": true,

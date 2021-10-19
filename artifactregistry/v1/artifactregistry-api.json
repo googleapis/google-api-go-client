@@ -3,10 +3,10 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         },
         "https://www.googleapis.com/auth/cloud-platform.read-only": {
-          "description": "View your data across Google Cloud Platform services"
+          "description": "View your data across Google Cloud services and see the email address of your Google Account"
         }
       }
     }
@@ -194,7 +194,9 @@
           "flatPath": "v1/operations",
           "httpMethod": "GET",
           "id": "artifactregistry.operations.list",
-          "parameterOrder": [],
+          "parameterOrder": [
+            "name"
+          ],
           "parameters": {
             "filter": {
               "description": "The standard list filter.",
@@ -203,7 +205,9 @@
             },
             "name": {
               "description": "The name of the operation's parent resource.",
-              "location": "query",
+              "location": "path",
+              "pattern": "^operations$",
+              "required": true,
               "type": "string"
             },
             "pageSize": {
@@ -218,7 +222,7 @@
               "type": "string"
             }
           },
-          "path": "v1/operations",
+          "path": "v1/{+name}",
           "response": {
             "$ref": "ListOperationsResponse"
           },
@@ -228,11 +232,177 @@
           ]
         }
       }
+    },
+    "projects": {
+      "resources": {
+        "locations": {
+          "resources": {
+            "repositories": {
+              "methods": {
+                "get": {
+                  "description": "Gets a repository.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}",
+                  "httpMethod": "GET",
+                  "id": "artifactregistry.projects.locations.repositories.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the repository to retrieve.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "Repository"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only"
+                  ]
+                },
+                "list": {
+                  "description": "Lists repositories.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/repositories",
+                  "httpMethod": "GET",
+                  "id": "artifactregistry.projects.locations.repositories.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "The maximum number of repositories to return.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "The next_page_token value returned from a previous list request, if any.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The name of the parent resource whose repositories will be listed.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/repositories",
+                  "response": {
+                    "$ref": "ListRepositoriesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloud-platform.read-only"
+                  ]
+                }
+              },
+              "resources": {
+                "dockerImages": {
+                  "methods": {
+                    "list": {
+                      "description": "Lists docker images.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/dockerImages",
+                      "httpMethod": "GET",
+                      "id": "artifactregistry.projects.locations.repositories.dockerImages.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "pageSize": {
+                          "description": "The maximum number of artifacts to return.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "The next_page_token value returned from a previous list request, if any.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. The name of the parent resource whose docker images will be listed.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}/dockerImages",
+                      "response": {
+                        "$ref": "ListDockerImagesResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/cloud-platform.read-only"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
-  "revision": "20201215",
+  "revision": "20210918",
   "rootUrl": "https://artifactregistry.googleapis.com/",
   "schemas": {
+    "AptArtifact": {
+      "description": "A detailed representation of an Apt artifact. Information in the record is derived from the archive's control file. See https://www.debian.org/doc/debian-policy/ch-controlfields.html",
+      "id": "AptArtifact",
+      "properties": {
+        "architecture": {
+          "description": "Output only. Operating system architecture of the artifact.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "component": {
+          "description": "Output only. Repository component of the artifact.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "controlFile": {
+          "description": "Output only. Contents of the artifact's control metadata file.",
+          "format": "byte",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. The Artifact Registry resource name of the artifact.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "packageName": {
+          "description": "Output only. The Apt package name of the artifact.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "packageType": {
+          "description": "Output only. An artifact is a binary or source package.",
+          "enum": [
+            "PACKAGE_TYPE_UNSPECIFIED",
+            "BINARY",
+            "SOURCE"
+          ],
+          "enumDescriptions": [
+            "Package type is not specified.",
+            "Binary package.",
+            "Source package."
+          ],
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "CancelOperationRequest": {
       "description": "The request message for Operations.CancelOperation.",
       "id": "CancelOperationRequest",
@@ -240,20 +410,25 @@
       "type": "object"
     },
     "DockerImage": {
-      "description": "DockerImage represents a docker artifact.",
+      "description": "DockerImage represents a docker artifact. The following fields are returned as untyped metadata in the Version resource, using camelcase keys (i.e. metadata.imageSizeBytes): - imageSizeBytes - mediaType - buildTime",
       "id": "DockerImage",
       "properties": {
+        "buildTime": {
+          "description": "The time this image was built. This field is returned as the 'metadata.buildTime' field in the Version resource. The build time is returned to the client as an RFC 3339 string, which can be easily used with the JavaScript Date constructor and keeps the Version timestamps returned via OnePlatform consistent, as JSON marshals google.protobuf.Timestamp into an RFC 3339 string.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "imageSizeBytes": {
-          "description": "Calculated size of the image.",
+          "description": "Calculated size of the image. This field is returned as the 'metadata.imageSizeBytes' field in the Version resource.",
           "format": "int64",
           "type": "string"
         },
         "mediaType": {
-          "description": "Media type of this image, e.g. \"application/vnd.docker.distribution.manifest.v2+json\".",
+          "description": "Media type of this image, e.g. \"application/vnd.docker.distribution.manifest.v2+json\". This field is returned as the 'metadata.mediaType' field in the Version resource.",
           "type": "string"
         },
         "name": {
-          "description": "Required. registry_location, project_id, repository_name and image id forms a unique image name:`projects//locations//repository//dockerimages/`. For example, \"projects/test-project/locations/us-west4/repositories/test-repo/dockerimages/ nginx@sha256:e9954c1fc875017be1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf\", where \"us-west4\" is the registry_location, \"test-project\" is the project_id, \"test-repo\" is the repository_name and \"nginx@sha256:e9954c1fc875017be1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf\" is the image's digest.",
+          "description": "Required. registry_location, project_id, repository_name and image id forms a unique image name:`projects//locations//repository//dockerImages/`. For example, \"projects/test-project/locations/us-west4/repositories/test-repo/dockerImages/ nginx@sha256:e9954c1fc875017be1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf\", where \"us-west4\" is the registry_location, \"test-project\" is the project_id, \"test-repo\" is the repository_name and \"nginx@sha256:e9954c1fc875017be1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf\" is the image's digest.",
           "type": "string"
         },
         "tags": {
@@ -281,6 +456,132 @@
       "properties": {},
       "type": "object"
     },
+    "ImportAptArtifactsErrorInfo": {
+      "description": "Error information explaining why a package was not imported.",
+      "id": "ImportAptArtifactsErrorInfo",
+      "properties": {
+        "error": {
+          "$ref": "Status",
+          "description": "The detailed error status."
+        },
+        "gcsSource": {
+          "$ref": "ImportAptArtifactsGcsSource",
+          "description": "Google Cloud Storage location requested."
+        }
+      },
+      "type": "object"
+    },
+    "ImportAptArtifactsGcsSource": {
+      "description": "Google Cloud Storage location where the artifacts currently reside.",
+      "id": "ImportAptArtifactsGcsSource",
+      "properties": {
+        "uris": {
+          "description": "Cloud Storage paths URI (e.g., gs://my_bucket//my_object).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "useWildcards": {
+          "description": "Supports URI wildcards for matching multiple objects from a single URI.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "ImportAptArtifactsResponse": {
+      "description": "The response message from importing artifacts.",
+      "id": "ImportAptArtifactsResponse",
+      "properties": {
+        "aptArtifacts": {
+          "description": "The Apt artifacts updated.",
+          "items": {
+            "$ref": "AptArtifact"
+          },
+          "type": "array"
+        },
+        "errors": {
+          "description": "Detailed error info for packages that were not imported.",
+          "items": {
+            "$ref": "ImportAptArtifactsErrorInfo"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ImportYumArtifactsErrorInfo": {
+      "description": "Error information explaining why a package was not imported.",
+      "id": "ImportYumArtifactsErrorInfo",
+      "properties": {
+        "error": {
+          "$ref": "Status",
+          "description": "The detailed error status."
+        },
+        "gcsSource": {
+          "$ref": "ImportYumArtifactsGcsSource",
+          "description": "Google Cloud Storage location requested."
+        }
+      },
+      "type": "object"
+    },
+    "ImportYumArtifactsGcsSource": {
+      "description": "Google Cloud Storage location where the artifacts currently reside.",
+      "id": "ImportYumArtifactsGcsSource",
+      "properties": {
+        "uris": {
+          "description": "Cloud Storage paths URI (e.g., gs://my_bucket//my_object).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "useWildcards": {
+          "description": "Supports URI wildcards for matching multiple objects from a single URI.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "ImportYumArtifactsResponse": {
+      "description": "The response message from importing artifacts.",
+      "id": "ImportYumArtifactsResponse",
+      "properties": {
+        "errors": {
+          "description": "Detailed error info for packages that were not imported.",
+          "items": {
+            "$ref": "ImportYumArtifactsErrorInfo"
+          },
+          "type": "array"
+        },
+        "yumArtifacts": {
+          "description": "The yum artifacts updated.",
+          "items": {
+            "$ref": "YumArtifact"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListDockerImagesResponse": {
+      "description": "The response from listing docker images.",
+      "id": "ListDockerImagesResponse",
+      "properties": {
+        "dockerImages": {
+          "description": "The docker images returned.",
+          "items": {
+            "$ref": "DockerImage"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "The token to retrieve the next page of artifacts, or empty if there are no more artifacts to return.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ListOperationsResponse": {
       "description": "The response message for Operations.ListOperations.",
       "id": "ListOperationsResponse",
@@ -293,6 +594,24 @@
           "description": "A list of operations that matches the specified filter in the request.",
           "items": {
             "$ref": "Operation"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListRepositoriesResponse": {
+      "description": "The response from listing repositories.",
+      "id": "ListRepositoriesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "The token to retrieve the next page of repositories, or empty if there are no more repositories to return.",
+          "type": "string"
+        },
+        "repositories": {
+          "description": "The repositories returned.",
+          "items": {
+            "$ref": "Repository"
           },
           "type": "array"
         }
@@ -334,6 +653,64 @@
       },
       "type": "object"
     },
+    "Repository": {
+      "description": "A Repository for storing artifacts with a specific format.",
+      "id": "Repository",
+      "properties": {
+        "createTime": {
+          "description": "The time when the repository was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "description": {
+          "description": "The user-provided description of the repository.",
+          "type": "string"
+        },
+        "format": {
+          "description": "The format of packages that are stored in the repository.",
+          "enum": [
+            "FORMAT_UNSPECIFIED",
+            "DOCKER",
+            "MAVEN",
+            "NPM",
+            "APT",
+            "YUM",
+            "PYTHON"
+          ],
+          "enumDescriptions": [
+            "Unspecified package format.",
+            "Docker package format.",
+            "Maven package format.",
+            "NPM package format.",
+            "APT package format.",
+            "YUM package format.",
+            "Python package format."
+          ],
+          "type": "string"
+        },
+        "kmsKeyName": {
+          "description": "The Cloud KMS resource name of the customer managed encryption key that’s used to encrypt the contents of the Repository. Has the form: `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. This value may not be changed after the Repository has been created.",
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Labels with user-defined metadata. This field may contain up to 64 entries. Label keys and values may be no longer than 63 characters. Label keys must begin with a lowercase letter and may only contain lowercase letters, numeric characters, underscores, and dashes.",
+          "type": "object"
+        },
+        "name": {
+          "description": "The name of the repository, for example: \"projects/p1/locations/us-central1/repositories/repo1\".",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "The time when the repository was last updated.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Status": {
       "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
       "id": "Status",
@@ -356,6 +733,93 @@
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UploadAptArtifactMediaResponse": {
+      "description": "The response to upload an artifact.",
+      "id": "UploadAptArtifactMediaResponse",
+      "properties": {
+        "operation": {
+          "$ref": "Operation",
+          "description": "Operation to be returned to the user."
+        }
+      },
+      "type": "object"
+    },
+    "UploadAptArtifactResponse": {
+      "description": "The response of the completed artifact upload operation. This response is contained in the Operation and available to users.",
+      "id": "UploadAptArtifactResponse",
+      "properties": {
+        "aptArtifacts": {
+          "description": "The Apt artifacts updated.",
+          "items": {
+            "$ref": "AptArtifact"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "UploadYumArtifactMediaResponse": {
+      "description": "The response to upload an artifact.",
+      "id": "UploadYumArtifactMediaResponse",
+      "properties": {
+        "operation": {
+          "$ref": "Operation",
+          "description": "Operation to be returned to the user."
+        }
+      },
+      "type": "object"
+    },
+    "UploadYumArtifactResponse": {
+      "description": "The response of the completed artifact upload operation. This response is contained in the Operation and available to users.",
+      "id": "UploadYumArtifactResponse",
+      "properties": {
+        "yumArtifacts": {
+          "description": "The Apt artifacts updated.",
+          "items": {
+            "$ref": "YumArtifact"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "YumArtifact": {
+      "description": "A detailed representation of a Yum artifact.",
+      "id": "YumArtifact",
+      "properties": {
+        "architecture": {
+          "description": "Output only. Operating system architecture of the artifact.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. The Artifact Registry resource name of the artifact.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "packageName": {
+          "description": "Output only. The yum package name of the artifact.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "packageType": {
+          "description": "Output only. An artifact is a binary or source package.",
+          "enum": [
+            "PACKAGE_TYPE_UNSPECIFIED",
+            "BINARY",
+            "SOURCE"
+          ],
+          "enumDescriptions": [
+            "Package type is not specified.",
+            "Binary package (.rpm). .rpm",
+            "Source package (.srpm)."
+          ],
+          "readOnly": true,
           "type": "string"
         }
       },

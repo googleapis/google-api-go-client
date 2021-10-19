@@ -85,7 +85,8 @@ const mtlsBasePath = "https://translation.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Translate text from one language to another using Google Translate
@@ -190,6 +191,178 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+// BatchDocumentInputConfig: Input configuration for
+// BatchTranslateDocument request.
+type BatchDocumentInputConfig struct {
+	// GcsSource: Google Cloud Storage location for the source input. This
+	// can be a single file (for example,
+	// `gs://translation-test/input.docx`) or a wildcard (for example,
+	// `gs://translation-test/*`). File mime type is determined based on
+	// extension. Supported mime type includes: - `pdf`, application/pdf -
+	// `docx`,
+	// application/vnd.openxmlformats-officedocument.wordprocessingml.documen
+	// t - `pptx`,
+	// application/vnd.openxmlformats-officedocument.presentationml.presentat
+	// ion - `xlsx`,
+	// application/vnd.openxmlformats-officedocument.spreadsheetml.sheet The
+	// max file size to support for `.docx`, `.pptx` and `.xlsx` is 100MB.
+	// The max file size to support for `.pdf` is 1GB and the max page limit
+	// is 1000 pages. The max file size to support for all input documents
+	// is 1GB.
+	GcsSource *GcsSource `json:"gcsSource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsSource") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchDocumentInputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDocumentInputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchDocumentOutputConfig: Output configuration for
+// BatchTranslateDocument request.
+type BatchDocumentOutputConfig struct {
+	// GcsDestination: Google Cloud Storage destination for output content.
+	// For every single input document (for example,
+	// gs://a/b/c.[extension]), we generate at most 2 * n output files. (n
+	// is the # of target_language_codes in the
+	// BatchTranslateDocumentRequest). While the input documents are being
+	// processed, we write/update an index file `index.csv` under
+	// `gcs_destination.output_uri_prefix` (for example,
+	// gs://translation_output/index.csv) The index file is
+	// generated/updated as new files are being translated. The format is:
+	// input_document,target_language_code,translation_output,error_output,
+	// glossary_translation_output,glossary_error_output `input_document` is
+	// one file we matched using gcs_source.input_uri.
+	// `target_language_code` is provided in the request.
+	// `translation_output` contains the translations. (details provided
+	// below) `error_output` contains the error message during processing of
+	// the file. Both translations_file and errors_file could be empty
+	// strings if we have no content to output.
+	// `glossary_translation_output` and `glossary_error_output` are the
+	// translated output/error when we apply glossaries. They could also be
+	// empty if we have no content to output. Once a row is present in
+	// index.csv, the input/output matching never changes. Callers should
+	// also expect all the content in input_file are processed and ready to
+	// be consumed (that is, no partial output file is written). Since
+	// index.csv will be keeping updated during the process, please make
+	// sure there is no custom retention policy applied on the output bucket
+	// that may avoid file updating.
+	// (https://cloud.google.com/storage/docs/bucket-lock?hl=en#retention-policy)
+	// The naming format of translation output files follows (for target
+	// language code [trg]): `translation_output`:
+	// gs://translation_output/a_b_c_[trg]_translation.[extension]
+	// `glossary_translation_output`:
+	// gs://translation_test/a_b_c_[trg]_glossary_translation.[extension]
+	// The output document will maintain the same file format as the input
+	// document. The naming format of error output files follows (for target
+	// language code [trg]): `error_output`:
+	// gs://translation_test/a_b_c_[trg]_errors.txt `glossary_error_output`:
+	// gs://translation_test/a_b_c_[trg]_glossary_translation.txt The error
+	// output is a txt file containing error details.
+	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsDestination") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchDocumentOutputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDocumentOutputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchTranslateDocumentRequest: The BatchTranslateDocument request.
+type BatchTranslateDocumentRequest struct {
+	// Glossaries: Optional. Glossaries to be applied. It's keyed by target
+	// language code.
+	Glossaries map[string]TranslateTextGlossaryConfig `json:"glossaries,omitempty"`
+
+	// InputConfigs: Required. Input configurations. The total number of
+	// files matched should be <= 100. The total content size to translate
+	// should be <= 100M Unicode codepoints. The files must use UTF-8
+	// encoding.
+	InputConfigs []*BatchDocumentInputConfig `json:"inputConfigs,omitempty"`
+
+	// Models: Optional. The models to use for translation. Map's key is
+	// target language code. Map's value is the model name. Value can be a
+	// built-in general model, or an AutoML Translation model. The value
+	// format depends on model type: - AutoML Translation models:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/{model
+	// -id}` - General (built-in) models:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
+	// l/nmt`, If the map is empty or a specific model is not requested for
+	// a language pair, then default google model (nmt) is used.
+	Models map[string]string `json:"models,omitempty"`
+
+	// OutputConfig: Required. Output configuration. If 2 input configs
+	// match to the same file (that is, same input path), we don't generate
+	// output for duplicate inputs.
+	OutputConfig *BatchDocumentOutputConfig `json:"outputConfig,omitempty"`
+
+	// SourceLanguageCode: Required. The BCP-47 language code of the input
+	// document if known, for example, "en-US" or "sr-Latn". Supported
+	// language codes are listed in Language Support
+	// (https://cloud.google.com/translate/docs/languages).
+	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
+
+	// TargetLanguageCodes: Required. The BCP-47 language code to use for
+	// translation of the input document. Specify up to 10 language codes
+	// here.
+	TargetLanguageCodes []string `json:"targetLanguageCodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Glossaries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Glossaries") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchTranslateDocumentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchTranslateDocumentRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BatchTranslateTextRequest: The batch translation request.
 type BatchTranslateTextRequest struct {
 	// Glossaries: Optional. Glossaries to be applied for translation. It's
@@ -217,9 +390,7 @@ type BatchTranslateTextRequest struct {
 	// `projects/{project-number-or-id}/locations/{location-id}/models/{model
 	// -id}` - General (built-in) models:
 	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-	// l/nmt`,
-	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-	// l/base` If the map is empty or a specific model is not requested for
+	// l/nmt`, If the map is empty or a specific model is not requested for
 	// a language pair, then default google model (nmt) is used.
 	Models map[string]string `json:"models,omitempty"`
 
@@ -236,10 +407,10 @@ type BatchTranslateTextRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Glossaries") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Glossaries") to include in
@@ -291,10 +462,10 @@ type DetectLanguageRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -324,10 +495,10 @@ type DetectLanguageResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Languages") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Languages") to include in
@@ -356,10 +527,10 @@ type DetectedLanguage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Confidence") to include in
@@ -391,6 +562,160 @@ func (s *DetectedLanguage) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// DocumentInputConfig: A document translation request input config.
+type DocumentInputConfig struct {
+	// Content: Document's content represented as a stream of bytes.
+	Content string `json:"content,omitempty"`
+
+	// GcsSource: Google Cloud Storage location. This must be a single file.
+	// For example: gs://example_bucket/example_file.pdf
+	GcsSource *GcsSource `json:"gcsSource,omitempty"`
+
+	// MimeType: Specifies the input document's mime_type. If not specified
+	// it will be determined using the file extension for gcs_source
+	// provided files. For a file provided through bytes content the
+	// mime_type must be provided. Currently supported mime types are: -
+	// application/pdf -
+	// application/vnd.openxmlformats-officedocument.wordprocessingml.documen
+	// t -
+	// application/vnd.openxmlformats-officedocument.presentationml.presentat
+	// ion -
+	// application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DocumentInputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DocumentInputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DocumentOutputConfig: A document translation request output config.
+type DocumentOutputConfig struct {
+	// GcsDestination: Optional. Google Cloud Storage destination for the
+	// translation output, e.g., `gs://my_bucket/my_directory/`. The
+	// destination directory provided does not have to be empty, but the
+	// bucket must exist. If a file with the same name as the output file
+	// already exists in the destination an error will be returned. For a
+	// DocumentInputConfig.contents provided document, the output file will
+	// have the name "output_[trg]_translations.[ext]", where - [trg]
+	// corresponds to the translated file's language code, - [ext]
+	// corresponds to the translated file's extension according to its mime
+	// type. For a DocumentInputConfig.gcs_uri provided document, the output
+	// file will have a name according to its URI. For example: an input
+	// file with URI: "gs://a/b/c.[extension]" stored in a gcs_destination
+	// bucket with name "my_bucket" will have an output URI:
+	// "gs://my_bucket/a_b_c_[trg]_translations.[ext]", where - [trg]
+	// corresponds to the translated file's language code, - [ext]
+	// corresponds to the translated file's extension according to its mime
+	// type. If the document was directly provided through the request, then
+	// the output document will have the format:
+	// "gs://my_bucket/translated_document_[trg]_translations.[ext], where -
+	// [trg] corresponds to the translated file's language code, - [ext]
+	// corresponds to the translated file's extension according to its mime
+	// type. If a glossary was provided, then the output URI for the
+	// glossary translation will be equal to the default output URI but have
+	// `glossary_translations` instead of `translations`. For the previous
+	// example, its glossary URI would be:
+	// "gs://my_bucket/a_b_c_[trg]_glossary_translations.[ext]". Thus the
+	// max number of output files will be 2 (Translated document, Glossary
+	// translated document). Callers should expect no partial outputs. If
+	// there is any error during document translation, no output will be
+	// stored in the Cloud Storage bucket.
+	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
+
+	// MimeType: Optional. Specifies the translated document's mime_type. If
+	// not specified, the translated file's mime type will be the same as
+	// the input file's mime type. Currently only support the output mime
+	// type to be the same as input mime type. - application/pdf -
+	// application/vnd.openxmlformats-officedocument.wordprocessingml.documen
+	// t -
+	// application/vnd.openxmlformats-officedocument.presentationml.presentat
+	// ion -
+	// application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsDestination") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DocumentOutputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DocumentOutputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DocumentTranslation: A translated document message.
+type DocumentTranslation struct {
+	// ByteStreamOutputs: The array of translated documents. It is expected
+	// to be size 1 for now. We may produce multiple translated documents in
+	// the future for other type of file formats.
+	ByteStreamOutputs []string `json:"byteStreamOutputs,omitempty"`
+
+	// DetectedLanguageCode: The detected language for the input document.
+	// If the user did not provide the source language for the input
+	// document, this field will have the language code automatically
+	// detected. If the source language was passed, auto-detection of the
+	// language does not occur and this field is empty.
+	DetectedLanguageCode string `json:"detectedLanguageCode,omitempty"`
+
+	// MimeType: The translated document's mime type.
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ByteStreamOutputs")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ByteStreamOutputs") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DocumentTranslation) MarshalJSON() ([]byte, error) {
+	type NoMethod DocumentTranslation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -413,10 +738,10 @@ type GcsDestination struct {
 
 	// ForceSendFields is a list of field names (e.g. "OutputUriPrefix") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputUriPrefix") to
@@ -443,10 +768,10 @@ type GcsSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "InputUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "InputUri") to include in
@@ -498,10 +823,10 @@ type Glossary struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -539,10 +864,10 @@ type GlossaryInputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsSource") to include in
@@ -587,10 +912,10 @@ type InputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsSource") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsSource") to include in
@@ -622,10 +947,10 @@ type LanguageCodePair struct {
 
 	// ForceSendFields is a list of field names (e.g. "SourceLanguageCode")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SourceLanguageCode") to
@@ -654,10 +979,10 @@ type LanguageCodesSet struct {
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCodes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LanguageCodes") to include
@@ -691,10 +1016,10 @@ type ListGlossariesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Glossaries") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Glossaries") to include in
@@ -728,10 +1053,10 @@ type ListLocationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Locations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Locations") to include in
@@ -765,10 +1090,10 @@ type ListOperationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -815,10 +1140,10 @@ type Location struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -877,10 +1202,10 @@ type Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -956,10 +1281,10 @@ type OutputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsDestination") to
@@ -1001,10 +1326,10 @@ type Status struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -1043,10 +1368,10 @@ type SupportedLanguage struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -1077,10 +1402,10 @@ type SupportedLanguages struct {
 
 	// ForceSendFields is a list of field names (e.g. "Languages") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Languages") to include in
@@ -1094,6 +1419,130 @@ type SupportedLanguages struct {
 
 func (s *SupportedLanguages) MarshalJSON() ([]byte, error) {
 	type NoMethod SupportedLanguages
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TranslateDocumentRequest: A document translation request.
+type TranslateDocumentRequest struct {
+	// DocumentInputConfig: Required. Input configurations.
+	DocumentInputConfig *DocumentInputConfig `json:"documentInputConfig,omitempty"`
+
+	// DocumentOutputConfig: Optional. Output configurations. Defines if the
+	// output file should be stored within Cloud Storage as well as the
+	// desired output format. If not provided the translated file will only
+	// be returned through a byte-stream and its output mime type will be
+	// the same as the input file's mime type.
+	DocumentOutputConfig *DocumentOutputConfig `json:"documentOutputConfig,omitempty"`
+
+	// GlossaryConfig: Optional. Glossary to be applied. The glossary must
+	// be within the same region (have the same location-id) as the model,
+	// otherwise an INVALID_ARGUMENT (400) error is returned.
+	GlossaryConfig *TranslateTextGlossaryConfig `json:"glossaryConfig,omitempty"`
+
+	// Labels: Optional. The labels with user-defined metadata for the
+	// request. Label keys and values can be no longer than 63 characters
+	// (Unicode codepoints), can only contain lowercase letters, numeric
+	// characters, underscores and dashes. International characters are
+	// allowed. Label values are optional. Label keys must start with a
+	// letter. See https://cloud.google.com/translate/docs/advanced/labels
+	// for more information.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Model: Optional. The `model` type requested for this translation. The
+	// format depends on model type: - AutoML Translation models:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/{model
+	// -id}` - General (built-in) models:
+	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
+	// l/nmt`, If not provided, the default Google model (NMT) will be used
+	// for translation.
+	Model string `json:"model,omitempty"`
+
+	// SourceLanguageCode: Optional. The BCP-47 language code of the input
+	// document if known, for example, "en-US" or "sr-Latn". Supported
+	// language codes are listed in Language Support. If the source language
+	// isn't specified, the API attempts to identify the source language
+	// automatically and returns the source language within the response.
+	// Source language must be specified if the request contains a glossary
+	// or a custom model.
+	SourceLanguageCode string `json:"sourceLanguageCode,omitempty"`
+
+	// TargetLanguageCode: Required. The BCP-47 language code to use for
+	// translation of the input document, set to one of the language codes
+	// listed in Language Support.
+	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DocumentInputConfig")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DocumentInputConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TranslateDocumentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod TranslateDocumentRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TranslateDocumentResponse: A translated document response message.
+type TranslateDocumentResponse struct {
+	// DocumentTranslation: Translated document.
+	DocumentTranslation *DocumentTranslation `json:"documentTranslation,omitempty"`
+
+	// GlossaryConfig: The `glossary_config` used for this translation.
+	GlossaryConfig *TranslateTextGlossaryConfig `json:"glossaryConfig,omitempty"`
+
+	// GlossaryDocumentTranslation: The document's translation output if a
+	// glossary is provided in the request. This can be the same as
+	// [TranslateDocumentResponse.document_translation] if no glossary terms
+	// apply.
+	GlossaryDocumentTranslation *DocumentTranslation `json:"glossaryDocumentTranslation,omitempty"`
+
+	// Model: Only present when 'model' is present in the request. 'model'
+	// is normalized to have a project number. For example: If the 'model'
+	// field in TranslateDocumentRequest is:
+	// `projects/{project-id}/locations/{location-id}/models/general/nmt`
+	// then `model` here would be normalized to
+	// `projects/{project-number}/locations/{location-id}/models/general/nmt`
+	// .
+	Model string `json:"model,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DocumentTranslation")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DocumentTranslation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TranslateDocumentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod TranslateDocumentResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1112,10 +1561,10 @@ type TranslateTextGlossaryConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "Glossary") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Glossary") to include in
@@ -1165,12 +1614,10 @@ type TranslateTextRequest struct {
 	// `projects/{project-number-or-id}/locations/{location-id}/models/{model
 	// -id}` - General (built-in) models:
 	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-	// l/nmt`,
-	// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-	// l/base` For global (non-regionalized) requests, use `location-id`
+	// l/nmt`, For global (non-regionalized) requests, use `location-id`
 	// `global`. For example,
 	// `projects/{project-number-or-id}/locations/global/models/general/nmt`.
-	//  If missing, the system decides which google base model to use.
+	//  If not provided, the default Google model (NMT) will be used
 	Model string `json:"model,omitempty"`
 
 	// SourceLanguageCode: Optional. The BCP-47 language code of the input
@@ -1187,10 +1634,10 @@ type TranslateTextRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Contents") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Contents") to include in
@@ -1224,8 +1671,8 @@ type TranslateTextResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "GlossaryTranslations") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1268,13 +1715,15 @@ type Translation struct {
 	// .
 	Model string `json:"model,omitempty"`
 
-	// TranslatedText: Text translated into the target language.
+	// TranslatedText: Text translated into the target language. If an error
+	// occurs during translation, this field might be excluded from the
+	// response.
 	TranslatedText string `json:"translatedText,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DetectedLanguageCode") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1307,10 +1756,10 @@ type WaitOperationRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Timeout") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Timeout") to include in
@@ -1340,6 +1789,15 @@ type ProjectsDetectLanguageCall struct {
 }
 
 // DetectLanguage: Detects the language of text within a request.
+//
+// - parent: Project or location to make a call. Must refer to a
+//   caller's project. Format:
+//   `projects/{project-number-or-id}/locations/{location-id}` or
+//   `projects/{project-number-or-id}`. For global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Only models within the same
+//   region (has same location-id) can be used. Otherwise an
+//   INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsService) DetectLanguage(parent string, detectlanguagerequest *DetectLanguageRequest) *ProjectsDetectLanguageCall {
 	c := &ProjectsDetectLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1374,7 +1832,7 @@ func (c *ProjectsDetectLanguageCall) Header() http.Header {
 
 func (c *ProjectsDetectLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1482,6 +1940,16 @@ type ProjectsGetSupportedLanguagesCall struct {
 
 // GetSupportedLanguages: Returns a list of supported languages for
 // translation.
+//
+// - parent: Project or location to make a call. Must refer to a
+//   caller's project. Format: `projects/{project-number-or-id}` or
+//   `projects/{project-number-or-id}/locations/{location-id}`. For
+//   global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Non-global location is required
+//   for AutoML models. Only models within the same region (have same
+//   location-id) can be used, otherwise an INVALID_ARGUMENT (400) error
+//   is returned.
 func (r *ProjectsService) GetSupportedLanguages(parent string) *ProjectsGetSupportedLanguagesCall {
 	c := &ProjectsGetSupportedLanguagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1503,11 +1971,8 @@ func (c *ProjectsGetSupportedLanguagesCall) DisplayLanguageCode(displayLanguageC
 // `projects/{project-number-or-id}/locations/{location-id}/models/{model
 // -id}` - General (built-in) models:
 // `projects/{project-number-or-id}/locations/{location-id}/models/genera
-// l/nmt`,
-// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-// l/base` Returns languages supported by the specified model. If
-// missing, we get supported languages of Google general base (PBMT)
-// model.
+// l/nmt`, Returns languages supported by the specified model. If
+// missing, we get supported languages of Google general NMT model.
 func (c *ProjectsGetSupportedLanguagesCall) Model(model string) *ProjectsGetSupportedLanguagesCall {
 	c.urlParams_.Set("model", model)
 	return c
@@ -1550,7 +2015,7 @@ func (c *ProjectsGetSupportedLanguagesCall) Header() http.Header {
 
 func (c *ProjectsGetSupportedLanguagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1626,7 +2091,7 @@ func (c *ProjectsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOption) (*S
 	//       "type": "string"
 	//     },
 	//     "model": {
-	//       "description": "Optional. Get supported languages of this model. The format depends on model type: - AutoML Translation models: `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}` - General (built-in) models: `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`, `projects/{project-number-or-id}/locations/{location-id}/models/general/base` Returns languages supported by the specified model. If missing, we get supported languages of Google general base (PBMT) model.",
+	//       "description": "Optional. Get supported languages of this model. The format depends on model type: - AutoML Translation models: `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}` - General (built-in) models: `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`, Returns languages supported by the specified model. If missing, we get supported languages of Google general NMT model.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1662,6 +2127,16 @@ type ProjectsTranslateTextCall struct {
 }
 
 // TranslateText: Translates input text and returns translated text.
+//
+// - parent: Project or location to make a call. Must refer to a
+//   caller's project. Format: `projects/{project-number-or-id}` or
+//   `projects/{project-number-or-id}/locations/{location-id}`. For
+//   global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Non-global location is required
+//   for requests using AutoML models or custom glossaries. Models and
+//   glossaries must be within the same region (have same location-id),
+//   otherwise an INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsService) TranslateText(parent string, translatetextrequest *TranslateTextRequest) *ProjectsTranslateTextCall {
 	c := &ProjectsTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1696,7 +2171,7 @@ func (c *ProjectsTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1791,6 +2266,159 @@ func (c *ProjectsTranslateTextCall) Do(opts ...googleapi.CallOption) (*Translate
 
 }
 
+// method id "translate.projects.locations.batchTranslateDocument":
+
+type ProjectsLocationsBatchTranslateDocumentCall struct {
+	s                             *Service
+	parent                        string
+	batchtranslatedocumentrequest *BatchTranslateDocumentRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// BatchTranslateDocument: Translates a large volume of document in
+// asynchronous batch mode. This function provides real-time output as
+// the inputs are being processed. If caller cancels a request, the
+// partial results (for an input file, it's all or nothing) may still be
+// available on the specified output location. This call returns
+// immediately and you can use google.longrunning.Operation.name to poll
+// the status of the call.
+//
+// - parent: Location to make a regional call. Format:
+//   `projects/{project-number-or-id}/locations/{location-id}`. The
+//   `global` location is not supported for batch translation. Only
+//   AutoML Translation models or glossaries within the same region
+//   (have the same location-id) can be used, otherwise an
+//   INVALID_ARGUMENT (400) error is returned.
+func (r *ProjectsLocationsService) BatchTranslateDocument(parent string, batchtranslatedocumentrequest *BatchTranslateDocumentRequest) *ProjectsLocationsBatchTranslateDocumentCall {
+	c := &ProjectsLocationsBatchTranslateDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchtranslatedocumentrequest = batchtranslatedocumentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsBatchTranslateDocumentCall) Fields(s ...googleapi.Field) *ProjectsLocationsBatchTranslateDocumentCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsBatchTranslateDocumentCall) Context(ctx context.Context) *ProjectsLocationsBatchTranslateDocumentCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsBatchTranslateDocumentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBatchTranslateDocumentCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchtranslatedocumentrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+parent}:batchTranslateDocument")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.batchTranslateDocument" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBatchTranslateDocumentCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Translates a large volume of document in asynchronous batch mode. This function provides real-time output as the inputs are being processed. If caller cancels a request, the partial results (for an input file, it's all or nothing) may still be available on the specified output location. This call returns immediately and you can use google.longrunning.Operation.name to poll the status of the call.",
+	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}:batchTranslateDocument",
+	//   "httpMethod": "POST",
+	//   "id": "translate.projects.locations.batchTranslateDocument",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Location to make a regional call. Format: `projects/{project-number-or-id}/locations/{location-id}`. The `global` location is not supported for batch translation. Only AutoML Translation models or glossaries within the same region (have the same location-id) can be used, otherwise an INVALID_ARGUMENT (400) error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3beta1/{+parent}:batchTranslateDocument",
+	//   "request": {
+	//     "$ref": "BatchTranslateDocumentRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "translate.projects.locations.batchTranslateText":
 
 type ProjectsLocationsBatchTranslateTextCall struct {
@@ -1809,6 +2437,13 @@ type ProjectsLocationsBatchTranslateTextCall struct {
 // the specified output location. This call returns immediately and you
 // can use google.longrunning.Operation.name to poll the status of the
 // call.
+//
+// - parent: Location to make a call. Must refer to a caller's project.
+//   Format: `projects/{project-number-or-id}/locations/{location-id}`.
+//   The `global` location is not supported for batch translation. Only
+//   AutoML Translation models or glossaries within the same region
+//   (have the same location-id) can be used, otherwise an
+//   INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) BatchTranslateText(parent string, batchtranslatetextrequest *BatchTranslateTextRequest) *ProjectsLocationsBatchTranslateTextCall {
 	c := &ProjectsLocationsBatchTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1843,7 +2478,7 @@ func (c *ProjectsLocationsBatchTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsLocationsBatchTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1949,6 +2584,15 @@ type ProjectsLocationsDetectLanguageCall struct {
 }
 
 // DetectLanguage: Detects the language of text within a request.
+//
+// - parent: Project or location to make a call. Must refer to a
+//   caller's project. Format:
+//   `projects/{project-number-or-id}/locations/{location-id}` or
+//   `projects/{project-number-or-id}`. For global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Only models within the same
+//   region (has same location-id) can be used. Otherwise an
+//   INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) DetectLanguage(parent string, detectlanguagerequest *DetectLanguageRequest) *ProjectsLocationsDetectLanguageCall {
 	c := &ProjectsLocationsDetectLanguageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1983,7 +2627,7 @@ func (c *ProjectsLocationsDetectLanguageCall) Header() http.Header {
 
 func (c *ProjectsLocationsDetectLanguageCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2090,6 +2734,8 @@ type ProjectsLocationsGetCall struct {
 }
 
 // Get: Gets information about a location.
+//
+// - name: Resource name for the location.
 func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2133,7 +2779,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2236,6 +2882,16 @@ type ProjectsLocationsGetSupportedLanguagesCall struct {
 
 // GetSupportedLanguages: Returns a list of supported languages for
 // translation.
+//
+// - parent: Project or location to make a call. Must refer to a
+//   caller's project. Format: `projects/{project-number-or-id}` or
+//   `projects/{project-number-or-id}/locations/{location-id}`. For
+//   global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Non-global location is required
+//   for AutoML models. Only models within the same region (have same
+//   location-id) can be used, otherwise an INVALID_ARGUMENT (400) error
+//   is returned.
 func (r *ProjectsLocationsService) GetSupportedLanguages(parent string) *ProjectsLocationsGetSupportedLanguagesCall {
 	c := &ProjectsLocationsGetSupportedLanguagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2257,11 +2913,8 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) DisplayLanguageCode(display
 // `projects/{project-number-or-id}/locations/{location-id}/models/{model
 // -id}` - General (built-in) models:
 // `projects/{project-number-or-id}/locations/{location-id}/models/genera
-// l/nmt`,
-// `projects/{project-number-or-id}/locations/{location-id}/models/genera
-// l/base` Returns languages supported by the specified model. If
-// missing, we get supported languages of Google general base (PBMT)
-// model.
+// l/nmt`, Returns languages supported by the specified model. If
+// missing, we get supported languages of Google general NMT model.
 func (c *ProjectsLocationsGetSupportedLanguagesCall) Model(model string) *ProjectsLocationsGetSupportedLanguagesCall {
 	c.urlParams_.Set("model", model)
 	return c
@@ -2304,7 +2957,7 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetSupportedLanguagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2380,7 +3033,7 @@ func (c *ProjectsLocationsGetSupportedLanguagesCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "model": {
-	//       "description": "Optional. Get supported languages of this model. The format depends on model type: - AutoML Translation models: `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}` - General (built-in) models: `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`, `projects/{project-number-or-id}/locations/{location-id}/models/general/base` Returns languages supported by the specified model. If missing, we get supported languages of Google general base (PBMT) model.",
+	//       "description": "Optional. Get supported languages of this model. The format depends on model type: - AutoML Translation models: `projects/{project-number-or-id}/locations/{location-id}/models/{model-id}` - General (built-in) models: `projects/{project-number-or-id}/locations/{location-id}/models/general/nmt`, Returns languages supported by the specified model. If missing, we get supported languages of Google general NMT model.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2417,28 +3070,34 @@ type ProjectsLocationsListCall struct {
 
 // List: Lists information about the supported locations for this
 // service.
+//
+// - name: The resource that owns the locations collection, if
+//   applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": A filter to narrow down
+// results to a preferred subset. The filtering language accepts strings
+// like "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token
+// received from the `next_page_token` field in the response. Send that
+// page token to receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2481,7 +3140,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2552,7 +3211,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The standard list filter.",
+	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2564,13 +3223,13 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The standard list page size.",
+	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The standard list page token.",
+	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2608,6 +3267,156 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
+// method id "translate.projects.locations.translateDocument":
+
+type ProjectsLocationsTranslateDocumentCall struct {
+	s                        *Service
+	parent                   string
+	translatedocumentrequest *TranslateDocumentRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// TranslateDocument: Translates documents in synchronous mode.
+//
+// - parent: Location to make a regional call. Format:
+//   `projects/{project-number-or-id}/locations/{location-id}`. For
+//   global calls, use
+//   `projects/{project-number-or-id}/locations/global`. Non-global
+//   location is required for requests using AutoML models or custom
+//   glossaries. Models and glossaries must be within the same region
+//   (have the same location-id), otherwise an INVALID_ARGUMENT (400)
+//   error is returned.
+func (r *ProjectsLocationsService) TranslateDocument(parent string, translatedocumentrequest *TranslateDocumentRequest) *ProjectsLocationsTranslateDocumentCall {
+	c := &ProjectsLocationsTranslateDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.translatedocumentrequest = translatedocumentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsTranslateDocumentCall) Fields(s ...googleapi.Field) *ProjectsLocationsTranslateDocumentCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsTranslateDocumentCall) Context(ctx context.Context) *ProjectsLocationsTranslateDocumentCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsTranslateDocumentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTranslateDocumentCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.translatedocumentrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3beta1/{+parent}:translateDocument")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "translate.projects.locations.translateDocument" call.
+// Exactly one of *TranslateDocumentResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TranslateDocumentResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsTranslateDocumentCall) Do(opts ...googleapi.CallOption) (*TranslateDocumentResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TranslateDocumentResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Translates documents in synchronous mode.",
+	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}:translateDocument",
+	//   "httpMethod": "POST",
+	//   "id": "translate.projects.locations.translateDocument",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Location to make a regional call. Format: `projects/{project-number-or-id}/locations/{location-id}`. For global calls, use `projects/{project-number-or-id}/locations/global`. Non-global location is required for requests using AutoML models or custom glossaries. Models and glossaries must be within the same region (have the same location-id), otherwise an INVALID_ARGUMENT (400) error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v3beta1/{+parent}:translateDocument",
+	//   "request": {
+	//     "$ref": "TranslateDocumentRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TranslateDocumentResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-translation"
+	//   ]
+	// }
+
+}
+
 // method id "translate.projects.locations.translateText":
 
 type ProjectsLocationsTranslateTextCall struct {
@@ -2620,6 +3429,16 @@ type ProjectsLocationsTranslateTextCall struct {
 }
 
 // TranslateText: Translates input text and returns translated text.
+//
+// - parent: Project or location to make a call. Must refer to a
+//   caller's project. Format: `projects/{project-number-or-id}` or
+//   `projects/{project-number-or-id}/locations/{location-id}`. For
+//   global calls, use
+//   `projects/{project-number-or-id}/locations/global` or
+//   `projects/{project-number-or-id}`. Non-global location is required
+//   for requests using AutoML models or custom glossaries. Models and
+//   glossaries must be within the same region (have same location-id),
+//   otherwise an INVALID_ARGUMENT (400) error is returned.
 func (r *ProjectsLocationsService) TranslateText(parent string, translatetextrequest *TranslateTextRequest) *ProjectsLocationsTranslateTextCall {
 	c := &ProjectsLocationsTranslateTextCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2654,7 +3473,7 @@ func (c *ProjectsLocationsTranslateTextCall) Header() http.Header {
 
 func (c *ProjectsLocationsTranslateTextCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2762,6 +3581,8 @@ type ProjectsLocationsGlossariesCreateCall struct {
 
 // Create: Creates a glossary and returns the long-running operation.
 // Returns NOT_FOUND, if the project doesn't exist.
+//
+// - parent: The project name.
 func (r *ProjectsLocationsGlossariesService) Create(parent string, glossary *Glossary) *ProjectsLocationsGlossariesCreateCall {
 	c := &ProjectsLocationsGlossariesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2796,7 +3617,7 @@ func (c *ProjectsLocationsGlossariesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2903,6 +3724,8 @@ type ProjectsLocationsGlossariesDeleteCall struct {
 // Delete: Deletes a glossary, or cancels glossary construction if the
 // glossary isn't created yet. Returns NOT_FOUND, if the glossary
 // doesn't exist.
+//
+// - name: The name of the glossary to delete.
 func (r *ProjectsLocationsGlossariesService) Delete(name string) *ProjectsLocationsGlossariesDeleteCall {
 	c := &ProjectsLocationsGlossariesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2936,7 +3759,7 @@ func (c *ProjectsLocationsGlossariesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3036,6 +3859,8 @@ type ProjectsLocationsGlossariesGetCall struct {
 
 // Get: Gets a glossary. Returns NOT_FOUND, if the glossary doesn't
 // exist.
+//
+// - name: The name of the glossary to retrieve.
 func (r *ProjectsLocationsGlossariesService) Get(name string) *ProjectsLocationsGlossariesGetCall {
 	c := &ProjectsLocationsGlossariesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3079,7 +3904,7 @@ func (c *ProjectsLocationsGlossariesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3182,6 +4007,9 @@ type ProjectsLocationsGlossariesListCall struct {
 
 // List: Lists glossaries in a project. Returns NOT_FOUND, if the
 // project doesn't exist.
+//
+// - parent: The name of the project from which to list all of the
+//   glossaries.
 func (r *ProjectsLocationsGlossariesService) List(parent string) *ProjectsLocationsGlossariesListCall {
 	c := &ProjectsLocationsGlossariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3264,7 +4092,7 @@ func (c *ProjectsLocationsGlossariesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsGlossariesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3412,6 +4240,8 @@ type ProjectsLocationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
 	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3446,7 +4276,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3555,6 +4385,8 @@ type ProjectsLocationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
 	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3588,7 +4420,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3689,6 +4521,8 @@ type ProjectsLocationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
 	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3732,7 +4566,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3843,6 +4677,8 @@ type ProjectsLocationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3907,7 +4743,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4045,9 +4881,9 @@ type ProjectsLocationsOperationsWaitCall struct {
 	header_              http.Header
 }
 
-// Wait: Waits for the specified long-running operation until it is done
-// or reaches at most a specified timeout, returning the latest state.
-// If the operation is already done, the latest state is immediately
+// Wait: Waits until the specified long-running operation is done or
+// reaches at most a specified timeout, returning the latest state. If
+// the operation is already done, the latest state is immediately
 // returned. If the timeout specified is greater than the default
 // HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does
 // not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.
@@ -4055,6 +4891,8 @@ type ProjectsLocationsOperationsWaitCall struct {
 // latest state before the specified timeout (including immediately),
 // meaning even an immediate response is no guarantee that the operation
 // is done.
+//
+// - name: The name of the operation resource to wait on.
 func (r *ProjectsLocationsOperationsService) Wait(name string, waitoperationrequest *WaitOperationRequest) *ProjectsLocationsOperationsWaitCall {
 	c := &ProjectsLocationsOperationsWaitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4089,7 +4927,7 @@ func (c *ProjectsLocationsOperationsWaitCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4153,7 +4991,7 @@ func (c *ProjectsLocationsOperationsWaitCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Waits for the specified long-running operation until it is done or reaches at most a specified timeout, returning the latest state. If the operation is already done, the latest state is immediately returned. If the timeout specified is greater than the default HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort basis. It may return the latest state before the specified timeout (including immediately), meaning even an immediate response is no guarantee that the operation is done.",
+	//   "description": "Waits until the specified long-running operation is done or reaches at most a specified timeout, returning the latest state. If the operation is already done, the latest state is immediately returned. If the timeout specified is greater than the default HTTP/RPC timeout, the HTTP/RPC timeout is used. If the server does not support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Note that this method is on a best-effort basis. It may return the latest state before the specified timeout (including immediately), meaning even an immediate response is no guarantee that the operation is done.",
 	//   "flatPath": "v3beta1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:wait",
 	//   "httpMethod": "POST",
 	//   "id": "translate.projects.locations.operations.wait",

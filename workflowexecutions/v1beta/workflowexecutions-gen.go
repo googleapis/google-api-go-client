@@ -79,7 +79,8 @@ const mtlsBasePath = "https://workflowexecutions.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -199,10 +200,10 @@ type Error struct {
 
 	// ForceSendFields is a list of field names (e.g. "Context") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Context") to include in
@@ -229,6 +230,16 @@ type Execution struct {
 	// of `argument`. Example:
 	// `'{"argument":"{\"firstName\":\"FIRST\",\"lastName\":\"LAST\"}"}'`
 	Argument string `json:"argument,omitempty"`
+
+	// CallLogLevel: The call logging level associated to this execution.
+	//
+	// Possible values:
+	//   "CALL_LOG_LEVEL_UNSPECIFIED" - No call logging specified.
+	//   "LOG_ALL_CALLS" - Log all call steps within workflows, all call
+	// returns, and all exceptions raised.
+	//   "LOG_ERRORS_ONLY" - Log only exceptions that are raised from call
+	// steps within workflows.
+	CallLogLevel string `json:"callLogLevel,omitempty"`
 
 	// EndTime: Output only. Marks the end of execution, successful or not.
 	EndTime string `json:"endTime,omitempty"`
@@ -271,10 +282,10 @@ type Execution struct {
 
 	// ForceSendFields is a list of field names (e.g. "Argument") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Argument") to include in
@@ -308,10 +319,10 @@ type ListExecutionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Executions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Executions") to include in
@@ -329,6 +340,46 @@ func (s *ListExecutionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Position: Position contains source position information about the
+// stack trace element such as line number, column number and length of
+// the code block in bytes.
+type Position struct {
+	// Column: The source code column position (of the line) the current
+	// instruction was generated from.
+	Column int64 `json:"column,omitempty,string"`
+
+	// Length: The length in bytes of text in this character group, e.g.
+	// digits of a number, string length, or AST (abstract syntax tree)
+	// node.
+	Length int64 `json:"length,omitempty,string"`
+
+	// Line: The source code line number the current instruction was
+	// generated from.
+	Line int64 `json:"line,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Column") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Position) MarshalJSON() ([]byte, error) {
+	type NoMethod Position
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StackTrace: A collection of stack elements (frames) where an error
 // occurred.
 type StackTrace struct {
@@ -337,10 +388,10 @@ type StackTrace struct {
 
 	// ForceSendFields is a list of field names (e.g. "Elements") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Elements") to include in
@@ -361,13 +412,8 @@ func (s *StackTrace) MarshalJSON() ([]byte, error) {
 // StackTraceElement: A single stack element (frame) where an error
 // occurred.
 type StackTraceElement struct {
-	// Column: The source code column position (of the line) the current
-	// instruction was generated from.
-	Column int64 `json:"column,omitempty,string"`
-
-	// Line: The source code line number the current instruction was
-	// generated from.
-	Line int64 `json:"line,omitempty,string"`
+	// Position: The source position information of the stacktrace element.
+	Position *Position `json:"position,omitempty"`
 
 	// Routine: The routine where the error occurred.
 	Routine string `json:"routine,omitempty"`
@@ -375,16 +421,16 @@ type StackTraceElement struct {
 	// Step: The step the error occurred at.
 	Step string `json:"step,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Column") to
+	// ForceSendFields is a list of field names (e.g. "Position") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Column") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Position") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -410,6 +456,10 @@ type ProjectsLocationsWorkflowsExecutionsCancelCall struct {
 }
 
 // Cancel: Cancels an execution of the given name.
+//
+// - name: Name of the execution to be cancelled. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow}/executi
+//   ons/{execution}.
 func (r *ProjectsLocationsWorkflowsExecutionsService) Cancel(name string, cancelexecutionrequest *CancelExecutionRequest) *ProjectsLocationsWorkflowsExecutionsCancelCall {
 	c := &ProjectsLocationsWorkflowsExecutionsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -444,7 +494,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -551,6 +601,11 @@ type ProjectsLocationsWorkflowsExecutionsCreateCall struct {
 
 // Create: Creates a new execution using the latest revision of the
 // given workflow.
+//
+// - parent: Name of the workflow for which an execution should be
+//   created. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow} The
+//   latest revision of the workflow will be used.
 func (r *ProjectsLocationsWorkflowsExecutionsService) Create(parent string, execution *Execution) *ProjectsLocationsWorkflowsExecutionsCreateCall {
 	c := &ProjectsLocationsWorkflowsExecutionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -585,7 +640,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -691,6 +746,10 @@ type ProjectsLocationsWorkflowsExecutionsGetCall struct {
 }
 
 // Get: Returns an execution of the given name.
+//
+// - name: Name of the execution to be retrieved. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow}/executi
+//   ons/{execution}.
 func (r *ProjectsLocationsWorkflowsExecutionsService) Get(name string) *ProjectsLocationsWorkflowsExecutionsGetCall {
 	c := &ProjectsLocationsWorkflowsExecutionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -749,7 +808,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -868,6 +927,10 @@ type ProjectsLocationsWorkflowsExecutionsListCall struct {
 // the given name. The method returns executions of all workflow
 // revisions. Returned executions are ordered by their start time
 // (newest first).
+//
+// - parent: Name of the workflow for which the executions should be
+//   listed. Format:
+//   projects/{project}/locations/{location}/workflows/{workflow}.
 func (r *ProjectsLocationsWorkflowsExecutionsService) List(parent string) *ProjectsLocationsWorkflowsExecutionsListCall {
 	c := &ProjectsLocationsWorkflowsExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -947,7 +1010,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

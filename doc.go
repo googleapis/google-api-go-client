@@ -51,4 +51,27 @@
 // To see the exact type of int that the API expects, you can inspect the API's
 // discovery doc. A global catalogue pointing to the discovery doc of APIs can
 // be found at https://www.googleapis.com/discovery/v1/apis.
+//
+//
+// ForceSendFields
+//
+// This field can be found on all Request/Response structs in the generated
+// clients. All of these types have the JSON `omitempty` field tag present on
+// their fields. This means if a type is set to its default value it will not be
+// marshalled. Sometimes you may actually want to send a default value, for
+// instance sending an int of `0`. In this case you can override the `omitempty`
+// feature by adding the field name to the `ForceSendFields` slice. See docs on
+// any struct for more details.
+//
+//
+// Inspecting errors
+//
+// All of the errors returned by a client's `Do` method may be cast to a
+// `*googleapis.Error`. This can be useful for getting more information on an
+// error while debugging.
+//  if _, err := svc.FooCall().Do(); err != nil {
+//      if gErr, ok := err.(*googleapi.Error); ok {
+//          fmt.Println("Status code: %v", gErr.Code)
+//      }
+//  }
 package api

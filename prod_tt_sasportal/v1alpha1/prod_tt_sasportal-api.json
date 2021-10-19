@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/userinfo.email": {
-          "description": "View your email address"
+          "description": "See your primary Google Account email address"
         }
       }
     }
@@ -2484,7 +2484,7 @@
       }
     }
   },
-  "revision": "20210129",
+  "revision": "20210903",
   "rootUrl": "https://prod-tt-sasportal.googleapis.com/",
   "schemas": {
     "SasPortalAssignment": {
@@ -2501,6 +2501,22 @@
         "role": {
           "description": "Required. Role that is assigned to `members`.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SasPortalChannelWithScore": {
+      "description": "The channel with score.",
+      "id": "SasPortalChannelWithScore",
+      "properties": {
+        "frequencyRange": {
+          "$ref": "SasPortalFrequencyRange",
+          "description": "The frequency range of the channel."
+        },
+        "score": {
+          "description": "The channel score, normalized to be in [0,100].",
+          "format": "double",
+          "type": "number"
         }
       },
       "type": "object"
@@ -2582,6 +2598,14 @@
           "description": "The deployment's display name.",
           "type": "string"
         },
+        "frns": {
+          "description": "Output only. The FRNs copied from its direct parent.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "name": {
           "description": "Output only. Resource name.",
           "readOnly": true,
@@ -2604,6 +2628,14 @@
           "$ref": "SasPortalDeviceConfig",
           "description": "Output only. Current configuration of the device as registered to the SAS."
         },
+        "currentChannels": {
+          "description": "Output only. Current channels with scores.",
+          "items": {
+            "$ref": "SasPortalChannelWithScore"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "deviceMetadata": {
           "$ref": "SasPortalDeviceMetadata",
           "description": "Device parameters that can be overridden by both SAS Portal and SAS registration requests."
@@ -2615,6 +2647,13 @@
         "fccId": {
           "description": "The FCC identifier of the device.",
           "type": "string"
+        },
+        "grantRangeAllowlists": {
+          "description": "Only ranges within the allowlists are available for new grants.",
+          "items": {
+            "$ref": "SasPortalFrequencyRange"
+          },
+          "type": "array"
         },
         "grants": {
           "description": "Output only. Grants held by the device.",
@@ -2848,7 +2887,20 @@
     "SasPortalDeviceMetadata": {
       "description": "Device data overridable by both SAS Portal and registration requests.",
       "id": "SasPortalDeviceMetadata",
-      "properties": {},
+      "properties": {
+        "antennaModel": {
+          "description": "If populated, the Antenna Model Pattern to use. Format is: RecordCreatorId:PatternId",
+          "type": "string"
+        },
+        "commonChannelGroup": {
+          "description": "CCG. A group of CBSDs in the same ICG requesting a common primary channel assignment. See CBRSA-TS-2001 V3.0.0 for more details.",
+          "type": "string"
+        },
+        "interferenceCoordinationGroup": {
+          "description": "ICG. A group of CBSDs that manage their own interference with the group. See CBRSA-TS-2001 V3.0.0 for more details.",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "SasPortalDeviceModel": {
@@ -3057,7 +3109,7 @@
           "type": "array"
         },
         "nextPageToken": {
-          "description": "A pagination token returned from a previous call to ListDeployments that indicates from where listing should continue. If the field is missing or empty, it means there is no more deployments.",
+          "description": "A pagination token returned from a previous call to ListDeployments that indicates from where listing should continue. If the field is missing or empty, it means there are no more deployments.",
           "type": "string"
         }
       },
@@ -3115,7 +3167,7 @@
       "id": "SasPortalMoveDeviceRequest",
       "properties": {
         "destination": {
-          "description": "Required. The name of the new parent resource node [spectrum.sas.portal.v1alpha1.Node] or customer to reparent the device under.",
+          "description": "Required. The name of the new parent resource node or customer to reparent the device under.",
           "type": "string"
         }
       },
@@ -3212,6 +3264,10 @@
       "description": "Request message for `SetPolicy` method.",
       "id": "SasPortalSetPolicyRequest",
       "properties": {
+        "disableNotification": {
+          "description": "Optional. Set the field as true when we would like to disable the onboarding notification.",
+          "type": "boolean"
+        },
         "policy": {
           "$ref": "SasPortalPolicy",
           "description": "Required. The policy to be applied to the `resource`."

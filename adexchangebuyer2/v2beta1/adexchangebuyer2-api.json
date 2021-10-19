@@ -900,6 +900,74 @@
               "scopes": [
                 "https://www.googleapis.com/auth/adexchange.buyer"
               ]
+            },
+            "pause": {
+              "description": "Update given deals to pause serving. This method will set the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to true for all listed deals in the request. Currently, this method only applies to PG and PD deals. For PA deals, please call accounts.proposals.pause endpoint. It is a no-op to pause already-paused deals. It is an error to call PauseProposalDeals for deals which are not part of the proposal of proposal_id or which are not finalized or renegotiating.",
+              "flatPath": "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:pause",
+              "httpMethod": "POST",
+              "id": "adexchangebuyer2.accounts.finalizedProposals.pause",
+              "parameterOrder": [
+                "accountId",
+                "proposalId"
+              ],
+              "parameters": {
+                "accountId": {
+                  "description": "Account ID of the buyer.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "proposalId": {
+                  "description": "The proposal_id of the proposal containing the deals.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:pause",
+              "request": {
+                "$ref": "PauseProposalDealsRequest"
+              },
+              "response": {
+                "$ref": "Proposal"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/adexchange.buyer"
+              ]
+            },
+            "resume": {
+              "description": "Update given deals to resume serving. This method will set the `DealServingMetadata.DealPauseStatus.has_buyer_paused` bit to false for all listed deals in the request. Currently, this method only applies to PG and PD deals. For PA deals, please call accounts.proposals.resume endpoint. It is a no-op to resume running deals or deals paused by the other party. It is an error to call ResumeProposalDeals for deals which are not part of the proposal of proposal_id or which are not finalized or renegotiating.",
+              "flatPath": "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:resume",
+              "httpMethod": "POST",
+              "id": "adexchangebuyer2.accounts.finalizedProposals.resume",
+              "parameterOrder": [
+                "accountId",
+                "proposalId"
+              ],
+              "parameters": {
+                "accountId": {
+                  "description": "Account ID of the buyer.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "proposalId": {
+                  "description": "The proposal_id of the proposal containing the deals.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2beta1/accounts/{accountId}/finalizedProposals/{proposalId}:resume",
+              "request": {
+                "$ref": "ResumeProposalDealsRequest"
+              },
+              "response": {
+                "$ref": "Proposal"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/adexchange.buyer"
+              ]
             }
           }
         },
@@ -2500,7 +2568,7 @@
       }
     }
   },
-  "revision": "20210126",
+  "revision": "20210923",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2767,7 +2835,7 @@
           "type": "string"
         },
         "clientName": {
-          "description": "Name used to represent this client to publishers. You may have multiple clients that map to the same entity, but for each client the combination of `clientName` and entity must be unique. You can specify this field as empty.",
+          "description": "Name used to represent this client to publishers. You may have multiple clients that map to the same entity, but for each client the combination of `clientName` and entity must be unique. You can specify this field as empty. Maximum length of 255 characters is allowed.",
           "type": "string"
         },
         "entityId": {
@@ -4082,7 +4150,7 @@
             "Financial service ad does not adhere to specifications.",
             "Flash content was found in an unsupported context.",
             "Misuse by an Open Measurement SDK script.",
-            "Use of an Open Measurement SDK vendor not on approved whitelist.",
+            "Use of an Open Measurement SDK vendor not on approved vendor list.",
             "Unacceptable landing page.",
             "Unsupported language.",
             "Non-SSL compliant.",
@@ -4336,7 +4404,9 @@
             "DAY",
             "WEEK",
             "MONTH",
-            "LIFETIME"
+            "LIFETIME",
+            "POD",
+            "STREAM"
           ],
           "enumDescriptions": [
             "A placeholder for an undefined time unit type. This just indicates the variable with this value hasn't been initialized.",
@@ -4345,7 +4415,9 @@
             "Day",
             "Week",
             "Month",
-            "Lifetime"
+            "Lifetime",
+            "Pod",
+            "Stream"
           ],
           "type": "string"
         }
@@ -4373,9 +4445,33 @@
           "format": "int64",
           "type": "string"
         },
+        "impressionCap": {
+          "description": "The lifetime impression cap for CPM sponsorship deals. The deal will stop serving when the cap is reached.",
+          "format": "int64",
+          "type": "string"
+        },
         "minimumDailyLooks": {
           "description": "Daily minimum looks for CPD deal types.",
           "format": "int64",
+          "type": "string"
+        },
+        "percentShareOfVoice": {
+          "description": "For sponsorship deals, this is the percentage of the seller's eligible impressions that the deal will serve until the cap is reached.",
+          "format": "int64",
+          "type": "string"
+        },
+        "reservationType": {
+          "description": "The reservation type for a Programmatic Guaranteed deal. This indicates whether the number of impressions is fixed, or a percent of available impressions. If not specified, the default reservation type is STANDARD.",
+          "enum": [
+            "RESERVATION_TYPE_UNSPECIFIED",
+            "STANDARD",
+            "SPONSORSHIP"
+          ],
+          "enumDescriptions": [
+            "An unspecified reservation type.",
+            "Non-sponsorship deal.",
+            "Sponsorship deals don't have impression goal (guaranteed_looks) and they are served based on the flight dates. For CPM Sponsorship deals, impression_cap is the lifetime impression limit."
+          ],
           "type": "string"
         }
       },
@@ -4613,7 +4709,8 @@
             "DISAPPROVAL_REASON",
             "POLICY_TOPIC",
             "ATP_VENDOR",
-            "VENDOR_DOMAIN"
+            "VENDOR_DOMAIN",
+            "GVL_ID"
           ],
           "enumDescriptions": [
             "A placeholder for an undefined status. This value will never be returned in responses.",
@@ -4624,7 +4721,8 @@
             "Indicates that the detail ID refers to a disapproval reason; see DisapprovalReason enum in [snippet-status-report-proto](https://developers.google.com/authorized-buyers/rtb/downloads/snippet-status-report-proto).",
             "Indicates that the detail ID refers to a policy topic.",
             "Indicates that the detail ID refers to an ad technology provider (ATP); see [providers] (https://storage.googleapis.com/adx-rtb-dictionaries/providers.csv). This namespace is different from the `VENDOR` detail type; see [ad technology providers](https://support.google.com/admanager/answer/9012903) for more information.",
-            "Indicates that the detail string refers the domain of an unknown vendor."
+            "Indicates that the detail string refers the domain of an unknown vendor.",
+            "Indicates that the detail ID refers an IAB GVL ID which Google did not detect in the latest TCF Vendor List. See [Global Vendor List] (https://vendor-list.consensu.org/v2/vendor-list.json)"
           ],
           "type": "string"
         },
@@ -5043,7 +5141,7 @@
       "type": "object"
     },
     "NonGuaranteedFixedPriceTerms": {
-      "description": "Terms for Preferred Deals. Note that Preferred Deals cannot be created via the API at this time, but can be returned in a get or list request.",
+      "description": "Terms for Preferred Deals.",
       "id": "NonGuaranteedFixedPriceTerms",
       "properties": {
         "fixedPrices": {
@@ -5110,6 +5208,24 @@
         "operatingSystemVersionCriteria": {
           "$ref": "CriteriaTargeting",
           "description": "IDs of operating system versions to be included/excluded."
+        }
+      },
+      "type": "object"
+    },
+    "PauseProposalDealsRequest": {
+      "description": "Request message to pause serving for finalized deals.",
+      "id": "PauseProposalDealsRequest",
+      "properties": {
+        "externalDealIds": {
+          "description": "The external_deal_id's of the deals to be paused. If empty, all the deals in the proposal will be paused.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "reason": {
+          "description": "The reason why the deals are being paused. This human readable message will be displayed in the seller's UI. (Max length: 1000 unicode code units.)",
+          "type": "string"
         }
       },
       "type": "object"
@@ -5223,7 +5339,7 @@
       "type": "object"
     },
     "Product": {
-      "description": "Note: this resource requires whitelisting for access. Please contact your account manager for access to Marketplace resources. A product is a segment of inventory that a seller wishes to sell. It is associated with certain terms and targeting information which helps the buyer know more about the inventory.",
+      "description": "A product is a segment of inventory that a seller wishes to sell. It is associated with certain terms and targeting information which helps the buyer know more about the inventory.",
       "id": "Product",
       "properties": {
         "availableEndTime": {
@@ -5315,7 +5431,7 @@
       "type": "object"
     },
     "Proposal": {
-      "description": "Note: this resource requires whitelisting for access. Please contact your account manager for access to Marketplace resources. Represents a proposal in the Marketplace. A proposal is the unit of negotiation between a seller and a buyer and contains deals which are served. Note: you can not update, create, or otherwise modify Private Auction or Preferred Deals deals through the API. Fields are updatable unless noted otherwise.",
+      "description": "Represents a proposal in the Marketplace. A proposal is the unit of negotiation between a seller and a buyer and contains deals which are served. Note: You can't update, create, or otherwise modify Private Auction deals through the API. Fields are updatable unless noted otherwise.",
       "id": "Proposal",
       "properties": {
         "billedBuyer": {
@@ -5461,7 +5577,7 @@
       "type": "object"
     },
     "PublisherProfile": {
-      "description": "Note: this resource requires whitelisting for access. Please contact your account manager for access to Marketplace resources. Represents a publisher profile (https://support.google.com/admanager/answer/6035806) in Marketplace. All fields are read only. All string fields are free-form text entered by the publisher unless noted otherwise.",
+      "description": "Represents a publisher profile (https://support.google.com/admanager/answer/6035806) in Marketplace. All fields are read only. All string fields are free-form text entered by the publisher unless noted otherwise.",
       "id": "PublisherProfile",
       "properties": {
         "audienceDescription": {
@@ -5629,6 +5745,20 @@
         "association": {
           "$ref": "CreativeDealAssociation",
           "description": "The association between a creative and a deal that should be removed."
+        }
+      },
+      "type": "object"
+    },
+    "ResumeProposalDealsRequest": {
+      "description": "Request message to resume (unpause) serving for already-finalized deals.",
+      "id": "ResumeProposalDealsRequest",
+      "properties": {
+        "externalDealIds": {
+          "description": "The external_deal_id's of the deals to resume. If empty, all the deals in the proposal will be resumed.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

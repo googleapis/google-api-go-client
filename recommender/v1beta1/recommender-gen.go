@@ -79,7 +79,8 @@ const mtlsBasePath = "https://recommender.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -434,10 +435,10 @@ type GoogleCloudRecommenderV1beta1CostProjection struct {
 
 	// ForceSendFields is a list of field names (e.g. "Cost") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Cost") to include in API
@@ -475,12 +476,15 @@ type GoogleCloudRecommenderV1beta1Impact struct {
 	// CostProjection: Use with CategoryType.COST
 	CostProjection *GoogleCloudRecommenderV1beta1CostProjection `json:"costProjection,omitempty"`
 
+	// SecurityProjection: Use with CategoryType.SECURITY
+	SecurityProjection *GoogleCloudRecommenderV1beta1SecurityProjection `json:"securityProjection,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Category") to include in
@@ -543,6 +547,16 @@ type GoogleCloudRecommenderV1beta1Insight struct {
 	// and begins at (last_refresh_time - observation_period).
 	ObservationPeriod string `json:"observationPeriod,omitempty"`
 
+	// Severity: Insight's severity.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Insight has unspecified severity.
+	//   "LOW" - Insight has low severity.
+	//   "MEDIUM" - Insight has medium severity.
+	//   "HIGH" - Insight has high severity.
+	//   "CRITICAL" - Insight has critical severity.
+	Severity string `json:"severity,omitempty"`
+
 	// StateInfo: Information state and metadata.
 	StateInfo *GoogleCloudRecommenderV1beta1InsightStateInfo `json:"stateInfo,omitempty"`
 
@@ -556,11 +570,11 @@ type GoogleCloudRecommenderV1beta1Insight struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AssociatedRecommendations") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -589,10 +603,10 @@ type GoogleCloudRecommenderV1beta1InsightRecommendationReference struct {
 
 	// ForceSendFields is a list of field names (e.g. "Recommendation") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Recommendation") to
@@ -637,10 +651,10 @@ type GoogleCloudRecommenderV1beta1InsightStateInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "State") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "State") to include in API
@@ -674,10 +688,10 @@ type GoogleCloudRecommenderV1beta1ListInsightsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Insights") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Insights") to include in
@@ -712,10 +726,10 @@ type GoogleCloudRecommenderV1beta1ListRecommendationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -746,10 +760,10 @@ type GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -782,10 +796,10 @@ type GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -818,10 +832,10 @@ type GoogleCloudRecommenderV1beta1MarkRecommendationFailedRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -854,10 +868,10 @@ type GoogleCloudRecommenderV1beta1MarkRecommendationSucceededRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -883,7 +897,7 @@ func (s *GoogleCloudRecommenderV1beta1MarkRecommendationSucceededRequest) Marsha
 // extension to custom operations not natively supported by RFC6902. See
 // https://tools.ietf.org/html/rfc6902 for details on the original RFC.
 type GoogleCloudRecommenderV1beta1Operation struct {
-	// Action: Type of this operation. Contains one of 'and', 'remove',
+	// Action: Type of this operation. Contains one of 'add', 'remove',
 	// 'replace', 'move', 'copy', 'test' and 'custom' operations. This field
 	// is case-insensitive and always populated.
 	Action string `json:"action,omitempty"`
@@ -906,7 +920,7 @@ type GoogleCloudRecommenderV1beta1Operation struct {
 	PathFilters googleapi.RawMessage `json:"pathFilters,omitempty"`
 
 	// PathValueMatchers: Similar to path_filters, this contains set of
-	// filters to apply if `path` field referes to array elements. This is
+	// filters to apply if `path` field refers to array elements. This is
 	// meant to support value matching beyond exact match. To perform exact
 	// match, use path_filters. When both path_filters and
 	// path_value_matchers are set, an implicit AND must be performed.
@@ -948,10 +962,10 @@ type GoogleCloudRecommenderV1beta1Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Action") to include in API
@@ -979,10 +993,10 @@ type GoogleCloudRecommenderV1beta1OperationGroup struct {
 
 	// ForceSendFields is a list of field names (e.g. "Operations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Operations") to include in
@@ -1035,6 +1049,16 @@ type GoogleCloudRecommenderV1beta1Recommendation struct {
 	// while trying to optimize for one category.
 	PrimaryImpact *GoogleCloudRecommenderV1beta1Impact `json:"primaryImpact,omitempty"`
 
+	// Priority: Recommendation's priority.
+	//
+	// Possible values:
+	//   "PRIORITY_UNSPECIFIED" - Recommendation has unspecified priority.
+	//   "P4" - Recommendation has P4 priority (lowest priority).
+	//   "P3" - Recommendation has P3 priority (second lowest priority).
+	//   "P2" - Recommendation has P2 priority (second highest priority).
+	//   "P1" - Recommendation has P1 priority (highest priority).
+	Priority string `json:"priority,omitempty"`
+
 	// RecommenderSubtype: Contains an identifier for a subtype of
 	// recommendations produced for the same recommender. Subtype is a
 	// function of content and impact, meaning a new subtype might be added
@@ -1054,10 +1078,10 @@ type GoogleCloudRecommenderV1beta1Recommendation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdditionalImpact") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdditionalImpact") to
@@ -1084,12 +1108,15 @@ type GoogleCloudRecommenderV1beta1RecommendationContent struct {
 	// expected to be performed atomically and in an order.
 	OperationGroups []*GoogleCloudRecommenderV1beta1OperationGroup `json:"operationGroups,omitempty"`
 
+	// Overview: Condensed overview information about the recommendation.
+	Overview googleapi.RawMessage `json:"overview,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "OperationGroups") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OperationGroups") to
@@ -1118,10 +1145,10 @@ type GoogleCloudRecommenderV1beta1RecommendationInsightReference struct {
 
 	// ForceSendFields is a list of field names (e.g. "Insight") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Insight") to include in
@@ -1169,10 +1196,10 @@ type GoogleCloudRecommenderV1beta1RecommendationStateInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "State") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "State") to include in API
@@ -1190,6 +1217,36 @@ func (s *GoogleCloudRecommenderV1beta1RecommendationStateInfo) MarshalJSON() ([]
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecommenderV1beta1SecurityProjection: Contains various
+// ways of describing the impact on Security.
+type GoogleCloudRecommenderV1beta1SecurityProjection struct {
+	// Details: This field can be used by the recommender to define details
+	// specific to security impact.
+	Details googleapi.RawMessage `json:"details,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Details") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Details") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecommenderV1beta1SecurityProjection) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecommenderV1beta1SecurityProjection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecommenderV1beta1ValueMatcher: Contains various matching
 // options for values for a GCP resource field.
 type GoogleCloudRecommenderV1beta1ValueMatcher struct {
@@ -1201,10 +1258,10 @@ type GoogleCloudRecommenderV1beta1ValueMatcher struct {
 
 	// ForceSendFields is a list of field names (e.g. "MatchesPattern") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MatchesPattern") to
@@ -1243,10 +1300,10 @@ type GoogleTypeMoney struct {
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrencyCode") to include
@@ -1277,6 +1334,8 @@ type BillingAccountsLocationsInsightTypesInsightsGetCall struct {
 
 // Get: Gets the requested insight. Requires the recommender.*.get IAM
 // permission for the specified insight type.
+//
+// - name: Name of the insight.
 func (r *BillingAccountsLocationsInsightTypesInsightsService) Get(name string) *BillingAccountsLocationsInsightTypesInsightsGetCall {
 	c := &BillingAccountsLocationsInsightTypesInsightsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1320,7 +1379,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsGetCall) Header() http.Head
 
 func (c *BillingAccountsLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1421,8 +1480,24 @@ type BillingAccountsLocationsInsightTypesInsightsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists insights for a Cloud project. Requires the
+// List: Lists insights for the specified Cloud Resource. Requires the
 // recommender.*.list IAM permission for the specified insight type.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: *
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//   T_TYPE_ID]` *
+//   `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TY
+//   PE_ID]` *
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//   pes/[INSIGHT_TYPE_ID]` *
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//   _ID]` *
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//   supported insight types:
+//   https://cloud.google.com/recommender/docs/insights/insight-types.
 func (r *BillingAccountsLocationsInsightTypesInsightsService) List(parent string) *BillingAccountsLocationsInsightTypesInsightsListCall {
 	c := &BillingAccountsLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1430,8 +1505,13 @@ func (r *BillingAccountsLocationsInsightTypesInsightsService) List(parent string
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the insights returned. Supported filter fields: state Eg:
-// `state:"DISMISSED" or state:"ACTIVE"
+// restrict the insights returned. Supported filter fields: *
+// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
+// OR severity = HIGH)` (These expressions are based on the filter
+// language described at https://google.aip.dev/160)
 func (c *BillingAccountsLocationsInsightTypesInsightsListCall) Filter(filter string) *BillingAccountsLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1493,7 +1573,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsListCall) Header() http.Hea
 
 func (c *BillingAccountsLocationsInsightTypesInsightsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1557,7 +1637,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsListCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists insights for a Cloud project. Requires the recommender.*.list IAM permission for the specified insight type.",
+	//   "description": "Lists insights for the specified Cloud Resource. Requires the recommender.*.list IAM permission for the specified insight type.",
 	//   "flatPath": "v1beta1/billingAccounts/{billingAccountsId}/locations/{locationsId}/insightTypes/{insightTypesId}/insights",
 	//   "httpMethod": "GET",
 	//   "id": "recommender.billingAccounts.locations.insightTypes.insights.list",
@@ -1566,7 +1646,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: state Eg: `state:\"DISMISSED\" or state:\"ACTIVE\"",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1582,7 +1662,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsListCall) Do(opts ...google
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: 1. \"projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]\", LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to supported insight types: https://cloud.google.com/recommender/docs/insights/insight-types.",
+	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to supported insight types: https://cloud.google.com/recommender/docs/insights/insight-types.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/insightTypes/[^/]+$",
 	//       "required": true,
@@ -1638,6 +1718,8 @@ type BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall struct {
 // being updated. MarkInsightAccepted can be applied to insights in
 // ACTIVE state. Requires the recommender.*.update IAM permission for
 // the specified insight.
+//
+// - name: Name of the insight.
 func (r *BillingAccountsLocationsInsightTypesInsightsService) MarkAccepted(name string, googlecloudrecommenderv1beta1markinsightacceptedrequest *GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest) *BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall {
 	c := &BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1672,7 +1754,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall) Header() 
 
 func (c *BillingAccountsLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1780,6 +1862,8 @@ type BillingAccountsLocationsRecommendersRecommendationsGetCall struct {
 
 // Get: Gets the requested recommendation. Requires the
 // recommender.*.get IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *BillingAccountsLocationsRecommendersRecommendationsService) Get(name string) *BillingAccountsLocationsRecommendersRecommendationsGetCall {
 	c := &BillingAccountsLocationsRecommendersRecommendationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1823,7 +1907,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsGetCall) Header() ht
 
 func (c *BillingAccountsLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1925,8 +2009,25 @@ type BillingAccountsLocationsRecommendersRecommendationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists recommendations for a Cloud project. Requires the
-// recommender.*.list IAM permission for the specified recommender.
+// List: Lists recommendations for the specified Cloud Resource.
+// Requires the recommender.*.list IAM permission for the specified
+// recommender.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: *
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//   ENDER_ID]` *
+//   `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
+//   R_ID]` *
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//   ers/[RECOMMENDER_ID]` *
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//   ID]` *
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//   supported recommenders:
+//   https://cloud.google.com/recommender/docs/recommenders.
 func (r *BillingAccountsLocationsRecommendersRecommendationsService) List(parent string) *BillingAccountsLocationsRecommendersRecommendationsListCall {
 	c := &BillingAccountsLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1934,9 +2035,13 @@ func (r *BillingAccountsLocationsRecommendersRecommendationsService) List(parent
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the recommendations returned. Supported filter fields:
-// state_info.state Eg: `state_info.state:"DISMISSED" or
-// state_info.state:"FAILED"
+// restrict the recommendations returned. Supported filter fields: *
+// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
+// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
+// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
+// based on the filter language described at https://google.aip.dev/160)
 func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) Filter(filter string) *BillingAccountsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1998,7 +2103,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) Header() h
 
 func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2063,7 +2168,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) Do(opts ..
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists recommendations for a Cloud project. Requires the recommender.*.list IAM permission for the specified recommender.",
+	//   "description": "Lists recommendations for the specified Cloud Resource. Requires the recommender.*.list IAM permission for the specified recommender.",
 	//   "flatPath": "v1beta1/billingAccounts/{billingAccountsId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations",
 	//   "httpMethod": "GET",
 	//   "id": "recommender.billingAccounts.locations.recommenders.recommendations.list",
@@ -2072,7 +2177,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: state_info.state Eg: `state_info.state:\"DISMISSED\" or state_info.state:\"FAILED\"",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2088,7 +2193,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) Do(opts ..
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: 1. \"projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]\", LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to supported recommenders: https://cloud.google.com/recommender/docs/recommenders.",
+	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to supported recommenders: https://cloud.google.com/recommender/docs/recommenders.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/recommenders/[^/]+$",
 	//       "required": true,
@@ -2145,6 +2250,8 @@ type BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall struct {
 // in the ACCEPTED state. MarkRecommendationClaimed can be applied to
 // recommendations in CLAIMED or ACTIVE state. Requires the
 // recommender.*.update IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *BillingAccountsLocationsRecommendersRecommendationsService) MarkClaimed(name string, googlecloudrecommenderv1beta1markrecommendationclaimedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest) *BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall {
 	c := &BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2179,7 +2286,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall) Hea
 
 func (c *BillingAccountsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2294,6 +2401,8 @@ type BillingAccountsLocationsRecommendersRecommendationsMarkFailedCall struct {
 // can be applied to recommendations in ACTIVE, CLAIMED, SUCCEEDED, or
 // FAILED state. Requires the recommender.*.update IAM permission for
 // the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *BillingAccountsLocationsRecommendersRecommendationsService) MarkFailed(name string, googlecloudrecommenderv1beta1markrecommendationfailedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationFailedRequest) *BillingAccountsLocationsRecommendersRecommendationsMarkFailedCall {
 	c := &BillingAccountsLocationsRecommendersRecommendationsMarkFailedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2328,7 +2437,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkFailedCall) Head
 
 func (c *BillingAccountsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2443,6 +2552,8 @@ type BillingAccountsLocationsRecommendersRecommendationsMarkSucceededCall struct
 // MarkRecommendationSucceeded can be applied to recommendations in
 // ACTIVE, CLAIMED, SUCCEEDED, or FAILED state. Requires the
 // recommender.*.update IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *BillingAccountsLocationsRecommendersRecommendationsService) MarkSucceeded(name string, googlecloudrecommenderv1beta1markrecommendationsucceededrequest *GoogleCloudRecommenderV1beta1MarkRecommendationSucceededRequest) *BillingAccountsLocationsRecommendersRecommendationsMarkSucceededCall {
 	c := &BillingAccountsLocationsRecommendersRecommendationsMarkSucceededCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2477,7 +2588,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsMarkSucceededCall) H
 
 func (c *BillingAccountsLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2586,6 +2697,8 @@ type FoldersLocationsInsightTypesInsightsGetCall struct {
 
 // Get: Gets the requested insight. Requires the recommender.*.get IAM
 // permission for the specified insight type.
+//
+// - name: Name of the insight.
 func (r *FoldersLocationsInsightTypesInsightsService) Get(name string) *FoldersLocationsInsightTypesInsightsGetCall {
 	c := &FoldersLocationsInsightTypesInsightsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2629,7 +2742,7 @@ func (c *FoldersLocationsInsightTypesInsightsGetCall) Header() http.Header {
 
 func (c *FoldersLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2730,8 +2843,24 @@ type FoldersLocationsInsightTypesInsightsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists insights for a Cloud project. Requires the
+// List: Lists insights for the specified Cloud Resource. Requires the
 // recommender.*.list IAM permission for the specified insight type.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: *
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//   T_TYPE_ID]` *
+//   `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TY
+//   PE_ID]` *
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//   pes/[INSIGHT_TYPE_ID]` *
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//   _ID]` *
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//   supported insight types:
+//   https://cloud.google.com/recommender/docs/insights/insight-types.
 func (r *FoldersLocationsInsightTypesInsightsService) List(parent string) *FoldersLocationsInsightTypesInsightsListCall {
 	c := &FoldersLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2739,8 +2868,13 @@ func (r *FoldersLocationsInsightTypesInsightsService) List(parent string) *Folde
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the insights returned. Supported filter fields: state Eg:
-// `state:"DISMISSED" or state:"ACTIVE"
+// restrict the insights returned. Supported filter fields: *
+// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
+// OR severity = HIGH)` (These expressions are based on the filter
+// language described at https://google.aip.dev/160)
 func (c *FoldersLocationsInsightTypesInsightsListCall) Filter(filter string) *FoldersLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2802,7 +2936,7 @@ func (c *FoldersLocationsInsightTypesInsightsListCall) Header() http.Header {
 
 func (c *FoldersLocationsInsightTypesInsightsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2866,7 +3000,7 @@ func (c *FoldersLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists insights for a Cloud project. Requires the recommender.*.list IAM permission for the specified insight type.",
+	//   "description": "Lists insights for the specified Cloud Resource. Requires the recommender.*.list IAM permission for the specified insight type.",
 	//   "flatPath": "v1beta1/folders/{foldersId}/locations/{locationsId}/insightTypes/{insightTypesId}/insights",
 	//   "httpMethod": "GET",
 	//   "id": "recommender.folders.locations.insightTypes.insights.list",
@@ -2875,7 +3009,7 @@ func (c *FoldersLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: state Eg: `state:\"DISMISSED\" or state:\"ACTIVE\"",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2891,7 +3025,7 @@ func (c *FoldersLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: 1. \"projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]\", LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to supported insight types: https://cloud.google.com/recommender/docs/insights/insight-types.",
+	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to supported insight types: https://cloud.google.com/recommender/docs/insights/insight-types.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/locations/[^/]+/insightTypes/[^/]+$",
 	//       "required": true,
@@ -2947,6 +3081,8 @@ type FoldersLocationsInsightTypesInsightsMarkAcceptedCall struct {
 // being updated. MarkInsightAccepted can be applied to insights in
 // ACTIVE state. Requires the recommender.*.update IAM permission for
 // the specified insight.
+//
+// - name: Name of the insight.
 func (r *FoldersLocationsInsightTypesInsightsService) MarkAccepted(name string, googlecloudrecommenderv1beta1markinsightacceptedrequest *GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest) *FoldersLocationsInsightTypesInsightsMarkAcceptedCall {
 	c := &FoldersLocationsInsightTypesInsightsMarkAcceptedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2981,7 +3117,7 @@ func (c *FoldersLocationsInsightTypesInsightsMarkAcceptedCall) Header() http.Hea
 
 func (c *FoldersLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3089,6 +3225,8 @@ type FoldersLocationsRecommendersRecommendationsGetCall struct {
 
 // Get: Gets the requested recommendation. Requires the
 // recommender.*.get IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *FoldersLocationsRecommendersRecommendationsService) Get(name string) *FoldersLocationsRecommendersRecommendationsGetCall {
 	c := &FoldersLocationsRecommendersRecommendationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3132,7 +3270,7 @@ func (c *FoldersLocationsRecommendersRecommendationsGetCall) Header() http.Heade
 
 func (c *FoldersLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3234,8 +3372,25 @@ type FoldersLocationsRecommendersRecommendationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists recommendations for a Cloud project. Requires the
-// recommender.*.list IAM permission for the specified recommender.
+// List: Lists recommendations for the specified Cloud Resource.
+// Requires the recommender.*.list IAM permission for the specified
+// recommender.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: *
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//   ENDER_ID]` *
+//   `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
+//   R_ID]` *
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//   ers/[RECOMMENDER_ID]` *
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//   ID]` *
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//   supported recommenders:
+//   https://cloud.google.com/recommender/docs/recommenders.
 func (r *FoldersLocationsRecommendersRecommendationsService) List(parent string) *FoldersLocationsRecommendersRecommendationsListCall {
 	c := &FoldersLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3243,9 +3398,13 @@ func (r *FoldersLocationsRecommendersRecommendationsService) List(parent string)
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the recommendations returned. Supported filter fields:
-// state_info.state Eg: `state_info.state:"DISMISSED" or
-// state_info.state:"FAILED"
+// restrict the recommendations returned. Supported filter fields: *
+// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
+// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
+// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
+// based on the filter language described at https://google.aip.dev/160)
 func (c *FoldersLocationsRecommendersRecommendationsListCall) Filter(filter string) *FoldersLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3307,7 +3466,7 @@ func (c *FoldersLocationsRecommendersRecommendationsListCall) Header() http.Head
 
 func (c *FoldersLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3372,7 +3531,7 @@ func (c *FoldersLocationsRecommendersRecommendationsListCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists recommendations for a Cloud project. Requires the recommender.*.list IAM permission for the specified recommender.",
+	//   "description": "Lists recommendations for the specified Cloud Resource. Requires the recommender.*.list IAM permission for the specified recommender.",
 	//   "flatPath": "v1beta1/folders/{foldersId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations",
 	//   "httpMethod": "GET",
 	//   "id": "recommender.folders.locations.recommenders.recommendations.list",
@@ -3381,7 +3540,7 @@ func (c *FoldersLocationsRecommendersRecommendationsListCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: state_info.state Eg: `state_info.state:\"DISMISSED\" or state_info.state:\"FAILED\"",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3397,7 +3556,7 @@ func (c *FoldersLocationsRecommendersRecommendationsListCall) Do(opts ...googlea
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: 1. \"projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]\", LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to supported recommenders: https://cloud.google.com/recommender/docs/recommenders.",
+	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to supported recommenders: https://cloud.google.com/recommender/docs/recommenders.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+/locations/[^/]+/recommenders/[^/]+$",
 	//       "required": true,
@@ -3454,6 +3613,8 @@ type FoldersLocationsRecommendersRecommendationsMarkClaimedCall struct {
 // in the ACCEPTED state. MarkRecommendationClaimed can be applied to
 // recommendations in CLAIMED or ACTIVE state. Requires the
 // recommender.*.update IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *FoldersLocationsRecommendersRecommendationsService) MarkClaimed(name string, googlecloudrecommenderv1beta1markrecommendationclaimedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest) *FoldersLocationsRecommendersRecommendationsMarkClaimedCall {
 	c := &FoldersLocationsRecommendersRecommendationsMarkClaimedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3488,7 +3649,7 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkClaimedCall) Header() ht
 
 func (c *FoldersLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3603,6 +3764,8 @@ type FoldersLocationsRecommendersRecommendationsMarkFailedCall struct {
 // can be applied to recommendations in ACTIVE, CLAIMED, SUCCEEDED, or
 // FAILED state. Requires the recommender.*.update IAM permission for
 // the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *FoldersLocationsRecommendersRecommendationsService) MarkFailed(name string, googlecloudrecommenderv1beta1markrecommendationfailedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationFailedRequest) *FoldersLocationsRecommendersRecommendationsMarkFailedCall {
 	c := &FoldersLocationsRecommendersRecommendationsMarkFailedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3637,7 +3800,7 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkFailedCall) Header() htt
 
 func (c *FoldersLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3752,6 +3915,8 @@ type FoldersLocationsRecommendersRecommendationsMarkSucceededCall struct {
 // MarkRecommendationSucceeded can be applied to recommendations in
 // ACTIVE, CLAIMED, SUCCEEDED, or FAILED state. Requires the
 // recommender.*.update IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *FoldersLocationsRecommendersRecommendationsService) MarkSucceeded(name string, googlecloudrecommenderv1beta1markrecommendationsucceededrequest *GoogleCloudRecommenderV1beta1MarkRecommendationSucceededRequest) *FoldersLocationsRecommendersRecommendationsMarkSucceededCall {
 	c := &FoldersLocationsRecommendersRecommendationsMarkSucceededCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3786,7 +3951,7 @@ func (c *FoldersLocationsRecommendersRecommendationsMarkSucceededCall) Header() 
 
 func (c *FoldersLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3895,6 +4060,8 @@ type OrganizationsLocationsInsightTypesInsightsGetCall struct {
 
 // Get: Gets the requested insight. Requires the recommender.*.get IAM
 // permission for the specified insight type.
+//
+// - name: Name of the insight.
 func (r *OrganizationsLocationsInsightTypesInsightsService) Get(name string) *OrganizationsLocationsInsightTypesInsightsGetCall {
 	c := &OrganizationsLocationsInsightTypesInsightsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3938,7 +4105,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsGetCall) Header() http.Header
 
 func (c *OrganizationsLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4039,8 +4206,24 @@ type OrganizationsLocationsInsightTypesInsightsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists insights for a Cloud project. Requires the
+// List: Lists insights for the specified Cloud Resource. Requires the
 // recommender.*.list IAM permission for the specified insight type.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: *
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//   T_TYPE_ID]` *
+//   `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TY
+//   PE_ID]` *
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//   pes/[INSIGHT_TYPE_ID]` *
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//   _ID]` *
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//   supported insight types:
+//   https://cloud.google.com/recommender/docs/insights/insight-types.
 func (r *OrganizationsLocationsInsightTypesInsightsService) List(parent string) *OrganizationsLocationsInsightTypesInsightsListCall {
 	c := &OrganizationsLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4048,8 +4231,13 @@ func (r *OrganizationsLocationsInsightTypesInsightsService) List(parent string) 
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the insights returned. Supported filter fields: state Eg:
-// `state:"DISMISSED" or state:"ACTIVE"
+// restrict the insights returned. Supported filter fields: *
+// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
+// OR severity = HIGH)` (These expressions are based on the filter
+// language described at https://google.aip.dev/160)
 func (c *OrganizationsLocationsInsightTypesInsightsListCall) Filter(filter string) *OrganizationsLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4111,7 +4299,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsListCall) Header() http.Heade
 
 func (c *OrganizationsLocationsInsightTypesInsightsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4175,7 +4363,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsListCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists insights for a Cloud project. Requires the recommender.*.list IAM permission for the specified insight type.",
+	//   "description": "Lists insights for the specified Cloud Resource. Requires the recommender.*.list IAM permission for the specified insight type.",
 	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/insightTypes/{insightTypesId}/insights",
 	//   "httpMethod": "GET",
 	//   "id": "recommender.organizations.locations.insightTypes.insights.list",
@@ -4184,7 +4372,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsListCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: state Eg: `state:\"DISMISSED\" or state:\"ACTIVE\"",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4200,7 +4388,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsListCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: 1. \"projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]\", LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to supported insight types: https://cloud.google.com/recommender/docs/insights/insight-types.",
+	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to supported insight types: https://cloud.google.com/recommender/docs/insights/insight-types.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/insightTypes/[^/]+$",
 	//       "required": true,
@@ -4256,6 +4444,8 @@ type OrganizationsLocationsInsightTypesInsightsMarkAcceptedCall struct {
 // being updated. MarkInsightAccepted can be applied to insights in
 // ACTIVE state. Requires the recommender.*.update IAM permission for
 // the specified insight.
+//
+// - name: Name of the insight.
 func (r *OrganizationsLocationsInsightTypesInsightsService) MarkAccepted(name string, googlecloudrecommenderv1beta1markinsightacceptedrequest *GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest) *OrganizationsLocationsInsightTypesInsightsMarkAcceptedCall {
 	c := &OrganizationsLocationsInsightTypesInsightsMarkAcceptedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4290,7 +4480,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsMarkAcceptedCall) Header() ht
 
 func (c *OrganizationsLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4398,6 +4588,8 @@ type OrganizationsLocationsRecommendersRecommendationsGetCall struct {
 
 // Get: Gets the requested recommendation. Requires the
 // recommender.*.get IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *OrganizationsLocationsRecommendersRecommendationsService) Get(name string) *OrganizationsLocationsRecommendersRecommendationsGetCall {
 	c := &OrganizationsLocationsRecommendersRecommendationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4441,7 +4633,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsGetCall) Header() http
 
 func (c *OrganizationsLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4543,8 +4735,25 @@ type OrganizationsLocationsRecommendersRecommendationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists recommendations for a Cloud project. Requires the
-// recommender.*.list IAM permission for the specified recommender.
+// List: Lists recommendations for the specified Cloud Resource.
+// Requires the recommender.*.list IAM permission for the specified
+// recommender.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: *
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//   ENDER_ID]` *
+//   `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
+//   R_ID]` *
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//   ers/[RECOMMENDER_ID]` *
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//   ID]` *
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//   supported recommenders:
+//   https://cloud.google.com/recommender/docs/recommenders.
 func (r *OrganizationsLocationsRecommendersRecommendationsService) List(parent string) *OrganizationsLocationsRecommendersRecommendationsListCall {
 	c := &OrganizationsLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4552,9 +4761,13 @@ func (r *OrganizationsLocationsRecommendersRecommendationsService) List(parent s
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the recommendations returned. Supported filter fields:
-// state_info.state Eg: `state_info.state:"DISMISSED" or
-// state_info.state:"FAILED"
+// restrict the recommendations returned. Supported filter fields: *
+// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
+// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
+// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
+// based on the filter language described at https://google.aip.dev/160)
 func (c *OrganizationsLocationsRecommendersRecommendationsListCall) Filter(filter string) *OrganizationsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4616,7 +4829,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsListCall) Header() htt
 
 func (c *OrganizationsLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4681,7 +4894,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsListCall) Do(opts ...g
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists recommendations for a Cloud project. Requires the recommender.*.list IAM permission for the specified recommender.",
+	//   "description": "Lists recommendations for the specified Cloud Resource. Requires the recommender.*.list IAM permission for the specified recommender.",
 	//   "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations",
 	//   "httpMethod": "GET",
 	//   "id": "recommender.organizations.locations.recommenders.recommendations.list",
@@ -4690,7 +4903,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsListCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: state_info.state Eg: `state_info.state:\"DISMISSED\" or state_info.state:\"FAILED\"",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4706,7 +4919,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsListCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: 1. \"projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]\", LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to supported recommenders: https://cloud.google.com/recommender/docs/recommenders.",
+	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to supported recommenders: https://cloud.google.com/recommender/docs/recommenders.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/recommenders/[^/]+$",
 	//       "required": true,
@@ -4763,6 +4976,8 @@ type OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall struct {
 // in the ACCEPTED state. MarkRecommendationClaimed can be applied to
 // recommendations in CLAIMED or ACTIVE state. Requires the
 // recommender.*.update IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *OrganizationsLocationsRecommendersRecommendationsService) MarkClaimed(name string, googlecloudrecommenderv1beta1markrecommendationclaimedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest) *OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall {
 	c := &OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4797,7 +5012,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall) Heade
 
 func (c *OrganizationsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4912,6 +5127,8 @@ type OrganizationsLocationsRecommendersRecommendationsMarkFailedCall struct {
 // can be applied to recommendations in ACTIVE, CLAIMED, SUCCEEDED, or
 // FAILED state. Requires the recommender.*.update IAM permission for
 // the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *OrganizationsLocationsRecommendersRecommendationsService) MarkFailed(name string, googlecloudrecommenderv1beta1markrecommendationfailedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationFailedRequest) *OrganizationsLocationsRecommendersRecommendationsMarkFailedCall {
 	c := &OrganizationsLocationsRecommendersRecommendationsMarkFailedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4946,7 +5163,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkFailedCall) Header
 
 func (c *OrganizationsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5061,6 +5278,8 @@ type OrganizationsLocationsRecommendersRecommendationsMarkSucceededCall struct {
 // MarkRecommendationSucceeded can be applied to recommendations in
 // ACTIVE, CLAIMED, SUCCEEDED, or FAILED state. Requires the
 // recommender.*.update IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *OrganizationsLocationsRecommendersRecommendationsService) MarkSucceeded(name string, googlecloudrecommenderv1beta1markrecommendationsucceededrequest *GoogleCloudRecommenderV1beta1MarkRecommendationSucceededRequest) *OrganizationsLocationsRecommendersRecommendationsMarkSucceededCall {
 	c := &OrganizationsLocationsRecommendersRecommendationsMarkSucceededCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5095,7 +5314,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsMarkSucceededCall) Hea
 
 func (c *OrganizationsLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5204,6 +5423,8 @@ type ProjectsLocationsInsightTypesInsightsGetCall struct {
 
 // Get: Gets the requested insight. Requires the recommender.*.get IAM
 // permission for the specified insight type.
+//
+// - name: Name of the insight.
 func (r *ProjectsLocationsInsightTypesInsightsService) Get(name string) *ProjectsLocationsInsightTypesInsightsGetCall {
 	c := &ProjectsLocationsInsightTypesInsightsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5247,7 +5468,7 @@ func (c *ProjectsLocationsInsightTypesInsightsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInsightTypesInsightsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5348,8 +5569,24 @@ type ProjectsLocationsInsightTypesInsightsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists insights for a Cloud project. Requires the
+// List: Lists insights for the specified Cloud Resource. Requires the
 // recommender.*.list IAM permission for the specified insight type.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: *
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGH
+//   T_TYPE_ID]` *
+//   `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TY
+//   PE_ID]` *
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTy
+//   pes/[INSIGHT_TYPE_ID]` *
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE
+//   _ID]` *
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[
+//   INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to
+//   supported insight types:
+//   https://cloud.google.com/recommender/docs/insights/insight-types.
 func (r *ProjectsLocationsInsightTypesInsightsService) List(parent string) *ProjectsLocationsInsightTypesInsightsListCall {
 	c := &ProjectsLocationsInsightTypesInsightsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5357,8 +5594,13 @@ func (r *ProjectsLocationsInsightTypesInsightsService) List(parent string) *Proj
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the insights returned. Supported filter fields: state Eg:
-// `state:"DISMISSED" or state:"ACTIVE"
+// restrict the insights returned. Supported filter fields: *
+// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
+// OR severity = HIGH)` (These expressions are based on the filter
+// language described at https://google.aip.dev/160)
 func (c *ProjectsLocationsInsightTypesInsightsListCall) Filter(filter string) *ProjectsLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5420,7 +5662,7 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInsightTypesInsightsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5484,7 +5726,7 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists insights for a Cloud project. Requires the recommender.*.list IAM permission for the specified insight type.",
+	//   "description": "Lists insights for the specified Cloud Resource. Requires the recommender.*.list IAM permission for the specified insight type.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/insightTypes/{insightTypesId}/insights",
 	//   "httpMethod": "GET",
 	//   "id": "recommender.projects.locations.insightTypes.insights.list",
@@ -5493,7 +5735,7 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: state Eg: `state:\"DISMISSED\" or state:\"ACTIVE\"",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5509,7 +5751,7 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: 1. \"projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]\", LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to supported insight types: https://cloud.google.com/recommender/docs/insights/insight-types.",
+	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `folders/[FOLDER_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]` LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ INSIGHT_TYPE_ID refers to supported insight types: https://cloud.google.com/recommender/docs/insights/insight-types.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/insightTypes/[^/]+$",
 	//       "required": true,
@@ -5565,6 +5807,8 @@ type ProjectsLocationsInsightTypesInsightsMarkAcceptedCall struct {
 // being updated. MarkInsightAccepted can be applied to insights in
 // ACTIVE state. Requires the recommender.*.update IAM permission for
 // the specified insight.
+//
+// - name: Name of the insight.
 func (r *ProjectsLocationsInsightTypesInsightsService) MarkAccepted(name string, googlecloudrecommenderv1beta1markinsightacceptedrequest *GoogleCloudRecommenderV1beta1MarkInsightAcceptedRequest) *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall {
 	c := &ProjectsLocationsInsightTypesInsightsMarkAcceptedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5599,7 +5843,7 @@ func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) Header() http.He
 
 func (c *ProjectsLocationsInsightTypesInsightsMarkAcceptedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5707,6 +5951,8 @@ type ProjectsLocationsRecommendersRecommendationsGetCall struct {
 
 // Get: Gets the requested recommendation. Requires the
 // recommender.*.get IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *ProjectsLocationsRecommendersRecommendationsService) Get(name string) *ProjectsLocationsRecommendersRecommendationsGetCall {
 	c := &ProjectsLocationsRecommendersRecommendationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5750,7 +5996,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsGetCall) Header() http.Head
 
 func (c *ProjectsLocationsRecommendersRecommendationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5852,8 +6098,25 @@ type ProjectsLocationsRecommendersRecommendationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists recommendations for a Cloud project. Requires the
-// recommender.*.list IAM permission for the specified recommender.
+// List: Lists recommendations for the specified Cloud Resource.
+// Requires the recommender.*.list IAM permission for the specified
+// recommender.
+//
+// - parent: The container resource on which to execute the request.
+//   Acceptable formats: *
+//   `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMM
+//   ENDER_ID]` *
+//   `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDE
+//   R_ID]` *
+//   `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommend
+//   ers/[RECOMMENDER_ID]` *
+//   `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_
+//   ID]` *
+//   `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[
+//   RECOMMENDER_ID]` LOCATION here refers to GCP Locations:
+//   https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to
+//   supported recommenders:
+//   https://cloud.google.com/recommender/docs/recommenders.
 func (r *ProjectsLocationsRecommendersRecommendationsService) List(parent string) *ProjectsLocationsRecommendersRecommendationsListCall {
 	c := &ProjectsLocationsRecommendersRecommendationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5861,9 +6124,13 @@ func (r *ProjectsLocationsRecommendersRecommendationsService) List(parent string
 }
 
 // Filter sets the optional parameter "filter": Filter expression to
-// restrict the recommendations returned. Supported filter fields:
-// state_info.state Eg: `state_info.state:"DISMISSED" or
-// state_info.state:"FAILED"
+// restrict the recommendations returned. Supported filter fields: *
+// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
+// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
+// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
+// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
+// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
+// based on the filter language described at https://google.aip.dev/160)
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) Filter(filter string) *ProjectsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5925,7 +6192,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Header() http.Hea
 
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5990,7 +6257,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists recommendations for a Cloud project. Requires the recommender.*.list IAM permission for the specified recommender.",
+	//   "description": "Lists recommendations for the specified Cloud Resource. Requires the recommender.*.list IAM permission for the specified recommender.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/recommenders/{recommendersId}/recommendations",
 	//   "httpMethod": "GET",
 	//   "id": "recommender.projects.locations.recommenders.recommendations.list",
@@ -5999,7 +6266,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: state_info.state Eg: `state_info.state:\"DISMISSED\" or state_info.state:\"FAILED\"",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6015,7 +6282,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Do(opts ...google
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: 1. \"projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]\", LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to supported recommenders: https://cloud.google.com/recommender/docs/recommenders.",
+	//       "description": "Required. The container resource on which to execute the request. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `projects/[PROJECT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `folders/[FOLDER_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/recommenders/[RECOMMENDER_ID]` LOCATION here refers to GCP Locations: https://cloud.google.com/about/locations/ RECOMMENDER_ID refers to supported recommenders: https://cloud.google.com/recommender/docs/recommenders.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/recommenders/[^/]+$",
 	//       "required": true,
@@ -6072,6 +6339,8 @@ type ProjectsLocationsRecommendersRecommendationsMarkClaimedCall struct {
 // in the ACCEPTED state. MarkRecommendationClaimed can be applied to
 // recommendations in CLAIMED or ACTIVE state. Requires the
 // recommender.*.update IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *ProjectsLocationsRecommendersRecommendationsService) MarkClaimed(name string, googlecloudrecommenderv1beta1markrecommendationclaimedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationClaimedRequest) *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall {
 	c := &ProjectsLocationsRecommendersRecommendationsMarkClaimedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6106,7 +6375,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) Header() h
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkClaimedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6221,6 +6490,8 @@ type ProjectsLocationsRecommendersRecommendationsMarkFailedCall struct {
 // can be applied to recommendations in ACTIVE, CLAIMED, SUCCEEDED, or
 // FAILED state. Requires the recommender.*.update IAM permission for
 // the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *ProjectsLocationsRecommendersRecommendationsService) MarkFailed(name string, googlecloudrecommenderv1beta1markrecommendationfailedrequest *GoogleCloudRecommenderV1beta1MarkRecommendationFailedRequest) *ProjectsLocationsRecommendersRecommendationsMarkFailedCall {
 	c := &ProjectsLocationsRecommendersRecommendationsMarkFailedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6255,7 +6526,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) Header() ht
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkFailedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6370,6 +6641,8 @@ type ProjectsLocationsRecommendersRecommendationsMarkSucceededCall struct {
 // MarkRecommendationSucceeded can be applied to recommendations in
 // ACTIVE, CLAIMED, SUCCEEDED, or FAILED state. Requires the
 // recommender.*.update IAM permission for the specified recommender.
+//
+// - name: Name of the recommendation.
 func (r *ProjectsLocationsRecommendersRecommendationsService) MarkSucceeded(name string, googlecloudrecommenderv1beta1markrecommendationsucceededrequest *GoogleCloudRecommenderV1beta1MarkRecommendationSucceededRequest) *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall {
 	c := &ProjectsLocationsRecommendersRecommendationsMarkSucceededCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6404,7 +6677,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) Header()
 
 func (c *ProjectsLocationsRecommendersRecommendationsMarkSucceededCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

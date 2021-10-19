@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         },
         "https://www.googleapis.com/auth/servicecontrol": {
           "description": "Manage your Google Service Control data"
@@ -139,7 +139,7 @@
           ]
         },
         "check": {
-          "description": "Checks whether an operation on a service should be allowed to proceed based on the configuration of the service and related policies. It must be called before the operation is executed. If feasible, the client should cache the check results and reuse them for 60 seconds. In case of any server errors, the client should rely on the cached results for much longer time to avoid outage. WARNING: There is general 60s delay for the configuration and policy propagation, therefore callers MUST NOT depend on the `Check` method having the latest policy information. NOTE: the CheckRequest has the size limit of 64KB. This method requires the `servicemanagement.services.check` permission on the specified service. For more information, see [Cloud IAM](https://cloud.google.com/iam).",
+          "description": "Checks whether an operation on a service should be allowed to proceed based on the configuration of the service and related policies. It must be called before the operation is executed. If feasible, the client should cache the check results and reuse them for 60 seconds. In case of any server errors, the client should rely on the cached results for much longer time to avoid outage. WARNING: There is general 60s delay for the configuration and policy propagation, therefore callers MUST NOT depend on the `Check` method having the latest policy information. NOTE: the CheckRequest has the size limit (wire-format byte size) of 1MB. This method requires the `servicemanagement.services.check` permission on the specified service. For more information, see [Cloud IAM](https://cloud.google.com/iam).",
           "flatPath": "v1/services/{serviceName}:check",
           "httpMethod": "POST",
           "id": "servicecontrol.services.check",
@@ -197,7 +197,7 @@
       }
     }
   },
-  "revision": "20210123",
+  "revision": "20210818",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -475,7 +475,7 @@
           "type": "string"
         },
         "resource": {
-          "description": "The resource being accessed, as a REST-style string. For example: bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID",
+          "description": "The resource being accessed, as a REST-style or cloud resource string. For example: bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID or projects/PROJECTID/datasets/DATASETID",
           "type": "string"
         },
         "resourceAttributes": {
@@ -1246,7 +1246,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Private Preview. This feature is only available for approved services. User defined labels for the resource that this operation is associated with. Only a combination of 1000 user labels per consumer project are allowed.",
+          "description": "Private Preview. This feature is only available for approved services. User defined labels for the resource that this operation is associated with.",
           "type": "object"
         }
       },
@@ -1436,7 +1436,7 @@
             "Decreases available quota by the cost specified for the operation. If cost is higher than available quota, operation fails and returns error.",
             "Decreases available quota by the cost specified for the operation. If cost is higher than available quota, operation does not fail and available quota goes down to zero but it returns error.",
             "Does not change any available quota. Only checks if there is enough quota. No lock is placed on the checked tokens neither.",
-            "Increases available quota by the operation cost specified for the operation."
+            "DEPRECATED: Increases available quota by the operation cost specified for the operation."
           ],
           "type": "string"
         }
@@ -1526,7 +1526,7 @@
           "type": "string"
         },
         "path": {
-          "description": "The HTTP URL path.",
+          "description": "The HTTP URL path, excluding the query parameters.",
           "type": "string"
         },
         "protocol": {
@@ -1551,7 +1551,7 @@
           "type": "string"
         },
         "time": {
-          "description": "The timestamp when the `destination` service receives the first byte of the request.",
+          "description": "The timestamp when the `destination` service receives the last byte of the request.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -1698,7 +1698,7 @@
           "description": "First party (Google) identity as the real authority."
         },
         "principalSubject": {
-          "description": "A string representing the principal_subject associated with the identity. See go/3pical for more info on how principal_subject is formatted.",
+          "description": "A string representing the principal_subject associated with the identity. For most identities, the format will be `principal://iam.googleapis.com/{identity pool name}/subject/{subject)` except for some GKE identities (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD) that are still in the legacy format `serviceAccount:{identity pool name}[{subject}]`",
           "type": "string"
         },
         "thirdPartyPrincipal": {
@@ -1709,7 +1709,7 @@
       "type": "object"
     },
     "SpanContext": {
-      "description": "The context of a span, attached to Exemplars in Distribution values during aggregation. It contains the name of a span with format: projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]",
+      "description": "The context of a span. This is attached to an Exemplar in Distribution values during aggregation. It contains the name of a span with format: projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]",
       "id": "SpanContext",
       "properties": {
         "spanName": {

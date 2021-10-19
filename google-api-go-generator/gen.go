@@ -966,6 +966,7 @@ var pointerFields = []fieldName{
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "Int64Value"},
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "StringValue"},
 	{api: "compute:alpha", schema: "ExternalVpnGateway", field: "Id"},
+	{api: "compute:alpha", schema: "MetadataItems", field: "Value"},
 	{api: "compute:alpha", schema: "Scheduling", field: "AutomaticRestart"},
 	{api: "compute:beta", schema: "ExternalVpnGateway", field: "Id"},
 	{api: "compute:beta", schema: "MetadataItems", field: "Value"},
@@ -1423,7 +1424,7 @@ func (s *Schema) writeSchemaStruct(api *API) {
 
 	commentFmtStr := "%s is a list of field names (e.g. %q) to " +
 		"unconditionally include in API requests. By default, fields " +
-		"with empty values are omitted from API requests. However, " +
+		"with empty or default values are omitted from API requests. However, " +
 		"any non-pointer, non-interface field appearing in %s will " +
 		"be sent to the server regardless of whether the field is " +
 		"empty or not. This may be used to include empty fields in " +
@@ -1776,6 +1777,12 @@ func (m *Method) OptParams() []*Param {
 	})
 }
 
+func (m *Method) ReqParams() []*Param {
+	return m.grepParams(func(p *Param) bool {
+		return p.p.Required
+	})
+}
+
 func (meth *Method) cacheResponseTypes(api *API) {
 	if retType := responseType(api, meth.m); retType != "" && strings.HasPrefix(retType, "*") {
 		api.responseTypes[retType] = true
@@ -1837,6 +1844,20 @@ func (meth *Method) generateCode() {
 	pn("}")
 
 	p("\n%s", asComment("", methodName+": "+removeMarkdownLinks(meth.m.Description)))
+
+	// Add required parameter docs.
+	params := meth.ReqParams()
+	// Sort to the same order params are listed in method.
+	sort.Slice(params, func(i, j int) bool { return params[i].p.Name < params[j].p.Name })
+	for i, v := range params {
+		if i == 0 {
+			p("//\n")
+		}
+		des := v.p.Description
+		des = strings.Replace(des, "Required.", "", 1)
+		des = strings.TrimSpace(des)
+		p("%s", asFuncParmeterComment("", fmt.Sprintf("- %s: %s", depunct(v.p.Name, false), removeMarkdownLinks(des)), true))
+	}
 	if res != nil {
 		if url := canonicalDocsURL[fmt.Sprintf("%v%v/%v", docsLink, res.Name, meth.m.Name)]; url != "" {
 			pn("// For details, see %v", url)
@@ -2338,7 +2359,7 @@ func (meth *Method) NewArguments() *arguments {
 	pnames := meth.m.ParameterOrder
 	if len(pnames) == 0 {
 		// No parameterOrder; collect required parameters and sort by name.
-		for _, reqParam := range meth.grepParams(func(p *Param) bool { return p.p.Required }) {
+		for _, reqParam := range meth.ReqParams() {
 			pnames = append(pnames, reqParam.p.Name)
 		}
 		sort.Strings(pnames)
@@ -2478,17 +2499,28 @@ func (a *arguments) String() string {
 var urlRE = regexp.MustCompile(`^\(?http\S+$`)
 
 func asComment(pfx, c string) string {
+	return asFuncParmeterComment(pfx, c, false)
+}
+
+func asFuncParmeterComment(pfx, c string, addPadding bool) string {
 	var buf bytes.Buffer
-	const maxLen = 70
+	var maxLen = 70
+	var padding string
 	r := strings.NewReplacer(
 		"\n", "\n"+pfx+"// ",
 		"`\"", `"`,
 		"\"`", `"`,
 	)
+	lineNum := 0
 	for len(c) > 0 {
+		// Adjust padding for the second line if needed.
+		if addPadding && lineNum == 1 {
+			padding = "  "
+			maxLen = 68
+		}
 		line := c
 		if len(line) < maxLen {
-			fmt.Fprintf(&buf, "%s// %s\n", pfx, r.Replace(line))
+			fmt.Fprintf(&buf, "%s// %s%s\n", pfx, padding, r.Replace(line))
 			break
 		}
 		// Don't break URLs.
@@ -2505,13 +2537,19 @@ func asComment(pfx, c string) string {
 		if si != -1 {
 			line = line[:si]
 		}
-		fmt.Fprintf(&buf, "%s// %s\n", pfx, r.Replace(line))
+		fmt.Fprintf(&buf, "%s// %s%s\n", pfx, padding, r.Replace(line))
 		c = c[len(line):]
 		if si != -1 {
 			c = c[1:]
 		}
+		lineNum++
 	}
-	return buf.String()
+	// Add a period at the end if there is not one.
+	str := buf.String()
+	if addPadding && len(str) > 1 && str[len(str)-2:] != ".\n" {
+		str = str[:len(str)-1] + ".\n"
+	}
+	return str
 }
 
 func simpleTypeConvert(apiType, format string) (gotype string, ok bool) {

@@ -83,10 +83,12 @@ const mtlsBasePath = "https://firebasedatabase.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
-	// View your data across Google Cloud Platform services
+	// View your data across Google Cloud services and see the email address
+	// of your Google Account
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
 
 	// View and administer all your Firebase data and settings
@@ -194,7 +196,7 @@ type DatabaseInstance struct {
 	// Name: The fully qualified resource name of the database instance, in
 	// the form:
 	// `projects/{project-number}/locations/{location-id}/instances/{database
-	// -id}`. Currently the only supported location is 'us-central1'.
+	// -id}`.
 	Name string `json:"name,omitempty"`
 
 	// Project: The resource name of the project this instance belongs to.
@@ -231,10 +233,10 @@ type DatabaseInstance struct {
 
 	// ForceSendFields is a list of field names (e.g. "DatabaseUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DatabaseUrl") to include
@@ -278,10 +280,10 @@ type ListDatabaseInstancesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Instances") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Instances") to include in
@@ -322,6 +324,9 @@ type ProjectsLocationsInstancesCreateCall struct {
 // https://cloud.google.com/billing/reference/rest/v1/projects/updateBillingInfo.
 // Note that it might take a few minutes for billing enablement state to
 // propagate to Firebase systems.
+//
+// - parent: The parent project for which to create a database instance,
+//   in the form: `projects/{project-number}/locations/{location-id}`.
 func (r *ProjectsLocationsInstancesService) Create(parent string, databaseinstance *DatabaseInstance) *ProjectsLocationsInstancesCreateCall {
 	c := &ProjectsLocationsInstancesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -370,7 +375,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -490,6 +495,11 @@ type ProjectsLocationsInstancesDeleteCall struct {
 // deleted. IDs for deleted database instances may never be recovered or
 // re-used. The Database may only be deleted if it is already in a
 // DISABLED state.
+//
+// - name: The fully qualified resource name of the database instance,
+//   in the form:
+//   `projects/{project-number}/locations/{location-id}/instances/{databa
+//   se-id}`.
 func (r *ProjectsLocationsInstancesService) Delete(name string) *ProjectsLocationsInstancesDeleteCall {
 	c := &ProjectsLocationsInstancesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -523,7 +533,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -625,6 +635,11 @@ type ProjectsLocationsInstancesDisableCall struct {
 // later using ReenableDatabaseInstance. When a database is disabled,
 // all reads and writes are denied, including view access in the
 // Firebase console.
+//
+// - name: The fully qualified resource name of the database instance,
+//   in the form:
+//   `projects/{project-number}/locations/{location-id}/instances/{databa
+//   se-id}`.
 func (r *ProjectsLocationsInstancesService) Disable(name string, disabledatabaseinstancerequest *DisableDatabaseInstanceRequest) *ProjectsLocationsInstancesDisableCall {
 	c := &ProjectsLocationsInstancesDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -659,7 +674,7 @@ func (c *ProjectsLocationsInstancesDisableCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -767,6 +782,15 @@ type ProjectsLocationsInstancesGetCall struct {
 
 // Get: Gets the DatabaseInstance identified by the specified resource
 // name.
+//
+// - name: The fully qualified resource name of the database instance,
+//   in the form:
+//   `projects/{project-number}/locations/{location-id}/instances/{databa
+//   se-id}`. `database-id` is a globally unique identifier across all
+//   parent collections. For convenience, this method allows you to
+//   supply `-` as a wildcard character in place of specific collections
+//   under `projects` and `locations`. The resulting wildcarding form of
+//   the method is: `projects/-/locations/-/instances/{database-id}`.
 func (r *ProjectsLocationsInstancesService) Get(nameid string) *ProjectsLocationsInstancesGetCall {
 	c := &ProjectsLocationsInstancesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -810,7 +834,7 @@ func (c *ProjectsLocationsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -919,6 +943,11 @@ type ProjectsLocationsInstancesListCall struct {
 // additional requests are made with a `pageToken`. The resulting list
 // contains instances in any STATE. The list results may be stale by a
 // few seconds. Use GetDatabaseInstance for consistent reads.
+//
+// - parent: The parent project for which to list database instances, in
+//   the form: `projects/{project-number}/locations/{location-id}` To
+//   list across all locations, use a parent in the form:
+//   `projects/{project-number}/locations/-`.
 func (r *ProjectsLocationsInstancesService) List(parent string) *ProjectsLocationsInstancesListCall {
 	c := &ProjectsLocationsInstancesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -980,7 +1009,7 @@ func (c *ProjectsLocationsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1118,6 +1147,11 @@ type ProjectsLocationsInstancesReenableCall struct {
 // Reenable: Enables a DatabaseInstance. The database must have been
 // disabled previously using DisableDatabaseInstance. The state of a
 // successfully reenabled DatabaseInstance is ACTIVE.
+//
+// - name: The fully qualified resource name of the database instance,
+//   in the form:
+//   `projects/{project-number}/locations/{location-id}/instances/{databa
+//   se-id}`.
 func (r *ProjectsLocationsInstancesService) Reenable(name string, reenabledatabaseinstancerequest *ReenableDatabaseInstanceRequest) *ProjectsLocationsInstancesReenableCall {
 	c := &ProjectsLocationsInstancesReenableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1152,7 +1186,7 @@ func (c *ProjectsLocationsInstancesReenableCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesReenableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

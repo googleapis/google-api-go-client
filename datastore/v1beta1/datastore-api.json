@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         },
         "https://www.googleapis.com/auth/datastore": {
           "description": "View and manage your Google Cloud Datastore data"
@@ -17,6 +17,7 @@
   "description": "Accesses the schemaless NoSQL database to provide fully managed, robust, scalable storage for your application. ",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/datastore/",
+  "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -167,7 +168,7 @@
       }
     }
   },
-  "revision": "20200802",
+  "revision": "20210901",
   "rootUrl": "https://datastore.googleapis.com/",
   "schemas": {
     "GoogleDatastoreAdminV1CommonMetadata": {

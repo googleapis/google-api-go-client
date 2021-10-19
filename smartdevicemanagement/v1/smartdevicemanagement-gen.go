@@ -23,6 +23,10 @@
 //
 // Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//   smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx, option.WithScopes(smartdevicemanagement.SdmThermostatServiceScope))
+//
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
 //   smartdevicemanagementService, err := smartdevicemanagement.NewService(ctx, option.WithAPIKey("AIza..."))
@@ -81,12 +85,16 @@ const mtlsBasePath = "https://smartdevicemanagement.mtls.googleapis.com/"
 const (
 	// See and/or control the devices that you selected
 	SdmServiceScope = "https://www.googleapis.com/auth/sdm.service"
+
+	// See and control the Nest thermostats that you select
+	SdmThermostatServiceScope = "https://www.googleapis.com/auth/sdm.thermostat.service"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/sdm.service",
+		"https://www.googleapis.com/auth/sdm.thermostat.service",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -205,10 +213,10 @@ type GoogleHomeEnterpriseSdmV1Device struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -238,10 +246,10 @@ type GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Command") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Command") to include in
@@ -271,10 +279,10 @@ type GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Results") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Results") to include in
@@ -308,10 +316,10 @@ type GoogleHomeEnterpriseSdmV1ListDevicesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Devices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Devices") to include in
@@ -345,10 +353,10 @@ type GoogleHomeEnterpriseSdmV1ListRoomsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -382,10 +390,10 @@ type GoogleHomeEnterpriseSdmV1ListStructuresResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -405,7 +413,7 @@ func (s *GoogleHomeEnterpriseSdmV1ListStructuresResponse) MarshalJSON() ([]byte,
 
 // GoogleHomeEnterpriseSdmV1ParentRelation: Represents device
 // relationships, for instance, structure/room to which the device is
-// assigned to. For now this is only filled in the enterprise flow.
+// assigned to.
 type GoogleHomeEnterpriseSdmV1ParentRelation struct {
 	// DisplayName: Output only. The custom name of the relation -- e.g.,
 	// structure/room where the device is assigned to.
@@ -419,10 +427,10 @@ type GoogleHomeEnterpriseSdmV1ParentRelation struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -457,10 +465,10 @@ type GoogleHomeEnterpriseSdmV1Room struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -494,10 +502,10 @@ type GoogleHomeEnterpriseSdmV1Structure struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -528,6 +536,9 @@ type EnterprisesDevicesExecuteCommandCall struct {
 
 // ExecuteCommand: Executes a command to device managed by the
 // enterprise.
+//
+// - name: The name of the device requested. For example:
+//   "enterprises/XYZ/devices/123".
 func (r *EnterprisesDevicesService) ExecuteCommand(name string, googlehomeenterprisesdmv1executedevicecommandrequest *GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandRequest) *EnterprisesDevicesExecuteCommandCall {
 	c := &EnterprisesDevicesExecuteCommandCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -562,7 +573,7 @@ func (c *EnterprisesDevicesExecuteCommandCall) Header() http.Header {
 
 func (c *EnterprisesDevicesExecuteCommandCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -652,7 +663,8 @@ func (c *EnterprisesDevicesExecuteCommandCall) Do(opts ...googleapi.CallOption) 
 	//     "$ref": "GoogleHomeEnterpriseSdmV1ExecuteDeviceCommandResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service"
+	//     "https://www.googleapis.com/auth/sdm.service",
+	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
 	//   ]
 	// }
 
@@ -670,6 +682,9 @@ type EnterprisesDevicesGetCall struct {
 }
 
 // Get: Gets a device managed by the enterprise.
+//
+// - name: The name of the device requested. For example:
+//   "enterprises/XYZ/devices/123".
 func (r *EnterprisesDevicesService) Get(name string) *EnterprisesDevicesGetCall {
 	c := &EnterprisesDevicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -713,7 +728,7 @@ func (c *EnterprisesDevicesGetCall) Header() http.Header {
 
 func (c *EnterprisesDevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -796,7 +811,8 @@ func (c *EnterprisesDevicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleHom
 	//     "$ref": "GoogleHomeEnterpriseSdmV1Device"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service"
+	//     "https://www.googleapis.com/auth/sdm.service",
+	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
 	//   ]
 	// }
 
@@ -814,6 +830,9 @@ type EnterprisesDevicesListCall struct {
 }
 
 // List: Lists devices managed by the enterprise.
+//
+// - parent: The parent enterprise to list devices under. E.g.
+//   "enterprises/XYZ".
 func (r *EnterprisesDevicesService) List(parent string) *EnterprisesDevicesListCall {
 	c := &EnterprisesDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -880,7 +899,7 @@ func (c *EnterprisesDevicesListCall) Header() http.Header {
 
 func (c *EnterprisesDevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -981,7 +1000,8 @@ func (c *EnterprisesDevicesListCall) Do(opts ...googleapi.CallOption) (*GoogleHo
 	//     "$ref": "GoogleHomeEnterpriseSdmV1ListDevicesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service"
+	//     "https://www.googleapis.com/auth/sdm.service",
+	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
 	//   ]
 	// }
 
@@ -1020,6 +1040,9 @@ type EnterprisesStructuresGetCall struct {
 }
 
 // Get: Gets a structure managed by the enterprise.
+//
+// - name: The name of the structure requested. For example:
+//   "enterprises/XYZ/structures/ABC".
 func (r *EnterprisesStructuresService) Get(name string) *EnterprisesStructuresGetCall {
 	c := &EnterprisesStructuresGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1063,7 +1086,7 @@ func (c *EnterprisesStructuresGetCall) Header() http.Header {
 
 func (c *EnterprisesStructuresGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1147,7 +1170,8 @@ func (c *EnterprisesStructuresGetCall) Do(opts ...googleapi.CallOption) (*Google
 	//     "$ref": "GoogleHomeEnterpriseSdmV1Structure"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service"
+	//     "https://www.googleapis.com/auth/sdm.service",
+	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
 	//   ]
 	// }
 
@@ -1165,6 +1189,9 @@ type EnterprisesStructuresListCall struct {
 }
 
 // List: Lists structures managed by the enterprise.
+//
+// - parent: The parent enterprise to list structures under. E.g.
+//   "enterprises/XYZ".
 func (r *EnterprisesStructuresService) List(parent string) *EnterprisesStructuresListCall {
 	c := &EnterprisesStructuresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1230,7 +1257,7 @@ func (c *EnterprisesStructuresListCall) Header() http.Header {
 
 func (c *EnterprisesStructuresListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1331,7 +1358,8 @@ func (c *EnterprisesStructuresListCall) Do(opts ...googleapi.CallOption) (*Googl
 	//     "$ref": "GoogleHomeEnterpriseSdmV1ListStructuresResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service"
+	//     "https://www.googleapis.com/auth/sdm.service",
+	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
 	//   ]
 	// }
 
@@ -1370,6 +1398,9 @@ type EnterprisesStructuresRoomsGetCall struct {
 }
 
 // Get: Gets a room managed by the enterprise.
+//
+// - name: The name of the room requested. For example:
+//   "enterprises/XYZ/structures/ABC/rooms/123".
 func (r *EnterprisesStructuresRoomsService) Get(name string) *EnterprisesStructuresRoomsGetCall {
 	c := &EnterprisesStructuresRoomsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1413,7 +1444,7 @@ func (c *EnterprisesStructuresRoomsGetCall) Header() http.Header {
 
 func (c *EnterprisesStructuresRoomsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1496,7 +1527,8 @@ func (c *EnterprisesStructuresRoomsGetCall) Do(opts ...googleapi.CallOption) (*G
 	//     "$ref": "GoogleHomeEnterpriseSdmV1Room"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service"
+	//     "https://www.googleapis.com/auth/sdm.service",
+	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
 	//   ]
 	// }
 
@@ -1514,6 +1546,9 @@ type EnterprisesStructuresRoomsListCall struct {
 }
 
 // List: Lists rooms managed by the enterprise.
+//
+// - parent: The parent resource name of the rooms requested. For
+//   example: "enterprises/XYZ/structures/ABC".
 func (r *EnterprisesStructuresRoomsService) List(parent string) *EnterprisesStructuresRoomsListCall {
 	c := &EnterprisesStructuresRoomsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1572,7 +1607,7 @@ func (c *EnterprisesStructuresRoomsListCall) Header() http.Header {
 
 func (c *EnterprisesStructuresRoomsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1668,7 +1703,8 @@ func (c *EnterprisesStructuresRoomsListCall) Do(opts ...googleapi.CallOption) (*
 	//     "$ref": "GoogleHomeEnterpriseSdmV1ListRoomsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/sdm.service"
+	//     "https://www.googleapis.com/auth/sdm.service",
+	//     "https://www.googleapis.com/auth/sdm.thermostat.service"
 	//   ]
 	// }
 

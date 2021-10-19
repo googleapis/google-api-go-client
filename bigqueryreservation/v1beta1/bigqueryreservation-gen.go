@@ -83,10 +83,12 @@ const mtlsBasePath = "https://bigqueryreservation.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data in Google BigQuery
+	// View and manage your data in Google BigQuery and see the email
+	// address for your Google Account
 	BigqueryScope = "https://www.googleapis.com/auth/bigquery"
 
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -200,8 +202,8 @@ type ProjectsLocationsReservationsAssignmentsService struct {
 	s *Service
 }
 
-// Assignment: A Assignment allows a project to submit jobs of a certain
-// type using slots from the specified reservation.
+// Assignment: An assignment allows a project to submit jobs of a
+// certain type using slots from the specified reservation.
 type Assignment struct {
 	// Assignee: The resource which will use the reservation. E.g.
 	// `projects/myproject`, `folders/123`, or `organizations/456`.
@@ -240,10 +242,10 @@ type Assignment struct {
 
 	// ForceSendFields is a list of field names (e.g. "Assignee") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Assignee") to include in
@@ -265,7 +267,7 @@ func (s *Assignment) MarshalJSON() ([]byte, error) {
 type BiReservation struct {
 	// Name: The resource name of the singleton BI reservation. Reservation
 	// names have the form
-	// `projects/{project_id}/locations/{location_id}/bireservation`.
+	// `projects/{project_id}/locations/{location_id}/biReservation`.
 	Name string `json:"name,omitempty"`
 
 	// Size: Size of a reservation, in bytes.
@@ -280,10 +282,10 @@ type BiReservation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -394,10 +396,10 @@ type CapacityCommitment struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommitmentEndTime")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommitmentEndTime") to
@@ -412,37 +414,6 @@ type CapacityCommitment struct {
 
 func (s *CapacityCommitment) MarshalJSON() ([]byte, error) {
 	type NoMethod CapacityCommitment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// CreateSlotPoolMetadata: The metadata for operation returned from
-// ReservationService.CreateSlotPool.
-type CreateSlotPoolMetadata struct {
-	// SlotPool: Resource name of the slot pool that is being created. E.g.,
-	// projects/myproject/locations/us-central1/reservations/foo/slotPools/12
-	// 3
-	SlotPool string `json:"slotPool,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "SlotPool") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SlotPool") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CreateSlotPoolMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod CreateSlotPoolMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -475,10 +446,10 @@ type ListAssignmentsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Assignments") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Assignments") to include
@@ -513,10 +484,10 @@ type ListCapacityCommitmentsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CapacityCommitments")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CapacityCommitments") to
@@ -551,10 +522,10 @@ type ListReservationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -584,8 +555,8 @@ type MergeCapacityCommitmentsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CapacityCommitmentIds") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -621,10 +592,10 @@ type MoveAssignmentRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "DestinationId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DestinationId") to include
@@ -648,10 +619,11 @@ type Reservation struct {
 	// CreationTime: Output only. Creation time of the reservation.
 	CreationTime string `json:"creationTime,omitempty"`
 
-	// IgnoreIdleSlots: If false, any query using this reservation will use
-	// idle slots from other reservations within the same admin project. If
-	// true, a query using this reservation will execute with the slot
-	// capacity specified above at most.
+	// IgnoreIdleSlots: If false, any query or pipeline job using this
+	// reservation will use idle slots from other reservations within the
+	// same admin project. If true, a query or pipeline job using this
+	// reservation will execute with the slot capacity specified in the
+	// slot_capacity field at most.
 	IgnoreIdleSlots bool `json:"ignoreIdleSlots,omitempty"`
 
 	// Name: The resource name of the reservation, e.g.,
@@ -677,10 +649,10 @@ type Reservation struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreationTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreationTime") to include
@@ -714,10 +686,10 @@ type SearchAssignmentsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Assignments") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Assignments") to include
@@ -744,10 +716,10 @@ type SplitCapacityCommitmentRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "SlotCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SlotCount") to include in
@@ -780,10 +752,10 @@ type SplitCapacityCommitmentResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "First") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "First") to include in API
@@ -824,10 +796,10 @@ type Status struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -857,6 +829,9 @@ type ProjectsLocationsGetBiReservationCall struct {
 }
 
 // GetBiReservation: Retrieves a BI reservation.
+//
+// - name: Name of the requested reservation, for example:
+//   `projects/{project_id}/locations/{location_id}/biReservation`.
 func (r *ProjectsLocationsService) GetBiReservation(name string) *ProjectsLocationsGetBiReservationCall {
 	c := &ProjectsLocationsGetBiReservationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -900,7 +875,7 @@ func (c *ProjectsLocationsGetBiReservationCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetBiReservationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -971,7 +946,7 @@ func (c *ProjectsLocationsGetBiReservationCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the requested reservation, for example: `projects/{project_id}/locations/{location_id}/bireservation`",
+	//       "description": "Required. Name of the requested reservation, for example: `projects/{project_id}/locations/{location_id}/biReservation`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/biReservation$",
 	//       "required": true,
@@ -1015,6 +990,9 @@ type ProjectsLocationsSearchAssignmentsCall struct {
 // here is `projects/*/locations/*`, instead of
 // `projects/*/locations/*reservations/*`. **Note** "-" cannot be used
 // for projects nor locations.
+//
+// - parent: The resource name of the admin project(containing project
+//   and location), e.g.: `projects/myproject/locations/US`.
 func (r *ProjectsLocationsService) SearchAssignments(parent string) *ProjectsLocationsSearchAssignmentsCall {
 	c := &ProjectsLocationsSearchAssignmentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1081,7 +1059,7 @@ func (c *ProjectsLocationsSearchAssignmentsCall) Header() http.Header {
 
 func (c *ProjectsLocationsSearchAssignmentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1224,6 +1202,10 @@ type ProjectsLocationsUpdateBiReservationCall struct {
 // exists with default size 0. In order to reserve BI capacity it needs
 // to be updated to an amount greater than 0. In order to release BI
 // capacity reservation size must be set to 0.
+//
+// - name: The resource name of the singleton BI reservation.
+//   Reservation names have the form
+//   `projects/{project_id}/locations/{location_id}/biReservation`.
 func (r *ProjectsLocationsService) UpdateBiReservation(name string, bireservation *BiReservation) *ProjectsLocationsUpdateBiReservationCall {
 	c := &ProjectsLocationsUpdateBiReservationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1265,7 +1247,7 @@ func (c *ProjectsLocationsUpdateBiReservationCall) Header() http.Header {
 
 func (c *ProjectsLocationsUpdateBiReservationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1338,7 +1320,7 @@ func (c *ProjectsLocationsUpdateBiReservationCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the singleton BI reservation. Reservation names have the form `projects/{project_id}/locations/{location_id}/bireservation`.",
+	//       "description": "The resource name of the singleton BI reservation. Reservation names have the form `projects/{project_id}/locations/{location_id}/biReservation`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/biReservation$",
 	//       "required": true,
@@ -1378,10 +1360,24 @@ type ProjectsLocationsCapacityCommitmentsCreateCall struct {
 }
 
 // Create: Creates a new capacity commitment resource.
+//
+// - parent: Resource name of the parent reservation. E.g.,
+//   `projects/myproject/locations/US`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Create(parent string, capacitycommitment *CapacityCommitment) *ProjectsLocationsCapacityCommitmentsCreateCall {
 	c := &ProjectsLocationsCapacityCommitmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.capacitycommitment = capacitycommitment
+	return c
+}
+
+// CapacityCommitmentId sets the optional parameter
+// "capacityCommitmentId": The optional capacity commitment ID. Capacity
+// commitment name will be generated automatically if this field is
+// empty. This field must only contain lower case alphanumeric
+// characters or dash. Max length is 64 characters. NOTE: this ID won't
+// be kept if the capacity commitment is split or merged.
+func (c *ProjectsLocationsCapacityCommitmentsCreateCall) CapacityCommitmentId(capacityCommitmentId string) *ProjectsLocationsCapacityCommitmentsCreateCall {
+	c.urlParams_.Set("capacityCommitmentId", capacityCommitmentId)
 	return c
 }
 
@@ -1420,7 +1416,7 @@ func (c *ProjectsLocationsCapacityCommitmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1492,6 +1488,11 @@ func (c *ProjectsLocationsCapacityCommitmentsCreateCall) Do(opts ...googleapi.Ca
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "capacityCommitmentId": {
+	//       "description": "The optional capacity commitment ID. Capacity commitment name will be generated automatically if this field is empty. This field must only contain lower case alphanumeric characters or dash. Max length is 64 characters. NOTE: this ID won't be kept if the capacity commitment is split or merged.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "enforceSingleAdminProjectPerOrg": {
 	//       "description": "If true, fail the request if another project in the organization has a capacity commitment.",
 	//       "location": "query",
@@ -1533,9 +1534,21 @@ type ProjectsLocationsCapacityCommitmentsDeleteCall struct {
 // Delete: Deletes a capacity commitment. Attempting to delete capacity
 // commitment before its commitment_end_time will fail with the error
 // code `google.rpc.Code.FAILED_PRECONDITION`.
+//
+// - name: Resource name of the capacity commitment to delete. E.g.,
+//   `projects/myproject/locations/US/capacityCommitments/123`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Delete(name string) *ProjectsLocationsCapacityCommitmentsDeleteCall {
 	c := &ProjectsLocationsCapacityCommitmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": Can be used to force
+// delete commitments even if assignments exist. Deleting commitments
+// with assignments may cause queries to fail if they no longer have
+// access to slots.
+func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) Force(force bool) *ProjectsLocationsCapacityCommitmentsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
 }
 
@@ -1566,7 +1579,7 @@ func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1633,6 +1646,11 @@ func (c *ProjectsLocationsCapacityCommitmentsDeleteCall) Do(opts ...googleapi.Ca
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "force": {
+	//       "description": "Can be used to force delete commitments even if assignments exist. Deleting commitments with assignments may cause queries to fail if they no longer have access to slots.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
 	//       "description": "Required. Resource name of the capacity commitment to delete. E.g., `projects/myproject/locations/US/capacityCommitments/123`",
 	//       "location": "path",
@@ -1665,6 +1683,9 @@ type ProjectsLocationsCapacityCommitmentsGetCall struct {
 }
 
 // Get: Returns information about the capacity commitment.
+//
+// - name: Resource name of the capacity commitment to retrieve. E.g.,
+//   `projects/myproject/locations/US/capacityCommitments/123`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Get(name string) *ProjectsLocationsCapacityCommitmentsGetCall {
 	c := &ProjectsLocationsCapacityCommitmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1708,7 +1729,7 @@ func (c *ProjectsLocationsCapacityCommitmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1810,6 +1831,9 @@ type ProjectsLocationsCapacityCommitmentsListCall struct {
 }
 
 // List: Lists all the capacity commitments for the admin project.
+//
+// - parent: Resource name of the parent reservation. E.g.,
+//   `projects/myproject/locations/US`.
 func (r *ProjectsLocationsCapacityCommitmentsService) List(parent string) *ProjectsLocationsCapacityCommitmentsListCall {
 	c := &ProjectsLocationsCapacityCommitmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1867,7 +1891,7 @@ func (c *ProjectsLocationsCapacityCommitmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2005,6 +2029,9 @@ type ProjectsLocationsCapacityCommitmentsMergeCall struct {
 // commitment_end_time out of the to-be-merged capacity commitments.
 // Attempting to merge capacity commitments of different plan will fail
 // with the error code `google.rpc.Code.FAILED_PRECONDITION`.
+//
+// - parent: Parent resource that identifies admin project and location
+//   e.g., `projects/myproject/locations/us`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Merge(parent string, mergecapacitycommitmentsrequest *MergeCapacityCommitmentsRequest) *ProjectsLocationsCapacityCommitmentsMergeCall {
 	c := &ProjectsLocationsCapacityCommitmentsMergeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2039,7 +2066,7 @@ func (c *ProjectsLocationsCapacityCommitmentsMergeCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsMergeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2150,6 +2177,9 @@ type ProjectsLocationsCapacityCommitmentsPatchCall struct {
 // plan of a longer commitment period. Attempting to change to a plan
 // with shorter commitment period will fail with the error code
 // `google.rpc.Code.FAILED_PRECONDITION`.
+//
+// - name: Output only. The resource name of the capacity commitment,
+//   e.g., `projects/myproject/locations/US/capacityCommitments/123`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Patch(name string, capacitycommitment *CapacityCommitment) *ProjectsLocationsCapacityCommitmentsPatchCall {
 	c := &ProjectsLocationsCapacityCommitmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2191,7 +2221,7 @@ func (c *ProjectsLocationsCapacityCommitmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2309,6 +2339,9 @@ type ProjectsLocationsCapacityCommitmentsSplitCall struct {
 // 8000, you might split a 10000 capacity commitment into commitments of
 // 2000 and 8000. Then, you would change the plan of the first one to
 // `FLEX` and then delete it.
+//
+// - name: The resource name e.g.,:
+//   `projects/myproject/locations/US/capacityCommitments/123`.
 func (r *ProjectsLocationsCapacityCommitmentsService) Split(name string, splitcapacitycommitmentrequest *SplitCapacityCommitmentRequest) *ProjectsLocationsCapacityCommitmentsSplitCall {
 	c := &ProjectsLocationsCapacityCommitmentsSplitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2343,7 +2376,7 @@ func (c *ProjectsLocationsCapacityCommitmentsSplitCall) Header() http.Header {
 
 func (c *ProjectsLocationsCapacityCommitmentsSplitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2450,6 +2483,8 @@ type ProjectsLocationsReservationsCreateCall struct {
 }
 
 // Create: Creates a new reservation resource.
+//
+// - parent: Project, location. E.g., `projects/myproject/locations/US`.
 func (r *ProjectsLocationsReservationsService) Create(parent string, reservation *Reservation) *ProjectsLocationsReservationsCreateCall {
 	c := &ProjectsLocationsReservationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2492,7 +2527,7 @@ func (c *ProjectsLocationsReservationsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2605,6 +2640,9 @@ type ProjectsLocationsReservationsDeleteCall struct {
 // Delete: Deletes a reservation. Returns
 // `google.rpc.Code.FAILED_PRECONDITION` when reservation has
 // assignments.
+//
+// - name: Resource name of the reservation to retrieve. E.g.,
+//   `projects/myproject/locations/US/reservations/team1-prod`.
 func (r *ProjectsLocationsReservationsService) Delete(name string) *ProjectsLocationsReservationsDeleteCall {
 	c := &ProjectsLocationsReservationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2638,7 +2676,7 @@ func (c *ProjectsLocationsReservationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2737,6 +2775,9 @@ type ProjectsLocationsReservationsGetCall struct {
 }
 
 // Get: Returns information about the reservation.
+//
+// - name: Resource name of the reservation to retrieve. E.g.,
+//   `projects/myproject/locations/US/reservations/team1-prod`.
 func (r *ProjectsLocationsReservationsService) Get(name string) *ProjectsLocationsReservationsGetCall {
 	c := &ProjectsLocationsReservationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2780,7 +2821,7 @@ func (c *ProjectsLocationsReservationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2883,6 +2924,9 @@ type ProjectsLocationsReservationsListCall struct {
 
 // List: Lists all the reservations for the project in the specified
 // location.
+//
+// - parent: The parent resource name containing project and location,
+//   e.g.: `projects/myproject/locations/US`.
 func (r *ProjectsLocationsReservationsService) List(parent string) *ProjectsLocationsReservationsListCall {
 	c := &ProjectsLocationsReservationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2950,7 +2994,7 @@ func (c *ProjectsLocationsReservationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3089,6 +3133,9 @@ type ProjectsLocationsReservationsPatchCall struct {
 }
 
 // Patch: Updates an existing reservation resource.
+//
+// - name: The resource name of the reservation, e.g.,
+//   `projects/*/locations/*/reservations/team1-prod`.
 func (r *ProjectsLocationsReservationsService) Patch(name string, reservation *Reservation) *ProjectsLocationsReservationsPatchCall {
 	c := &ProjectsLocationsReservationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3130,7 +3177,7 @@ func (c *ProjectsLocationsReservationsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsReservationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3256,15 +3303,32 @@ type ProjectsLocationsReservationsAssignmentsCreateCall struct {
 // `organizationA` contains two projects, `project1` and `project2`. *
 // Assignments for all three entities (`organizationA`, `project1`, and
 // `project2`) could all be created and mapped to the same or different
-// reservations. Returns `google.rpc.Code.PERMISSION_DENIED` if user
-// does not have 'bigquery.admin' permissions on the project using the
-// reservation and the project that owns this reservation. Returns
+// reservations. "None" assignments represent an absence of the
+// assignment. Projects assigned to None use on-demand pricing. To
+// create a "None" assignment, use "none" as a reservation_id in the
+// parent. Example parent:
+// `projects/myproject/locations/US/reservations/none`. Returns
+// `google.rpc.Code.PERMISSION_DENIED` if user does not have
+// 'bigquery.admin' permissions on the project using the reservation and
+// the project that owns this reservation. Returns
 // `google.rpc.Code.INVALID_ARGUMENT` when location of the assignment
 // does not match location of the reservation.
+//
+// - parent: The parent resource name of the assignment E.g.
+//   `projects/myproject/locations/US/reservations/team1-prod`.
 func (r *ProjectsLocationsReservationsAssignmentsService) Create(parent string, assignment *Assignment) *ProjectsLocationsReservationsAssignmentsCreateCall {
 	c := &ProjectsLocationsReservationsAssignmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.assignment = assignment
+	return c
+}
+
+// AssignmentId sets the optional parameter "assignmentId": The optional
+// assignment ID. Assignment name will be generated automatically if
+// this field is empty. This field must only contain lower case
+// alphanumeric characters or dash. Max length is 64 characters.
+func (c *ProjectsLocationsReservationsAssignmentsCreateCall) AssignmentId(assignmentId string) *ProjectsLocationsReservationsAssignmentsCreateCall {
+	c.urlParams_.Set("assignmentId", assignmentId)
 	return c
 }
 
@@ -3295,7 +3359,7 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) Header() http.Heade
 
 func (c *ProjectsLocationsReservationsAssignmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3359,7 +3423,7 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an assignment object which allows the given project to submit jobs of a certain type using slots from the specified reservation. Currently a resource (project, folder, organization) can only have one assignment per each (job_type, location) combination, and that reservation will be used for all jobs of the matching type. Different assignments can be created on different levels of the projects, folders or organization hierarchy. During query execution, the assignment is looked up at the project, folder and organization levels in that order. The first assignment found is applied to the query. When creating assignments, it does not matter if other assignments exist at higher levels. Example: * The organization `organizationA` contains two projects, `project1` and `project2`. * Assignments for all three entities (`organizationA`, `project1`, and `project2`) could all be created and mapped to the same or different reservations. Returns `google.rpc.Code.PERMISSION_DENIED` if user does not have 'bigquery.admin' permissions on the project using the reservation and the project that owns this reservation. Returns `google.rpc.Code.INVALID_ARGUMENT` when location of the assignment does not match location of the reservation.",
+	//   "description": "Creates an assignment object which allows the given project to submit jobs of a certain type using slots from the specified reservation. Currently a resource (project, folder, organization) can only have one assignment per each (job_type, location) combination, and that reservation will be used for all jobs of the matching type. Different assignments can be created on different levels of the projects, folders or organization hierarchy. During query execution, the assignment is looked up at the project, folder and organization levels in that order. The first assignment found is applied to the query. When creating assignments, it does not matter if other assignments exist at higher levels. Example: * The organization `organizationA` contains two projects, `project1` and `project2`. * Assignments for all three entities (`organizationA`, `project1`, and `project2`) could all be created and mapped to the same or different reservations. \"None\" assignments represent an absence of the assignment. Projects assigned to None use on-demand pricing. To create a \"None\" assignment, use \"none\" as a reservation_id in the parent. Example parent: `projects/myproject/locations/US/reservations/none`. Returns `google.rpc.Code.PERMISSION_DENIED` if user does not have 'bigquery.admin' permissions on the project using the reservation and the project that owns this reservation. Returns `google.rpc.Code.INVALID_ARGUMENT` when location of the assignment does not match location of the reservation.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}/assignments",
 	//   "httpMethod": "POST",
 	//   "id": "bigqueryreservation.projects.locations.reservations.assignments.create",
@@ -3367,6 +3431,11 @@ func (c *ProjectsLocationsReservationsAssignmentsCreateCall) Do(opts ...googleap
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "assignmentId": {
+	//       "description": "The optional assignment ID. Assignment name will be generated automatically if this field is empty. This field must only contain lower case alphanumeric characters or dash. Max length is 64 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "parent": {
 	//       "description": "Required. The parent resource name of the assignment E.g. `projects/myproject/locations/US/reservations/team1-prod`",
 	//       "location": "path",
@@ -3409,6 +3478,10 @@ type ProjectsLocationsReservationsAssignmentsDeleteCall struct {
 // assignment ``. After said deletion, queries from `project1` will
 // still use `res1` while queries from `project2` will switch to use
 // on-demand mode.
+//
+// - name: Name of the resource, e.g.
+//   `projects/myproject/locations/US/reservations/team1-prod/assignments
+//   /123`.
 func (r *ProjectsLocationsReservationsAssignmentsService) Delete(name string) *ProjectsLocationsReservationsAssignmentsDeleteCall {
 	c := &ProjectsLocationsReservationsAssignmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3442,7 +3515,7 @@ func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) Header() http.Heade
 
 func (c *ProjectsLocationsReservationsAssignmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3551,6 +3624,10 @@ type ProjectsLocationsReservationsAssignmentsListCall struct {
 // In that case all assignments belongs to the specified project and
 // location will be listed. **Note** "-" cannot be used for projects nor
 // locations.
+//
+// - parent: The parent resource name e.g.:
+//   `projects/myproject/locations/US/reservations/team1-prod` Or:
+//   `projects/myproject/locations/US/reservations/-`.
 func (r *ProjectsLocationsReservationsAssignmentsService) List(parent string) *ProjectsLocationsReservationsAssignmentsListCall {
 	c := &ProjectsLocationsReservationsAssignmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3608,7 +3685,7 @@ func (c *ProjectsLocationsReservationsAssignmentsListCall) Header() http.Header 
 
 func (c *ProjectsLocationsReservationsAssignmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3745,6 +3822,10 @@ type ProjectsLocationsReservationsAssignmentsMoveCall struct {
 // removing an existing assignment and recreating a new one by providing
 // a transactional change that ensures an assignee always has an
 // associated reservation.
+//
+// - name: The resource name of the assignment, e.g.
+//   `projects/myproject/locations/US/reservations/team1-prod/assignments
+//   /123`.
 func (r *ProjectsLocationsReservationsAssignmentsService) Move(name string, moveassignmentrequest *MoveAssignmentRequest) *ProjectsLocationsReservationsAssignmentsMoveCall {
 	c := &ProjectsLocationsReservationsAssignmentsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3779,7 +3860,7 @@ func (c *ProjectsLocationsReservationsAssignmentsMoveCall) Header() http.Header 
 
 func (c *ProjectsLocationsReservationsAssignmentsMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3862,6 +3943,165 @@ func (c *ProjectsLocationsReservationsAssignmentsMoveCall) Do(opts ...googleapi.
 	//   "path": "v1beta1/{+name}:move",
 	//   "request": {
 	//     "$ref": "MoveAssignmentRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Assignment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigqueryreservation.projects.locations.reservations.assignments.patch":
+
+type ProjectsLocationsReservationsAssignmentsPatchCall struct {
+	s          *Service
+	name       string
+	assignment *Assignment
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates an existing assignment. Only the `priority` field can
+// be updated.
+//
+// - name: Output only. Name of the resource. E.g.:
+//   `projects/myproject/locations/US/reservations/team1-prod/assignments
+//   /123`.
+func (r *ProjectsLocationsReservationsAssignmentsService) Patch(name string, assignment *Assignment) *ProjectsLocationsReservationsAssignmentsPatchCall {
+	c := &ProjectsLocationsReservationsAssignmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.assignment = assignment
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Standard field
+// mask for the set of fields to be updated.
+func (c *ProjectsLocationsReservationsAssignmentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsReservationsAssignmentsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsReservationsAssignmentsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsReservationsAssignmentsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsReservationsAssignmentsPatchCall) Context(ctx context.Context) *ProjectsLocationsReservationsAssignmentsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsReservationsAssignmentsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsReservationsAssignmentsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.assignment)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigqueryreservation.projects.locations.reservations.assignments.patch" call.
+// Exactly one of *Assignment or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Assignment.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsReservationsAssignmentsPatchCall) Do(opts ...googleapi.CallOption) (*Assignment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Assignment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing assignment. Only the `priority` field can be updated.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}/assignments/{assignmentsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "bigqueryreservation.projects.locations.reservations.assignments.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Name of the resource. E.g.: `projects/myproject/locations/US/reservations/team1-prod/assignments/123`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/reservations/[^/]+/assignments/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Standard field mask for the set of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}",
+	//   "request": {
+	//     "$ref": "Assignment"
 	//   },
 	//   "response": {
 	//     "$ref": "Assignment"

@@ -85,7 +85,8 @@ const mtlsBasePath = "https://monitoring.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and write monitoring data for all of your Google and third-party
@@ -618,10 +619,10 @@ type Aggregation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AlignmentPeriod") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AlignmentPeriod") to
@@ -646,6 +647,10 @@ func (s *Aggregation) MarshalJSON() ([]byte, error) {
 // policies, see Introduction to Alerting
 // (https://cloud.google.com/monitoring/alerts/).
 type AlertPolicy struct {
+	// AlertStrategy: Control over how this alert policy's notification
+	// channels are notified.
+	AlertStrategy *AlertStrategy `json:"alertStrategy,omitempty"`
+
 	// Combiner: How to combine the results of multiple conditions to
 	// determine if an incident should be opened. If
 	// condition_time_series_query_language is present, this must be
@@ -741,15 +746,50 @@ type AlertPolicy struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Combiner") to
+	// ForceSendFields is a list of field names (e.g. "AlertStrategy") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Combiner") to include in
+	// NullFields is a list of field names (e.g. "AlertStrategy") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AlertPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod AlertPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AlertStrategy: Control over how the notification channels in
+// notification_channels are notified when this alert fires.
+type AlertStrategy struct {
+	// AutoClose: If an alert policy that was active has no data for this
+	// log, any open incidents will close
+	AutoClose string `json:"autoClose,omitempty"`
+
+	// NotificationRateLimit: Required for alert policies with a LogMatch
+	// condition.This limit is not implemented for alert policies that are
+	// not log-based.
+	NotificationRateLimit *NotificationRateLimit `json:"notificationRateLimit,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoClose") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutoClose") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -758,8 +798,8 @@ type AlertPolicy struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *AlertPolicy) MarshalJSON() ([]byte, error) {
-	type NoMethod AlertPolicy
+func (s *AlertStrategy) MarshalJSON() ([]byte, error) {
+	type NoMethod AlertStrategy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -775,10 +815,10 @@ type AppEngine struct {
 
 	// ForceSendFields is a list of field names (e.g. "ModuleId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ModuleId") to include in
@@ -815,10 +855,10 @@ type BasicAuthentication struct {
 
 	// ForceSendFields is a list of field names (e.g. "Password") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Password") to include in
@@ -875,10 +915,10 @@ type BasicSli struct {
 
 	// ForceSendFields is a list of field names (e.g. "Availability") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Availability") to include
@@ -923,10 +963,10 @@ type BucketOptions struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExplicitBuckets") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExplicitBuckets") to
@@ -956,10 +996,10 @@ type CloudEndpoints struct {
 
 	// ForceSendFields is a list of field names (e.g. "Service") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Service") to include in
@@ -1003,10 +1043,10 @@ type ClusterIstio struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClusterName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClusterName") to include
@@ -1055,10 +1095,10 @@ type CollectdPayload struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -1094,10 +1134,10 @@ type CollectdPayloadError struct {
 
 	// ForceSendFields is a list of field names (e.g. "Error") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Error") to include in API
@@ -1142,10 +1182,10 @@ type CollectdValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "DataSourceName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DataSourceName") to
@@ -1176,10 +1216,10 @@ type CollectdValueError struct {
 
 	// ForceSendFields is a list of field names (e.g. "Error") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Error") to include in API
@@ -1204,6 +1244,11 @@ type Condition struct {
 	// ConditionAbsent: A condition that checks that a time series continues
 	// to receive new data points.
 	ConditionAbsent *MetricAbsence `json:"conditionAbsent,omitempty"`
+
+	// ConditionMatchedLog: A condition that checks for log messages
+	// matching given constraints. If set, no other conditions can be
+	// present.
+	ConditionMatchedLog *LogMatch `json:"conditionMatchedLog,omitempty"`
 
 	// ConditionMonitoringQueryLanguage: A condition that uses the
 	// Monitoring Query Language to define alerts.
@@ -1238,10 +1283,10 @@ type Condition struct {
 
 	// ForceSendFields is a list of field names (e.g. "ConditionAbsent") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ConditionAbsent") to
@@ -1286,18 +1331,20 @@ type ContentMatcher struct {
 	// match succeeds if the output does NOT contain the content string.
 	//   "MATCHES_REGEX" - Selects regular-expression matching. The match
 	// succeeds of the output matches the regular expression specified in
-	// the content string.
+	// the content string. Regex matching is only supported for HTTP/HTTPS
+	// checks.
 	//   "NOT_MATCHES_REGEX" - Selects negation of regular-expression
 	// matching. The match succeeds if the output does NOT match the regular
-	// expression specified in the content string.
+	// expression specified in the content string. Regex matching is only
+	// supported for HTTP/HTTPS checks.
 	Matcher string `json:"matcher,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -1333,10 +1380,10 @@ type CreateCollectdTimeSeriesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "CollectdPayloads") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CollectdPayloads") to
@@ -1377,10 +1424,10 @@ type CreateCollectdTimeSeriesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "PayloadErrors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PayloadErrors") to include
@@ -1411,10 +1458,10 @@ type CreateTimeSeriesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "TimeSeries") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TimeSeries") to include in
@@ -1448,10 +1495,10 @@ type CreateTimeSeriesSummary struct {
 
 	// ForceSendFields is a list of field names (e.g. "Errors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Errors") to include in API
@@ -1528,10 +1575,10 @@ type Distribution struct {
 
 	// ForceSendFields is a list of field names (e.g. "BucketCounts") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BucketCounts") to include
@@ -1569,8 +1616,8 @@ func (s *Distribution) UnmarshalJSON(data []byte) error {
 // thresholds used for measuring good service and total service. The
 // TimeSeries must have ValueType = DISTRIBUTION and MetricKind = DELTA
 // or MetricKind = CUMULATIVE. The computed good_service will be the
-// count of values x in the Distribution such that range.min <= x <
-// range.max.
+// estimated count of values in the Distribution that fall within the
+// specified min and max.
 type DistributionCut struct {
 	// DistributionFilter: A monitoring filter
 	// (https://cloud.google.com/monitoring/api/v3/filters) specifying a
@@ -1584,10 +1631,10 @@ type DistributionCut struct {
 
 	// ForceSendFields is a list of field names (e.g. "DistributionFilter")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DistributionFilter") to
@@ -1622,10 +1669,10 @@ type Documentation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -1664,10 +1711,10 @@ type DroppedLabels struct {
 
 	// ForceSendFields is a list of field names (e.g. "Label") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Label") to include in API
@@ -1708,10 +1755,10 @@ type Error struct {
 
 	// ForceSendFields is a list of field names (e.g. "PointCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PointCount") to include in
@@ -1755,10 +1802,10 @@ type Exemplar struct {
 
 	// ForceSendFields is a list of field names (e.g. "Attachments") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Attachments") to include
@@ -1803,10 +1850,10 @@ type Explicit struct {
 
 	// ForceSendFields is a list of field names (e.g. "Bounds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Bounds") to include in API
@@ -1843,10 +1890,10 @@ type Exponential struct {
 
 	// ForceSendFields is a list of field names (e.g. "GrowthFactor") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GrowthFactor") to include
@@ -1947,10 +1994,10 @@ type Field struct {
 
 	// ForceSendFields is a list of field names (e.g. "Cardinality") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Cardinality") to include
@@ -1985,10 +2032,10 @@ type GetNotificationChannelVerificationCodeRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExpireTime") to include in
@@ -2027,10 +2074,10 @@ type GetNotificationChannelVerificationCodeResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -2048,10 +2095,8 @@ func (s *GetNotificationChannelVerificationCodeResponse) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleMonitoringV3Range: Range of numerical values, inclusive of min
-// and exclusive of max. If the open range "< range.max" is desired, set
-// range.min = -infinity. If the open range ">= range.min" is desired,
-// set range.max = infinity.
+// GoogleMonitoringV3Range: Range of numerical values within min and
+// max.
 type GoogleMonitoringV3Range struct {
 	// Max: Range maximum.
 	Max float64 `json:"max,omitempty"`
@@ -2061,10 +2106,10 @@ type GoogleMonitoringV3Range struct {
 
 	// ForceSendFields is a list of field names (e.g. "Max") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Max") to include in API
@@ -2153,10 +2198,10 @@ type Group struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -2257,10 +2302,10 @@ type HttpCheck struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuthInfo") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuthInfo") to include in
@@ -2326,10 +2371,10 @@ type InternalChecker struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -2370,10 +2415,10 @@ type IstioCanonicalService struct {
 
 	// ForceSendFields is a list of field names (e.g. "CanonicalService") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CanonicalService") to
@@ -2415,10 +2460,10 @@ type LabelDescriptor struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -2449,10 +2494,10 @@ type LabelValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoolValue") to include in
@@ -2478,10 +2523,10 @@ type LatencyCriteria struct {
 
 	// ForceSendFields is a list of field names (e.g. "Threshold") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Threshold") to include in
@@ -2517,10 +2562,10 @@ type Linear struct {
 
 	// ForceSendFields is a list of field names (e.g. "NumFiniteBuckets") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NumFiniteBuckets") to
@@ -2578,10 +2623,10 @@ type ListAlertPoliciesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AlertPolicies") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AlertPolicies") to include
@@ -2619,10 +2664,10 @@ type ListGroupMembersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Members") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Members") to include in
@@ -2657,10 +2702,10 @@ type ListGroupsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Group") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Group") to include in API
@@ -2696,10 +2741,10 @@ type ListMetricDescriptorsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "MetricDescriptors")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MetricDescriptors") to
@@ -2737,10 +2782,10 @@ type ListMonitoredResourceDescriptorsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -2777,10 +2822,10 @@ type ListNotificationChannelDescriptorsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChannelDescriptors")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelDescriptors") to
@@ -2823,10 +2868,10 @@ type ListNotificationChannelsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -2863,10 +2908,10 @@ type ListServiceLevelObjectivesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -2901,10 +2946,10 @@ type ListServicesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -2951,10 +2996,10 @@ type ListTimeSeriesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExecutionErrors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExecutionErrors") to
@@ -2996,10 +3041,10 @@ type ListUptimeCheckConfigsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -3038,10 +3083,10 @@ type ListUptimeCheckIpsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -3055,6 +3100,52 @@ type ListUptimeCheckIpsResponse struct {
 
 func (s *ListUptimeCheckIpsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListUptimeCheckIpsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LogMatch: A condition type that checks whether a log message in the
+// scoping project
+// (https://cloud.google.com/monitoring/api/v3#project_name) satisfies
+// the given filter. Logs from other projects in the metrics scope are
+// not evaluated.
+type LogMatch struct {
+	// Filter: Required. A logs-based filter. See Advanced Logs Queries
+	// (https://cloud.google.com/logging/docs/view/advanced-queries) for how
+	// this filter should be constructed.
+	Filter string `json:"filter,omitempty"`
+
+	// LabelExtractors: Optional. A map from a label key to an extractor
+	// expression, which is used to extract the value for this label key.
+	// Each entry in this map is a specification for how data should be
+	// extracted from log entries that match filter. Each combination of
+	// extracted values is treated as a separate rule for the purposes of
+	// triggering notifications. Label keys and corresponding values can be
+	// used in notifications generated by this condition.Please see the
+	// documentation on logs-based metric valueExtractors
+	// (https://cloud.google.com/logging/docs/reference/v2/rest/v2/projects.metrics#LogMetric.FIELDS.value_extractor)
+	// for syntax and examples.
+	LabelExtractors map[string]string `json:"labelExtractors,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LogMatch) MarshalJSON() ([]byte, error) {
+	type NoMethod LogMatch
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3078,10 +3169,10 @@ type MeshIstio struct {
 
 	// ForceSendFields is a list of field names (e.g. "MeshUid") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MeshUid") to include in
@@ -3112,10 +3203,10 @@ type Metric struct {
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Labels") to include in API
@@ -3159,10 +3250,10 @@ type MetricAbsence struct {
 	// ignored.
 	Duration string `json:"duration,omitempty"`
 
-	// Filter: A filter (https://cloud.google.com/monitoring/api/v3/filters)
-	// that identifies which time series should be compared with the
-	// threshold.The filter is similar to the one that is specified in the
-	// ListTimeSeries request
+	// Filter: Required. A filter
+	// (https://cloud.google.com/monitoring/api/v3/filters) that identifies
+	// which time series should be compared with the threshold.The filter is
+	// similar to the one that is specified in the ListTimeSeries request
 	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list)
 	// (that call is useful to verify the time series that will be retrieved
 	// / processed). The filter must specify the metric type and the
@@ -3178,10 +3269,10 @@ type MetricAbsence struct {
 
 	// ForceSendFields is a list of field names (e.g. "Aggregations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Aggregations") to include
@@ -3369,10 +3460,10 @@ type MetricDescriptor struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -3444,10 +3535,10 @@ type MetricDescriptorMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "IngestDelay") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IngestDelay") to include
@@ -3466,7 +3557,7 @@ func (s *MetricDescriptorMetadata) MarshalJSON() ([]byte, error) {
 }
 
 // MetricRange: A MetricRange is used when each window is good when the
-// value x of a single TimeSeries satisfies range.min <= x < range.max.
+// value x of a single TimeSeries satisfies range.min <= x <= range.max.
 // The provided TimeSeries must have ValueType = INT64 or ValueType =
 // DOUBLE and MetricKind = GAUGE.
 type MetricRange struct {
@@ -3481,10 +3572,10 @@ type MetricRange struct {
 
 	// ForceSendFields is a list of field names (e.g. "Range") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Range") to include in API
@@ -3573,10 +3664,10 @@ type MetricThreshold struct {
 	// alerted on quickly.
 	Duration string `json:"duration,omitempty"`
 
-	// Filter: A filter (https://cloud.google.com/monitoring/api/v3/filters)
-	// that identifies which time series should be compared with the
-	// threshold.The filter is similar to the one that is specified in the
-	// ListTimeSeries request
+	// Filter: Required. A filter
+	// (https://cloud.google.com/monitoring/api/v3/filters) that identifies
+	// which time series should be compared with the threshold.The filter is
+	// similar to the one that is specified in the ListTimeSeries request
 	// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list)
 	// (that call is useful to verify the time series that will be retrieved
 	// / processed). The filter must specify the metric type and the
@@ -3597,10 +3688,10 @@ type MetricThreshold struct {
 
 	// ForceSendFields is a list of field names (e.g. "Aggregations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Aggregations") to include
@@ -3652,15 +3743,18 @@ type MonitoredResource struct {
 	// Type: Required. The monitored resource type. This field must match
 	// the type field of a MonitoredResourceDescriptor object. For example,
 	// the type of a Compute Engine VM instance is gce_instance. For a list
-	// of types, see Monitoring resource types and Logging resource types.
+	// of types, see Monitoring resource types
+	// (https://cloud.google.com/monitoring/api/resources) and Logging
+	// resource types
+	// (https://cloud.google.com/logging/docs/api/v2/resource-list).
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Labels") to include in API
@@ -3751,7 +3845,11 @@ type MonitoredResourceDescriptor struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: Required. The monitored resource type. For example, the type
-	// "cloudsql_database" represents databases in Google Cloud SQL.
+	// "cloudsql_database" represents databases in Google Cloud SQL. For a
+	// list of types, see Monitoring resource types
+	// (https://cloud.google.com/monitoring/api/resources) and Logging
+	// resource types
+	// (https://cloud.google.com/logging/docs/api/v2/resource-list).
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3760,10 +3858,10 @@ type MonitoredResourceDescriptor struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -3801,10 +3899,10 @@ type MonitoredResourceMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "SystemLabels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SystemLabels") to include
@@ -3853,10 +3951,10 @@ type MonitoringQueryLanguageCondition struct {
 
 	// ForceSendFields is a list of field names (e.g. "Duration") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Duration") to include in
@@ -3884,10 +3982,10 @@ type MutationRecord struct {
 
 	// ForceSendFields is a list of field names (e.g. "MutateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MutateTime") to include in
@@ -3999,10 +4097,10 @@ type NotificationChannel struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreationRecord") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreationRecord") to
@@ -4094,10 +4192,10 @@ type NotificationChannelDescriptor struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -4111,6 +4209,77 @@ type NotificationChannelDescriptor struct {
 
 func (s *NotificationChannelDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod NotificationChannelDescriptor
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NotificationRateLimit: Control over the rate of notifications sent to
+// this alert policy's notification channels.
+type NotificationRateLimit struct {
+	// Period: Not more than one notification per period.
+	Period string `json:"period,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Period") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Period") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NotificationRateLimit) MarshalJSON() ([]byte, error) {
+	type NoMethod NotificationRateLimit
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OperationMetadata: Contains metadata for longrunning operation for
+// the edit Metrics Scope endpoints.
+type OperationMetadata struct {
+	// CreateTime: The time when the batch request was received.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// State: Current state of the batch operation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Invalid.
+	//   "CREATED" - Request has been received.
+	//   "RUNNING" - Request is actively being processed.
+	//   "DONE" - The batch processing is done.
+	//   "CANCELLED" - The batch processing was cancelled.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: The time when the operation result was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4133,10 +4302,10 @@ type Option struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -4169,10 +4338,10 @@ type PerformanceThreshold struct {
 
 	// ForceSendFields is a list of field names (e.g. "BasicSliPerformance")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicSliPerformance") to
@@ -4223,10 +4392,10 @@ type Point struct {
 
 	// ForceSendFields is a list of field names (e.g. "Interval") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Interval") to include in
@@ -4257,10 +4426,10 @@ type PointData struct {
 
 	// ForceSendFields is a list of field names (e.g. "TimeInterval") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TimeInterval") to include
@@ -4297,10 +4466,10 @@ type QueryTimeSeriesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PageSize") to include in
@@ -4343,10 +4512,10 @@ type QueryTimeSeriesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -4374,10 +4543,10 @@ type Range struct {
 
 	// ForceSendFields is a list of field names (e.g. "Max") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Max") to include in API
@@ -4426,10 +4595,10 @@ type RequestBasedSli struct {
 
 	// ForceSendFields is a list of field names (e.g. "DistributionCut") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DistributionCut") to
@@ -4468,10 +4637,10 @@ type ResourceGroup struct {
 
 	// ForceSendFields is a list of field names (e.g. "GroupId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GroupId") to include in
@@ -4531,16 +4700,25 @@ type MService struct {
 	// Telemetry: Configuration for how to query telemetry on a Service.
 	Telemetry *Telemetry `json:"telemetry,omitempty"`
 
+	// UserLabels: Labels which have been used to annotate the service.
+	// Label keys must start with a letter. Label keys and values may
+	// contain lowercase letters, numbers, underscores, and dashes. Label
+	// keys and values have a maximum length of 63 characters, and must be
+	// less than 128 bytes in size. Up to 64 label entries may be stored.
+	// For labels which do not have a semantic value, the empty string may
+	// be supplied for the label value.
+	UserLabels map[string]string `json:"userLabels,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "AppEngine") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppEngine") to include in
@@ -4585,10 +4763,10 @@ type ServiceLevelIndicator struct {
 
 	// ForceSendFields is a list of field names (e.g. "BasicSli") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicSli") to include in
@@ -4655,16 +4833,25 @@ type ServiceLevelObjective struct {
 	// respect to a single aspect of service quality.
 	ServiceLevelIndicator *ServiceLevelIndicator `json:"serviceLevelIndicator,omitempty"`
 
+	// UserLabels: Labels which have been used to annotate the service-level
+	// objective. Label keys must start with a letter. Label keys and values
+	// may contain lowercase letters, numbers, underscores, and dashes.
+	// Label keys and values have a maximum length of 63 characters, and
+	// must be less than 128 bytes in size. Up to 64 label entries may be
+	// stored. For labels which do not have a semantic value, the empty
+	// string may be supplied for the label value.
+	UserLabels map[string]string `json:"userLabels,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "CalendarPeriod") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CalendarPeriod") to
@@ -4707,10 +4894,10 @@ type SourceContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "FileName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FileName") to include in
@@ -4728,9 +4915,9 @@ func (s *SourceContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SpanContext: The context of a span, attached to Exemplars in
-// Distribution values during aggregation.It contains the name of a span
-// with format:
+// SpanContext: The context of a span. This is attached to an Exemplar
+// in Distribution values during aggregation.It contains the name of a
+// span with format:
 // projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
 type SpanContext struct {
 	// SpanName: The resource name of the span. The format is:
@@ -4743,10 +4930,10 @@ type SpanContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "SpanName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SpanName") to include in
@@ -4787,10 +4974,10 @@ type Status struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -4817,10 +5004,10 @@ type TcpCheck struct {
 
 	// ForceSendFields is a list of field names (e.g. "Port") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Port") to include in API
@@ -4847,10 +5034,10 @@ type Telemetry struct {
 
 	// ForceSendFields is a list of field names (e.g. "ResourceName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResourceName") to include
@@ -4870,32 +5057,33 @@ func (s *Telemetry) MarshalJSON() ([]byte, error) {
 
 // TimeInterval: A closed time interval. It extends from the start time
 // to the end time, and includes both: [startTime, endTime]. Valid time
-// intervals depend on the MetricKind of the metric value. The end time
-// must not be earlier than the start time. When writing data points,
-// the start time must not be more than 25 hours in the past and the end
-// time must not be more than five minutes in the future. For GAUGE
-// metrics, the startTime value is technically optional; if no value is
-// specified, the start time defaults to the value of the end time, and
-// the interval represents a single point in time. If both start and end
-// times are specified, they must be identical. Such an interval is
-// valid only for GAUGE metrics, which are point-in-time measurements.
-// The end time of a new interval must be at least a millisecond after
-// the end time of the previous interval. For DELTA metrics, the start
-// time and end time must specify a non-zero interval, with subsequent
-// points specifying contiguous and non-overlapping intervals. For DELTA
-// metrics, the start time of the next interval must be at least a
-// millisecond after the end time of the previous interval. For
-// CUMULATIVE metrics, the start time and end time must specify a a
-// non-zero interval, with subsequent points specifying the same start
-// time and increasing end times, until an event resets the cumulative
-// value to zero and sets a new start time for the following points. The
-// new start time must be at least a millisecond after the end time of
-// the previous interval. The start time of a new interval must be at
-// least a millisecond after the end time of the previous interval
-// because intervals are closed. If the start time of a new interval is
-// the same as the end time of the previous interval, then data written
-// at the new start time could overwrite data written at the previous
-// end time.
+// intervals depend on the MetricKind
+// (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.metricDescriptors#MetricKind)
+// of the metric value. The end time must not be earlier than the start
+// time. When writing data points, the start time must not be more than
+// 25 hours in the past and the end time must not be more than five
+// minutes in the future. For GAUGE metrics, the startTime value is
+// technically optional; if no value is specified, the start time
+// defaults to the value of the end time, and the interval represents a
+// single point in time. If both start and end times are specified, they
+// must be identical. Such an interval is valid only for GAUGE metrics,
+// which are point-in-time measurements. The end time of a new interval
+// must be at least a millisecond after the end time of the previous
+// interval. For DELTA metrics, the start time and end time must specify
+// a non-zero interval, with subsequent points specifying contiguous and
+// non-overlapping intervals. For DELTA metrics, the start time of the
+// next interval must be at least a millisecond after the end time of
+// the previous interval. For CUMULATIVE metrics, the start time and end
+// time must specify a a non-zero interval, with subsequent points
+// specifying the same start time and increasing end times, until an
+// event resets the cumulative value to zero and sets a new start time
+// for the following points. The new start time must be at least a
+// millisecond after the end time of the previous interval. The start
+// time of a new interval must be at least a millisecond after the end
+// time of the previous interval because intervals are closed. If the
+// start time of a new interval is the same as the end time of the
+// previous interval, then data written at the new start time could
+// overwrite data written at the previous end time.
 type TimeInterval struct {
 	// EndTime: Required. The end of the time interval.
 	EndTime string `json:"endTime,omitempty"`
@@ -4907,10 +5095,10 @@ type TimeInterval struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -4973,7 +5161,9 @@ type TimeSeries struct {
 	Points []*Point `json:"points,omitempty"`
 
 	// Resource: The associated monitored resource. Custom metrics can use
-	// only certain monitored resource types in their time series data.
+	// only certain monitored resource types in their time series data. For
+	// more information, see Monitored resources for custom metrics
+	// (https://cloud.google.com/monitoring/custom-metrics/creating-metrics#custom-metric-resources).
 	Resource *MonitoredResource `json:"resource,omitempty"`
 
 	// Unit: The units in which the metric value is reported. It is only
@@ -5002,10 +5192,10 @@ type TimeSeries struct {
 
 	// ForceSendFields is a list of field names (e.g. "Metadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Metadata") to include in
@@ -5038,10 +5228,10 @@ type TimeSeriesData struct {
 
 	// ForceSendFields is a list of field names (e.g. "LabelValues") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LabelValues") to include
@@ -5070,10 +5260,10 @@ type TimeSeriesDescriptor struct {
 
 	// ForceSendFields is a list of field names (e.g. "LabelDescriptors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LabelDescriptors") to
@@ -5124,10 +5314,10 @@ type TimeSeriesRatio struct {
 
 	// ForceSendFields is a list of field names (e.g. "BadServiceFilter") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BadServiceFilter") to
@@ -5160,10 +5350,10 @@ type Trigger struct {
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Count") to include in API
@@ -5222,10 +5412,10 @@ type Type struct {
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Fields") to include in API
@@ -5264,10 +5454,10 @@ type TypedValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoolValue") to include in
@@ -5337,9 +5527,9 @@ type UptimeCheckConfig struct {
 
 	// MonitoredResource: The monitored resource
 	// (https://cloud.google.com/monitoring/api/resources) associated with
-	// the configuration. The following monitored resource types are
-	// supported for Uptime checks: uptime_url, gce_instance, gae_app,
-	// aws_ec2_instance, aws_elb_load_balancer
+	// the configuration. The following monitored resource types are valid
+	// for this field: uptime_url, gce_instance, gae_app, aws_ec2_instance,
+	// aws_elb_load_balancer k8s_service
 	MonitoredResource *MonitoredResource `json:"monitoredResource,omitempty"`
 
 	// Name: A unique resource name for this Uptime check configuration. The
@@ -5392,10 +5582,10 @@ type UptimeCheckConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContentMatchers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContentMatchers") to
@@ -5448,10 +5638,10 @@ type UptimeCheckIp struct {
 
 	// ForceSendFields is a list of field names (e.g. "IpAddress") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IpAddress") to include in
@@ -5508,10 +5698,10 @@ type ValueDescriptor struct {
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -5544,10 +5734,10 @@ type VerifyNotificationChannelRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -5594,10 +5784,10 @@ type WindowsBasedSli struct {
 
 	// ForceSendFields is a list of field names (e.g. "GoodBadMetricFilter")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GoodBadMetricFilter") to
@@ -5629,6 +5819,12 @@ type FoldersTimeSeriesListCall struct {
 
 // List: Lists time series that match a filter. This method does not
 // require a Workspace.
+//
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name),
+//   organization or folder on which to execute the request. The format
+//   is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID]
+//   folders/[FOLDER_ID].
 func (r *FoldersTimeSeriesService) List(name string) *FoldersTimeSeriesListCall {
 	c := &FoldersTimeSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6219,7 +6415,7 @@ func (c *FoldersTimeSeriesListCall) Header() http.Header {
 
 func (c *FoldersTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6403,7 +6599,7 @@ func (c *FoldersTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTimeS
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project, organization or folder on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID] folders/[FOLDER_ID] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name), organization or folder on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID] folders/[FOLDER_ID] ",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -6582,6 +6778,12 @@ type OrganizationsTimeSeriesListCall struct {
 
 // List: Lists time series that match a filter. This method does not
 // require a Workspace.
+//
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name),
+//   organization or folder on which to execute the request. The format
+//   is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID]
+//   folders/[FOLDER_ID].
 func (r *OrganizationsTimeSeriesService) List(name string) *OrganizationsTimeSeriesListCall {
 	c := &OrganizationsTimeSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7172,7 +7374,7 @@ func (c *OrganizationsTimeSeriesListCall) Header() http.Header {
 
 func (c *OrganizationsTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7356,7 +7558,7 @@ func (c *OrganizationsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project, organization or folder on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID] folders/[FOLDER_ID] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name), organization or folder on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID] folders/[FOLDER_ID] ",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -7534,6 +7736,18 @@ type ProjectsAlertPoliciesCreateCall struct {
 }
 
 // Create: Creates a new alerting policy.
+//
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) in which
+//   to create the alerting policy. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER] Note that this field names the
+//   parent container in which the alerting policy will be written, not
+//   the name of the created policy. |name| must be a host project of a
+//   workspace, otherwise INVALID_ARGUMENT error will return. The
+//   alerting policy that is returned will have a name that contains a
+//   normalized representation of this name as a prefix but adds a
+//   suffix of the form /alertPolicies/[ALERT_POLICY_ID], identifying
+//   the policy in the container.
 func (r *ProjectsAlertPoliciesService) Create(name string, alertpolicy *AlertPolicy) *ProjectsAlertPoliciesCreateCall {
 	c := &ProjectsAlertPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7568,7 +7782,7 @@ func (c *ProjectsAlertPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7641,7 +7855,7 @@ func (c *ProjectsAlertPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Ale
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project in which to create the alerting policy. The format is: projects/[PROJECT_ID_OR_NUMBER] Note that this field names the parent container in which the alerting policy will be written, not the name of the created policy. |name| must be a host project of a workspace, otherwise INVALID_ARGUMENT error will return. The alerting policy that is returned will have a name that contains a normalized representation of this name as a prefix but adds a suffix of the form /alertPolicies/[ALERT_POLICY_ID], identifying the policy in the container.",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) in which to create the alerting policy. The format is: projects/[PROJECT_ID_OR_NUMBER] Note that this field names the parent container in which the alerting policy will be written, not the name of the created policy. |name| must be a host project of a workspace, otherwise INVALID_ARGUMENT error will return. The alerting policy that is returned will have a name that contains a normalized representation of this name as a prefix but adds a suffix of the form /alertPolicies/[ALERT_POLICY_ID], identifying the policy in the container.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -7674,6 +7888,10 @@ type ProjectsAlertPoliciesDeleteCall struct {
 }
 
 // Delete: Deletes an alerting policy.
+//
+// - name: The alerting policy to delete. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID] For
+//   more information, see AlertPolicy.
 func (r *ProjectsAlertPoliciesService) Delete(name string) *ProjectsAlertPoliciesDeleteCall {
 	c := &ProjectsAlertPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7707,7 +7925,7 @@ func (c *ProjectsAlertPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7806,6 +8024,9 @@ type ProjectsAlertPoliciesGetCall struct {
 }
 
 // Get: Gets a single alerting policy.
+//
+// - name: The alerting policy to retrieve. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID].
 func (r *ProjectsAlertPoliciesService) Get(name string) *ProjectsAlertPoliciesGetCall {
 	c := &ProjectsAlertPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7849,7 +8070,7 @@ func (c *ProjectsAlertPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7952,6 +8173,14 @@ type ProjectsAlertPoliciesListCall struct {
 }
 
 // List: Lists the existing alerting policies for the workspace.
+//
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) whose
+//   alert policies are to be listed. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER] Note that this field names the
+//   parent container in which the alerting policies to be listed are
+//   stored. To retrieve a single alerting policy by name, use the
+//   GetAlertPolicy operation, instead.
 func (r *ProjectsAlertPoliciesService) List(name string) *ProjectsAlertPoliciesListCall {
 	c := &ProjectsAlertPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8031,7 +8260,7 @@ func (c *ProjectsAlertPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8107,7 +8336,7 @@ func (c *ProjectsAlertPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListA
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project whose alert policies are to be listed. The format is: projects/[PROJECT_ID_OR_NUMBER] Note that this field names the parent container in which the alerting policies to be listed are stored. To retrieve a single alerting policy by name, use the GetAlertPolicy operation, instead.",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) whose alert policies are to be listed. The format is: projects/[PROJECT_ID_OR_NUMBER] Note that this field names the parent container in which the alerting policies to be listed are stored. To retrieve a single alerting policy by name, use the GetAlertPolicy operation, instead.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -8179,6 +8408,14 @@ type ProjectsAlertPoliciesPatchCall struct {
 // policy with a new one or replace only certain fields in the current
 // alerting policy by specifying the fields to be updated via
 // updateMask. Returns the updated alerting policy.
+//
+// - name: Required if the policy exists. The resource name for this
+//   policy. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID]
+//   [ALERT_POLICY_ID] is assigned by Stackdriver Monitoring when the
+//   policy is created. When calling the alertPolicies.create method, do
+//   not include the name field in the alerting policy passed as part of
+//   the request.
 func (r *ProjectsAlertPoliciesService) Patch(name string, alertpolicy *AlertPolicy) *ProjectsAlertPoliciesPatchCall {
 	c := &ProjectsAlertPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8236,7 +8473,7 @@ func (c *ProjectsAlertPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsAlertPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8351,6 +8588,11 @@ type ProjectsCollectdTimeSeriesCreateCall struct {
 // Create: Stackdriver Monitoring Agent only: Creates a new time
 // series.This method is only for use by the Stackdriver Monitoring
 // Agent. Use projects.timeSeries.create instead.
+//
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) in which
+//   to create the time series. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsCollectdTimeSeriesService) Create(name string, createcollectdtimeseriesrequest *CreateCollectdTimeSeriesRequest) *ProjectsCollectdTimeSeriesCreateCall {
 	c := &ProjectsCollectdTimeSeriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8385,7 +8627,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsCollectdTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8458,7 +8700,7 @@ func (c *ProjectsCollectdTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The project in which to create the time series. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "The project (https://cloud.google.com/monitoring/api/v3#project_name) in which to create the time series. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -8493,6 +8735,10 @@ type ProjectsGroupsCreateCall struct {
 }
 
 // Create: Creates a new group.
+//
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) in which
+//   to create the group. The format is: projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsGroupsService) Create(name string, group *Group) *ProjectsGroupsCreateCall {
 	c := &ProjectsGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8534,7 +8780,7 @@ func (c *ProjectsGroupsCreateCall) Header() http.Header {
 
 func (c *ProjectsGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8607,7 +8853,7 @@ func (c *ProjectsGroupsCreateCall) Do(opts ...googleapi.CallOption) (*Group, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project in which to create the group. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) in which to create the group. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -8645,6 +8891,9 @@ type ProjectsGroupsDeleteCall struct {
 }
 
 // Delete: Deletes an existing group.
+//
+// - name: The group to delete. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID].
 func (r *ProjectsGroupsService) Delete(name string) *ProjectsGroupsDeleteCall {
 	c := &ProjectsGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8687,7 +8936,7 @@ func (c *ProjectsGroupsDeleteCall) Header() http.Header {
 
 func (c *ProjectsGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8791,6 +9040,9 @@ type ProjectsGroupsGetCall struct {
 }
 
 // Get: Gets a single group.
+//
+// - name: The group to retrieve. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID].
 func (r *ProjectsGroupsService) Get(name string) *ProjectsGroupsGetCall {
 	c := &ProjectsGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8834,7 +9086,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8937,6 +9189,11 @@ type ProjectsGroupsListCall struct {
 }
 
 // List: Lists the existing groups.
+//
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) whose
+//   groups are to be listed. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsGroupsService) List(name string) *ProjectsGroupsListCall {
 	c := &ProjectsGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9029,7 +9286,7 @@ func (c *ProjectsGroupsListCall) Header() http.Header {
 
 func (c *ProjectsGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9115,7 +9372,7 @@ func (c *ProjectsGroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsRe
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project whose groups are to be listed. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) whose groups are to be listed. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -9180,6 +9437,12 @@ type ProjectsGroupsUpdateCall struct {
 
 // Update: Updates an existing group. You can change any group
 // attributes except name.
+//
+// - name: Output only. The name of this group. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID] When creating a
+//   group, this field is ignored and a new name is created consisting
+//   of the project specified in the call to CreateGroup and a unique
+//   [GROUP_ID] that is generated automatically.
 func (r *ProjectsGroupsService) Update(name string, group *Group) *ProjectsGroupsUpdateCall {
 	c := &ProjectsGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9221,7 +9484,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9333,6 +9596,9 @@ type ProjectsGroupsMembersListCall struct {
 }
 
 // List: Lists the monitored resources that are members of a group.
+//
+// - name: The group whose members are listed. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/groups/[GROUP_ID].
 func (r *ProjectsGroupsMembersService) List(name string) *ProjectsGroupsMembersListCall {
 	c := &ProjectsGroupsMembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9420,7 +9686,7 @@ func (c *ProjectsGroupsMembersListCall) Header() http.Header {
 
 func (c *ProjectsGroupsMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9571,9 +9837,15 @@ type ProjectsMetricDescriptorsCreateCall struct {
 	header_          http.Header
 }
 
-// Create: Creates a new metric descriptor. User-created metric
-// descriptors define custom metrics
+// Create: Creates a new metric descriptor. The creation is executed
+// asynchronously and callers may check the returned operation to track
+// its progress. User-created metric descriptors define custom metrics
 // (https://cloud.google.com/monitoring/custom-metrics).
+//
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//   to execute the request. The format is: 4
+//   projects/PROJECT_ID_OR_NUMBER.
 func (r *ProjectsMetricDescriptorsService) Create(name string, metricdescriptor *MetricDescriptor) *ProjectsMetricDescriptorsCreateCall {
 	c := &ProjectsMetricDescriptorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9608,7 +9880,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9672,7 +9944,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new metric descriptor. User-created metric descriptors define custom metrics (https://cloud.google.com/monitoring/custom-metrics).",
+	//   "description": "Creates a new metric descriptor. The creation is executed asynchronously and callers may check the returned operation to track its progress. User-created metric descriptors define custom metrics (https://cloud.google.com/monitoring/custom-metrics).",
 	//   "flatPath": "v3/projects/{projectsId}/metricDescriptors",
 	//   "httpMethod": "POST",
 	//   "id": "monitoring.projects.metricDescriptors.create",
@@ -9681,7 +9953,7 @@ func (c *ProjectsMetricDescriptorsCreateCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) on which to execute the request. The format is: 4 projects/PROJECT_ID_OR_NUMBER",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -9716,6 +9988,11 @@ type ProjectsMetricDescriptorsDeleteCall struct {
 
 // Delete: Deletes a metric descriptor. Only user-created custom metrics
 // (https://cloud.google.com/monitoring/custom-metrics) can be deleted.
+//
+// - name: The metric descriptor on which to execute the request. The
+//   format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID] An
+//   example of [METRIC_ID] is: "custom.googleapis.com/my_test_metric".
 func (r *ProjectsMetricDescriptorsService) Delete(name string) *ProjectsMetricDescriptorsDeleteCall {
 	c := &ProjectsMetricDescriptorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9749,7 +10026,7 @@ func (c *ProjectsMetricDescriptorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9849,6 +10126,12 @@ type ProjectsMetricDescriptorsGetCall struct {
 
 // Get: Gets a single metric descriptor. This method does not require a
 // Workspace.
+//
+// - name: The metric descriptor on which to execute the request. The
+//   format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID] An
+//   example value of [METRIC_ID] is
+//   "compute.googleapis.com/instance/disk/read_bytes_count".
 func (r *ProjectsMetricDescriptorsService) Get(name string) *ProjectsMetricDescriptorsGetCall {
 	c := &ProjectsMetricDescriptorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9892,7 +10175,7 @@ func (c *ProjectsMetricDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9997,6 +10280,11 @@ type ProjectsMetricDescriptorsListCall struct {
 
 // List: Lists metric descriptors that match a filter. This method does
 // not require a Workspace.
+//
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//   to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsMetricDescriptorsService) List(name string) *ProjectsMetricDescriptorsListCall {
 	c := &ProjectsMetricDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10069,7 +10357,7 @@ func (c *ProjectsMetricDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMetricDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10145,7 +10433,7 @@ func (c *ProjectsMetricDescriptorsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10211,6 +10499,11 @@ type ProjectsMonitoredResourceDescriptorsGetCall struct {
 
 // Get: Gets a single monitored resource descriptor. This method does
 // not require a Workspace.
+//
+// - name: The monitored resource descriptor to get. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOUR
+//   CE_TYPE] The [RESOURCE_TYPE] is a predefined type, such as
+//   cloudsql_database.
 func (r *ProjectsMonitoredResourceDescriptorsService) Get(name string) *ProjectsMonitoredResourceDescriptorsGetCall {
 	c := &ProjectsMonitoredResourceDescriptorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10254,7 +10547,7 @@ func (c *ProjectsMonitoredResourceDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10359,6 +10652,11 @@ type ProjectsMonitoredResourceDescriptorsListCall struct {
 
 // List: Lists monitored resource descriptors that match a filter. This
 // method does not require a Workspace.
+//
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//   to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsMonitoredResourceDescriptorsService) List(name string) *ProjectsMonitoredResourceDescriptorsListCall {
 	c := &ProjectsMonitoredResourceDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10429,7 +10727,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsMonitoredResourceDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10507,7 +10805,7 @@ func (c *ProjectsMonitoredResourceDescriptorsListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10574,6 +10872,11 @@ type ProjectsNotificationChannelDescriptorsGetCall struct {
 // Get: Gets a single channel descriptor. The descriptor indicates which
 // fields are expected / permitted for a notification channel of the
 // given type.
+//
+// - name: The channel type for which to execute the request. The format
+//   is:
+//   projects/[PROJECT_ID_OR_NUMBER]/notificationChannelDescriptors/[CHAN
+//   NEL_TYPE].
 func (r *ProjectsNotificationChannelDescriptorsService) Get(name string) *ProjectsNotificationChannelDescriptorsGetCall {
 	c := &ProjectsNotificationChannelDescriptorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10617,7 +10920,7 @@ func (c *ProjectsNotificationChannelDescriptorsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10722,6 +11025,14 @@ type ProjectsNotificationChannelDescriptorsListCall struct {
 // List: Lists the descriptors for supported channel types. The use of
 // descriptors makes it possible for new channel types to be dynamically
 // added.
+//
+// - name: The REST resource name of the parent from which to retrieve
+//   the notification channel descriptors. The expected syntax is:
+//   projects/[PROJECT_ID_OR_NUMBER] Note that this names
+//   (https://cloud.google.com/monitoring/api/v3#project_name) the
+//   parent container in which to look for the descriptors; to retrieve
+//   a single descriptor by name, use the
+//   GetNotificationChannelDescriptor operation, instead.
 func (r *ProjectsNotificationChannelDescriptorsService) List(name string) *ProjectsNotificationChannelDescriptorsListCall {
 	c := &ProjectsNotificationChannelDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10781,7 +11092,7 @@ func (c *ProjectsNotificationChannelDescriptorsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelDescriptorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10854,7 +11165,7 @@ func (c *ProjectsNotificationChannelDescriptorsListCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The REST resource name of the parent from which to retrieve the notification channel descriptors. The expected syntax is: projects/[PROJECT_ID_OR_NUMBER] Note that this names the parent container in which to look for the descriptors; to retrieve a single descriptor by name, use the GetNotificationChannelDescriptor operation, instead.",
+	//       "description": "Required. The REST resource name of the parent from which to retrieve the notification channel descriptors. The expected syntax is: projects/[PROJECT_ID_OR_NUMBER] Note that this names (https://cloud.google.com/monitoring/api/v3#project_name) the parent container in which to look for the descriptors; to retrieve a single descriptor by name, use the GetNotificationChannelDescriptor operation, instead.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -10920,6 +11231,15 @@ type ProjectsNotificationChannelsCreateCall struct {
 // Create: Creates a new notification channel, representing a single
 // notification endpoint such as an email address, SMS number, or
 // PagerDuty service.
+//
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//   to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER] This names the container into which
+//   the channel will be written, this does not name the newly created
+//   channel. The resulting channel's name will have a normalized
+//   version of this field as a prefix, but will add
+//   /notificationChannels/[CHANNEL_ID] to identify the channel.
 func (r *ProjectsNotificationChannelsService) Create(name string, notificationchannel *NotificationChannel) *ProjectsNotificationChannelsCreateCall {
 	c := &ProjectsNotificationChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10954,7 +11274,7 @@ func (c *ProjectsNotificationChannelsCreateCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11027,7 +11347,7 @@ func (c *ProjectsNotificationChannelsCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] This names the container into which the channel will be written, this does not name the newly created channel. The resulting channel's name will have a normalized version of this field as a prefix, but will add /notificationChannels/[CHANNEL_ID] to identify the channel.",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] This names the container into which the channel will be written, this does not name the newly created channel. The resulting channel's name will have a normalized version of this field as a prefix, but will add /notificationChannels/[CHANNEL_ID] to identify the channel.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -11060,6 +11380,9 @@ type ProjectsNotificationChannelsDeleteCall struct {
 }
 
 // Delete: Deletes a notification channel.
+//
+// - name: The channel for which to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID].
 func (r *ProjectsNotificationChannelsService) Delete(name string) *ProjectsNotificationChannelsDeleteCall {
 	c := &ProjectsNotificationChannelsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11103,7 +11426,7 @@ func (c *ProjectsNotificationChannelsDeleteCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11212,6 +11535,9 @@ type ProjectsNotificationChannelsGetCall struct {
 // other private key matter and thus the response may not be 100%
 // identical to the information that was supplied in the call to the
 // create method.
+//
+// - name: The channel for which to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID].
 func (r *ProjectsNotificationChannelsService) Get(name string) *ProjectsNotificationChannelsGetCall {
 	c := &ProjectsNotificationChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11255,7 +11581,7 @@ func (c *ProjectsNotificationChannelsGetCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11378,6 +11704,11 @@ type ProjectsNotificationChannelsGetVerificationCodeCall struct {
 // have a shorter expiration (e.g. codes such as "G-123456") whereas
 // GetVerificationCode() will typically return a much longer, websafe
 // base 64 encoded string that has a longer expiration time.
+//
+// - name: The notification channel for which a verification code is to
+//   be generated and retrieved. This must name a channel that is
+//   already verified; if the specified channel is not verified, the
+//   request will fail.
 func (r *ProjectsNotificationChannelsService) GetVerificationCode(name string, getnotificationchannelverificationcoderequest *GetNotificationChannelVerificationCodeRequest) *ProjectsNotificationChannelsGetVerificationCodeCall {
 	c := &ProjectsNotificationChannelsGetVerificationCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11412,7 +11743,7 @@ func (c *ProjectsNotificationChannelsGetVerificationCodeCall) Header() http.Head
 
 func (c *ProjectsNotificationChannelsGetVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11522,6 +11853,14 @@ type ProjectsNotificationChannelsListCall struct {
 
 // List: Lists the notification channels that have been created for the
 // project.
+//
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//   to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER] This names the container in which
+//   to look for the notification channels; it does not name a specific
+//   channel. To query a specific channel by REST resource name, use the
+//   GetNotificationChannel operation.
 func (r *ProjectsNotificationChannelsService) List(name string) *ProjectsNotificationChannelsListCall {
 	c := &ProjectsNotificationChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11602,7 +11941,7 @@ func (c *ProjectsNotificationChannelsListCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11678,7 +12017,7 @@ func (c *ProjectsNotificationChannelsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] This names the container in which to look for the notification channels; it does not name a specific channel. To query a specific channel by REST resource name, use the GetNotificationChannel operation.",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] This names the container in which to look for the notification channels; it does not name a specific channel. To query a specific channel by REST resource name, use the GetNotificationChannel operation.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -11748,6 +12087,11 @@ type ProjectsNotificationChannelsPatchCall struct {
 
 // Patch: Updates a notification channel. Fields not specified in the
 // field mask remain unchanged.
+//
+// - name: The full REST resource name for this channel. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
+//   The [CHANNEL_ID] is automatically assigned by the server on
+//   creation.
 func (r *ProjectsNotificationChannelsService) Patch(name string, notificationchannel *NotificationChannel) *ProjectsNotificationChannelsPatchCall {
 	c := &ProjectsNotificationChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11789,7 +12133,7 @@ func (c *ProjectsNotificationChannelsPatchCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11904,6 +12248,9 @@ type ProjectsNotificationChannelsSendVerificationCodeCall struct {
 // SendVerificationCode: Causes a verification code to be delivered to
 // the channel. The code can then be supplied in
 // VerifyNotificationChannel to verify the channel.
+//
+// - name: The notification channel to which to send a verification
+//   code.
 func (r *ProjectsNotificationChannelsService) SendVerificationCode(name string, sendnotificationchannelverificationcoderequest *SendNotificationChannelVerificationCodeRequest) *ProjectsNotificationChannelsSendVerificationCodeCall {
 	c := &ProjectsNotificationChannelsSendVerificationCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11938,7 +12285,7 @@ func (c *ProjectsNotificationChannelsSendVerificationCodeCall) Header() http.Hea
 
 func (c *ProjectsNotificationChannelsSendVerificationCodeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12047,6 +12394,8 @@ type ProjectsNotificationChannelsVerifyCall struct {
 // Verify: Verifies a NotificationChannel by proving receipt of the code
 // delivered to the channel as a result of calling
 // SendNotificationChannelVerificationCode.
+//
+// - name: The notification channel to verify.
 func (r *ProjectsNotificationChannelsService) Verify(name string, verifynotificationchannelrequest *VerifyNotificationChannelRequest) *ProjectsNotificationChannelsVerifyCall {
 	c := &ProjectsNotificationChannelsVerifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12081,7 +12430,7 @@ func (c *ProjectsNotificationChannelsVerifyCall) Header() http.Header {
 
 func (c *ProjectsNotificationChannelsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12191,6 +12540,11 @@ type ProjectsTimeSeriesCreateCall struct {
 // is empty if all time series in the request were written. If any time
 // series could not be written, a corresponding failure message is
 // included in the error response.
+//
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//   to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsTimeSeriesService) Create(name string, createtimeseriesrequest *CreateTimeSeriesRequest) *ProjectsTimeSeriesCreateCall {
 	c := &ProjectsTimeSeriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12225,7 +12579,7 @@ func (c *ProjectsTimeSeriesCreateCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12298,7 +12652,7 @@ func (c *ProjectsTimeSeriesCreateCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -12334,6 +12688,12 @@ type ProjectsTimeSeriesListCall struct {
 
 // List: Lists time series that match a filter. This method does not
 // require a Workspace.
+//
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name),
+//   organization or folder on which to execute the request. The format
+//   is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID]
+//   folders/[FOLDER_ID].
 func (r *ProjectsTimeSeriesService) List(name string) *ProjectsTimeSeriesListCall {
 	c := &ProjectsTimeSeriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12924,7 +13284,7 @@ func (c *ProjectsTimeSeriesListCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13108,7 +13468,7 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The project, organization or folder on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID] folders/[FOLDER_ID] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name), organization or folder on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] organizations/[ORGANIZATION_ID] folders/[FOLDER_ID] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -13287,6 +13647,11 @@ type ProjectsTimeSeriesQueryCall struct {
 
 // Query: Queries time series using Monitoring Query Language. This
 // method does not require a Workspace.
+//
+// - name: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) on which
+//   to execute the request. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsTimeSeriesService) Query(name string, querytimeseriesrequest *QueryTimeSeriesRequest) *ProjectsTimeSeriesQueryCall {
 	c := &ProjectsTimeSeriesQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13321,7 +13686,7 @@ func (c *ProjectsTimeSeriesQueryCall) Header() http.Header {
 
 func (c *ProjectsTimeSeriesQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13394,7 +13759,7 @@ func (c *ProjectsTimeSeriesQueryCall) Do(opts ...googleapi.CallOption) (*QueryTi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The project on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) on which to execute the request. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -13450,6 +13815,11 @@ type ProjectsUptimeCheckConfigsCreateCall struct {
 }
 
 // Create: Creates a new Uptime check configuration.
+//
+// - parent: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) in which
+//   to create the Uptime check. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsUptimeCheckConfigsService) Create(parent string, uptimecheckconfig *UptimeCheckConfig) *ProjectsUptimeCheckConfigsCreateCall {
 	c := &ProjectsUptimeCheckConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13484,7 +13854,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13557,7 +13927,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project in which to create the Uptime check. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) in which to create the Uptime check. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -13593,6 +13963,9 @@ type ProjectsUptimeCheckConfigsDeleteCall struct {
 // will fail if the Uptime check configuration is referenced by an alert
 // policy or other dependent configs that would be rendered invalid by
 // the deletion.
+//
+// - name: The Uptime check configuration to delete. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID].
 func (r *ProjectsUptimeCheckConfigsService) Delete(name string) *ProjectsUptimeCheckConfigsDeleteCall {
 	c := &ProjectsUptimeCheckConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13626,7 +13999,7 @@ func (c *ProjectsUptimeCheckConfigsDeleteCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13725,6 +14098,9 @@ type ProjectsUptimeCheckConfigsGetCall struct {
 }
 
 // Get: Gets a single Uptime check configuration.
+//
+// - name: The Uptime check configuration to retrieve. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID].
 func (r *ProjectsUptimeCheckConfigsService) Get(name string) *ProjectsUptimeCheckConfigsGetCall {
 	c := &ProjectsUptimeCheckConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13768,7 +14144,7 @@ func (c *ProjectsUptimeCheckConfigsGetCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13872,6 +14248,11 @@ type ProjectsUptimeCheckConfigsListCall struct {
 
 // List: Lists the existing valid Uptime check configurations for the
 // project (leaving out any invalid configurations).
+//
+// - parent: The project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) whose
+//   Uptime check configurations are listed. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER].
 func (r *ProjectsUptimeCheckConfigsService) List(parent string) *ProjectsUptimeCheckConfigsListCall {
 	c := &ProjectsUptimeCheckConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13934,7 +14315,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14016,7 +14397,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The project whose Uptime check configurations are listed. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. The project (https://cloud.google.com/monitoring/api/v3#project_name) whose Uptime check configurations are listed. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -14072,6 +14453,14 @@ type ProjectsUptimeCheckConfigsPatchCall struct {
 // the entire configuration with a new one or replace only certain
 // fields in the current configuration by specifying the fields to be
 // updated via updateMask. Returns the updated configuration.
+//
+// - name: A unique resource name for this Uptime check configuration.
+//   The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/uptimeCheckConfigs/[UPTIME_CHECK_ID]
+//    [PROJECT_ID_OR_NUMBER] is the Workspace host project associated
+//   with the Uptime check.This field should be omitted when creating
+//   the Uptime check configuration; on create, the resource name is
+//   assigned by the server and included in the response.
 func (r *ProjectsUptimeCheckConfigsService) Patch(name string, uptimecheckconfig *UptimeCheckConfig) *ProjectsUptimeCheckConfigsPatchCall {
 	c := &ProjectsUptimeCheckConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14116,7 +14505,7 @@ func (c *ProjectsUptimeCheckConfigsPatchCall) Header() http.Header {
 
 func (c *ProjectsUptimeCheckConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14229,6 +14618,10 @@ type ServicesCreateCall struct {
 }
 
 // Create: Create a Service.
+//
+// - parent: Resource name
+//   (https://cloud.google.com/monitoring/api/v3#project_name) of the
+//   parent workspace. The format is: projects/[PROJECT_ID_OR_NUMBER].
 func (r *ServicesService) Create(parent string, service *MService) *ServicesCreateCall {
 	c := &ServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14271,7 +14664,7 @@ func (c *ServicesCreateCall) Header() http.Header {
 
 func (c *ServicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14344,7 +14737,7 @@ func (c *ServicesCreateCall) Do(opts ...googleapi.CallOption) (*MService, error)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent workspace. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. Resource name (https://cloud.google.com/monitoring/api/v3#project_name) of the parent workspace. The format is: projects/[PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -14382,6 +14775,9 @@ type ServicesDeleteCall struct {
 }
 
 // Delete: Soft delete this Service.
+//
+// - name: Resource name of the Service to delete. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
 func (r *ServicesService) Delete(name string) *ServicesDeleteCall {
 	c := &ServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14415,7 +14811,7 @@ func (c *ServicesDeleteCall) Header() http.Header {
 
 func (c *ServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14514,6 +14910,9 @@ type ServicesGetCall struct {
 }
 
 // Get: Get the named Service.
+//
+// - name: Resource name of the Service. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
 func (r *ServicesService) Get(name string) *ServicesGetCall {
 	c := &ServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14557,7 +14956,7 @@ func (c *ServicesGetCall) Header() http.Header {
 
 func (c *ServicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14660,6 +15059,13 @@ type ServicesListCall struct {
 }
 
 // List: List Services for this workspace.
+//
+// - parent: Resource name of the parent containing the listed services,
+//   either a project
+//   (https://cloud.google.com/monitoring/api/v3#project_name) or a
+//   Monitoring Workspace. The formats are:
+//   projects/[PROJECT_ID_OR_NUMBER]
+//   workspaces/[HOST_PROJECT_ID_OR_NUMBER].
 func (r *ServicesService) List(parent string) *ServicesListCall {
 	c := &ServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14739,7 +15145,7 @@ func (c *ServicesListCall) Header() http.Header {
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14826,7 +15232,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Resource name of the parent containing the listed services, either a project or a Monitoring Workspace. The formats are: projects/[PROJECT_ID_OR_NUMBER] workspaces/[HOST_PROJECT_ID_OR_NUMBER] ",
+	//       "description": "Required. Resource name of the parent containing the listed services, either a project (https://cloud.google.com/monitoring/api/v3#project_name) or a Monitoring Workspace. The formats are: projects/[PROJECT_ID_OR_NUMBER] workspaces/[HOST_PROJECT_ID_OR_NUMBER] ",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -14879,6 +15285,9 @@ type ServicesPatchCall struct {
 }
 
 // Patch: Update this Service.
+//
+// - name: Resource name for this Service. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
 func (r *ServicesService) Patch(name string, service *MService) *ServicesPatchCall {
 	c := &ServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14920,7 +15329,7 @@ func (c *ServicesPatchCall) Header() http.Header {
 
 func (c *ServicesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15033,6 +15442,9 @@ type ServicesServiceLevelObjectivesCreateCall struct {
 }
 
 // Create: Create a ServiceLevelObjective for the given Service.
+//
+// - parent: Resource name of the parent Service. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
 func (r *ServicesServiceLevelObjectivesService) Create(parent string, servicelevelobjective *ServiceLevelObjective) *ServicesServiceLevelObjectivesCreateCall {
 	c := &ServicesServiceLevelObjectivesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15076,7 +15488,7 @@ func (c *ServicesServiceLevelObjectivesCreateCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15187,6 +15599,11 @@ type ServicesServiceLevelObjectivesDeleteCall struct {
 }
 
 // Delete: Delete the given ServiceLevelObjective.
+//
+// - name: Resource name of the ServiceLevelObjective to delete. The
+//   format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelOb
+//   jectives/[SLO_NAME].
 func (r *ServicesServiceLevelObjectivesService) Delete(name string) *ServicesServiceLevelObjectivesDeleteCall {
 	c := &ServicesServiceLevelObjectivesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15220,7 +15637,7 @@ func (c *ServicesServiceLevelObjectivesDeleteCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15319,6 +15736,11 @@ type ServicesServiceLevelObjectivesGetCall struct {
 }
 
 // Get: Get a ServiceLevelObjective by name.
+//
+// - name: Resource name of the ServiceLevelObjective to get. The format
+//   is:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelOb
+//   jectives/[SLO_NAME].
 func (r *ServicesServiceLevelObjectivesService) Get(name string) *ServicesServiceLevelObjectivesGetCall {
 	c := &ServicesServiceLevelObjectivesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15383,7 +15805,7 @@ func (c *ServicesServiceLevelObjectivesGetCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15501,6 +15923,11 @@ type ServicesServiceLevelObjectivesListCall struct {
 }
 
 // List: List the ServiceLevelObjectives for the given Service.
+//
+// - parent: Resource name of the parent containing the listed SLOs,
+//   either a project or a Monitoring Workspace. The formats are:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
+//   workspaces/[HOST_PROJECT_ID_OR_NUMBER]/services/-.
 func (r *ServicesServiceLevelObjectivesService) List(parent string) *ServicesServiceLevelObjectivesListCall {
 	c := &ServicesServiceLevelObjectivesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15589,7 +16016,7 @@ func (c *ServicesServiceLevelObjectivesListCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15745,6 +16172,10 @@ type ServicesServiceLevelObjectivesPatchCall struct {
 }
 
 // Patch: Update the given ServiceLevelObjective.
+//
+// - name: Resource name for this ServiceLevelObjective. The format is:
+//   projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelOb
+//   jectives/[SLO_NAME].
 func (r *ServicesServiceLevelObjectivesService) Patch(name string, servicelevelobjective *ServiceLevelObjective) *ServicesServiceLevelObjectivesPatchCall {
 	c := &ServicesServiceLevelObjectivesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15786,7 +16217,7 @@ func (c *ServicesServiceLevelObjectivesPatchCall) Header() http.Header {
 
 func (c *ServicesServiceLevelObjectivesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15960,7 +16391,7 @@ func (c *UptimeCheckIpsListCall) Header() http.Header {
 
 func (c *UptimeCheckIpsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -79,7 +79,8 @@ const mtlsBasePath = "https://datalabeling.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -365,10 +366,10 @@ type GoogleCloudDatalabelingV1alpha1CreateInstructionMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -408,10 +409,10 @@ type GoogleCloudDatalabelingV1alpha1ExportDataOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
@@ -455,10 +456,10 @@ type GoogleCloudDatalabelingV1alpha1ExportDataOperationResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
@@ -489,10 +490,10 @@ type GoogleCloudDatalabelingV1alpha1GcsDestination struct {
 
 	// ForceSendFields is a list of field names (e.g. "MimeType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MimeType") to include in
@@ -518,10 +519,10 @@ type GoogleCloudDatalabelingV1alpha1GcsFolderDestination struct {
 
 	// ForceSendFields is a list of field names (e.g. "OutputFolderUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputFolderUri") to
@@ -589,11 +590,11 @@ type GoogleCloudDatalabelingV1alpha1HumanAnnotationConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AnnotatedDatasetDescription") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -630,10 +631,10 @@ type GoogleCloudDatalabelingV1alpha1ImportDataOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -665,10 +666,10 @@ type GoogleCloudDatalabelingV1alpha1ImportDataOperationResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dataset") to include in
@@ -694,10 +695,10 @@ type GoogleCloudDatalabelingV1alpha1LabelImageBoundingBoxOperationMetadata struc
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -723,10 +724,10 @@ type GoogleCloudDatalabelingV1alpha1LabelImageBoundingPolyOperationMetadata stru
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -752,10 +753,10 @@ type GoogleCloudDatalabelingV1alpha1LabelImageClassificationOperationMetadata st
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -782,10 +783,10 @@ type GoogleCloudDatalabelingV1alpha1LabelImageOrientedBoundingBoxOperationMetada
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -811,10 +812,10 @@ type GoogleCloudDatalabelingV1alpha1LabelImagePolylineOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -840,10 +841,10 @@ type GoogleCloudDatalabelingV1alpha1LabelImageSegmentationOperationMetadata stru
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -932,10 +933,10 @@ type GoogleCloudDatalabelingV1alpha1LabelOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
@@ -966,10 +967,10 @@ type GoogleCloudDatalabelingV1alpha1LabelStats struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExampleCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExampleCount") to include
@@ -995,10 +996,10 @@ type GoogleCloudDatalabelingV1alpha1LabelTextClassificationOperationMetadata str
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -1024,10 +1025,10 @@ type GoogleCloudDatalabelingV1alpha1LabelTextEntityExtractionOperationMetadata s
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -1053,10 +1054,10 @@ type GoogleCloudDatalabelingV1alpha1LabelVideoClassificationOperationMetadata st
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -1082,10 +1083,10 @@ type GoogleCloudDatalabelingV1alpha1LabelVideoEventOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -1111,10 +1112,10 @@ type GoogleCloudDatalabelingV1alpha1LabelVideoObjectDetectionOperationMetadata s
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -1140,10 +1141,10 @@ type GoogleCloudDatalabelingV1alpha1LabelVideoObjectTrackingOperationMetadata st
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -1175,10 +1176,10 @@ type GoogleCloudDatalabelingV1alpha1OutputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsDestination") to
@@ -1282,10 +1283,10 @@ type GoogleCloudDatalabelingV1beta1AnnotatedDataset struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSource") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSource") to
@@ -1347,10 +1348,10 @@ type GoogleCloudDatalabelingV1beta1AnnotatedDatasetMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPolyConfig")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPolyConfig") to
@@ -1404,10 +1405,10 @@ type GoogleCloudDatalabelingV1beta1Annotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationMetadata")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationMetadata") to
@@ -1434,10 +1435,10 @@ type GoogleCloudDatalabelingV1beta1AnnotationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "OperatorMetadata") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OperatorMetadata") to
@@ -1481,10 +1482,10 @@ type GoogleCloudDatalabelingV1beta1AnnotationSpec struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -1537,10 +1538,10 @@ type GoogleCloudDatalabelingV1beta1AnnotationSpecSet struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpecs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpecs") to
@@ -1571,10 +1572,10 @@ type GoogleCloudDatalabelingV1beta1AnnotationSpecSetConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "AllowMultiLabel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllowMultiLabel") to
@@ -1634,11 +1635,11 @@ type GoogleCloudDatalabelingV1beta1AnnotationValue struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ImageBoundingPolyAnnotation") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -1667,10 +1668,10 @@ type GoogleCloudDatalabelingV1beta1Attempt struct {
 
 	// ForceSendFields is a list of field names (e.g. "AttemptTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AttemptTime") to include
@@ -1706,10 +1707,10 @@ type GoogleCloudDatalabelingV1beta1BigQuerySource struct {
 
 	// ForceSendFields is a list of field names (e.g. "InputUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "InputUri") to include in
@@ -1738,10 +1739,10 @@ type GoogleCloudDatalabelingV1beta1BoundingBoxEvaluationOptions struct {
 
 	// ForceSendFields is a list of field names (e.g. "IouThreshold") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IouThreshold") to include
@@ -1781,10 +1782,10 @@ type GoogleCloudDatalabelingV1beta1BoundingPoly struct {
 
 	// ForceSendFields is a list of field names (e.g. "Vertices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Vertices") to include in
@@ -1814,10 +1815,10 @@ type GoogleCloudDatalabelingV1beta1BoundingPolyConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
@@ -1844,10 +1845,10 @@ type GoogleCloudDatalabelingV1beta1ClassificationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "IsMultiLabel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IsMultiLabel") to include
@@ -1878,10 +1879,10 @@ type GoogleCloudDatalabelingV1beta1ClassificationMetrics struct {
 
 	// ForceSendFields is a list of field names (e.g. "ConfusionMatrix") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ConfusionMatrix") to
@@ -1944,10 +1945,10 @@ type GoogleCloudDatalabelingV1beta1ConfidenceMetricsEntry struct {
 
 	// ForceSendFields is a list of field names (e.g. "ConfidenceThreshold")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ConfidenceThreshold") to
@@ -2007,10 +2008,10 @@ type GoogleCloudDatalabelingV1beta1ConfusionMatrix struct {
 
 	// ForceSendFields is a list of field names (e.g. "Row") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Row") to include in API
@@ -2039,10 +2040,10 @@ type GoogleCloudDatalabelingV1beta1ConfusionMatrixEntry struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpec") to
@@ -2071,10 +2072,10 @@ type GoogleCloudDatalabelingV1beta1CreateAnnotationSpecSetRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
@@ -2101,10 +2102,10 @@ type GoogleCloudDatalabelingV1beta1CreateDatasetRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dataset") to include in
@@ -2130,10 +2131,10 @@ type GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Job") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Job") to include in API
@@ -2168,10 +2169,10 @@ type GoogleCloudDatalabelingV1beta1CreateInstructionMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -2198,10 +2199,10 @@ type GoogleCloudDatalabelingV1beta1CreateInstructionRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Instruction") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Instruction") to include
@@ -2228,10 +2229,10 @@ type GoogleCloudDatalabelingV1beta1CsvInstruction struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsFileUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsFileUri") to include in
@@ -2271,10 +2272,10 @@ type GoogleCloudDatalabelingV1beta1DataItem struct {
 
 	// ForceSendFields is a list of field names (e.g. "ImagePayload") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ImagePayload") to include
@@ -2335,10 +2336,10 @@ type GoogleCloudDatalabelingV1beta1Dataset struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlockingResources")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlockingResources") to
@@ -2427,10 +2428,10 @@ type GoogleCloudDatalabelingV1beta1Evaluation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationType") to
@@ -2460,11 +2461,11 @@ type GoogleCloudDatalabelingV1beta1EvaluationConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "BoundingBoxEvaluationOptions") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -2584,10 +2585,10 @@ type GoogleCloudDatalabelingV1beta1EvaluationJob struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
@@ -2622,10 +2623,10 @@ type GoogleCloudDatalabelingV1beta1EvaluationJobAlertConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "Email") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Email") to include in API
@@ -2749,10 +2750,10 @@ type GoogleCloudDatalabelingV1beta1EvaluationJobConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "BigqueryImportKeys")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BigqueryImportKeys") to
@@ -2792,8 +2793,8 @@ type GoogleCloudDatalabelingV1beta1EvaluationMetrics struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ClassificationMetrics") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2835,10 +2836,10 @@ type GoogleCloudDatalabelingV1beta1EventConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSets")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpecSets") to
@@ -2884,10 +2885,10 @@ type GoogleCloudDatalabelingV1beta1Example struct {
 
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Annotations") to include
@@ -2916,10 +2917,10 @@ type GoogleCloudDatalabelingV1beta1ExampleComparison struct {
 
 	// ForceSendFields is a list of field names (e.g. "GroundTruthExample")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GroundTruthExample") to
@@ -2960,10 +2961,10 @@ type GoogleCloudDatalabelingV1beta1ExportDataOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
@@ -3007,10 +3008,10 @@ type GoogleCloudDatalabelingV1beta1ExportDataOperationResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
@@ -3051,10 +3052,10 @@ type GoogleCloudDatalabelingV1beta1ExportDataRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
@@ -3102,10 +3103,10 @@ type GoogleCloudDatalabelingV1beta1FeedbackMessage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Body") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Body") to include in API
@@ -3140,8 +3141,8 @@ type GoogleCloudDatalabelingV1beta1FeedbackThread struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "FeedbackThreadMetadata") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -3181,10 +3182,10 @@ type GoogleCloudDatalabelingV1beta1FeedbackThreadMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -3214,10 +3215,10 @@ type GoogleCloudDatalabelingV1beta1GcsDestination struct {
 
 	// ForceSendFields is a list of field names (e.g. "MimeType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MimeType") to include in
@@ -3243,10 +3244,10 @@ type GoogleCloudDatalabelingV1beta1GcsFolderDestination struct {
 
 	// ForceSendFields is a list of field names (e.g. "OutputFolderUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputFolderUri") to
@@ -3278,10 +3279,10 @@ type GoogleCloudDatalabelingV1beta1GcsSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "InputUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "InputUri") to include in
@@ -3348,11 +3349,11 @@ type GoogleCloudDatalabelingV1beta1HumanAnnotationConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AnnotatedDatasetDescription") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -3384,10 +3385,10 @@ type GoogleCloudDatalabelingV1beta1ImageBoundingPolyAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpec") to
@@ -3414,10 +3415,10 @@ type GoogleCloudDatalabelingV1beta1ImageClassificationAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpec") to
@@ -3458,10 +3459,10 @@ type GoogleCloudDatalabelingV1beta1ImageClassificationConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "AllowMultiLabel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllowMultiLabel") to
@@ -3497,10 +3498,10 @@ type GoogleCloudDatalabelingV1beta1ImagePayload struct {
 
 	// ForceSendFields is a list of field names (e.g. "ImageThumbnail") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ImageThumbnail") to
@@ -3531,10 +3532,10 @@ type GoogleCloudDatalabelingV1beta1ImagePolylineAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpec") to
@@ -3569,10 +3570,10 @@ type GoogleCloudDatalabelingV1beta1ImageSegmentationAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationColors") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationColors") to
@@ -3609,10 +3610,10 @@ type GoogleCloudDatalabelingV1beta1ImportDataOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -3644,10 +3645,10 @@ type GoogleCloudDatalabelingV1beta1ImportDataOperationResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dataset") to include in
@@ -3677,10 +3678,10 @@ type GoogleCloudDatalabelingV1beta1ImportDataRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "InputConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "InputConfig") to include
@@ -3762,10 +3763,10 @@ type GoogleCloudDatalabelingV1beta1InputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationType") to
@@ -3838,10 +3839,10 @@ type GoogleCloudDatalabelingV1beta1Instruction struct {
 
 	// ForceSendFields is a list of field names (e.g. "BlockingResources")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BlockingResources") to
@@ -3868,10 +3869,10 @@ type GoogleCloudDatalabelingV1beta1LabelImageBoundingBoxOperationMetadata struct
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -3897,10 +3898,10 @@ type GoogleCloudDatalabelingV1beta1LabelImageBoundingPolyOperationMetadata struc
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -3926,10 +3927,10 @@ type GoogleCloudDatalabelingV1beta1LabelImageClassificationOperationMetadata str
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -3956,10 +3957,10 @@ type GoogleCloudDatalabelingV1beta1LabelImageOrientedBoundingBoxOperationMetadat
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -3985,10 +3986,10 @@ type GoogleCloudDatalabelingV1beta1LabelImagePolylineOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -4052,10 +4053,10 @@ type GoogleCloudDatalabelingV1beta1LabelImageRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -4081,10 +4082,10 @@ type GoogleCloudDatalabelingV1beta1LabelImageSegmentationOperationMetadata struc
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -4173,10 +4174,10 @@ type GoogleCloudDatalabelingV1beta1LabelOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
@@ -4207,10 +4208,10 @@ type GoogleCloudDatalabelingV1beta1LabelStats struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExampleCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExampleCount") to include
@@ -4236,10 +4237,10 @@ type GoogleCloudDatalabelingV1beta1LabelTextClassificationOperationMetadata stru
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -4265,10 +4266,10 @@ type GoogleCloudDatalabelingV1beta1LabelTextEntityExtractionOperationMetadata st
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -4312,10 +4313,10 @@ type GoogleCloudDatalabelingV1beta1LabelTextRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -4341,10 +4342,10 @@ type GoogleCloudDatalabelingV1beta1LabelVideoClassificationOperationMetadata str
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -4370,10 +4371,10 @@ type GoogleCloudDatalabelingV1beta1LabelVideoEventOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -4399,10 +4400,10 @@ type GoogleCloudDatalabelingV1beta1LabelVideoObjectDetectionOperationMetadata st
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -4428,10 +4429,10 @@ type GoogleCloudDatalabelingV1beta1LabelVideoObjectTrackingOperationMetadata str
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -4489,10 +4490,10 @@ type GoogleCloudDatalabelingV1beta1LabelVideoRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -4525,10 +4526,10 @@ type GoogleCloudDatalabelingV1beta1ListAnnotatedDatasetsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDatasets")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotatedDatasets") to
@@ -4562,10 +4563,10 @@ type GoogleCloudDatalabelingV1beta1ListAnnotationSpecSetsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSets")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpecSets") to
@@ -4599,10 +4600,10 @@ type GoogleCloudDatalabelingV1beta1ListDataItemsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DataItems") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DataItems") to include in
@@ -4635,10 +4636,10 @@ type GoogleCloudDatalabelingV1beta1ListDatasetsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Datasets") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Datasets") to include in
@@ -4671,10 +4672,10 @@ type GoogleCloudDatalabelingV1beta1ListEvaluationJobsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "EvaluationJobs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EvaluationJobs") to
@@ -4708,10 +4709,10 @@ type GoogleCloudDatalabelingV1beta1ListExamplesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Examples") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Examples") to include in
@@ -4744,10 +4745,10 @@ type GoogleCloudDatalabelingV1beta1ListFeedbackMessagesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "FeedbackMessages") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FeedbackMessages") to
@@ -4781,10 +4782,10 @@ type GoogleCloudDatalabelingV1beta1ListFeedbackThreadsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "FeedbackThreads") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FeedbackThreads") to
@@ -4818,10 +4819,10 @@ type GoogleCloudDatalabelingV1beta1ListInstructionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Instructions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Instructions") to include
@@ -4847,10 +4848,10 @@ type GoogleCloudDatalabelingV1beta1NormalizedBoundingPoly struct {
 
 	// ForceSendFields is a list of field names (e.g. "NormalizedVertices")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NormalizedVertices") to
@@ -4877,10 +4878,10 @@ type GoogleCloudDatalabelingV1beta1NormalizedPolyline struct {
 
 	// ForceSendFields is a list of field names (e.g. "NormalizedVertices")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NormalizedVertices") to
@@ -4911,10 +4912,10 @@ type GoogleCloudDatalabelingV1beta1NormalizedVertex struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -4963,10 +4964,10 @@ type GoogleCloudDatalabelingV1beta1ObjectDetectionConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
@@ -5007,10 +5008,10 @@ type GoogleCloudDatalabelingV1beta1ObjectDetectionMetrics struct {
 
 	// ForceSendFields is a list of field names (e.g. "PrCurve") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PrCurve") to include in
@@ -5046,10 +5047,10 @@ type GoogleCloudDatalabelingV1beta1ObjectTrackingConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
@@ -5081,10 +5082,10 @@ type GoogleCloudDatalabelingV1beta1ObjectTrackingFrame struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundingPoly") to include
@@ -5127,10 +5128,10 @@ type GoogleCloudDatalabelingV1beta1OperatorMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Comments") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Comments") to include in
@@ -5176,10 +5177,10 @@ type GoogleCloudDatalabelingV1beta1OutputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsDestination") to
@@ -5211,10 +5212,10 @@ type GoogleCloudDatalabelingV1beta1PdfInstruction struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsFileUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsFileUri") to include in
@@ -5240,10 +5241,10 @@ type GoogleCloudDatalabelingV1beta1Polyline struct {
 
 	// ForceSendFields is a list of field names (e.g. "Vertices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Vertices") to include in
@@ -5273,10 +5274,10 @@ type GoogleCloudDatalabelingV1beta1PolylineConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
@@ -5316,10 +5317,10 @@ type GoogleCloudDatalabelingV1beta1PrCurve struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpec") to
@@ -5377,10 +5378,10 @@ type GoogleCloudDatalabelingV1beta1Row struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpec") to
@@ -5414,10 +5415,10 @@ type GoogleCloudDatalabelingV1beta1SearchEvaluationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Evaluations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Evaluations") to include
@@ -5450,10 +5451,10 @@ type GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PageSize") to include in
@@ -5487,10 +5488,10 @@ type GoogleCloudDatalabelingV1beta1SearchExampleComparisonsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExampleComparisons")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExampleComparisons") to
@@ -5522,10 +5523,10 @@ type GoogleCloudDatalabelingV1beta1SegmentationConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
@@ -5554,11 +5555,11 @@ type GoogleCloudDatalabelingV1beta1SentimentConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "EnableLabelSentimentSelection") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -5588,10 +5589,10 @@ type GoogleCloudDatalabelingV1beta1SequentialSegment struct {
 
 	// ForceSendFields is a list of field names (e.g. "End") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "End") to include in API
@@ -5617,10 +5618,10 @@ type GoogleCloudDatalabelingV1beta1TextClassificationAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpec") to
@@ -5656,10 +5657,10 @@ type GoogleCloudDatalabelingV1beta1TextClassificationConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "AllowMultiLabel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AllowMultiLabel") to
@@ -5689,10 +5690,10 @@ type GoogleCloudDatalabelingV1beta1TextEntityExtractionAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpec") to
@@ -5719,10 +5720,10 @@ type GoogleCloudDatalabelingV1beta1TextEntityExtractionConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpecSet")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpecSet") to
@@ -5750,10 +5751,10 @@ type GoogleCloudDatalabelingV1beta1TextMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LanguageCode") to include
@@ -5779,10 +5780,10 @@ type GoogleCloudDatalabelingV1beta1TextPayload struct {
 
 	// ForceSendFields is a list of field names (e.g. "TextContent") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TextContent") to include
@@ -5813,10 +5814,10 @@ type GoogleCloudDatalabelingV1beta1TimeSegment struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTimeOffset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTimeOffset") to include
@@ -5846,10 +5847,10 @@ type GoogleCloudDatalabelingV1beta1Vertex struct {
 
 	// ForceSendFields is a list of field names (e.g. "X") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "X") to include in API
@@ -5879,10 +5880,10 @@ type GoogleCloudDatalabelingV1beta1VideoClassificationAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpec") to
@@ -5921,11 +5922,11 @@ type GoogleCloudDatalabelingV1beta1VideoClassificationConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AnnotationSpecSetConfigs") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpecSetConfigs")
@@ -5956,10 +5957,10 @@ type GoogleCloudDatalabelingV1beta1VideoEventAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpec") to
@@ -5994,10 +5995,10 @@ type GoogleCloudDatalabelingV1beta1VideoObjectTrackingAnnotation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotationSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotationSpec") to
@@ -6036,10 +6037,10 @@ type GoogleCloudDatalabelingV1beta1VideoPayload struct {
 
 	// ForceSendFields is a list of field names (e.g. "FrameRate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FrameRate") to include in
@@ -6084,10 +6085,10 @@ type GoogleCloudDatalabelingV1beta1VideoThumbnail struct {
 
 	// ForceSendFields is a list of field names (e.g. "Thumbnail") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Thumbnail") to include in
@@ -6122,10 +6123,10 @@ type GoogleCloudDatalabelingV1p1alpha1CreateInstructionMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -6165,10 +6166,10 @@ type GoogleCloudDatalabelingV1p1alpha1ExportDataOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
@@ -6212,10 +6213,10 @@ type GoogleCloudDatalabelingV1p1alpha1ExportDataOperationResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
@@ -6246,10 +6247,10 @@ type GoogleCloudDatalabelingV1p1alpha1GcsDestination struct {
 
 	// ForceSendFields is a list of field names (e.g. "MimeType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MimeType") to include in
@@ -6275,10 +6276,10 @@ type GoogleCloudDatalabelingV1p1alpha1GcsFolderDestination struct {
 
 	// ForceSendFields is a list of field names (e.g. "OutputFolderUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputFolderUri") to
@@ -6309,10 +6310,10 @@ type GoogleCloudDatalabelingV1p1alpha1GenerateAnalysisReportOperationMetadata st
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -6379,11 +6380,11 @@ type GoogleCloudDatalabelingV1p1alpha1HumanAnnotationConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AnnotatedDatasetDescription") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -6420,10 +6421,10 @@ type GoogleCloudDatalabelingV1p1alpha1ImportDataOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -6455,10 +6456,10 @@ type GoogleCloudDatalabelingV1p1alpha1ImportDataOperationResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dataset") to include in
@@ -6484,10 +6485,10 @@ type GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingBoxOperationMetadata str
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -6513,10 +6514,10 @@ type GoogleCloudDatalabelingV1p1alpha1LabelImageBoundingPolyOperationMetadata st
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -6542,10 +6543,10 @@ type GoogleCloudDatalabelingV1p1alpha1LabelImageClassificationOperationMetadata 
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -6572,10 +6573,10 @@ type GoogleCloudDatalabelingV1p1alpha1LabelImageOrientedBoundingBoxOperationMeta
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -6601,10 +6602,10 @@ type GoogleCloudDatalabelingV1p1alpha1LabelImagePolylineOperationMetadata struct
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -6630,10 +6631,10 @@ type GoogleCloudDatalabelingV1p1alpha1LabelImageSegmentationOperationMetadata st
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -6722,10 +6723,10 @@ type GoogleCloudDatalabelingV1p1alpha1LabelOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
@@ -6756,10 +6757,10 @@ type GoogleCloudDatalabelingV1p1alpha1LabelStats struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExampleCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExampleCount") to include
@@ -6785,10 +6786,10 @@ type GoogleCloudDatalabelingV1p1alpha1LabelTextClassificationOperationMetadata s
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -6814,10 +6815,10 @@ type GoogleCloudDatalabelingV1p1alpha1LabelTextEntityExtractionOperationMetadata
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -6843,10 +6844,10 @@ type GoogleCloudDatalabelingV1p1alpha1LabelVideoClassificationOperationMetadata 
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -6872,10 +6873,10 @@ type GoogleCloudDatalabelingV1p1alpha1LabelVideoEventOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -6901,10 +6902,10 @@ type GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectDetectionOperationMetadata
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -6930,10 +6931,10 @@ type GoogleCloudDatalabelingV1p1alpha1LabelVideoObjectTrackingOperationMetadata 
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -6965,10 +6966,10 @@ type GoogleCloudDatalabelingV1p1alpha1OutputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsDestination") to
@@ -7004,10 +7005,10 @@ type GoogleCloudDatalabelingV1p2alpha1CreateInstructionMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -7047,10 +7048,10 @@ type GoogleCloudDatalabelingV1p2alpha1ExportDataOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
@@ -7094,10 +7095,10 @@ type GoogleCloudDatalabelingV1p2alpha1ExportDataOperationResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
@@ -7128,10 +7129,10 @@ type GoogleCloudDatalabelingV1p2alpha1GcsDestination struct {
 
 	// ForceSendFields is a list of field names (e.g. "MimeType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MimeType") to include in
@@ -7157,10 +7158,10 @@ type GoogleCloudDatalabelingV1p2alpha1GcsFolderDestination struct {
 
 	// ForceSendFields is a list of field names (e.g. "OutputFolderUri") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OutputFolderUri") to
@@ -7228,11 +7229,11 @@ type GoogleCloudDatalabelingV1p2alpha1HumanAnnotationConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AnnotatedDatasetDescription") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -7269,10 +7270,10 @@ type GoogleCloudDatalabelingV1p2alpha1ImportDataOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -7304,10 +7305,10 @@ type GoogleCloudDatalabelingV1p2alpha1ImportDataOperationResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dataset") to include in
@@ -7333,10 +7334,10 @@ type GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingBoxOperationMetadata str
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -7362,10 +7363,10 @@ type GoogleCloudDatalabelingV1p2alpha1LabelImageBoundingPolyOperationMetadata st
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -7391,10 +7392,10 @@ type GoogleCloudDatalabelingV1p2alpha1LabelImageClassificationOperationMetadata 
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -7421,10 +7422,10 @@ type GoogleCloudDatalabelingV1p2alpha1LabelImageOrientedBoundingBoxOperationMeta
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -7450,10 +7451,10 @@ type GoogleCloudDatalabelingV1p2alpha1LabelImagePolylineOperationMetadata struct
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -7479,10 +7480,10 @@ type GoogleCloudDatalabelingV1p2alpha1LabelImageSegmentationOperationMetadata st
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -7571,10 +7572,10 @@ type GoogleCloudDatalabelingV1p2alpha1LabelOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "AnnotatedDataset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AnnotatedDataset") to
@@ -7605,10 +7606,10 @@ type GoogleCloudDatalabelingV1p2alpha1LabelStats struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExampleCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExampleCount") to include
@@ -7634,10 +7635,10 @@ type GoogleCloudDatalabelingV1p2alpha1LabelTextClassificationOperationMetadata s
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -7663,10 +7664,10 @@ type GoogleCloudDatalabelingV1p2alpha1LabelTextEntityExtractionOperationMetadata
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -7692,10 +7693,10 @@ type GoogleCloudDatalabelingV1p2alpha1LabelVideoClassificationOperationMetadata 
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -7721,10 +7722,10 @@ type GoogleCloudDatalabelingV1p2alpha1LabelVideoEventOperationMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -7750,10 +7751,10 @@ type GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectDetectionOperationMetadata
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -7779,10 +7780,10 @@ type GoogleCloudDatalabelingV1p2alpha1LabelVideoObjectTrackingOperationMetadata 
 
 	// ForceSendFields is a list of field names (e.g. "BasicConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BasicConfig") to include
@@ -7814,10 +7815,10 @@ type GoogleCloudDatalabelingV1p2alpha1OutputConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "GcsDestination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GcsDestination") to
@@ -7852,10 +7853,10 @@ type GoogleLongrunningListOperationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -7914,10 +7915,10 @@ type GoogleLongrunningOperation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -7970,10 +7971,10 @@ type GoogleRpcStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -8003,6 +8004,9 @@ type ProjectsAnnotationSpecSetsCreateCall struct {
 }
 
 // Create: Creates an annotation spec set by providing a set of labels.
+//
+// - parent: AnnotationSpecSet resource parent, format:
+//   projects/{project_id}.
 func (r *ProjectsAnnotationSpecSetsService) Create(parent string, googleclouddatalabelingv1beta1createannotationspecsetrequest *GoogleCloudDatalabelingV1beta1CreateAnnotationSpecSetRequest) *ProjectsAnnotationSpecSetsCreateCall {
 	c := &ProjectsAnnotationSpecSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8037,7 +8041,7 @@ func (c *ProjectsAnnotationSpecSetsCreateCall) Header() http.Header {
 
 func (c *ProjectsAnnotationSpecSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8144,6 +8148,9 @@ type ProjectsAnnotationSpecSetsDeleteCall struct {
 }
 
 // Delete: Deletes an annotation spec set by resource name.
+//
+// - name: AnnotationSpec resource name, format:
+//   `projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}`.
 func (r *ProjectsAnnotationSpecSetsService) Delete(name string) *ProjectsAnnotationSpecSetsDeleteCall {
 	c := &ProjectsAnnotationSpecSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8177,7 +8184,7 @@ func (c *ProjectsAnnotationSpecSetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAnnotationSpecSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8275,6 +8282,9 @@ type ProjectsAnnotationSpecSetsGetCall struct {
 }
 
 // Get: Gets an annotation spec set by resource name.
+//
+// - name: AnnotationSpecSet resource name, format:
+//   projects/{project_id}/annotationSpecSets/{annotation_spec_set_id}.
 func (r *ProjectsAnnotationSpecSetsService) Get(name string) *ProjectsAnnotationSpecSetsGetCall {
 	c := &ProjectsAnnotationSpecSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8318,7 +8328,7 @@ func (c *ProjectsAnnotationSpecSetsGetCall) Header() http.Header {
 
 func (c *ProjectsAnnotationSpecSetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8422,6 +8432,9 @@ type ProjectsAnnotationSpecSetsListCall struct {
 
 // List: Lists annotation spec sets for a project. Pagination is
 // supported.
+//
+// - parent: Parent of AnnotationSpecSet resource, format:
+//   projects/{project_id}.
 func (r *ProjectsAnnotationSpecSetsService) List(parent string) *ProjectsAnnotationSpecSetsListCall {
 	c := &ProjectsAnnotationSpecSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8489,7 +8502,7 @@ func (c *ProjectsAnnotationSpecSetsListCall) Header() http.Header {
 
 func (c *ProjectsAnnotationSpecSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8630,6 +8643,8 @@ type ProjectsDatasetsCreateCall struct {
 }
 
 // Create: Creates dataset. If success return a Dataset resource.
+//
+// - parent: Dataset resource parent, format: projects/{project_id}.
 func (r *ProjectsDatasetsService) Create(parent string, googleclouddatalabelingv1beta1createdatasetrequest *GoogleCloudDatalabelingV1beta1CreateDatasetRequest) *ProjectsDatasetsCreateCall {
 	c := &ProjectsDatasetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8664,7 +8679,7 @@ func (c *ProjectsDatasetsCreateCall) Header() http.Header {
 
 func (c *ProjectsDatasetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8770,6 +8785,9 @@ type ProjectsDatasetsDeleteCall struct {
 }
 
 // Delete: Deletes a dataset by resource name.
+//
+// - name: Dataset resource name, format:
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsService) Delete(name string) *ProjectsDatasetsDeleteCall {
 	c := &ProjectsDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8803,7 +8821,7 @@ func (c *ProjectsDatasetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8901,6 +8919,9 @@ type ProjectsDatasetsExportDataCall struct {
 }
 
 // ExportData: Exports data and annotations from dataset.
+//
+// - name: Dataset resource name, format:
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsService) ExportData(name string, googleclouddatalabelingv1beta1exportdatarequest *GoogleCloudDatalabelingV1beta1ExportDataRequest) *ProjectsDatasetsExportDataCall {
 	c := &ProjectsDatasetsExportDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8935,7 +8956,7 @@ func (c *ProjectsDatasetsExportDataCall) Header() http.Header {
 
 func (c *ProjectsDatasetsExportDataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9041,6 +9062,9 @@ type ProjectsDatasetsGetCall struct {
 }
 
 // Get: Gets dataset by resource name.
+//
+// - name: Dataset resource name, format:
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsService) Get(name string) *ProjectsDatasetsGetCall {
 	c := &ProjectsDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9084,7 +9108,7 @@ func (c *ProjectsDatasetsGetCall) Header() http.Header {
 
 func (c *ProjectsDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9191,6 +9215,9 @@ type ProjectsDatasetsImportDataCall struct {
 // running on it. For example, no labeling task (also long running
 // operation) can be started while importing is still ongoing. Vice
 // versa.
+//
+// - name: Dataset resource name, format:
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsService) ImportData(name string, googleclouddatalabelingv1beta1importdatarequest *GoogleCloudDatalabelingV1beta1ImportDataRequest) *ProjectsDatasetsImportDataCall {
 	c := &ProjectsDatasetsImportDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9225,7 +9252,7 @@ func (c *ProjectsDatasetsImportDataCall) Header() http.Header {
 
 func (c *ProjectsDatasetsImportDataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9331,6 +9358,8 @@ type ProjectsDatasetsListCall struct {
 }
 
 // List: Lists datasets under a project. Pagination is supported.
+//
+// - parent: Dataset resource parent, format: projects/{project_id}.
 func (r *ProjectsDatasetsService) List(parent string) *ProjectsDatasetsListCall {
 	c := &ProjectsDatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9398,7 +9427,7 @@ func (c *ProjectsDatasetsListCall) Header() http.Header {
 
 func (c *ProjectsDatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9537,6 +9566,10 @@ type ProjectsDatasetsAnnotatedDatasetsDeleteCall struct {
 }
 
 // Delete: Deletes an annotated dataset by resource name.
+//
+// - name: Name of the annotated dataset to delete, format:
+//   projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
+//   {annotated_dataset_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsService) Delete(name string) *ProjectsDatasetsAnnotatedDatasetsDeleteCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9570,7 +9603,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDatasetsAnnotatedDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9668,6 +9701,10 @@ type ProjectsDatasetsAnnotatedDatasetsGetCall struct {
 }
 
 // Get: Gets an annotated dataset by resource name.
+//
+// - name: Name of the annotated dataset to get, format:
+//   projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
+//   {annotated_dataset_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9711,7 +9748,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsGetCall) Header() http.Header {
 
 func (c *ProjectsDatasetsAnnotatedDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9815,6 +9852,9 @@ type ProjectsDatasetsAnnotatedDatasetsListCall struct {
 
 // List: Lists annotated datasets for a dataset. Pagination is
 // supported.
+//
+// - parent: Name of the dataset to list annotated datasets, format:
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsListCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9882,7 +9922,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsListCall) Header() http.Header {
 
 func (c *ProjectsDatasetsAnnotatedDatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10024,6 +10064,9 @@ type ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall struct {
 
 // Get: Gets a data item in a dataset by resource name. This API can be
 // called after data are imported into dataset.
+//
+// - name: The name of the data item to get, format:
+//   projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsDataItemsService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10067,7 +10110,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall) Header() http.Header
 
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10170,6 +10213,9 @@ type ProjectsDatasetsAnnotatedDatasetsDataItemsListCall struct {
 
 // List: Lists data items in a dataset. This API can be called after
 // data are imported into dataset. Pagination is supported.
+//
+// - parent: Name of the dataset to list data items, format:
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsDataItemsService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsDataItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10236,7 +10282,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) Header() http.Heade
 
 func (c *ProjectsDatasetsAnnotatedDatasetsDataItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10377,6 +10423,10 @@ type ProjectsDatasetsAnnotatedDatasetsExamplesGetCall struct {
 
 // Get: Gets an example by resource name, including both data and
 // annotation.
+//
+// - name: Name of example, format:
+//   projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/
+//   {annotated_dataset_id}/examples/{example_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsExamplesService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsExamplesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10428,7 +10478,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) Header() http.Header 
 
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10536,6 +10586,8 @@ type ProjectsDatasetsAnnotatedDatasetsExamplesListCall struct {
 
 // List: Lists examples in an annotated dataset. Pagination is
 // supported.
+//
+// - parent: Example resource parent.
 func (r *ProjectsDatasetsAnnotatedDatasetsExamplesService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsExamplesListCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsExamplesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10604,7 +10656,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) Header() http.Header
 
 func (c *ProjectsDatasetsAnnotatedDatasetsExamplesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10743,6 +10795,11 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall struct {
 }
 
 // Delete: Delete a FeedbackThread.
+//
+// - name: Name of the FeedbackThread that is going to be deleted.
+//   Format:
+//   'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//   tated_dataset_id}/feedbackThreads/{feedback_thread_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsService) Delete(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10776,7 +10833,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall) Header() ht
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10874,6 +10931,10 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall struct {
 }
 
 // Get: Get a FeedbackThread object.
+//
+// - name: Name of the feedback. Format:
+//   'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//   tated_dataset_id}/feedbackThreads/{feedback_thread_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10917,7 +10978,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall) Header() http.
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11020,6 +11081,10 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall struct {
 }
 
 // List: List FeedbackThreads with pagination.
+//
+// - parent: FeedbackThread resource parent. Format:
+//   "projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//   tated_dataset_id}".
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11080,7 +11145,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) Header() http
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11216,6 +11281,10 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall 
 }
 
 // Create: Create a FeedbackMessage object.
+//
+// - parent: FeedbackMessage resource parent, format:
+//   projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annot
+//   ated_dataset_id}/feedbackThreads/{feedback_thread_id}.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) Create(parent string, googleclouddatalabelingv1beta1feedbackmessage *GoogleCloudDatalabelingV1beta1FeedbackMessage) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11250,7 +11319,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateC
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11355,6 +11424,12 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall 
 }
 
 // Delete: Delete a FeedbackMessage.
+//
+// - name: Name of the FeedbackMessage that is going to be deleted.
+//   Format:
+//   'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//   tated_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessa
+//   ges/{feedback_message_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) Delete(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11388,7 +11463,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteC
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11486,6 +11561,11 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall str
 }
 
 // Get: Get a FeedbackMessage object.
+//
+// - name: Name of the feedback. Format:
+//   'projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//   tated_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessa
+//   ges/{feedback_message_id}'.
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) Get(name string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11529,7 +11609,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11632,6 +11712,10 @@ type ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall st
 }
 
 // List: List FeedbackMessages with pagination.
+//
+// - parent: FeedbackMessage resource parent. Format:
+//   "projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{anno
+//   tated_dataset_id}/feedbackThreads/{feedback_thread_id}".
 func (r *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesService) List(parent string) *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall {
 	c := &ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11692,7 +11776,7 @@ func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCal
 
 func (c *ProjectsDatasetsAnnotatedDatasetsFeedbackThreadsFeedbackMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11829,6 +11913,9 @@ type ProjectsDatasetsDataItemsGetCall struct {
 
 // Get: Gets a data item in a dataset by resource name. This API can be
 // called after data are imported into dataset.
+//
+// - name: The name of the data item to get, format:
+//   projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}.
 func (r *ProjectsDatasetsDataItemsService) Get(name string) *ProjectsDatasetsDataItemsGetCall {
 	c := &ProjectsDatasetsDataItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11872,7 +11959,7 @@ func (c *ProjectsDatasetsDataItemsGetCall) Header() http.Header {
 
 func (c *ProjectsDatasetsDataItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11975,6 +12062,9 @@ type ProjectsDatasetsDataItemsListCall struct {
 
 // List: Lists data items in a dataset. This API can be called after
 // data are imported into dataset. Pagination is supported.
+//
+// - parent: Name of the dataset to list data items, format:
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsDataItemsService) List(parent string) *ProjectsDatasetsDataItemsListCall {
 	c := &ProjectsDatasetsDataItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12041,7 +12131,7 @@ func (c *ProjectsDatasetsDataItemsListCall) Header() http.Header {
 
 func (c *ProjectsDatasetsDataItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12182,6 +12272,10 @@ type ProjectsDatasetsEvaluationsGetCall struct {
 
 // Get: Gets an evaluation by resource name (to search, use
 // projects.evaluations.search).
+//
+// - name: Name of the evaluation. Format:
+//   "projects/{project_id}/datasets/
+//   {dataset_id}/evaluations/{evaluation_id}'.
 func (r *ProjectsDatasetsEvaluationsService) Get(name string) *ProjectsDatasetsEvaluationsGetCall {
 	c := &ProjectsDatasetsEvaluationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12225,7 +12319,7 @@ func (c *ProjectsDatasetsEvaluationsGetCall) Header() http.Header {
 
 func (c *ProjectsDatasetsEvaluationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12331,6 +12425,11 @@ type ProjectsDatasetsEvaluationsExampleComparisonsSearchCall struct {
 // format is a list of example comparisons that show ground truth and
 // prediction(s) for a single input. Search by providing an evaluation
 // ID.
+//
+// - parent: Name of the Evaluation resource to search for example
+//   comparisons from. Format:
+//   "projects/{project_id}/datasets/{dataset_id}/evaluations/
+//   {evaluation_id}".
 func (r *ProjectsDatasetsEvaluationsExampleComparisonsService) Search(parent string, googleclouddatalabelingv1beta1searchexamplecomparisonsrequest *GoogleCloudDatalabelingV1beta1SearchExampleComparisonsRequest) *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall {
 	c := &ProjectsDatasetsEvaluationsExampleComparisonsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12365,7 +12464,7 @@ func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) Header() http.
 
 func (c *ProjectsDatasetsEvaluationsExampleComparisonsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12496,6 +12595,9 @@ type ProjectsDatasetsImageLabelCall struct {
 
 // Label: Starts a labeling task for image. The type of image labeling
 // task is configured by feature in the request.
+//
+// - parent: Name of the dataset to request labeling task, format:
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsImageService) Label(parent string, googleclouddatalabelingv1beta1labelimagerequest *GoogleCloudDatalabelingV1beta1LabelImageRequest) *ProjectsDatasetsImageLabelCall {
 	c := &ProjectsDatasetsImageLabelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12530,7 +12632,7 @@ func (c *ProjectsDatasetsImageLabelCall) Header() http.Header {
 
 func (c *ProjectsDatasetsImageLabelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12637,6 +12739,9 @@ type ProjectsDatasetsTextLabelCall struct {
 
 // Label: Starts a labeling task for text. The type of text labeling
 // task is configured by feature in the request.
+//
+// - parent: Name of the data set to request labeling task, format:
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsTextService) Label(parent string, googleclouddatalabelingv1beta1labeltextrequest *GoogleCloudDatalabelingV1beta1LabelTextRequest) *ProjectsDatasetsTextLabelCall {
 	c := &ProjectsDatasetsTextLabelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12671,7 +12776,7 @@ func (c *ProjectsDatasetsTextLabelCall) Header() http.Header {
 
 func (c *ProjectsDatasetsTextLabelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12778,6 +12883,9 @@ type ProjectsDatasetsVideoLabelCall struct {
 
 // Label: Starts a labeling task for video. The type of video labeling
 // task is configured by feature in the request.
+//
+// - parent: Name of the dataset to request labeling task, format:
+//   projects/{project_id}/datasets/{dataset_id}.
 func (r *ProjectsDatasetsVideoService) Label(parent string, googleclouddatalabelingv1beta1labelvideorequest *GoogleCloudDatalabelingV1beta1LabelVideoRequest) *ProjectsDatasetsVideoLabelCall {
 	c := &ProjectsDatasetsVideoLabelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12812,7 +12920,7 @@ func (c *ProjectsDatasetsVideoLabelCall) Header() http.Header {
 
 func (c *ProjectsDatasetsVideoLabelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12918,6 +13026,9 @@ type ProjectsEvaluationJobsCreateCall struct {
 }
 
 // Create: Creates an evaluation job.
+//
+// - parent: Evaluation job resource parent. Format:
+//   "projects/{project_id}".
 func (r *ProjectsEvaluationJobsService) Create(parent string, googleclouddatalabelingv1beta1createevaluationjobrequest *GoogleCloudDatalabelingV1beta1CreateEvaluationJobRequest) *ProjectsEvaluationJobsCreateCall {
 	c := &ProjectsEvaluationJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12952,7 +13063,7 @@ func (c *ProjectsEvaluationJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13059,6 +13170,9 @@ type ProjectsEvaluationJobsDeleteCall struct {
 }
 
 // Delete: Stops and deletes an evaluation job.
+//
+// - name: Name of the evaluation job that is going to be deleted.
+//   Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Delete(name string) *ProjectsEvaluationJobsDeleteCall {
 	c := &ProjectsEvaluationJobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13092,7 +13206,7 @@ func (c *ProjectsEvaluationJobsDeleteCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13190,6 +13304,9 @@ type ProjectsEvaluationJobsGetCall struct {
 }
 
 // Get: Gets an evaluation job by resource name.
+//
+// - name: Name of the evaluation job. Format: "projects/{project_id}
+//   /evaluationJobs/{evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Get(name string) *ProjectsEvaluationJobsGetCall {
 	c := &ProjectsEvaluationJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13233,7 +13350,7 @@ func (c *ProjectsEvaluationJobsGetCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13337,6 +13454,9 @@ type ProjectsEvaluationJobsListCall struct {
 
 // List: Lists all evaluation jobs within a project with possible
 // filters. Pagination is supported.
+//
+// - parent: Evaluation job resource parent. Format:
+//   "projects/{project_id}".
 func (r *ProjectsEvaluationJobsService) List(parent string) *ProjectsEvaluationJobsListCall {
 	c := &ProjectsEvaluationJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13408,7 +13528,7 @@ func (c *ProjectsEvaluationJobsListCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13553,6 +13673,10 @@ type ProjectsEvaluationJobsPatchCall struct {
 // `humanAnnotationConfig.instruction`, `exampleCount`, and
 // `exampleSamplePercentage`. If you want to change any other aspect of
 // the evaluation job, you must delete the job and create a new one.
+//
+// - name: Output only. After you create a job, Data Labeling Service
+//   assigns a name to the job with the following format:
+//   "projects/{project_id}/evaluationJobs/ {evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Patch(name string, googleclouddatalabelingv1beta1evaluationjob *GoogleCloudDatalabelingV1beta1EvaluationJob) *ProjectsEvaluationJobsPatchCall {
 	c := &ProjectsEvaluationJobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13598,7 +13722,7 @@ func (c *ProjectsEvaluationJobsPatchCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13713,6 +13837,9 @@ type ProjectsEvaluationJobsPauseCall struct {
 
 // Pause: Pauses an evaluation job. Pausing an evaluation job that is
 // already in a `PAUSED` state is a no-op.
+//
+// - name: Name of the evaluation job that is going to be paused.
+//   Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Pause(name string, googleclouddatalabelingv1beta1pauseevaluationjobrequest *GoogleCloudDatalabelingV1beta1PauseEvaluationJobRequest) *ProjectsEvaluationJobsPauseCall {
 	c := &ProjectsEvaluationJobsPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13747,7 +13874,7 @@ func (c *ProjectsEvaluationJobsPauseCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13855,6 +13982,9 @@ type ProjectsEvaluationJobsResumeCall struct {
 // Resume: Resumes a paused evaluation job. A deleted evaluation job
 // can't be resumed. Resuming a running or scheduled evaluation job is a
 // no-op.
+//
+// - name: Name of the evaluation job that is going to be resumed.
+//   Format: "projects/{project_id}/evaluationJobs/{evaluation_job_id}".
 func (r *ProjectsEvaluationJobsService) Resume(name string, googleclouddatalabelingv1beta1resumeevaluationjobrequest *GoogleCloudDatalabelingV1beta1ResumeEvaluationJobRequest) *ProjectsEvaluationJobsResumeCall {
 	c := &ProjectsEvaluationJobsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13889,7 +14019,7 @@ func (c *ProjectsEvaluationJobsResumeCall) Header() http.Header {
 
 func (c *ProjectsEvaluationJobsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13995,6 +14125,9 @@ type ProjectsEvaluationsSearchCall struct {
 }
 
 // Search: Searches evaluations within a project.
+//
+// - parent: Evaluation search parent (project ID). Format: "projects/
+//   {project_id}".
 func (r *ProjectsEvaluationsService) Search(parent string) *ProjectsEvaluationsSearchCall {
 	c := &ProjectsEvaluationsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14078,7 +14211,7 @@ func (c *ProjectsEvaluationsSearchCall) Header() http.Header {
 
 func (c *ProjectsEvaluationsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14219,6 +14352,8 @@ type ProjectsInstructionsCreateCall struct {
 }
 
 // Create: Creates an instruction for how data should be labeled.
+//
+// - parent: Instruction resource parent, format: projects/{project_id}.
 func (r *ProjectsInstructionsService) Create(parent string, googleclouddatalabelingv1beta1createinstructionrequest *GoogleCloudDatalabelingV1beta1CreateInstructionRequest) *ProjectsInstructionsCreateCall {
 	c := &ProjectsInstructionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14253,7 +14388,7 @@ func (c *ProjectsInstructionsCreateCall) Header() http.Header {
 
 func (c *ProjectsInstructionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14358,6 +14493,9 @@ type ProjectsInstructionsDeleteCall struct {
 }
 
 // Delete: Deletes an instruction object by resource name.
+//
+// - name: Instruction resource name, format:
+//   projects/{project_id}/instructions/{instruction_id}.
 func (r *ProjectsInstructionsService) Delete(name string) *ProjectsInstructionsDeleteCall {
 	c := &ProjectsInstructionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14391,7 +14529,7 @@ func (c *ProjectsInstructionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsInstructionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14489,6 +14627,9 @@ type ProjectsInstructionsGetCall struct {
 }
 
 // Get: Gets an instruction by resource name.
+//
+// - name: Instruction resource name, format:
+//   projects/{project_id}/instructions/{instruction_id}.
 func (r *ProjectsInstructionsService) Get(name string) *ProjectsInstructionsGetCall {
 	c := &ProjectsInstructionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14532,7 +14673,7 @@ func (c *ProjectsInstructionsGetCall) Header() http.Header {
 
 func (c *ProjectsInstructionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14635,6 +14776,8 @@ type ProjectsInstructionsListCall struct {
 }
 
 // List: Lists instructions for a project. Pagination is supported.
+//
+// - parent: Instruction resource parent, format: projects/{project_id}.
 func (r *ProjectsInstructionsService) List(parent string) *ProjectsInstructionsListCall {
 	c := &ProjectsInstructionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14702,7 +14845,7 @@ func (c *ProjectsInstructionsListCall) Header() http.Header {
 
 func (c *ProjectsInstructionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14852,6 +14995,8 @@ type ProjectsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *ProjectsOperationsService) Cancel(name string) *ProjectsOperationsCancelCall {
 	c := &ProjectsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -14895,7 +15040,7 @@ func (c *ProjectsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14998,6 +15143,8 @@ type ProjectsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *ProjectsOperationsService) Delete(name string) *ProjectsOperationsDeleteCall {
 	c := &ProjectsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15031,7 +15178,7 @@ func (c *ProjectsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15131,6 +15278,8 @@ type ProjectsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
 	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15174,7 +15323,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15284,6 +15433,8 @@ type ProjectsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *ProjectsOperationsService) List(name string) *ProjectsOperationsListCall {
 	c := &ProjectsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15348,7 +15499,7 @@ func (c *ProjectsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

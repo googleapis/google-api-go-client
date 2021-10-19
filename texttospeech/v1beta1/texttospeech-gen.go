@@ -81,7 +81,8 @@ const mtlsBasePath = "https://texttospeech.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -178,6 +179,9 @@ type AudioConfig struct {
 	//   "MULAW" - 8-bit samples that compand 14-bit audio samples using
 	// G.711 PCMU/mu-law. Audio content returned as MULAW also contains a
 	// WAV header.
+	//   "ALAW" - 8-bit samples that compand 14-bit audio samples using
+	// G.711 PCMU/A-law. Audio content returned as ALAW also contains a WAV
+	// header.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 
 	// EffectsProfileId: Optional. Input only. An identifier which selects
@@ -223,10 +227,10 @@ type AudioConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "AudioEncoding") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AudioEncoding") to include
@@ -274,10 +278,10 @@ type ListVoicesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Voices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Voices") to include in API
@@ -311,10 +315,10 @@ type SynthesisInput struct {
 
 	// ForceSendFields is a list of field names (e.g. "Ssml") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Ssml") to include in API
@@ -344,8 +348,8 @@ type SynthesizeSpeechRequest struct {
 	// Possible values:
 	//   "TIMEPOINT_TYPE_UNSPECIFIED" - Not specified. No timepoint
 	// information will be returned.
-	//   "SSML_MARK" - Timepoint information of tags in SSML input will be
-	// returned.
+	//   "SSML_MARK" - Timepoint information of `` tags in SSML input will
+	// be returned.
 	EnableTimePointing []string `json:"enableTimePointing,omitempty"`
 
 	// Input: Required. The Synthesizer requires either plain text or SSML
@@ -357,10 +361,10 @@ type SynthesizeSpeechRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AudioConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AudioConfig") to include
@@ -393,7 +397,7 @@ type SynthesizeSpeechResponse struct {
 
 	// Timepoints: A link between a position in the original request input
 	// and a corresponding time in the output audio. It's only supported via
-	// of SSML input.
+	// `` of SSML input.
 	Timepoints []*Timepoint `json:"timepoints,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -402,10 +406,10 @@ type SynthesizeSpeechResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AudioConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AudioConfig") to include
@@ -426,7 +430,7 @@ func (s *SynthesizeSpeechResponse) MarshalJSON() ([]byte, error) {
 // Timepoint: This contains a mapping between a certain point in the
 // input text and a corresponding time in the output audio.
 type Timepoint struct {
-	// MarkName: Timepoint name as received from the client within tag.
+	// MarkName: Timepoint name as received from the client within `` tag.
 	MarkName string `json:"markName,omitempty"`
 
 	// TimeSeconds: Time offset in seconds from the start of the synthesized
@@ -435,10 +439,10 @@ type Timepoint struct {
 
 	// ForceSendFields is a list of field names (e.g. "MarkName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MarkName") to include in
@@ -501,10 +505,10 @@ type Voice struct {
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCodes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LanguageCodes") to include
@@ -565,10 +569,10 @@ type VoiceSelectionParams struct {
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LanguageCode") to include
@@ -631,7 +635,7 @@ func (c *TextSynthesizeCall) Header() http.Header {
 
 func (c *TextSynthesizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -730,12 +734,13 @@ func (r *VoicesService) List() *VoicesListCall {
 
 // LanguageCode sets the optional parameter "languageCode": Recommended.
 // BCP-47 (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.
-// If specified, the ListVoices call will only return voices that can be
+// If not specified, the API will return all supported voices. If
+// specified, the ListVoices call will only return voices that can be
 // used to synthesize this language_code. E.g. when specifying "en-NZ",
-// you will get supported "en-\*" voices; when specifying "no", you will
+// you will get supported "en-NZ" voices; when specifying "no", you will
 // get supported "no-\*" (Norwegian) and "nb-\*" (Norwegian Bokmal)
 // voices; specifying "zh" will also get supported "cmn-\*" voices;
-// specifying "zh-hk" will also get supported "yue-\*" voices.
+// specifying "zh-hk" will also get supported "yue-hk" voices.
 func (c *VoicesListCall) LanguageCode(languageCode string) *VoicesListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -778,7 +783,7 @@ func (c *VoicesListCall) Header() http.Header {
 
 func (c *VoicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -844,7 +849,7 @@ func (c *VoicesListCall) Do(opts ...googleapi.CallOption) (*ListVoicesResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. Recommended. [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. If specified, the ListVoices call will only return voices that can be used to synthesize this language_code. E.g. when specifying \"en-NZ\", you will get supported \"en-\\*\" voices; when specifying \"no\", you will get supported \"no-\\*\" (Norwegian) and \"nb-\\*\" (Norwegian Bokmal) voices; specifying \"zh\" will also get supported \"cmn-\\*\" voices; specifying \"zh-hk\" will also get supported \"yue-\\*\" voices.",
+	//       "description": "Optional. Recommended. [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. If not specified, the API will return all supported voices. If specified, the ListVoices call will only return voices that can be used to synthesize this language_code. E.g. when specifying \"en-NZ\", you will get supported \"en-NZ\" voices; when specifying \"no\", you will get supported \"no-\\*\" (Norwegian) and \"nb-\\*\" (Norwegian Bokmal) voices; specifying \"zh\" will also get supported \"cmn-\\*\" voices; specifying \"zh-hk\" will also get supported \"yue-hk\" voices.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

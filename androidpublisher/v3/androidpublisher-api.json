@@ -116,6 +116,11 @@
             "editId"
           ],
           "parameters": {
+            "changesNotSentForReview": {
+              "description": "Indicates that the changes in this edit will not be reviewed until they are explicitly sent for review from the Google Play Console UI. These changes will be added to any other changes that are not yet sent for review.",
+              "location": "query",
+              "type": "boolean"
+            },
             "editId": {
               "description": "Identifier of the edit.",
               "location": "path",
@@ -434,7 +439,7 @@
               ],
               "parameters": {
                 "ackBundleInstallationWarning": {
-                  "description": "Must be set to true if the bundle installation may trigger a warning on user devices (for example, if installation size may be over a threshold, typically 100 MB).",
+                  "description": "Must be set to true if the app bundle installation may trigger a warning on user devices (for example, if installation size may be over a threshold, typically 100 MB).",
                   "location": "query",
                   "type": "boolean"
                 },
@@ -473,7 +478,7 @@
                 "accept": [
                   "application/octet-stream"
                 ],
-                "maxSize": "314572800",
+                "maxSize": "629145600",
                 "protocols": {
                   "resumable": {
                     "multipart": true,
@@ -1779,7 +1784,7 @@
           ]
         },
         "list": {
-          "description": "Lists all in-app products - both managed products and subscriptions.",
+          "description": "Lists all in-app products - both managed products and subscriptions. If an app has a large number of in-app products, the response may be paginated. In this case the response field `tokenPagination.nextPageToken` will be set and the caller should provide its value as a `token` request parameter to retrieve the next page.",
           "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts",
           "httpMethod": "GET",
           "id": "androidpublisher.inappproducts.list",
@@ -1788,7 +1793,7 @@
           ],
           "parameters": {
             "maxResults": {
-              "description": "How many results the list operation should return.",
+              "description": "Deprecated and ignored. The page size is determined by the server.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
@@ -1800,7 +1805,7 @@
               "type": "string"
             },
             "startIndex": {
-              "description": "The index of the first element to return.",
+              "description": "Deprecated and ignored. Set the `token` parameter to rertieve the next page.",
               "format": "uint32",
               "location": "query",
               "type": "integer"
@@ -1868,6 +1873,11 @@
             "sku"
           ],
           "parameters": {
+            "allowMissing": {
+              "description": "If set to true, and the in-app product with the given package_name and sku doesn't exist, the in-app product will be created.",
+              "location": "query",
+              "type": "boolean"
+            },
             "autoConvertMissingPrices": {
               "description": "If true the prices for all regions targeted by the parent app that don't have a price specified for this in-app product will be auto converted to the target currency based on the default price. Defaults to false.",
               "location": "query",
@@ -1989,7 +1999,7 @@
     "orders": {
       "methods": {
         "refund": {
-          "description": "Refund a user's subscription or in-app purchase order.",
+          "description": "Refunds a user's subscription or in-app purchase order. Orders older than 1 year cannot be refunded.",
           "flatPath": "androidpublisher/v3/applications/{packageName}/orders/{orderId}:refund",
           "httpMethod": "POST",
           "id": "androidpublisher.orders.refund",
@@ -2671,7 +2681,7 @@
       }
     }
   },
-  "revision": "20201203",
+  "revision": "20210901",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -2786,7 +2796,7 @@
       "type": "object"
     },
     "Bundle": {
-      "description": "Information about a bundle. The resource for BundlesService.",
+      "description": "Information about an app bundle. The resource for BundlesService.",
       "id": "Bundle",
       "properties": {
         "sha1": {
@@ -2806,11 +2816,11 @@
       "type": "object"
     },
     "BundlesListResponse": {
-      "description": "Response listing all bundles.",
+      "description": "Response listing all app bundles.",
       "id": "BundlesListResponse",
       "properties": {
         "bundles": {
-          "description": "All bundles.",
+          "description": "All app bundles.",
           "items": {
             "$ref": "Bundle"
           },
@@ -3274,7 +3284,7 @@
         },
         "pageInfo": {
           "$ref": "PageInfo",
-          "description": "Information about the current page."
+          "description": "Deprecated and unset."
         },
         "tokenPagination": {
           "$ref": "TokenPagination",
@@ -3711,7 +3721,7 @@
           "type": "string"
         },
         "orderId": {
-          "description": "The order id of the latest recurring order associated with the purchase of the subscription.",
+          "description": "The order id of the latest recurring order associated with the purchase of the subscription. If the subscription was canceled because payment was declined, this will be the order id from the payment declined order.",
           "type": "string"
         },
         "paymentState": {
@@ -3720,7 +3730,7 @@
           "type": "integer"
         },
         "priceAmountMicros": {
-          "description": "Price of the subscription, not including tax. Price is expressed in micro-units, where 1,000,000 micro-units represents one unit of the currency. For example, if the subscription price is €1.99, price_amount_micros is 1990000.",
+          "description": "Price of the subscription, For tax exclusive countries, the price doesn't include tax. For tax inclusive countries, the price includes tax. Price is expressed in micro-units, where 1,000,000 micro-units represents one unit of the currency. For example, if the subscription price is €1.99, price_amount_micros is 1990000.",
           "format": "int64",
           "type": "string"
         },

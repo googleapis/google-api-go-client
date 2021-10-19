@@ -387,10 +387,10 @@ type Apk struct {
 
 	// ForceSendFields is a list of field names (e.g. "Binary") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Binary") to include in API
@@ -420,10 +420,10 @@ type ApkBinary struct {
 
 	// ForceSendFields is a list of field names (e.g. "Sha1") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Sha1") to include in API
@@ -450,10 +450,10 @@ type ApksAddExternallyHostedRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExternallyHostedApk")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExternallyHostedApk") to
@@ -485,10 +485,10 @@ type ApksAddExternallyHostedResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExternallyHostedApk")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExternallyHostedApk") to
@@ -522,10 +522,10 @@ type ApksListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Apks") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Apks") to include in API
@@ -564,10 +564,10 @@ type AppDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContactEmail") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContactEmail") to include
@@ -601,10 +601,10 @@ type AppEdit struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExpiryTimeSeconds")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExpiryTimeSeconds") to
@@ -623,7 +623,8 @@ func (s *AppEdit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Bundle: Information about a bundle. The resource for BundlesService.
+// Bundle: Information about an app bundle. The resource for
+// BundlesService.
 type Bundle struct {
 	// Sha1: A sha1 hash of the upload payload, encoded as a hex string and
 	// matching the output of the sha1sum command.
@@ -643,10 +644,10 @@ type Bundle struct {
 
 	// ForceSendFields is a list of field names (e.g. "Sha1") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Sha1") to include in API
@@ -664,9 +665,9 @@ func (s *Bundle) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BundlesListResponse: Response listing all bundles.
+// BundlesListResponse: Response listing all app bundles.
 type BundlesListResponse struct {
-	// Bundles: All bundles.
+	// Bundles: All app bundles.
 	Bundles []*Bundle `json:"bundles,omitempty"`
 
 	// Kind: The kind of this response
@@ -679,10 +680,10 @@ type BundlesListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Bundles") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Bundles") to include in
@@ -710,10 +711,10 @@ type Comment struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeveloperComment") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeveloperComment") to
@@ -744,10 +745,10 @@ type CountryTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g. "Countries") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Countries") to include in
@@ -778,10 +779,10 @@ type DeobfuscationFile struct {
 
 	// ForceSendFields is a list of field names (e.g. "SymbolType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SymbolType") to include in
@@ -810,10 +811,10 @@ type DeobfuscationFilesUploadResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeobfuscationFile")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeobfuscationFile") to
@@ -843,10 +844,10 @@ type DeveloperComment struct {
 
 	// ForceSendFields is a list of field names (e.g. "LastModified") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LastModified") to include
@@ -902,10 +903,10 @@ type DeviceMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CpuMake") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CpuMake") to include in
@@ -939,10 +940,10 @@ type DeviceSpec struct {
 
 	// ForceSendFields is a list of field names (e.g. "ScreenDensity") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ScreenDensity") to include
@@ -979,10 +980,10 @@ type ExpansionFile struct {
 
 	// ForceSendFields is a list of field names (e.g. "FileSize") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FileSize") to include in
@@ -1012,10 +1013,10 @@ type ExpansionFilesUploadResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExpansionFile") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExpansionFile") to include
@@ -1093,10 +1094,10 @@ type ExternallyHostedApk struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApplicationLabel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApplicationLabel") to
@@ -1131,10 +1132,10 @@ type Image struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -1163,10 +1164,10 @@ type ImagesDeleteAllResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Deleted") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Deleted") to include in
@@ -1195,10 +1196,10 @@ type ImagesListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Images") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Images") to include in API
@@ -1227,10 +1228,10 @@ type ImagesUploadResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Image") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Image") to include in API
@@ -1314,10 +1315,10 @@ type InAppProduct struct {
 
 	// ForceSendFields is a list of field names (e.g. "DefaultLanguage") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DefaultLanguage") to
@@ -1349,10 +1350,10 @@ type InAppProductListing struct {
 
 	// ForceSendFields is a list of field names (e.g. "Benefits") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Benefits") to include in
@@ -1379,7 +1380,7 @@ type InappproductsListResponse struct {
 	// ("androidpublisher#inappproductsListResponse").
 	Kind string `json:"kind,omitempty"`
 
-	// PageInfo: Information about the current page.
+	// PageInfo: Deprecated and unset.
 	PageInfo *PageInfo `json:"pageInfo,omitempty"`
 
 	// TokenPagination: Pagination token, to handle a number of products
@@ -1392,10 +1393,10 @@ type InappproductsListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Inappproduct") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Inappproduct") to include
@@ -1436,8 +1437,8 @@ type InternalAppSharingArtifact struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CertificateFingerprint") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1487,11 +1488,11 @@ type IntroductoryPriceInfo struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "IntroductoryPriceAmountMicros") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -1534,10 +1535,10 @@ type Listing struct {
 
 	// ForceSendFields is a list of field names (e.g. "FullDescription") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FullDescription") to
@@ -1571,10 +1572,10 @@ type ListingsListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -1603,10 +1604,10 @@ type LocalizedText struct {
 
 	// ForceSendFields is a list of field names (e.g. "Language") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Language") to include in
@@ -1641,10 +1642,10 @@ type PageInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "ResultPerPage") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResultPerPage") to include
@@ -1674,10 +1675,10 @@ type Price struct {
 
 	// ForceSendFields is a list of field names (e.g. "Currency") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Currency") to include in
@@ -1768,8 +1769,8 @@ type ProductPurchase struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AcknowledgementState") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -1799,10 +1800,10 @@ type ProductPurchasesAcknowledgeRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeveloperPayload") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeveloperPayload") to
@@ -1838,10 +1839,10 @@ type Review struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuthorName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuthorName") to include in
@@ -1869,10 +1870,10 @@ type ReviewReplyResult struct {
 
 	// ForceSendFields is a list of field names (e.g. "LastEdited") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LastEdited") to include in
@@ -1908,10 +1909,10 @@ type ReviewsListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "PageInfo") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PageInfo") to include in
@@ -1939,10 +1940,10 @@ type ReviewsReplyRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ReplyText") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ReplyText") to include in
@@ -1971,10 +1972,10 @@ type ReviewsReplyResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Result") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Result") to include in API
@@ -2008,10 +2009,10 @@ type SubscriptionCancelSurveyResult struct {
 
 	// ForceSendFields is a list of field names (e.g. "CancelSurveyReason")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CancelSurveyReason") to
@@ -2046,11 +2047,11 @@ type SubscriptionDeferralInfo struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DesiredExpiryTimeMillis") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DesiredExpiryTimeMillis")
@@ -2091,10 +2092,10 @@ type SubscriptionPriceChange struct {
 
 	// ForceSendFields is a list of field names (e.g. "NewPrice") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NewPrice") to include in
@@ -2212,7 +2213,9 @@ type SubscriptionPurchase struct {
 	ObfuscatedExternalProfileId string `json:"obfuscatedExternalProfileId,omitempty"`
 
 	// OrderId: The order id of the latest recurring order associated with
-	// the purchase of the subscription.
+	// the purchase of the subscription. If the subscription was canceled
+	// because payment was declined, this will be the order id from the
+	// payment declined order.
 	OrderId string `json:"orderId,omitempty"`
 
 	// PaymentState: The payment state of the subscription. Possible values
@@ -2221,10 +2224,12 @@ type SubscriptionPurchase struct {
 	// subscriptions.
 	PaymentState int64 `json:"paymentState,omitempty"`
 
-	// PriceAmountMicros: Price of the subscription, not including tax.
-	// Price is expressed in micro-units, where 1,000,000 micro-units
-	// represents one unit of the currency. For example, if the subscription
-	// price is €1.99, price_amount_micros is 1990000.
+	// PriceAmountMicros: Price of the subscription, For tax exclusive
+	// countries, the price doesn't include tax. For tax inclusive
+	// countries, the price includes tax. Price is expressed in micro-units,
+	// where 1,000,000 micro-units represents one unit of the currency. For
+	// example, if the subscription price is €1.99, price_amount_micros is
+	// 1990000.
 	PriceAmountMicros int64 `json:"priceAmountMicros,omitempty,string"`
 
 	// PriceChange: The latest price change information available. This is
@@ -2280,8 +2285,8 @@ type SubscriptionPurchase struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AcknowledgementState") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2311,10 +2316,10 @@ type SubscriptionPurchasesAcknowledgeRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeveloperPayload") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeveloperPayload") to
@@ -2342,10 +2347,10 @@ type SubscriptionPurchasesDeferRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeferralInfo") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeferralInfo") to include
@@ -2376,10 +2381,10 @@ type SubscriptionPurchasesDeferResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NewExpiryTimeMillis")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NewExpiryTimeMillis") to
@@ -2410,10 +2415,10 @@ type SystemApksListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Variants") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Variants") to include in
@@ -2442,10 +2447,10 @@ type Testers struct {
 
 	// ForceSendFields is a list of field names (e.g. "GoogleGroups") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GoogleGroups") to include
@@ -2477,10 +2482,10 @@ type Timestamp struct {
 
 	// ForceSendFields is a list of field names (e.g. "Nanos") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Nanos") to include in API
@@ -2517,10 +2522,10 @@ type TokenPagination struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -2553,10 +2558,10 @@ type Track struct {
 
 	// ForceSendFields is a list of field names (e.g. "Releases") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Releases") to include in
@@ -2620,10 +2625,10 @@ type TrackRelease struct {
 
 	// ForceSendFields is a list of field names (e.g. "CountryTargeting") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CountryTargeting") to
@@ -2671,10 +2676,10 @@ type TracksListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -2746,10 +2751,10 @@ type UserComment struct {
 
 	// ForceSendFields is a list of field names (e.g. "AndroidOsVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AndroidOsVersion") to
@@ -2779,10 +2784,10 @@ type UsesPermission struct {
 
 	// ForceSendFields is a list of field names (e.g. "MaxSdkVersion") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MaxSdkVersion") to include
@@ -2816,10 +2821,10 @@ type Variant struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceSpec") to include in
@@ -2873,10 +2878,10 @@ type VoidedPurchase struct {
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Kind") to include in API
@@ -2911,10 +2916,10 @@ type VoidedPurchasesListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "PageInfo") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PageInfo") to include in
@@ -2944,10 +2949,23 @@ type EditsCommitCall struct {
 }
 
 // Commit: Commits an app edit.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
 func (r *EditsService) Commit(packageName string, editId string) *EditsCommitCall {
 	c := &EditsCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
 	c.editId = editId
+	return c
+}
+
+// ChangesNotSentForReview sets the optional parameter
+// "changesNotSentForReview": Indicates that the changes in this edit
+// will not be reviewed until they are explicitly sent for review from
+// the Google Play Console UI. These changes will be added to any other
+// changes that are not yet sent for review.
+func (c *EditsCommitCall) ChangesNotSentForReview(changesNotSentForReview bool) *EditsCommitCall {
+	c.urlParams_.Set("changesNotSentForReview", fmt.Sprint(changesNotSentForReview))
 	return c
 }
 
@@ -2978,7 +2996,7 @@ func (c *EditsCommitCall) Header() http.Header {
 
 func (c *EditsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3047,6 +3065,11 @@ func (c *EditsCommitCall) Do(opts ...googleapi.CallOption) (*AppEdit, error) {
 	//     "editId"
 	//   ],
 	//   "parameters": {
+	//     "changesNotSentForReview": {
+	//       "description": "Indicates that the changes in this edit will not be reviewed until they are explicitly sent for review from the Google Play Console UI. These changes will be added to any other changes that are not yet sent for review.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "editId": {
 	//       "description": "Identifier of the edit.",
 	//       "location": "path",
@@ -3083,6 +3106,9 @@ type EditsDeleteCall struct {
 }
 
 // Delete: Deletes an app edit.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
 func (r *EditsService) Delete(packageName string, editId string) *EditsDeleteCall {
 	c := &EditsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -3117,7 +3143,7 @@ func (c *EditsDeleteCall) Header() http.Header {
 
 func (c *EditsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3195,6 +3221,9 @@ type EditsGetCall struct {
 }
 
 // Get: Gets an app edit.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
 func (r *EditsService) Get(packageName string, editId string) *EditsGetCall {
 	c := &EditsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -3239,7 +3268,7 @@ func (c *EditsGetCall) Header() http.Header {
 
 func (c *EditsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3347,6 +3376,8 @@ type EditsInsertCall struct {
 }
 
 // Insert: Creates a new edit for an app.
+//
+// - packageName: Package name of the app.
 func (r *EditsService) Insert(packageName string, appedit *AppEdit) *EditsInsertCall {
 	c := &EditsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -3381,7 +3412,7 @@ func (c *EditsInsertCall) Header() http.Header {
 
 func (c *EditsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3486,6 +3517,9 @@ type EditsValidateCall struct {
 }
 
 // Validate: Validates an app edit.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
 func (r *EditsService) Validate(packageName string, editId string) *EditsValidateCall {
 	c := &EditsValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -3520,7 +3554,7 @@ func (c *EditsValidateCall) Header() http.Header {
 
 func (c *EditsValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3630,6 +3664,9 @@ type EditsApksAddexternallyhostedCall struct {
 // This function is only available to organizations using Managed Play
 // whose application is configured to restrict distribution to the
 // organizations.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
 func (r *EditsApksService) Addexternallyhosted(packageName string, editId string, apksaddexternallyhostedrequest *ApksAddExternallyHostedRequest) *EditsApksAddexternallyhostedCall {
 	c := &EditsApksAddexternallyhostedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -3665,7 +3702,7 @@ func (c *EditsApksAddexternallyhostedCall) Header() http.Header {
 
 func (c *EditsApksAddexternallyhostedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3779,6 +3816,9 @@ type EditsApksListCall struct {
 }
 
 // List: Lists all current APKs of the app and edit.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
 func (r *EditsApksService) List(packageName string, editId string) *EditsApksListCall {
 	c := &EditsApksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -3823,7 +3863,7 @@ func (c *EditsApksListCall) Header() http.Header {
 
 func (c *EditsApksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3932,6 +3972,9 @@ type EditsApksUploadCall struct {
 }
 
 // Upload: Uploads an APK and adds to the current edit.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
 func (r *EditsApksService) Upload(packageName string, editId string) *EditsApksUploadCall {
 	c := &EditsApksUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -4005,7 +4048,7 @@ func (c *EditsApksUploadCall) Header() http.Header {
 
 func (c *EditsApksUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4157,6 +4200,9 @@ type EditsBundlesListCall struct {
 }
 
 // List: Lists all current Android App Bundles of the app and edit.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
 func (r *EditsBundlesService) List(packageName string, editId string) *EditsBundlesListCall {
 	c := &EditsBundlesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -4201,7 +4247,7 @@ func (c *EditsBundlesListCall) Header() http.Header {
 
 func (c *EditsBundlesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4315,6 +4361,9 @@ type EditsBundlesUploadCall struct {
 // is recommended). See Timeouts and Errors
 // (https://developers.google.com/api-client-library/java/google-api-java-client/errors)
 // for an example in java.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
 func (r *EditsBundlesService) Upload(packageName string, editId string) *EditsBundlesUploadCall {
 	c := &EditsBundlesUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -4323,7 +4372,7 @@ func (r *EditsBundlesService) Upload(packageName string, editId string) *EditsBu
 }
 
 // AckBundleInstallationWarning sets the optional parameter
-// "ackBundleInstallationWarning": Must be set to true if the bundle
+// "ackBundleInstallationWarning": Must be set to true if the app bundle
 // installation may trigger a warning on user devices (for example, if
 // installation size may be over a threshold, typically 100 MB).
 func (c *EditsBundlesUploadCall) AckBundleInstallationWarning(ackBundleInstallationWarning bool) *EditsBundlesUploadCall {
@@ -4397,7 +4446,7 @@ func (c *EditsBundlesUploadCall) Header() http.Header {
 
 func (c *EditsBundlesUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4511,7 +4560,7 @@ func (c *EditsBundlesUploadCall) Do(opts ...googleapi.CallOption) (*Bundle, erro
 	//   ],
 	//   "parameters": {
 	//     "ackBundleInstallationWarning": {
-	//       "description": "Must be set to true if the bundle installation may trigger a warning on user devices (for example, if installation size may be over a threshold, typically 100 MB).",
+	//       "description": "Must be set to true if the app bundle installation may trigger a warning on user devices (for example, if installation size may be over a threshold, typically 100 MB).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4556,6 +4605,12 @@ type EditsDeobfuscationfilesUploadCall struct {
 
 // Upload: Uploads a new deobfuscation file and attaches to the
 // specified APK.
+//
+// - apkVersionCode: The version code of the APK whose Deobfuscation
+//   File is being uploaded.
+// - deobfuscationFileType: The type of the deobfuscation file.
+// - editId: Unique identifier for this edit.
+// - packageName: Unique identifier for the Android app.
 func (r *EditsDeobfuscationfilesService) Upload(packageNameid string, editId string, apkVersionCode int64, deobfuscationFileType string) *EditsDeobfuscationfilesUploadCall {
 	c := &EditsDeobfuscationfilesUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageNameid = packageNameid
@@ -4631,7 +4686,7 @@ func (c *EditsDeobfuscationfilesUploadCall) Header() http.Header {
 
 func (c *EditsDeobfuscationfilesUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4729,7 +4784,7 @@ func (c *EditsDeobfuscationfilesUploadCall) Do(opts ...googleapi.CallOption) (*D
 	//     "accept": [
 	//       "application/octet-stream"
 	//     ],
-	//     "maxSize": "314572800",
+	//     "maxSize": "629145600",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
@@ -4809,6 +4864,9 @@ type EditsDetailsGetCall struct {
 }
 
 // Get: Gets details of an app.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
 func (r *EditsDetailsService) Get(packageName string, editId string) *EditsDetailsGetCall {
 	c := &EditsDetailsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -4853,7 +4911,7 @@ func (c *EditsDetailsGetCall) Header() http.Header {
 
 func (c *EditsDetailsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4962,6 +5020,9 @@ type EditsDetailsPatchCall struct {
 }
 
 // Patch: Patches details of an app.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
 func (r *EditsDetailsService) Patch(packageName string, editId string, appdetails *AppDetails) *EditsDetailsPatchCall {
 	c := &EditsDetailsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -4997,7 +5058,7 @@ func (c *EditsDetailsPatchCall) Header() http.Header {
 
 func (c *EditsDetailsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5111,6 +5172,9 @@ type EditsDetailsUpdateCall struct {
 }
 
 // Update: Updates details of an app.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
 func (r *EditsDetailsService) Update(packageName string, editId string, appdetails *AppDetails) *EditsDetailsUpdateCall {
 	c := &EditsDetailsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -5146,7 +5210,7 @@ func (c *EditsDetailsUpdateCall) Header() http.Header {
 
 func (c *EditsDetailsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5262,6 +5326,13 @@ type EditsExpansionfilesGetCall struct {
 }
 
 // Get: Fetches the expansion file configuration for the specified APK.
+//
+// - apkVersionCode: The version code of the APK whose expansion file
+//   configuration is being read or modified.
+// - editId: Identifier of the edit.
+// - expansionFileType: The file type of the file configuration which is
+//   being read or modified.
+// - packageName: Package name of the app.
 func (r *EditsExpansionfilesService) Get(packageName string, editId string, apkVersionCode int64, expansionFileType string) *EditsExpansionfilesGetCall {
 	c := &EditsExpansionfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -5308,7 +5379,7 @@ func (c *EditsExpansionfilesGetCall) Header() http.Header {
 
 func (c *EditsExpansionfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5448,6 +5519,13 @@ type EditsExpansionfilesPatchCall struct {
 // Patch: Patches the APK's expansion file configuration to reference
 // another APK's expansion file. To add a new expansion file use the
 // Upload method.
+//
+// - apkVersionCode: The version code of the APK whose expansion file
+//   configuration is being read or modified.
+// - editId: Identifier of the edit.
+// - expansionFileType: The file type of the expansion file
+//   configuration which is being updated.
+// - packageName: Package name of the app.
 func (r *EditsExpansionfilesService) Patch(packageName string, editId string, apkVersionCode int64, expansionFileType string, expansionfile *ExpansionFile) *EditsExpansionfilesPatchCall {
 	c := &EditsExpansionfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -5485,7 +5563,7 @@ func (c *EditsExpansionfilesPatchCall) Header() http.Header {
 
 func (c *EditsExpansionfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5630,6 +5708,13 @@ type EditsExpansionfilesUpdateCall struct {
 // Update: Updates the APK's expansion file configuration to reference
 // another APK's expansion file. To add a new expansion file use the
 // Upload method.
+//
+// - apkVersionCode: The version code of the APK whose expansion file
+//   configuration is being read or modified.
+// - editId: Identifier of the edit.
+// - expansionFileType: The file type of the file configuration which is
+//   being read or modified.
+// - packageName: Package name of the app.
 func (r *EditsExpansionfilesService) Update(packageName string, editId string, apkVersionCode int64, expansionFileType string, expansionfile *ExpansionFile) *EditsExpansionfilesUpdateCall {
 	c := &EditsExpansionfilesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -5667,7 +5752,7 @@ func (c *EditsExpansionfilesUpdateCall) Header() http.Header {
 
 func (c *EditsExpansionfilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5811,6 +5896,13 @@ type EditsExpansionfilesUploadCall struct {
 
 // Upload: Uploads a new expansion file and attaches to the specified
 // APK.
+//
+// - apkVersionCode: The version code of the APK whose expansion file
+//   configuration is being read or modified.
+// - editId: Identifier of the edit.
+// - expansionFileType: The file type of the expansion file
+//   configuration which is being updated.
+// - packageName: Package name of the app.
 func (r *EditsExpansionfilesService) Upload(packageName string, editId string, apkVersionCode int64, expansionFileType string) *EditsExpansionfilesUploadCall {
 	c := &EditsExpansionfilesUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -5886,7 +5978,7 @@ func (c *EditsExpansionfilesUploadCall) Header() http.Header {
 
 func (c *EditsExpansionfilesUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6066,6 +6158,14 @@ type EditsImagesDeleteCall struct {
 }
 
 // Delete: Deletes the image (specified by id) from the edit.
+//
+// - editId: Identifier of the edit.
+// - imageId: Unique identifier an image within the set of images
+//   attached to this edit.
+// - imageType: Type of the Image.
+// - language: Language localization code (a BCP-47 language tag; for
+//   example, "de-AT" for Austrian German).
+// - packageName: Package name of the app.
 func (r *EditsImagesService) Delete(packageName string, editId string, language string, imageType string, imageId string) *EditsImagesDeleteCall {
 	c := &EditsImagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -6103,7 +6203,7 @@ func (c *EditsImagesDeleteCall) Header() http.Header {
 
 func (c *EditsImagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6229,6 +6329,14 @@ type EditsImagesDeleteallCall struct {
 
 // Deleteall: Deletes all images for the specified language and image
 // type. Returns an empty response if no images are found.
+//
+// - editId: Identifier of the edit.
+// - imageType: Type of the Image. Providing an image type that refers
+//   to no images is a no-op.
+// - language: Language localization code (a BCP-47 language tag; for
+//   example, "de-AT" for Austrian German). Providing a language that is
+//   not supported by the App is a no-op.
+// - packageName: Package name of the app.
 func (r *EditsImagesService) Deleteall(packageName string, editId string, language string, imageType string) *EditsImagesDeleteallCall {
 	c := &EditsImagesDeleteallCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -6265,7 +6373,7 @@ func (c *EditsImagesDeleteallCall) Header() http.Header {
 
 func (c *EditsImagesDeleteallCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6411,6 +6519,14 @@ type EditsImagesListCall struct {
 }
 
 // List: Lists all images. The response may be empty.
+//
+// - editId: Identifier of the edit.
+// - imageType: Type of the Image. Providing an image type that refers
+//   to no images will return an empty response.
+// - language: Language localization code (a BCP-47 language tag; for
+//   example, "de-AT" for Austrian German). There must be a store
+//   listing for the specified language.
+// - packageName: Package name of the app.
 func (r *EditsImagesService) List(packageName string, editId string, language string, imageType string) *EditsImagesListCall {
 	c := &EditsImagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -6457,7 +6573,7 @@ func (c *EditsImagesListCall) Header() http.Header {
 
 func (c *EditsImagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6607,6 +6723,13 @@ type EditsImagesUploadCall struct {
 
 // Upload: Uploads an image of the specified language and image type,
 // and adds to the edit.
+//
+// - editId: Identifier of the edit.
+// - imageType: Type of the Image.
+// - language: Language localization code (a BCP-47 language tag; for
+//   example, "de-AT" for Austrian German). Providing a language that is
+//   not supported by the App is a no-op.
+// - packageName: Package name of the app.
 func (r *EditsImagesService) Upload(packageName string, editId string, language string, imageType string) *EditsImagesUploadCall {
 	c := &EditsImagesUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -6682,7 +6805,7 @@ func (c *EditsImagesUploadCall) Header() http.Header {
 
 func (c *EditsImagesUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6871,6 +6994,11 @@ type EditsListingsDeleteCall struct {
 }
 
 // Delete: Deletes a localized store listing.
+//
+// - editId: Identifier of the edit.
+// - language: Language localization code (a BCP-47 language tag; for
+//   example, "de-AT" for Austrian German).
+// - packageName: Package name of the app.
 func (r *EditsListingsService) Delete(packageName string, editId string, language string) *EditsListingsDeleteCall {
 	c := &EditsListingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -6906,7 +7034,7 @@ func (c *EditsListingsDeleteCall) Header() http.Header {
 
 func (c *EditsListingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6991,6 +7119,9 @@ type EditsListingsDeleteallCall struct {
 }
 
 // Deleteall: Deletes all store listings.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
 func (r *EditsListingsService) Deleteall(packageName string, editId string) *EditsListingsDeleteallCall {
 	c := &EditsListingsDeleteallCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -7025,7 +7156,7 @@ func (c *EditsListingsDeleteallCall) Header() http.Header {
 
 func (c *EditsListingsDeleteallCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7104,6 +7235,11 @@ type EditsListingsGetCall struct {
 }
 
 // Get: Gets a localized store listing.
+//
+// - editId: Identifier of the edit.
+// - language: Language localization code (a BCP-47 language tag; for
+//   example, "de-AT" for Austrian German).
+// - packageName: Package name of the app.
 func (r *EditsListingsService) Get(packageName string, editId string, language string) *EditsListingsGetCall {
 	c := &EditsListingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -7149,7 +7285,7 @@ func (c *EditsListingsGetCall) Header() http.Header {
 
 func (c *EditsListingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7266,6 +7402,9 @@ type EditsListingsListCall struct {
 }
 
 // List: Lists all localized store listings.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
 func (r *EditsListingsService) List(packageName string, editId string) *EditsListingsListCall {
 	c := &EditsListingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -7310,7 +7449,7 @@ func (c *EditsListingsListCall) Header() http.Header {
 
 func (c *EditsListingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7420,6 +7559,11 @@ type EditsListingsPatchCall struct {
 }
 
 // Patch: Patches a localized store listing.
+//
+// - editId: Identifier of the edit.
+// - language: Language localization code (a BCP-47 language tag; for
+//   example, "de-AT" for Austrian German).
+// - packageName: Package name of the app.
 func (r *EditsListingsService) Patch(packageName string, editId string, language string, listing *Listing) *EditsListingsPatchCall {
 	c := &EditsListingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -7456,7 +7600,7 @@ func (c *EditsListingsPatchCall) Header() http.Header {
 
 func (c *EditsListingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7579,6 +7723,11 @@ type EditsListingsUpdateCall struct {
 }
 
 // Update: Creates or updates a localized store listing.
+//
+// - editId: Identifier of the edit.
+// - language: Language localization code (a BCP-47 language tag; for
+//   example, "de-AT" for Austrian German).
+// - packageName: Package name of the app.
 func (r *EditsListingsService) Update(packageName string, editId string, language string, listing *Listing) *EditsListingsUpdateCall {
 	c := &EditsListingsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -7615,7 +7764,7 @@ func (c *EditsListingsUpdateCall) Header() http.Header {
 
 func (c *EditsListingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7738,6 +7887,10 @@ type EditsTestersGetCall struct {
 }
 
 // Get: Gets testers.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
+// - track: The track to read from.
 func (r *EditsTestersService) Get(packageName string, editId string, track string) *EditsTestersGetCall {
 	c := &EditsTestersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -7783,7 +7936,7 @@ func (c *EditsTestersGetCall) Header() http.Header {
 
 func (c *EditsTestersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7901,6 +8054,10 @@ type EditsTestersPatchCall struct {
 }
 
 // Patch: Patches testers.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
+// - track: The track to update.
 func (r *EditsTestersService) Patch(packageName string, editId string, track string, testers *Testers) *EditsTestersPatchCall {
 	c := &EditsTestersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -7937,7 +8094,7 @@ func (c *EditsTestersPatchCall) Header() http.Header {
 
 func (c *EditsTestersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8060,6 +8217,10 @@ type EditsTestersUpdateCall struct {
 }
 
 // Update: Updates testers.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
+// - track: The track to update.
 func (r *EditsTestersService) Update(packageName string, editId string, track string, testers *Testers) *EditsTestersUpdateCall {
 	c := &EditsTestersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -8096,7 +8257,7 @@ func (c *EditsTestersUpdateCall) Header() http.Header {
 
 func (c *EditsTestersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8219,6 +8380,10 @@ type EditsTracksGetCall struct {
 }
 
 // Get: Gets a track.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
+// - track: Identifier of the track.
 func (r *EditsTracksService) Get(packageName string, editId string, track string) *EditsTracksGetCall {
 	c := &EditsTracksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -8264,7 +8429,7 @@ func (c *EditsTracksGetCall) Header() http.Header {
 
 func (c *EditsTracksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8381,6 +8546,9 @@ type EditsTracksListCall struct {
 }
 
 // List: Lists all tracks.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
 func (r *EditsTracksService) List(packageName string, editId string) *EditsTracksListCall {
 	c := &EditsTracksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -8425,7 +8593,7 @@ func (c *EditsTracksListCall) Header() http.Header {
 
 func (c *EditsTracksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8535,6 +8703,10 @@ type EditsTracksPatchCall struct {
 }
 
 // Patch: Patches a track.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
+// - track: Identifier of the track.
 func (r *EditsTracksService) Patch(packageName string, editId string, track string, track2 *Track) *EditsTracksPatchCall {
 	c := &EditsTracksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -8571,7 +8743,7 @@ func (c *EditsTracksPatchCall) Header() http.Header {
 
 func (c *EditsTracksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8694,6 +8866,10 @@ type EditsTracksUpdateCall struct {
 }
 
 // Update: Updates a track.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
+// - track: Identifier of the track.
 func (r *EditsTracksService) Update(packageName string, editId string, track string, track2 *Track) *EditsTracksUpdateCall {
 	c := &EditsTracksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -8730,7 +8906,7 @@ func (c *EditsTracksUpdateCall) Header() http.Header {
 
 func (c *EditsTracksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8852,6 +9028,9 @@ type InappproductsDeleteCall struct {
 
 // Delete: Deletes an in-app product (i.e. a managed product or a
 // subscriptions).
+//
+// - packageName: Package name of the app.
+// - sku: Unique identifier for the in-app product.
 func (r *InappproductsService) Delete(packageName string, skuid string) *InappproductsDeleteCall {
 	c := &InappproductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -8886,7 +9065,7 @@ func (c *InappproductsDeleteCall) Header() http.Header {
 
 func (c *InappproductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8965,6 +9144,9 @@ type InappproductsGetCall struct {
 
 // Get: Gets an in-app product, which can be a managed product or a
 // subscription.
+//
+// - packageName: Package name of the app.
+// - sku: Unique identifier for the in-app product.
 func (r *InappproductsService) Get(packageName string, skuid string) *InappproductsGetCall {
 	c := &InappproductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -9009,7 +9191,7 @@ func (c *InappproductsGetCall) Header() http.Header {
 
 func (c *InappproductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9118,6 +9300,8 @@ type InappproductsInsertCall struct {
 
 // Insert: Creates an in-app product (i.e. a managed product or a
 // subscriptions).
+//
+// - packageName: Package name of the app.
 func (r *InappproductsService) Insert(packageName string, inappproduct *InAppProduct) *InappproductsInsertCall {
 	c := &InappproductsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -9162,7 +9346,7 @@ func (c *InappproductsInsertCall) Header() http.Header {
 
 func (c *InappproductsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9272,22 +9456,28 @@ type InappproductsListCall struct {
 }
 
 // List: Lists all in-app products - both managed products and
-// subscriptions.
+// subscriptions. If an app has a large number of in-app products, the
+// response may be paginated. In this case the response field
+// `tokenPagination.nextPageToken` will be set and the caller should
+// provide its value as a `token` request parameter to retrieve the next
+// page.
+//
+// - packageName: Package name of the app.
 func (r *InappproductsService) List(packageName string) *InappproductsListCall {
 	c := &InappproductsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": How many results
-// the list operation should return.
+// MaxResults sets the optional parameter "maxResults": Deprecated and
+// ignored. The page size is determined by the server.
 func (c *InappproductsListCall) MaxResults(maxResults int64) *InappproductsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
-// StartIndex sets the optional parameter "startIndex": The index of the
-// first element to return.
+// StartIndex sets the optional parameter "startIndex": Deprecated and
+// ignored. Set the `token` parameter to rertieve the next page.
 func (c *InappproductsListCall) StartIndex(startIndex int64) *InappproductsListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
@@ -9337,7 +9527,7 @@ func (c *InappproductsListCall) Header() http.Header {
 
 func (c *InappproductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9399,7 +9589,7 @@ func (c *InappproductsListCall) Do(opts ...googleapi.CallOption) (*Inappproducts
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all in-app products - both managed products and subscriptions.",
+	//   "description": "Lists all in-app products - both managed products and subscriptions. If an app has a large number of in-app products, the response may be paginated. In this case the response field `tokenPagination.nextPageToken` will be set and the caller should provide its value as a `token` request parameter to retrieve the next page.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts",
 	//   "httpMethod": "GET",
 	//   "id": "androidpublisher.inappproducts.list",
@@ -9408,7 +9598,7 @@ func (c *InappproductsListCall) Do(opts ...googleapi.CallOption) (*Inappproducts
 	//   ],
 	//   "parameters": {
 	//     "maxResults": {
-	//       "description": "How many results the list operation should return.",
+	//       "description": "Deprecated and ignored. The page size is determined by the server.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9420,7 +9610,7 @@ func (c *InappproductsListCall) Do(opts ...googleapi.CallOption) (*Inappproducts
 	//       "type": "string"
 	//     },
 	//     "startIndex": {
-	//       "description": "The index of the first element to return.",
+	//       "description": "Deprecated and ignored. Set the `token` parameter to rertieve the next page.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9456,6 +9646,9 @@ type InappproductsPatchCall struct {
 
 // Patch: Patches an in-app product (i.e. a managed product or a
 // subscriptions).
+//
+// - packageName: Package name of the app.
+// - sku: Unique identifier for the in-app product.
 func (r *InappproductsService) Patch(packageName string, skuid string, inappproduct *InAppProduct) *InappproductsPatchCall {
 	c := &InappproductsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -9501,7 +9694,7 @@ func (c *InappproductsPatchCall) Header() http.Header {
 
 func (c *InappproductsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9621,11 +9814,22 @@ type InappproductsUpdateCall struct {
 
 // Update: Updates an in-app product (i.e. a managed product or a
 // subscriptions).
+//
+// - packageName: Package name of the app.
+// - sku: Unique identifier for the in-app product.
 func (r *InappproductsService) Update(packageName string, skuid string, inappproduct *InAppProduct) *InappproductsUpdateCall {
 	c := &InappproductsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
 	c.skuid = skuid
 	c.inappproduct = inappproduct
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, and the in-app product with the given package_name and sku
+// doesn't exist, the in-app product will be created.
+func (c *InappproductsUpdateCall) AllowMissing(allowMissing bool) *InappproductsUpdateCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
@@ -9666,7 +9870,7 @@ func (c *InappproductsUpdateCall) Header() http.Header {
 
 func (c *InappproductsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9740,6 +9944,11 @@ func (c *InappproductsUpdateCall) Do(opts ...googleapi.CallOption) (*InAppProduc
 	//     "sku"
 	//   ],
 	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "If set to true, and the in-app product with the given package_name and sku doesn't exist, the in-app product will be created.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "autoConvertMissingPrices": {
 	//       "description": "If true the prices for all regions targeted by the parent app that don't have a price specified for this in-app product will be auto converted to the target currency based on the default price. Defaults to false.",
 	//       "location": "query",
@@ -9789,6 +9998,8 @@ type InternalappsharingartifactsUploadapkCall struct {
 // recommended). See Timeouts and Errors
 // (https://developers.google.com/api-client-library/java/google-api-java-client/errors)
 // for an example in java.
+//
+// - packageName: Package name of the app.
 func (r *InternalappsharingartifactsService) Uploadapk(packageName string) *InternalappsharingartifactsUploadapkCall {
 	c := &InternalappsharingartifactsUploadapkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -9861,7 +10072,7 @@ func (c *InternalappsharingartifactsUploadapkCall) Header() http.Header {
 
 func (c *InternalappsharingartifactsUploadapkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10009,6 +10220,8 @@ type InternalappsharingartifactsUploadbundleCall struct {
 // of 2 minutes is recommended). See Timeouts and Errors
 // (https://developers.google.com/api-client-library/java/google-api-java-client/errors)
 // for an example in java.
+//
+// - packageName: Package name of the app.
 func (r *InternalappsharingartifactsService) Uploadbundle(packageName string) *InternalappsharingartifactsUploadbundleCall {
 	c := &InternalappsharingartifactsUploadbundleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -10081,7 +10294,7 @@ func (c *InternalappsharingartifactsUploadbundleCall) Header() http.Header {
 
 func (c *InternalappsharingartifactsUploadbundleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10222,7 +10435,14 @@ type OrdersRefundCall struct {
 	header_     http.Header
 }
 
-// Refund: Refund a user's subscription or in-app purchase order.
+// Refund: Refunds a user's subscription or in-app purchase order.
+// Orders older than 1 year cannot be refunded.
+//
+// - orderId: The order ID provided to the user when the subscription or
+//   in-app order was purchased.
+// - packageName: The package name of the application for which this
+//   subscription or in-app item was purchased (for example,
+//   'com.some.thing').
 func (r *OrdersService) Refund(packageName string, orderId string) *OrdersRefundCall {
 	c := &OrdersRefundCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -10267,7 +10487,7 @@ func (c *OrdersRefundCall) Header() http.Header {
 
 func (c *OrdersRefundCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10302,7 +10522,7 @@ func (c *OrdersRefundCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Refund a user's subscription or in-app purchase order.",
+	//   "description": "Refunds a user's subscription or in-app purchase order. Orders older than 1 year cannot be refunded.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/orders/{orderId}:refund",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.orders.refund",
@@ -10351,6 +10571,13 @@ type PurchasesProductsAcknowledgeCall struct {
 }
 
 // Acknowledge: Acknowledges a purchase of an inapp item.
+//
+// - packageName: The package name of the application the inapp product
+//   was sold in (for example, 'com.some.thing').
+// - productId: The inapp product SKU (for example,
+//   'com.some.thing.inapp1').
+// - token: The token provided to the user's device when the inapp
+//   product was purchased.
 func (r *PurchasesProductsService) Acknowledge(packageName string, productId string, token string, productpurchasesacknowledgerequest *ProductPurchasesAcknowledgeRequest) *PurchasesProductsAcknowledgeCall {
 	c := &PurchasesProductsAcknowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -10387,7 +10614,7 @@ func (c *PurchasesProductsAcknowledgeCall) Header() http.Header {
 
 func (c *PurchasesProductsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10482,6 +10709,13 @@ type PurchasesProductsGetCall struct {
 }
 
 // Get: Checks the purchase and consumption status of an inapp item.
+//
+// - packageName: The package name of the application the inapp product
+//   was sold in (for example, 'com.some.thing').
+// - productId: The inapp product SKU (for example,
+//   'com.some.thing.inapp1').
+// - token: The token provided to the user's device when the inapp
+//   product was purchased.
 func (r *PurchasesProductsService) Get(packageName string, productId string, token string) *PurchasesProductsGetCall {
 	c := &PurchasesProductsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -10527,7 +10761,7 @@ func (c *PurchasesProductsGetCall) Header() http.Header {
 
 func (c *PurchasesProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10645,6 +10879,13 @@ type PurchasesSubscriptionsAcknowledgeCall struct {
 }
 
 // Acknowledge: Acknowledges a subscription purchase.
+//
+// - packageName: The package name of the application for which this
+//   subscription was purchased (for example, 'com.some.thing').
+// - subscriptionId: The purchased subscription ID (for example,
+//   'monthly001').
+// - token: The token provided to the user's device when the
+//   subscription was purchased.
 func (r *PurchasesSubscriptionsService) Acknowledge(packageName string, subscriptionId string, token string, subscriptionpurchasesacknowledgerequest *SubscriptionPurchasesAcknowledgeRequest) *PurchasesSubscriptionsAcknowledgeCall {
 	c := &PurchasesSubscriptionsAcknowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -10681,7 +10922,7 @@ func (c *PurchasesSubscriptionsAcknowledgeCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10776,6 +11017,13 @@ type PurchasesSubscriptionsCancelCall struct {
 
 // Cancel: Cancels a user's subscription purchase. The subscription
 // remains valid until its expiration time.
+//
+// - packageName: The package name of the application for which this
+//   subscription was purchased (for example, 'com.some.thing').
+// - subscriptionId: The purchased subscription ID (for example,
+//   'monthly001').
+// - token: The token provided to the user's device when the
+//   subscription was purchased.
 func (r *PurchasesSubscriptionsService) Cancel(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsCancelCall {
 	c := &PurchasesSubscriptionsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -10811,7 +11059,7 @@ func (c *PurchasesSubscriptionsCancelCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10899,6 +11147,13 @@ type PurchasesSubscriptionsDeferCall struct {
 
 // Defer: Defers a user's subscription purchase until a specified future
 // expiration time.
+//
+// - packageName: The package name of the application for which this
+//   subscription was purchased (for example, 'com.some.thing').
+// - subscriptionId: The purchased subscription ID (for example,
+//   'monthly001').
+// - token: The token provided to the user's device when the
+//   subscription was purchased.
 func (r *PurchasesSubscriptionsService) Defer(packageName string, subscriptionId string, token string, subscriptionpurchasesdeferrequest *SubscriptionPurchasesDeferRequest) *PurchasesSubscriptionsDeferCall {
 	c := &PurchasesSubscriptionsDeferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -10935,7 +11190,7 @@ func (c *PurchasesSubscriptionsDeferCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsDeferCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11060,6 +11315,13 @@ type PurchasesSubscriptionsGetCall struct {
 
 // Get: Checks whether a user's subscription purchase is valid and
 // returns its expiry time.
+//
+// - packageName: The package name of the application for which this
+//   subscription was purchased (for example, 'com.some.thing').
+// - subscriptionId: The purchased subscription ID (for example,
+//   'monthly001').
+// - token: The token provided to the user's device when the
+//   subscription was purchased.
 func (r *PurchasesSubscriptionsService) Get(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsGetCall {
 	c := &PurchasesSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -11105,7 +11367,7 @@ func (c *PurchasesSubscriptionsGetCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11224,6 +11486,13 @@ type PurchasesSubscriptionsRefundCall struct {
 // Refund: Refunds a user's subscription purchase, but the subscription
 // remains valid until its expiration time and it will continue to
 // recur.
+//
+// - packageName: The package name of the application for which this
+//   subscription was purchased (for example, 'com.some.thing').
+// - subscriptionId: "The purchased subscription ID (for example,
+//   'monthly001').
+// - token: The token provided to the user's device when the
+//   subscription was purchased.
 func (r *PurchasesSubscriptionsService) Refund(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsRefundCall {
 	c := &PurchasesSubscriptionsRefundCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -11259,7 +11528,7 @@ func (c *PurchasesSubscriptionsRefundCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsRefundCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11347,6 +11616,13 @@ type PurchasesSubscriptionsRevokeCall struct {
 // Revoke: Refunds and immediately revokes a user's subscription
 // purchase. Access to the subscription will be terminated immediately
 // and it will stop recurring.
+//
+// - packageName: The package name of the application for which this
+//   subscription was purchased (for example, 'com.some.thing').
+// - subscriptionId: The purchased subscription ID (for example,
+//   'monthly001').
+// - token: The token provided to the user's device when the
+//   subscription was purchased.
 func (r *PurchasesSubscriptionsService) Revoke(packageName string, subscriptionId string, token string) *PurchasesSubscriptionsRevokeCall {
 	c := &PurchasesSubscriptionsRevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -11382,7 +11658,7 @@ func (c *PurchasesSubscriptionsRevokeCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsRevokeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11468,6 +11744,9 @@ type PurchasesVoidedpurchasesListCall struct {
 
 // List: Lists the purchases that were canceled, refunded or
 // charged-back.
+//
+// - packageName: The package name of the application for which voided
+//   purchases need to be returned (for example, 'com.some.thing').
 func (r *PurchasesVoidedpurchasesService) List(packageName string) *PurchasesVoidedpurchasesListCall {
 	c := &PurchasesVoidedpurchasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -11574,7 +11853,7 @@ func (c *PurchasesVoidedpurchasesListCall) Header() http.Header {
 
 func (c *PurchasesVoidedpurchasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11710,6 +11989,9 @@ type ReviewsGetCall struct {
 }
 
 // Get: Gets a single review.
+//
+// - packageName: Package name of the app.
+// - reviewId: Unique identifier for a review.
 func (r *ReviewsService) Get(packageName string, reviewId string) *ReviewsGetCall {
 	c := &ReviewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -11761,7 +12043,7 @@ func (c *ReviewsGetCall) Header() http.Header {
 
 func (c *ReviewsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11874,6 +12156,8 @@ type ReviewsListCall struct {
 }
 
 // List: Lists all reviews.
+//
+// - packageName: Package name of the app.
 func (r *ReviewsService) List(packageName string) *ReviewsListCall {
 	c := &ReviewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -11945,7 +12229,7 @@ func (c *ReviewsListCall) Header() http.Header {
 
 func (c *ReviewsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12068,6 +12352,9 @@ type ReviewsReplyCall struct {
 }
 
 // Reply: Replies to a single review, or updates an existing reply.
+//
+// - packageName: Package name of the app.
+// - reviewId: Unique identifier for a review.
 func (r *ReviewsService) Reply(packageName string, reviewId string, reviewsreplyrequest *ReviewsReplyRequest) *ReviewsReplyCall {
 	c := &ReviewsReplyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -12103,7 +12390,7 @@ func (c *ReviewsReplyCall) Header() http.Header {
 
 func (c *ReviewsReplyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12218,6 +12505,9 @@ type SystemapksVariantsCreateCall struct {
 
 // Create: Creates an APK which is suitable for inclusion in a system
 // image from an already uploaded Android App Bundle.
+//
+// - packageName: Package name of the app.
+// - versionCode: The version code of the App Bundle.
 func (r *SystemapksVariantsService) Create(packageName string, versionCode int64, variant *Variant) *SystemapksVariantsCreateCall {
 	c := &SystemapksVariantsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -12253,7 +12543,7 @@ func (c *SystemapksVariantsCreateCall) Header() http.Header {
 
 func (c *SystemapksVariantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12370,6 +12660,10 @@ type SystemapksVariantsDownloadCall struct {
 
 // Download: Downloads a previously created system APK which is suitable
 // for inclusion in a system image.
+//
+// - packageName: Package name of the app.
+// - variantId: The ID of a previously created system APK variant.
+// - versionCode: The version code of the App Bundle.
 func (r *SystemapksVariantsService) Download(packageName string, versionCode int64, variantId int64) *SystemapksVariantsDownloadCall {
 	c := &SystemapksVariantsDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -12415,7 +12709,7 @@ func (c *SystemapksVariantsDownloadCall) Header() http.Header {
 
 func (c *SystemapksVariantsDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12525,6 +12819,10 @@ type SystemapksVariantsGetCall struct {
 }
 
 // Get: Returns a previously created system APK variant.
+//
+// - packageName: Package name of the app.
+// - variantId: The ID of a previously created system APK variant.
+// - versionCode: The version code of the App Bundle.
 func (r *SystemapksVariantsService) Get(packageName string, versionCode int64, variantId int64) *SystemapksVariantsGetCall {
 	c := &SystemapksVariantsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -12570,7 +12868,7 @@ func (c *SystemapksVariantsGetCall) Header() http.Header {
 
 func (c *SystemapksVariantsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12689,6 +12987,9 @@ type SystemapksVariantsListCall struct {
 }
 
 // List: Returns the list of previously created system APK variants.
+//
+// - packageName: Package name of the app.
+// - versionCode: The version code of the App Bundle.
 func (r *SystemapksVariantsService) List(packageName string, versionCode int64) *SystemapksVariantsListCall {
 	c := &SystemapksVariantsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -12733,7 +13034,7 @@ func (c *SystemapksVariantsListCall) Header() http.Header {
 
 func (c *SystemapksVariantsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -147,26 +147,32 @@ type PagespeedapiService struct {
 // AuditRefs: A light reference to an audit by id, used to group and
 // weight audits in a given category.
 type AuditRefs struct {
+	// Acronym: The conventional acronym for the audit/metric.
+	Acronym string `json:"acronym,omitempty"`
+
 	// Group: The category group that the audit belongs to (optional).
 	Group string `json:"group,omitempty"`
 
 	// Id: The audit ref id.
 	Id string `json:"id,omitempty"`
 
+	// RelevantAudits: Any audit IDs closely relevant to this one.
+	RelevantAudits []string `json:"relevantAudits,omitempty"`
+
 	// Weight: The weight this audit's score has on the overall category
 	// score.
 	Weight float64 `json:"weight,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Group") to
+	// ForceSendFields is a list of field names (e.g. "Acronym") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Group") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Acronym") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -209,10 +215,10 @@ type Bucket struct {
 
 	// ForceSendFields is a list of field names (e.g. "Max") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Max") to include in API
@@ -268,10 +274,10 @@ type Categories struct {
 
 	// ForceSendFields is a list of field names (e.g. "Accessibility") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Accessibility") to include
@@ -299,10 +305,10 @@ type CategoryGroupV5 struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -344,10 +350,10 @@ type ConfigSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "Channel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Channel") to include in
@@ -381,10 +387,10 @@ type Environment struct {
 
 	// ForceSendFields is a list of field names (e.g. "BenchmarkIndex") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BenchmarkIndex") to
@@ -425,11 +431,11 @@ type I18n struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "RendererFormattedStrings") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "RendererFormattedStrings")
@@ -470,6 +476,10 @@ type LighthouseAuditResultV5 struct {
 	// Id: The audit's id.
 	Id string `json:"id,omitempty"`
 
+	// NumericUnit: The unit of the numeric_value field. Used to format the
+	// numeric value for display.
+	NumericUnit string `json:"numericUnit,omitempty"`
+
 	// NumericValue: A numeric value that has a meaning specific to the
 	// audit, e.g. the number of nodes in the DOM or the timestamp of a
 	// specific load event. More information can be found in the audit
@@ -490,10 +500,10 @@ type LighthouseAuditResultV5 struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -551,10 +561,10 @@ type LighthouseCategoryV5 struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuditRefs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuditRefs") to include in
@@ -627,10 +637,10 @@ type LighthouseResultV5 struct {
 
 	// ForceSendFields is a list of field names (e.g. "Audits") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Audits") to include in API
@@ -670,10 +680,10 @@ type PagespeedApiLoadingExperienceV5 struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -725,8 +735,8 @@ type PagespeedApiPagespeedResponseV5 struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AnalysisUTCTimestamp") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -760,10 +770,10 @@ type PagespeedVersion struct {
 
 	// ForceSendFields is a list of field names (e.g. "Major") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Major") to include in API
@@ -788,6 +798,11 @@ type RendererFormattedStrings struct {
 	// icon.
 	AuditGroupExpandTooltip string `json:"auditGroupExpandTooltip,omitempty"`
 
+	// CalculatorLink: Text link pointing to the Lighthouse scoring
+	// calculator. This link immediately follows a sentence stating the
+	// performance score is calculated from the perf metrics.
+	CalculatorLink string `json:"calculatorLink,omitempty"`
+
 	// CrcInitialNavigation: The label for the initial request in a critical
 	// request chain.
 	CrcInitialNavigation string `json:"crcInitialNavigation,omitempty"`
@@ -795,6 +810,38 @@ type RendererFormattedStrings struct {
 	// CrcLongestDurationLabel: The label for values shown in the summary of
 	// critical request chains.
 	CrcLongestDurationLabel string `json:"crcLongestDurationLabel,omitempty"`
+
+	// DropdownCopyJSON: Option in a dropdown menu that copies the
+	// Lighthouse JSON object to the system clipboard.
+	DropdownCopyJSON string `json:"dropdownCopyJSON,omitempty"`
+
+	// DropdownDarkTheme: Option in a dropdown menu that toggles the
+	// themeing of the report between Light(default) and Dark themes.
+	DropdownDarkTheme string `json:"dropdownDarkTheme,omitempty"`
+
+	// DropdownPrintExpanded: Option in a dropdown menu that opens a full
+	// Lighthouse report in a print dialog.
+	DropdownPrintExpanded string `json:"dropdownPrintExpanded,omitempty"`
+
+	// DropdownPrintSummary: Option in a dropdown menu that opens a small,
+	// summary report in a print dialog.
+	DropdownPrintSummary string `json:"dropdownPrintSummary,omitempty"`
+
+	// DropdownSaveGist: Option in a dropdown menu that saves the current
+	// report as a new GitHub Gist.
+	DropdownSaveGist string `json:"dropdownSaveGist,omitempty"`
+
+	// DropdownSaveHTML: Option in a dropdown menu that saves the Lighthouse
+	// report HTML locally to the system as a '.html' file.
+	DropdownSaveHTML string `json:"dropdownSaveHTML,omitempty"`
+
+	// DropdownSaveJSON: Option in a dropdown menu that saves the Lighthouse
+	// JSON object to the local system as a '.json' file.
+	DropdownSaveJSON string `json:"dropdownSaveJSON,omitempty"`
+
+	// DropdownViewer: Option in a dropdown menu that opens the current
+	// report in the Lighthouse Viewer Application.
+	DropdownViewer string `json:"dropdownViewer,omitempty"`
 
 	// ErrorLabel: The label shown next to an audit or metric that has had
 	// an error.
@@ -804,11 +851,15 @@ type RendererFormattedStrings struct {
 	// audit.
 	ErrorMissingAuditInfo string `json:"errorMissingAuditInfo,omitempty"`
 
+	// FooterIssue: Label for button to create an issue against the
+	// Lighthouse GitHub project.
+	FooterIssue string `json:"footerIssue,omitempty"`
+
 	// LabDataTitle: The title of the lab data performance category.
 	LabDataTitle string `json:"labDataTitle,omitempty"`
 
 	// LsPerformanceCategoryDescription: The disclaimer shown under
-	// performance explaning that the network can vary.
+	// performance explaining that the network can vary.
 	LsPerformanceCategoryDescription string `json:"lsPerformanceCategoryDescription,omitempty"`
 
 	// ManualAuditsGroupTitle: The heading shown above a list of audits that
@@ -831,9 +882,101 @@ type RendererFormattedStrings struct {
 	// audits that are passing.
 	PassedAuditsGroupTitle string `json:"passedAuditsGroupTitle,omitempty"`
 
+	// RuntimeDesktopEmulation: Descriptive explanation for emulation
+	// setting when emulating a generic desktop form factor, as opposed to a
+	// mobile-device like form factor.
+	RuntimeDesktopEmulation string `json:"runtimeDesktopEmulation,omitempty"`
+
+	// RuntimeMobileEmulation: Descriptive explanation for emulation setting
+	// when emulating a Nexus 5X mobile device.
+	RuntimeMobileEmulation string `json:"runtimeMobileEmulation,omitempty"`
+
+	// RuntimeNoEmulation: Descriptive explanation for emulation setting
+	// when no device emulation is set.
+	RuntimeNoEmulation string `json:"runtimeNoEmulation,omitempty"`
+
+	// RuntimeSettingsAxeVersion: Label for a row in a table that shows the
+	// version of the Axe library used
+	RuntimeSettingsAxeVersion string `json:"runtimeSettingsAxeVersion,omitempty"`
+
+	// RuntimeSettingsBenchmark: Label for a row in a table that shows the
+	// estimated CPU power of the machine running Lighthouse. Example row
+	// values: 532, 1492, 783.
+	RuntimeSettingsBenchmark string `json:"runtimeSettingsBenchmark,omitempty"`
+
+	// RuntimeSettingsCPUThrottling: Label for a row in a table that
+	// describes the CPU throttling conditions that were used during a
+	// Lighthouse run, if any.
+	RuntimeSettingsCPUThrottling string `json:"runtimeSettingsCPUThrottling,omitempty"`
+
+	// RuntimeSettingsChannel: Label for a row in a table that shows in what
+	// tool Lighthouse is being run (e.g. The lighthouse CLI, Chrome
+	// DevTools, Lightrider, WebPageTest, etc).
+	RuntimeSettingsChannel string `json:"runtimeSettingsChannel,omitempty"`
+
+	// RuntimeSettingsDevice: Label for a row in a table that describes the
+	// kind of device that was emulated for the Lighthouse run. Example
+	// values for row elements: 'No Emulation', 'Emulated Desktop', etc.
+	RuntimeSettingsDevice string `json:"runtimeSettingsDevice,omitempty"`
+
+	// RuntimeSettingsFetchTime: Label for a row in a table that shows the
+	// time at which a Lighthouse run was conducted; formatted as a
+	// timestamp, e.g. Jan 1, 1970 12:00 AM UTC.
+	RuntimeSettingsFetchTime string `json:"runtimeSettingsFetchTime,omitempty"`
+
+	// RuntimeSettingsNetworkThrottling: Label for a row in a table that
+	// describes the network throttling conditions that were used during a
+	// Lighthouse run, if any.
+	RuntimeSettingsNetworkThrottling string `json:"runtimeSettingsNetworkThrottling,omitempty"`
+
+	// RuntimeSettingsTitle: Title of the Runtime settings table in a
+	// Lighthouse report. Runtime settings are the environment
+	// configurations that a specific report used at auditing time.
+	RuntimeSettingsTitle string `json:"runtimeSettingsTitle,omitempty"`
+
+	// RuntimeSettingsUA: Label for a row in a table that shows the User
+	// Agent that was detected on the Host machine that ran Lighthouse.
+	RuntimeSettingsUA string `json:"runtimeSettingsUA,omitempty"`
+
+	// RuntimeSettingsUANetwork: Label for a row in a table that shows the
+	// User Agent that was used to send out all network requests during the
+	// Lighthouse run.
+	RuntimeSettingsUANetwork string `json:"runtimeSettingsUANetwork,omitempty"`
+
+	// RuntimeSettingsUrl: Label for a row in a table that shows the URL
+	// that was audited during a Lighthouse run.
+	RuntimeSettingsUrl string `json:"runtimeSettingsUrl,omitempty"`
+
+	// RuntimeUnknown: Descriptive explanation for a runtime setting that is
+	// set to an unknown value.
+	RuntimeUnknown string `json:"runtimeUnknown,omitempty"`
+
 	// ScorescaleLabel: The label that explains the score gauges scale
 	// (0-49, 50-89, 90-100).
 	ScorescaleLabel string `json:"scorescaleLabel,omitempty"`
+
+	// ShowRelevantAudits: Label preceding a radio control for filtering the
+	// list of audits. The radio choices are various performance metrics
+	// (FCP, LCP, TBT), and if chosen, the audits in the report are hidden
+	// if they are not relevant to the selected metric.
+	ShowRelevantAudits string `json:"showRelevantAudits,omitempty"`
+
+	// SnippetCollapseButtonLabel: The label for the button to show only a
+	// few lines of a snippet
+	SnippetCollapseButtonLabel string `json:"snippetCollapseButtonLabel,omitempty"`
+
+	// SnippetExpandButtonLabel: The label for the button to show all lines
+	// of a snippet
+	SnippetExpandButtonLabel string `json:"snippetExpandButtonLabel,omitempty"`
+
+	// ThirdPartyResourcesLabel: This label is for a filter checkbox above a
+	// table of items
+	ThirdPartyResourcesLabel string `json:"thirdPartyResourcesLabel,omitempty"`
+
+	// ThrottlingProvided: Descriptive explanation for environment
+	// throttling that was provided by the runtime environment instead of
+	// provided by Lighthouse throttling.
+	ThrottlingProvided string `json:"throttlingProvided,omitempty"`
 
 	// ToplevelWarningsMessage: The label shown preceding important warnings
 	// that may have invalidated an entire report.
@@ -843,16 +986,23 @@ type RendererFormattedStrings struct {
 	// value.
 	VarianceDisclaimer string `json:"varianceDisclaimer,omitempty"`
 
+	// ViewTreemapLabel: Label for a button that opens the Treemap App
+	ViewTreemapLabel string `json:"viewTreemapLabel,omitempty"`
+
+	// WarningAuditsGroupTitle: The heading that is shown above a list of
+	// audits that have warnings
+	WarningAuditsGroupTitle string `json:"warningAuditsGroupTitle,omitempty"`
+
 	// WarningHeader: The label shown above a bulleted list of warnings.
 	WarningHeader string `json:"warningHeader,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AuditGroupExpandTooltip") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuditGroupExpandTooltip")
@@ -881,10 +1031,10 @@ type RuntimeError struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -918,10 +1068,10 @@ type StackPack struct {
 
 	// ForceSendFields is a list of field names (e.g. "Descriptions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Descriptions") to include
@@ -947,10 +1097,10 @@ type Timing struct {
 
 	// ForceSendFields is a list of field names (e.g. "Total") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Total") to include in API
@@ -1007,10 +1157,10 @@ type UserPageLoadMetricV5 struct {
 
 	// ForceSendFields is a list of field names (e.g. "Category") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Category") to include in
@@ -1041,6 +1191,8 @@ type PagespeedapiRunpagespeedCall struct {
 // Runpagespeed: Runs PageSpeed analysis on the page at the specified
 // URL, and returns PageSpeed scores, a list of suggestions to make that
 // page faster, and other information.
+//
+// - url: The URL to fetch and analyze.
 func (r *PagespeedapiService) Runpagespeed(url string) *PagespeedapiRunpagespeedCall {
 	c := &PagespeedapiRunpagespeedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("url", url)
@@ -1145,7 +1297,7 @@ func (c *PagespeedapiRunpagespeedCall) Header() http.Header {
 
 func (c *PagespeedapiRunpagespeedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

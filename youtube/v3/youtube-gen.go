@@ -176,6 +176,7 @@ func New(client *http.Client) (*Service, error) {
 	s.VideoCategories = NewVideoCategoriesService(s)
 	s.Videos = NewVideosService(s)
 	s.Watermarks = NewWatermarksService(s)
+	s.Youtube = NewYoutubeService(s)
 	return s, nil
 }
 
@@ -241,6 +242,8 @@ type Service struct {
 	Videos *VideosService
 
 	Watermarks *WatermarksService
+
+	Youtube *YoutubeService
 }
 
 func (s *Service) userAgent() string {
@@ -511,6 +514,27 @@ type WatermarksService struct {
 	s *Service
 }
 
+func NewYoutubeService(s *Service) *YoutubeService {
+	rs := &YoutubeService{s: s}
+	rs.V3 = NewYoutubeV3Service(s)
+	return rs
+}
+
+type YoutubeService struct {
+	s *Service
+
+	V3 *YoutubeV3Service
+}
+
+func NewYoutubeV3Service(s *Service) *YoutubeV3Service {
+	rs := &YoutubeV3Service{s: s}
+	return rs
+}
+
+type YoutubeV3Service struct {
+	s *Service
+}
+
 type AbuseReport struct {
 	AbuseTypes []*AbuseType `json:"abuseTypes,omitempty"`
 
@@ -526,10 +550,10 @@ type AbuseReport struct {
 
 	// ForceSendFields is a list of field names (e.g. "AbuseTypes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AbuseTypes") to include in
@@ -552,10 +576,10 @@ type AbuseType struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -585,10 +609,10 @@ type AccessPolicy struct {
 
 	// ForceSendFields is a list of field names (e.g. "Allowed") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Allowed") to include in
@@ -637,10 +661,10 @@ type Activity struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContentDetails") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContentDetails") to
@@ -717,10 +741,10 @@ type ActivityContentDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Bulletin") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Bulletin") to include in
@@ -748,10 +772,10 @@ type ActivityContentDetailsBulletin struct {
 
 	// ForceSendFields is a list of field names (e.g. "ResourceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResourceId") to include in
@@ -778,10 +802,10 @@ type ActivityContentDetailsChannelItem struct {
 
 	// ForceSendFields is a list of field names (e.g. "ResourceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResourceId") to include in
@@ -808,10 +832,10 @@ type ActivityContentDetailsComment struct {
 
 	// ForceSendFields is a list of field names (e.g. "ResourceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResourceId") to include in
@@ -838,10 +862,10 @@ type ActivityContentDetailsFavorite struct {
 
 	// ForceSendFields is a list of field names (e.g. "ResourceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResourceId") to include in
@@ -868,10 +892,10 @@ type ActivityContentDetailsLike struct {
 
 	// ForceSendFields is a list of field names (e.g. "ResourceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResourceId") to include in
@@ -905,10 +929,10 @@ type ActivityContentDetailsPlaylistItem struct {
 
 	// ForceSendFields is a list of field names (e.g. "PlaylistId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PlaylistId") to include in
@@ -975,10 +999,10 @@ type ActivityContentDetailsPromotedItem struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdTag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdTag") to include in API
@@ -1018,10 +1042,10 @@ type ActivityContentDetailsRecommendation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Reason") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Reason") to include in API
@@ -1057,7 +1081,7 @@ type ActivityContentDetailsSocial struct {
 	// Type: The name of the social network.
 	//
 	// Possible values:
-	//   "typeUnspecified"
+	//   "unspecified"
 	//   "googlePlus"
 	//   "facebook"
 	//   "twitter"
@@ -1065,10 +1089,10 @@ type ActivityContentDetailsSocial struct {
 
 	// ForceSendFields is a list of field names (e.g. "Author") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Author") to include in API
@@ -1095,10 +1119,10 @@ type ActivityContentDetailsSubscription struct {
 
 	// ForceSendFields is a list of field names (e.g. "ResourceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResourceId") to include in
@@ -1124,10 +1148,10 @@ type ActivityContentDetailsUpload struct {
 
 	// ForceSendFields is a list of field names (e.g. "VideoId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "VideoId") to include in
@@ -1181,10 +1205,10 @@ type ActivityListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -1257,10 +1281,10 @@ type ActivitySnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelId") to include in
@@ -1300,10 +1324,10 @@ type Caption struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -1345,10 +1369,10 @@ type CaptionListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -1451,10 +1475,10 @@ type CaptionSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "AudioTrackType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AudioTrackType") to
@@ -1517,10 +1541,10 @@ type CdnSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "Format") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Format") to include in API
@@ -1597,10 +1621,10 @@ type Channel struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuditDetails") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuditDetails") to include
@@ -1635,11 +1659,11 @@ type ChannelAuditDetails struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CommunityGuidelinesGoodStanding") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -1676,10 +1700,10 @@ type ChannelBannerResource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -1713,10 +1737,10 @@ type ChannelBrandingSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "Channel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Channel") to include in
@@ -1740,10 +1764,10 @@ type ChannelContentDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "RelatedPlaylists") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "RelatedPlaylists") to
@@ -1790,10 +1814,10 @@ type ChannelContentDetailsRelatedPlaylists struct {
 
 	// ForceSendFields is a list of field names (e.g. "Favorites") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Favorites") to include in
@@ -1824,10 +1848,10 @@ type ChannelContentOwnerDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContentOwner") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContentOwner") to include
@@ -1869,10 +1893,10 @@ type ChannelConversionPing struct {
 
 	// ForceSendFields is a list of field names (e.g. "Context") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Context") to include in
@@ -1901,10 +1925,10 @@ type ChannelConversionPings struct {
 
 	// ForceSendFields is a list of field names (e.g. "Pings") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Pings") to include in API
@@ -1958,10 +1982,10 @@ type ChannelListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -1989,10 +2013,10 @@ type ChannelLocalization struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -2025,10 +2049,10 @@ type ChannelProfileDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelId") to include in
@@ -2080,10 +2104,10 @@ type ChannelSection struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContentDetails") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContentDetails") to
@@ -2115,10 +2139,10 @@ type ChannelSectionContentDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Channels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Channels") to include in
@@ -2160,10 +2184,10 @@ type ChannelSectionListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -2188,10 +2212,10 @@ type ChannelSectionLocalization struct {
 
 	// ForceSendFields is a list of field names (e.g. "Title") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Title") to include in API
@@ -2241,7 +2265,7 @@ type ChannelSectionSnippet struct {
 	// Type: The type of the channel section.
 	//
 	// Possible values:
-	//   "channelsectionTypeUnspecified"
+	//   "channelsectionTypeUndefined"
 	//   "singlePlaylist"
 	//   "multiplePlaylists"
 	//   "popularUploads"
@@ -2262,10 +2286,10 @@ type ChannelSectionSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelId") to include in
@@ -2296,10 +2320,10 @@ type ChannelSectionTargeting struct {
 
 	// ForceSendFields is a list of field names (e.g. "Countries") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Countries") to include in
@@ -2369,10 +2393,10 @@ type ChannelSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "Country") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Country") to include in
@@ -2432,10 +2456,10 @@ type ChannelSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "Country") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Country") to include in
@@ -2474,10 +2498,10 @@ type ChannelStatistics struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommentCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommentCount") to include
@@ -2526,10 +2550,10 @@ type ChannelStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "IsLinked") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IsLinked") to include in
@@ -2558,10 +2582,10 @@ type ChannelToStoreLinkDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "StoreName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "StoreName") to include in
@@ -2593,10 +2617,10 @@ type ChannelTopicDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "TopicCategories") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TopicCategories") to
@@ -2636,10 +2660,10 @@ type Comment struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -2690,10 +2714,10 @@ type CommentListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -2784,10 +2808,10 @@ type CommentSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuthorChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuthorChannelId") to
@@ -2813,10 +2837,10 @@ type CommentSnippetAuthorChannelId struct {
 
 	// ForceSendFields is a list of field names (e.g. "Value") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Value") to include in API
@@ -2862,10 +2886,10 @@ type CommentThread struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -2916,10 +2940,10 @@ type CommentThreadListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -2947,10 +2971,10 @@ type CommentThreadReplies struct {
 
 	// ForceSendFields is a list of field names (e.g. "Comments") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Comments") to include in
@@ -2997,10 +3021,10 @@ type CommentThreadSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "CanReply") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CanReply") to include in
@@ -4033,10 +4057,10 @@ type ContentRating struct {
 
 	// ForceSendFields is a list of field names (e.g. "AcbRating") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AcbRating") to include in
@@ -4063,10 +4087,10 @@ type Entity struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -4097,10 +4121,10 @@ type GeoPoint struct {
 
 	// ForceSendFields is a list of field names (e.g. "Altitude") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Altitude") to include in
@@ -4155,10 +4179,10 @@ type I18nLanguage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -4202,10 +4226,10 @@ type I18nLanguageListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -4234,10 +4258,10 @@ type I18nLanguageSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "Hl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Hl") to include in API
@@ -4274,10 +4298,10 @@ type I18nRegion struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -4321,10 +4345,10 @@ type I18nRegionListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -4353,10 +4377,10 @@ type I18nRegionSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "Gl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Gl") to include in API
@@ -4466,10 +4490,10 @@ type ImageSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "BackgroundImageUrl")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BackgroundImageUrl") to
@@ -4521,8 +4545,8 @@ type IngestionInfo struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "BackupIngestionAddress") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -4568,10 +4592,10 @@ type InvideoBranding struct {
 
 	// ForceSendFields is a list of field names (e.g. "ImageBytes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ImageBytes") to include in
@@ -4611,10 +4635,10 @@ type InvideoPosition struct {
 
 	// ForceSendFields is a list of field names (e.g. "CornerPosition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CornerPosition") to
@@ -4659,10 +4683,10 @@ type InvideoTiming struct {
 
 	// ForceSendFields is a list of field names (e.g. "DurationMs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DurationMs") to include in
@@ -4685,10 +4709,10 @@ type LanguageTag struct {
 
 	// ForceSendFields is a list of field names (e.g. "Value") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Value") to include in API
@@ -4713,10 +4737,10 @@ type LevelDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -4773,10 +4797,10 @@ type LiveBroadcast struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContentDetails") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContentDetails") to
@@ -4919,10 +4943,10 @@ type LiveBroadcastContentDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "BoundStreamId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BoundStreamId") to include
@@ -4977,10 +5001,10 @@ type LiveBroadcastListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -5031,11 +5055,11 @@ type LiveBroadcastSnippet struct {
 	PublishedAt string `json:"publishedAt,omitempty"`
 
 	// ScheduledEndTime: The date and time that the broadcast is scheduled
-	// to start.
+	// to end.
 	ScheduledEndTime string `json:"scheduledEndTime,omitempty"`
 
 	// ScheduledStartTime: The date and time that the broadcast is scheduled
-	// to end.
+	// to start.
 	ScheduledStartTime string `json:"scheduledStartTime,omitempty"`
 
 	// Thumbnails: A map of thumbnail images associated with the broadcast.
@@ -5052,10 +5076,10 @@ type LiveBroadcastSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "ActualEndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ActualEndTime") to include
@@ -5087,10 +5111,10 @@ type LiveBroadcastStatistics struct {
 
 	// ForceSendFields is a list of field names (e.g. "TotalChatCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TotalChatCount") to
@@ -5172,10 +5196,10 @@ type LiveBroadcastStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "LifeCycleStatus") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LifeCycleStatus") to
@@ -5216,10 +5240,10 @@ type LiveChatBan struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -5257,10 +5281,10 @@ type LiveChatBanSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "BanDurationSeconds")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BanDurationSeconds") to
@@ -5295,10 +5319,10 @@ type LiveChatFanFundingEventDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "AmountDisplayString")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AmountDisplayString") to
@@ -5313,6 +5337,46 @@ type LiveChatFanFundingEventDetails struct {
 
 func (s *LiveChatFanFundingEventDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatFanFundingEventDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type LiveChatMemberMilestoneChatDetails struct {
+	// MemberLevelName: The name of the Level at which the viever is a
+	// member. The Level names are defined by the YouTube channel offering
+	// the Membership. In some situations this field isn't filled.
+	MemberLevelName string `json:"memberLevelName,omitempty"`
+
+	// MemberMonth: The total amount of months (rounded up) the viewer has
+	// been a member that granted them this Member Milestone Chat. This is
+	// the same number of months as is being displayed to YouTube users.
+	MemberMonth int64 `json:"memberMonth,omitempty"`
+
+	// UserComment: The comment added by the member to this Member Milestone
+	// Chat. This field is empty for messages without a comment from the
+	// member.
+	UserComment string `json:"userComment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MemberLevelName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MemberLevelName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LiveChatMemberMilestoneChatDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod LiveChatMemberMilestoneChatDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5343,10 +5407,10 @@ type LiveChatMessage struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuthorDetails") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuthorDetails") to include
@@ -5392,10 +5456,10 @@ type LiveChatMessageAuthorDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelId") to include in
@@ -5418,10 +5482,10 @@ type LiveChatMessageDeletedDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeletedMessageId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeletedMessageId") to
@@ -5477,10 +5541,10 @@ type LiveChatMessageListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -5503,10 +5567,10 @@ type LiveChatMessageRetractedDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "RetractedMessageId")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "RetractedMessageId") to
@@ -5525,15 +5589,18 @@ func (s *LiveChatMessageRetractedDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LiveChatMessageSnippet: Next ID: 31
 type LiveChatMessageSnippet struct {
 	// AuthorChannelId: The ID of the user that authored this message, this
 	// field is not always filled. textMessageEvent - the user that wrote
 	// the message fanFundingEvent - the user that funded the broadcast
 	// newSponsorEvent - the user that just became a sponsor
+	// memberMilestoneChatEvent - the member that sent the message
 	// messageDeletedEvent - the moderator that took the action
 	// messageRetractedEvent - the author that retracted their message
 	// userBannedEvent - the moderator that took the action superChatEvent -
-	// the user that made the purchase
+	// the user that made the purchase superStickerEvent - the user that
+	// made the purchase
 	AuthorChannelId string `json:"authorChannelId,omitempty"`
 
 	// DisplayMessage: Contains a string that can be displayed to the user.
@@ -5551,9 +5618,18 @@ type LiveChatMessageSnippet struct {
 
 	LiveChatId string `json:"liveChatId,omitempty"`
 
+	// MemberMilestoneChatDetails: Details about the Member Milestone Chat
+	// event, this is only set if the type is 'memberMilestoneChatEvent'.
+	MemberMilestoneChatDetails *LiveChatMemberMilestoneChatDetails `json:"memberMilestoneChatDetails,omitempty"`
+
 	MessageDeletedDetails *LiveChatMessageDeletedDetails `json:"messageDeletedDetails,omitempty"`
 
 	MessageRetractedDetails *LiveChatMessageRetractedDetails `json:"messageRetractedDetails,omitempty"`
+
+	// NewSponsorDetails: Details about the New Member Announcement event,
+	// this is only set if the type is 'newSponsorEvent'. Please note that
+	// "member" is the new term for "sponsor".
+	NewSponsorDetails *LiveChatNewSponsorDetails `json:"newSponsorDetails,omitempty"`
 
 	// PublishedAt: The date and time when the message was orignally
 	// published.
@@ -5583,6 +5659,7 @@ type LiveChatMessageSnippet struct {
 	//   "sponsorOnlyModeStartedEvent"
 	//   "sponsorOnlyModeEndedEvent"
 	//   "newSponsorEvent"
+	//   "memberMilestoneChatEvent"
 	//   "messageDeletedEvent"
 	//   "messageRetractedEvent"
 	//   "userBannedEvent"
@@ -5594,10 +5671,10 @@ type LiveChatMessageSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuthorChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuthorChannelId") to
@@ -5640,10 +5717,10 @@ type LiveChatModerator struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -5698,10 +5775,10 @@ type LiveChatModeratorListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -5728,10 +5805,10 @@ type LiveChatModeratorSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "LiveChatId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LiveChatId") to include in
@@ -5745,6 +5822,40 @@ type LiveChatModeratorSnippet struct {
 
 func (s *LiveChatModeratorSnippet) MarshalJSON() ([]byte, error) {
 	type NoMethod LiveChatModeratorSnippet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type LiveChatNewSponsorDetails struct {
+	// IsUpgrade: If the viewer just had upgraded from a lower level. For
+	// viewers that were not members at the time of purchase, this field is
+	// false.
+	IsUpgrade bool `json:"isUpgrade,omitempty"`
+
+	// MemberLevelName: The name of the Level that the viewer just had
+	// joined. The Level names are defined by the YouTube channel offering
+	// the Membership. In some situations this field isn't filled.
+	MemberLevelName string `json:"memberLevelName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IsUpgrade") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IsUpgrade") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LiveChatNewSponsorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod LiveChatNewSponsorDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5770,10 +5881,10 @@ type LiveChatSuperChatDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "AmountDisplayString")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AmountDisplayString") to
@@ -5813,10 +5924,10 @@ type LiveChatSuperStickerDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "AmountDisplayString")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AmountDisplayString") to
@@ -5841,10 +5952,10 @@ type LiveChatTextMessageDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "MessageText") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MessageText") to include
@@ -5879,10 +5990,10 @@ type LiveChatUserBannedMessageDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "BanDurationSeconds")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BanDurationSeconds") to
@@ -5936,10 +6047,10 @@ type LiveStream struct {
 
 	// ForceSendFields is a list of field names (e.g. "Cdn") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Cdn") to include in API
@@ -6014,10 +6125,10 @@ type LiveStreamConfigurationIssue struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -6058,11 +6169,11 @@ type LiveStreamContentDetails struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ClosedCaptionsIngestionUrl") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -6101,10 +6212,10 @@ type LiveStreamHealthStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "ConfigurationIssues")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ConfigurationIssues") to
@@ -6159,10 +6270,10 @@ type LiveStreamListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -6200,10 +6311,10 @@ type LiveStreamSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelId") to include in
@@ -6236,10 +6347,10 @@ type LiveStreamStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "HealthStatus") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HealthStatus") to include
@@ -6267,10 +6378,10 @@ type LocalizedProperty struct {
 
 	// ForceSendFields is a list of field names (e.g. "Default") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Default") to include in
@@ -6295,10 +6406,10 @@ type LocalizedString struct {
 
 	// ForceSendFields is a list of field names (e.g. "Language") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Language") to include in
@@ -6332,10 +6443,10 @@ type Member struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -6385,10 +6496,10 @@ type MemberListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -6418,10 +6529,10 @@ type MemberSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreatorChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreatorChannelId") to
@@ -6464,10 +6575,10 @@ type MembershipsDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccessibleLevels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccessibleLevels") to
@@ -6498,10 +6609,10 @@ type MembershipsDuration struct {
 
 	// ForceSendFields is a list of field names (e.g. "MemberSince") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MemberSince") to include
@@ -6534,10 +6645,10 @@ type MembershipsDurationAtLevel struct {
 
 	// ForceSendFields is a list of field names (e.g. "Level") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Level") to include in API
@@ -6576,10 +6687,10 @@ type MembershipsLevel struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -6621,10 +6732,10 @@ type MembershipsLevelListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -6652,10 +6763,10 @@ type MembershipsLevelSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreatorChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreatorChannelId") to
@@ -6698,8 +6809,8 @@ type MonitorStreamInfo struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "BroadcastStreamDelayMs") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -6733,10 +6844,10 @@ type PageInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "ResultsPerPage") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResultsPerPage") to
@@ -6807,10 +6918,10 @@ type Playlist struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContentDetails") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContentDetails") to
@@ -6835,10 +6946,10 @@ type PlaylistContentDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "ItemCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ItemCount") to include in
@@ -6903,10 +7014,10 @@ type PlaylistItem struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContentDetails") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContentDetails") to
@@ -6953,10 +7064,10 @@ type PlaylistItemContentDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndAt") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndAt") to include in API
@@ -7010,10 +7121,10 @@ type PlaylistItemListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -7033,7 +7144,7 @@ func (s *PlaylistItemListResponse) MarshalJSON() ([]byte, error) {
 
 // PlaylistItemSnippet: Basic details about a playlist, including title,
 // description and thumbnails. Basic details of a YouTube Playlist item
-// provided by the author. Next ID: 13
+// provided by the author. Next ID: 15
 type PlaylistItemSnippet struct {
 	// ChannelId: The ID that YouTube uses to uniquely identify the user
 	// that added the item to the playlist.
@@ -7073,12 +7184,20 @@ type PlaylistItemSnippet struct {
 	// Title: The item's title.
 	Title string `json:"title,omitempty"`
 
+	// VideoOwnerChannelId: Channel id for the channel this video belongs
+	// to.
+	VideoOwnerChannelId string `json:"videoOwnerChannelId,omitempty"`
+
+	// VideoOwnerChannelTitle: Channel title for the channel this video
+	// belongs to.
+	VideoOwnerChannelTitle string `json:"videoOwnerChannelTitle,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelId") to include in
@@ -7109,10 +7228,10 @@ type PlaylistItemStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "PrivacyStatus") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PrivacyStatus") to include
@@ -7167,10 +7286,10 @@ type PlaylistListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -7198,10 +7317,10 @@ type PlaylistLocalization struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -7226,10 +7345,10 @@ type PlaylistPlayer struct {
 
 	// ForceSendFields is a list of field names (e.g. "EmbedHtml") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EmbedHtml") to include in
@@ -7274,6 +7393,16 @@ type PlaylistSnippet struct {
 	// Tags: Keyword tags associated with the playlist.
 	Tags []string `json:"tags,omitempty"`
 
+	// ThumbnailVideoId: Note: if the playlist has a custom thumbnail, this
+	// field will not be populated. The video id selected by the user that
+	// will be used as the thumbnail of this playlist. This field defaults
+	// to the first publicly viewable video in the playlist, if: 1. The user
+	// has never selected a video to be the thumbnail of the playlist. 2.
+	// The user selects a video to be the thumbnail, and then removes that
+	// video from the playlist. 3. The user selects a non-owned video to be
+	// the thumbnail, but that video becomes private, or gets deleted.
+	ThumbnailVideoId string `json:"thumbnailVideoId,omitempty"`
+
 	// Thumbnails: A map of thumbnail images associated with the playlist.
 	// For each object in the map, the key is the name of the thumbnail
 	// image, and the value is an object that contains other information
@@ -7285,10 +7414,10 @@ type PlaylistSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelId") to include in
@@ -7317,10 +7446,10 @@ type PlaylistStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "PrivacyStatus") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PrivacyStatus") to include
@@ -7348,10 +7477,10 @@ type PropertyValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "Property") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Property") to include in
@@ -7374,10 +7503,10 @@ type RelatedEntity struct {
 
 	// ForceSendFields is a list of field names (e.g. "Entity") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Entity") to include in API
@@ -7418,10 +7547,10 @@ type ResourceId struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelId") to include in
@@ -7478,10 +7607,10 @@ type SearchListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -7524,10 +7653,10 @@ type SearchResult struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -7587,10 +7716,10 @@ type SearchResultSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelId") to include in
@@ -7643,10 +7772,10 @@ type Subscription struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContentDetails") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContentDetails") to
@@ -7687,10 +7816,10 @@ type SubscriptionContentDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "ActivityType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ActivityType") to include
@@ -7744,10 +7873,10 @@ type SubscriptionListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -7797,10 +7926,10 @@ type SubscriptionSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelId") to include in
@@ -7835,10 +7964,10 @@ type SubscriptionSubscriberSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelId") to include in
@@ -7876,10 +8005,10 @@ type SuperChatEvent struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -7930,10 +8059,10 @@ type SuperChatEventListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -7989,10 +8118,10 @@ type SuperChatEventSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "AmountMicros") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AmountMicros") to include
@@ -8026,10 +8155,10 @@ type SuperStickerMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "AltText") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AltText") to include in
@@ -8048,6 +8177,8 @@ func (s *SuperStickerMetadata) MarshalJSON() ([]byte, error) {
 }
 
 type TestItem struct {
+	FeaturedPart bool `json:"featuredPart,omitempty"`
+
 	Gaia int64 `json:"gaia,omitempty,string"`
 
 	Id string `json:"id,omitempty"`
@@ -8058,18 +8189,18 @@ type TestItem struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Gaia") to
+	// ForceSendFields is a list of field names (e.g. "FeaturedPart") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Gaia") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "FeaturedPart") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -8113,10 +8244,10 @@ type ThirdPartyLink struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -8153,10 +8284,10 @@ type ThirdPartyLinkSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChannelToStoreLink")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelToStoreLink") to
@@ -8187,10 +8318,10 @@ type ThirdPartyLinkStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "LinkStatus") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LinkStatus") to include in
@@ -8221,10 +8352,10 @@ type Thumbnail struct {
 
 	// ForceSendFields is a list of field names (e.g. "Height") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Height") to include in API
@@ -8262,10 +8393,10 @@ type ThumbnailDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Default") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Default") to include in
@@ -8307,10 +8438,10 @@ type ThumbnailSetResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -8434,10 +8565,10 @@ type Video struct {
 
 	// ForceSendFields is a list of field names (e.g. "AgeGating") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AgeGating") to include in
@@ -8476,10 +8607,10 @@ type VideoAbuseReport struct {
 
 	// ForceSendFields is a list of field names (e.g. "Comments") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Comments") to include in
@@ -8517,10 +8648,10 @@ type VideoAbuseReportReason struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -8563,10 +8694,10 @@ type VideoAbuseReportReasonListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -8596,10 +8727,10 @@ type VideoAbuseReportReasonSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "Label") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Label") to include in API
@@ -8626,10 +8757,10 @@ type VideoAbuseReportSecondaryReason struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -8670,10 +8801,10 @@ type VideoAgeGating struct {
 
 	// ForceSendFields is a list of field names (e.g. "AlcoholContent") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AlcoholContent") to
@@ -8711,10 +8842,10 @@ type VideoCategory struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -8771,10 +8902,10 @@ type VideoCategoryListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -8805,10 +8936,10 @@ type VideoCategorySnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "Assignable") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Assignable") to include in
@@ -8890,10 +9021,10 @@ type VideoContentDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Caption") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Caption") to include in
@@ -8930,10 +9061,10 @@ type VideoContentDetailsRegionRestriction struct {
 
 	// ForceSendFields is a list of field names (e.g. "Allowed") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Allowed") to include in
@@ -9009,10 +9140,10 @@ type VideoFileDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "AudioStreams") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AudioStreams") to include
@@ -9047,10 +9178,10 @@ type VideoFileDetailsAudioStream struct {
 
 	// ForceSendFields is a list of field names (e.g. "BitrateBps") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BitrateBps") to include in
@@ -9108,10 +9239,10 @@ type VideoFileDetailsVideoStream struct {
 
 	// ForceSendFields is a list of field names (e.g. "AspectRatio") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AspectRatio") to include
@@ -9143,6 +9274,51 @@ func (s *VideoFileDetailsVideoStream) UnmarshalJSON(data []byte) error {
 	s.AspectRatio = float64(s1.AspectRatio)
 	s.FrameRateFps = float64(s1.FrameRateFps)
 	return nil
+}
+
+type VideoGetRatingResponse struct {
+	// Etag: Etag of this resource.
+	Etag string `json:"etag,omitempty"`
+
+	// EventId: Serialized EventId of the request which produced this
+	// response.
+	EventId string `json:"eventId,omitempty"`
+
+	// Items: A list of ratings that match the request criteria.
+	Items []*VideoRating `json:"items,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "youtube#videoGetRatingResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// VisitorId: The visitorId identifies the visitor.
+	VisitorId string `json:"visitorId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VideoGetRatingResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod VideoGetRatingResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type VideoListResponse struct {
@@ -9181,10 +9357,10 @@ type VideoListResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Etag") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Etag") to include in API
@@ -9241,10 +9417,10 @@ type VideoLiveStreamingDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "ActiveLiveChatId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ActiveLiveChatId") to
@@ -9274,10 +9450,10 @@ type VideoLocalization struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -9304,10 +9480,10 @@ type VideoMonetizationDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Access") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Access") to include in API
@@ -9338,10 +9514,10 @@ type VideoPlayer struct {
 
 	// ForceSendFields is a list of field names (e.g. "EmbedHeight") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EmbedHeight") to include
@@ -9424,11 +9600,11 @@ type VideoProcessingDetails struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "EditorSuggestionsAvailability") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -9470,10 +9646,10 @@ type VideoProcessingDetailsProcessingProgress struct {
 
 	// ForceSendFields is a list of field names (e.g. "PartsProcessed") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PartsProcessed") to
@@ -9518,10 +9694,10 @@ type VideoRating struct {
 
 	// ForceSendFields is a list of field names (e.g. "Rating") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Rating") to include in API
@@ -9535,51 +9711,6 @@ type VideoRating struct {
 
 func (s *VideoRating) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoRating
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type VideoRatingListResponse struct {
-	// Etag: Etag of this resource.
-	Etag string `json:"etag,omitempty"`
-
-	// EventId: Serialized EventId of the request which produced this
-	// response.
-	EventId string `json:"eventId,omitempty"`
-
-	// Items: A list of ratings that match the request criteria.
-	Items []*VideoRating `json:"items,omitempty"`
-
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "youtube#videoGetRatingResponse".
-	Kind string `json:"kind,omitempty"`
-
-	// VisitorId: The visitorId identifies the visitor.
-	VisitorId string `json:"visitorId,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *VideoRatingListResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod VideoRatingListResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9599,10 +9730,10 @@ type VideoRecordingDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Location") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Location") to include in
@@ -9680,10 +9811,10 @@ type VideoSnippet struct {
 
 	// ForceSendFields is a list of field names (e.g. "CategoryId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CategoryId") to include in
@@ -9724,10 +9855,10 @@ type VideoStatistics struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommentCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommentCount") to include
@@ -9824,10 +9955,10 @@ type VideoStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "Embeddable") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Embeddable") to include in
@@ -9934,10 +10065,10 @@ type VideoSuggestions struct {
 
 	// ForceSendFields is a list of field names (e.g. "EditorSuggestions")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EditorSuggestions") to
@@ -9971,10 +10102,10 @@ type VideoSuggestionsTagSuggestion struct {
 
 	// ForceSendFields is a list of field names (e.g. "CategoryRestricts")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CategoryRestricts") to
@@ -10014,10 +10145,10 @@ type VideoTopicDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "RelevantTopicIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "RelevantTopicIds") to
@@ -10052,10 +10183,10 @@ type WatchSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "BackgroundColor") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BackgroundColor") to
@@ -10085,6 +10216,10 @@ type AbuseReportsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include.
 func (r *AbuseReportsService) Insert(part []string, abusereport *AbuseReport) *AbuseReportsInsertCall {
 	c := &AbuseReportsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -10119,7 +10254,7 @@ func (c *AbuseReportsInsertCall) Header() http.Header {
 
 func (c *AbuseReportsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10222,6 +10357,15 @@ type ActivitiesListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more activity resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in an activity resource, the snippet property contains
+//   other properties that identify the type of activity, a display
+//   title for the activity, and so forth. If you set *part=snippet*,
+//   the API response will also contain all of those nested properties.
 func (r *ActivitiesService) List(part []string) *ActivitiesListCall {
 	c := &ActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -10318,7 +10462,7 @@ func (c *ActivitiesListCall) Header() http.Header {
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10477,6 +10621,8 @@ type CaptionsDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - id: .
 func (r *CaptionsService) Delete(id string) *CaptionsDeleteCall {
 	c := &CaptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -10535,7 +10681,7 @@ func (c *CaptionsDeleteCall) Header() http.Header {
 
 func (c *CaptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10611,6 +10757,9 @@ type CaptionsDownloadCall struct {
 }
 
 // Download: Downloads a caption track.
+//
+// - id: The ID of the caption track to download, required for One
+//   Platform.
 func (r *CaptionsService) Download(id string) *CaptionsDownloadCall {
 	c := &CaptionsDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -10693,7 +10842,7 @@ func (c *CaptionsDownloadCall) Header() http.Header {
 
 func (c *CaptionsDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10804,6 +10953,10 @@ type CaptionsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter specifies the caption resource parts
+//   that the API response will include. Set the parameter value to
+//   snippet.
 func (r *CaptionsService) Insert(part []string, caption *Caption) *CaptionsInsertCall {
 	c := &CaptionsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -10909,7 +11062,7 @@ func (c *CaptionsInsertCall) Header() http.Header {
 
 func (c *CaptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11074,6 +11227,12 @@ type CaptionsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more caption resource parts that the API response will include.
+//   The part names that you can include in the parameter value are id
+//   and snippet.
+// - videoId: Returns the captions for the specified video.
 func (r *CaptionsService) List(part []string, videoId string) *CaptionsListCall {
 	c := &CaptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -11150,7 +11309,7 @@ func (c *CaptionsListCall) Header() http.Header {
 
 func (c *CaptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11272,6 +11431,11 @@ type CaptionsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more caption resource parts that the API response will include.
+//   The part names that you can include in the parameter value are id
+//   and snippet.
 func (r *CaptionsService) Update(part []string, caption *Caption) *CaptionsUpdateCall {
 	c := &CaptionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -11377,7 +11541,7 @@ func (c *CaptionsUpdateCall) Header() http.Header {
 
 func (c *CaptionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11664,7 +11828,7 @@ func (c *ChannelBannersInsertCall) Header() http.Header {
 
 func (c *ChannelBannersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11820,6 +11984,8 @@ type ChannelSectionsDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - id: .
 func (r *ChannelSectionsService) Delete(id string) *ChannelSectionsDeleteCall {
 	c := &ChannelSectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -11870,7 +12036,7 @@ func (c *ChannelSectionsDeleteCall) Header() http.Header {
 
 func (c *ChannelSectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11941,6 +12107,12 @@ type ChannelSectionsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   names that you can include in the parameter value are snippet and
+//   contentDetails.
 func (r *ChannelSectionsService) Insert(part []string, channelsection *ChannelSection) *ChannelSectionsInsertCall {
 	c := &ChannelSectionsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -12016,7 +12188,7 @@ func (c *ChannelSectionsInsertCall) Header() http.Header {
 
 func (c *ChannelSectionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12130,6 +12302,17 @@ type ChannelSectionsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more channelSection resource properties that the API response
+//   will include. The part names that you can include in the parameter
+//   value are id, snippet, and contentDetails. If the parameter
+//   identifies a property that contains child properties, the child
+//   properties will be included in the response. For example, in a
+//   channelSection resource, the snippet property contains other
+//   properties, such as a display title for the channelSection. If you
+//   set *part=snippet*, the API response will also contain all of those
+//   nested properties.
 func (r *ChannelSectionsService) List(part []string) *ChannelSectionsListCall {
 	c := &ChannelSectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -12218,7 +12401,7 @@ func (c *ChannelSectionsListCall) Header() http.Header {
 
 func (c *ChannelSectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12344,6 +12527,12 @@ type ChannelSectionsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   names that you can include in the parameter value are snippet and
+//   contentDetails.
 func (r *ChannelSectionsService) Update(part []string, channelsection *ChannelSection) *ChannelSectionsUpdateCall {
 	c := &ChannelSectionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -12395,7 +12584,7 @@ func (c *ChannelSectionsUpdateCall) Header() http.Header {
 
 func (c *ChannelSectionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12504,6 +12693,15 @@ type ChannelsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more channel resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in a channel resource, the contentDetails property
+//   contains other properties, such as the uploads properties. As such,
+//   if you set *part=contentDetails*, the API response will also
+//   contain all of those nested properties.
 func (r *ChannelsService) List(part []string) *ChannelsListCall {
 	c := &ChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -12634,7 +12832,7 @@ func (c *ChannelsListCall) Header() http.Header {
 
 func (c *ChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12811,6 +13009,15 @@ type ChannelsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The API
+//   currently only allows the parameter value to be set to either
+//   brandingSettings or invideoPromotion. (You cannot update both of
+//   those parts with a single request.) Note that this method overrides
+//   the existing values for all of the mutable properties that are
+//   contained in any parts that the parameter value specifies.
 func (r *ChannelsService) Update(part []string, channel *Channel) *ChannelsUpdateCall {
 	c := &ChannelsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -12860,7 +13067,7 @@ func (c *ChannelsUpdateCall) Header() http.Header {
 
 func (c *ChannelsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12969,6 +13176,10 @@ type CommentThreadsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter identifies the properties that the API
+//   response will include. Set the parameter value to snippet. The
+//   snippet part has a quota cost of 2 units.
 func (r *CommentThreadsService) Insert(part []string, commentthread *CommentThread) *CommentThreadsInsertCall {
 	c := &CommentThreadsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -13003,7 +13214,7 @@ func (c *CommentThreadsInsertCall) Header() http.Header {
 
 func (c *CommentThreadsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13105,6 +13316,10 @@ type CommentThreadsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more commentThread resource properties that the API response
+//   will include.
 func (r *CommentThreadsService) List(part []string) *CommentThreadsListCall {
 	c := &CommentThreadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -13243,7 +13458,7 @@ func (c *CommentThreadsListCall) Header() http.Header {
 
 func (c *CommentThreadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13439,142 +13654,6 @@ func (c *CommentThreadsListCall) Pages(ctx context.Context, f func(*CommentThrea
 	}
 }
 
-// method id "youtube.commentThreads.update":
-
-type CommentThreadsUpdateCall struct {
-	s             *Service
-	commentthread *CommentThread
-	urlParams_    gensupport.URLParams
-	ctx_          context.Context
-	header_       http.Header
-}
-
-// Update: Updates an existing resource.
-func (r *CommentThreadsService) Update(part []string, commentthread *CommentThread) *CommentThreadsUpdateCall {
-	c := &CommentThreadsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.SetMulti("part", append([]string{}, part...))
-	c.commentthread = commentthread
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *CommentThreadsUpdateCall) Fields(s ...googleapi.Field) *CommentThreadsUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *CommentThreadsUpdateCall) Context(ctx context.Context) *CommentThreadsUpdateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *CommentThreadsUpdateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *CommentThreadsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commentthread)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "youtube/v3/commentThreads")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "youtube.commentThreads.update" call.
-// Exactly one of *CommentThread or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *CommentThread.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *CommentThreadsUpdateCall) Do(opts ...googleapi.CallOption) (*CommentThread, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &CommentThread{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates an existing resource.",
-	//   "flatPath": "youtube/v3/commentThreads",
-	//   "httpMethod": "PUT",
-	//   "id": "youtube.commentThreads.update",
-	//   "parameterOrder": [
-	//     "part"
-	//   ],
-	//   "parameters": {
-	//     "part": {
-	//       "description": "The *part* parameter specifies a comma-separated list of commentThread resource properties that the API response will include. You must at least include the snippet part in the parameter value since that part contains all of the properties that the API request can update.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "youtube/v3/commentThreads",
-	//   "request": {
-	//     "$ref": "CommentThread"
-	//   },
-	//   "response": {
-	//     "$ref": "CommentThread"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube.force-ssl"
-	//   ]
-	// }
-
-}
-
 // method id "youtube.comments.delete":
 
 type CommentsDeleteCall struct {
@@ -13585,6 +13664,8 @@ type CommentsDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - id: .
 func (r *CommentsService) Delete(id string) *CommentsDeleteCall {
 	c := &CommentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -13618,7 +13699,7 @@ func (c *CommentsDeleteCall) Header() http.Header {
 
 func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13682,6 +13763,10 @@ type CommentsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter identifies the properties that the API
+//   response will include. Set the parameter value to snippet. The
+//   snippet part has a quota cost of 2 units.
 func (r *CommentsService) Insert(part []string, comment *Comment) *CommentsInsertCall {
 	c := &CommentsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -13716,7 +13801,7 @@ func (c *CommentsInsertCall) Header() http.Header {
 
 func (c *CommentsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13818,6 +13903,10 @@ type CommentsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more comment resource properties that the API response will
+//   include.
 func (r *CommentsService) List(part []string) *CommentsListCall {
 	c := &CommentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -13907,7 +13996,7 @@ func (c *CommentsListCall) Header() http.Header {
 
 func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14066,6 +14155,9 @@ type CommentsMarkAsSpamCall struct {
 
 // MarkAsSpam: Expresses the caller's opinion that one or more comments
 // should be flagged as spam.
+//
+// - id: Flags the comments with the given IDs as spam in the caller's
+//   opinion.
 func (r *CommentsService) MarkAsSpam(id []string) *CommentsMarkAsSpamCall {
 	c := &CommentsMarkAsSpamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("id", append([]string{}, id...))
@@ -14099,7 +14191,7 @@ func (c *CommentsMarkAsSpamCall) Header() http.Header {
 
 func (c *CommentsMarkAsSpamCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14165,6 +14257,14 @@ type CommentsSetModerationStatusCall struct {
 
 // SetModerationStatus: Sets the moderation status of one or more
 // comments.
+//
+// - id: Modifies the moderation status of the comments with the given
+//   IDs.
+// - moderationStatus: Specifies the requested moderation status. Note,
+//   comments can be in statuses, which are not available through this
+//   call. For example, this call does not allow to mark a comment as
+//   'likely spam'. Valid values: MODERATION_STATUS_PUBLISHED,
+//   MODERATION_STATUS_HELD_FOR_REVIEW, MODERATION_STATUS_REJECTED.
 func (r *CommentsService) SetModerationStatus(id []string, moderationStatus string) *CommentsSetModerationStatusCall {
 	c := &CommentsSetModerationStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("id", append([]string{}, id...))
@@ -14208,7 +14308,7 @@ func (c *CommentsSetModerationStatusCall) Header() http.Header {
 
 func (c *CommentsSetModerationStatusCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14299,6 +14399,11 @@ type CommentsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter identifies the properties that the API
+//   response will include. You must at least include the snippet part
+//   in the parameter value since that part contains all of the
+//   properties that the API request can update.
 func (r *CommentsService) Update(part []string, comment *Comment) *CommentsUpdateCall {
 	c := &CommentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -14333,7 +14438,7 @@ func (c *CommentsUpdateCall) Header() http.Header {
 
 func (c *CommentsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14435,6 +14540,10 @@ type I18nLanguagesListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies the i18nLanguage resource
+//   properties that the API response will include. Set the parameter
+//   value to snippet.
 func (r *I18nLanguagesService) List(part []string) *I18nLanguagesListCall {
 	c := &I18nLanguagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -14484,7 +14593,7 @@ func (c *I18nLanguagesListCall) Header() http.Header {
 
 func (c *I18nLanguagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14589,6 +14698,10 @@ type I18nRegionsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies the i18nRegion resource
+//   properties that the API response will include. Set the parameter
+//   value to snippet.
 func (r *I18nRegionsService) List(part []string) *I18nRegionsListCall {
 	c := &I18nRegionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -14638,7 +14751,7 @@ func (c *I18nRegionsListCall) Header() http.Header {
 
 func (c *I18nRegionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14742,6 +14855,12 @@ type LiveBroadcastsBindCall struct {
 }
 
 // Bind: Bind a broadcast to a stream.
+//
+// - id: Broadcast to bind to the stream.
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more liveBroadcast resource properties that the API response
+//   will include. The part names that you can include in the parameter
+//   value are id, snippet, contentDetails, and status.
 func (r *LiveBroadcastsService) Bind(id string, part []string) *LiveBroadcastsBindCall {
 	c := &LiveBroadcastsBindCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -14824,7 +14943,7 @@ func (c *LiveBroadcastsBindCall) Header() http.Header {
 
 func (c *LiveBroadcastsBindCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14930,236 +15049,6 @@ func (c *LiveBroadcastsBindCall) Do(opts ...googleapi.CallOption) (*LiveBroadcas
 
 }
 
-// method id "youtube.liveBroadcasts.control":
-
-type LiveBroadcastsControlCall struct {
-	s          *Service
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Control: Slate and recording control of the live broadcast. Support
-// actions: slate on/off, recording start/stop/pause/resume. Design doc:
-// goto/yt-api-liveBroadcast-control
-func (r *LiveBroadcastsService) Control(id string, part []string) *LiveBroadcastsControlCall {
-	c := &LiveBroadcastsControlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.urlParams_.Set("id", id)
-	c.urlParams_.SetMulti("part", append([]string{}, part...))
-	return c
-}
-
-// DisplaySlate sets the optional parameter "displaySlate": Whether
-// display or hide slate.
-func (c *LiveBroadcastsControlCall) DisplaySlate(displaySlate bool) *LiveBroadcastsControlCall {
-	c.urlParams_.Set("displaySlate", fmt.Sprint(displaySlate))
-	return c
-}
-
-// OffsetTimeMs sets the optional parameter "offsetTimeMs": The exact
-// time when the actions (e.g. slate on) are executed. It is an offset
-// from the first frame of the monitor stream. If not set, it means
-// "now" or ASAP. This field should not be set if the monitor stream is
-// disabled, otherwise an error will be returned.
-func (c *LiveBroadcastsControlCall) OffsetTimeMs(offsetTimeMs uint64) *LiveBroadcastsControlCall {
-	c.urlParams_.Set("offsetTimeMs", fmt.Sprint(offsetTimeMs))
-	return c
-}
-
-// OnBehalfOfContentOwner sets the optional parameter
-// "onBehalfOfContentOwner": *Note:* This parameter is intended
-// exclusively for YouTube content partners. The
-// *onBehalfOfContentOwner* parameter indicates that the request's
-// authorization credentials identify a YouTube CMS user who is acting
-// on behalf of the content owner specified in the parameter value. This
-// parameter is intended for YouTube content partners that own and
-// manage many different YouTube channels. It allows content owners to
-// authenticate once and get access to all their video and channel data,
-// without having to provide authentication credentials for each
-// individual channel. The CMS account that the user authenticates with
-// must be linked to the specified YouTube content owner.
-func (c *LiveBroadcastsControlCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *LiveBroadcastsControlCall {
-	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
-	return c
-}
-
-// OnBehalfOfContentOwnerChannel sets the optional parameter
-// "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended
-// exclusively for YouTube content partners. The
-// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube
-// channel ID of the channel to which a video is being added. This
-// parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in
-// conjunction with that parameter. In addition, the request must be
-// authorized using a CMS account that is linked to the content owner
-// that the onBehalfOfContentOwner parameter specifies. Finally, the
-// channel that the onBehalfOfContentOwnerChannel parameter value
-// specifies must be linked to the content owner that the
-// onBehalfOfContentOwner parameter specifies. This parameter is
-// intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate
-// once and perform actions on behalf of the channel specified in the
-// parameter value, without having to provide authentication credentials
-// for each separate channel.
-func (c *LiveBroadcastsControlCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveBroadcastsControlCall {
-	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
-	return c
-}
-
-// Walltime sets the optional parameter "walltime": The wall clock time
-// at which the action should be executed. Only one of offset_time_ms
-// and walltime may be set at a time.
-func (c *LiveBroadcastsControlCall) Walltime(walltime string) *LiveBroadcastsControlCall {
-	c.urlParams_.Set("walltime", walltime)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *LiveBroadcastsControlCall) Fields(s ...googleapi.Field) *LiveBroadcastsControlCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *LiveBroadcastsControlCall) Context(ctx context.Context) *LiveBroadcastsControlCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *LiveBroadcastsControlCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *LiveBroadcastsControlCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "youtube/v3/liveBroadcasts/control")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "youtube.liveBroadcasts.control" call.
-// Exactly one of *LiveBroadcast or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *LiveBroadcast.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *LiveBroadcastsControlCall) Do(opts ...googleapi.CallOption) (*LiveBroadcast, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &LiveBroadcast{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Slate and recording control of the live broadcast. Support actions: slate on/off, recording start/stop/pause/resume. Design doc: goto/yt-api-liveBroadcast-control",
-	//   "flatPath": "youtube/v3/liveBroadcasts/control",
-	//   "httpMethod": "POST",
-	//   "id": "youtube.liveBroadcasts.control",
-	//   "parameterOrder": [
-	//     "id",
-	//     "part"
-	//   ],
-	//   "parameters": {
-	//     "displaySlate": {
-	//       "description": "Whether display or hide slate.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "id": {
-	//       "description": "Broadcast to operate.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "offsetTimeMs": {
-	//       "description": "The exact time when the actions (e.g. slate on) are executed. It is an offset from the first frame of the monitor stream. If not set, it means \"now\" or ASAP. This field should not be set if the monitor stream is disabled, otherwise an error will be returned.",
-	//       "format": "uint64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwner": {
-	//       "description": "*Note:* This parameter is intended exclusively for YouTube content partners. The *onBehalfOfContentOwner* parameter indicates that the request's authorization credentials identify a YouTube CMS user who is acting on behalf of the content owner specified in the parameter value. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and get access to all their video and channel data, without having to provide authentication credentials for each individual channel. The CMS account that the user authenticates with must be linked to the specified YouTube content owner.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "onBehalfOfContentOwnerChannel": {
-	//       "description": "This parameter can only be used in a properly authorized request. *Note:* This parameter is intended exclusively for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID of the channel to which a video is being added. This parameter is required when a request specifies a value for the onBehalfOfContentOwner parameter, and it can only be used in conjunction with that parameter. In addition, the request must be authorized using a CMS account that is linked to the content owner that the onBehalfOfContentOwner parameter specifies. Finally, the channel that the onBehalfOfContentOwnerChannel parameter value specifies must be linked to the content owner that the onBehalfOfContentOwner parameter specifies. This parameter is intended for YouTube content partners that own and manage many different YouTube channels. It allows content owners to authenticate once and perform actions on behalf of the channel specified in the parameter value, without having to provide authentication credentials for each separate channel.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "part": {
-	//       "description": "The *part* parameter specifies a comma-separated list of one or more liveBroadcast resource properties that the API response will include. The part names that you can include in the parameter value are id, snippet, contentDetails, and status.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "walltime": {
-	//       "description": "The wall clock time at which the action should be executed. Only one of offset_time_ms and walltime may be set at a time.",
-	//       "format": "google-datetime",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "youtube/v3/liveBroadcasts/control",
-	//   "response": {
-	//     "$ref": "LiveBroadcast"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/youtube",
-	//     "https://www.googleapis.com/auth/youtube.force-ssl"
-	//   ]
-	// }
-
-}
-
 // method id "youtube.liveBroadcasts.delete":
 
 type LiveBroadcastsDeleteCall struct {
@@ -15170,6 +15059,8 @@ type LiveBroadcastsDeleteCall struct {
 }
 
 // Delete: Delete a given broadcast.
+//
+// - id: Broadcast to delete.
 func (r *LiveBroadcastsService) Delete(id string) *LiveBroadcastsDeleteCall {
 	c := &LiveBroadcastsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -15244,7 +15135,7 @@ func (c *LiveBroadcastsDeleteCall) Header() http.Header {
 
 func (c *LiveBroadcastsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15320,6 +15211,12 @@ type LiveBroadcastsInsertCall struct {
 }
 
 // Insert: Inserts a new stream for the authenticated user.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   properties that you can include in the parameter value are id,
+//   snippet, contentDetails, and status.
 func (r *LiveBroadcastsService) Insert(part []string, livebroadcast *LiveBroadcast) *LiveBroadcastsInsertCall {
 	c := &LiveBroadcastsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -15395,7 +15292,7 @@ func (c *LiveBroadcastsInsertCall) Header() http.Header {
 
 func (c *LiveBroadcastsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15509,6 +15406,11 @@ type LiveBroadcastsListCall struct {
 
 // List: Retrieve the list of broadcasts associated with the given
 // channel.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more liveBroadcast resource properties that the API response
+//   will include. The part names that you can include in the parameter
+//   value are id, snippet, contentDetails, status and statistics.
 func (r *LiveBroadcastsService) List(part []string) *LiveBroadcastsListCall {
 	c := &LiveBroadcastsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -15650,7 +15552,7 @@ func (c *LiveBroadcastsListCall) Header() http.Header {
 
 func (c *LiveBroadcastsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15840,6 +15742,14 @@ type LiveBroadcastsTransitionCall struct {
 }
 
 // Transition: Transition a broadcast to a given status.
+//
+// - broadcastStatus: The status to which the broadcast is going to
+//   transition.
+// - id: Broadcast to transition.
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more liveBroadcast resource properties that the API response
+//   will include. The part names that you can include in the parameter
+//   value are id, snippet, contentDetails, and status.
 func (r *LiveBroadcastsService) Transition(broadcastStatus string, id string, part []string) *LiveBroadcastsTransitionCall {
 	c := &LiveBroadcastsTransitionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("broadcastStatus", broadcastStatus)
@@ -15916,7 +15826,7 @@ func (c *LiveBroadcastsTransitionCall) Header() http.Header {
 
 func (c *LiveBroadcastsTransitionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16047,6 +15957,21 @@ type LiveBroadcastsUpdateCall struct {
 }
 
 // Update: Updates an existing broadcast for the authenticated user.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   properties that you can include in the parameter value are id,
+//   snippet, contentDetails, and status. Note that this method will
+//   override the existing values for all of the mutable properties that
+//   are contained in any parts that the parameter value specifies. For
+//   example, a broadcast's privacy status is defined in the status
+//   part. As such, if your request is updating a private or unlisted
+//   broadcast, and the request's part parameter value includes the
+//   status part, the broadcast's privacy setting will be updated to
+//   whatever value the request body specifies. If the request body does
+//   not specify a value, the existing privacy setting will be removed
+//   and the broadcast will revert to the default privacy setting.
 func (r *LiveBroadcastsService) Update(part []string, livebroadcast *LiveBroadcast) *LiveBroadcastsUpdateCall {
 	c := &LiveBroadcastsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -16122,7 +16047,7 @@ func (c *LiveBroadcastsUpdateCall) Header() http.Header {
 
 func (c *LiveBroadcastsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16234,6 +16159,8 @@ type LiveChatBansDeleteCall struct {
 }
 
 // Delete: Deletes a chat ban.
+//
+// - id: .
 func (r *LiveChatBansService) Delete(id string) *LiveChatBansDeleteCall {
 	c := &LiveChatBansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -16267,7 +16194,7 @@ func (c *LiveChatBansDeleteCall) Header() http.Header {
 
 func (c *LiveChatBansDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16332,6 +16259,11 @@ type LiveChatBansInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response returns. Set the
+//   parameter value to snippet.
 func (r *LiveChatBansService) Insert(part []string, livechatban *LiveChatBan) *LiveChatBansInsertCall {
 	c := &LiveChatBansInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -16366,7 +16298,7 @@ func (c *LiveChatBansInsertCall) Header() http.Header {
 
 func (c *LiveChatBansInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16468,6 +16400,8 @@ type LiveChatMessagesDeleteCall struct {
 }
 
 // Delete: Deletes a chat message.
+//
+// - id: .
 func (r *LiveChatMessagesService) Delete(id string) *LiveChatMessagesDeleteCall {
 	c := &LiveChatMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -16501,7 +16435,7 @@ func (c *LiveChatMessagesDeleteCall) Header() http.Header {
 
 func (c *LiveChatMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16566,6 +16500,11 @@ type LiveChatMessagesInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes. It identifies the
+//   properties that the write operation will set as well as the
+//   properties that the API response will include. Set the parameter
+//   value to snippet.
 func (r *LiveChatMessagesService) Insert(part []string, livechatmessage *LiveChatMessage) *LiveChatMessagesInsertCall {
 	c := &LiveChatMessagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -16600,7 +16539,7 @@ func (c *LiveChatMessagesInsertCall) Header() http.Header {
 
 func (c *LiveChatMessagesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16703,6 +16642,12 @@ type LiveChatMessagesListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - liveChatId: The id of the live chat for which comments should be
+//   returned.
+// - part: The *part* parameter specifies the liveChatComment resource
+//   parts that the API response will include. Supported values are id
+//   and snippet.
 func (r *LiveChatMessagesService) List(liveChatId string, part []string) *LiveChatMessagesListCall {
 	c := &LiveChatMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("liveChatId", liveChatId)
@@ -16779,7 +16724,7 @@ func (c *LiveChatMessagesListCall) Header() http.Header {
 
 func (c *LiveChatMessagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16932,6 +16877,8 @@ type LiveChatModeratorsDeleteCall struct {
 }
 
 // Delete: Deletes a chat moderator.
+//
+// - id: .
 func (r *LiveChatModeratorsService) Delete(id string) *LiveChatModeratorsDeleteCall {
 	c := &LiveChatModeratorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -16965,7 +16912,7 @@ func (c *LiveChatModeratorsDeleteCall) Header() http.Header {
 
 func (c *LiveChatModeratorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17030,6 +16977,11 @@ type LiveChatModeratorsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response returns. Set the
+//   parameter value to snippet.
 func (r *LiveChatModeratorsService) Insert(part []string, livechatmoderator *LiveChatModerator) *LiveChatModeratorsInsertCall {
 	c := &LiveChatModeratorsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -17064,7 +17016,7 @@ func (c *LiveChatModeratorsInsertCall) Header() http.Header {
 
 func (c *LiveChatModeratorsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17167,6 +17119,12 @@ type LiveChatModeratorsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - liveChatId: The id of the live chat for which moderators should be
+//   returned.
+// - part: The *part* parameter specifies the liveChatModerator resource
+//   parts that the API response will include. Supported values are id
+//   and snippet.
 func (r *LiveChatModeratorsService) List(liveChatId string, part []string) *LiveChatModeratorsListCall {
 	c := &LiveChatModeratorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("liveChatId", liveChatId)
@@ -17228,7 +17186,7 @@ func (c *LiveChatModeratorsListCall) Header() http.Header {
 
 func (c *LiveChatModeratorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17368,6 +17326,8 @@ type LiveStreamsDeleteCall struct {
 }
 
 // Delete: Deletes an existing stream for the authenticated user.
+//
+// - id: .
 func (r *LiveStreamsService) Delete(id string) *LiveStreamsDeleteCall {
 	c := &LiveStreamsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -17442,7 +17402,7 @@ func (c *LiveStreamsDeleteCall) Header() http.Header {
 
 func (c *LiveStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17517,6 +17477,12 @@ type LiveStreamsInsertCall struct {
 }
 
 // Insert: Inserts a new stream for the authenticated user.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   properties that you can include in the parameter value are id,
+//   snippet, cdn, content_details, and status.
 func (r *LiveStreamsService) Insert(part []string, livestream *LiveStream) *LiveStreamsInsertCall {
 	c := &LiveStreamsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -17592,7 +17558,7 @@ func (c *LiveStreamsInsertCall) Header() http.Header {
 
 func (c *LiveStreamsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17706,6 +17672,11 @@ type LiveStreamsListCall struct {
 
 // List: Retrieve the list of streams associated with the given channel.
 // --
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more liveStream resource properties that the API response will
+//   include. The part names that you can include in the parameter value
+//   are id, snippet, cdn, and status.
 func (r *LiveStreamsService) List(part []string) *LiveStreamsListCall {
 	c := &LiveStreamsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -17820,7 +17791,7 @@ func (c *LiveStreamsListCall) Header() http.Header {
 
 func (c *LiveStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17974,6 +17945,16 @@ type LiveStreamsUpdateCall struct {
 }
 
 // Update: Updates an existing stream for the authenticated user.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. The part
+//   properties that you can include in the parameter value are id,
+//   snippet, cdn, and status. Note that this method will override the
+//   existing values for all of the mutable properties that are
+//   contained in any parts that the parameter value specifies. If the
+//   request body does not specify a value for a mutable property, the
+//   existing value for that property will be removed.
 func (r *LiveStreamsService) Update(part []string, livestream *LiveStream) *LiveStreamsUpdateCall {
 	c := &LiveStreamsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -18049,7 +18030,7 @@ func (c *LiveStreamsUpdateCall) Header() http.Header {
 
 func (c *LiveStreamsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18163,6 +18144,9 @@ type MembersListCall struct {
 
 // List: Retrieves a list of members that match the request criteria for
 // a channel.
+//
+// - part: The *part* parameter specifies the member resource parts that
+//   the API response will include. Set the parameter value to snippet.
 func (r *MembersService) List(part []string) *MembersListCall {
 	c := &MembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -18254,7 +18238,7 @@ func (c *MembersListCall) Header() http.Header {
 
 func (c *MembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18413,6 +18397,10 @@ type MembershipsLevelsListCall struct {
 
 // List: Retrieves a list of all pricing levels offered by a creator to
 // the fans.
+//
+// - part: The *part* parameter specifies the membershipsLevel resource
+//   parts that the API response will include. Supported values are id
+//   and snippet.
 func (r *MembershipsLevelsService) List(part []string) *MembershipsLevelsListCall {
 	c := &MembershipsLevelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -18456,7 +18444,7 @@ func (c *MembershipsLevelsListCall) Header() http.Header {
 
 func (c *MembershipsLevelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18552,6 +18540,8 @@ type PlaylistItemsDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - id: .
 func (r *PlaylistItemsService) Delete(id string) *PlaylistItemsDeleteCall {
 	c := &PlaylistItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -18602,7 +18592,7 @@ func (c *PlaylistItemsDeleteCall) Header() http.Header {
 
 func (c *PlaylistItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18673,6 +18663,10 @@ type PlaylistItemsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include.
 func (r *PlaylistItemsService) Insert(part []string, playlistitem *PlaylistItem) *PlaylistItemsInsertCall {
 	c := &PlaylistItemsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -18724,7 +18718,7 @@ func (c *PlaylistItemsInsertCall) Header() http.Header {
 
 func (c *PlaylistItemsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18833,6 +18827,16 @@ type PlaylistItemsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more playlistItem resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in a playlistItem resource, the snippet property
+//   contains numerous fields, including the title, description,
+//   position, and resourceId properties. As such, if you set
+//   *part=snippet*, the API response will contain all of those
+//   properties.
 func (r *PlaylistItemsService) List(part []string) *PlaylistItemsListCall {
 	c := &PlaylistItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -18930,7 +18934,7 @@ func (c *PlaylistItemsListCall) Header() http.Header {
 
 func (c *PlaylistItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19085,6 +19089,21 @@ type PlaylistItemsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. Note
+//   that this method will override the existing values for all of the
+//   mutable properties that are contained in any parts that the
+//   parameter value specifies. For example, a playlist item can specify
+//   a start time and end time, which identify the times portion of the
+//   video that should play when users watch the video in the playlist.
+//   If your request is updating a playlist item that sets these values,
+//   and the request's part parameter value includes the contentDetails
+//   part, the playlist item's start and end times will be updated to
+//   whatever value the request body specifies. If the request body does
+//   not specify values, the existing start and end times will be
+//   removed and replaced with the default settings.
 func (r *PlaylistItemsService) Update(part []string, playlistitem *PlaylistItem) *PlaylistItemsUpdateCall {
 	c := &PlaylistItemsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -19136,7 +19155,7 @@ func (c *PlaylistItemsUpdateCall) Header() http.Header {
 
 func (c *PlaylistItemsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19244,6 +19263,8 @@ type PlaylistsDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - id: .
 func (r *PlaylistsService) Delete(id string) *PlaylistsDeleteCall {
 	c := &PlaylistsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -19294,7 +19315,7 @@ func (c *PlaylistsDeleteCall) Header() http.Header {
 
 func (c *PlaylistsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19365,6 +19386,10 @@ type PlaylistsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include.
 func (r *PlaylistsService) Insert(part []string, playlist *Playlist) *PlaylistsInsertCall {
 	c := &PlaylistsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -19440,7 +19465,7 @@ func (c *PlaylistsInsertCall) Header() http.Header {
 
 func (c *PlaylistsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19554,6 +19579,15 @@ type PlaylistsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more playlist resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in a playlist resource, the snippet property contains
+//   properties like author, title, description, tags, and timeCreated.
+//   As such, if you set *part=snippet*, the API response will contain
+//   all of those properties.
 func (r *PlaylistsService) List(part []string) *PlaylistsListCall {
 	c := &PlaylistsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -19683,7 +19717,7 @@ func (c *PlaylistsListCall) Header() http.Header {
 
 func (c *PlaylistsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19849,6 +19883,16 @@ type PlaylistsUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. Note
+//   that this method will override the existing values for mutable
+//   properties that are contained in any parts that the request body
+//   specifies. For example, a playlist's description is contained in
+//   the snippet part, which must be included in the request body. If
+//   the request does not specify a value for the snippet.description
+//   property, the playlist's existing description will be deleted.
 func (r *PlaylistsService) Update(part []string, playlist *Playlist) *PlaylistsUpdateCall {
 	c := &PlaylistsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -19900,7 +19944,7 @@ func (c *PlaylistsUpdateCall) Header() http.Header {
 
 func (c *PlaylistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20009,6 +20053,10 @@ type SearchListCall struct {
 }
 
 // List: Retrieves a list of search resources
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more search resource properties that the API response will
+//   include. Set the parameter value to snippet.
 func (r *SearchService) List(part []string) *SearchListCall {
 	c := &SearchListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -20248,7 +20296,8 @@ func (c *SearchListCall) VideoDefinition(videoDefinition string) *SearchListCall
 // on 3d videos.
 //
 // Possible values:
-//   "any"
+//   "any" - Include both 3D and non-3D videos in returned results. This
+// is the default value.
 //   "2d" - Restrict search results to exclude 3D videos.
 //   "3d" - Restrict search results to only include 3D videos.
 func (c *SearchListCall) VideoDimension(videoDimension string) *SearchListCall {
@@ -20362,7 +20411,7 @@ func (c *SearchListCall) Header() http.Header {
 
 func (c *SearchListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20597,7 +20646,6 @@ func (c *SearchListCall) Do(opts ...googleapi.CallOption) (*SearchListResponse, 
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "default": "video,channel,playlist",
 	//       "description": "Restrict results to a particular set of resource types from One Platform.",
 	//       "location": "query",
 	//       "repeated": true,
@@ -20648,7 +20696,7 @@ func (c *SearchListCall) Do(opts ...googleapi.CallOption) (*SearchListResponse, 
 	//         "3d"
 	//       ],
 	//       "enumDescriptions": [
-	//         "",
+	//         "Include both 3D and non-3D videos in returned results. This is the default value.",
 	//         "Restrict search results to exclude 3D videos.",
 	//         "Restrict search results to only include 3D videos."
 	//       ],
@@ -20782,6 +20830,8 @@ type SubscriptionsDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - id: .
 func (r *SubscriptionsService) Delete(id string) *SubscriptionsDeleteCall {
 	c := &SubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -20815,7 +20865,7 @@ func (c *SubscriptionsDeleteCall) Header() http.Header {
 
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20881,6 +20931,10 @@ type SubscriptionsInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include.
 func (r *SubscriptionsService) Insert(part []string, subscription *Subscription) *SubscriptionsInsertCall {
 	c := &SubscriptionsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -20915,7 +20969,7 @@ func (c *SubscriptionsInsertCall) Header() http.Header {
 
 func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21019,6 +21073,15 @@ type SubscriptionsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more subscription resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in a subscription resource, the snippet property
+//   contains other properties, such as a display title for the
+//   subscription. If you set *part=snippet*, the API response will also
+//   contain all of those nested properties.
 func (r *SubscriptionsService) List(part []string) *SubscriptionsListCall {
 	c := &SubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -21176,7 +21239,7 @@ func (c *SubscriptionsListCall) Header() http.Header {
 
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21369,6 +21432,10 @@ type SuperChatEventsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies the superChatEvent resource
+//   parts that the API response will include. This parameter is
+//   currently not supported.
 func (r *SuperChatEventsService) List(part []string) *SuperChatEventsListCall {
 	c := &SuperChatEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -21436,7 +21503,7 @@ func (c *SuperChatEventsListCall) Header() http.Header {
 
 func (c *SuperChatEventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21523,7 +21590,7 @@ func (c *SuperChatEventsListCall) Do(opts ...googleapi.CallOption) (*SuperChatEv
 	//       "type": "string"
 	//     },
 	//     "part": {
-	//       "description": "The *part* parameter specifies the superChatEvent resource parts that the API response will include. Supported values are id and snippet.",
+	//       "description": "The *part* parameter specifies the superChatEvent resource parts that the API response will include. This parameter is currently not supported.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "required": true,
@@ -21575,10 +21642,18 @@ type TestsInsertCall struct {
 }
 
 // Insert: POST method.
+//
+// - part: .
 func (r *TestsService) Insert(part []string, testitem *TestItem) *TestsInsertCall {
 	c := &TestsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
 	c.testitem = testitem
+	return c
+}
+
+// ExternalChannelId sets the optional parameter "externalChannelId":
+func (c *TestsInsertCall) ExternalChannelId(externalChannelId string) *TestsInsertCall {
+	c.urlParams_.Set("externalChannelId", externalChannelId)
 	return c
 }
 
@@ -21609,7 +21684,7 @@ func (c *TestsInsertCall) Header() http.Header {
 
 func (c *TestsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21678,6 +21753,10 @@ func (c *TestsInsertCall) Do(opts ...googleapi.CallOption) (*TestItem, error) {
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "externalChannelId": {
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "part": {
 	//       "location": "query",
 	//       "repeated": true,
@@ -21709,10 +21788,21 @@ type ThirdPartyLinksDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - linkingToken: Delete the partner links with the given linking
+//   token.
+// - type: Type of the link to be deleted.
 func (r *ThirdPartyLinksService) Delete(linkingToken string, type_ string) *ThirdPartyLinksDeleteCall {
 	c := &ThirdPartyLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("linkingToken", linkingToken)
 	c.urlParams_.Set("type", type_)
+	return c
+}
+
+// ExternalChannelId sets the optional parameter "externalChannelId":
+// Channel ID to which changes should be applied, for delegation.
+func (c *ThirdPartyLinksDeleteCall) ExternalChannelId(externalChannelId string) *ThirdPartyLinksDeleteCall {
+	c.urlParams_.Set("externalChannelId", externalChannelId)
 	return c
 }
 
@@ -21750,7 +21840,7 @@ func (c *ThirdPartyLinksDeleteCall) Header() http.Header {
 
 func (c *ThirdPartyLinksDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21790,6 +21880,11 @@ func (c *ThirdPartyLinksDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     "type"
 	//   ],
 	//   "parameters": {
+	//     "externalChannelId": {
+	//       "description": "Channel ID to which changes should be applied, for delegation.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "linkingToken": {
 	//       "description": "Delete the partner links with the given linking token.",
 	//       "location": "query",
@@ -21833,10 +21928,21 @@ type ThirdPartyLinksInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter specifies the thirdPartyLink resource
+//   parts that the API request and response will include. Supported
+//   values are linkingToken, status, and snippet.
 func (r *ThirdPartyLinksService) Insert(part []string, thirdpartylink *ThirdPartyLink) *ThirdPartyLinksInsertCall {
 	c := &ThirdPartyLinksInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
 	c.thirdpartylink = thirdpartylink
+	return c
+}
+
+// ExternalChannelId sets the optional parameter "externalChannelId":
+// Channel ID to which changes should be applied, for delegation.
+func (c *ThirdPartyLinksInsertCall) ExternalChannelId(externalChannelId string) *ThirdPartyLinksInsertCall {
+	c.urlParams_.Set("externalChannelId", externalChannelId)
 	return c
 }
 
@@ -21867,7 +21973,7 @@ func (c *ThirdPartyLinksInsertCall) Header() http.Header {
 
 func (c *ThirdPartyLinksInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21936,6 +22042,11 @@ func (c *ThirdPartyLinksInsertCall) Do(opts ...googleapi.CallOption) (*ThirdPart
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "externalChannelId": {
+	//       "description": "Channel ID to which changes should be applied, for delegation.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "part": {
 	//       "description": "The *part* parameter specifies the thirdPartyLink resource parts that the API request and response will include. Supported values are linkingToken, status, and snippet.",
 	//       "location": "query",
@@ -21966,9 +22077,20 @@ type ThirdPartyLinksListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies the thirdPartyLink resource
+//   parts that the API response will include. Supported values are
+//   linkingToken, status, and snippet.
 func (r *ThirdPartyLinksService) List(part []string) *ThirdPartyLinksListCall {
 	c := &ThirdPartyLinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
+	return c
+}
+
+// ExternalChannelId sets the optional parameter "externalChannelId":
+// Channel ID to which changes should be applied, for delegation.
+func (c *ThirdPartyLinksListCall) ExternalChannelId(externalChannelId string) *ThirdPartyLinksListCall {
+	c.urlParams_.Set("externalChannelId", externalChannelId)
 	return c
 }
 
@@ -22029,7 +22151,7 @@ func (c *ThirdPartyLinksListCall) Header() http.Header {
 
 func (c *ThirdPartyLinksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22096,6 +22218,11 @@ func (c *ThirdPartyLinksListCall) Do(opts ...googleapi.CallOption) (*ThirdPartyL
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "externalChannelId": {
+	//       "description": "Channel ID to which changes should be applied, for delegation.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "linkingToken": {
 	//       "description": "Get a third party link with the given linking token.",
 	//       "location": "query",
@@ -22141,10 +22268,21 @@ type ThirdPartyLinksUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter specifies the thirdPartyLink resource
+//   parts that the API request and response will include. Supported
+//   values are linkingToken, status, and snippet.
 func (r *ThirdPartyLinksService) Update(part []string, thirdpartylink *ThirdPartyLink) *ThirdPartyLinksUpdateCall {
 	c := &ThirdPartyLinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
 	c.thirdpartylink = thirdpartylink
+	return c
+}
+
+// ExternalChannelId sets the optional parameter "externalChannelId":
+// Channel ID to which changes should be applied, for delegation.
+func (c *ThirdPartyLinksUpdateCall) ExternalChannelId(externalChannelId string) *ThirdPartyLinksUpdateCall {
+	c.urlParams_.Set("externalChannelId", externalChannelId)
 	return c
 }
 
@@ -22175,7 +22313,7 @@ func (c *ThirdPartyLinksUpdateCall) Header() http.Header {
 
 func (c *ThirdPartyLinksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22244,6 +22382,11 @@ func (c *ThirdPartyLinksUpdateCall) Do(opts ...googleapi.CallOption) (*ThirdPart
 	//     "part"
 	//   ],
 	//   "parameters": {
+	//     "externalChannelId": {
+	//       "description": "Channel ID to which changes should be applied, for delegation.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "part": {
 	//       "description": "The *part* parameter specifies the thirdPartyLink resource parts that the API request and response will include. Supported values are linkingToken, status, and snippet.",
 	//       "location": "query",
@@ -22276,6 +22419,9 @@ type ThumbnailsSetCall struct {
 // Set: As this is not an insert in a strict sense (it supports
 // uploading/setting of a thumbnail for multiple videos, which doesn't
 // result in creation of a single resource), I use a custom verb here.
+//
+// - videoId: Returns the Thumbnail with the given video IDs for Stubby
+//   or Apiary.
 func (r *ThumbnailsService) Set(videoId string) *ThumbnailsSetCall {
 	c := &ThumbnailsSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("videoId", videoId)
@@ -22366,7 +22512,7 @@ func (c *ThumbnailsSetCall) Header() http.Header {
 
 func (c *ThumbnailsSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22514,6 +22660,10 @@ type VideoAbuseReportReasonsListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies the videoCategory resource
+//   parts that the API response will include. Supported values are id
+//   and snippet.
 func (r *VideoAbuseReportReasonsService) List(part []string) *VideoAbuseReportReasonsListCall {
 	c := &VideoAbuseReportReasonsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -22563,7 +22713,7 @@ func (c *VideoAbuseReportReasonsListCall) Header() http.Header {
 
 func (c *VideoAbuseReportReasonsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22668,6 +22818,10 @@ type VideoCategoriesListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies the videoCategory resource
+//   properties that the API response will include. Set the parameter
+//   value to snippet.
 func (r *VideoCategoriesService) List(part []string) *VideoCategoriesListCall {
 	c := &VideoCategoriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -22730,7 +22884,7 @@ func (c *VideoCategoriesListCall) Header() http.Header {
 
 func (c *VideoCategoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22844,6 +22998,8 @@ type VideosDeleteCall struct {
 }
 
 // Delete: Deletes a resource.
+//
+// - id: .
 func (r *VideosService) Delete(id string) *VideosDeleteCall {
 	c := &VideosDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -22895,7 +23051,7 @@ func (c *VideosDeleteCall) Header() http.Header {
 
 func (c *VideosDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22967,6 +23123,8 @@ type VideosGetRatingCall struct {
 
 // GetRating: Retrieves the ratings that the authorized user gave to a
 // list of specified videos.
+//
+// - id: .
 func (r *VideosService) GetRating(id []string) *VideosGetRatingCall {
 	c := &VideosGetRatingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("id", append([]string{}, id...))
@@ -23027,7 +23185,7 @@ func (c *VideosGetRatingCall) Header() http.Header {
 
 func (c *VideosGetRatingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23049,13 +23207,13 @@ func (c *VideosGetRatingCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "youtube.videos.getRating" call.
-// Exactly one of *VideoRatingListResponse or error will be non-nil. Any
+// Exactly one of *VideoGetRatingResponse or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
-// *VideoRatingListResponse.ServerResponse.Header or (if a response was
+// *VideoGetRatingResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *VideosGetRatingCall) Do(opts ...googleapi.CallOption) (*VideoRatingListResponse, error) {
+func (c *VideosGetRatingCall) Do(opts ...googleapi.CallOption) (*VideoGetRatingResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -23074,7 +23232,7 @@ func (c *VideosGetRatingCall) Do(opts ...googleapi.CallOption) (*VideoRatingList
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &VideoRatingListResponse{
+	ret := &VideoGetRatingResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -23108,7 +23266,7 @@ func (c *VideosGetRatingCall) Do(opts ...googleapi.CallOption) (*VideoRatingList
 	//   },
 	//   "path": "youtube/v3/videos/getRating",
 	//   "response": {
-	//     "$ref": "VideoRatingListResponse"
+	//     "$ref": "VideoGetRatingResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/youtube",
@@ -23131,6 +23289,16 @@ type VideosInsertCall struct {
 }
 
 // Insert: Inserts a new resource into this collection.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. Note
+//   that not all parts contain properties that can be set when
+//   inserting or updating a video. For example, the statistics object
+//   encapsulates statistics that YouTube calculates for a video and
+//   does not contain values that you can set or modify. If the
+//   parameter value specifies a part that does not contain mutable
+//   values, that part will still be included in the API response.
 func (r *VideosService) Insert(part []string, video *Video) *VideosInsertCall {
 	c := &VideosInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -23267,7 +23435,7 @@ func (c *VideosInsertCall) Header() http.Header {
 
 func (c *VideosInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23444,6 +23612,15 @@ type VideosListCall struct {
 }
 
 // List: Retrieves a list of resources, possibly filtered.
+//
+// - part: The *part* parameter specifies a comma-separated list of one
+//   or more video resource properties that the API response will
+//   include. If the parameter identifies a property that contains child
+//   properties, the child properties will be included in the response.
+//   For example, in a video resource, the snippet property contains the
+//   channelId, title, description, tags, and categoryId properties. As
+//   such, if you set *part=snippet*, the API response will contain all
+//   of those properties.
 func (r *VideosService) List(part []string) *VideosListCall {
 	c := &VideosListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -23602,7 +23779,7 @@ func (c *VideosListCall) Header() http.Header {
 
 func (c *VideosListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23811,6 +23988,9 @@ type VideosRateCall struct {
 
 // Rate: Adds a like or dislike rating to a video or removes a rating
 // from a video.
+//
+// - id: .
+// - rating: .
 func (r *VideosService) Rate(id string, rating string) *VideosRateCall {
 	c := &VideosRateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("id", id)
@@ -23845,7 +24025,7 @@ func (c *VideosRateCall) Header() http.Header {
 
 func (c *VideosRateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23977,7 +24157,7 @@ func (c *VideosReportAbuseCall) Header() http.Header {
 
 func (c *VideosReportAbuseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24049,6 +24229,25 @@ type VideosUpdateCall struct {
 }
 
 // Update: Updates an existing resource.
+//
+// - part: The *part* parameter serves two purposes in this operation.
+//   It identifies the properties that the write operation will set as
+//   well as the properties that the API response will include. Note
+//   that this method will override the existing values for all of the
+//   mutable properties that are contained in any parts that the
+//   parameter value specifies. For example, a video's privacy setting
+//   is contained in the status part. As such, if your request is
+//   updating a private video, and the request's part parameter value
+//   includes the status part, the video's privacy setting will be
+//   updated to whatever value the request body specifies. If the
+//   request body does not specify a value, the existing privacy setting
+//   will be removed and the video will revert to the default privacy
+//   setting. In addition, not all parts contain properties that can be
+//   set when inserting or updating a video. For example, the statistics
+//   object encapsulates statistics that YouTube calculates for a video
+//   and does not contain values that you can set or modify. If the
+//   parameter value specifies a part that does not contain mutable
+//   values, that part will still be included in the API response.
 func (r *VideosService) Update(part []string, video *Video) *VideosUpdateCall {
 	c := &VideosUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -24101,7 +24300,7 @@ func (c *VideosUpdateCall) Header() http.Header {
 
 func (c *VideosUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24211,6 +24410,8 @@ type WatermarksSetCall struct {
 }
 
 // Set: Allows upload of watermark image and setting it for a channel.
+//
+// - channelId: .
 func (r *WatermarksService) Set(channelId string, invideobranding *InvideoBranding) *WatermarksSetCall {
 	c := &WatermarksSetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("channelId", channelId)
@@ -24301,7 +24502,7 @@ func (c *WatermarksSetCall) Header() http.Header {
 
 func (c *WatermarksSetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24427,6 +24628,8 @@ type WatermarksUnsetCall struct {
 }
 
 // Unset: Allows removal of channel watermark.
+//
+// - channelId: .
 func (r *WatermarksService) Unset(channelId string) *WatermarksUnsetCall {
 	c := &WatermarksUnsetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("channelId", channelId)
@@ -24477,7 +24680,7 @@ func (c *WatermarksUnsetCall) Header() http.Header {
 
 func (c *WatermarksUnsetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24533,6 +24736,145 @@ func (c *WatermarksUnsetCall) Do(opts ...googleapi.CallOption) error {
 	//     "https://www.googleapis.com/auth/youtube.force-ssl",
 	//     "https://www.googleapis.com/auth/youtubepartner"
 	//   ]
+	// }
+
+}
+
+// method id "youtube.youtube.v3.updateCommentThreads":
+
+type YoutubeV3UpdateCommentThreadsCall struct {
+	s             *Service
+	commentthread *CommentThread
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// UpdateCommentThreads: Updates an existing resource.
+func (r *YoutubeV3Service) UpdateCommentThreads(commentthread *CommentThread) *YoutubeV3UpdateCommentThreadsCall {
+	c := &YoutubeV3UpdateCommentThreadsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.commentthread = commentthread
+	return c
+}
+
+// Part sets the optional parameter "part": The *part* parameter
+// specifies a comma-separated list of commentThread resource properties
+// that the API response will include. You must at least include the
+// snippet part in the parameter value since that part contains all of
+// the properties that the API request can update.
+func (c *YoutubeV3UpdateCommentThreadsCall) Part(part ...string) *YoutubeV3UpdateCommentThreadsCall {
+	c.urlParams_.SetMulti("part", append([]string{}, part...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *YoutubeV3UpdateCommentThreadsCall) Fields(s ...googleapi.Field) *YoutubeV3UpdateCommentThreadsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *YoutubeV3UpdateCommentThreadsCall) Context(ctx context.Context) *YoutubeV3UpdateCommentThreadsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *YoutubeV3UpdateCommentThreadsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *YoutubeV3UpdateCommentThreadsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commentthread)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "youtube/v3/commentThreads")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "youtube.youtube.v3.updateCommentThreads" call.
+// Exactly one of *CommentThread or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CommentThread.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *YoutubeV3UpdateCommentThreadsCall) Do(opts ...googleapi.CallOption) (*CommentThread, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CommentThread{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing resource.",
+	//   "flatPath": "youtube/v3/commentThreads",
+	//   "httpMethod": "PUT",
+	//   "id": "youtube.youtube.v3.updateCommentThreads",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "part": {
+	//       "description": "The *part* parameter specifies a comma-separated list of commentThread resource properties that the API response will include. You must at least include the snippet part in the parameter value since that part contains all of the properties that the API request can update.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "youtube/v3/commentThreads",
+	//   "request": {
+	//     "$ref": "CommentThread"
+	//   },
+	//   "response": {
+	//     "$ref": "CommentThread"
+	//   }
 	// }
 
 }

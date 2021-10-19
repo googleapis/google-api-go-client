@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -166,6 +166,34 @@
       "resources": {
         "builds": {
           "methods": {
+            "approve": {
+              "description": "Approves or rejects a pending build. If approved, the returned LRO will be analogous to the LRO returned from a CreateBuild call. If rejected, the returned LRO will be immediately done.",
+              "flatPath": "v1/projects/{projectsId}/builds/{buildsId}:approve",
+              "httpMethod": "POST",
+              "id": "cloudbuild.projects.builds.approve",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. Name of the target build. For example: \"projects/{$project_id}/builds/{$build_id}\"",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/builds/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}:approve",
+              "request": {
+                "$ref": "ApproveBuildRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
             "cancel": {
               "description": "Cancels a build in progress.",
               "flatPath": "v1/projects/{projectId}/builds/{id}:cancel",
@@ -349,10 +377,209 @@
             }
           }
         },
+        "githubEnterpriseConfigs": {
+          "methods": {
+            "create": {
+              "description": "Create an association between a GCP project and a GitHub Enterprise server.",
+              "flatPath": "v1/projects/{projectsId}/githubEnterpriseConfigs",
+              "httpMethod": "POST",
+              "id": "cloudbuild.projects.githubEnterpriseConfigs.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Name of the parent project. For example: projects/{$project_number} or projects/{$project_id}",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "projectId": {
+                  "description": "ID of the project.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/githubEnterpriseConfigs",
+              "request": {
+                "$ref": "GitHubEnterpriseConfig"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "delete": {
+              "description": "Delete an association between a GCP project and a GitHub Enterprise server.",
+              "flatPath": "v1/projects/{projectsId}/githubEnterpriseConfigs/{githubEnterpriseConfigsId}",
+              "httpMethod": "DELETE",
+              "id": "cloudbuild.projects.githubEnterpriseConfigs.delete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "configId": {
+                  "description": "Unique identifier of the `GitHubEnterpriseConfig`",
+                  "location": "query",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/githubEnterpriseConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "projectId": {
+                  "description": "ID of the project",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "get": {
+              "description": "Retrieve a GitHubEnterpriseConfig.",
+              "flatPath": "v1/projects/{projectsId}/githubEnterpriseConfigs/{githubEnterpriseConfigsId}",
+              "httpMethod": "GET",
+              "id": "cloudbuild.projects.githubEnterpriseConfigs.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "configId": {
+                  "description": "Unique identifier of the `GitHubEnterpriseConfig`",
+                  "location": "query",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/githubEnterpriseConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "projectId": {
+                  "description": "ID of the project",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "response": {
+                "$ref": "GitHubEnterpriseConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "list": {
+              "description": "List all GitHubEnterpriseConfigs for a given project.",
+              "flatPath": "v1/projects/{projectsId}/githubEnterpriseConfigs",
+              "httpMethod": "GET",
+              "id": "cloudbuild.projects.githubEnterpriseConfigs.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Name of the parent project. For example: projects/{$project_number} or projects/{$project_id}",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "projectId": {
+                  "description": "ID of the project",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+parent}/githubEnterpriseConfigs",
+              "response": {
+                "$ref": "ListGithubEnterpriseConfigsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "patch": {
+              "description": "Update an association between a GCP project and a GitHub Enterprise server.",
+              "flatPath": "v1/projects/{projectsId}/githubEnterpriseConfigs/{githubEnterpriseConfigsId}",
+              "httpMethod": "PATCH",
+              "id": "cloudbuild.projects.githubEnterpriseConfigs.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Optional. The full resource name for the GitHubEnterpriseConfig For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/githubEnterpriseConfigs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "Update mask for the resource. If this is set, the server will only update the fields specified in the field mask. Otherwise, a full update of the mutable resource fields will be performed.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "GitHubEnterpriseConfig"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
+        },
         "locations": {
           "resources": {
             "builds": {
               "methods": {
+                "approve": {
+                  "description": "Approves or rejects a pending build. If approved, the returned LRO will be analogous to the LRO returned from a CreateBuild call. If rejected, the returned LRO will be immediately done.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/builds/{buildsId}:approve",
+                  "httpMethod": "POST",
+                  "id": "cloudbuild.projects.locations.builds.approve",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Name of the target build. For example: \"projects/{$project_id}/builds/{$build_id}\"",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/builds/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:approve",
+                  "request": {
+                    "$ref": "ApproveBuildRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "cancel": {
                   "description": "Cancels a build in progress.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/builds/{buildsId}:cancel",
@@ -525,6 +752,177 @@
                 }
               }
             },
+            "githubEnterpriseConfigs": {
+              "methods": {
+                "create": {
+                  "description": "Create an association between a GCP project and a GitHub Enterprise server.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/githubEnterpriseConfigs",
+                  "httpMethod": "POST",
+                  "id": "cloudbuild.projects.locations.githubEnterpriseConfigs.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Name of the parent project. For example: projects/{$project_number} or projects/{$project_id}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "projectId": {
+                      "description": "ID of the project.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/githubEnterpriseConfigs",
+                  "request": {
+                    "$ref": "GitHubEnterpriseConfig"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Delete an association between a GCP project and a GitHub Enterprise server.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/githubEnterpriseConfigs/{githubEnterpriseConfigsId}",
+                  "httpMethod": "DELETE",
+                  "id": "cloudbuild.projects.locations.githubEnterpriseConfigs.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "configId": {
+                      "description": "Unique identifier of the `GitHubEnterpriseConfig`",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/githubEnterpriseConfigs/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "projectId": {
+                      "description": "ID of the project",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Retrieve a GitHubEnterpriseConfig.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/githubEnterpriseConfigs/{githubEnterpriseConfigsId}",
+                  "httpMethod": "GET",
+                  "id": "cloudbuild.projects.locations.githubEnterpriseConfigs.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "configId": {
+                      "description": "Unique identifier of the `GitHubEnterpriseConfig`",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "This field should contain the name of the enterprise config resource. For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/githubEnterpriseConfigs/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "projectId": {
+                      "description": "ID of the project",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "GitHubEnterpriseConfig"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "List all GitHubEnterpriseConfigs for a given project.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/githubEnterpriseConfigs",
+                  "httpMethod": "GET",
+                  "id": "cloudbuild.projects.locations.githubEnterpriseConfigs.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Name of the parent project. For example: projects/{$project_number} or projects/{$project_id}",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "projectId": {
+                      "description": "ID of the project",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/githubEnterpriseConfigs",
+                  "response": {
+                    "$ref": "ListGithubEnterpriseConfigsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "patch": {
+                  "description": "Update an association between a GCP project and a GitHub Enterprise server.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/githubEnterpriseConfigs/{githubEnterpriseConfigsId}",
+                  "httpMethod": "PATCH",
+                  "id": "cloudbuild.projects.locations.githubEnterpriseConfigs.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Optional. The full resource name for the GitHubEnterpriseConfig For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/githubEnterpriseConfigs/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "Update mask for the resource. If this is set, the server will only update the fields specified in the field mask. Otherwise, a full update of the mutable resource fields will be performed.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "request": {
+                    "$ref": "GitHubEnterpriseConfig"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
             "operations": {
               "methods": {
                 "cancel": {
@@ -581,6 +979,442 @@
                   ]
                 }
               }
+            },
+            "triggers": {
+              "methods": {
+                "create": {
+                  "description": "Creates a new `BuildTrigger`. This API is experimental.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers",
+                  "httpMethod": "POST",
+                  "id": "cloudbuild.projects.locations.triggers.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "The parent resource where this trigger will be created. Format: `projects/{project}/locations/{location}`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "projectId": {
+                      "description": "Required. ID of the project for which to configure automatic builds.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/triggers",
+                  "request": {
+                    "$ref": "BuildTrigger"
+                  },
+                  "response": {
+                    "$ref": "BuildTrigger"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Deletes a `BuildTrigger` by its project ID and trigger ID. This API is experimental.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers/{triggersId}",
+                  "httpMethod": "DELETE",
+                  "id": "cloudbuild.projects.locations.triggers.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the `Trigger` to delete. Format: `projects/{project}/locations/{location}/triggers/{trigger}`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "projectId": {
+                      "description": "Required. ID of the project that owns the trigger.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "triggerId": {
+                      "description": "Required. ID of the `BuildTrigger` to delete.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Returns information about a `BuildTrigger`. This API is experimental.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers/{triggersId}",
+                  "httpMethod": "GET",
+                  "id": "cloudbuild.projects.locations.triggers.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the `Trigger` to retrieve. Format: `projects/{project}/locations/{location}/triggers/{trigger}`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "projectId": {
+                      "description": "Required. ID of the project that owns the trigger.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "triggerId": {
+                      "description": "Required. Identifier (`id` or `name`) of the `BuildTrigger` to get.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "BuildTrigger"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists existing `BuildTrigger`s. This API is experimental.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers",
+                  "httpMethod": "GET",
+                  "id": "cloudbuild.projects.locations.triggers.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "Number of results to return in the list.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "Token to provide to skip to a particular spot in the list.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "The parent of the collection of `Triggers`. Format: `projects/{project}/locations/{location}`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "projectId": {
+                      "description": "Required. ID of the project for which to list BuildTriggers.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/triggers",
+                  "response": {
+                    "$ref": "ListBuildTriggersResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "patch": {
+                  "description": "Updates a `BuildTrigger` by its project ID and trigger ID. This API is experimental.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers/{triggersId}",
+                  "httpMethod": "PATCH",
+                  "id": "cloudbuild.projects.locations.triggers.patch",
+                  "parameterOrder": [
+                    "resourceName"
+                  ],
+                  "parameters": {
+                    "projectId": {
+                      "description": "Required. ID of the project that owns the trigger.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "resourceName": {
+                      "description": "The `Trigger` name with format: `projects/{project}/locations/{location}/triggers/{trigger}`, where {trigger} is a unique identifier generated by the service.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "triggerId": {
+                      "description": "Required. ID of the `BuildTrigger` to update.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+resourceName}",
+                  "request": {
+                    "$ref": "BuildTrigger"
+                  },
+                  "response": {
+                    "$ref": "BuildTrigger"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "run": {
+                  "description": "Runs a `BuildTrigger` at a particular source revision.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers/{triggersId}:run",
+                  "httpMethod": "POST",
+                  "id": "cloudbuild.projects.locations.triggers.run",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the `Trigger` to run. Format: `projects/{project}/locations/{location}/triggers/{trigger}`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:run",
+                  "request": {
+                    "$ref": "RunBuildTriggerRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "webhook": {
+                  "description": "ReceiveTriggerWebhook [Experimental] is called when the API receives a webhook request targeted at a specific trigger.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/triggers/{triggersId}:webhook",
+                  "httpMethod": "POST",
+                  "id": "cloudbuild.projects.locations.triggers.webhook",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the `ReceiveTriggerWebhook` to retrieve. Format: `projects/{project}/locations/{location}/triggers/{trigger}`",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "projectId": {
+                      "description": "Project in which the specified trigger lives",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "secret": {
+                      "description": "Secret token used for authorization if an OAuth token isn't provided.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "trigger": {
+                      "description": "Name of the trigger to run the payload against",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}:webhook",
+                  "request": {
+                    "$ref": "HttpBody"
+                  },
+                  "response": {
+                    "$ref": "ReceiveTriggerWebhookResponse"
+                  }
+                }
+              }
+            },
+            "workerPools": {
+              "methods": {
+                "create": {
+                  "description": "Creates a `WorkerPool`.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workerPools",
+                  "httpMethod": "POST",
+                  "id": "cloudbuild.projects.locations.workerPools.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The parent resource where this worker pool will be created. Format: `projects/{project}/locations/{location}`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "validateOnly": {
+                      "description": "If set, validate the request and preview the response, but do not actually post it.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
+                    "workerPoolId": {
+                      "description": "Required. Immutable. The ID to use for the `WorkerPool`, which will become the final component of the resource name. This value should be 1-63 characters, and valid characters are /a-z-/.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/workerPools",
+                  "request": {
+                    "$ref": "WorkerPool"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Deletes a `WorkerPool`.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workerPools/{workerPoolsId}",
+                  "httpMethod": "DELETE",
+                  "id": "cloudbuild.projects.locations.workerPools.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "allowMissing": {
+                      "description": "If set to true, and the `WorkerPool` is not found, the request will succeed but no action will be taken on the server.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
+                    "etag": {
+                      "description": "Optional. If this is provided, it must match the server's etag on the workerpool for the request to be processed.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "Required. The name of the `WorkerPool` to delete. Format: `projects/{project}/locations/{workerPool}/workerPools/{workerPool}`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/workerPools/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "validateOnly": {
+                      "description": "If set, validate the request and preview the response, but do not actually post it.",
+                      "location": "query",
+                      "type": "boolean"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Returns details of a `WorkerPool`.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workerPools/{workerPoolsId}",
+                  "httpMethod": "GET",
+                  "id": "cloudbuild.projects.locations.workerPools.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. The name of the `WorkerPool` to retrieve. Format: `projects/{project}/locations/{location}/workerPools/{workerPool}`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/workerPools/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "response": {
+                    "$ref": "WorkerPool"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Lists `WorkerPool`s.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workerPools",
+                  "httpMethod": "GET",
+                  "id": "cloudbuild.projects.locations.workerPools.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "description": "The maximum number of `WorkerPool`s to return. The service may return fewer than this value. If omitted, the server will use a sensible default.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "A page token, received from a previous `ListWorkerPools` call. Provide this to retrieve the subsequent page.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. The parent of the collection of `WorkerPools`. Format: `projects/{project}/locations/{location}`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}/workerPools",
+                  "response": {
+                    "$ref": "ListWorkerPoolsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "patch": {
+                  "description": "Updates a `WorkerPool`.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workerPools/{workerPoolsId}",
+                  "httpMethod": "PATCH",
+                  "id": "cloudbuild.projects.locations.workerPools.patch",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Output only. The resource name of the `WorkerPool`, with format `projects/{project}/locations/{location}/workerPools/{worker_pool}`. The value of `{worker_pool}` is provided by `worker_pool_id` in `CreateWorkerPool` request and the value of `{location}` is determined by the endpoint accessed.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/workerPools/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "updateMask": {
+                      "description": "A mask specifying which fields in `worker_pool` to update.",
+                      "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "validateOnly": {
+                      "description": "If set, validate the request and preview the response, but do not actually post it.",
+                      "location": "query",
+                      "type": "boolean"
+                    }
+                  },
+                  "path": "v1/{+name}",
+                  "request": {
+                    "$ref": "WorkerPool"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
             }
           }
         },
@@ -595,6 +1429,11 @@
                 "projectId"
               ],
               "parameters": {
+                "parent": {
+                  "description": "The parent resource where this trigger will be created. Format: `projects/{project}/locations/{location}`",
+                  "location": "query",
+                  "type": "string"
+                },
                 "projectId": {
                   "description": "Required. ID of the project for which to configure automatic builds.",
                   "location": "path",
@@ -623,6 +1462,11 @@
                 "triggerId"
               ],
               "parameters": {
+                "name": {
+                  "description": "The name of the `Trigger` to delete. Format: `projects/{project}/locations/{location}/triggers/{trigger}`",
+                  "location": "query",
+                  "type": "string"
+                },
                 "projectId": {
                   "description": "Required. ID of the project that owns the trigger.",
                   "location": "path",
@@ -654,6 +1498,11 @@
                 "triggerId"
               ],
               "parameters": {
+                "name": {
+                  "description": "The name of the `Trigger` to retrieve. Format: `projects/{project}/locations/{location}/triggers/{trigger}`",
+                  "location": "query",
+                  "type": "string"
+                },
                 "projectId": {
                   "description": "Required. ID of the project that owns the trigger.",
                   "location": "path",
@@ -692,6 +1541,11 @@
                 },
                 "pageToken": {
                   "description": "Token to provide to skip to a particular spot in the list.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "The parent of the collection of `Triggers`. Format: `projects/{project}/locations/{location}`",
                   "location": "query",
                   "type": "string"
                 },
@@ -754,6 +1608,11 @@
                 "triggerId"
               ],
               "parameters": {
+                "name": {
+                  "description": "The name of the `Trigger` to run. Format: `projects/{project}/locations/{location}/triggers/{trigger}`",
+                  "location": "query",
+                  "type": "string"
+                },
                 "projectId": {
                   "description": "Required. ID of the project.",
                   "location": "path",
@@ -788,6 +1647,11 @@
                 "trigger"
               ],
               "parameters": {
+                "name": {
+                  "description": "The name of the `ReceiveTriggerWebhook` to retrieve. Format: `projects/{project}/locations/{location}/triggers/{trigger}`",
+                  "location": "query",
+                  "type": "string"
+                },
                 "projectId": {
                   "description": "Project in which the specified trigger lives",
                   "location": "path",
@@ -817,11 +1681,98 @@
           }
         }
       }
+    },
+    "v1": {
+      "methods": {
+        "webhook": {
+          "description": "ReceiveWebhook is called when the API receives a GitHub webhook.",
+          "flatPath": "v1/webhook",
+          "httpMethod": "POST",
+          "id": "cloudbuild.webhook",
+          "parameterOrder": [],
+          "parameters": {
+            "webhookKey": {
+              "description": "For GitHub Enterprise webhooks, this key is used to associate the webhook request with the GitHubEnterpriseConfig to use for validation.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v1/webhook",
+          "request": {
+            "$ref": "HttpBody"
+          },
+          "response": {
+            "$ref": "Empty"
+          }
+        }
+      }
     }
   },
-  "revision": "20210121",
+  "revision": "20210903",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
+    "ApprovalConfig": {
+      "description": "ApprovalConfig describes configuration for manual approval of a build.",
+      "id": "ApprovalConfig",
+      "properties": {
+        "approvalRequired": {
+          "description": "Whether or not approval is needed. If this is set on a build, it will become pending when created, and will need to be explicitly approved to start.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "ApprovalResult": {
+      "description": "ApprovalResult describes the decision and associated metadata of a manual approval of a build.",
+      "id": "ApprovalResult",
+      "properties": {
+        "approvalTime": {
+          "description": "Output only. The time when the approval decision was made.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "approverAccount": {
+          "description": "Output only. Email of the user that called the ApproveBuild API to approve or reject a build at the time that the API was called.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "comment": {
+          "description": "Optional. An optional comment for this manual approval result.",
+          "type": "string"
+        },
+        "decision": {
+          "description": "Required. The decision of this manual approval.",
+          "enum": [
+            "DECISION_UNSPECIFIED",
+            "APPROVED",
+            "REJECTED"
+          ],
+          "enumDescriptions": [
+            "Default enum type. This should not be used.",
+            "Build is approved.",
+            "Build is rejected."
+          ],
+          "type": "string"
+        },
+        "url": {
+          "description": "Optional. An optional URL tied to this manual approval result. This field is essentially the same as comment, except that it will be rendered by the UI differently. An example use case is a link to an external job that approved this Build.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ApproveBuildRequest": {
+      "description": "Request to approve or reject a pending build.",
+      "id": "ApproveBuildRequest",
+      "properties": {
+        "approvalResult": {
+          "$ref": "ApprovalResult",
+          "description": "Approval decision and metadata."
+        }
+      },
+      "type": "object"
+    },
     "ArtifactObjects": {
       "description": "Files in the workspace to upload to Cloud Storage upon successful completion of all build steps.",
       "id": "ArtifactObjects",
@@ -882,9 +1833,14 @@
       "type": "object"
     },
     "Build": {
-      "description": "A build resource in the Cloud Build API. At a high level, a `Build` describes where to find source code, how to build it (for example, the builder image to run on the source), and where to store the built artifacts. Fields can include the following variables, which will be expanded when the build is created: - $PROJECT_ID: the project ID of the build. - $BUILD_ID: the autogenerated ID of the build. - $REPO_NAME: the source repository name specified by RepoSource. - $BRANCH_NAME: the branch name specified by RepoSource. - $TAG_NAME: the tag name specified by RepoSource. - $REVISION_ID or $COMMIT_SHA: the commit SHA specified by RepoSource or resolved from the specified branch or tag. - $SHORT_SHA: first 7 characters of $REVISION_ID or $COMMIT_SHA.",
+      "description": "A build resource in the Cloud Build API. At a high level, a `Build` describes where to find source code, how to build it (for example, the builder image to run on the source), and where to store the built artifacts. Fields can include the following variables, which will be expanded when the build is created: - $PROJECT_ID: the project ID of the build. - $PROJECT_NUMBER: the project number of the build. - $LOCATION: the location/region of the build. - $BUILD_ID: the autogenerated ID of the build. - $REPO_NAME: the source repository name specified by RepoSource. - $BRANCH_NAME: the branch name specified by RepoSource. - $TAG_NAME: the tag name specified by RepoSource. - $REVISION_ID or $COMMIT_SHA: the commit SHA specified by RepoSource or resolved from the specified branch or tag. - $SHORT_SHA: first 7 characters of $REVISION_ID or $COMMIT_SHA.",
       "id": "Build",
       "properties": {
+        "approval": {
+          "$ref": "BuildApproval",
+          "description": "Output only. Describes this build's approval configuration, status, and result.",
+          "readOnly": true
+        },
         "artifacts": {
           "$ref": "Artifacts",
           "description": "Artifacts produced by the build that should be uploaded upon successful completion of all build steps."
@@ -903,6 +1859,11 @@
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
+        },
+        "failureInfo": {
+          "$ref": "FailureInfo",
+          "description": "Output only. Contains information about the build when status=FAILURE.",
+          "readOnly": true
         },
         "finishTime": {
           "description": "Output only. Time at which execution of the build was finished. The difference between finish_time and start_time is the duration of the build's execution.",
@@ -963,7 +1924,7 @@
           "type": "array"
         },
         "serviceAccount": {
-          "description": "IAM service account whose credentials will be used at build runtime. Must be of the format `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. ACCOUNT can be email address or uniqueId of the service account. This field is in beta.",
+          "description": "IAM service account whose credentials will be used at build runtime. Must be of the format `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`. ACCOUNT can be email address or uniqueId of the service account. ",
           "type": "string"
         },
         "source": {
@@ -985,6 +1946,7 @@
           "description": "Output only. Status of the build.",
           "enum": [
             "STATUS_UNKNOWN",
+            "PENDING",
             "QUEUED",
             "WORKING",
             "SUCCESS",
@@ -996,6 +1958,7 @@
           ],
           "enumDescriptions": [
             "Status of the build is unknown.",
+            "Build has been created and is pending execution and queuing. It has not been queued.",
             "Build or step is queued; work has not yet begun.",
             "Build or step is being executed.",
             "Build or step finished successfully.",
@@ -1043,9 +2006,53 @@
           "additionalProperties": {
             "$ref": "TimeSpan"
           },
-          "description": "Output only. Stores timing information for phases of the build. Valid keys are: * BUILD: time to execute all build steps * PUSH: time to push all specified images. * FETCHSOURCE: time to fetch source. If the build does not specify source or images, these keys will not be included.",
+          "description": "Output only. Stores timing information for phases of the build. Valid keys are: * BUILD: time to execute all build steps. * PUSH: time to push all specified images. * FETCHSOURCE: time to fetch source. * SETUPBUILD: time to set up build. If the build does not specify source or images, these keys will not be included.",
           "readOnly": true,
           "type": "object"
+        },
+        "warnings": {
+          "description": "Output only. Non-fatal problems encountered during the execution of the build.",
+          "items": {
+            "$ref": "Warning"
+          },
+          "readOnly": true,
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "BuildApproval": {
+      "description": "BuildApproval describes a build's approval configuration, state, and result.",
+      "id": "BuildApproval",
+      "properties": {
+        "config": {
+          "$ref": "ApprovalConfig",
+          "description": "Output only. Configuration for manual approval of this build.",
+          "readOnly": true
+        },
+        "result": {
+          "$ref": "ApprovalResult",
+          "description": "Output only. Result of manual approval for this Build.",
+          "readOnly": true
+        },
+        "state": {
+          "description": "Output only. The state of this build's approval.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "PENDING",
+            "APPROVED",
+            "REJECTED",
+            "CANCELLED"
+          ],
+          "enumDescriptions": [
+            "Default enum type. This should not be used.",
+            "Build approval is pending.",
+            "Build approval has been approved.",
+            "Build approval has been rejected.",
+            "Build was cancelled while it was still pending approval."
+          ],
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -1133,6 +2140,10 @@
           ],
           "type": "string"
         },
+        "pool": {
+          "$ref": "PoolOption",
+          "description": "Optional. Specification for execution on a `WorkerPool`. See [running builds in a private pool](https://cloud.google.com/build/docs/private-pools/run-builds-in-private-pool) for more information."
+        },
         "requestedVerifyOption": {
           "description": "Requested verifiability options.",
           "enum": [
@@ -1189,7 +2200,7 @@
           "type": "array"
         },
         "workerPool": {
-          "description": "Option to specify a `WorkerPool` for the build. Format: projects/{project}/locations/{location}/workerPools/{workerPool} This field is in beta and is available only to restricted users.",
+          "description": "This field deprecated; please use `pool.name` instead.",
           "type": "string"
         }
       },
@@ -1234,6 +2245,10 @@
           "description": "Output only. Stores timing information for pulling this build step's builder image only.",
           "readOnly": true
         },
+        "script": {
+          "description": "A shell script to be executed in the step. When script is provided, the user cannot specify the entrypoint or args.",
+          "type": "string"
+        },
         "secretEnv": {
           "description": "A list of environment variables which are encrypted using a Cloud Key Management Service crypto key. These values must be specified in the build's `Secret`.",
           "items": {
@@ -1245,6 +2260,7 @@
           "description": "Output only. Status of the build step. At this time, build step status is only updated on build completion; step status is not updated in real-time as the build progresses.",
           "enum": [
             "STATUS_UNKNOWN",
+            "PENDING",
             "QUEUED",
             "WORKING",
             "SUCCESS",
@@ -1256,6 +2272,7 @@
           ],
           "enumDescriptions": [
             "Status of the build is unknown.",
+            "Build has been created and is pending execution and queuing. It has not been queued.",
             "Build or step is queued; work has not yet begun.",
             "Build or step is being executed.",
             "Build or step finished successfully.",
@@ -1299,6 +2316,14 @@
       "description": "Configuration for an automated build in response to source repository changes.",
       "id": "BuildTrigger",
       "properties": {
+        "approvalConfig": {
+          "$ref": "ApprovalConfig",
+          "description": "Configuration for manual approval to start a build invocation of this BuildTrigger."
+        },
+        "autodetect": {
+          "description": "Autodetect build configuration. The following precedence is used (case insensitive): 1. cloudbuild.yaml 2. cloudbuild.yml 3. cloudbuild.json 4. Dockerfile Currently only available for GitHub App Triggers.",
+          "type": "boolean"
+        },
         "build": {
           "$ref": "Build",
           "description": "Contents of the build template."
@@ -1318,8 +2343,16 @@
           "type": "boolean"
         },
         "filename": {
-          "description": "Path, from the source root, to a file whose contents is used for the template.",
+          "description": "Path, from the source root, to the build configuration file (i.e. cloudbuild.yaml).",
           "type": "string"
+        },
+        "filter": {
+          "description": "A Common Expression Language string.",
+          "type": "string"
+        },
+        "gitFileSource": {
+          "$ref": "GitFileSource",
+          "description": "The file source describing the local or remote Build template."
         },
         "github": {
           "$ref": "GitHubEventsConfig",
@@ -1348,6 +2381,22 @@
           "description": "User-assigned name of the trigger. Must be unique within the project. Trigger names must meet the following requirements: + They must contain only alphanumeric characters and dashes. + They can be 1-64 characters long. + They must begin and end with an alphanumeric character.",
           "type": "string"
         },
+        "pubsubConfig": {
+          "$ref": "PubsubConfig",
+          "description": "PubsubConfig describes the configuration of a trigger that creates a build whenever a Pub/Sub message is published."
+        },
+        "resourceName": {
+          "description": "The `Trigger` name with format: `projects/{project}/locations/{location}/triggers/{trigger}`, where {trigger} is a unique identifier generated by the service.",
+          "type": "string"
+        },
+        "serviceAccount": {
+          "description": "The service account used for all user-controlled operations including UpdateBuildTrigger, RunBuildTrigger, CreateBuild, and CancelBuild. If no service account is set, then the standard Cloud Build service account ([PROJECT_NUM]@system.gserviceaccount.com) will be used instead. Format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT_ID_OR_EMAIL}`",
+          "type": "string"
+        },
+        "sourceToBuild": {
+          "$ref": "GitRepoSource",
+          "description": "The repo and ref of the repository from which to build. This field is used only for those triggers that do not respond to SCM events. Triggers that respond to such events build source at whatever commit caused the event. This field is currently only used by Webhook, Pub/Sub, Manual, and Cron triggers."
+        },
         "substitutions": {
           "additionalProperties": {
             "type": "string"
@@ -1365,6 +2414,10 @@
         "triggerTemplate": {
           "$ref": "RepoSource",
           "description": "Template describing the types of source changes to trigger a build. Branch and tag names in trigger templates are interpreted as regular expressions. Any branch or tag change that matches that regular expression will trigger a build. Mutually exclusive with `github`."
+        },
+        "webhookConfig": {
+          "$ref": "WebhookConfig",
+          "description": "WebhookConfig describes the configuration of a trigger that creates a build whenever a webhook is sent to a trigger's webhook URL."
         }
       },
       "type": "object"
@@ -1414,10 +2467,127 @@
       "properties": {},
       "type": "object"
     },
+    "CreateGitHubEnterpriseConfigOperationMetadata": {
+      "description": "Metadata for `CreateGithubEnterpriseConfig` operation.",
+      "id": "CreateGitHubEnterpriseConfigOperationMetadata",
+      "properties": {
+        "completeTime": {
+          "description": "Time the operation was completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Time the operation was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "githubEnterpriseConfig": {
+          "description": "The resource name of the GitHubEnterprise to be created. Format: `projects/{project}/locations/{location}/githubEnterpriseConfigs/{id}`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CreateWorkerPoolOperationMetadata": {
+      "description": "Metadata for the `CreateWorkerPool` operation.",
+      "id": "CreateWorkerPoolOperationMetadata",
+      "properties": {
+        "completeTime": {
+          "description": "Time the operation was completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Time the operation was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "workerPool": {
+          "description": "The resource name of the `WorkerPool` to create. Format: `projects/{project}/locations/{location}/workerPools/{worker_pool}`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DeleteGitHubEnterpriseConfigOperationMetadata": {
+      "description": "Metadata for `DeleteGitHubEnterpriseConfig` operation.",
+      "id": "DeleteGitHubEnterpriseConfigOperationMetadata",
+      "properties": {
+        "completeTime": {
+          "description": "Time the operation was completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Time the operation was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "githubEnterpriseConfig": {
+          "description": "The resource name of the GitHubEnterprise to be deleted. Format: `projects/{project}/locations/{location}/githubEnterpriseConfigs/{id}`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DeleteWorkerPoolOperationMetadata": {
+      "description": "Metadata for the `DeleteWorkerPool` operation.",
+      "id": "DeleteWorkerPoolOperationMetadata",
+      "properties": {
+        "completeTime": {
+          "description": "Time the operation was completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Time the operation was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "workerPool": {
+          "description": "The resource name of the `WorkerPool` being deleted. Format: `projects/{project}/locations/{location}/workerPools/{worker_pool}`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } The JSON representation for `Empty` is empty JSON object `{}`.",
       "id": "Empty",
       "properties": {},
+      "type": "object"
+    },
+    "FailureInfo": {
+      "description": "A fatal problem encountered during the execution of the build.",
+      "id": "FailureInfo",
+      "properties": {
+        "detail": {
+          "description": "Explains the failure issue in more detail using hard-coded text.",
+          "type": "string"
+        },
+        "type": {
+          "description": "The name of the failure.",
+          "enum": [
+            "FAILURE_TYPE_UNSPECIFIED",
+            "PUSH_FAILED",
+            "PUSH_IMAGE_NOT_FOUND",
+            "PUSH_NOT_AUTHORIZED",
+            "LOGGING_FAILURE",
+            "USER_BUILD_STEP",
+            "FETCH_SOURCE_FAILED"
+          ],
+          "enumDescriptions": [
+            "Type unspecified",
+            "Unable to push the image to the repository.",
+            "Final image not found.",
+            "Unauthorized push of the final image.",
+            "Backend logging failures. Should retry.",
+            "A build step has failed.",
+            "The source fetching has failed."
+          ],
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "FileHashes": {
@@ -1434,10 +2604,132 @@
       },
       "type": "object"
     },
+    "GitFileSource": {
+      "description": "GitFileSource describes a file within a (possibly remote) code repository.",
+      "id": "GitFileSource",
+      "properties": {
+        "path": {
+          "description": "The path of the file, with the repo root as the root of the path.",
+          "type": "string"
+        },
+        "repoType": {
+          "description": "See RepoType above.",
+          "enum": [
+            "UNKNOWN",
+            "CLOUD_SOURCE_REPOSITORIES",
+            "GITHUB"
+          ],
+          "enumDescriptions": [
+            "The default, unknown repo type.",
+            "A Google Cloud Source Repositories-hosted repo.",
+            "A GitHub-hosted repo not necessarily on \"github.com\" (i.e. GitHub Enterprise)."
+          ],
+          "type": "string"
+        },
+        "revision": {
+          "description": "The branch, tag, arbitrary ref, or SHA version of the repo to use when resolving the filename (optional). This field respects the same syntax/resolution as described here: https://git-scm.com/docs/gitrevisions If unspecified, the revision from which the trigger invocation originated is assumed to be the revision from which to read the specified path.",
+          "type": "string"
+        },
+        "uri": {
+          "description": "The URI of the repo (optional). If unspecified, the repo from which the trigger invocation originated is assumed to be the repo from which to read the specified path.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GitHubEnterpriseConfig": {
+      "description": "GitHubEnterpriseConfig represents a configuration for a GitHub Enterprise server.",
+      "id": "GitHubEnterpriseConfig",
+      "properties": {
+        "appId": {
+          "description": "Required. The GitHub app id of the Cloud Build app on the GitHub Enterprise server.",
+          "format": "int64",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Output only. Time when the installation was associated with the project.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Name to display for this config.",
+          "type": "string"
+        },
+        "hostUrl": {
+          "description": "The URL of the github enterprise host the configuration is for.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Optional. The full resource name for the GitHubEnterpriseConfig For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+          "type": "string"
+        },
+        "peeredNetwork": {
+          "description": "Optional. The network to be used when reaching out to the GitHub Enterprise server. The VPC network must be enabled for private service connection. This should be set if the GitHub Enterprise server is hosted on-premises and not reachable by public internet. If this field is left empty, no network peering will occur and calls to the GitHub Enterprise server will be made over the public internet. Must be in the format `projects/{project}/global/networks/{network}`, where {project} is a project number or id and {network} is the name of a VPC network in the project.",
+          "type": "string"
+        },
+        "secrets": {
+          "$ref": "GitHubEnterpriseSecrets",
+          "description": "Names of secrets in Secret Manager."
+        },
+        "sslCa": {
+          "description": "Optional. SSL certificate to use for requests to GitHub Enterprise.",
+          "type": "string"
+        },
+        "webhookKey": {
+          "description": "The key that should be attached to webhook calls to the ReceiveWebhook endpoint.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GitHubEnterpriseSecrets": {
+      "description": "GitHubEnterpriseSecrets represents the names of all necessary secrets in Secret Manager for a GitHub Enterprise server. Format is: projects//secrets/.",
+      "id": "GitHubEnterpriseSecrets",
+      "properties": {
+        "oauthClientIdName": {
+          "description": "The resource name for the OAuth client ID secret in Secret Manager.",
+          "type": "string"
+        },
+        "oauthClientIdVersionName": {
+          "description": "The resource name for the OAuth client ID secret version in Secret Manager.",
+          "type": "string"
+        },
+        "oauthSecretName": {
+          "description": "The resource name for the OAuth secret in Secret Manager.",
+          "type": "string"
+        },
+        "oauthSecretVersionName": {
+          "description": "The resource name for the OAuth secret secret version in Secret Manager.",
+          "type": "string"
+        },
+        "privateKeyName": {
+          "description": "The resource name for the private key secret.",
+          "type": "string"
+        },
+        "privateKeyVersionName": {
+          "description": "The resource name for the private key secret version.",
+          "type": "string"
+        },
+        "webhookSecretName": {
+          "description": "The resource name for the webhook secret in Secret Manager.",
+          "type": "string"
+        },
+        "webhookSecretVersionName": {
+          "description": "The resource name for the webhook secret secret version in Secret Manager.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GitHubEventsConfig": {
-      "description": "GitHubEventsConfig describes the configuration of a trigger that creates a build whenever a GitHub event is received. This message is experimental.",
+      "description": "GitHubEventsConfig describes the configuration of a trigger that creates a build whenever a GitHub event is received.",
       "id": "GitHubEventsConfig",
       "properties": {
+        "enterpriseConfigResourceName": {
+          "description": "Optional. The resource name of the github enterprise config that should be applied to this installation. For example: \"projects/{$project_id}/githubEnterpriseConfigs/{$config_id}\"",
+          "type": "string"
+        },
         "installationId": {
           "description": "The installationID that emits the GitHub event.",
           "format": "int64",
@@ -1458,6 +2750,79 @@
         "push": {
           "$ref": "PushFilter",
           "description": "filter to match changes in refs like branches, tags."
+        }
+      },
+      "type": "object"
+    },
+    "GitRepoSource": {
+      "description": "GitRepoSource describes a repo and ref of a code repository.",
+      "id": "GitRepoSource",
+      "properties": {
+        "ref": {
+          "description": "The branch or tag to use. Must start with \"refs/\" (required).",
+          "type": "string"
+        },
+        "repoType": {
+          "description": "See RepoType below.",
+          "enum": [
+            "UNKNOWN",
+            "CLOUD_SOURCE_REPOSITORIES",
+            "GITHUB"
+          ],
+          "enumDescriptions": [
+            "The default, unknown repo type.",
+            "A Google Cloud Source Repositories-hosted repo.",
+            "A GitHub-hosted repo not necessarily on \"github.com\" (i.e. GitHub Enterprise)."
+          ],
+          "type": "string"
+        },
+        "uri": {
+          "description": "The URI of the repo (required).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleDevtoolsCloudbuildV2OperationMetadata": {
+      "description": "Represents the metadata of the long-running operation.",
+      "id": "GoogleDevtoolsCloudbuildV2OperationMetadata",
+      "properties": {
+        "apiVersion": {
+          "description": "Output only. API version used to start the operation.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Output only. The time the operation was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "endTime": {
+          "description": "Output only. The time the operation finished running.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "requestedCancellation": {
+          "description": "Output only. Identifies whether the user has requested cancellation of the operation. Operations that have successfully been cancelled have Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "statusMessage": {
+          "description": "Output only. Human-readable status of the operation, if any.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "target": {
+          "description": "Output only. Server-defined resource path for the target of the operation.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "verb": {
+          "description": "Output only. Name of the verb executed by the operation.",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -1576,6 +2941,63 @@
         },
         "nextPageToken": {
           "description": "Token to receive the next page of results. This will be absent if the end of the response list has been reached.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ListGithubEnterpriseConfigsResponse": {
+      "description": "RPC response object returned by ListGithubEnterpriseConfigs RPC method.",
+      "id": "ListGithubEnterpriseConfigsResponse",
+      "properties": {
+        "configs": {
+          "description": "A list of GitHubEnterpriseConfigs",
+          "items": {
+            "$ref": "GitHubEnterpriseConfig"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListWorkerPoolsResponse": {
+      "description": "Response containing existing `WorkerPools`.",
+      "id": "ListWorkerPoolsResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "Continuation token used to page through large result sets. Provide this value in a subsequent ListWorkerPoolsRequest to return the next page of results.",
+          "type": "string"
+        },
+        "workerPools": {
+          "description": "`WorkerPools` for the specified project.",
+          "items": {
+            "$ref": "WorkerPool"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "NetworkConfig": {
+      "description": "Defines the network configuration for the pool.",
+      "id": "NetworkConfig",
+      "properties": {
+        "egressOption": {
+          "description": "Option to configure network egress for the workers.",
+          "enum": [
+            "EGRESS_OPTION_UNSPECIFIED",
+            "NO_PUBLIC_EGRESS",
+            "PUBLIC_EGRESS"
+          ],
+          "enumDescriptions": [
+            "If set, defaults to PUBLIC_EGRESS.",
+            "If set, workers are created without any public address, which prevents network egress to public IPs unless a network proxy is configured.",
+            "If set, workers are created with a public address which allows for public internet egress."
+          ],
+          "type": "string"
+        },
+        "peeredNetwork": {
+          "description": "Required. Immutable. The network definition that the workers are peered to. If this section is left empty, the workers will be peered to `WorkerPool.project_id` on the service producer network. Must be in the format `projects/{project}/global/networks/{network}`, where `{project}` is a project number, such as `12345`, and `{network}` is the name of a VPC network in the project. See [Understanding network configuration options](https://cloud.google.com/build/docs/private-pools/set-up-private-pool-environment)",
           "type": "string"
         }
       },
@@ -1729,6 +3151,135 @@
       },
       "type": "object"
     },
+    "OperationMetadata": {
+      "description": "Represents the metadata of the long-running operation.",
+      "id": "OperationMetadata",
+      "properties": {
+        "apiVersion": {
+          "description": "Output only. API version used to start the operation.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "cancelRequested": {
+          "description": "Output only. Identifies whether the user has requested cancellation of the operation. Operations that have been cancelled successfully have Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "createTime": {
+          "description": "Output only. The time the operation was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "endTime": {
+          "description": "Output only. The time the operation finished running.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "statusDetail": {
+          "description": "Output only. Human-readable status of the operation, if any.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "target": {
+          "description": "Output only. Server-defined resource path for the target of the operation.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "verb": {
+          "description": "Output only. Name of the verb executed by the operation.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PoolOption": {
+      "description": "Details about how a build should be executed on a `WorkerPool`. See [running builds in a private pool](https://cloud.google.com/build/docs/private-pools/run-builds-in-private-pool) for more information.",
+      "id": "PoolOption",
+      "properties": {
+        "name": {
+          "description": "The `WorkerPool` resource to execute the build on. You must have `cloudbuild.workerpools.use` on the project hosting the WorkerPool. Format projects/{project}/locations/{location}/workerPools/{workerPoolId}",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PrivatePoolV1Config": {
+      "description": "Configuration for a V1 `PrivatePool`.",
+      "id": "PrivatePoolV1Config",
+      "properties": {
+        "networkConfig": {
+          "$ref": "NetworkConfig",
+          "description": "Network configuration for the pool."
+        },
+        "workerConfig": {
+          "$ref": "WorkerConfig",
+          "description": "Machine configuration for the workers in the pool."
+        }
+      },
+      "type": "object"
+    },
+    "ProcessAppManifestCallbackOperationMetadata": {
+      "description": "Metadata for `ProcessAppManifestCallback` operation.",
+      "id": "ProcessAppManifestCallbackOperationMetadata",
+      "properties": {
+        "completeTime": {
+          "description": "Time the operation was completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Time the operation was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "githubEnterpriseConfig": {
+          "description": "The resource name of the GitHubEnterprise to be created. Format: `projects/{project}/locations/{location}/githubEnterpriseConfigs/{id}`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PubsubConfig": {
+      "description": "PubsubConfig describes the configuration of a trigger that creates a build whenever a Pub/Sub message is published.",
+      "id": "PubsubConfig",
+      "properties": {
+        "serviceAccountEmail": {
+          "description": "Service account that will make the push request.",
+          "type": "string"
+        },
+        "state": {
+          "description": "Potential issues with the underlying Pub/Sub subscription configuration. Only populated on get requests.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "OK",
+            "SUBSCRIPTION_DELETED",
+            "TOPIC_DELETED",
+            "SUBSCRIPTION_MISCONFIGURED"
+          ],
+          "enumDescriptions": [
+            "The subscription configuration has not been checked.",
+            "The Pub/Sub subscription is properly configured.",
+            "The subscription has been deleted.",
+            "The topic has been deleted.",
+            "Some of the subscription's field are misconfigured."
+          ],
+          "type": "string"
+        },
+        "subscription": {
+          "description": "Output only. Name of the subscription. Format is `projects/{project}/subscriptions/{subscription}`.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "topic": {
+          "description": "The name of the topic from which this subscription is receiving messages. Format is `projects/{project}/topics/{topic}`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "PullRequestFilter": {
       "description": "PullRequestFilter contains filter properties for matching GitHub Pull Requests.",
       "id": "PullRequestFilter",
@@ -1808,7 +3359,7 @@
           "type": "string"
         },
         "repoName": {
-          "description": "Required. Name of the Cloud Source Repository.",
+          "description": "Name of the Cloud Source Repository.",
           "type": "string"
         },
         "substitutions": {
@@ -1881,6 +3432,25 @@
         },
         "projectId": {
           "description": "Required. ID of the project.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RunBuildTriggerRequest": {
+      "description": "Specifies a build trigger to run and the source to use.",
+      "id": "RunBuildTriggerRequest",
+      "properties": {
+        "projectId": {
+          "description": "Required. ID of the project.",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "RepoSource",
+          "description": "Source to build against this trigger."
+        },
+        "triggerId": {
+          "description": "Required. ID of the trigger.",
           "type": "string"
         }
       },
@@ -1997,6 +3567,10 @@
         "storageSource": {
           "$ref": "StorageSource",
           "description": "If provided, get the source from this location in Google Cloud Storage."
+        },
+        "storageSourceManifest": {
+          "$ref": "StorageSourceManifest",
+          "description": "If provided, get the source from this manifest in Google Cloud Storage. This feature is in Preview; see description [here](https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher)."
         }
       },
       "type": "object"
@@ -2020,6 +3594,10 @@
         "resolvedStorageSource": {
           "$ref": "StorageSource",
           "description": "A copy of the build's `source.storage_source`, if exists, with any generations resolved."
+        },
+        "resolvedStorageSourceManifest": {
+          "$ref": "StorageSourceManifest",
+          "description": "A copy of the build's `source.storage_source_manifest`, if exists, with any revisions resolved. This feature is in Preview."
         }
       },
       "type": "object"
@@ -2065,7 +3643,27 @@
           "type": "string"
         },
         "object": {
-          "description": "Google Cloud Storage object containing the source. This object must be a gzipped archive file (`.tar.gz`) containing source to build.",
+          "description": "Google Cloud Storage object containing the source. This object must be a zipped (`.zip`) or gzipped archive file (`.tar.gz`) containing source to build.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "StorageSourceManifest": {
+      "description": "Location of the source manifest in Google Cloud Storage. This feature is in Preview; see description [here](https://github.com/GoogleCloudPlatform/cloud-builders/tree/master/gcs-fetcher).",
+      "id": "StorageSourceManifest",
+      "properties": {
+        "bucket": {
+          "description": "Google Cloud Storage bucket containing the source manifest (see [Bucket Name Requirements](https://cloud.google.com/storage/docs/bucket-naming#requirements)).",
+          "type": "string"
+        },
+        "generation": {
+          "description": "Google Cloud Storage generation for the object. If the generation is omitted, the latest generation will be used.",
+          "format": "int64",
+          "type": "string"
+        },
+        "object": {
+          "description": "Google Cloud Storage object containing the source manifest. This object must be a JSON file.",
           "type": "string"
         }
       },
@@ -2088,6 +3686,48 @@
       },
       "type": "object"
     },
+    "UpdateGitHubEnterpriseConfigOperationMetadata": {
+      "description": "Metadata for `UpdateGitHubEnterpriseConfig` operation.",
+      "id": "UpdateGitHubEnterpriseConfigOperationMetadata",
+      "properties": {
+        "completeTime": {
+          "description": "Time the operation was completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Time the operation was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "githubEnterpriseConfig": {
+          "description": "The resource name of the GitHubEnterprise to be updated. Format: `projects/{project}/locations/{location}/githubEnterpriseConfigs/{id}`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UpdateWorkerPoolOperationMetadata": {
+      "description": "Metadata for the `UpdateWorkerPool` operation.",
+      "id": "UpdateWorkerPoolOperationMetadata",
+      "properties": {
+        "completeTime": {
+          "description": "Time the operation was completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Time the operation was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "workerPool": {
+          "description": "The resource name of the `WorkerPool` being updated. Format: `projects/{project}/locations/{location}/workerPools/{worker_pool}`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Volume": {
       "description": "Volume describes a Docker container volume which is mounted into build steps in order to persist files across build step execution.",
       "id": "Volume",
@@ -2098,6 +3738,148 @@
         },
         "path": {
           "description": "Path at which to mount the volume. Paths must be absolute and cannot conflict with other volume paths on the same build step or with certain reserved volume paths.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Warning": {
+      "description": "A non-fatal problem encountered during the execution of the build.",
+      "id": "Warning",
+      "properties": {
+        "priority": {
+          "description": "The priority for this warning.",
+          "enum": [
+            "PRIORITY_UNSPECIFIED",
+            "INFO",
+            "WARNING",
+            "ALERT"
+          ],
+          "enumDescriptions": [
+            "Should not be used.",
+            "e.g. deprecation warnings and alternative feature highlights.",
+            "e.g. automated detection of possible issues with the build.",
+            "e.g. alerts that a feature used in the build is pending removal"
+          ],
+          "type": "string"
+        },
+        "text": {
+          "description": "Explanation of the warning generated.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WebhookConfig": {
+      "description": "WebhookConfig describes the configuration of a trigger that creates a build whenever a webhook is sent to a trigger's webhook URL.",
+      "id": "WebhookConfig",
+      "properties": {
+        "secret": {
+          "description": "Required. Resource name for the secret required as a URL parameter.",
+          "type": "string"
+        },
+        "state": {
+          "description": "Potential issues with the underlying Pub/Sub subscription configuration. Only populated on get requests.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "OK",
+            "SECRET_DELETED"
+          ],
+          "enumDescriptions": [
+            "The webhook auth configuration not been checked.",
+            "The auth configuration is properly setup.",
+            "The secret provided in auth_method has been deleted."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WorkerConfig": {
+      "description": "Defines the configuration to be used for creating workers in the pool.",
+      "id": "WorkerConfig",
+      "properties": {
+        "diskSizeGb": {
+          "description": "Size of the disk attached to the worker, in GB. See [Worker pool config file](https://cloud.google.com/build/docs/private-pools/worker-pool-config-file-schema). Specify a value of up to 1000. If `0` is specified, Cloud Build will use a standard disk size.",
+          "format": "int64",
+          "type": "string"
+        },
+        "machineType": {
+          "description": "Machine type of a worker, such as `e2-medium`. See [Worker pool config file](https://cloud.google.com/build/docs/private-pools/worker-pool-config-file-schema). If left blank, Cloud Build will use a sensible default.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WorkerPool": {
+      "description": "Configuration for a `WorkerPool`. Cloud Build owns and maintains a pool of workers for general use and have no access to a project's private network. By default, builds submitted to Cloud Build will use a worker from this pool. If your build needs access to resources on a private network, create and use a `WorkerPool` to run your builds. Private `WorkerPool`s give your builds access to any single VPC network that you administer, including any on-prem resources connected to that VPC network. For an overview of private pools, see [Private pools overview](https://cloud.google.com/build/docs/private-pools/private-pools-overview).",
+      "id": "WorkerPool",
+      "properties": {
+        "annotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "User specified annotations. See https://google.aip.dev/128#annotations for more details such as format and size limitations.",
+          "type": "object"
+        },
+        "createTime": {
+          "description": "Output only. Time at which the request to create the `WorkerPool` was received.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "deleteTime": {
+          "description": "Output only. Time at which the request to delete the `WorkerPool` was received.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "displayName": {
+          "description": "A user-specified, human-readable name for the `WorkerPool`. If provided, this value must be 1-63 characters.",
+          "type": "string"
+        },
+        "etag": {
+          "description": "Output only. Checksum computed by the server. May be sent on update and delete requests to ensure that the client has an up-to-date value before proceeding.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. The resource name of the `WorkerPool`, with format `projects/{project}/locations/{location}/workerPools/{worker_pool}`. The value of `{worker_pool}` is provided by `worker_pool_id` in `CreateWorkerPool` request and the value of `{location}` is determined by the endpoint accessed.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "privatePoolV1Config": {
+          "$ref": "PrivatePoolV1Config",
+          "description": "Private Pool using a v1 configuration."
+        },
+        "state": {
+          "description": "Output only. `WorkerPool` state.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "CREATING",
+            "RUNNING",
+            "DELETING",
+            "DELETED"
+          ],
+          "enumDescriptions": [
+            "State of the `WorkerPool` is unknown.",
+            "`WorkerPool` is being created.",
+            "`WorkerPool` is running.",
+            "`WorkerPool` is being deleted: cancelling builds and draining workers.",
+            "`WorkerPool` is deleted."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "uid": {
+          "description": "Output only. A unique identifier for the `WorkerPool`.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Output only. Time at which the request to update the `WorkerPool` was received.",
+          "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         }
       },

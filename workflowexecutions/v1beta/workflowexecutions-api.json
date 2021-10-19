@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -269,7 +269,7 @@
       }
     }
   },
-  "revision": "20210105",
+  "revision": "20210817",
   "rootUrl": "https://workflowexecutions.googleapis.com/",
   "schemas": {
     "CancelExecutionRequest": {
@@ -303,6 +303,20 @@
       "properties": {
         "argument": {
           "description": "Input parameters of the execution represented as a JSON string. The size limit is 32KB. *Note*: If you are using the REST API directly to run your workflow, you must escape any JSON string value of `argument`. Example: `'{\"argument\":\"{\\\"firstName\\\":\\\"FIRST\\\",\\\"lastName\\\":\\\"LAST\\\"}\"}'`",
+          "type": "string"
+        },
+        "callLogLevel": {
+          "description": "The call logging level associated to this execution.",
+          "enum": [
+            "CALL_LOG_LEVEL_UNSPECIFIED",
+            "LOG_ALL_CALLS",
+            "LOG_ERRORS_ONLY"
+          ],
+          "enumDescriptions": [
+            "No call logging specified.",
+            "Log all call steps within workflows, all call returns, and all exceptions raised.",
+            "Log only exceptions that are raised from call steps within workflows."
+          ],
           "type": "string"
         },
         "endTime": {
@@ -377,6 +391,28 @@
       },
       "type": "object"
     },
+    "Position": {
+      "description": "Position contains source position information about the stack trace element such as line number, column number and length of the code block in bytes.",
+      "id": "Position",
+      "properties": {
+        "column": {
+          "description": "The source code column position (of the line) the current instruction was generated from.",
+          "format": "int64",
+          "type": "string"
+        },
+        "length": {
+          "description": "The length in bytes of text in this character group, e.g. digits of a number, string length, or AST (abstract syntax tree) node.",
+          "format": "int64",
+          "type": "string"
+        },
+        "line": {
+          "description": "The source code line number the current instruction was generated from.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "StackTrace": {
       "description": "A collection of stack elements (frames) where an error occurred.",
       "id": "StackTrace",
@@ -395,15 +431,9 @@
       "description": "A single stack element (frame) where an error occurred.",
       "id": "StackTraceElement",
       "properties": {
-        "column": {
-          "description": "The source code column position (of the line) the current instruction was generated from.",
-          "format": "int64",
-          "type": "string"
-        },
-        "line": {
-          "description": "The source code line number the current instruction was generated from.",
-          "format": "int64",
-          "type": "string"
+        "position": {
+          "$ref": "Position",
+          "description": "The source position information of the stacktrace element."
         },
         "routine": {
           "description": "The routine where the error occurred.",

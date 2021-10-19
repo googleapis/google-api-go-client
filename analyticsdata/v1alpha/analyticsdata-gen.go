@@ -202,6 +202,11 @@ func (s *BatchRunPivotReportsRequest) MarshalJSON() ([]byte, error) {
 // BatchRunPivotReportsResponse: The batch response containing multiple
 // pivot reports.
 type BatchRunPivotReportsResponse struct {
+	// Kind: Identifies what kind of resource this message is. This `kind`
+	// is always the fixed string "analyticsData#batchRunPivotReports".
+	// Useful to distinguish between response types in JSON.
+	Kind string `json:"kind,omitempty"`
+
 	// PivotReports: Individual responses. Each response has a separate
 	// pivot report request.
 	PivotReports []*RunPivotReportResponse `json:"pivotReports,omitempty"`
@@ -210,7 +215,7 @@ type BatchRunPivotReportsResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "PivotReports") to
+	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -218,10 +223,10 @@ type BatchRunPivotReportsResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PivotReports") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -271,6 +276,11 @@ func (s *BatchRunReportsRequest) MarshalJSON() ([]byte, error) {
 // BatchRunReportsResponse: The batch response containing multiple
 // reports.
 type BatchRunReportsResponse struct {
+	// Kind: Identifies what kind of resource this message is. This `kind`
+	// is always the fixed string "analyticsData#batchRunReports". Useful to
+	// distinguish between response types in JSON.
+	Kind string `json:"kind,omitempty"`
+
 	// Reports: Individual responses. Each response has a separate report
 	// request.
 	Reports []*RunReportResponse `json:"reports,omitempty"`
@@ -279,7 +289,7 @@ type BatchRunReportsResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Reports") to
+	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -287,8 +297,8 @@ type BatchRunReportsResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Reports") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -928,12 +938,6 @@ type Filter struct {
 	// InListFilter: A filter for in list values.
 	InListFilter *InListFilter `json:"inListFilter,omitempty"`
 
-	// NullFilter: A filter for null values. If True, a null dimension value
-	// is matched by this filter. Null filter is commonly used inside a NOT
-	// filter expression. For example, a NOT expression of a null filter
-	// removes rows when a dimension is null.
-	NullFilter bool `json:"nullFilter,omitempty"`
-
 	// NumericFilter: A filter for numeric or date values.
 	NumericFilter *NumericFilter `json:"numericFilter,omitempty"`
 
@@ -1467,8 +1471,12 @@ type Pivot struct {
 	// will indicate the corresponding date range from the request.
 	FieldNames []string `json:"fieldNames,omitempty"`
 
-	// Limit: The number of rows to return in this pivot. If unspecified, 10
-	// rows are returned. If -1, all rows are returned.
+	// Limit: The number of rows to return in this pivot. The `limit`
+	// parameter is required. A `limit` of 10,000 is common for single pivot
+	// requests. The product of the `limit` for each `pivot` in a
+	// `RunPivotReportRequest` must not exceed 100,000. For example, a two
+	// pivot request with `limit: 1000` in each pivot will fail because the
+	// product is `1,000,000`.
 	Limit int64 `json:"limit,omitempty,string"`
 
 	// MetricAggregations: Aggregate the metrics by dimensions in this pivot
@@ -1552,9 +1560,9 @@ type PivotHeader struct {
 	// corresponding dimension combinations.
 	PivotDimensionHeaders []*PivotDimensionHeader `json:"pivotDimensionHeaders,omitempty"`
 
-	// RowCount: The cardinality of the pivot as if offset = 0 and limit =
-	// -1. The total number of rows for this pivot's fields regardless of
-	// how the parameters offset and limit are specified in the request.
+	// RowCount: The cardinality of the pivot. The total number of rows for
+	// this pivot's fields regardless of how the parameters `offset` and
+	// `limit` are specified in the request.
 	RowCount int64 `json:"rowCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1668,6 +1676,13 @@ type PropertyQuota struct {
 	// concurrent requests; Analytics 360 Properties can use up to 50
 	// concurrent requests.
 	ConcurrentRequests *QuotaStatus `json:"concurrentRequests,omitempty"`
+
+	// PotentiallyThresholdedRequestsPerHour: Analytics Properties can send
+	// up to 120 requests with potentially thresholded dimensions per hour.
+	// In a batch request, each report request is individually counted for
+	// this quota if the request contains potentially thresholded
+	// dimensions.
+	PotentiallyThresholdedRequestsPerHour *QuotaStatus `json:"potentiallyThresholdedRequestsPerHour,omitempty"`
 
 	// ServerErrorsPerProjectPerHour: Standard Analytics Properties and
 	// cloud project pairs can have up to 10 server errors per hour;
@@ -1914,6 +1929,11 @@ type RunPivotReportResponse struct {
 	// dimensions present in rows.
 	DimensionHeaders []*DimensionHeader `json:"dimensionHeaders,omitempty"`
 
+	// Kind: Identifies what kind of resource this message is. This `kind`
+	// is always the fixed string "analyticsData#runPivotReport". Useful to
+	// distinguish between response types in JSON.
+	Kind string `json:"kind,omitempty"`
+
 	// Metadata: Metadata for the report.
 	Metadata *ResponseMetaData `json:"metadata,omitempty"`
 
@@ -1978,8 +1998,9 @@ type RunRealtimeReportRequest struct {
 	// Dimensions: The dimensions requested and displayed.
 	Dimensions []*Dimension `json:"dimensions,omitempty"`
 
-	// Limit: The number of rows to return. If unspecified, 10 rows are
-	// returned. If -1, all rows are returned.
+	// Limit: The number of rows to return. If the `limit` parameter is
+	// unspecified, 10,000 rows are returned. The API returns a maximum of
+	// 100,000 rows per request, no matter how many you ask for.
 	Limit int64 `json:"limit,omitempty,string"`
 
 	// MetricAggregations: Aggregation of metrics. Aggregated metric values
@@ -2042,6 +2063,11 @@ type RunRealtimeReportResponse struct {
 	// DimensionHeaders and ordering of DimensionHeaders matches the
 	// dimensions present in rows.
 	DimensionHeaders []*DimensionHeader `json:"dimensionHeaders,omitempty"`
+
+	// Kind: Identifies what kind of resource this message is. This `kind`
+	// is always the fixed string "analyticsData#runRealtimeReport". Useful
+	// to distinguish between response types in JSON.
+	Kind string `json:"kind,omitempty"`
 
 	// Maximums: If requested, the maximum values of metrics.
 	Maximums []*Row `json:"maximums,omitempty"`
@@ -2134,9 +2160,10 @@ type RunReportRequest struct {
 	// if they are not separately removed by a filter.
 	KeepEmptyRows bool `json:"keepEmptyRows,omitempty"`
 
-	// Limit: The number of rows to return. If unspecified, 10 rows are
-	// returned. If -1, all rows are returned. To learn more about this
-	// pagination parameter, see Pagination
+	// Limit: The number of rows to return. If the `limit` parameter is
+	// unspecified, 10,000 rows are returned. The API returns a maximum of
+	// 100,000 rows per request, no matter how many you ask for. To learn
+	// more about this pagination parameter, see Pagination
 	// (https://developers.google.com/analytics/devguides/reporting/data/v1/basics#pagination).
 	Limit int64 `json:"limit,omitempty,string"`
 
@@ -2204,6 +2231,11 @@ type RunReportResponse struct {
 	// DimensionHeaders and ordering of DimensionHeaders matches the
 	// dimensions present in rows.
 	DimensionHeaders []*DimensionHeader `json:"dimensionHeaders,omitempty"`
+
+	// Kind: Identifies what kind of resource this message is. This `kind`
+	// is always the fixed string "analyticsData#runReport". Useful to
+	// distinguish between response types in JSON.
+	Kind string `json:"kind,omitempty"`
 
 	// Maximums: If requested, the maximum values of metrics.
 	Maximums []*Row `json:"maximums,omitempty"`
@@ -2374,7 +2406,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210321")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2512,7 +2544,7 @@ func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 
 func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210321")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2652,7 +2684,7 @@ func (c *V1alphaBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210321")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2779,7 +2811,7 @@ func (c *V1alphaBatchRunReportsCall) Header() http.Header {
 
 func (c *V1alphaBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210321")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2909,7 +2941,7 @@ func (c *V1alphaRunPivotReportCall) Header() http.Header {
 
 func (c *V1alphaRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210321")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3041,7 +3073,7 @@ func (c *V1alphaRunReportCall) Header() http.Header {
 
 func (c *V1alphaRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210321")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -79,7 +79,8 @@ const mtlsBasePath = "https://securitycenter.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -306,6 +307,13 @@ type ProjectsSourcesFindingsService struct {
 // modifications to an Asset are only within the context of Security
 // Command Center and don't affect the referenced Google Cloud resource.
 type Asset struct {
+	// CanonicalName: The canonical name of the resource. It's either
+	// "organizations/{organization_id}/assets/{asset_id}",
+	// "folders/{folder_id}/assets/{asset_id}" or
+	// "projects/{project_number}/assets/{asset_id}", depending on the
+	// closest CRM ancestor of the resource.
+	CanonicalName string `json:"canonicalName,omitempty"`
+
 	// CreateTime: The time at which the asset was created in Security
 	// Command Center.
 	CreateTime string `json:"createTime,omitempty"`
@@ -336,22 +344,22 @@ type Asset struct {
 	// that belongs to the asset.
 	SecurityMarks *SecurityMarks `json:"securityMarks,omitempty"`
 
-	// UpdateTime: The time at which the asset was last updated, added, or
-	// deleted in Security Command Center.
+	// UpdateTime: The time at which the asset was last updated or added in
+	// Cloud SCC.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "CanonicalName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CanonicalName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -387,10 +395,10 @@ type AssetDiscoveryConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "FolderIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FolderIds") to include in
@@ -438,10 +446,10 @@ type AuditConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuditLogConfigs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuditLogConfigs") to
@@ -483,10 +491,10 @@ type AuditLogConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "ExemptedMembers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExemptedMembers") to
@@ -557,10 +565,10 @@ type Binding struct {
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Condition") to include in
@@ -576,6 +584,201 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Cve: CVE stands for Common Vulnerabilities and Exposures. More
+// information: https://cve.mitre.org
+type Cve struct {
+	// Cvssv3: Describe Common Vulnerability Scoring System specified at
+	// https://www.first.org/cvss/v3.1/specification-document
+	Cvssv3 *Cvssv3 `json:"cvssv3,omitempty"`
+
+	// Id: The unique identifier for the vulnerability. e.g. CVE-2021-34527
+	Id string `json:"id,omitempty"`
+
+	// References: Additional information about the CVE. e.g.
+	// https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-34527
+	References []*Reference `json:"references,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cvssv3") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cvssv3") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Cve) MarshalJSON() ([]byte, error) {
+	type NoMethod Cve
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Cvssv3: Common Vulnerability Scoring System version 3.
+type Cvssv3 struct {
+	// AttackComplexity: This metric describes the conditions beyond the
+	// attacker's control that must exist in order to exploit the
+	// vulnerability.
+	//
+	// Possible values:
+	//   "ATTACK_COMPLEXITY_UNSPECIFIED" - Invalid value.
+	//   "ATTACK_COMPLEXITY_LOW" - Specialized access conditions or
+	// extenuating circumstances do not exist. An attacker can expect
+	// repeatable success when attacking the vulnerable component.
+	//   "ATTACK_COMPLEXITY_HIGH" - A successful attack depends on
+	// conditions beyond the attacker's control. That is, a successful
+	// attack cannot be accomplished at will, but requires the attacker to
+	// invest in some measurable amount of effort in preparation or
+	// execution against the vulnerable component before a successful attack
+	// can be expected.
+	AttackComplexity string `json:"attackComplexity,omitempty"`
+
+	// AttackVector: Base Metrics Represents the intrinsic characteristics
+	// of a vulnerability that are constant over time and across user
+	// environments. This metric reflects the context by which vulnerability
+	// exploitation is possible.
+	//
+	// Possible values:
+	//   "ATTACK_VECTOR_UNSPECIFIED" - Invalid value.
+	//   "ATTACK_VECTOR_NETWORK" - The vulnerable component is bound to the
+	// network stack and the set of possible attackers extends beyond the
+	// other options listed below, up to and including the entire Internet.
+	//   "ATTACK_VECTOR_ADJACENT" - The vulnerable component is bound to the
+	// network stack, but the attack is limited at the protocol level to a
+	// logically adjacent topology.
+	//   "ATTACK_VECTOR_LOCAL" - The vulnerable component is not bound to
+	// the network stack and the attacker's path is via read/write/execute
+	// capabilities.
+	//   "ATTACK_VECTOR_PHYSICAL" - The attack requires the attacker to
+	// physically touch or manipulate the vulnerable component.
+	AttackVector string `json:"attackVector,omitempty"`
+
+	// AvailabilityImpact: This metric measures the impact to the
+	// availability of the impacted component resulting from a successfully
+	// exploited vulnerability.
+	//
+	// Possible values:
+	//   "IMPACT_UNSPECIFIED" - Invalid value.
+	//   "IMPACT_HIGH" - High impact.
+	//   "IMPACT_LOW" - Low impact.
+	//   "IMPACT_NONE" - No impact.
+	AvailabilityImpact string `json:"availabilityImpact,omitempty"`
+
+	// BaseScore: The base score is a function of the base metric scores.
+	BaseScore float64 `json:"baseScore,omitempty"`
+
+	// ConfidentialityImpact: This metric measures the impact to the
+	// confidentiality of the information resources managed by a software
+	// component due to a successfully exploited vulnerability.
+	//
+	// Possible values:
+	//   "IMPACT_UNSPECIFIED" - Invalid value.
+	//   "IMPACT_HIGH" - High impact.
+	//   "IMPACT_LOW" - Low impact.
+	//   "IMPACT_NONE" - No impact.
+	ConfidentialityImpact string `json:"confidentialityImpact,omitempty"`
+
+	// IntegrityImpact: This metric measures the impact to integrity of a
+	// successfully exploited vulnerability.
+	//
+	// Possible values:
+	//   "IMPACT_UNSPECIFIED" - Invalid value.
+	//   "IMPACT_HIGH" - High impact.
+	//   "IMPACT_LOW" - Low impact.
+	//   "IMPACT_NONE" - No impact.
+	IntegrityImpact string `json:"integrityImpact,omitempty"`
+
+	// PrivilegesRequired: This metric describes the level of privileges an
+	// attacker must possess before successfully exploiting the
+	// vulnerability.
+	//
+	// Possible values:
+	//   "PRIVILEGES_REQUIRED_UNSPECIFIED" - Invalid value.
+	//   "PRIVILEGES_REQUIRED_NONE" - The attacker is unauthorized prior to
+	// attack, and therefore does not require any access to settings or
+	// files of the vulnerable system to carry out an attack.
+	//   "PRIVILEGES_REQUIRED_LOW" - The attacker requires privileges that
+	// provide basic user capabilities that could normally affect only
+	// settings and files owned by a user. Alternatively, an attacker with
+	// Low privileges has the ability to access only non-sensitive
+	// resources.
+	//   "PRIVILEGES_REQUIRED_HIGH" - The attacker requires privileges that
+	// provide significant (e.g., administrative) control over the
+	// vulnerable component allowing access to component-wide settings and
+	// files.
+	PrivilegesRequired string `json:"privilegesRequired,omitempty"`
+
+	// Scope: The Scope metric captures whether a vulnerability in one
+	// vulnerable component impacts resources in components beyond its
+	// security scope.
+	//
+	// Possible values:
+	//   "SCOPE_UNSPECIFIED" - Invalid value.
+	//   "SCOPE_UNCHANGED" - An exploited vulnerability can only affect
+	// resources managed by the same security authority.
+	//   "SCOPE_CHANGED" - An exploited vulnerability can affect resources
+	// beyond the security scope managed by the security authority of the
+	// vulnerable component.
+	Scope string `json:"scope,omitempty"`
+
+	// UserInteraction: This metric captures the requirement for a human
+	// user, other than the attacker, to participate in the successful
+	// compromise of the vulnerable component.
+	//
+	// Possible values:
+	//   "USER_INTERACTION_UNSPECIFIED" - Invalid value.
+	//   "USER_INTERACTION_NONE" - The vulnerable system can be exploited
+	// without interaction from any user.
+	//   "USER_INTERACTION_REQUIRED" - Successful exploitation of this
+	// vulnerability requires a user to take some action before the
+	// vulnerability can be exploited.
+	UserInteraction string `json:"userInteraction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttackComplexity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttackComplexity") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Cvssv3) MarshalJSON() ([]byte, error) {
+	type NoMethod Cvssv3
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Cvssv3) UnmarshalJSON(data []byte) error {
+	type NoMethod Cvssv3
+	var s1 struct {
+		BaseScore gensupport.JSONFloat64 `json:"baseScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BaseScore = float64(s1.BaseScore)
+	return nil
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -629,10 +832,10 @@ type Expr struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -657,6 +860,15 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // scripting (XSS) vulnerability in an App Engine application is a
 // finding.
 type Finding struct {
+	// CanonicalName: The canonical name of the finding. It's either
+	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
+	// _id}",
+	// "folders/{folder_id}/sources/{source_id}/findings/{finding_id}" or
+	// "projects/{project_number}/sources/{source_id}/findings/{finding_id}",
+	//  depending on the closest CRM ancestor of the resource associated
+	// with the finding.
+	CanonicalName string `json:"canonicalName,omitempty"`
+
 	// Category: The additional taxonomy group within findings from a given
 	// source. This field is immutable after creation time. Example:
 	// "XSS_FLASH_INJECTION"
@@ -671,7 +883,8 @@ type Finding struct {
 	// open firewall it would capture the time the detector believes the
 	// firewall became open. The accuracy is determined by the detector. If
 	// the finding were to be resolved afterward, this time would reflect
-	// when the finding was resolved.
+	// when the finding was resolved. Must not be set to a value greater
+	// than the current timestamp.
 	EventTime string `json:"eventTime,omitempty"`
 
 	// ExternalUri: The URI that, if available, points to a web page outside
@@ -679,6 +892,26 @@ type Finding struct {
 	// finding can be found. This field is guaranteed to be either empty or
 	// a well formed URL.
 	ExternalUri string `json:"externalUri,omitempty"`
+
+	// FindingClass: The class of the finding.
+	//
+	// Possible values:
+	//   "FINDING_CLASS_UNSPECIFIED" - Unspecified finding class.
+	//   "THREAT" - Describes unwanted or malicious activity.
+	//   "VULNERABILITY" - Describes a potential weakness in software that
+	// increases risk to Confidentiality & Integrity & Availability.
+	//   "MISCONFIGURATION" - Describes a potential weakness in cloud
+	// resource/asset configuration that increases risk.
+	//   "OBSERVATION" - Describes a security observation that is for
+	// informational purposes.
+	FindingClass string `json:"findingClass,omitempty"`
+
+	// Indicator: Represents what's commonly known as an Indicator of
+	// compromise (IoC) in computer forensics. This is an artifact observed
+	// on a network or in an operating system that, with high confidence,
+	// indicates a computer intrusion. Reference:
+	// https://en.wikipedia.org/wiki/Indicator_of_compromise
+	Indicator *Indicator `json:"indicator,omitempty"`
 
 	// Name: The relative resource name of this finding. See:
 	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
@@ -767,22 +1000,27 @@ type Finding struct {
 	// otherwise addressed and is no longer active.
 	State string `json:"state,omitempty"`
 
+	// Vulnerability: Represents vulnerability specific fields like cve,
+	// cvss scores etc. CVE stands for Common Vulnerabilities and Exposures
+	// (https://cve.mitre.org/about/)
+	Vulnerability *Vulnerability `json:"vulnerability,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Category") to
+	// ForceSendFields is a list of field names (e.g. "CanonicalName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Category") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CanonicalName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -807,10 +1045,10 @@ type Folder struct {
 
 	// ForceSendFields is a list of field names (e.g. "ResourceFolder") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResourceFolder") to
@@ -837,10 +1075,10 @@ type GetIamPolicyRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Options") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Options") to include in
@@ -872,8 +1110,8 @@ type GetPolicyOptions struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "RequestedPolicyVersion") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -911,10 +1149,10 @@ type GoogleCloudSecuritycenterV1NotificationMessage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Finding") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Finding") to include in
@@ -958,12 +1196,15 @@ type GoogleCloudSecuritycenterV1Resource struct {
 	// resource belongs to.
 	ProjectDisplayName string `json:"projectDisplayName,omitempty"`
 
+	// Type: The full resource type of the resource.
+	Type string `json:"type,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Folders") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Folders") to include in
@@ -1000,10 +1241,10 @@ type GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Duration") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Duration") to include in
@@ -1040,10 +1281,10 @@ type GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Duration") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Duration") to include in
@@ -1068,6 +1309,15 @@ func (s *GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse) MarshalJSON(
 // enforcement. For example, an XSS vulnerability in an App Engine
 // application is a finding.
 type GoogleCloudSecuritycenterV1p1beta1Finding struct {
+	// CanonicalName: The canonical name of the finding. It's either
+	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
+	// _id}",
+	// "folders/{folder_id}/sources/{source_id}/findings/{finding_id}" or
+	// "projects/{project_number}/sources/{source_id}/findings/{finding_id}",
+	//  depending on the closest CRM ancestor of the resource associated
+	// with the finding.
+	CanonicalName string `json:"canonicalName,omitempty"`
+
 	// Category: The additional taxonomy group within findings from a given
 	// source. This field is immutable after creation time. Example:
 	// "XSS_FLASH_INJECTION"
@@ -1082,7 +1332,8 @@ type GoogleCloudSecuritycenterV1p1beta1Finding struct {
 	// open firewall it would capture the time the detector believes the
 	// firewall became open. The accuracy is determined by the detector. If
 	// the finding were to be resolved afterward, this time would reflect
-	// when the finding was resolved.
+	// when the finding was resolved. Must not be set to a value greater
+	// than the current timestamp.
 	EventTime string `json:"eventTime,omitempty"`
 
 	// ExternalUri: The URI that, if available, points to a web page outside
@@ -1146,18 +1397,18 @@ type GoogleCloudSecuritycenterV1p1beta1Finding struct {
 	// otherwise addressed and is no longer active.
 	State string `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Category") to
+	// ForceSendFields is a list of field names (e.g. "CanonicalName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Category") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CanonicalName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1182,10 +1433,10 @@ type GoogleCloudSecuritycenterV1p1beta1Folder struct {
 
 	// ForceSendFields is a list of field names (e.g. "ResourceFolder") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResourceFolder") to
@@ -1220,10 +1471,10 @@ type GoogleCloudSecuritycenterV1p1beta1NotificationMessage struct {
 
 	// ForceSendFields is a list of field names (e.g. "Finding") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Finding") to include in
@@ -1269,10 +1520,10 @@ type GoogleCloudSecuritycenterV1p1beta1Resource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Folders") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Folders") to include in
@@ -1309,10 +1560,10 @@ type GoogleCloudSecuritycenterV1p1beta1RunAssetDiscoveryResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Duration") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Duration") to include in
@@ -1336,6 +1587,18 @@ func (s *GoogleCloudSecuritycenterV1p1beta1RunAssetDiscoveryResponse) MarshalJSO
 // Center organization -- they can be modified and viewed by all users
 // who have proper permissions on the organization.
 type GoogleCloudSecuritycenterV1p1beta1SecurityMarks struct {
+	// CanonicalName: The canonical name of the marks. Examples:
+	// "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+	// "folders/{folder_id}/assets/{asset_id}/securityMarks"
+	// "projects/{project_number}/assets/{asset_id}/securityMarks"
+	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
+	// _id}/securityMarks"
+	// "folders/{folder_id}/sources/{source_id}/findings/{finding_id}/securit
+	// yMarks"
+	// "projects/{project_number}/sources/{source_id}/findings/{finding_id}/s
+	// ecurityMarks"
+	CanonicalName string `json:"canonicalName,omitempty"`
+
 	// Marks: Mutable user specified security marks belonging to the parent
 	// resource. Constraints are as follows: * Keys and values are treated
 	// as case insensitive * Keys must be between 1 - 256 characters
@@ -1352,18 +1615,18 @@ type GoogleCloudSecuritycenterV1p1beta1SecurityMarks struct {
 	// _id}/securityMarks".
 	Name string `json:"name,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Marks") to
+	// ForceSendFields is a list of field names (e.g. "CanonicalName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Marks") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CanonicalName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1468,10 +1731,10 @@ type GroupAssetsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "CompareDuration") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CompareDuration") to
@@ -1514,10 +1777,10 @@ type GroupAssetsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "GroupByResults") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GroupByResults") to
@@ -1578,15 +1841,19 @@ type GroupFindingsRequest struct {
 	// field and operator combinations are supported: * name: `=` * parent:
 	// `=`, `:` * resource_name: `=`, `:` * state: `=`, `:` * category: `=`,
 	// `:` * external_uri: `=`, `:` * event_time: `=`, `>`, `<`, `>=`, `<=`
-	// * severity: `=`, `:` Usage: This should be milliseconds since epoch
-	// or an RFC3339 string. Examples: `event_time =
-	// "2019-06-10T16:07:18-07:00" `event_time = 1560208038000` *
+	// Usage: This should be milliseconds since epoch or an RFC3339 string.
+	// Examples: `event_time = "2019-06-10T16:07:18-07:00" `event_time =
+	// 1560208038000` * severity: `=`, `:` * workflow_state: `=`, `:` *
 	// security_marks.marks: `=`, `:` * source_properties: `=`, `:`, `>`,
 	// `<`, `>=`, `<=` For example, `source_properties.size = 100` is a
 	// valid filter string. Use a partial match on the empty string to
 	// filter based on a property existing: `source_properties.my_property :
 	// "" Use a negated partial match on the empty string to filter based
-	// on a property not existing: `-source_properties.my_property : ""
+	// on a property not existing: `-source_properties.my_property : "" *
+	// resource: * resource.name: `=`, `:` * resource.parent_name: `=`, `:`
+	// * resource.parent_display_name: `=`, `:` * resource.project_name:
+	// `=`, `:` * resource.project_display_name: `=`, `:` * resource.type:
+	// `=`, `:`
 	Filter string `json:"filter,omitempty"`
 
 	// GroupBy: Required. Expression that defines what assets fields to use
@@ -1614,10 +1881,10 @@ type GroupFindingsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "CompareDuration") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CompareDuration") to
@@ -1660,10 +1927,10 @@ type GroupFindingsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "GroupByResults") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GroupByResults") to
@@ -1693,10 +1960,10 @@ type GroupResult struct {
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Count") to include in API
@@ -1726,10 +1993,10 @@ type IamPolicy struct {
 
 	// ForceSendFields is a list of field names (e.g. "PolicyBlob") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PolicyBlob") to include in
@@ -1743,6 +2010,41 @@ type IamPolicy struct {
 
 func (s *IamPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod IamPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Indicator: Represents what's commonly known as an Indicator of
+// compromise (IoC) in computer forensics. This is an artifact observed
+// on a network or in an operating system that, with high confidence,
+// indicates a computer intrusion. Reference:
+// https://en.wikipedia.org/wiki/Indicator_of_compromise
+type Indicator struct {
+	// Domains: List of domains associated to the Finding.
+	Domains []string `json:"domains,omitempty"`
+
+	// IpAddresses: List of ip addresses associated to the Finding.
+	IpAddresses []string `json:"ipAddresses,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Domains") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Domains") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Indicator) MarshalJSON() ([]byte, error) {
+	type NoMethod Indicator
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1768,10 +2070,10 @@ type ListAssetsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ListAssetsResults")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ListAssetsResults") to
@@ -1807,10 +2109,10 @@ type ListAssetsResult struct {
 
 	// ForceSendFields is a list of field names (e.g. "Asset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Asset") to include in API
@@ -1849,10 +2151,10 @@ type ListFindingsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ListFindingsResults")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ListFindingsResults") to
@@ -1896,10 +2198,10 @@ type ListFindingsResult struct {
 
 	// ForceSendFields is a list of field names (e.g. "Finding") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Finding") to include in
@@ -1934,10 +2236,10 @@ type ListNotificationConfigsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -1971,10 +2273,10 @@ type ListOperationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -2007,10 +2309,10 @@ type ListSourcesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -2062,10 +2364,10 @@ type NotificationConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -2124,10 +2426,10 @@ type Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -2169,8 +2471,8 @@ type OrganizationSettings struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AssetDiscoveryConfig") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2223,9 +2525,9 @@ func (s *OrganizationSettings) MarshalJSON() ([]byte, error) {
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
 // condition: title: expirable access description: Does not grant access
 // after Sep 2020 expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version:
-// 3 For a description of IAM and its features, see the IAM
-// documentation (https://cloud.google.com/iam/docs/).
+// timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
+// For a description of IAM and its features, see the IAM documentation
+// (https://cloud.google.com/iam/docs/).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -2275,10 +2577,10 @@ type Policy struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuditConfigs") to include
@@ -2296,8 +2598,40 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Reference: Additional Links
+type Reference struct {
+	// Source: Source of the reference e.g. NVD
+	Source string `json:"source,omitempty"`
+
+	// Uri: Uri for the mentioned source e.g.
+	// https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2021-34527.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Source") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Source") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Reference) MarshalJSON() ([]byte, error) {
+	type NoMethod Reference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Resource: Information related to the Google Cloud resource that is
-// associated with this finding. LINT.IfChange
+// associated with this finding.
 type Resource struct {
 	// Folders: Contains a Folder message for each folder in the assets
 	// ancestry. The first folder is the deepest nested folder, and the last
@@ -2324,10 +2658,10 @@ type Resource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Folders") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Folders") to include in
@@ -2397,10 +2731,10 @@ type SecurityCenterProperties struct {
 
 	// ForceSendFields is a list of field names (e.g. "Folders") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Folders") to include in
@@ -2424,6 +2758,18 @@ func (s *SecurityCenterProperties) MarshalJSON() ([]byte, error) {
 // and viewed by all users who have proper permissions on the
 // organization.
 type SecurityMarks struct {
+	// CanonicalName: The canonical name of the marks. Examples:
+	// "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+	// "folders/{folder_id}/assets/{asset_id}/securityMarks"
+	// "projects/{project_number}/assets/{asset_id}/securityMarks"
+	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
+	// _id}/securityMarks"
+	// "folders/{folder_id}/sources/{source_id}/findings/{finding_id}/securit
+	// yMarks"
+	// "projects/{project_number}/sources/{source_id}/findings/{finding_id}/s
+	// ecurityMarks"
+	CanonicalName string `json:"canonicalName,omitempty"`
+
 	// Marks: Mutable user specified security marks belonging to the parent
 	// resource. Constraints are as follows: * Keys and values are treated
 	// as case insensitive * Keys must be between 1 - 256 characters
@@ -2444,18 +2790,18 @@ type SecurityMarks struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Marks") to
+	// ForceSendFields is a list of field names (e.g. "CanonicalName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Marks") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CanonicalName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2486,10 +2832,10 @@ type SetFindingStateRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "StartTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "StartTime") to include in
@@ -2523,10 +2869,10 @@ type SetIamPolicyRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Policy") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Policy") to include in API
@@ -2549,6 +2895,13 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // a container of findings that come from the same scanner, logger,
 // monitor, and other tools.
 type Source struct {
+	// CanonicalName: The canonical name of the finding. It's either
+	// "organizations/{organization_id}/sources/{source_id}",
+	// "folders/{folder_id}/sources/{source_id}" or
+	// "projects/{project_number}/sources/{source_id}", depending on the
+	// closest CRM ancestor of the resource associated with the finding.
+	CanonicalName string `json:"canonicalName,omitempty"`
+
 	// Description: The description of the source (max of 1024 characters).
 	// Example: "Web Security Scanner is a web security scanner for common
 	// vulnerabilities in App Engine applications. It can automatically scan
@@ -2572,15 +2925,15 @@ type Source struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Description") to
+	// ForceSendFields is a list of field names (e.g. "CanonicalName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Description") to include
+	// NullFields is a list of field names (e.g. "CanonicalName") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -2618,10 +2971,10 @@ type Status struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -2658,10 +3011,10 @@ type StreamingConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Filter") to include in API
@@ -2690,10 +3043,10 @@ type TestIamPermissionsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -2724,10 +3077,10 @@ type TestIamPermissionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permissions") to include
@@ -2745,6 +3098,36 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Vulnerability: Refers to common vulnerability fields e.g. cve, cvss,
+// cwe etc.
+type Vulnerability struct {
+	// Cve: CVE stands for Common Vulnerabilities and Exposures
+	// (https://cve.mitre.org/about/)
+	Cve *Cve `json:"cve,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cve") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cve") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Vulnerability) MarshalJSON() ([]byte, error) {
+	type NoMethod Vulnerability
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "securitycenter.folders.assets.group":
 
 type FoldersAssetsGroupCall struct {
@@ -2758,6 +3141,10 @@ type FoldersAssetsGroupCall struct {
 
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
+//
+// - parent: Name of the organization to groupBy. Its format is
+//   "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *FoldersAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *FoldersAssetsGroupCall {
 	c := &FoldersAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2792,7 +3179,7 @@ func (c *FoldersAssetsGroupCall) Header() http.Header {
 
 func (c *FoldersAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2919,6 +3306,10 @@ type FoldersAssetsListCall struct {
 }
 
 // List: Lists an organization's assets.
+//
+// - parent: Name of the organization assets should belong to. Its
+//   format is "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *FoldersAssetsService) List(parent string) *FoldersAssetsListCall {
 	c := &FoldersAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3085,7 +3476,7 @@ func (c *FoldersAssetsListCall) Header() http.Header {
 
 func (c *FoldersAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3246,6 +3637,13 @@ type FoldersAssetsUpdateSecurityMarksCall struct {
 }
 
 // UpdateSecurityMarks: Updates security marks.
+//
+// - name: The relative resource name of the SecurityMarks. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Examples:
+//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}/securityMarks".
 func (r *FoldersAssetsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *FoldersAssetsUpdateSecurityMarksCall {
 	c := &FoldersAssetsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3298,7 +3696,7 @@ func (c *FoldersAssetsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *FoldersAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3416,6 +3814,10 @@ type FoldersSourcesListCall struct {
 }
 
 // List: Lists all sources belonging to an organization.
+//
+// - parent: Resource name of the parent of sources to list. Its format
+//   should be "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *FoldersSourcesService) List(parent string) *FoldersSourcesListCall {
 	c := &FoldersSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3476,7 +3878,7 @@ func (c *FoldersSourcesListCall) Header() http.Header {
 
 func (c *FoldersSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3614,6 +4016,14 @@ type FoldersSourcesFindingsGroupCall struct {
 // /v1/organizations/{organization_id}/sources/-/findings,
 // /v1/folders/{folder_id}/sources/-/findings,
 // /v1/projects/{project_id}/sources/-/findings
+//
+// - parent: Name of the source to groupBy. Its format is
+//   "organizations/[organization_id]/sources/[source_id]",
+//   folders/[folder_id]/sources/[source_id], or
+//   projects/[project_id]/sources/[source_id]. To groupBy across all
+//   sources provide a source_id of `-`. For example:
+//   organizations/{organization_id}/sources/-,
+//   folders/{folder_id}/sources/-, or projects/{project_id}/sources/-.
 func (r *FoldersSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *FoldersSourcesFindingsGroupCall {
 	c := &FoldersSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3648,7 +4058,7 @@ func (c *FoldersSourcesFindingsGroupCall) Header() http.Header {
 
 func (c *FoldersSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3777,6 +4187,14 @@ type FoldersSourcesFindingsListCall struct {
 // List: Lists an organization or source's findings. To list across all
 // sources provide a `-` as the source id. Example:
 // /v1/organizations/{organization_id}/sources/-/findings
+//
+// - parent: Name of the source the findings belong to. Its format is
+//   "organizations/[organization_id]/sources/[source_id],
+//   folders/[folder_id]/sources/[source_id], or
+//   projects/[project_id]/sources/[source_id]". To list across all
+//   sources provide a source_id of `-`. For example:
+//   organizations/{organization_id}/sources/-,
+//   folders/{folder_id}/sources/- or projects/{projects_id}/sources/-.
 func (r *FoldersSourcesFindingsService) List(parent string) *FoldersSourcesFindingsListCall {
 	c := &FoldersSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3834,15 +4252,20 @@ func (c *FoldersSourcesFindingsListCall) FieldMask(fieldMask string) *FoldersSou
 // `false` without quotes. The following field and operator combinations
 // are supported: * name: `=` * parent: `=`, `:` * resource_name: `=`,
 // `:` * state: `=`, `:` * category: `=`, `:` * external_uri: `=`, `:` *
-// event_time: `=`, `>`, `<`, `>=`, `<=` * severity: `=`, `:` Usage:
-// This should be milliseconds since epoch or an RFC3339 string.
-// Examples: `event_time = "2019-06-10T16:07:18-07:00" `event_time =
-// 1560208038000` security_marks.marks: `=`, `:` source_properties: `=`,
-// `:`, `>`, `<`, `>=`, `<=` For example, `source_properties.size = 100`
-// is a valid filter string. Use a partial match on the empty string to
-// filter based on a property existing: `source_properties.my_property :
-// "" Use a negated partial match on the empty string to filter based
-// on a property not existing: `-source_properties.my_property : ""
+// event_time: `=`, `>`, `<`, `>=`, `<=` Usage: This should be
+// milliseconds since epoch or an RFC3339 string. Examples: `event_time
+// = "2019-06-10T16:07:18-07:00" `event_time = 1560208038000` *
+// severity: `=`, `:` * workflow_state: `=`, `:` * security_marks.marks:
+// `=`, `:` * source_properties: `=`, `:`, `>`, `<`, `>=`, `<=` For
+// example, `source_properties.size = 100` is a valid filter string. Use
+// a partial match on the empty string to filter based on a property
+// existing: `source_properties.my_property : "" Use a negated partial
+// match on the empty string to filter based on a property not existing:
+// `-source_properties.my_property : "" * resource: * resource.name:
+// `=`, `:` * resource.parent_name: `=`, `:` *
+// resource.parent_display_name: `=`, `:` * resource.project_name: `=`,
+// `:` * resource.project_display_name: `=`, `:` * resource.type: `=`,
+// `:` * resource.folders.resource_folder: `=`, `:`
 func (c *FoldersSourcesFindingsListCall) Filter(filter string) *FoldersSourcesFindingsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3928,7 +4351,7 @@ func (c *FoldersSourcesFindingsListCall) Header() http.Header {
 
 func (c *FoldersSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4011,7 +4434,7 @@ func (c *FoldersSourcesFindingsListCall) Do(opts ...googleapi.CallOption) (*List
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Expression that defines the filter to apply across findings. The expression is a list of one or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. Examples include: * name * source_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following field and operator combinations are supported: * name: `=` * parent: `=`, `:` * resource_name: `=`, `:` * state: `=`, `:` * category: `=`, `:` * external_uri: `=`, `:` * event_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` * severity: `=`, `:` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `event_time = \"2019-06-10T16:07:18-07:00\"` `event_time = 1560208038000` security_marks.marks: `=`, `:` source_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` For example, `source_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `source_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-source_properties.my_property : \"\"`",
+	//       "description": "Expression that defines the filter to apply across findings. The expression is a list of one or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. Examples include: * name * source_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following field and operator combinations are supported: * name: `=` * parent: `=`, `:` * resource_name: `=`, `:` * state: `=`, `:` * category: `=`, `:` * external_uri: `=`, `:` * event_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `event_time = \"2019-06-10T16:07:18-07:00\"` `event_time = 1560208038000` * severity: `=`, `:` * workflow_state: `=`, `:` * security_marks.marks: `=`, `:` * source_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` For example, `source_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `source_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-source_properties.my_property : \"\"` * resource: * resource.name: `=`, `:` * resource.parent_name: `=`, `:` * resource.parent_display_name: `=`, `:` * resource.project_name: `=`, `:` * resource.project_display_name: `=`, `:` * resource.type: `=`, `:` * resource.folders.resource_folder: `=`, `:`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4090,6 +4513,12 @@ type FoldersSourcesFindingsPatchCall struct {
 
 // Patch: Creates or updates a finding. The corresponding source must
 // exist for a finding creation to succeed.
+//
+// - name: The relative resource name of this finding. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}".
 func (r *FoldersSourcesFindingsService) Patch(name string, finding *Finding) *FoldersSourcesFindingsPatchCall {
 	c := &FoldersSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4135,7 +4564,7 @@ func (c *FoldersSourcesFindingsPatchCall) Header() http.Header {
 
 func (c *FoldersSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4247,6 +4676,12 @@ type FoldersSourcesFindingsSetStateCall struct {
 }
 
 // SetState: Updates the state of a finding.
+//
+// - name: The relative resource name of the finding. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/sources/{source_id}/finding/{findin
+//   g_id}".
 func (r *FoldersSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *FoldersSourcesFindingsSetStateCall {
 	c := &FoldersSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4281,7 +4716,7 @@ func (c *FoldersSourcesFindingsSetStateCall) Header() http.Header {
 
 func (c *FoldersSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4387,6 +4822,13 @@ type FoldersSourcesFindingsUpdateSecurityMarksCall struct {
 }
 
 // UpdateSecurityMarks: Updates security marks.
+//
+// - name: The relative resource name of the SecurityMarks. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Examples:
+//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}/securityMarks".
 func (r *FoldersSourcesFindingsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *FoldersSourcesFindingsUpdateSecurityMarksCall {
 	c := &FoldersSourcesFindingsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4439,7 +4881,7 @@ func (c *FoldersSourcesFindingsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *FoldersSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4557,6 +4999,10 @@ type OrganizationsGetOrganizationSettingsCall struct {
 }
 
 // GetOrganizationSettings: Gets the settings for an organization.
+//
+// - name: Name of the organization to get organization settings for.
+//   Its format is
+//   "organizations/[organization_id]/organizationSettings".
 func (r *OrganizationsService) GetOrganizationSettings(name string) *OrganizationsGetOrganizationSettingsCall {
 	c := &OrganizationsGetOrganizationSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4600,7 +5046,7 @@ func (c *OrganizationsGetOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4701,6 +5147,10 @@ type OrganizationsUpdateOrganizationSettingsCall struct {
 }
 
 // UpdateOrganizationSettings: Updates an organization's settings.
+//
+// - name: The relative resource name of the settings. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example: "organizations/{organization_id}/organizationSettings".
 func (r *OrganizationsService) UpdateOrganizationSettings(name string, organizationsettings *OrganizationSettings) *OrganizationsUpdateOrganizationSettingsCall {
 	c := &OrganizationsUpdateOrganizationSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4743,7 +5193,7 @@ func (c *OrganizationsUpdateOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4856,6 +5306,10 @@ type OrganizationsAssetsGroupCall struct {
 
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
+//
+// - parent: Name of the organization to groupBy. Its format is
+//   "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *OrganizationsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *OrganizationsAssetsGroupCall {
 	c := &OrganizationsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4890,7 +5344,7 @@ func (c *OrganizationsAssetsGroupCall) Header() http.Header {
 
 func (c *OrganizationsAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5017,6 +5471,10 @@ type OrganizationsAssetsListCall struct {
 }
 
 // List: Lists an organization's assets.
+//
+// - parent: Name of the organization assets should belong to. Its
+//   format is "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *OrganizationsAssetsService) List(parent string) *OrganizationsAssetsListCall {
 	c := &OrganizationsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5183,7 +5641,7 @@ func (c *OrganizationsAssetsListCall) Header() http.Header {
 
 func (c *OrganizationsAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5347,6 +5805,9 @@ type OrganizationsAssetsRunDiscoveryCall struct {
 // long-running operation. This API can only be called with limited
 // frequency for an organization. If it is called too frequently the
 // caller will receive a TOO_MANY_REQUESTS error.
+//
+// - parent: Name of the organization to run asset discovery for. Its
+//   format is "organizations/[organization_id]".
 func (r *OrganizationsAssetsService) RunDiscovery(parent string, runassetdiscoveryrequest *RunAssetDiscoveryRequest) *OrganizationsAssetsRunDiscoveryCall {
 	c := &OrganizationsAssetsRunDiscoveryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5381,7 +5842,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Header() http.Header {
 
 func (c *OrganizationsAssetsRunDiscoveryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5487,6 +5948,13 @@ type OrganizationsAssetsUpdateSecurityMarksCall struct {
 }
 
 // UpdateSecurityMarks: Updates security marks.
+//
+// - name: The relative resource name of the SecurityMarks. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Examples:
+//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}/securityMarks".
 func (r *OrganizationsAssetsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *OrganizationsAssetsUpdateSecurityMarksCall {
 	c := &OrganizationsAssetsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5539,7 +6007,7 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5657,6 +6125,9 @@ type OrganizationsNotificationConfigsCreateCall struct {
 }
 
 // Create: Creates a notification config.
+//
+// - parent: Resource name of the new notification config's parent. Its
+//   format is "organizations/[organization_id]".
 func (r *OrganizationsNotificationConfigsService) Create(parent string, notificationconfig *NotificationConfig) *OrganizationsNotificationConfigsCreateCall {
 	c := &OrganizationsNotificationConfigsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5700,7 +6171,7 @@ func (c *OrganizationsNotificationConfigsCreateCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5810,6 +6281,9 @@ type OrganizationsNotificationConfigsDeleteCall struct {
 }
 
 // Delete: Deletes a notification config.
+//
+// - name: Name of the notification config to delete. Its format is
+//   "organizations/[organization_id]/notificationConfigs/[config_id]".
 func (r *OrganizationsNotificationConfigsService) Delete(name string) *OrganizationsNotificationConfigsDeleteCall {
 	c := &OrganizationsNotificationConfigsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5843,7 +6317,7 @@ func (c *OrganizationsNotificationConfigsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5941,6 +6415,9 @@ type OrganizationsNotificationConfigsGetCall struct {
 }
 
 // Get: Gets a notification config.
+//
+// - name: Name of the notification config to get. Its format is
+//   "organizations/[organization_id]/notificationConfigs/[config_id]".
 func (r *OrganizationsNotificationConfigsService) Get(name string) *OrganizationsNotificationConfigsGetCall {
 	c := &OrganizationsNotificationConfigsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5984,7 +6461,7 @@ func (c *OrganizationsNotificationConfigsGetCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6085,6 +6562,9 @@ type OrganizationsNotificationConfigsListCall struct {
 }
 
 // List: Lists notification configs.
+//
+// - parent: Name of the organization to list notification configs. Its
+//   format is "organizations/[organization_id]".
 func (r *OrganizationsNotificationConfigsService) List(parent string) *OrganizationsNotificationConfigsListCall {
 	c := &OrganizationsNotificationConfigsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6145,7 +6625,7 @@ func (c *OrganizationsNotificationConfigsListCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6279,6 +6759,12 @@ type OrganizationsNotificationConfigsPatchCall struct {
 
 // Patch:  Updates a notification config. The following update fields
 // are allowed: description, pubsub_topic, streaming_config.filter
+//
+// - name: The relative resource name of this notification config. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/notificationConfigs/notify_public_b
+//   ucket".
 func (r *OrganizationsNotificationConfigsService) Patch(name string, notificationconfig *NotificationConfig) *OrganizationsNotificationConfigsPatchCall {
 	c := &OrganizationsNotificationConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6321,7 +6807,7 @@ func (c *OrganizationsNotificationConfigsPatchCall) Header() http.Header {
 
 func (c *OrganizationsNotificationConfigsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6441,6 +6927,8 @@ type OrganizationsOperationsCancelCall struct {
 // deleted; instead, it becomes an operation with an Operation.error
 // value with a google.rpc.Status.code of 1, corresponding to
 // `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
 func (r *OrganizationsOperationsService) Cancel(name string) *OrganizationsOperationsCancelCall {
 	c := &OrganizationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6474,7 +6962,7 @@ func (c *OrganizationsOperationsCancelCall) Header() http.Header {
 
 func (c *OrganizationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6574,6 +7062,8 @@ type OrganizationsOperationsDeleteCall struct {
 // the client is no longer interested in the operation result. It does
 // not cancel the operation. If the server doesn't support this method,
 // it returns `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
 func (r *OrganizationsOperationsService) Delete(name string) *OrganizationsOperationsDeleteCall {
 	c := &OrganizationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6607,7 +7097,7 @@ func (c *OrganizationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6707,6 +7197,8 @@ type OrganizationsOperationsGetCall struct {
 // Get: Gets the latest state of a long-running operation. Clients can
 // use this method to poll the operation result at intervals as
 // recommended by the API service.
+//
+// - name: The name of the operation resource.
 func (r *OrganizationsOperationsService) Get(name string) *OrganizationsOperationsGetCall {
 	c := &OrganizationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6750,7 +7242,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6860,6 +7352,8 @@ type OrganizationsOperationsListCall struct {
 // the operations collection id, however overriding users must ensure
 // the name binding is the parent resource, without the operations
 // collection id.
+//
+// - name: The name of the operation's parent resource.
 func (r *OrganizationsOperationsService) List(name string) *OrganizationsOperationsListCall {
 	c := &OrganizationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6924,7 +7418,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7062,6 +7556,9 @@ type OrganizationsSourcesCreateCall struct {
 }
 
 // Create: Creates a source.
+//
+// - parent: Resource name of the new source's parent. Its format should
+//   be "organizations/[organization_id]".
 func (r *OrganizationsSourcesService) Create(parent string, source *Source) *OrganizationsSourcesCreateCall {
 	c := &OrganizationsSourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7096,7 +7593,7 @@ func (c *OrganizationsSourcesCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7202,6 +7699,9 @@ type OrganizationsSourcesGetCall struct {
 }
 
 // Get: Gets a source.
+//
+// - name: Relative resource name of the source. Its format is
+//   "organizations/[organization_id]/source/[source_id]".
 func (r *OrganizationsSourcesService) Get(name string) *OrganizationsSourcesGetCall {
 	c := &OrganizationsSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7245,7 +7745,7 @@ func (c *OrganizationsSourcesGetCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7346,6 +7846,10 @@ type OrganizationsSourcesGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Gets the access control policy on the specified Source.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
 func (r *OrganizationsSourcesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *OrganizationsSourcesGetIamPolicyCall {
 	c := &OrganizationsSourcesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7380,7 +7884,7 @@ func (c *OrganizationsSourcesGetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7486,6 +7990,10 @@ type OrganizationsSourcesListCall struct {
 }
 
 // List: Lists all sources belonging to an organization.
+//
+// - parent: Resource name of the parent of sources to list. Its format
+//   should be "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *OrganizationsSourcesService) List(parent string) *OrganizationsSourcesListCall {
 	c := &OrganizationsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7546,7 +8054,7 @@ func (c *OrganizationsSourcesListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7679,6 +8187,10 @@ type OrganizationsSourcesPatchCall struct {
 }
 
 // Patch: Updates a source.
+//
+// - name: The relative resource name of this source. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example: "organizations/{organization_id}/sources/{source_id}".
 func (r *OrganizationsSourcesService) Patch(name string, source *Source) *OrganizationsSourcesPatchCall {
 	c := &OrganizationsSourcesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7721,7 +8233,7 @@ func (c *OrganizationsSourcesPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7833,6 +8345,10 @@ type OrganizationsSourcesSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the access control policy on the specified Source.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
 func (r *OrganizationsSourcesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *OrganizationsSourcesSetIamPolicyCall {
 	c := &OrganizationsSourcesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7867,7 +8383,7 @@ func (c *OrganizationsSourcesSetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7974,6 +8490,10 @@ type OrganizationsSourcesTestIamPermissionsCall struct {
 
 // TestIamPermissions: Returns the permissions that a caller has on the
 // specified source.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
 func (r *OrganizationsSourcesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *OrganizationsSourcesTestIamPermissionsCall {
 	c := &OrganizationsSourcesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8008,7 +8528,7 @@ func (c *OrganizationsSourcesTestIamPermissionsCall) Header() http.Header {
 
 func (c *OrganizationsSourcesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8115,6 +8635,9 @@ type OrganizationsSourcesFindingsCreateCall struct {
 
 // Create: Creates a finding. The corresponding source must exist for
 // finding creation to succeed.
+//
+// - parent: Resource name of the new finding's parent. Its format
+//   should be "organizations/[organization_id]/sources/[source_id]".
 func (r *OrganizationsSourcesFindingsService) Create(parent string, finding *Finding) *OrganizationsSourcesFindingsCreateCall {
 	c := &OrganizationsSourcesFindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8158,7 +8681,7 @@ func (c *OrganizationsSourcesFindingsCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8274,6 +8797,14 @@ type OrganizationsSourcesFindingsGroupCall struct {
 // /v1/organizations/{organization_id}/sources/-/findings,
 // /v1/folders/{folder_id}/sources/-/findings,
 // /v1/projects/{project_id}/sources/-/findings
+//
+// - parent: Name of the source to groupBy. Its format is
+//   "organizations/[organization_id]/sources/[source_id]",
+//   folders/[folder_id]/sources/[source_id], or
+//   projects/[project_id]/sources/[source_id]. To groupBy across all
+//   sources provide a source_id of `-`. For example:
+//   organizations/{organization_id}/sources/-,
+//   folders/{folder_id}/sources/-, or projects/{project_id}/sources/-.
 func (r *OrganizationsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *OrganizationsSourcesFindingsGroupCall {
 	c := &OrganizationsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8308,7 +8839,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8437,6 +8968,14 @@ type OrganizationsSourcesFindingsListCall struct {
 // List: Lists an organization or source's findings. To list across all
 // sources provide a `-` as the source id. Example:
 // /v1/organizations/{organization_id}/sources/-/findings
+//
+// - parent: Name of the source the findings belong to. Its format is
+//   "organizations/[organization_id]/sources/[source_id],
+//   folders/[folder_id]/sources/[source_id], or
+//   projects/[project_id]/sources/[source_id]". To list across all
+//   sources provide a source_id of `-`. For example:
+//   organizations/{organization_id}/sources/-,
+//   folders/{folder_id}/sources/- or projects/{projects_id}/sources/-.
 func (r *OrganizationsSourcesFindingsService) List(parent string) *OrganizationsSourcesFindingsListCall {
 	c := &OrganizationsSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8494,15 +9033,20 @@ func (c *OrganizationsSourcesFindingsListCall) FieldMask(fieldMask string) *Orga
 // `false` without quotes. The following field and operator combinations
 // are supported: * name: `=` * parent: `=`, `:` * resource_name: `=`,
 // `:` * state: `=`, `:` * category: `=`, `:` * external_uri: `=`, `:` *
-// event_time: `=`, `>`, `<`, `>=`, `<=` * severity: `=`, `:` Usage:
-// This should be milliseconds since epoch or an RFC3339 string.
-// Examples: `event_time = "2019-06-10T16:07:18-07:00" `event_time =
-// 1560208038000` security_marks.marks: `=`, `:` source_properties: `=`,
-// `:`, `>`, `<`, `>=`, `<=` For example, `source_properties.size = 100`
-// is a valid filter string. Use a partial match on the empty string to
-// filter based on a property existing: `source_properties.my_property :
-// "" Use a negated partial match on the empty string to filter based
-// on a property not existing: `-source_properties.my_property : ""
+// event_time: `=`, `>`, `<`, `>=`, `<=` Usage: This should be
+// milliseconds since epoch or an RFC3339 string. Examples: `event_time
+// = "2019-06-10T16:07:18-07:00" `event_time = 1560208038000` *
+// severity: `=`, `:` * workflow_state: `=`, `:` * security_marks.marks:
+// `=`, `:` * source_properties: `=`, `:`, `>`, `<`, `>=`, `<=` For
+// example, `source_properties.size = 100` is a valid filter string. Use
+// a partial match on the empty string to filter based on a property
+// existing: `source_properties.my_property : "" Use a negated partial
+// match on the empty string to filter based on a property not existing:
+// `-source_properties.my_property : "" * resource: * resource.name:
+// `=`, `:` * resource.parent_name: `=`, `:` *
+// resource.parent_display_name: `=`, `:` * resource.project_name: `=`,
+// `:` * resource.project_display_name: `=`, `:` * resource.type: `=`,
+// `:` * resource.folders.resource_folder: `=`, `:`
 func (c *OrganizationsSourcesFindingsListCall) Filter(filter string) *OrganizationsSourcesFindingsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -8588,7 +9132,7 @@ func (c *OrganizationsSourcesFindingsListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8671,7 +9215,7 @@ func (c *OrganizationsSourcesFindingsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Expression that defines the filter to apply across findings. The expression is a list of one or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. Examples include: * name * source_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following field and operator combinations are supported: * name: `=` * parent: `=`, `:` * resource_name: `=`, `:` * state: `=`, `:` * category: `=`, `:` * external_uri: `=`, `:` * event_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` * severity: `=`, `:` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `event_time = \"2019-06-10T16:07:18-07:00\"` `event_time = 1560208038000` security_marks.marks: `=`, `:` source_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` For example, `source_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `source_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-source_properties.my_property : \"\"`",
+	//       "description": "Expression that defines the filter to apply across findings. The expression is a list of one or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. Examples include: * name * source_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following field and operator combinations are supported: * name: `=` * parent: `=`, `:` * resource_name: `=`, `:` * state: `=`, `:` * category: `=`, `:` * external_uri: `=`, `:` * event_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `event_time = \"2019-06-10T16:07:18-07:00\"` `event_time = 1560208038000` * severity: `=`, `:` * workflow_state: `=`, `:` * security_marks.marks: `=`, `:` * source_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` For example, `source_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `source_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-source_properties.my_property : \"\"` * resource: * resource.name: `=`, `:` * resource.parent_name: `=`, `:` * resource.parent_display_name: `=`, `:` * resource.project_name: `=`, `:` * resource.project_display_name: `=`, `:` * resource.type: `=`, `:` * resource.folders.resource_folder: `=`, `:`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8750,6 +9294,12 @@ type OrganizationsSourcesFindingsPatchCall struct {
 
 // Patch: Creates or updates a finding. The corresponding source must
 // exist for a finding creation to succeed.
+//
+// - name: The relative resource name of this finding. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}".
 func (r *OrganizationsSourcesFindingsService) Patch(name string, finding *Finding) *OrganizationsSourcesFindingsPatchCall {
 	c := &OrganizationsSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8795,7 +9345,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8907,6 +9457,12 @@ type OrganizationsSourcesFindingsSetStateCall struct {
 }
 
 // SetState: Updates the state of a finding.
+//
+// - name: The relative resource name of the finding. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/sources/{source_id}/finding/{findin
+//   g_id}".
 func (r *OrganizationsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *OrganizationsSourcesFindingsSetStateCall {
 	c := &OrganizationsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8941,7 +9497,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9047,6 +9603,13 @@ type OrganizationsSourcesFindingsUpdateSecurityMarksCall struct {
 }
 
 // UpdateSecurityMarks: Updates security marks.
+//
+// - name: The relative resource name of the SecurityMarks. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Examples:
+//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}/securityMarks".
 func (r *OrganizationsSourcesFindingsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *OrganizationsSourcesFindingsUpdateSecurityMarksCall {
 	c := &OrganizationsSourcesFindingsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9099,7 +9662,7 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Header() http.Head
 
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9218,6 +9781,10 @@ type ProjectsAssetsGroupCall struct {
 
 // Group: Filters an organization's assets and groups them by their
 // specified properties.
+//
+// - parent: Name of the organization to groupBy. Its format is
+//   "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *ProjectsAssetsService) Group(parent string, groupassetsrequest *GroupAssetsRequest) *ProjectsAssetsGroupCall {
 	c := &ProjectsAssetsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9252,7 +9819,7 @@ func (c *ProjectsAssetsGroupCall) Header() http.Header {
 
 func (c *ProjectsAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9379,6 +9946,10 @@ type ProjectsAssetsListCall struct {
 }
 
 // List: Lists an organization's assets.
+//
+// - parent: Name of the organization assets should belong to. Its
+//   format is "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *ProjectsAssetsService) List(parent string) *ProjectsAssetsListCall {
 	c := &ProjectsAssetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9545,7 +10116,7 @@ func (c *ProjectsAssetsListCall) Header() http.Header {
 
 func (c *ProjectsAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9706,6 +10277,13 @@ type ProjectsAssetsUpdateSecurityMarksCall struct {
 }
 
 // UpdateSecurityMarks: Updates security marks.
+//
+// - name: The relative resource name of the SecurityMarks. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Examples:
+//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}/securityMarks".
 func (r *ProjectsAssetsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *ProjectsAssetsUpdateSecurityMarksCall {
 	c := &ProjectsAssetsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9758,7 +10336,7 @@ func (c *ProjectsAssetsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *ProjectsAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9876,6 +10454,10 @@ type ProjectsSourcesListCall struct {
 }
 
 // List: Lists all sources belonging to an organization.
+//
+// - parent: Resource name of the parent of sources to list. Its format
+//   should be "organizations/[organization_id], folders/[folder_id], or
+//   projects/[project_id]".
 func (r *ProjectsSourcesService) List(parent string) *ProjectsSourcesListCall {
 	c := &ProjectsSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9936,7 +10518,7 @@ func (c *ProjectsSourcesListCall) Header() http.Header {
 
 func (c *ProjectsSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10074,6 +10656,14 @@ type ProjectsSourcesFindingsGroupCall struct {
 // /v1/organizations/{organization_id}/sources/-/findings,
 // /v1/folders/{folder_id}/sources/-/findings,
 // /v1/projects/{project_id}/sources/-/findings
+//
+// - parent: Name of the source to groupBy. Its format is
+//   "organizations/[organization_id]/sources/[source_id]",
+//   folders/[folder_id]/sources/[source_id], or
+//   projects/[project_id]/sources/[source_id]. To groupBy across all
+//   sources provide a source_id of `-`. For example:
+//   organizations/{organization_id}/sources/-,
+//   folders/{folder_id}/sources/-, or projects/{project_id}/sources/-.
 func (r *ProjectsSourcesFindingsService) Group(parent string, groupfindingsrequest *GroupFindingsRequest) *ProjectsSourcesFindingsGroupCall {
 	c := &ProjectsSourcesFindingsGroupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10108,7 +10698,7 @@ func (c *ProjectsSourcesFindingsGroupCall) Header() http.Header {
 
 func (c *ProjectsSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10237,6 +10827,14 @@ type ProjectsSourcesFindingsListCall struct {
 // List: Lists an organization or source's findings. To list across all
 // sources provide a `-` as the source id. Example:
 // /v1/organizations/{organization_id}/sources/-/findings
+//
+// - parent: Name of the source the findings belong to. Its format is
+//   "organizations/[organization_id]/sources/[source_id],
+//   folders/[folder_id]/sources/[source_id], or
+//   projects/[project_id]/sources/[source_id]". To list across all
+//   sources provide a source_id of `-`. For example:
+//   organizations/{organization_id}/sources/-,
+//   folders/{folder_id}/sources/- or projects/{projects_id}/sources/-.
 func (r *ProjectsSourcesFindingsService) List(parent string) *ProjectsSourcesFindingsListCall {
 	c := &ProjectsSourcesFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10294,15 +10892,20 @@ func (c *ProjectsSourcesFindingsListCall) FieldMask(fieldMask string) *ProjectsS
 // `false` without quotes. The following field and operator combinations
 // are supported: * name: `=` * parent: `=`, `:` * resource_name: `=`,
 // `:` * state: `=`, `:` * category: `=`, `:` * external_uri: `=`, `:` *
-// event_time: `=`, `>`, `<`, `>=`, `<=` * severity: `=`, `:` Usage:
-// This should be milliseconds since epoch or an RFC3339 string.
-// Examples: `event_time = "2019-06-10T16:07:18-07:00" `event_time =
-// 1560208038000` security_marks.marks: `=`, `:` source_properties: `=`,
-// `:`, `>`, `<`, `>=`, `<=` For example, `source_properties.size = 100`
-// is a valid filter string. Use a partial match on the empty string to
-// filter based on a property existing: `source_properties.my_property :
-// "" Use a negated partial match on the empty string to filter based
-// on a property not existing: `-source_properties.my_property : ""
+// event_time: `=`, `>`, `<`, `>=`, `<=` Usage: This should be
+// milliseconds since epoch or an RFC3339 string. Examples: `event_time
+// = "2019-06-10T16:07:18-07:00" `event_time = 1560208038000` *
+// severity: `=`, `:` * workflow_state: `=`, `:` * security_marks.marks:
+// `=`, `:` * source_properties: `=`, `:`, `>`, `<`, `>=`, `<=` For
+// example, `source_properties.size = 100` is a valid filter string. Use
+// a partial match on the empty string to filter based on a property
+// existing: `source_properties.my_property : "" Use a negated partial
+// match on the empty string to filter based on a property not existing:
+// `-source_properties.my_property : "" * resource: * resource.name:
+// `=`, `:` * resource.parent_name: `=`, `:` *
+// resource.parent_display_name: `=`, `:` * resource.project_name: `=`,
+// `:` * resource.project_display_name: `=`, `:` * resource.type: `=`,
+// `:` * resource.folders.resource_folder: `=`, `:`
 func (c *ProjectsSourcesFindingsListCall) Filter(filter string) *ProjectsSourcesFindingsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -10388,7 +10991,7 @@ func (c *ProjectsSourcesFindingsListCall) Header() http.Header {
 
 func (c *ProjectsSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10471,7 +11074,7 @@ func (c *ProjectsSourcesFindingsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Expression that defines the filter to apply across findings. The expression is a list of one or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. Examples include: * name * source_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following field and operator combinations are supported: * name: `=` * parent: `=`, `:` * resource_name: `=`, `:` * state: `=`, `:` * category: `=`, `:` * external_uri: `=`, `:` * event_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` * severity: `=`, `:` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `event_time = \"2019-06-10T16:07:18-07:00\"` `event_time = 1560208038000` security_marks.marks: `=`, `:` source_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` For example, `source_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `source_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-source_properties.my_property : \"\"`",
+	//       "description": "Expression that defines the filter to apply across findings. The expression is a list of one or more restrictions combined via logical operators `AND` and `OR`. Parentheses are supported, and `OR` has higher precedence than `AND`. Restrictions have the form ` ` and may have a `-` character in front of them to indicate negation. Examples include: * name * source_properties.a_property * security_marks.marks.marka The supported operators are: * `=` for all value types. * `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values. * `:`, meaning substring matching, for strings. The supported value types are: * string literals in quotes. * integer literals without quotes. * boolean literals `true` and `false` without quotes. The following field and operator combinations are supported: * name: `=` * parent: `=`, `:` * resource_name: `=`, `:` * state: `=`, `:` * category: `=`, `:` * external_uri: `=`, `:` * event_time: `=`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` Usage: This should be milliseconds since epoch or an RFC3339 string. Examples: `event_time = \"2019-06-10T16:07:18-07:00\"` `event_time = 1560208038000` * severity: `=`, `:` * workflow_state: `=`, `:` * security_marks.marks: `=`, `:` * source_properties: `=`, `:`, `\u003e`, `\u003c`, `\u003e=`, `\u003c=` For example, `source_properties.size = 100` is a valid filter string. Use a partial match on the empty string to filter based on a property existing: `source_properties.my_property : \"\"` Use a negated partial match on the empty string to filter based on a property not existing: `-source_properties.my_property : \"\"` * resource: * resource.name: `=`, `:` * resource.parent_name: `=`, `:` * resource.parent_display_name: `=`, `:` * resource.project_name: `=`, `:` * resource.project_display_name: `=`, `:` * resource.type: `=`, `:` * resource.folders.resource_folder: `=`, `:`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10550,6 +11153,12 @@ type ProjectsSourcesFindingsPatchCall struct {
 
 // Patch: Creates or updates a finding. The corresponding source must
 // exist for a finding creation to succeed.
+//
+// - name: The relative resource name of this finding. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}".
 func (r *ProjectsSourcesFindingsService) Patch(name string, finding *Finding) *ProjectsSourcesFindingsPatchCall {
 	c := &ProjectsSourcesFindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10595,7 +11204,7 @@ func (c *ProjectsSourcesFindingsPatchCall) Header() http.Header {
 
 func (c *ProjectsSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10707,6 +11316,12 @@ type ProjectsSourcesFindingsSetStateCall struct {
 }
 
 // SetState: Updates the state of a finding.
+//
+// - name: The relative resource name of the finding. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Example:
+//   "organizations/{organization_id}/sources/{source_id}/finding/{findin
+//   g_id}".
 func (r *ProjectsSourcesFindingsService) SetState(name string, setfindingstaterequest *SetFindingStateRequest) *ProjectsSourcesFindingsSetStateCall {
 	c := &ProjectsSourcesFindingsSetStateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10741,7 +11356,7 @@ func (c *ProjectsSourcesFindingsSetStateCall) Header() http.Header {
 
 func (c *ProjectsSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10847,6 +11462,13 @@ type ProjectsSourcesFindingsUpdateSecurityMarksCall struct {
 }
 
 // UpdateSecurityMarks: Updates security marks.
+//
+// - name: The relative resource name of the SecurityMarks. See:
+//   https://cloud.google.com/apis/design/resource_names#relative_resource_name
+//   Examples:
+//   "organizations/{organization_id}/assets/{asset_id}/securityMarks"
+//   "organizations/{organization_id}/sources/{source_id}/findings/{findi
+//   ng_id}/securityMarks".
 func (r *ProjectsSourcesFindingsService) UpdateSecurityMarks(name string, securitymarks *SecurityMarks) *ProjectsSourcesFindingsUpdateSecurityMarksCall {
 	c := &ProjectsSourcesFindingsUpdateSecurityMarksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10899,7 +11521,7 @@ func (c *ProjectsSourcesFindingsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *ProjectsSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

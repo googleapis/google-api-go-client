@@ -91,7 +91,7 @@ const (
 	// billing invoices
 	DisplayVideoMediaplanningScope = "https://www.googleapis.com/auth/display-video-mediaplanning"
 
-	// New Service:
+	// Private Service:
 	// https://www.googleapis.com/auth/display-video-user-management
 	DisplayVideoUserManagementScope = "https://www.googleapis.com/auth/display-video-user-management"
 
@@ -200,6 +200,7 @@ func NewAdvertisersService(s *Service) *AdvertisersService {
 	rs.Channels = NewAdvertisersChannelsService(s)
 	rs.Creatives = NewAdvertisersCreativesService(s)
 	rs.InsertionOrders = NewAdvertisersInsertionOrdersService(s)
+	rs.Invoices = NewAdvertisersInvoicesService(s)
 	rs.LineItems = NewAdvertisersLineItemsService(s)
 	rs.LocationLists = NewAdvertisersLocationListsService(s)
 	rs.ManualTriggers = NewAdvertisersManualTriggersService(s)
@@ -220,6 +221,8 @@ type AdvertisersService struct {
 	Creatives *AdvertisersCreativesService
 
 	InsertionOrders *AdvertisersInsertionOrdersService
+
+	Invoices *AdvertisersInvoicesService
 
 	LineItems *AdvertisersLineItemsService
 
@@ -243,10 +246,34 @@ type AdvertisersAssetsService struct {
 
 func NewAdvertisersCampaignsService(s *Service) *AdvertisersCampaignsService {
 	rs := &AdvertisersCampaignsService{s: s}
+	rs.TargetingTypes = NewAdvertisersCampaignsTargetingTypesService(s)
 	return rs
 }
 
 type AdvertisersCampaignsService struct {
+	s *Service
+
+	TargetingTypes *AdvertisersCampaignsTargetingTypesService
+}
+
+func NewAdvertisersCampaignsTargetingTypesService(s *Service) *AdvertisersCampaignsTargetingTypesService {
+	rs := &AdvertisersCampaignsTargetingTypesService{s: s}
+	rs.AssignedTargetingOptions = NewAdvertisersCampaignsTargetingTypesAssignedTargetingOptionsService(s)
+	return rs
+}
+
+type AdvertisersCampaignsTargetingTypesService struct {
+	s *Service
+
+	AssignedTargetingOptions *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsService
+}
+
+func NewAdvertisersCampaignsTargetingTypesAssignedTargetingOptionsService(s *Service) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsService {
+	rs := &AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsService{s: s}
+	return rs
+}
+
+type AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsService struct {
 	s *Service
 }
 
@@ -282,10 +309,43 @@ type AdvertisersCreativesService struct {
 
 func NewAdvertisersInsertionOrdersService(s *Service) *AdvertisersInsertionOrdersService {
 	rs := &AdvertisersInsertionOrdersService{s: s}
+	rs.TargetingTypes = NewAdvertisersInsertionOrdersTargetingTypesService(s)
 	return rs
 }
 
 type AdvertisersInsertionOrdersService struct {
+	s *Service
+
+	TargetingTypes *AdvertisersInsertionOrdersTargetingTypesService
+}
+
+func NewAdvertisersInsertionOrdersTargetingTypesService(s *Service) *AdvertisersInsertionOrdersTargetingTypesService {
+	rs := &AdvertisersInsertionOrdersTargetingTypesService{s: s}
+	rs.AssignedTargetingOptions = NewAdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService(s)
+	return rs
+}
+
+type AdvertisersInsertionOrdersTargetingTypesService struct {
+	s *Service
+
+	AssignedTargetingOptions *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService
+}
+
+func NewAdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService(s *Service) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService {
+	rs := &AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService{s: s}
+	return rs
+}
+
+type AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService struct {
+	s *Service
+}
+
+func NewAdvertisersInvoicesService(s *Service) *AdvertisersInvoicesService {
+	rs := &AdvertisersInvoicesService{s: s}
+	return rs
+}
+
+type AdvertisersInvoicesService struct {
 	s *Service
 }
 
@@ -679,10 +739,10 @@ type ActiveViewVideoViewabilityMetricConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -719,11 +779,11 @@ type Adloox struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ExcludedAdlooxCategories") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ExcludedAdlooxCategories")
@@ -766,10 +826,10 @@ type Advertiser struct {
 
 	// EntityStatus: Required. Controls whether or not insertion orders and
 	// line items of the advertiser can spend their budgets and bid on
-	// inventory. * Accepted values are `ENTITY_STATUS_ACTIVE` and
-	// `ENTITY_STATUS_SCHEDULED_FOR_DELETION`. * If set to
-	// `ENTITY_STATUS_SCHEDULED_FOR_DELETION`, the advertiser will be
-	// deleted 30 days from when it was first scheduled for deletion.
+	// inventory. * Accepted values are `ENTITY_STATUS_ACTIVE`,
+	// `ENTITY_STATUS_PAUSED` and `ENTITY_STATUS_SCHEDULED_FOR_DELETION`. *
+	// If set to `ENTITY_STATUS_SCHEDULED_FOR_DELETION`, the advertiser will
+	// be deleted 30 days from when it was first scheduled for deletion.
 	//
 	// Possible values:
 	//   "ENTITY_STATUS_UNSPECIFIED" - Default value when status is not
@@ -803,6 +863,14 @@ type Advertiser struct {
 	// advertiser belongs to.
 	PartnerId int64 `json:"partnerId,omitempty,string"`
 
+	// PrismaEnabled: Whether integration with Mediaocean (Prisma) is
+	// enabled. By enabling this, you agree to the following: On behalf of
+	// my company, I authorize Mediaocean (Prisma) to send budget segment
+	// plans to Google, and I authorize Google to send corresponding
+	// reporting and invoices from DV360 to Mediaocean for the purposes of
+	// budget planning, billing, and reconciliation for this advertiser.
+	PrismaEnabled bool `json:"prismaEnabled,omitempty"`
+
 	// ServingConfig: Targeting settings related to ad serving of the
 	// advertiser.
 	ServingConfig *AdvertiserTargetingConfig `json:"servingConfig,omitempty"`
@@ -817,10 +885,10 @@ type Advertiser struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdServerConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdServerConfig") to
@@ -852,10 +920,10 @@ type AdvertiserAdServerConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "CmHybridConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CmHybridConfig") to
@@ -903,8 +971,8 @@ type AdvertiserCreativeConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DynamicCreativeEnabled") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -935,10 +1003,10 @@ type AdvertiserDataAccessConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "SdfConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SdfConfig") to include in
@@ -992,10 +1060,10 @@ type AdvertiserGeneralConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrencyCode") to include
@@ -1030,11 +1098,11 @@ type AdvertiserSdfConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "OverridePartnerSdfConfig") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OverridePartnerSdfConfig")
@@ -1063,11 +1131,11 @@ type AdvertiserTargetingConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ExemptTvFromViewabilityTargeting") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -1117,10 +1185,10 @@ type AgeRangeAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "AgeRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AgeRange") to include in
@@ -1159,10 +1227,10 @@ type AgeRangeTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "AgeRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AgeRange") to include in
@@ -1189,6 +1257,28 @@ type AppAssignedTargetingOptionDetails struct {
 	// ID uses 9 digit string, for example `422689480`.
 	AppId string `json:"appId,omitempty"`
 
+	// AppPlatform: Indicates the platform of the targeted app. If this
+	// field is not specified, the app platform will be assumed to be mobile
+	// (i.e., Android or iOS), and we will derive the appropriate mobile
+	// platform from the app ID.
+	//
+	// Possible values:
+	//   "APP_PLATFORM_UNSPECIFIED" - Default value when app platform is not
+	// specified in this version. This enum is a placeholder for default
+	// value and does not represent a real platform option.
+	//   "APP_PLATFORM_IOS" - The app platform is iOS.
+	//   "APP_PLATFORM_ANDROID" - The app platform is Android.
+	//   "APP_PLATFORM_ROKU" - The app platform is Roku.
+	//   "APP_PLATFORM_AMAZON_FIRETV" - The app platform is Amazon FireTV.
+	//   "APP_PLATFORM_PLAYSTATION" - The app platform is Playstation.
+	//   "APP_PLATFORM_APPLE_TV" - The app platform is Apple TV.
+	//   "APP_PLATFORM_XBOX" - The app platform is Xbox.
+	//   "APP_PLATFORM_SAMSUNG_TV" - The app platform is Samsung TV.
+	//   "APP_PLATFORM_ANDROID_TV" - The app platform is Android TV.
+	//   "APP_PLATFORM_GENERIC_CTV" - The app platform is a CTV platform
+	// that is not explicitly listed elsewhere.
+	AppPlatform string `json:"appPlatform,omitempty"`
+
 	// DisplayName: Output only. The display name of the app.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -1197,10 +1287,10 @@ type AppAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "AppId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppId") to include in API
@@ -1235,10 +1325,10 @@ type AppCategoryAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -1267,10 +1357,10 @@ type AppCategoryTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -1301,10 +1391,10 @@ type Asset struct {
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Content") to include in
@@ -1433,10 +1523,10 @@ type AssetAssociation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Asset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Asset") to include in API
@@ -1476,11 +1566,11 @@ type AssignedInventorySource struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AssignedInventorySourceId") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -1521,10 +1611,10 @@ type AssignedLocation struct {
 
 	// ForceSendFields is a list of field names (e.g. "AssignedLocationId")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssignedLocationId") to
@@ -1548,107 +1638,112 @@ func (s *AssignedLocation) MarshalJSON() ([]byte, error) {
 // settings.
 type AssignedTargetingOption struct {
 	// AgeRangeDetails: Age range details. This field will be populated when
-	// the TargetingType is `TARGETING_TYPE_AGE_RANGE`.
+	// the targeting_type is `TARGETING_TYPE_AGE_RANGE`.
 	AgeRangeDetails *AgeRangeAssignedTargetingOptionDetails `json:"ageRangeDetails,omitempty"`
 
 	// AppCategoryDetails: App category details. This field will be
-	// populated when the TargetingType is `TARGETING_TYPE_APP_CATEGORY`.
+	// populated when the targeting_type is `TARGETING_TYPE_APP_CATEGORY`.
 	AppCategoryDetails *AppCategoryAssignedTargetingOptionDetails `json:"appCategoryDetails,omitempty"`
 
 	// AppDetails: App details. This field will be populated when the
-	// TargetingType is `TARGETING_TYPE_APP`.
+	// targeting_type is `TARGETING_TYPE_APP`.
 	AppDetails *AppAssignedTargetingOptionDetails `json:"appDetails,omitempty"`
 
 	// AssignedTargetingOptionId: Output only. The unique ID of the assigned
-	// targeting option. The ID is only unique within a given line item and
+	// targeting option. The ID is only unique within a given resource and
 	// targeting type. It may be reused in other contexts.
 	AssignedTargetingOptionId string `json:"assignedTargetingOptionId,omitempty"`
 
 	// AudienceGroupDetails: Audience targeting details. This field will be
-	// populated when the TargetingType is `TARGETING_TYPE_AUDIENCE_GROUP`.
-	// You can only target one audience group option per line item.
+	// populated when the targeting_type is `TARGETING_TYPE_AUDIENCE_GROUP`.
+	// You can only target one audience group option per resource.
 	AudienceGroupDetails *AudienceGroupAssignedTargetingOptionDetails `json:"audienceGroupDetails,omitempty"`
 
 	// AuthorizedSellerStatusDetails: Authorized seller status details. This
-	// field will be populated when the TargetingType is
+	// field will be populated when the targeting_type is
 	// `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`. You can only target one
-	// authorized seller status option per line item. If a line item doesn't
+	// authorized seller status option per resource. If a resource doesn't
 	// have an authorized seller status option, all authorized sellers
 	// indicated as DIRECT or RESELLER in the ads.txt file are targeted by
 	// default.
 	AuthorizedSellerStatusDetails *AuthorizedSellerStatusAssignedTargetingOptionDetails `json:"authorizedSellerStatusDetails,omitempty"`
 
 	// BrowserDetails: Browser details. This field will be populated when
-	// the TargetingType is `TARGETING_TYPE_BROWSER`.
+	// the targeting_type is `TARGETING_TYPE_BROWSER`.
 	BrowserDetails *BrowserAssignedTargetingOptionDetails `json:"browserDetails,omitempty"`
 
+	// BusinessChainDetails: Business chain details. This field will be
+	// populated when the targeting_type is `TARGETING_TYPE_BUSINESS_CHAIN`.
+	BusinessChainDetails *BusinessChainAssignedTargetingOptionDetails `json:"businessChainDetails,omitempty"`
+
 	// CarrierAndIspDetails: Carrier and ISP details. This field will be
-	// populated when the TargetingType is `TARGETING_TYPE_CARRIER_AND_ISP`.
+	// populated when the targeting_type is
+	// `TARGETING_TYPE_CARRIER_AND_ISP`.
 	CarrierAndIspDetails *CarrierAndIspAssignedTargetingOptionDetails `json:"carrierAndIspDetails,omitempty"`
 
 	// CategoryDetails: Category details. This field will be populated when
-	// the TargetingType is `TARGETING_TYPE_CATEGORY`. Targeting a category
+	// the targeting_type is `TARGETING_TYPE_CATEGORY`. Targeting a category
 	// will also target its subcategories. If a category is excluded from
 	// targeting and a subcategory is included, the exclusion will take
 	// precedence.
 	CategoryDetails *CategoryAssignedTargetingOptionDetails `json:"categoryDetails,omitempty"`
 
 	// ChannelDetails: Channel details. This field will be populated when
-	// the TargetingType is `TARGETING_TYPE_CHANNEL`.
+	// the targeting_type is `TARGETING_TYPE_CHANNEL`.
 	ChannelDetails *ChannelAssignedTargetingOptionDetails `json:"channelDetails,omitempty"`
 
 	// ContentInstreamPositionDetails: Content instream position details.
-	// This field will be populated when the TargetingType is
+	// This field will be populated when the targeting_type is
 	// `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
 	ContentInstreamPositionDetails *ContentInstreamPositionAssignedTargetingOptionDetails `json:"contentInstreamPositionDetails,omitempty"`
 
 	// ContentOutstreamPositionDetails: Content outstream position details.
-	// This field will be populated when the TargetingType is
+	// This field will be populated when the targeting_type is
 	// `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
 	ContentOutstreamPositionDetails *ContentOutstreamPositionAssignedTargetingOptionDetails `json:"contentOutstreamPositionDetails,omitempty"`
 
 	// DayAndTimeDetails: Day and time details. This field will be populated
-	// when the TargetingType is `TARGETING_TYPE_DAY_AND_TIME`.
+	// when the targeting_type is `TARGETING_TYPE_DAY_AND_TIME`.
 	DayAndTimeDetails *DayAndTimeAssignedTargetingOptionDetails `json:"dayAndTimeDetails,omitempty"`
 
 	// DeviceMakeModelDetails: Device make and model details. This field
-	// will be populated when the TargetingType is
+	// will be populated when the targeting_type is
 	// `TARGETING_TYPE_DEVICE_MAKE_MODEL`.
 	DeviceMakeModelDetails *DeviceMakeModelAssignedTargetingOptionDetails `json:"deviceMakeModelDetails,omitempty"`
 
 	// DeviceTypeDetails: Device Type details. This field will be populated
-	// when the TargetingType is `TARGETING_TYPE_DEVICE_TYPE`.
+	// when the targeting_type is `TARGETING_TYPE_DEVICE_TYPE`.
 	DeviceTypeDetails *DeviceTypeAssignedTargetingOptionDetails `json:"deviceTypeDetails,omitempty"`
 
 	// DigitalContentLabelExclusionDetails: Digital content label details.
-	// This field will be populated when the TargetingType is
+	// This field will be populated when the targeting_type is
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION`. Digital content
 	// labels are targeting exclusions. Advertiser level digital content
 	// label exclusions, if set, are always applied in serving (even though
-	// they aren't visible in line item settings). Line item settings can
+	// they aren't visible in resource settings). Resource settings can
 	// exclude content labels in addition to advertiser exclusions, but
 	// can't override them. A line item won't serve if all the digital
 	// content labels are excluded.
 	DigitalContentLabelExclusionDetails *DigitalContentLabelAssignedTargetingOptionDetails `json:"digitalContentLabelExclusionDetails,omitempty"`
 
 	// EnvironmentDetails: Environment details. This field will be populated
-	// when the TargetingType is `TARGETING_TYPE_ENVIRONMENT`.
+	// when the targeting_type is `TARGETING_TYPE_ENVIRONMENT`.
 	EnvironmentDetails *EnvironmentAssignedTargetingOptionDetails `json:"environmentDetails,omitempty"`
 
 	// ExchangeDetails: Exchange details. This field will be populated when
-	// the TargetingType is `TARGETING_TYPE_EXCHANGE`.
+	// the targeting_type is `TARGETING_TYPE_EXCHANGE`.
 	ExchangeDetails *ExchangeAssignedTargetingOptionDetails `json:"exchangeDetails,omitempty"`
 
 	// GenderDetails: Gender details. This field will be populated when the
-	// TargetingType is `TARGETING_TYPE_GENDER`.
+	// targeting_type is `TARGETING_TYPE_GENDER`.
 	GenderDetails *GenderAssignedTargetingOptionDetails `json:"genderDetails,omitempty"`
 
 	// GeoRegionDetails: Geographic region details. This field will be
-	// populated when the TargetingType is `TARGETING_TYPE_GEO_REGION`.
+	// populated when the targeting_type is `TARGETING_TYPE_GEO_REGION`.
 	GeoRegionDetails *GeoRegionAssignedTargetingOptionDetails `json:"geoRegionDetails,omitempty"`
 
 	// HouseholdIncomeDetails: Household income details. This field will be
-	// populated when the TargetingType is
+	// populated when the targeting_type is
 	// `TARGETING_TYPE_HOUSEHOLD_INCOME`.
 	HouseholdIncomeDetails *HouseholdIncomeAssignedTargetingOptionDetails `json:"householdIncomeDetails,omitempty"`
 
@@ -1667,71 +1762,85 @@ type AssignedTargetingOption struct {
 	Inheritance string `json:"inheritance,omitempty"`
 
 	// InventorySourceDetails: Inventory source details. This field will be
-	// populated when the TargetingType is
+	// populated when the targeting_type is
 	// `TARGETING_TYPE_INVENTORY_SOURCE`.
 	InventorySourceDetails *InventorySourceAssignedTargetingOptionDetails `json:"inventorySourceDetails,omitempty"`
 
 	// InventorySourceGroupDetails: Inventory source group details. This
-	// field will be populated when the TargetingType is
+	// field will be populated when the targeting_type is
 	// `TARGETING_TYPE_INVENTORY_SOURCE_GROUP`.
 	InventorySourceGroupDetails *InventorySourceGroupAssignedTargetingOptionDetails `json:"inventorySourceGroupDetails,omitempty"`
 
 	// KeywordDetails: Keyword details. This field will be populated when
-	// the TargetingType is `TARGETING_TYPE_KEYWORD`. A maximum of 5000
-	// direct negative keywords can be assigned to a line item. No limit on
+	// the targeting_type is `TARGETING_TYPE_KEYWORD`. A maximum of 5000
+	// direct negative keywords can be assigned to a resource. No limit on
 	// number of positive keywords that can be assigned.
 	KeywordDetails *KeywordAssignedTargetingOptionDetails `json:"keywordDetails,omitempty"`
 
 	// LanguageDetails: Language details. This field will be populated when
-	// the TargetingType is `TARGETING_TYPE_LANGUAGE`.
+	// the targeting_type is `TARGETING_TYPE_LANGUAGE`.
 	LanguageDetails *LanguageAssignedTargetingOptionDetails `json:"languageDetails,omitempty"`
 
 	// Name: Output only. The resource name for this assigned targeting
 	// option.
 	Name string `json:"name,omitempty"`
 
+	// NativeContentPositionDetails: Native content position details. This
+	// field will be populated when the targeting_type is
+	// `TARGETING_TYPE_NATIVE_CONTENT_POSITION`.
+	NativeContentPositionDetails *NativeContentPositionAssignedTargetingOptionDetails `json:"nativeContentPositionDetails,omitempty"`
+
 	// NegativeKeywordListDetails: Keyword details. This field will be
-	// populated when the TargetingType is
+	// populated when the targeting_type is
 	// `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST`. A maximum of 4 negative
-	// keyword lists can be assigned to a line item.
+	// keyword lists can be assigned to a resource.
 	NegativeKeywordListDetails *NegativeKeywordListAssignedTargetingOptionDetails `json:"negativeKeywordListDetails,omitempty"`
 
+	// OmidDetails: Open Measurement enabled inventory details. This field
+	// will be populated when the targeting_type is `TARGETING_TYPE_OMID`.
+	OmidDetails *OmidAssignedTargetingOptionDetails `json:"omidDetails,omitempty"`
+
 	// OnScreenPositionDetails: On screen position details. This field will
-	// be populated when the TargetingType is
+	// be populated when the targeting_type is
 	// `TARGETING_TYPE_ON_SCREEN_POSITION`.
 	OnScreenPositionDetails *OnScreenPositionAssignedTargetingOptionDetails `json:"onScreenPositionDetails,omitempty"`
 
 	// OperatingSystemDetails: Operating system details. This field will be
-	// populated when the TargetingType is
+	// populated when the targeting_type is
 	// `TARGETING_TYPE_OPERATING_SYSTEM`.
 	OperatingSystemDetails *OperatingSystemAssignedTargetingOptionDetails `json:"operatingSystemDetails,omitempty"`
 
 	// ParentalStatusDetails: Parental status details. This field will be
-	// populated when the TargetingType is `TARGETING_TYPE_PARENTAL_STATUS`.
+	// populated when the targeting_type is
+	// `TARGETING_TYPE_PARENTAL_STATUS`.
 	ParentalStatusDetails *ParentalStatusAssignedTargetingOptionDetails `json:"parentalStatusDetails,omitempty"`
 
+	// PoiDetails: POI details. This field will be populated when the
+	// targeting_type is `TARGETING_TYPE_POI`.
+	PoiDetails *PoiAssignedTargetingOptionDetails `json:"poiDetails,omitempty"`
+
 	// ProximityLocationListDetails: Proximity location list details. This
-	// field will be populated when the TargetingType is
+	// field will be populated when the targeting_type is
 	// `TARGETING_TYPE_PROXIMITY_LOCATION_LIST`.
 	ProximityLocationListDetails *ProximityLocationListAssignedTargetingOptionDetails `json:"proximityLocationListDetails,omitempty"`
 
 	// RegionalLocationListDetails: Regional location list details. This
-	// field will be populated when the TargetingType is
+	// field will be populated when the targeting_type is
 	// `TARGETING_TYPE_REGIONAL_LOCATION_LIST`.
 	RegionalLocationListDetails *RegionalLocationListAssignedTargetingOptionDetails `json:"regionalLocationListDetails,omitempty"`
 
 	// SensitiveCategoryExclusionDetails: Sensitive category details. This
-	// field will be populated when the TargetingType is
+	// field will be populated when the targeting_type is
 	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`. Sensitive categories
 	// are targeting exclusions. Advertiser level sensitive category
 	// exclusions, if set, are always applied in serving (even though they
-	// aren't visible in line item settings). Line item settings can exclude
+	// aren't visible in resource settings). Resource settings can exclude
 	// sensitive categories in addition to advertiser exclusions, but can't
 	// override them.
 	SensitiveCategoryExclusionDetails *SensitiveCategoryAssignedTargetingOptionDetails `json:"sensitiveCategoryExclusionDetails,omitempty"`
 
 	// SubExchangeDetails: Sub-exchange details. This field will be
-	// populated when the TargetingType is `TARGETING_TYPE_SUB_EXCHANGE`.
+	// populated when the targeting_type is `TARGETING_TYPE_SUB_EXCHANGE`.
 	SubExchangeDetails *SubExchangeAssignedTargetingOptionDetails `json:"subExchangeDetails,omitempty"`
 
 	// TargetingType: Output only. Identifies the type of this assigned
@@ -1818,30 +1927,39 @@ type AssignedTargetingOption struct {
 	// exchanges.
 	//   "TARGETING_TYPE_SUB_EXCHANGE" - Purchase impressions from specific
 	// sub-exchanges.
+	//   "TARGETING_TYPE_POI" - Target ads around a specific point of
+	// interest, such as a notable building, a street address, or
+	// latitude/longitude coordinates.
+	//   "TARGETING_TYPE_BUSINESS_CHAIN" - Target ads around locations of a
+	// business chain within a specific geo region.
+	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
+	// native content position.
+	//   "TARGETING_TYPE_OMID" - Target ads in an Open Measurement enabled
+	// inventory.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ThirdPartyVerifierDetails: Third party verification details. This
-	// field will be populated when the TargetingType is
+	// field will be populated when the targeting_type is
 	// `TARGETING_TYPE_THIRD_PARTY_VERIFIER`.
 	ThirdPartyVerifierDetails *ThirdPartyVerifierAssignedTargetingOptionDetails `json:"thirdPartyVerifierDetails,omitempty"`
 
 	// UrlDetails: URL details. This field will be populated when the
-	// TargetingType is `TARGETING_TYPE_URL`.
+	// targeting_type is `TARGETING_TYPE_URL`.
 	UrlDetails *UrlAssignedTargetingOptionDetails `json:"urlDetails,omitempty"`
 
 	// UserRewardedContentDetails: User rewarded content details. This field
-	// will be populated when the TargetingType is
+	// will be populated when the targeting_type is
 	// `TARGETING_TYPE_USER_REWARDED_CONTENT`.
 	UserRewardedContentDetails *UserRewardedContentAssignedTargetingOptionDetails `json:"userRewardedContentDetails,omitempty"`
 
 	// VideoPlayerSizeDetails: Video player size details. This field will be
-	// populated when the TargetingType is
+	// populated when the targeting_type is
 	// `TARGETING_TYPE_VIDEO_PLAYER_SIZE`.
 	VideoPlayerSizeDetails *VideoPlayerSizeAssignedTargetingOptionDetails `json:"videoPlayerSizeDetails,omitempty"`
 
 	// ViewabilityDetails: Viewability details. This field will be populated
-	// when the TargetingType is `TARGETING_TYPE_VIEWABILITY`. You can only
-	// target one viewability option per line item.
+	// when the targeting_type is `TARGETING_TYPE_VIEWABILITY`. You can only
+	// target one viewability option per resource.
 	ViewabilityDetails *ViewabilityAssignedTargetingOptionDetails `json:"viewabilityDetails,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1850,10 +1968,10 @@ type AssignedTargetingOption struct {
 
 	// ForceSendFields is a list of field names (e.g. "AgeRangeDetails") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AgeRangeDetails") to
@@ -1937,10 +2055,10 @@ type AssignedUserRole struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserId") to include
@@ -2003,11 +2121,11 @@ type AudienceGroupAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ExcludedFirstAndThirdPartyAudienceGroup") to unconditionally include
-	// in API requests. By default, fields with empty values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// in API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -2036,10 +2154,10 @@ type AudioVideoOffset struct {
 
 	// ForceSendFields is a list of field names (e.g. "Percentage") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Percentage") to include in
@@ -2118,8 +2236,8 @@ type AuditAdvertiserResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AdGroupCriteriaCount") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2170,8 +2288,8 @@ type AuthorizedSellerStatusAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AuthorizedSellerStatus") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2217,8 +2335,8 @@ type AuthorizedSellerStatusTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AuthorizedSellerStatus") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -2270,10 +2388,10 @@ type BiddingStrategy struct {
 
 	// ForceSendFields is a list of field names (e.g. "FixedBid") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FixedBid") to include in
@@ -2300,8 +2418,8 @@ type BrowserAssignedTargetingOptionDetails struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Negative: Indicates if this option is being negatively targeted. All
-	// assigned browser targeting options on the same line item must have
-	// the same value for this field.
+	// assigned browser targeting options on the same resource must have the
+	// same value for this field.
 	Negative bool `json:"negative,omitempty"`
 
 	// TargetingOptionId: Required. The targeting_option_id of a
@@ -2310,10 +2428,10 @@ type BrowserAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -2340,10 +2458,10 @@ type BrowserTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -2361,6 +2479,58 @@ func (s *BrowserTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BudgetSummary: Summarized information of an individual campaign
+// budget.
+type BudgetSummary struct {
+	// ExternalBudgetId: Corresponds to the external_budget_id of a campaign
+	// budget. If the value is not set in the campaign budget, this field
+	// will be empty.
+	ExternalBudgetId string `json:"externalBudgetId,omitempty"`
+
+	// PreTaxAmountMicros: The sum of charges made under this budget before
+	// taxes, in micros of the invoice's currency. For example, if
+	// currency_code is `USD`, then 1000000 represents one US dollar.
+	PreTaxAmountMicros int64 `json:"preTaxAmountMicros,omitempty,string"`
+
+	// PrismaCpeCode: Relevant client, product, and estimate codes from the
+	// Mediaocean Prisma tool. Only applicable for campaign budgets with an
+	// external_budget_source of EXTERNAL_BUDGET_SOURCE_MEDIA_OCEAN.
+	PrismaCpeCode *PrismaCpeCode `json:"prismaCpeCode,omitempty"`
+
+	// TaxAmountMicros: The amount of tax applied to charges under this
+	// budget, in micros of the invoice's currency. For example, if
+	// currency_code is `USD`, then 1000000 represents one US dollar.
+	TaxAmountMicros int64 `json:"taxAmountMicros,omitempty,string"`
+
+	// TotalAmountMicros: The total sum of charges made under this budget,
+	// including tax, in micros of the invoice's currency. For example, if
+	// currency_code is `USD`, then 1000000 represents one US dollar.
+	TotalAmountMicros int64 `json:"totalAmountMicros,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ExternalBudgetId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExternalBudgetId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BudgetSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod BudgetSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BulkEditAdvertiserAssignedTargetingOptionsRequest: Request message
 // for BulkEditAdvertiserAssignedTargetingOptions.
 type BulkEditAdvertiserAssignedTargetingOptionsRequest struct {
@@ -2368,22 +2538,22 @@ type BulkEditAdvertiserAssignedTargetingOptionsRequest struct {
 	// specified as a list of `CreateAssignedTargetingOptionsRequest`.
 	// Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
-	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`
+	// `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`
 	CreateRequests []*CreateAssignedTargetingOptionsRequest `json:"createRequests,omitempty"`
 
 	// DeleteRequests: The assigned targeting options to delete in batch,
 	// specified as a list of `DeleteAssignedTargetingOptionsRequest`.
 	// Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
-	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`
+	// `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`
 	DeleteRequests []*DeleteAssignedTargetingOptionsRequest `json:"deleteRequests,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateRequests") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateRequests") to
@@ -2414,11 +2584,11 @@ type BulkEditAdvertiserAssignedTargetingOptionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CreatedAssignedTargetingOptions") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -2461,10 +2631,10 @@ type BulkEditAssignedInventorySourcesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserId") to include
@@ -2495,11 +2665,11 @@ type BulkEditAssignedInventorySourcesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AssignedInventorySources") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssignedInventorySources")
@@ -2531,11 +2701,11 @@ type BulkEditAssignedLocationsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CreatedAssignedLocations") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreatedAssignedLocations")
@@ -2567,10 +2737,10 @@ type BulkEditAssignedLocationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AssignedLocations")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssignedLocations") to
@@ -2604,11 +2774,11 @@ type BulkEditAssignedUserRolesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CreatedAssignedUserRoles") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreatedAssignedUserRoles")
@@ -2638,11 +2808,11 @@ type BulkEditAssignedUserRolesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CreatedAssignedUserRoles") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreatedAssignedUserRoles")
@@ -2674,10 +2844,10 @@ type BulkEditLineItemAssignedTargetingOptionsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateRequests") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateRequests") to
@@ -2708,11 +2878,11 @@ type BulkEditLineItemAssignedTargetingOptionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CreatedAssignedTargetingOptions") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -2744,11 +2914,11 @@ type BulkEditNegativeKeywordsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CreatedNegativeKeywords") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreatedNegativeKeywords")
@@ -2780,10 +2950,10 @@ type BulkEditNegativeKeywordsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NegativeKeywords") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NegativeKeywords") to
@@ -2817,10 +2987,10 @@ type BulkEditPartnerAssignedTargetingOptionsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreateRequests") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateRequests") to
@@ -2851,11 +3021,11 @@ type BulkEditPartnerAssignedTargetingOptionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CreatedAssignedTargetingOptions") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -2892,10 +3062,10 @@ type BulkEditSitesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserId") to include
@@ -2926,10 +3096,10 @@ type BulkEditSitesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Sites") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Sites") to include in API
@@ -2965,11 +3135,11 @@ type BulkListAdvertiserAssignedTargetingOptionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AssignedTargetingOptions") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
@@ -2984,6 +3154,92 @@ type BulkListAdvertiserAssignedTargetingOptionsResponse struct {
 
 func (s *BulkListAdvertiserAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BulkListAdvertiserAssignedTargetingOptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BulkListCampaignAssignedTargetingOptionsResponse: Response message
+// for BulkListCampaignAssignedTargetingOptions.
+type BulkListCampaignAssignedTargetingOptionsResponse struct {
+	// AssignedTargetingOptions: The list of assigned targeting options.
+	// This list will be absent if empty.
+	AssignedTargetingOptions []*AssignedTargetingOption `json:"assignedTargetingOptions,omitempty"`
+
+	// NextPageToken: A token identifying the next page of results. This
+	// value should be specified as the pageToken in a subsequent
+	// BulkListCampaignAssignedTargetingOptionsRequest to fetch the next
+	// page of results. This token will be absent if there are no more
+	// assigned_targeting_options to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssignedTargetingOptions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkListCampaignAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkListCampaignAssignedTargetingOptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BulkListInsertionOrderAssignedTargetingOptionsResponse: Response
+// message for BulkListInsertionOrderAssignedTargetingOptions.
+type BulkListInsertionOrderAssignedTargetingOptionsResponse struct {
+	// AssignedTargetingOptions: The list of assigned targeting options.
+	// This list will be absent if empty.
+	AssignedTargetingOptions []*AssignedTargetingOption `json:"assignedTargetingOptions,omitempty"`
+
+	// NextPageToken: A token identifying the next page of results. This
+	// value should be specified as the pageToken in a subsequent
+	// BulkListInsertionOrderAssignedTargetingOptionsRequest to fetch the
+	// next page of results. This token will be absent if there are no more
+	// assigned_targeting_options to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssignedTargetingOptions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BulkListInsertionOrderAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BulkListInsertionOrderAssignedTargetingOptionsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3006,11 +3262,11 @@ type BulkListLineItemAssignedTargetingOptionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AssignedTargetingOptions") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
@@ -3029,11 +3285,205 @@ func (s *BulkListLineItemAssignedTargetingOptionsResponse) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BusinessChainAssignedTargetingOptionDetails: Details for assigned
+// Business chain targeting option. This will be populated in the
+// details field of an AssignedTargetingOption when targeting_type is
+// `TARGETING_TYPE_BUSINESS_CHAIN`.
+type BusinessChainAssignedTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of a business chain, e.g.
+	// "KFC", "Chase Bank".
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ProximityRadiusAmount: Required. The radius of the area around the
+	// business chain that will be targeted. The units of the radius are
+	// specified by proximity_radius_unit. Must be 1 to 800 if unit is
+	// `DISTANCE_UNIT_KILOMETERS` and 1 to 500 if unit is
+	// `DISTANCE_UNIT_MILES`. The minimum increment for both cases is 0.1.
+	// Inputs will be rounded to the nearest acceptable value if it is too
+	// granular, e.g. 15.57 will become 15.6.
+	ProximityRadiusAmount float64 `json:"proximityRadiusAmount,omitempty"`
+
+	// ProximityRadiusUnit: Required. The unit of distance by which the
+	// targeting radius is measured.
+	//
+	// Possible values:
+	//   "DISTANCE_UNIT_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "DISTANCE_UNIT_MILES" - Miles.
+	//   "DISTANCE_UNIT_KILOMETERS" - Kilometers.
+	ProximityRadiusUnit string `json:"proximityRadiusUnit,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id of a
+	// TargetingOption of type `TARGETING_TYPE_BUSINESS_CHAIN`. Accepted
+	// business chain targeting option IDs can be retrieved using
+	// SearchTargetingOptions.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BusinessChainAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod BusinessChainAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *BusinessChainAssignedTargetingOptionDetails) UnmarshalJSON(data []byte) error {
+	type NoMethod BusinessChainAssignedTargetingOptionDetails
+	var s1 struct {
+		ProximityRadiusAmount gensupport.JSONFloat64 `json:"proximityRadiusAmount"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ProximityRadiusAmount = float64(s1.ProximityRadiusAmount)
+	return nil
+}
+
+// BusinessChainSearchTerms: Search terms for Business Chain targeting
+// options. At least one of the field should be populated.
+type BusinessChainSearchTerms struct {
+	// BusinessChainQuery: The search query for the desired business chain.
+	// The query must be the full name of the business, e.g. "KFC",
+	// "mercedes-benz".
+	BusinessChainQuery string `json:"businessChainQuery,omitempty"`
+
+	// RegionQuery: The search query for the desired geo region, e.g.
+	// "Seattle", "United State".
+	RegionQuery string `json:"regionQuery,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BusinessChainQuery")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BusinessChainQuery") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BusinessChainSearchTerms) MarshalJSON() ([]byte, error) {
+	type NoMethod BusinessChainSearchTerms
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BusinessChainTargetingOptionDetails: Represents a targetable business
+// chain within a geo region. This will be populated in the
+// business_chain_details field when targeting_type is
+// `TARGETING_TYPE_BUSINESS_CHAIN`.
+type BusinessChainTargetingOptionDetails struct {
+	// BusinessChain: Output only. The display name of the business chain,
+	// e.g. "KFC", "Chase Bank".
+	BusinessChain string `json:"businessChain,omitempty"`
+
+	// GeoRegion: Output only. The display name of the geographic region,
+	// e.g. "Ontario, Canada".
+	GeoRegion string `json:"geoRegion,omitempty"`
+
+	// GeoRegionType: Output only. The type of the geographic region.
+	//
+	// Possible values:
+	//   "GEO_REGION_TYPE_UNKNOWN" - The geographic region type is unknown.
+	//   "GEO_REGION_TYPE_OTHER" - The geographic region type is other.
+	//   "GEO_REGION_TYPE_COUNTRY" - The geographic region is a country.
+	//   "GEO_REGION_TYPE_REGION" - The geographic region type is region.
+	//   "GEO_REGION_TYPE_TERRITORY" - The geographic region is a territory.
+	//   "GEO_REGION_TYPE_PROVINCE" - The geographic region is a province.
+	//   "GEO_REGION_TYPE_STATE" - The geographic region is a state.
+	//   "GEO_REGION_TYPE_PREFECTURE" - The geographic region is a
+	// prefecture.
+	//   "GEO_REGION_TYPE_GOVERNORATE" - The geographic region is a
+	// governorate.
+	//   "GEO_REGION_TYPE_CANTON" - The geographic region is a canton.
+	//   "GEO_REGION_TYPE_UNION_TERRITORY" - The geographic region is a
+	// union territory.
+	//   "GEO_REGION_TYPE_AUTONOMOUS_COMMUNITY" - The geographic region is
+	// an autonomous community.
+	//   "GEO_REGION_TYPE_DMA_REGION" - The geographic region is a
+	// designated market area (DMA) region.
+	//   "GEO_REGION_TYPE_METRO" - The geographic region type is metro.
+	//   "GEO_REGION_TYPE_CONGRESSIONAL_DISTRICT" - The geographic region is
+	// a congressional district.
+	//   "GEO_REGION_TYPE_COUNTY" - The geographic region is a county.
+	//   "GEO_REGION_TYPE_MUNICIPALITY" - The geographic region is a
+	// municipality.
+	//   "GEO_REGION_TYPE_CITY" - The geographic region is a city.
+	//   "GEO_REGION_TYPE_POSTAL_CODE" - The geographic region targeting
+	// type is postal code.
+	//   "GEO_REGION_TYPE_DEPARTMENT" - The geographic region targeting type
+	// is department.
+	//   "GEO_REGION_TYPE_AIRPORT" - The geographic region is an airport.
+	//   "GEO_REGION_TYPE_TV_REGION" - The geographic region is a TV region.
+	//   "GEO_REGION_TYPE_OKRUG" - The geographic region is an okrug.
+	//   "GEO_REGION_TYPE_BOROUGH" - The geographic region is a borough.
+	//   "GEO_REGION_TYPE_CITY_REGION" - The geographic region is a city
+	// region.
+	//   "GEO_REGION_TYPE_ARRONDISSEMENT" - The geographic region is an
+	// arrondissement.
+	//   "GEO_REGION_TYPE_NEIGHBORHOOD" - The geographic region is a
+	// neighborhood.
+	//   "GEO_REGION_TYPE_UNIVERSITY" - The geographic region is a
+	// university.
+	//   "GEO_REGION_TYPE_DISTRICT" - The geographic region is a district.
+	GeoRegionType string `json:"geoRegionType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BusinessChain") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BusinessChain") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BusinessChainTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod BusinessChainTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Campaign: A single campaign.
 type Campaign struct {
 	// AdvertiserId: Output only. The unique ID of the advertiser the
 	// campaign belongs to.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// CampaignBudgets: The list of budgets available to this campaign. If
+	// this field is not set, the campaign uses an unlimited budget.
+	CampaignBudgets []*CampaignBudget `json:"campaignBudgets,omitempty"`
 
 	// CampaignFlight: Required. The planned spend and duration of the
 	// campaign.
@@ -3088,10 +3538,10 @@ type Campaign struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserId") to include
@@ -3105,6 +3555,93 @@ type Campaign struct {
 
 func (s *Campaign) MarshalJSON() ([]byte, error) {
 	type NoMethod Campaign
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CampaignBudget: Settings that control how the campaign budget is
+// allocated.
+type CampaignBudget struct {
+	// BudgetAmountMicros: Required. The total amount the linked insertion
+	// order segments can budget. The amount is in micros. Must be greater
+	// than 0. For example, 500000000 represents 500 standard units of the
+	// currency.
+	BudgetAmountMicros int64 `json:"budgetAmountMicros,omitempty,string"`
+
+	// BudgetId: The unique ID of the campaign budget. Assigned by the
+	// system. Do not set for new budgets. Must be included when updating or
+	// adding budgets to campaign_budgets. Otherwise, a new ID will be
+	// generated and assigned.
+	BudgetId int64 `json:"budgetId,omitempty,string"`
+
+	// BudgetUnit: Required. Immutable. Specifies whether the budget is
+	// measured in currency or impressions.
+	//
+	// Possible values:
+	//   "BUDGET_UNIT_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "BUDGET_UNIT_CURRENCY" - Budgeting in currency amounts.
+	//   "BUDGET_UNIT_IMPRESSIONS" - Budgeting in impression amounts.
+	BudgetUnit string `json:"budgetUnit,omitempty"`
+
+	// DateRange: Required. The date range for the campaign budget. Linked
+	// budget segments may have a different date range. They are resolved
+	// relative to the parent advertiser's time zone. Both `start_date` and
+	// `end_date` must be before the year 2037.
+	DateRange *DateRange `json:"dateRange,omitempty"`
+
+	// DisplayName: Required. The display name of the budget. Must be UTF-8
+	// encoded with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ExternalBudgetId: Immutable. The ID identifying this budget to the
+	// external source. If this field is set and the invoice detail level of
+	// the corresponding billing profile is set to "Budget level PO", all
+	// impressions served against this budget will include this ID on the
+	// invoice. Must be unique under the campaign.
+	ExternalBudgetId string `json:"externalBudgetId,omitempty"`
+
+	// ExternalBudgetSource: Required. The external source of the budget.
+	//
+	// Possible values:
+	//   "EXTERNAL_BUDGET_SOURCE_UNSPECIFIED" - External budget source value
+	// is not specified or unknown in this version.
+	//   "EXTERNAL_BUDGET_SOURCE_NONE" - Budget has no external source.
+	//   "EXTERNAL_BUDGET_SOURCE_MEDIA_OCEAN" - Budget source is Mediaocean.
+	ExternalBudgetSource string `json:"externalBudgetSource,omitempty"`
+
+	// InvoiceGroupingId: Immutable. The ID used to group budgets to be
+	// included the same invoice. If this field is set and the invoice level
+	// of the corresponding billing profile is set to "Budget invoice
+	// grouping ID", all external_budget_id sharing the same
+	// invoice_grouping_id will be grouped in the same invoice.
+	InvoiceGroupingId string `json:"invoiceGroupingId,omitempty"`
+
+	// PrismaConfig: Additional metadata for use by the Mediaocean Prisma
+	// tool. Required for Mediaocean budgets. Only applicable to
+	// prisma_enabled advertisers.
+	PrismaConfig *PrismaConfig `json:"prismaConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BudgetAmountMicros")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BudgetAmountMicros") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CampaignBudget) MarshalJSON() ([]byte, error) {
+	type NoMethod CampaignBudget
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3132,10 +3669,10 @@ type CampaignFlight struct {
 
 	// ForceSendFields is a list of field names (e.g. "PlannedDates") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PlannedDates") to include
@@ -3179,10 +3716,10 @@ type CampaignGoal struct {
 
 	// ForceSendFields is a list of field names (e.g. "CampaignGoalType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CampaignGoalType") to
@@ -3210,7 +3747,7 @@ type CarrierAndIspAssignedTargetingOptionDetails struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Negative: Indicates if this option is being negatively targeted. All
-	// assigned carrier and ISP targeting options on the same line item must
+	// assigned carrier and ISP targeting options on the same resource must
 	// have the same value for this field.
 	Negative bool `json:"negative,omitempty"`
 
@@ -3220,10 +3757,10 @@ type CarrierAndIspAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -3262,10 +3799,10 @@ type CarrierAndIspTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -3299,10 +3836,10 @@ type CategoryAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -3329,10 +3866,10 @@ type CategoryTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -3367,8 +3904,16 @@ type Channel struct {
 	// Name: Output only. The resource name of the channel.
 	Name string `json:"name,omitempty"`
 
+	// NegativelyTargetedLineItemCount: Output only. Number of line items
+	// that are directly targeting this channel negatively.
+	NegativelyTargetedLineItemCount int64 `json:"negativelyTargetedLineItemCount,omitempty,string"`
+
 	// PartnerId: The ID of the partner that owns the channel.
 	PartnerId int64 `json:"partnerId,omitempty,string"`
+
+	// PositivelyTargetedLineItemCount: Output only. Number of line items
+	// that are directly targeting this channel positively.
+	PositivelyTargetedLineItemCount int64 `json:"positivelyTargetedLineItemCount,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -3376,10 +3921,10 @@ type Channel struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserId") to include
@@ -3414,10 +3959,10 @@ type ChannelAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "ChannelId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ChannelId") to include in
@@ -3469,10 +4014,10 @@ type CmHybridConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "CmAccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CmAccountId") to include
@@ -3505,10 +4050,10 @@ type CmTrackingAd struct {
 
 	// ForceSendFields is a list of field names (e.g. "CmAdId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CmAdId") to include in API
@@ -3545,10 +4090,10 @@ type CombinedAudience struct {
 
 	// ForceSendFields is a list of field names (e.g. "CombinedAudienceId")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CombinedAudienceId") to
@@ -3579,10 +4124,10 @@ type CombinedAudienceGroup struct {
 
 	// ForceSendFields is a list of field names (e.g. "Settings") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Settings") to include in
@@ -3609,10 +4154,10 @@ type CombinedAudienceTargetingSetting struct {
 
 	// ForceSendFields is a list of field names (e.g. "CombinedAudienceId")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CombinedAudienceId") to
@@ -3636,6 +4181,24 @@ func (s *CombinedAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
 // populated in the content_instream_position_details field when
 // targeting_type is `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
 type ContentInstreamPositionAssignedTargetingOptionDetails struct {
+	// AdType: Output only. The ad type to target. Only applicable to
+	// insertion order targeting and new line items supporting the specified
+	// ad type will inherit this targeting option by default. Possible
+	// values are: * `AD_TYPE_VIDEO`, the setting will be inherited by new
+	// line item when line_item_type is `LINE_ITEM_TYPE_VIDEO_DEFAULT`. *
+	// `AD_TYPE_AUDIO`, the setting will be inherited by new line item when
+	// line_item_type is `LINE_ITEM_TYPE_AUDIO_DEFAULT`.
+	//
+	// Possible values:
+	//   "AD_TYPE_UNSPECIFIED" - Ad type is not specified or is unknown in
+	// this version.
+	//   "AD_TYPE_DISPLAY" - Display creatives, e.g. image and HTML5.
+	//   "AD_TYPE_VIDEO" - Video creatives, e.g. video ads that play during
+	// streaming content in video players.
+	//   "AD_TYPE_AUDIO" - Audio creatives, e.g. audio ads that play during
+	// audio content.
+	AdType string `json:"adType,omitempty"`
+
 	// ContentInstreamPosition: Output only. The content instream position
 	// for video or audio ads.
 	//
@@ -3649,28 +4212,28 @@ type ContentInstreamPositionAssignedTargetingOptionDetails struct {
 	// beginning and end of streaming content.
 	//   "CONTENT_INSTREAM_POSITION_POST_ROLL" - Ads that play at the end of
 	// streaming content.
+	//   "CONTENT_INSTREAM_POSITION_UNKNOWN" - Ads instream position is
+	// unknown.
 	ContentInstreamPosition string `json:"contentInstreamPosition,omitempty"`
 
 	// TargetingOptionId: Required. The targeting_option_id field when
 	// targeting_type is `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ContentInstreamPosition") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ContentInstreamPosition")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdType") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3698,15 +4261,17 @@ type ContentInstreamPositionTargetingOptionDetails struct {
 	// beginning and end of streaming content.
 	//   "CONTENT_INSTREAM_POSITION_POST_ROLL" - Ads that play at the end of
 	// streaming content.
+	//   "CONTENT_INSTREAM_POSITION_UNKNOWN" - Ads instream position is
+	// unknown.
 	ContentInstreamPosition string `json:"contentInstreamPosition,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ContentInstreamPosition") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContentInstreamPosition")
@@ -3730,6 +4295,24 @@ func (s *ContentInstreamPositionTargetingOptionDetails) MarshalJSON() ([]byte, e
 // populated in the content_outstream_position_details field when
 // targeting_type is `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
 type ContentOutstreamPositionAssignedTargetingOptionDetails struct {
+	// AdType: Output only. The ad type to target. Only applicable to
+	// insertion order targeting and new line items supporting the specified
+	// ad type will inherit this targeting option by default. Possible
+	// values are: * `AD_TYPE_DISPLAY`, the setting will be inherited by new
+	// line item when line_item_type is `LINE_ITEM_TYPE_DISPLAY_DEFAULT`. *
+	// `AD_TYPE_VIDEO`, the setting will be inherited by new line item when
+	// line_item_type is `LINE_ITEM_TYPE_VIDEO_DEFAULT`.
+	//
+	// Possible values:
+	//   "AD_TYPE_UNSPECIFIED" - Ad type is not specified or is unknown in
+	// this version.
+	//   "AD_TYPE_DISPLAY" - Display creatives, e.g. image and HTML5.
+	//   "AD_TYPE_VIDEO" - Video creatives, e.g. video ads that play during
+	// streaming content in video players.
+	//   "AD_TYPE_AUDIO" - Audio creatives, e.g. audio ads that play during
+	// audio content.
+	AdType string `json:"adType,omitempty"`
+
 	// ContentOutstreamPosition: Output only. The content outstream
 	// position.
 	//
@@ -3756,22 +4339,20 @@ type ContentOutstreamPositionAssignedTargetingOptionDetails struct {
 	// targeting_type is `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ContentOutstreamPosition") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ContentOutstreamPosition")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdType") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3811,11 +4392,11 @@ type ContentOutstreamPositionTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ContentOutstreamPosition") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContentOutstreamPosition")
@@ -3852,11 +4433,11 @@ type ConversionCountingConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "FloodlightActivityConfigs") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -3886,10 +4467,10 @@ type CounterEvent struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -3916,10 +4497,10 @@ type CreateAssetRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Filename") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Filename") to include in
@@ -3948,10 +4529,10 @@ type CreateAssetResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Asset") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Asset") to include in API
@@ -4061,15 +4642,24 @@ type CreateAssignedTargetingOptionsRequest struct {
 	// exchanges.
 	//   "TARGETING_TYPE_SUB_EXCHANGE" - Purchase impressions from specific
 	// sub-exchanges.
+	//   "TARGETING_TYPE_POI" - Target ads around a specific point of
+	// interest, such as a notable building, a street address, or
+	// latitude/longitude coordinates.
+	//   "TARGETING_TYPE_BUSINESS_CHAIN" - Target ads around locations of a
+	// business chain within a specific geo region.
+	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
+	// native content position.
+	//   "TARGETING_TYPE_OMID" - Target ads in an Open Measurement enabled
+	// inventory.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AssignedTargetingOptions") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
@@ -4124,16 +4714,16 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_4_2" - SDF version 4.2
 	//   "SDF_VERSION_5" - SDF version 5.
 	//   "SDF_VERSION_5_1" - SDF version 5.1
-	//   "SDF_VERSION_5_2" - SDF version 5.2;
+	//   "SDF_VERSION_5_2" - SDF version 5.2
 	//   "SDF_VERSION_5_3" - SDF version 5.3
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserId") to include
@@ -4431,6 +5021,13 @@ type Creative struct {
 	// `CREATIVE_TYPE_PUBLISHER_HOSTED`
 	MediaDuration string `json:"mediaDuration,omitempty"`
 
+	// Mp3Audio: Output only. Indicates the third-party audio creative
+	// supports MP3. Output only and only valid for third-party audio
+	// creatives. Third-party audio creatives are creatives with following
+	// hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined with
+	// following creative_type: * `CREATIVE_TYPE_AUDIO`
+	Mp3Audio bool `json:"mp3Audio,omitempty"`
+
 	// Name: Output only. The resource name of the creative.
 	Name string `json:"name,omitempty"`
 
@@ -4441,6 +5038,13 @@ type Creative struct {
 	// ObaIcon: Specifies the OBA icon for a video creative. This field is
 	// only supported in following creative_type: * `CREATIVE_TYPE_VIDEO`
 	ObaIcon *ObaIcon `json:"obaIcon,omitempty"`
+
+	// OggAudio: Output only. Indicates the third-party audio creative
+	// supports OGG. Output only and only valid for third-party audio
+	// creatives. Third-party audio creatives are creatives with following
+	// hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined with
+	// following creative_type: * `CREATIVE_TYPE_AUDIO`
+	OggAudio bool `json:"oggAudio,omitempty"`
 
 	// ProgressOffset: Amount of time to play the video before counting a
 	// view. This field is required when skippable is true. This field is
@@ -4573,8 +5177,8 @@ type Creative struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AdditionalDimensions") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -4662,10 +5266,10 @@ type CreativeConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreativeType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreativeType") to include
@@ -4693,6 +5297,24 @@ type CustomBiddingAlgorithm struct {
 	// bidding algorithm. Assigned by the system.
 	CustomBiddingAlgorithmId int64 `json:"customBiddingAlgorithmId,omitempty,string"`
 
+	// CustomBiddingAlgorithmState: Output only. The status of custom
+	// bidding algorithm.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State is not specified or is unknown in this
+	// version.
+	//   "ENABLED" - Algorithm is enabled, either recently used, currently
+	// used or scheduled to be used. The algorithm is actively scoring
+	// impressions.
+	//   "DORMANT" - Algorithm has not been used recently. Although the
+	// algorithm still acts as `ENABLED`, it will eventually be suspended if
+	// not used.
+	//   "SUSPENDED" - Algorithm is susepended from scoring impressions and
+	// doesn't have a serving model trained. If the algorithm is assigned to
+	// a line item or otherwise updated, it will switch back to the
+	// `ENABLED` state and require time to prepare the serving model again.
+	CustomBiddingAlgorithmState string `json:"customBiddingAlgorithmState,omitempty"`
+
 	// CustomBiddingAlgorithmType: Required. Immutable. The type of custom
 	// bidding algorithm.
 	//
@@ -4703,6 +5325,8 @@ type CustomBiddingAlgorithm struct {
 	// custom bidding script files.
 	//   "ADS_DATA_HUB_BASED" - Algorithm created through Ads Data Hub
 	// product.
+	//   "GOAL_BUILDER_BASED" - Algorithm created through goal builder in
+	// DV3 UI.
 	CustomBiddingAlgorithmType string `json:"customBiddingAlgorithmType,omitempty"`
 
 	// DisplayName: Required. The display name of the custom bidding
@@ -4736,16 +5360,26 @@ type CustomBiddingAlgorithm struct {
 	// custom bidding algorithm.
 	PartnerId int64 `json:"partnerId,omitempty,string"`
 
+	// SharedAdvertiserIds: The IDs of the advertisers who have access to
+	// this algorithm. If advertiser_id is set, this field will only consist
+	// of that value. This field will not be set if the algorithm `owner`
+	// (/display-video/api/reference/rest/v1/customBiddingAlgorithms#CustomBi
+	// ddingAlgorithm.FIELDS.oneof_owner) is a partner and is being
+	// retrieved using an advertiser `accessor`
+	// (/display-video/api/reference/rest/v1/customBiddingAlgorithms/list#bod
+	// y.QUERY_PARAMETERS.oneof_accessor).
+	SharedAdvertiserIds googleapi.Int64s `json:"sharedAdvertiserIds,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserId") to include
@@ -4782,10 +5416,10 @@ type CustomList struct {
 
 	// ForceSendFields is a list of field names (e.g. "CustomListId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CustomListId") to include
@@ -4812,10 +5446,10 @@ type CustomListGroup struct {
 
 	// ForceSendFields is a list of field names (e.g. "Settings") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Settings") to include in
@@ -4841,10 +5475,10 @@ type CustomListTargetingSetting struct {
 
 	// ForceSendFields is a list of field names (e.g. "CustomListId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CustomListId") to include
@@ -4887,10 +5521,10 @@ type Date struct {
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Day") to include in API
@@ -4920,10 +5554,10 @@ type DateRange struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndDate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndDate") to include in
@@ -4982,10 +5616,10 @@ type DayAndTimeAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DayOfWeek") to include in
@@ -5100,15 +5734,24 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	// exchanges.
 	//   "TARGETING_TYPE_SUB_EXCHANGE" - Purchase impressions from specific
 	// sub-exchanges.
+	//   "TARGETING_TYPE_POI" - Target ads around a specific point of
+	// interest, such as a notable building, a street address, or
+	// latitude/longitude coordinates.
+	//   "TARGETING_TYPE_BUSINESS_CHAIN" - Target ads around locations of a
+	// business chain within a specific geo region.
+	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
+	// native content position.
+	//   "TARGETING_TYPE_OMID" - Target ads in an Open Measurement enabled
+	// inventory.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AssignedTargetingOptionIds") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -5145,10 +5788,10 @@ type DeviceMakeModelAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -5177,10 +5820,10 @@ type DeviceMakeModelTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -5220,10 +5863,10 @@ type DeviceTypeAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceType") to include in
@@ -5259,10 +5902,10 @@ type DeviceTypeTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeviceType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeviceType") to include in
@@ -5309,10 +5952,10 @@ type DigitalContentLabelAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContentRatingTier")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContentRatingTier") to
@@ -5356,10 +5999,10 @@ type DigitalContentLabelTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "ContentRatingTier")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ContentRatingTier") to
@@ -5388,10 +6031,10 @@ type Dimensions struct {
 
 	// ForceSendFields is a list of field names (e.g. "HeightPixels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HeightPixels") to include
@@ -5451,10 +6094,10 @@ type DoubleVerify struct {
 
 	// ForceSendFields is a list of field names (e.g. "AppStarRating") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppStarRating") to include
@@ -5499,11 +6142,11 @@ type DoubleVerifyAppStarRating struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AvoidInsufficientStarRating") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -5579,11 +6222,11 @@ type DoubleVerifyBrandSafetyCategories struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AvoidUnknownBrandSafetyCategory") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -5646,10 +6289,10 @@ type DoubleVerifyDisplayViewability struct {
 
 	// ForceSendFields is a list of field names (e.g. "Iab") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Iab") to include in API
@@ -5690,11 +6333,11 @@ type DoubleVerifyFraudInvalidTraffic struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AvoidInsufficientOption") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AvoidInsufficientOption")
@@ -5775,8 +6418,8 @@ type DoubleVerifyVideoViewability struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "PlayerImpressionRate") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -5841,10 +6484,10 @@ type EnvironmentAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Environment") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Environment") to include
@@ -5888,10 +6531,10 @@ type EnvironmentTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Environment") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Environment") to include
@@ -5920,10 +6563,10 @@ type ExchangeAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "TargetingOptionId")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TargetingOptionId") to
@@ -5951,10 +6594,10 @@ type ExchangeConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "EnabledExchanges") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EnabledExchanges") to
@@ -6030,19 +6673,22 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_UNITED" - United.
 	//   "EXCHANGE_YIELDLAB" - Yieldlab.
 	//   "EXCHANGE_YIELDMO" - Yieldmo.
-	//   "EXCHANGE_UNRULYX" - UnrulyX
-	//   "EXCHANGE_OPEN8" - Open8
+	//   "EXCHANGE_UNRULYX" - UnrulyX.
+	//   "EXCHANGE_OPEN8" - Open8.
 	//   "EXCHANGE_TRITON" - Triton.
-	//   "EXCHANGE_TRIPLELIFT" - TripleLift
-	//   "EXCHANGE_TABOOLA" - Taboola
+	//   "EXCHANGE_TRIPLELIFT" - TripleLift.
+	//   "EXCHANGE_TABOOLA" - Taboola.
 	//   "EXCHANGE_INMOBI" - InMobi.
-	//   "EXCHANGE_SMAATO" - Smaato
+	//   "EXCHANGE_SMAATO" - Smaato.
 	//   "EXCHANGE_AJA" - Aja.
 	//   "EXCHANGE_SUPERSHIP" - Supership.
 	//   "EXCHANGE_NEXSTAR_DIGITAL" - Nexstar Digital.
 	//   "EXCHANGE_WAZE" - Waze.
 	//   "EXCHANGE_SOUNDCAST" - SoundCast.
-	//   "EXCHANGE_SHARETHROUGH" - Sharethrough
+	//   "EXCHANGE_SHARETHROUGH" - Sharethrough.
+	//   "EXCHANGE_RED_FOR_PUBLISHERS" - Red For Publishers.
+	//   "EXCHANGE_MEDIANET" - Media.net.
+	//   "EXCHANGE_TAPJOY" - Tapjoy.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager.
@@ -6060,10 +6706,10 @@ type ExchangeConfigEnabledExchange struct {
 
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Exchange") to include in
@@ -6138,19 +6784,22 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_UNITED" - United.
 	//   "EXCHANGE_YIELDLAB" - Yieldlab.
 	//   "EXCHANGE_YIELDMO" - Yieldmo.
-	//   "EXCHANGE_UNRULYX" - UnrulyX
-	//   "EXCHANGE_OPEN8" - Open8
+	//   "EXCHANGE_UNRULYX" - UnrulyX.
+	//   "EXCHANGE_OPEN8" - Open8.
 	//   "EXCHANGE_TRITON" - Triton.
-	//   "EXCHANGE_TRIPLELIFT" - TripleLift
-	//   "EXCHANGE_TABOOLA" - Taboola
+	//   "EXCHANGE_TRIPLELIFT" - TripleLift.
+	//   "EXCHANGE_TABOOLA" - Taboola.
 	//   "EXCHANGE_INMOBI" - InMobi.
-	//   "EXCHANGE_SMAATO" - Smaato
+	//   "EXCHANGE_SMAATO" - Smaato.
 	//   "EXCHANGE_AJA" - Aja.
 	//   "EXCHANGE_SUPERSHIP" - Supership.
 	//   "EXCHANGE_NEXSTAR_DIGITAL" - Nexstar Digital.
 	//   "EXCHANGE_WAZE" - Waze.
 	//   "EXCHANGE_SOUNDCAST" - SoundCast.
-	//   "EXCHANGE_SHARETHROUGH" - Sharethrough
+	//   "EXCHANGE_SHARETHROUGH" - Sharethrough.
+	//   "EXCHANGE_RED_FOR_PUBLISHERS" - Red For Publishers.
+	//   "EXCHANGE_MEDIANET" - Media.net.
+	//   "EXCHANGE_TAPJOY" - Tapjoy.
 	Exchange string `json:"exchange,omitempty"`
 
 	// Status: Status of the exchange review.
@@ -6165,10 +6814,10 @@ type ExchangeReviewStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Exchange") to include in
@@ -6245,27 +6894,30 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_UNITED" - United.
 	//   "EXCHANGE_YIELDLAB" - Yieldlab.
 	//   "EXCHANGE_YIELDMO" - Yieldmo.
-	//   "EXCHANGE_UNRULYX" - UnrulyX
-	//   "EXCHANGE_OPEN8" - Open8
+	//   "EXCHANGE_UNRULYX" - UnrulyX.
+	//   "EXCHANGE_OPEN8" - Open8.
 	//   "EXCHANGE_TRITON" - Triton.
-	//   "EXCHANGE_TRIPLELIFT" - TripleLift
-	//   "EXCHANGE_TABOOLA" - Taboola
+	//   "EXCHANGE_TRIPLELIFT" - TripleLift.
+	//   "EXCHANGE_TABOOLA" - Taboola.
 	//   "EXCHANGE_INMOBI" - InMobi.
-	//   "EXCHANGE_SMAATO" - Smaato
+	//   "EXCHANGE_SMAATO" - Smaato.
 	//   "EXCHANGE_AJA" - Aja.
 	//   "EXCHANGE_SUPERSHIP" - Supership.
 	//   "EXCHANGE_NEXSTAR_DIGITAL" - Nexstar Digital.
 	//   "EXCHANGE_WAZE" - Waze.
 	//   "EXCHANGE_SOUNDCAST" - SoundCast.
-	//   "EXCHANGE_SHARETHROUGH" - Sharethrough
+	//   "EXCHANGE_SHARETHROUGH" - Sharethrough.
+	//   "EXCHANGE_RED_FOR_PUBLISHERS" - Red For Publishers.
+	//   "EXCHANGE_MEDIANET" - Media.net.
+	//   "EXCHANGE_TAPJOY" - Tapjoy.
 	Exchange string `json:"exchange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Exchange") to include in
@@ -6311,10 +6963,10 @@ type ExitEvent struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -6461,11 +7113,11 @@ type FirstAndThirdPartyAudience struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ActiveDisplayAudienceSize") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -6495,10 +7147,10 @@ type FirstAndThirdPartyAudienceGroup struct {
 
 	// ForceSendFields is a list of field names (e.g. "Settings") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Settings") to include in
@@ -6554,6 +7206,7 @@ type FirstAndThirdPartyAudienceTargetingSetting struct {
 	//   "RECENCY_28_DAYS" - Recency is 28 days.
 	//   "RECENCY_30_DAYS" - Recency is 30 days.
 	//   "RECENCY_40_DAYS" - Recency is 40 days.
+	//   "RECENCY_45_DAYS" - Recency is 45 days.
 	//   "RECENCY_60_DAYS" - Recency is 60 days.
 	//   "RECENCY_90_DAYS" - Recency is 90 days.
 	//   "RECENCY_120_DAYS" - Recency is 120 days.
@@ -6564,11 +7217,11 @@ type FirstAndThirdPartyAudienceTargetingSetting struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "FirstAndThirdPartyAudienceId") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -6599,10 +7252,10 @@ type FixedBidStrategy struct {
 
 	// ForceSendFields is a list of field names (e.g. "BidAmountMicros") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BidAmountMicros") to
@@ -6676,10 +7329,10 @@ type FloodlightGroup struct {
 
 	// ForceSendFields is a list of field names (e.g. "ActiveViewConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ActiveViewConfig") to
@@ -6702,12 +7355,12 @@ func (s *FloodlightGroup) MarshalJSON() ([]byte, error) {
 // shown with the same ad during a given time period.
 type FrequencyCap struct {
 	// MaxImpressions: The maximum number of times a user may be shown with
-	// the same ad during this period. Must be greater than 0. Applicable
-	// when unlimited is `false`.
+	// the same ad during this period. Must be greater than 0. Required when
+	// unlimited is `false`.
 	MaxImpressions int64 `json:"maxImpressions,omitempty"`
 
 	// TimeUnit: The time unit in which the frequency cap will be applied.
-	// Applicable when unlimited is `false`.
+	// Required when unlimited is `false`.
 	//
 	// Possible values:
 	//   "TIME_UNIT_UNSPECIFIED" - Time unit value is not specified or is
@@ -6727,13 +7380,12 @@ type FrequencyCap struct {
 	TimeUnit string `json:"timeUnit,omitempty"`
 
 	// TimeUnitCount: The number of time_unit the frequency cap will last.
-	// Applicable when unlimited is `false`. The following restrictions
-	// apply based on the value of time_unit: * `TIME_UNIT_LIFETIME` - this
-	// field is output only and will default to 1 * `TIME_UNIT_MONTHS` -
-	// must be between 1 and 2 * `TIME_UNIT_WEEKS` - must be between 1 and 4
-	// * `TIME_UNIT_DAYS` - must be between 1 and 6 * `TIME_UNIT_HOURS` -
-	// must be between 1 and 23 * `TIME_UNIT_MINUTES` - must be between 1
-	// and 59
+	// Required when unlimited is `false`. The following restrictions apply
+	// based on the value of time_unit: * `TIME_UNIT_LIFETIME` - this field
+	// is output only and will default to 1 * `TIME_UNIT_MONTHS` - must be
+	// between 1 and 2 * `TIME_UNIT_WEEKS` - must be between 1 and 4 *
+	// `TIME_UNIT_DAYS` - must be between 1 and 6 * `TIME_UNIT_HOURS` - must
+	// be between 1 and 23 * `TIME_UNIT_MINUTES` - must be between 1 and 59
 	TimeUnitCount int64 `json:"timeUnitCount,omitempty"`
 
 	// Unlimited: Whether unlimited frequency capping is applied. When this
@@ -6743,10 +7395,10 @@ type FrequencyCap struct {
 
 	// ForceSendFields is a list of field names (e.g. "MaxImpressions") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MaxImpressions") to
@@ -6787,10 +7439,10 @@ type GenderAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Gender") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Gender") to include in API
@@ -6825,10 +7477,10 @@ type GenderTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Gender") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Gender") to include in API
@@ -6842,6 +7494,70 @@ type GenderTargetingOptionDetails struct {
 
 func (s *GenderTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GenderTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GenerateDefaultLineItemRequest: Request message for
+// LineItemService.GenerateDefaultLineItem.
+type GenerateDefaultLineItemRequest struct {
+	// DisplayName: Required. The display name of the line item. Must be
+	// UTF-8 encoded with a maximum size of 240 bytes.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// InsertionOrderId: Required. The unique ID of the insertion order that
+	// the line item belongs to.
+	InsertionOrderId int64 `json:"insertionOrderId,omitempty,string"`
+
+	// LineItemType: Required. The type of the line item.
+	//
+	// Possible values:
+	//   "LINE_ITEM_TYPE_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "LINE_ITEM_TYPE_DISPLAY_DEFAULT" - Image, HTML5, native, or rich
+	// media ads.
+	//   "LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INSTALL" - Display ads that
+	// drive installs of an app.
+	//   "LINE_ITEM_TYPE_VIDEO_DEFAULT" - Video ads sold on a CPM basis for
+	// a variety of environments.
+	//   "LINE_ITEM_TYPE_VIDEO_MOBILE_APP_INSTALL" - Video ads that drive
+	// installs of an app.
+	//   "LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INVENTORY" - Display ads served
+	// on mobile app inventory.
+	//   "LINE_ITEM_TYPE_VIDEO_MOBILE_APP_INVENTORY" - Video ads served on
+	// mobile app inventory.
+	//   "LINE_ITEM_TYPE_AUDIO_DEFAULT" - RTB Audio ads sold for a variety
+	// of environments.
+	//   "LINE_ITEM_TYPE_VIDEO_OVER_THE_TOP" - Over-the-top ads present in
+	// OTT insertion orders. This type is only applicable to line items with
+	// an insertion order of insertion_order_type `OVER_THE_TOP`.
+	LineItemType string `json:"lineItemType,omitempty"`
+
+	// MobileApp: The mobile app promoted by the line item. This is
+	// applicable only when line_item_type is either
+	// `LINE_ITEM_TYPE_DISPLAY_MOBILE_APP_INSTALL` or
+	// `LINE_ITEM_TYPE_VIDEO_MOBILE_APP_INSTALL`.
+	MobileApp *MobileApp `json:"mobileApp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenerateDefaultLineItemRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateDefaultLineItemRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6911,10 +7627,10 @@ type GeoRegionAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -6940,10 +7656,10 @@ type GeoRegionSearchTerms struct {
 
 	// ForceSendFields is a list of field names (e.g. "GeoRegionQuery") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GeoRegionQuery") to
@@ -7019,10 +7735,10 @@ type GeoRegionTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -7076,10 +7792,10 @@ type GoogleAudience struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -7106,10 +7822,10 @@ type GoogleAudienceGroup struct {
 
 	// ForceSendFields is a list of field names (e.g. "Settings") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Settings") to include in
@@ -7136,10 +7852,10 @@ type GoogleAudienceTargetingSetting struct {
 
 	// ForceSendFields is a list of field names (e.g. "GoogleAudienceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GoogleAudienceId") to
@@ -7169,10 +7885,10 @@ type GoogleBytestreamMedia struct {
 
 	// ForceSendFields is a list of field names (e.g. "ResourceName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResourceName") to include
@@ -7224,10 +7940,10 @@ type HouseholdIncomeAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "HouseholdIncome") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HouseholdIncome") to
@@ -7276,10 +7992,10 @@ type HouseholdIncomeTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "HouseholdIncome") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HouseholdIncome") to
@@ -7331,10 +8047,10 @@ type IdFilter struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdGroupAdIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdGroupAdIds") to include
@@ -7413,8 +8129,8 @@ type InsertionOrder struct {
 	// Possible values:
 	//   "INSERTION_ORDER_TYPE_UNSPECIFIED" - Insertion order type is not
 	// specified or is unknown.
-	//   "RTB" - RTB Video type IO.
-	//   "OVER_THE_TOP" - Video Over the top type IO.
+	//   "RTB" - Real-time bidding.
+	//   "OVER_THE_TOP" - Over-the-top.
 	InsertionOrderType string `json:"insertionOrderType,omitempty"`
 
 	// IntegrationDetails: Additional integration details of the insertion
@@ -7446,10 +8162,10 @@ type InsertionOrder struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserId") to include
@@ -7506,10 +8222,10 @@ type InsertionOrderBudget struct {
 
 	// ForceSendFields is a list of field names (e.g. "AutomationType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AutomationType") to
@@ -7537,8 +8253,8 @@ type InsertionOrderBudgetSegment struct {
 	// of the currency.
 	BudgetAmountMicros int64 `json:"budgetAmountMicros,omitempty,string"`
 
-	// CampaignBudgetId: The ID of the campaign budget linked to this
-	// insertion order budget segment.
+	// CampaignBudgetId: The budget_id of the campaign budget that this
+	// insertion order budget segment is a part of.
 	CampaignBudgetId int64 `json:"campaignBudgetId,omitempty,string"`
 
 	// DateRange: Required. The start and end date settings of the budget
@@ -7558,10 +8274,10 @@ type InsertionOrderBudgetSegment struct {
 
 	// ForceSendFields is a list of field names (e.g. "BudgetAmountMicros")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "BudgetAmountMicros") to
@@ -7718,10 +8434,10 @@ type IntegralAdScience struct {
 
 	// ForceSendFields is a list of field names (e.g. "CustomSegmentId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CustomSegmentId") to
@@ -7754,10 +8470,10 @@ type IntegrationDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Details") to include in
@@ -7873,19 +8589,22 @@ type InventorySource struct {
 	//   "EXCHANGE_UNITED" - United.
 	//   "EXCHANGE_YIELDLAB" - Yieldlab.
 	//   "EXCHANGE_YIELDMO" - Yieldmo.
-	//   "EXCHANGE_UNRULYX" - UnrulyX
-	//   "EXCHANGE_OPEN8" - Open8
+	//   "EXCHANGE_UNRULYX" - UnrulyX.
+	//   "EXCHANGE_OPEN8" - Open8.
 	//   "EXCHANGE_TRITON" - Triton.
-	//   "EXCHANGE_TRIPLELIFT" - TripleLift
-	//   "EXCHANGE_TABOOLA" - Taboola
+	//   "EXCHANGE_TRIPLELIFT" - TripleLift.
+	//   "EXCHANGE_TABOOLA" - Taboola.
 	//   "EXCHANGE_INMOBI" - InMobi.
-	//   "EXCHANGE_SMAATO" - Smaato
+	//   "EXCHANGE_SMAATO" - Smaato.
 	//   "EXCHANGE_AJA" - Aja.
 	//   "EXCHANGE_SUPERSHIP" - Supership.
 	//   "EXCHANGE_NEXSTAR_DIGITAL" - Nexstar Digital.
 	//   "EXCHANGE_WAZE" - Waze.
 	//   "EXCHANGE_SOUNDCAST" - SoundCast.
-	//   "EXCHANGE_SHARETHROUGH" - Sharethrough
+	//   "EXCHANGE_SHARETHROUGH" - Sharethrough.
+	//   "EXCHANGE_RED_FOR_PUBLISHERS" - Red For Publishers.
+	//   "EXCHANGE_MEDIANET" - Media.net.
+	//   "EXCHANGE_TAPJOY" - Tapjoy.
 	Exchange string `json:"exchange,omitempty"`
 
 	// InventorySourceId: Output only. The unique ID of the inventory
@@ -7927,10 +8646,10 @@ type InventorySource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Commitment") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Commitment") to include in
@@ -7959,10 +8678,10 @@ type InventorySourceAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "InventorySourceId")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "InventorySourceId") to
@@ -7990,10 +8709,10 @@ type InventorySourceDisplayCreativeConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreativeSize") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreativeSize") to include
@@ -8022,10 +8741,10 @@ type InventorySourceFilter struct {
 
 	// ForceSendFields is a list of field names (e.g. "InventorySourceIds")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "InventorySourceIds") to
@@ -8063,10 +8782,10 @@ type InventorySourceGroup struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -8096,8 +8815,8 @@ type InventorySourceGroupAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "InventorySourceGroupId") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -8194,10 +8913,10 @@ type InventorySourceStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "ConfigStatus") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ConfigStatus") to include
@@ -8224,10 +8943,10 @@ type InventorySourceVideoCreativeConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "Duration") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Duration") to include in
@@ -8241,6 +8960,131 @@ type InventorySourceVideoCreativeConfig struct {
 
 func (s *InventorySourceVideoCreativeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod InventorySourceVideoCreativeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Invoice: A single invoice.
+type Invoice struct {
+	// BudgetInvoiceGroupingId: The budget grouping ID for this invoice.
+	// This field will only be set if the invoice level of the corresponding
+	// billing profile was set to "Budget invoice grouping ID".
+	BudgetInvoiceGroupingId string `json:"budgetInvoiceGroupingId,omitempty"`
+
+	// BudgetSummaries: The list of summarized information for each budget
+	// associated with this invoice. This field will only be set if the
+	// invoice detail level of the corresponding billing profile was set to
+	// "Budget level PO".
+	BudgetSummaries []*BudgetSummary `json:"budgetSummaries,omitempty"`
+
+	// CorrectedInvoiceId: The ID of the original invoice being adjusted by
+	// this invoice, if applicable. May appear on the invoice PDF as
+	// `Reference invoice number`. If replaced_invoice_ids is set, this
+	// field will be empty.
+	CorrectedInvoiceId string `json:"correctedInvoiceId,omitempty"`
+
+	// CurrencyCode: The currency used in the invoice in ISO 4217 format.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// DisplayName: The display name of the invoice.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// DueDate: The date when the invoice is due.
+	DueDate *Date `json:"dueDate,omitempty"`
+
+	// InvoiceId: The unique ID of the invoice.
+	InvoiceId string `json:"invoiceId,omitempty"`
+
+	// InvoiceType: The type of invoice document.
+	//
+	// Possible values:
+	//   "INVOICE_TYPE_UNSPECIFIED" - Not specified or is unknown in this
+	// version.
+	//   "INVOICE_TYPE_CREDIT" - The invoice has a negative amount.
+	//   "INVOICE_TYPE_INVOICE" - The invoice has a positive amount.
+	InvoiceType string `json:"invoiceType,omitempty"`
+
+	// IssueDate: The date when the invoice was issued.
+	IssueDate *Date `json:"issueDate,omitempty"`
+
+	// Name: The resource name of the invoice.
+	Name string `json:"name,omitempty"`
+
+	// NonBudgetMicros: The total amount of costs or adjustments not tied to
+	// a particular budget, in micros of the invoice's currency. For
+	// example, if currency_code is `USD`, then 1000000 represents one US
+	// dollar.
+	NonBudgetMicros int64 `json:"nonBudgetMicros,omitempty,string"`
+
+	// PaymentsAccountId: The ID of the payments account the invoice belongs
+	// to. Appears on the invoice PDF as `Billing Account Number`.
+	PaymentsAccountId string `json:"paymentsAccountId,omitempty"`
+
+	// PaymentsProfileId: The ID of the payments profile the invoice belongs
+	// to. Appears on the invoice PDF as `Billing ID`.
+	PaymentsProfileId string `json:"paymentsProfileId,omitempty"`
+
+	// PdfUrl: The URL to download a PDF copy of the invoice. This URL is
+	// user specific and requires a valid OAuth 2.0 access token to access.
+	// The access token must be provided in an `Authorization: Bearer` HTTP
+	// header and be authorized for one of the following scopes: *
+	// `https://www.googleapis.com/auth/display-video-mediaplanning` *
+	// `https://www.googleapis.com/auth/display-video` The URL will be valid
+	// for 7 days after retrieval of this invoice object or until this
+	// invoice is retrieved again.
+	PdfUrl string `json:"pdfUrl,omitempty"`
+
+	// PurchaseOrderNumber: Purchase order number associated with the
+	// invoice.
+	PurchaseOrderNumber string `json:"purchaseOrderNumber,omitempty"`
+
+	// ReplacedInvoiceIds: The ID(s) of any originally issued invoice that
+	// is being cancelled by this invoice, if applicable. Multiple invoices
+	// may be listed if those invoices are being consolidated into a single
+	// invoice. May appear on invoice PDF as `Replaced invoice numbers`. If
+	// corrected_invoice_id is set, this field will be empty.
+	ReplacedInvoiceIds []string `json:"replacedInvoiceIds,omitempty"`
+
+	// ServiceDateRange: The service start and end dates which are covered
+	// by this invoice.
+	ServiceDateRange *DateRange `json:"serviceDateRange,omitempty"`
+
+	// SubtotalAmountMicros: The pre-tax subtotal amount, in micros of the
+	// invoice's currency. For example, if currency_code is `USD`, then
+	// 1000000 represents one US dollar.
+	SubtotalAmountMicros int64 `json:"subtotalAmountMicros,omitempty,string"`
+
+	// TotalAmountMicros: The invoice total amount, in micros of the
+	// invoice's currency. For example, if currency_code is `USD`, then
+	// 1000000 represents one US dollar.
+	TotalAmountMicros int64 `json:"totalAmountMicros,omitempty,string"`
+
+	// TotalTaxAmountMicros: The sum of all taxes in invoice, in micros of
+	// the invoice's currency. For example, if currency_code is `USD`, then
+	// 1000000 represents one US dollar.
+	TotalTaxAmountMicros int64 `json:"totalTaxAmountMicros,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BudgetInvoiceGroupingId") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BudgetInvoiceGroupingId")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Invoice) MarshalJSON() ([]byte, error) {
+	type NoMethod Invoice
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8261,10 +9105,10 @@ type KeywordAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Keyword") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Keyword") to include in
@@ -8292,7 +9136,7 @@ type LanguageAssignedTargetingOptionDetails struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Negative: Indicates if this option is being negatively targeted. All
-	// assigned language targeting options on the same line item must have
+	// assigned language targeting options on the same resource must have
 	// the same value for this field.
 	Negative bool `json:"negative,omitempty"`
 
@@ -8302,10 +9146,10 @@ type LanguageAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -8333,10 +9177,10 @@ type LanguageTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -8444,11 +9288,11 @@ type LineItem struct {
 	// on mobile app inventory.
 	//   "LINE_ITEM_TYPE_VIDEO_MOBILE_APP_INVENTORY" - Video ads served on
 	// mobile app inventory.
-	//   "LINE_ITEM_TYPE_AUDIO_DEFAULT" - Rtb Audio ads sold for a variety
+	//   "LINE_ITEM_TYPE_AUDIO_DEFAULT" - RTB Audio ads sold for a variety
 	// of environments.
-	//   "LINE_ITEM_TYPE_VIDEO_OVER_THE_TOP" - Over the top ads present in
-	// OTT IOs. This type is only applicable to line items with an insertion
-	// order of insertion_order_type `OVER_THE_TOP`
+	//   "LINE_ITEM_TYPE_VIDEO_OVER_THE_TOP" - Over-the-top ads present in
+	// OTT insertion orders. This type is only applicable to line items with
+	// an insertion order of insertion_order_type `OVER_THE_TOP`.
 	LineItemType string `json:"lineItemType,omitempty"`
 
 	// MobileApp: The mobile app promoted by the line item. This is
@@ -8537,10 +9381,10 @@ type LineItem struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserId") to include
@@ -8602,8 +9446,8 @@ type LineItemBudget struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "BudgetAllocationType") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -8662,10 +9506,10 @@ type LineItemFlight struct {
 
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DateRange") to include in
@@ -8703,11 +9547,11 @@ type ListAdvertiserAssignedTargetingOptionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AssignedTargetingOptions") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
@@ -8742,10 +9586,10 @@ type ListAdvertisersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Advertisers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Advertisers") to include
@@ -8782,11 +9626,11 @@ type ListAssignedInventorySourcesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AssignedInventorySources") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssignedInventorySources")
@@ -8823,10 +9667,10 @@ type ListAssignedLocationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AssignedLocations")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssignedLocations") to
@@ -8841,6 +9685,49 @@ type ListAssignedLocationsResponse struct {
 
 func (s *ListAssignedLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAssignedLocationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListCampaignAssignedTargetingOptionsResponse: Response message for
+// ListCampaignAssignedTargetingOptions.
+type ListCampaignAssignedTargetingOptionsResponse struct {
+	// AssignedTargetingOptions: The list of assigned targeting options.
+	// This list will be absent if empty.
+	AssignedTargetingOptions []*AssignedTargetingOption `json:"assignedTargetingOptions,omitempty"`
+
+	// NextPageToken: A token identifying the next page of results. This
+	// value should be specified as the pageToken in a subsequent
+	// ListCampaignAssignedTargetingOptionsRequest to fetch the next page of
+	// results. This token will be absent if there are no more
+	// assigned_targeting_options to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssignedTargetingOptions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCampaignAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCampaignAssignedTargetingOptionsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8860,10 +9747,10 @@ type ListCampaignsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Campaigns") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Campaigns") to include in
@@ -8896,10 +9783,10 @@ type ListChannelsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Channels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Channels") to include in
@@ -8933,10 +9820,10 @@ type ListCombinedAudiencesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CombinedAudiences")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CombinedAudiences") to
@@ -8971,10 +9858,10 @@ type ListCreativesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Creatives") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Creatives") to include in
@@ -9009,11 +9896,11 @@ type ListCustomBiddingAlgorithmsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CustomBiddingAlgorithms") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CustomBiddingAlgorithms")
@@ -9048,10 +9935,10 @@ type ListCustomListsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CustomLists") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CustomLists") to include
@@ -9087,11 +9974,11 @@ type ListFirstAndThirdPartyAudiencesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "FirstAndThirdPartyAudiences") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -9126,10 +10013,10 @@ type ListGoogleAudiencesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "GoogleAudiences") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GoogleAudiences") to
@@ -9144,6 +10031,49 @@ type ListGoogleAudiencesResponse struct {
 
 func (s *ListGoogleAudiencesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGoogleAudiencesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListInsertionOrderAssignedTargetingOptionsResponse: Response message
+// for ListInsertionOrderAssignedTargetingOptions.
+type ListInsertionOrderAssignedTargetingOptionsResponse struct {
+	// AssignedTargetingOptions: The list of assigned targeting options.
+	// This list will be absent if empty.
+	AssignedTargetingOptions []*AssignedTargetingOption `json:"assignedTargetingOptions,omitempty"`
+
+	// NextPageToken: A token identifying the next page of results. This
+	// value should be specified as the pageToken in a subsequent
+	// ListInsertionOrderAssignedTargetingOptionsRequest to fetch the next
+	// page of results. This token will be absent if there are no more
+	// assigned_targeting_options to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssignedTargetingOptions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListInsertionOrderAssignedTargetingOptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListInsertionOrderAssignedTargetingOptionsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9164,10 +10094,10 @@ type ListInsertionOrdersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "InsertionOrders") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "InsertionOrders") to
@@ -9205,8 +10135,8 @@ type ListInventorySourceGroupsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "InventorySourceGroups") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -9244,10 +10174,10 @@ type ListInventorySourcesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "InventorySources") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "InventorySources") to
@@ -9262,6 +10192,43 @@ type ListInventorySourcesResponse struct {
 
 func (s *ListInventorySourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInventorySourcesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ListInvoicesResponse struct {
+	// Invoices: The list of invoices. This list will be absent if empty.
+	Invoices []*Invoice `json:"invoices,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListInvoices` method to retrieve the next page of results. This
+	// token will be absent if there are no more invoices to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Invoices") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Invoices") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListInvoicesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListInvoicesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9286,11 +10253,11 @@ type ListLineItemAssignedTargetingOptionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AssignedTargetingOptions") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
@@ -9324,10 +10291,10 @@ type ListLineItemsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "LineItems") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LineItems") to include in
@@ -9361,10 +10328,10 @@ type ListLocationListsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "LocationLists") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LocationLists") to include
@@ -9398,10 +10365,10 @@ type ListManualTriggersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ManualTriggers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ManualTriggers") to
@@ -9439,8 +10406,8 @@ type ListNegativeKeywordListsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "NegativeKeywordLists") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -9480,10 +10447,10 @@ type ListNegativeKeywordsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NegativeKeywords") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NegativeKeywords") to
@@ -9520,11 +10487,11 @@ type ListPartnerAssignedTargetingOptionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AssignedTargetingOptions") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssignedTargetingOptions")
@@ -9558,10 +10525,10 @@ type ListPartnersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -9595,10 +10562,10 @@ type ListSitesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -9634,10 +10601,10 @@ type ListTargetingOptionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -9671,10 +10638,10 @@ type ListUsersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -9727,10 +10694,10 @@ type LocationList struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserId") to include
@@ -9761,10 +10728,10 @@ type LookbackWindow struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClickDays") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClickDays") to include in
@@ -9778,6 +10745,37 @@ type LookbackWindow struct {
 
 func (s *LookbackWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod LookbackWindow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type LookupInvoiceCurrencyResponse struct {
+	// CurrencyCode: Currency used by the advertiser in ISO 4217 format.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LookupInvoiceCurrencyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod LookupInvoiceCurrencyResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9824,11 +10822,11 @@ type ManualTrigger struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ActivationDurationMinutes") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -9886,11 +10884,11 @@ type MaximizeSpendBidStrategy struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CustomBiddingAlgorithmId") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CustomBiddingAlgorithmId")
@@ -9921,11 +10919,11 @@ type MeasurementConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "Dv360ToCmCostReportingEnabled") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -9968,10 +10966,10 @@ type MobileApp struct {
 
 	// ForceSendFields is a list of field names (e.g. "AppId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AppId") to include in API
@@ -10008,10 +11006,10 @@ type Money struct {
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrencyCode") to include
@@ -10025,6 +11023,114 @@ type Money struct {
 
 func (s *Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NativeContentPositionAssignedTargetingOptionDetails: Details for
+// native content position assigned targeting option. This will be
+// populated in the native_content_position_details field when
+// targeting_type is `TARGETING_TYPE_NATIVE_CONTENT_POSITION`.
+// Explicitly targeting all options is not supported. Remove all native
+// content position targeting options to achieve this effect.
+type NativeContentPositionAssignedTargetingOptionDetails struct {
+	// ContentPosition: Output only. The content position.
+	//
+	// Possible values:
+	//   "NATIVE_CONTENT_POSITION_UNSPECIFIED" - Native content position is
+	// not specified in this version. This enum is a place holder for a
+	// default value and does not represent a real native content position.
+	//   "NATIVE_CONTENT_POSITION_UNKNOWN" - The native content position is
+	// unknown.
+	//   "NATIVE_CONTENT_POSITION_IN_ARTICLE" - Native content position is
+	// in-article, i.e., ads appear between the paragraphs of pages.
+	//   "NATIVE_CONTENT_POSITION_IN_FEED" - Native content position is
+	// in-feed, i.e., ads appear in a scrollable stream of content. A feed
+	// is typically editorial (e.g. a list of articles or news) or listings
+	// (e.g. a list of products or services).
+	//   "NATIVE_CONTENT_POSITION_PERIPHERAL" - Native content position is
+	// peripheral, i.e., ads appear outside of core content on pages, such
+	// as the right- or left-hand side of the page.
+	//   "NATIVE_CONTENT_POSITION_RECOMMENDATION" - Native content position
+	// is recommendation, i.e., ads appear in sections for recommended
+	// content.
+	ContentPosition string `json:"contentPosition,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id field when
+	// targeting_type is `TARGETING_TYPE_NATIVE_CONTENT_POSITION`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentPosition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentPosition") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NativeContentPositionAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod NativeContentPositionAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NativeContentPositionTargetingOptionDetails: Represents a targetable
+// native content position. This will be populated in the
+// native_content_position_details field when targeting_type is
+// `TARGETING_TYPE_NATIVE_CONTENT_POSITION`.
+type NativeContentPositionTargetingOptionDetails struct {
+	// ContentPosition: Output only. The content position.
+	//
+	// Possible values:
+	//   "NATIVE_CONTENT_POSITION_UNSPECIFIED" - Native content position is
+	// not specified in this version. This enum is a place holder for a
+	// default value and does not represent a real native content position.
+	//   "NATIVE_CONTENT_POSITION_UNKNOWN" - The native content position is
+	// unknown.
+	//   "NATIVE_CONTENT_POSITION_IN_ARTICLE" - Native content position is
+	// in-article, i.e., ads appear between the paragraphs of pages.
+	//   "NATIVE_CONTENT_POSITION_IN_FEED" - Native content position is
+	// in-feed, i.e., ads appear in a scrollable stream of content. A feed
+	// is typically editorial (e.g. a list of articles or news) or listings
+	// (e.g. a list of products or services).
+	//   "NATIVE_CONTENT_POSITION_PERIPHERAL" - Native content position is
+	// peripheral, i.e., ads appear outside of core content on pages, such
+	// as the right- or left-hand side of the page.
+	//   "NATIVE_CONTENT_POSITION_RECOMMENDATION" - Native content position
+	// is recommendation, i.e., ads appear in sections for recommended
+	// content.
+	ContentPosition string `json:"contentPosition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentPosition") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentPosition") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NativeContentPositionTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod NativeContentPositionTargetingOptionDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10049,10 +11155,10 @@ type NegativeKeyword struct {
 
 	// ForceSendFields is a list of field names (e.g. "KeywordValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "KeywordValue") to include
@@ -10087,16 +11193,20 @@ type NegativeKeywordList struct {
 	// keyword list. Assigned by the system.
 	NegativeKeywordListId int64 `json:"negativeKeywordListId,omitempty,string"`
 
+	// TargetedLineItemCount: Output only. Number of line items that are
+	// directly targeting this negative keyword list.
+	TargetedLineItemCount int64 `json:"targetedLineItemCount,omitempty,string"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserId") to include
@@ -10126,8 +11236,8 @@ type NegativeKeywordListAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "NegativeKeywordListId") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -10195,10 +11305,10 @@ type ObaIcon struct {
 
 	// ForceSendFields is a list of field names (e.g. "ClickTrackingUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ClickTrackingUrl") to
@@ -10217,11 +11327,106 @@ func (s *ObaIcon) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OmidAssignedTargetingOptionDetails: Represents a targetable Open
+// Measurement enabled inventory type. This will be populated in the
+// details field of an AssignedTargetingOption when targeting_type is
+// `TARGETING_TYPE_OMID`.
+type OmidAssignedTargetingOptionDetails struct {
+	// Omid: Output only. The type of Open Measurement enabled inventory.
+	//
+	// Possible values:
+	//   "OMID_UNSPECIFIED" - Default value when omid targeting is not
+	// specified in this version.
+	//   "OMID_FOR_MOBILE_DISPLAY_ADS" - Open Measurement enabled mobile
+	// display inventory.
+	Omid string `json:"omid,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id of a
+	// TargetingOption of type `TARGETING_TYPE_OMID`.
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Omid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Omid") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OmidAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod OmidAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OmidTargetingOptionDetails: Represents a targetable Open Measurement
+// enabled inventory type. This will be populated in the omid_details
+// field when targeting_type is `TARGETING_TYPE_OMID`.
+type OmidTargetingOptionDetails struct {
+	// Omid: Output only. The type of Open Measurement enabled inventory.
+	//
+	// Possible values:
+	//   "OMID_UNSPECIFIED" - Default value when omid targeting is not
+	// specified in this version.
+	//   "OMID_FOR_MOBILE_DISPLAY_ADS" - Open Measurement enabled mobile
+	// display inventory.
+	Omid string `json:"omid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Omid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Omid") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OmidTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod OmidTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OnScreenPositionAssignedTargetingOptionDetails: On screen position
 // targeting option details. This will be populated in the
 // on_screen_position_details field when targeting_type is
 // `TARGETING_TYPE_ON_SCREEN_POSITION`.
 type OnScreenPositionAssignedTargetingOptionDetails struct {
+	// AdType: Output only. The ad type to target. Only applicable to
+	// insertion order targeting and new line items supporting the specified
+	// ad type will inherit this targeting option by default. Possible
+	// values are: * `AD_TYPE_DISPLAY`, the setting will be inherited by new
+	// line item when line_item_type is `LINE_ITEM_TYPE_DISPLAY_DEFAULT`. *
+	// `AD_TYPE_VIDEO`, the setting will be inherited by new line item when
+	// line_item_type is `LINE_ITEM_TYPE_VIDEO_DEFAULT`.
+	//
+	// Possible values:
+	//   "AD_TYPE_UNSPECIFIED" - Ad type is not specified or is unknown in
+	// this version.
+	//   "AD_TYPE_DISPLAY" - Display creatives, e.g. image and HTML5.
+	//   "AD_TYPE_VIDEO" - Video creatives, e.g. video ads that play during
+	// streaming content in video players.
+	//   "AD_TYPE_AUDIO" - Audio creatives, e.g. audio ads that play during
+	// audio content.
+	AdType string `json:"adType,omitempty"`
+
 	// OnScreenPosition: Output only. The on screen position.
 	//
 	// Possible values:
@@ -10240,21 +11445,20 @@ type OnScreenPositionAssignedTargetingOptionDetails struct {
 	// targeting_type is `TARGETING_TYPE_ON_SCREEN_POSITION`.
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "OnScreenPosition") to
+	// ForceSendFields is a list of field names (e.g. "AdType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "OnScreenPosition") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdType") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -10285,10 +11489,10 @@ type OnScreenPositionTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "OnScreenPosition") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "OnScreenPosition") to
@@ -10325,10 +11529,10 @@ type OperatingSystemAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -10356,10 +11560,10 @@ type OperatingSystemTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -10418,10 +11622,10 @@ type Operation struct {
 
 	// ForceSendFields is a list of field names (e.g. "Done") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Done") to include in API
@@ -10490,10 +11694,10 @@ type Pacing struct {
 
 	// ForceSendFields is a list of field names (e.g. "DailyMaxImpressions")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DailyMaxImpressions") to
@@ -10565,10 +11769,10 @@ type ParentEntityFilter struct {
 
 	// ForceSendFields is a list of field names (e.g. "FileType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FileType") to include in
@@ -10609,10 +11813,10 @@ type ParentalStatusAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "ParentalStatus") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ParentalStatus") to
@@ -10650,10 +11854,10 @@ type ParentalStatusTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "ParentalStatus") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ParentalStatus") to
@@ -10727,10 +11931,10 @@ type Partner struct {
 
 	// ForceSendFields is a list of field names (e.g. "AdServerConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdServerConfig") to
@@ -10756,10 +11960,10 @@ type PartnerAdServerConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "MeasurementConfig")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MeasurementConfig") to
@@ -10890,10 +12094,10 @@ type PartnerCost struct {
 
 	// ForceSendFields is a list of field names (e.g. "CostType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CostType") to include in
@@ -10920,10 +12124,10 @@ type PartnerDataAccessConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "SdfConfig") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SdfConfig") to include in
@@ -10953,10 +12157,10 @@ type PartnerGeneralConfig struct {
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrencyCode") to include
@@ -11008,10 +12212,10 @@ type PartnerRevenueModel struct {
 
 	// ForceSendFields is a list of field names (e.g. "MarkupAmount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MarkupAmount") to include
@@ -11044,8 +12248,8 @@ type PerformanceGoal struct {
 	// goal percentage in micros. Applicable when performance_goal_type is
 	// one of: * `PERFORMANCE_GOAL_TYPE_CTR` *
 	// `PERFORMANCE_GOAL_TYPE_VIEWABILITY` *
-	// `PERFORMANCE_GOAL_TYPE_CVR_CLICKS` *
-	// `PERFORMANCE_GOAL_TYPE_CVR_IMPRESSIONS` * `PERFORMANCE_GOAL_TYPE_VTR`
+	// `PERFORMANCE_GOAL_TYPE_CLICK_CVR` *
+	// `PERFORMANCE_GOAL_TYPE_IMPRESSION_CVR` * `PERFORMANCE_GOAL_TYPE_VTR`
 	// * `PERFORMANCE_GOAL_TYPE_AUDIO_COMPLETION_RATE` *
 	// `PERFORMANCE_GOAL_TYPE_VIDEO_COMPLETION_RATE` For example, 70000
 	// represents 7% (decimal 0.07).
@@ -11076,17 +12280,32 @@ type PerformanceGoal struct {
 	// CPIAVC (cost per impression audible and visible at completion).
 	//   "PERFORMANCE_GOAL_TYPE_CPE" - The performance goal is set in CPE
 	// (cost per engagement).
+	//   "PERFORMANCE_GOAL_TYPE_CLICK_CVR" - The performance goal is set in
+	// click conversion rate (conversions per click) percentage.
+	//   "PERFORMANCE_GOAL_TYPE_IMPRESSION_CVR" - The performance goal is
+	// set in impression conversion rate (conversions per impression)
+	// percentage.
+	//   "PERFORMANCE_GOAL_TYPE_VCPM" - The performance goal is set in VCPM
+	// (cost per thousand viewable impressions).
+	//   "PERFORMANCE_GOAL_TYPE_VTR" - The performance goal is set in
+	// YouTube view rate (YouTube views per impression) percentage.
+	//   "PERFORMANCE_GOAL_TYPE_AUDIO_COMPLETION_RATE" - The performance
+	// goal is set in audio completion rate (complete audio listens per
+	// impression) percentage.
+	//   "PERFORMANCE_GOAL_TYPE_VIDEO_COMPLETION_RATE" - The performance
+	// goal is set in video completion rate (complete video views per
+	// impression) percentage.
 	//   "PERFORMANCE_GOAL_TYPE_OTHER" - The performance goal is set to
 	// Other.
 	PerformanceGoalType string `json:"performanceGoalType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "PerformanceGoalAmountMicros") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -11171,11 +12390,11 @@ type PerformanceGoalBidStrategy struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CustomBiddingAlgorithmId") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CustomBiddingAlgorithmId")
@@ -11194,6 +12413,259 @@ func (s *PerformanceGoalBidStrategy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PoiAssignedTargetingOptionDetails: Details for assigned POI targeting
+// option. This will be populated in the details field of an
+// AssignedTargetingOption when targeting_type is `TARGETING_TYPE_POI`.
+type PoiAssignedTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of a POI, e.g. "Times
+	// Square", "Space Needle", followed by its full address if available.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Latitude: Output only. Latitude of the POI rounding to 6th decimal
+	// place.
+	Latitude float64 `json:"latitude,omitempty"`
+
+	// Longitude: Output only. Longitude of the POI rounding to 6th decimal
+	// place.
+	Longitude float64 `json:"longitude,omitempty"`
+
+	// ProximityRadiusAmount: Required. The radius of the area around the
+	// POI that will be targeted. The units of the radius are specified by
+	// proximity_radius_unit. Must be 1 to 800 if unit is
+	// `DISTANCE_UNIT_KILOMETERS` and 1 to 500 if unit is
+	// `DISTANCE_UNIT_MILES`.
+	ProximityRadiusAmount float64 `json:"proximityRadiusAmount,omitempty"`
+
+	// ProximityRadiusUnit: Required. The unit of distance by which the
+	// targeting radius is measured.
+	//
+	// Possible values:
+	//   "DISTANCE_UNIT_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
+	//   "DISTANCE_UNIT_MILES" - Miles.
+	//   "DISTANCE_UNIT_KILOMETERS" - Kilometers.
+	ProximityRadiusUnit string `json:"proximityRadiusUnit,omitempty"`
+
+	// TargetingOptionId: Required. The targeting_option_id of a
+	// TargetingOption of type `TARGETING_TYPE_POI`. Accepted POI targeting
+	// option IDs can be retrieved using SearchTargetingOptions. If
+	// targeting a specific latitude/longitude coordinate removed from an
+	// address or POI name, you can generate the necessary targeting option
+	// ID by rounding the desired coordinate values to the 6th decimal
+	// place, removing the decimals, and concatenating the string values
+	// separated by a semicolon. For example, you can target the
+	// latitude/longitude pair of 40.7414691, -74.003387 using the targeting
+	// option ID "40741469;-74003387".
+	TargetingOptionId string `json:"targetingOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PoiAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PoiAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *PoiAssignedTargetingOptionDetails) UnmarshalJSON(data []byte) error {
+	type NoMethod PoiAssignedTargetingOptionDetails
+	var s1 struct {
+		Latitude              gensupport.JSONFloat64 `json:"latitude"`
+		Longitude             gensupport.JSONFloat64 `json:"longitude"`
+		ProximityRadiusAmount gensupport.JSONFloat64 `json:"proximityRadiusAmount"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	s.ProximityRadiusAmount = float64(s1.ProximityRadiusAmount)
+	return nil
+}
+
+// PoiSearchTerms: Search terms for POI targeting options.
+type PoiSearchTerms struct {
+	// PoiQuery: The search query for the desired POI name, street address,
+	// or coordinate of the desired POI. The query can be a prefix, e.g.
+	// "Times squar", "40.7505045,-73.99562", "315 W 44th St", etc.
+	PoiQuery string `json:"poiQuery,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PoiQuery") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PoiQuery") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PoiSearchTerms) MarshalJSON() ([]byte, error) {
+	type NoMethod PoiSearchTerms
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PoiTargetingOptionDetails: Represents a targetable point of
+// interest(POI). This will be populated in the poi_details field when
+// targeting_type is `TARGETING_TYPE_POI`.
+type PoiTargetingOptionDetails struct {
+	// DisplayName: Output only. The display name of a POI(e.g. "Times
+	// Square", "Space Needle"), followed by its full address if available.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Latitude: Output only. Latitude of the POI rounding to 6th decimal
+	// place.
+	Latitude float64 `json:"latitude,omitempty"`
+
+	// Longitude: Output only. Longitude of the POI rounding to 6th decimal
+	// place.
+	Longitude float64 `json:"longitude,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PoiTargetingOptionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PoiTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *PoiTargetingOptionDetails) UnmarshalJSON(data []byte) error {
+	type NoMethod PoiTargetingOptionDetails
+	var s1 struct {
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
+}
+
+// PrismaConfig: Settings specific to the Mediaocean Prisma tool.
+type PrismaConfig struct {
+	// PrismaCpeCode: Required. Relevant client, product, and estimate codes
+	// from the Mediaocean Prisma tool.
+	PrismaCpeCode *PrismaCpeCode `json:"prismaCpeCode,omitempty"`
+
+	// PrismaType: Required. The Prisma type.
+	//
+	// Possible values:
+	//   "PRISMA_TYPE_UNSPECIFIED" - Type is not specified or unknown in
+	// this version.
+	//   "PRISMA_TYPE_DISPLAY" - Display type.
+	//   "PRISMA_TYPE_SEARCH" - Search type.
+	//   "PRISMA_TYPE_VIDEO" - Video type.
+	//   "PRISMA_TYPE_AUDIO" - Audio type.
+	//   "PRISMA_TYPE_SOCIAL" - Social type.
+	//   "PRISMA_TYPE_FEE" - Fee type.
+	PrismaType string `json:"prismaType,omitempty"`
+
+	// Supplier: Required. The entity allocated this budget (DSP, site,
+	// etc.).
+	Supplier string `json:"supplier,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrismaCpeCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrismaCpeCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrismaConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PrismaConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrismaCpeCode: Google Payments Center supports searching and
+// filtering on the component fields of this code.
+type PrismaCpeCode struct {
+	// PrismaClientCode: The Prisma client code.
+	PrismaClientCode string `json:"prismaClientCode,omitempty"`
+
+	// PrismaEstimateCode: The Prisma estimate code.
+	PrismaEstimateCode string `json:"prismaEstimateCode,omitempty"`
+
+	// PrismaProductCode: The Prisma product code.
+	PrismaProductCode string `json:"prismaProductCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrismaClientCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrismaClientCode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrismaCpeCode) MarshalJSON() ([]byte, error) {
+	type NoMethod PrismaCpeCode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ProximityLocationListAssignedTargetingOptionDetails: Targeting
 // details for proximity location list. This will be populated in the
 // details field of an AssignedTargetingOption when targeting_type is
@@ -11207,10 +12679,9 @@ type ProximityLocationListAssignedTargetingOptionDetails struct {
 	// ProximityRadiusRange: Required. Radius range for proximity location
 	// list. This represents the size of the area around a chosen location
 	// that will be targeted. `All` proximity location targeting under a
-	// single line item must have the same radius range value. Set this
-	// value to match any existing targeting. If updated, this field will
-	// change the radius range for all proximity targeting under the line
-	// item.
+	// single resource must have the same radius range value. Set this value
+	// to match any existing targeting. If updated, this field will change
+	// the radius range for all proximity targeting under the resource.
 	//
 	// Possible values:
 	//   "PROXIMITY_RADIUS_RANGE_UNSPECIFIED" - The targeted radius range is
@@ -11227,11 +12698,11 @@ type ProximityLocationListAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ProximityLocationListId") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ProximityLocationListId")
@@ -11267,10 +12738,10 @@ type PublisherReviewStatus struct {
 
 	// ForceSendFields is a list of field names (e.g. "PublisherName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PublisherName") to include
@@ -11320,11 +12791,11 @@ type RateDetails struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "InventorySourceRateType") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "InventorySourceRateType")
@@ -11358,10 +12829,10 @@ type RegionalLocationListAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Negative") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Negative") to include in
@@ -11375,6 +12846,140 @@ type RegionalLocationListAssignedTargetingOptionDetails struct {
 
 func (s *RegionalLocationListAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionalLocationListAssignedTargetingOptionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReplaceNegativeKeywordsRequest: Request message for
+// NegativeKeywordService.ReplaceNegativeKeywords.
+type ReplaceNegativeKeywordsRequest struct {
+	// NewNegativeKeywords: The negative keywords that will replace the
+	// existing keywords in the negative keyword list, specified as a list
+	// of NegativeKeywords.
+	NewNegativeKeywords []*NegativeKeyword `json:"newNegativeKeywords,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NewNegativeKeywords")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NewNegativeKeywords") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplaceNegativeKeywordsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplaceNegativeKeywordsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReplaceNegativeKeywordsResponse: Response message for
+// NegativeKeywordService.ReplaceNegativeKeywords.
+type ReplaceNegativeKeywordsResponse struct {
+	// NegativeKeywords: The full list of negative keywords now present in
+	// the negative keyword list.
+	NegativeKeywords []*NegativeKeyword `json:"negativeKeywords,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NegativeKeywords") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NegativeKeywords") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplaceNegativeKeywordsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplaceNegativeKeywordsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReplaceSitesRequest: Request message for SiteService.ReplaceSites.
+type ReplaceSitesRequest struct {
+	// AdvertiserId: The ID of the advertiser that owns the parent channel.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// NewSites: The sites that will replace the existing sites assigned to
+	// the channel, specified as a list of Sites.
+	NewSites []*Site `json:"newSites,omitempty"`
+
+	// PartnerId: The ID of the partner that owns the parent channel.
+	PartnerId int64 `json:"partnerId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvertiserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplaceSitesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplaceSitesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReplaceSitesResponse: Response message for SiteService.ReplaceSites.
+type ReplaceSitesResponse struct {
+	// Sites: The list of sites in the channel after replacing.
+	Sites []*Site `json:"sites,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Sites") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Sites") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplaceSitesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplaceSitesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -11430,10 +13035,10 @@ type ReviewStatusInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "ApprovalStatus") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ApprovalStatus") to
@@ -11469,16 +13074,16 @@ type SdfConfig struct {
 	//   "SDF_VERSION_4_2" - SDF version 4.2
 	//   "SDF_VERSION_5" - SDF version 5.
 	//   "SDF_VERSION_5_1" - SDF version 5.1
-	//   "SDF_VERSION_5_2" - SDF version 5.2;
+	//   "SDF_VERSION_5_2" - SDF version 5.2
 	//   "SDF_VERSION_5_3" - SDF version 5.3
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdminEmail") to include in
@@ -11508,10 +13113,10 @@ type SdfDownloadTask struct {
 
 	// ForceSendFields is a list of field names (e.g. "ResourceName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResourceName") to include
@@ -11549,16 +13154,16 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_4_2" - SDF version 4.2
 	//   "SDF_VERSION_5" - SDF version 5.
 	//   "SDF_VERSION_5_1" - SDF version 5.1
-	//   "SDF_VERSION_5_2" - SDF version 5.2;
+	//   "SDF_VERSION_5_2" - SDF version 5.2
 	//   "SDF_VERSION_5_3" - SDF version 5.3
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreateTime") to include in
@@ -11583,6 +13188,11 @@ type SearchTargetingOptionsRequest struct {
 	// the context of.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
+	// BusinessChainSearchTerms: Search terms for Business Chain targeting
+	// options. Can only be used when targeting_type is
+	// `TARGETING_TYPE_BUSINESS_CHAIN`.
+	BusinessChainSearchTerms *BusinessChainSearchTerms `json:"businessChainSearchTerms,omitempty"`
+
 	// GeoRegionSearchTerms: Search terms for geo region targeting options.
 	// Can only be used when targeting_type is `TARGETING_TYPE_GEO_REGION`.
 	GeoRegionSearchTerms *GeoRegionSearchTerms `json:"geoRegionSearchTerms,omitempty"`
@@ -11598,12 +13208,16 @@ type SearchTargetingOptionsRequest struct {
 	// specified, the first page of results will be returned.
 	PageToken string `json:"pageToken,omitempty"`
 
+	// PoiSearchTerms: Search terms for POI targeting options. Can only be
+	// used when targeting_type is `TARGETING_TYPE_POI`.
+	PoiSearchTerms *PoiSearchTerms `json:"poiSearchTerms,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AdvertiserId") to include
@@ -11622,7 +13236,7 @@ func (s *SearchTargetingOptionsRequest) MarshalJSON() ([]byte, error) {
 }
 
 // SearchTargetingOptionsResponse: Response message for
-// SearchTargetingOptionsResponse.
+// SearchTargetingOptions.
 type SearchTargetingOptionsResponse struct {
 	// NextPageToken: A token to retrieve the next page of results. Pass
 	// this value in the page_token field in the subsequent call to
@@ -11639,10 +13253,10 @@ type SearchTargetingOptionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -11728,11 +13342,11 @@ type SensitiveCategoryAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ExcludedTargetingOptionId") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -11815,10 +13429,10 @@ type SensitiveCategoryTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "SensitiveCategory")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SensitiveCategory") to
@@ -11843,7 +13457,7 @@ type Site struct {
 	// Name: Output only. The resource name of the site.
 	Name string `json:"name,omitempty"`
 
-	// UrlOrAppId: Required. The URL or app ID of the site. Must be UTF-8
+	// UrlOrAppId: Required. The app ID or URL of the site. Must be UTF-8
 	// encoded with a maximum length of 240 bytes.
 	UrlOrAppId string `json:"urlOrAppId,omitempty"`
 
@@ -11853,10 +13467,10 @@ type Site struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -11897,10 +13511,10 @@ type Status struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -11929,10 +13543,10 @@ type SubExchangeAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "TargetingOptionId")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TargetingOptionId") to
@@ -11961,10 +13575,10 @@ type SubExchangeTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -12012,11 +13626,11 @@ type TargetingExpansionConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ExcludeFirstPartyAudience") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -12050,6 +13664,9 @@ type TargetingOption struct {
 
 	// BrowserDetails: Browser details.
 	BrowserDetails *BrowserTargetingOptionDetails `json:"browserDetails,omitempty"`
+
+	// BusinessChainDetails: Business chain resource details.
+	BusinessChainDetails *BusinessChainTargetingOptionDetails `json:"businessChainDetails,omitempty"`
 
 	// CarrierAndIspDetails: Carrier and ISP details.
 	CarrierAndIspDetails *CarrierAndIspTargetingOptionDetails `json:"carrierAndIspDetails,omitempty"`
@@ -12093,6 +13710,12 @@ type TargetingOption struct {
 	// Name: Output only. The resource name for this targeting option.
 	Name string `json:"name,omitempty"`
 
+	// NativeContentPositionDetails: Native content position details.
+	NativeContentPositionDetails *NativeContentPositionTargetingOptionDetails `json:"nativeContentPositionDetails,omitempty"`
+
+	// OmidDetails: Open Measurement enabled inventory details.
+	OmidDetails *OmidTargetingOptionDetails `json:"omidDetails,omitempty"`
+
 	// OnScreenPositionDetails: On screen position details.
 	OnScreenPositionDetails *OnScreenPositionTargetingOptionDetails `json:"onScreenPositionDetails,omitempty"`
 
@@ -12101,6 +13724,9 @@ type TargetingOption struct {
 
 	// ParentalStatusDetails: Parental status details.
 	ParentalStatusDetails *ParentalStatusTargetingOptionDetails `json:"parentalStatusDetails,omitempty"`
+
+	// PoiDetails: POI resource details.
+	PoiDetails *PoiTargetingOptionDetails `json:"poiDetails,omitempty"`
 
 	// SensitiveCategoryDetails: Sensitive Category details.
 	SensitiveCategoryDetails *SensitiveCategoryTargetingOptionDetails `json:"sensitiveCategoryDetails,omitempty"`
@@ -12196,6 +13822,15 @@ type TargetingOption struct {
 	// exchanges.
 	//   "TARGETING_TYPE_SUB_EXCHANGE" - Purchase impressions from specific
 	// sub-exchanges.
+	//   "TARGETING_TYPE_POI" - Target ads around a specific point of
+	// interest, such as a notable building, a street address, or
+	// latitude/longitude coordinates.
+	//   "TARGETING_TYPE_BUSINESS_CHAIN" - Target ads around locations of a
+	// business chain within a specific geo region.
+	//   "TARGETING_TYPE_NATIVE_CONTENT_POSITION" - Target ads to a specific
+	// native content position.
+	//   "TARGETING_TYPE_OMID" - Target ads in an Open Measurement enabled
+	// inventory.
 	TargetingType string `json:"targetingType,omitempty"`
 
 	// UserRewardedContentDetails: User rewarded content details.
@@ -12213,10 +13848,10 @@ type TargetingOption struct {
 
 	// ForceSendFields is a list of field names (e.g. "AgeRangeDetails") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AgeRangeDetails") to
@@ -12244,11 +13879,11 @@ type ThirdPartyOnlyConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "PixelOrderIdReportingEnabled") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
@@ -12316,10 +13951,10 @@ type ThirdPartyUrl struct {
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Type") to include in API
@@ -12353,10 +13988,10 @@ type ThirdPartyVerifierAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Adloox") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Adloox") to include in API
@@ -12384,10 +14019,10 @@ type TimeRange struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndTime") to include in
@@ -12416,10 +14051,10 @@ type TimerEvent struct {
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Name") to include in API
@@ -12455,8 +14090,8 @@ type TrackingFloodlightActivityConfig struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "FloodlightActivityId") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -12516,10 +14151,10 @@ type Transcode struct {
 
 	// ForceSendFields is a list of field names (e.g. "AudioBitRateKbps") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AudioBitRateKbps") to
@@ -12577,10 +14212,10 @@ type UniversalAdId struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -12614,10 +14249,10 @@ type UrlAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Negative") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Negative") to include in
@@ -12663,10 +14298,10 @@ type User struct {
 
 	// ForceSendFields is a list of field names (e.g. "AssignedUserRoles")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssignedUserRoles") to
@@ -12708,10 +14343,10 @@ type UserRewardedContentAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "TargetingOptionId")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TargetingOptionId") to
@@ -12749,10 +14384,10 @@ type UserRewardedContentTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "UserRewardedContent")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "UserRewardedContent") to
@@ -12803,10 +14438,10 @@ type VideoPlayerSizeAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "TargetingOptionId")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TargetingOptionId") to
@@ -12850,10 +14485,10 @@ type VideoPlayerSizeTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "VideoPlayerSize") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "VideoPlayerSize") to
@@ -12910,10 +14545,10 @@ type ViewabilityAssignedTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "TargetingOptionId")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TargetingOptionId") to
@@ -12965,10 +14600,10 @@ type ViewabilityTargetingOptionDetails struct {
 
 	// ForceSendFields is a list of field names (e.g. "Viewability") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Viewability") to include
@@ -13001,6 +14636,8 @@ type AdvertisersAuditCall struct {
 // resource type under the advertiser provided. Used entities count
 // towards their respective resource limit. See
 // https://support.google.com/displayvideo/answer/6071450.
+//
+// - advertiserId: The ID of the advertiser to audit.
 func (r *AdvertisersService) Audit(advertiserId int64) *AdvertisersAuditCall {
 	c := &AdvertisersAuditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -13055,7 +14692,7 @@ func (c *AdvertisersAuditCall) Header() http.Header {
 
 func (c *AdvertisersAuditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13168,6 +14805,8 @@ type AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall struct {
 // BulkEditAdvertiserAssignedTargetingOptionsRequest.delete_requests and
 // then create the assigned targeting options provided in
 // BulkEditAdvertiserAssignedTargetingOptionsRequest.create_requests .
+//
+// - advertiserId: The ID of the advertiser.
 func (r *AdvertisersService) BulkEditAdvertiserAssignedTargetingOptions(advertiserId int64, bulkeditadvertiserassignedtargetingoptionsrequest *BulkEditAdvertiserAssignedTargetingOptionsRequest) *AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall {
 	c := &AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -13202,7 +14841,7 @@ func (c *AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall) Header() htt
 
 func (c *AdvertisersBulkEditAdvertiserAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13312,6 +14951,8 @@ type AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall struct {
 
 // BulkListAdvertiserAssignedTargetingOptions: Lists assigned targeting
 // options of an advertiser across targeting types.
+//
+// - advertiserId: The ID of the advertiser the line item belongs to.
 func (r *AdvertisersService) BulkListAdvertiserAssignedTargetingOptions(advertiserId int64) *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall {
 	c := &AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -13398,7 +15039,7 @@ func (c *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall) Header() htt
 
 func (c *AdvertisersBulkListAdvertiserAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13578,7 +15219,7 @@ func (c *AdvertisersCreateCall) Header() http.Header {
 
 func (c *AdvertisersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13672,6 +15313,8 @@ type AdvertisersDeleteCall struct {
 // Delete: Deletes an advertiser. Deleting an advertiser will delete all
 // of its child resources, for example, campaigns, insertion orders and
 // line items. A deleted advertiser cannot be recovered.
+//
+// - advertiserId: The ID of the advertiser we need to delete.
 func (r *AdvertisersService) Delete(advertiserId int64) *AdvertisersDeleteCall {
 	c := &AdvertisersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -13705,7 +15348,7 @@ func (c *AdvertisersDeleteCall) Header() http.Header {
 
 func (c *AdvertisersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13804,6 +15447,8 @@ type AdvertisersGetCall struct {
 }
 
 // Get: Gets an advertiser.
+//
+// - advertiserId: The ID of the advertiser to fetch.
 func (r *AdvertisersService) Get(advertiserId int64) *AdvertisersGetCall {
 	c := &AdvertisersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -13847,7 +15492,7 @@ func (c *AdvertisersGetCall) Header() http.Header {
 
 func (c *AdvertisersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14049,7 +15694,7 @@ func (c *AdvertisersListCall) Header() http.Header {
 
 func (c *AdvertisersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14187,6 +15832,9 @@ type AdvertisersPatchCall struct {
 
 // Patch: Updates an existing advertiser. Returns the updated advertiser
 // if successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser.
+//   Assigned by the system.
 func (r *AdvertisersService) Patch(advertiserId int64, advertiser *Advertiser) *AdvertisersPatchCall {
 	c := &AdvertisersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -14228,7 +15876,7 @@ func (c *AdvertisersPatchCall) Header() http.Header {
 
 func (c *AdvertisersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14344,6 +15992,8 @@ type AdvertisersAssetsUploadCall struct {
 // Upload: Uploads an asset. Returns the ID of the newly uploaded asset
 // if successful. The asset file size should be no more than 10 MB for
 // images, 200 MB for ZIP files, and 1 GB for videos.
+//
+// - advertiserId: The ID of the advertiser this asset belongs to.
 func (r *AdvertisersAssetsService) Upload(advertiserId int64, createassetrequest *CreateAssetRequest) *AdvertisersAssetsUploadCall {
 	c := &AdvertisersAssetsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -14417,7 +16067,7 @@ func (c *AdvertisersAssetsUploadCall) Header() http.Header {
 
 func (c *AdvertisersAssetsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14552,6 +16202,259 @@ func (c *AdvertisersAssetsUploadCall) Do(opts ...googleapi.CallOption) (*CreateA
 
 }
 
+// method id "displayvideo.advertisers.campaigns.bulkListCampaignAssignedTargetingOptions":
+
+type AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall struct {
+	s            *Service
+	advertiserId int64
+	campaignId   int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BulkListCampaignAssignedTargetingOptions: Lists assigned targeting
+// options of a campaign across targeting types.
+//
+// - advertiserId: The ID of the advertiser the campaign belongs to.
+// - campaignId: The ID of the campaign to list assigned targeting
+//   options for.
+func (r *AdvertisersCampaignsService) BulkListCampaignAssignedTargetingOptions(advertiserId int64, campaignId int64) *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall {
+	c := &AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.campaignId = campaignId
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// assigned targeting option properties. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by the logical operator `OR` on the same field. * A
+// restriction has the form of `{field} {operator} {value}`. * The
+// operator must be `EQUALS (=)`. * Supported fields: - `targetingType`
+// - `inheritance` Examples: * AssignedTargetingOptions of targeting
+// type TARGETING_TYPE_LANGUAGE or TARGETING_TYPE_GENDER
+// `targetingType="TARGETING_TYPE_LANGUAGE" OR
+// targetingType="TARGETING_TYPE_GENDER" * AssignedTargetingOptions
+// with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER
+// `inheritance="NOT_INHERITED" OR inheritance="INHERITED_FROM_PARTNER"
+// The length of this field should be no more than 500 characters.
+func (c *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall) Filter(filter string) *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `targetingType` (default) The
+// default sorting order is ascending. To specify descending order for a
+// field, a suffix "desc" should be added to the field name. Example:
+// `targetingType desc`.
+func (c *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall) OrderBy(orderBy string) *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The size must be an integer between `1` and `5000`. If unspecified,
+// the default is `5000`. Returns error code `INVALID_ARGUMENT` if an
+// invalid value is specified.
+func (c *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall) PageSize(pageSize int64) *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token that lets
+// the client fetch the next page of results. Typically, this is the
+// value of next_page_token returned from the previous call to
+// `BulkListCampaignAssignedTargetingOptions` method. If not specified,
+// the first page of results will be returned.
+func (c *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall) PageToken(pageToken string) *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall) Fields(s ...googleapi.Field) *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall) IfNoneMatch(entityTag string) *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall) Context(ctx context.Context) *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/campaigns/{+campaignId}:bulkListCampaignAssignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"campaignId":   strconv.FormatInt(c.campaignId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.campaigns.bulkListCampaignAssignedTargetingOptions" call.
+// Exactly one of *BulkListCampaignAssignedTargetingOptionsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *BulkListCampaignAssignedTargetingOptionsResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall) Do(opts ...googleapi.CallOption) (*BulkListCampaignAssignedTargetingOptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BulkListCampaignAssignedTargetingOptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists assigned targeting options of a campaign across targeting types.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/campaigns/{campaignsId}:bulkListCampaignAssignedTargetingOptions",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.campaigns.bulkListCampaignAssignedTargetingOptions",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "campaignId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the campaign belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "campaignId": {
+	//       "description": "Required. The ID of the campaign to list assigned targeting options for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR` on the same field. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `targetingType` - `inheritance` Examples: * AssignedTargetingOptions of targeting type TARGETING_TYPE_LANGUAGE or TARGETING_TYPE_GENDER `targetingType=\"TARGETING_TYPE_LANGUAGE\" OR targetingType=\"TARGETING_TYPE_GENDER\"` * AssignedTargetingOptions with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list. Acceptable values are: * `targetingType` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `targetingType desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The size must be an integer between `1` and `5000`. If unspecified, the default is `5000`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token that lets the client fetch the next page of results. Typically, this is the value of next_page_token returned from the previous call to `BulkListCampaignAssignedTargetingOptions` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/campaigns/{+campaignId}:bulkListCampaignAssignedTargetingOptions",
+	//   "response": {
+	//     "$ref": "BulkListCampaignAssignedTargetingOptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersCampaignsBulkListCampaignAssignedTargetingOptionsCall) Pages(ctx context.Context, f func(*BulkListCampaignAssignedTargetingOptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "displayvideo.advertisers.campaigns.create":
 
 type AdvertisersCampaignsCreateCall struct {
@@ -14565,6 +16468,9 @@ type AdvertisersCampaignsCreateCall struct {
 
 // Create: Creates a new campaign. Returns the newly created campaign if
 // successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the
+//   campaign belongs to.
 func (r *AdvertisersCampaignsService) Create(advertiserId int64, campaign *Campaign) *AdvertisersCampaignsCreateCall {
 	c := &AdvertisersCampaignsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -14599,7 +16505,7 @@ func (c *AdvertisersCampaignsCreateCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14709,6 +16615,9 @@ type AdvertisersCampaignsDeleteCall struct {
 // Delete: Permanently deletes a campaign. A deleted campaign cannot be
 // recovered. The campaign should be archived first, i.e. set
 // entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it.
+//
+// - advertiserId: The ID of the advertiser this campaign belongs to.
+// - campaignId: The ID of the campaign we need to delete.
 func (r *AdvertisersCampaignsService) Delete(advertiserId int64, campaignId int64) *AdvertisersCampaignsDeleteCall {
 	c := &AdvertisersCampaignsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -14743,7 +16652,7 @@ func (c *AdvertisersCampaignsDeleteCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14854,6 +16763,9 @@ type AdvertisersCampaignsGetCall struct {
 }
 
 // Get: Gets a campaign.
+//
+// - advertiserId: The ID of the advertiser this campaign belongs to.
+// - campaignId: The ID of the campaign to fetch.
 func (r *AdvertisersCampaignsService) Get(advertiserId int64, campaignId int64) *AdvertisersCampaignsGetCall {
 	c := &AdvertisersCampaignsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -14898,7 +16810,7 @@ func (c *AdvertisersCampaignsGetCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15014,6 +16926,8 @@ type AdvertisersCampaignsListCall struct {
 // order_by parameter. If a filter by entity_status is not specified,
 // campaigns with `ENTITY_STATUS_ARCHIVED` will not be included in the
 // results.
+//
+// - advertiserId: The ID of the advertiser to list campaigns for.
 func (r *AdvertisersCampaignsService) List(advertiserId int64) *AdvertisersCampaignsListCall {
 	c := &AdvertisersCampaignsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -15107,7 +17021,7 @@ func (c *AdvertisersCampaignsListCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15254,6 +17168,11 @@ type AdvertisersCampaignsPatchCall struct {
 
 // Patch: Updates an existing campaign. Returns the updated campaign if
 // successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the
+//   campaign belongs to.
+// - campaignId: Output only. The unique ID of the campaign. Assigned by
+//   the system.
 func (r *AdvertisersCampaignsService) Patch(advertiserId int64, campaignId int64, campaign *Campaign) *AdvertisersCampaignsPatchCall {
 	c := &AdvertisersCampaignsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -15296,7 +17215,7 @@ func (c *AdvertisersCampaignsPatchCall) Header() http.Header {
 
 func (c *AdvertisersCampaignsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15408,6 +17327,665 @@ func (c *AdvertisersCampaignsPatchCall) Do(opts ...googleapi.CallOption) (*Campa
 
 }
 
+// method id "displayvideo.advertisers.campaigns.targetingTypes.assignedTargetingOptions.get":
+
+type AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall struct {
+	s                         *Service
+	advertiserId              int64
+	campaignId                int64
+	targetingType             string
+	assignedTargetingOptionId string
+	urlParams_                gensupport.URLParams
+	ifNoneMatch_              string
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Get: Gets a single targeting option assigned to a campaign.
+//
+// - advertiserId: The ID of the advertiser the campaign belongs to.
+// - assignedTargetingOptionId: An identifier unique to the targeting
+//   type in this campaign that identifies the assigned targeting option
+//   being requested.
+// - campaignId: The ID of the campaign the assigned targeting option
+//   belongs to.
+// - targetingType: Identifies the type of this assigned targeting
+//   option. Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` *
+//   `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` *
+//   `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+//   `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+//   `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//   `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
+//   `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+//   `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//   `TARGETING_TYPE_INVENTORY_SOURCE` *
+//   `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_LANGUAGE`
+//   * `TARGETING_TYPE_ON_SCREEN_POSITION` *
+//   `TARGETING_TYPE_PARENTAL_STATUS` *
+//   `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//   `TARGETING_TYPE_SUB_EXCHANGE` *
+//   `TARGETING_TYPE_THIRD_PARTY_VERIFIER` *
+//   `TARGETING_TYPE_VIEWABILITY`.
+func (r *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, campaignId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall {
+	c := &AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.campaignId = campaignId
+	c.targetingType = targetingType
+	c.assignedTargetingOptionId = assignedTargetingOptionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Fields(s ...googleapi.Field) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) IfNoneMatch(entityTag string) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Context(ctx context.Context) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/campaigns/{+campaignId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":              strconv.FormatInt(c.advertiserId, 10),
+		"campaignId":                strconv.FormatInt(c.campaignId, 10),
+		"targetingType":             c.targetingType,
+		"assignedTargetingOptionId": c.assignedTargetingOptionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.campaigns.targetingTypes.assignedTargetingOptions.get" call.
+// Exactly one of *AssignedTargetingOption or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AssignedTargetingOption.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googleapi.CallOption) (*AssignedTargetingOption, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AssignedTargetingOption{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a single targeting option assigned to a campaign.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/campaigns/{campaignsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.campaigns.targetingTypes.assignedTargetingOptions.get",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "campaignId",
+	//     "targetingType",
+	//     "assignedTargetingOptionId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the campaign belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "assignedTargetingOptionId": {
+	//       "description": "Required. An identifier unique to the targeting type in this campaign that identifies the assigned targeting option being requested.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "campaignId": {
+	//       "description": "Required. The ID of the campaign the assigned targeting option belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE` * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_VIEWABILITY`",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/campaigns/{+campaignId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}",
+	//   "response": {
+	//     "$ref": "AssignedTargetingOption"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.campaigns.targetingTypes.assignedTargetingOptions.list":
+
+type AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall struct {
+	s             *Service
+	advertiserId  int64
+	campaignId    int64
+	targetingType string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// List: Lists the targeting options assigned to a campaign for a
+// specified targeting type.
+//
+// - advertiserId: The ID of the advertiser the campaign belongs to.
+// - campaignId: The ID of the campaign to list assigned targeting
+//   options for.
+// - targetingType: Identifies the type of assigned targeting options to
+//   list. Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` *
+//   `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` *
+//   `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+//   `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+//   `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//   `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
+//   `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
+//   `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//   `TARGETING_TYPE_INVENTORY_SOURCE` *
+//   `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_LANGUAGE`
+//   * `TARGETING_TYPE_ON_SCREEN_POSITION` *
+//   `TARGETING_TYPE_PARENTAL_STATUS` *
+//   `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//   `TARGETING_TYPE_SUB_EXCHANGE` *
+//   `TARGETING_TYPE_THIRD_PARTY_VERIFIER` *
+//   `TARGETING_TYPE_VIEWABILITY`.
+func (r *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, campaignId int64, targetingType string) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall {
+	c := &AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.campaignId = campaignId
+	c.targetingType = targetingType
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// assigned targeting option properties. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by the logical operator `OR`. * A restriction has the
+// form of `{field} {operator} {value}`. * The operator must be `EQUALS
+// (=)`. * Supported fields: - `assignedTargetingOptionId` -
+// `inheritance` Examples: * AssignedTargetingOptions with ID 1 or 2
+// `assignedTargetingOptionId="1" OR assignedTargetingOptionId="2" *
+// AssignedTargetingOptions with inheritance status of NOT_INHERITED or
+// INHERITED_FROM_PARTNER `inheritance="NOT_INHERITED" OR
+// inheritance="INHERITED_FROM_PARTNER" The length of this field should
+// be no more than 500 characters.
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Filter(filter string) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `assignedTargetingOptionId`
+// (default) The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `assignedTargetingOptionId desc`.
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) OrderBy(orderBy string) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `5000`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) PageSize(pageSize int64) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListCampaignAssignedTargetingOptions` method. If not specified,
+// the first page of results will be returned.
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) PageToken(pageToken string) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Fields(s ...googleapi.Field) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) IfNoneMatch(entityTag string) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Context(ctx context.Context) *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/campaigns/{+campaignId}/targetingTypes/{+targetingType}/assignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":  strconv.FormatInt(c.advertiserId, 10),
+		"campaignId":    strconv.FormatInt(c.campaignId, 10),
+		"targetingType": c.targetingType,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.campaigns.targetingTypes.assignedTargetingOptions.list" call.
+// Exactly one of *ListCampaignAssignedTargetingOptionsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListCampaignAssignedTargetingOptionsResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...googleapi.CallOption) (*ListCampaignAssignedTargetingOptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListCampaignAssignedTargetingOptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the targeting options assigned to a campaign for a specified targeting type.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/campaigns/{campaignsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.campaigns.targetingTypes.assignedTargetingOptions.list",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "campaignId",
+	//     "targetingType"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the campaign belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "campaignId": {
+	//       "description": "Required. The ID of the campaign to list assigned targeting options for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedTargetingOptionId` - `inheritance` Examples: * AssignedTargetingOptions with ID 1 or 2 `assignedTargetingOptionId=\"1\" OR assignedTargetingOptionId=\"2\"` * AssignedTargetingOptions with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list. Acceptable values are: * `assignedTargetingOptionId` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `assignedTargetingOptionId desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `5000`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListCampaignAssignedTargetingOptions` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE` * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_VIEWABILITY`",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/campaigns/{+campaignId}/targetingTypes/{+targetingType}/assignedTargetingOptions",
+	//   "response": {
+	//     "$ref": "ListCampaignAssignedTargetingOptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersCampaignsTargetingTypesAssignedTargetingOptionsListCall) Pages(ctx context.Context, f func(*ListCampaignAssignedTargetingOptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "displayvideo.advertisers.channels.create":
 
 type AdvertisersChannelsCreateCall struct {
@@ -15421,6 +17999,9 @@ type AdvertisersChannelsCreateCall struct {
 
 // Create: Creates a new channel. Returns the newly created channel if
 // successful.
+//
+// - advertiserId: The ID of the advertiser that owns the created
+//   channel.
 func (r *AdvertisersChannelsService) Create(advertiserId int64, channel *Channel) *AdvertisersChannelsCreateCall {
 	c := &AdvertisersChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -15462,7 +18043,7 @@ func (c *AdvertisersChannelsCreateCall) Header() http.Header {
 
 func (c *AdvertisersChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15576,6 +18157,10 @@ type AdvertisersChannelsGetCall struct {
 }
 
 // Get: Gets a channel for a partner or advertiser.
+//
+// - advertiserId: The ID of the advertiser that owns the fetched
+//   channel.
+// - channelId: The ID of the channel to fetch.
 func (r *AdvertisersChannelsService) Get(advertiserId int64, channelId int64) *AdvertisersChannelsGetCall {
 	c := &AdvertisersChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -15627,7 +18212,7 @@ func (c *AdvertisersChannelsGetCall) Header() http.Header {
 
 func (c *AdvertisersChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15745,6 +18330,8 @@ type AdvertisersChannelsListCall struct {
 }
 
 // List: Lists channels for a partner or advertiser.
+//
+// - advertiserId: The ID of the advertiser that owns the channels.
 func (r *AdvertisersChannelsService) List(advertiserId int64) *AdvertisersChannelsListCall {
 	c := &AdvertisersChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -15837,7 +18424,7 @@ func (c *AdvertisersChannelsListCall) Header() http.Header {
 
 func (c *AdvertisersChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -15988,6 +18575,11 @@ type AdvertisersChannelsPatchCall struct {
 }
 
 // Patch: Updates a channel. Returns the updated channel if successful.
+//
+// - advertiserId: The ID of the advertiser that owns the created
+//   channel.
+// - channelId: Output only. The unique ID of the channel. Assigned by
+//   the system.
 func (r *AdvertisersChannelsService) Patch(advertiserId int64, channelId int64, channel *Channel) *AdvertisersChannelsPatchCall {
 	c := &AdvertisersChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -16037,7 +18629,7 @@ func (c *AdvertisersChannelsPatchCall) Header() http.Header {
 
 func (c *AdvertisersChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16168,6 +18760,10 @@ type AdvertisersChannelsSitesBulkEditCall struct {
 // BulkEdit: Bulk edits sites under a single channel. The operation will
 // delete the sites provided in BulkEditSitesRequest.deleted_sites and
 // then create the sites provided in BulkEditSitesRequest.created_sites.
+//
+// - advertiserId: The ID of the advertiser that owns the parent
+//   channel.
+// - channelId: The ID of the parent channel to which the sites belong.
 func (r *AdvertisersChannelsSitesService) BulkEdit(advertiserId int64, channelId int64, bulkeditsitesrequest *BulkEditSitesRequest) *AdvertisersChannelsSitesBulkEditCall {
 	c := &AdvertisersChannelsSitesBulkEditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -16203,7 +18799,7 @@ func (c *AdvertisersChannelsSitesBulkEditCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16320,6 +18916,11 @@ type AdvertisersChannelsSitesCreateCall struct {
 }
 
 // Create: Creates a site in a channel.
+//
+// - advertiserId: The ID of the advertiser that owns the parent
+//   channel.
+// - channelId: The ID of the parent channel in which the site will be
+//   created.
 func (r *AdvertisersChannelsSitesService) Create(advertiserId int64, channelId int64, site *Site) *AdvertisersChannelsSitesCreateCall {
 	c := &AdvertisersChannelsSitesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -16362,7 +18963,7 @@ func (c *AdvertisersChannelsSitesCreateCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16485,6 +19086,11 @@ type AdvertisersChannelsSitesDeleteCall struct {
 }
 
 // Delete: Deletes a site from a channel.
+//
+// - advertiserId: The ID of the advertiser that owns the parent
+//   channel.
+// - channelId: The ID of the parent channel to which the site belongs.
+// - urlOrAppId: The URL or app ID of the site to delete.
 func (r *AdvertisersChannelsSitesService) Delete(advertiserId int64, channelId int64, urlOrAppId string) *AdvertisersChannelsSitesDeleteCall {
 	c := &AdvertisersChannelsSitesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -16527,7 +19133,7 @@ func (c *AdvertisersChannelsSitesDeleteCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16651,6 +19257,11 @@ type AdvertisersChannelsSitesListCall struct {
 }
 
 // List: Lists sites in a channel.
+//
+// - advertiserId: The ID of the advertiser that owns the parent
+//   channel.
+// - channelId: The ID of the parent channel to which the requested
+//   sites belong.
 func (r *AdvertisersChannelsSitesService) List(advertiserId int64, channelId int64) *AdvertisersChannelsSitesListCall {
 	c := &AdvertisersChannelsSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -16680,8 +19291,8 @@ func (c *AdvertisersChannelsSitesListCall) OrderBy(orderBy string) *AdvertisersC
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
-// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// Must be between `1` and `10000`. If unspecified will default to
+// `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *AdvertisersChannelsSitesListCall) PageSize(pageSize int64) *AdvertisersChannelsSitesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -16742,7 +19353,7 @@ func (c *AdvertisersChannelsSitesListCall) Header() http.Header {
 
 func (c *AdvertisersChannelsSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -16841,7 +19452,7 @@ func (c *AdvertisersChannelsSitesListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `10000`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -16890,6 +19501,165 @@ func (c *AdvertisersChannelsSitesListCall) Pages(ctx context.Context, f func(*Li
 	}
 }
 
+// method id "displayvideo.advertisers.channels.sites.replace":
+
+type AdvertisersChannelsSitesReplaceCall struct {
+	s                   *Service
+	advertiserId        int64
+	channelId           int64
+	replacesitesrequest *ReplaceSitesRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Replace: Replaces all of the sites under a single channel. The
+// operation will replace the sites under a channel with the sites
+// provided in ReplaceSitesRequest.new_sites.
+//
+// - advertiserId: The ID of the advertiser that owns the parent
+//   channel.
+// - channelId: The ID of the parent channel whose sites will be
+//   replaced.
+func (r *AdvertisersChannelsSitesService) Replace(advertiserId int64, channelId int64, replacesitesrequest *ReplaceSitesRequest) *AdvertisersChannelsSitesReplaceCall {
+	c := &AdvertisersChannelsSitesReplaceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.channelId = channelId
+	c.replacesitesrequest = replacesitesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersChannelsSitesReplaceCall) Fields(s ...googleapi.Field) *AdvertisersChannelsSitesReplaceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersChannelsSitesReplaceCall) Context(ctx context.Context) *AdvertisersChannelsSitesReplaceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersChannelsSitesReplaceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersChannelsSitesReplaceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.replacesitesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{advertiserId}/channels/{+channelId}/sites:replace")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"channelId":    strconv.FormatInt(c.channelId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.channels.sites.replace" call.
+// Exactly one of *ReplaceSitesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ReplaceSitesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersChannelsSitesReplaceCall) Do(opts ...googleapi.CallOption) (*ReplaceSitesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ReplaceSitesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Replaces all of the sites under a single channel. The operation will replace the sites under a channel with the sites provided in ReplaceSitesRequest.new_sites.",
+	//   "flatPath": "v1/advertisers/{advertiserId}/channels/{channelsId}/sites:replace",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.advertisers.channels.sites.replace",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "channelId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "The ID of the advertiser that owns the parent channel.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "channelId": {
+	//       "description": "Required. The ID of the parent channel whose sites will be replaced.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{advertiserId}/channels/{+channelId}/sites:replace",
+	//   "request": {
+	//     "$ref": "ReplaceSitesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ReplaceSitesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
 // method id "displayvideo.advertisers.creatives.create":
 
 type AdvertisersCreativesCreateCall struct {
@@ -16903,6 +19673,9 @@ type AdvertisersCreativesCreateCall struct {
 
 // Create: Creates a new creative. Returns the newly created creative if
 // successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the
+//   creative belongs to.
 func (r *AdvertisersCreativesService) Create(advertiserId int64, creative *Creative) *AdvertisersCreativesCreateCall {
 	c := &AdvertisersCreativesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -16937,7 +19710,7 @@ func (c *AdvertisersCreativesCreateCall) Header() http.Header {
 
 func (c *AdvertisersCreativesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17047,6 +19820,9 @@ type AdvertisersCreativesDeleteCall struct {
 // creative does not exist. The creative should be archived first, i.e.
 // set entity_status to `ENTITY_STATUS_ARCHIVED`, before it can be
 // deleted.
+//
+// - advertiserId: The ID of the advertiser this creative belongs to.
+// - creativeId: The ID of the creative to be deleted.
 func (r *AdvertisersCreativesService) Delete(advertiserId int64, creativeId int64) *AdvertisersCreativesDeleteCall {
 	c := &AdvertisersCreativesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17081,7 +19857,7 @@ func (c *AdvertisersCreativesDeleteCall) Header() http.Header {
 
 func (c *AdvertisersCreativesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17191,6 +19967,9 @@ type AdvertisersCreativesGetCall struct {
 }
 
 // Get: Gets a creative.
+//
+// - advertiserId: The ID of the advertiser this creative belongs to.
+// - creativeId: The ID of the creative to fetch.
 func (r *AdvertisersCreativesService) Get(advertiserId int64, creativeId int64) *AdvertisersCreativesGetCall {
 	c := &AdvertisersCreativesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17235,7 +20014,7 @@ func (c *AdvertisersCreativesGetCall) Header() http.Header {
 
 func (c *AdvertisersCreativesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17350,6 +20129,8 @@ type AdvertisersCreativesListCall struct {
 // order_by parameter. If a filter by entity_status is not specified,
 // creatives with `ENTITY_STATUS_ARCHIVED` will not be included in the
 // results.
+//
+// - advertiserId: The ID of the advertiser to list creatives for.
 func (r *AdvertisersCreativesService) List(advertiserId int64) *AdvertisersCreativesListCall {
 	c := &AdvertisersCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17464,7 +20245,7 @@ func (c *AdvertisersCreativesListCall) Header() http.Header {
 
 func (c *AdvertisersCreativesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17610,6 +20391,11 @@ type AdvertisersCreativesPatchCall struct {
 
 // Patch: Updates an existing creative. Returns the updated creative if
 // successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the
+//   creative belongs to.
+// - creativeId: Output only. The unique ID of the creative. Assigned by
+//   the system.
 func (r *AdvertisersCreativesService) Patch(advertiserId int64, creativeId int64, creative *Creative) *AdvertisersCreativesPatchCall {
 	c := &AdvertisersCreativesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17652,7 +20438,7 @@ func (c *AdvertisersCreativesPatchCall) Header() http.Header {
 
 func (c *AdvertisersCreativesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17763,6 +20549,261 @@ func (c *AdvertisersCreativesPatchCall) Do(opts ...googleapi.CallOption) (*Creat
 
 }
 
+// method id "displayvideo.advertisers.insertionOrders.bulkListInsertionOrderAssignedTargetingOptions":
+
+type AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall struct {
+	s                *Service
+	advertiserId     int64
+	insertionOrderId int64
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// BulkListInsertionOrderAssignedTargetingOptions: Lists assigned
+// targeting options of an insertion order across targeting types.
+//
+// - advertiserId: The ID of the advertiser the insertion order belongs
+//   to.
+// - insertionOrderId: The ID of the insertion order to list assigned
+//   targeting options for.
+func (r *AdvertisersInsertionOrdersService) BulkListInsertionOrderAssignedTargetingOptions(advertiserId int64, insertionOrderId int64) *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall {
+	c := &AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.insertionOrderId = insertionOrderId
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// assigned targeting option properties. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by the logical operator `OR` on the same field. * A
+// restriction has the form of `{field} {operator} {value}`. * The
+// operator must be `EQUALS (=)`. * Supported fields: - `targetingType`
+// - `inheritance` Examples: * AssignedTargetingOptions of targeting
+// type TARGETING_TYPE_PROXIMITY_LOCATION_LIST or TARGETING_TYPE_CHANNEL
+// `targetingType="TARGETING_TYPE_PROXIMITY_LOCATION_LIST" OR
+// targetingType="TARGETING_TYPE_CHANNEL" * AssignedTargetingOptions
+// with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER
+// `inheritance="NOT_INHERITED" OR inheritance="INHERITED_FROM_PARTNER"
+// The length of this field should be no more than 500 characters.
+func (c *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall) Filter(filter string) *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `targetingType` (default) The
+// default sorting order is ascending. To specify descending order for a
+// field, a suffix "desc" should be added to the field name. Example:
+// `targetingType desc`.
+func (c *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall) OrderBy(orderBy string) *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The size must be an integer between `1` and `5000`. If unspecified,
+// the default is `5000`. Returns error code `INVALID_ARGUMENT` if an
+// invalid value is specified.
+func (c *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall) PageSize(pageSize int64) *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token that lets
+// the client fetch the next page of results. Typically, this is the
+// value of next_page_token returned from the previous call to
+// `BulkListInsertionOrderAssignedTargetingOptions` method. If not
+// specified, the first page of results will be returned.
+func (c *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall) PageToken(pageToken string) *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall) Fields(s ...googleapi.Field) *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall) IfNoneMatch(entityTag string) *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall) Context(ctx context.Context) *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}:bulkListInsertionOrderAssignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
+		"insertionOrderId": strconv.FormatInt(c.insertionOrderId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.insertionOrders.bulkListInsertionOrderAssignedTargetingOptions" call.
+// Exactly one of
+// *BulkListInsertionOrderAssignedTargetingOptionsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *BulkListInsertionOrderAssignedTargetingOptionsResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall) Do(opts ...googleapi.CallOption) (*BulkListInsertionOrderAssignedTargetingOptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BulkListInsertionOrderAssignedTargetingOptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists assigned targeting options of an insertion order across targeting types.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/insertionOrders/{insertionOrdersId}:bulkListInsertionOrderAssignedTargetingOptions",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.insertionOrders.bulkListInsertionOrderAssignedTargetingOptions",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "insertionOrderId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the insertion order belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR` on the same field. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `targetingType` - `inheritance` Examples: * AssignedTargetingOptions of targeting type TARGETING_TYPE_PROXIMITY_LOCATION_LIST or TARGETING_TYPE_CHANNEL `targetingType=\"TARGETING_TYPE_PROXIMITY_LOCATION_LIST\" OR targetingType=\"TARGETING_TYPE_CHANNEL\"` * AssignedTargetingOptions with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "insertionOrderId": {
+	//       "description": "Required. The ID of the insertion order to list assigned targeting options for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list. Acceptable values are: * `targetingType` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `targetingType desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The size must be an integer between `1` and `5000`. If unspecified, the default is `5000`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token that lets the client fetch the next page of results. Typically, this is the value of next_page_token returned from the previous call to `BulkListInsertionOrderAssignedTargetingOptions` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}:bulkListInsertionOrderAssignedTargetingOptions",
+	//   "response": {
+	//     "$ref": "BulkListInsertionOrderAssignedTargetingOptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersInsertionOrdersBulkListInsertionOrderAssignedTargetingOptionsCall) Pages(ctx context.Context, f func(*BulkListInsertionOrderAssignedTargetingOptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "displayvideo.advertisers.insertionOrders.create":
 
 type AdvertisersInsertionOrdersCreateCall struct {
@@ -17776,6 +20817,9 @@ type AdvertisersInsertionOrdersCreateCall struct {
 
 // Create: Creates a new insertion order. Returns the newly created
 // insertion order if successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the
+//   insertion order belongs to.
 func (r *AdvertisersInsertionOrdersService) Create(advertiserId int64, insertionorder *InsertionOrder) *AdvertisersInsertionOrdersCreateCall {
 	c := &AdvertisersInsertionOrdersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17810,7 +20854,7 @@ func (c *AdvertisersInsertionOrdersCreateCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -17920,6 +20964,10 @@ type AdvertisersInsertionOrdersDeleteCall struct {
 // the insertion order does not exist. The insertion order should be
 // archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`,
 // to be able to delete it.
+//
+// - advertiserId: The ID of the advertiser this insertion order belongs
+//   to.
+// - insertionOrderId: The ID of the insertion order we need to delete.
 func (r *AdvertisersInsertionOrdersService) Delete(advertiserId int64, insertionOrderId int64) *AdvertisersInsertionOrdersDeleteCall {
 	c := &AdvertisersInsertionOrdersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -17954,7 +21002,7 @@ func (c *AdvertisersInsertionOrdersDeleteCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18065,6 +21113,10 @@ type AdvertisersInsertionOrdersGetCall struct {
 
 // Get: Gets an insertion order. Returns error code `NOT_FOUND` if the
 // insertion order does not exist.
+//
+// - advertiserId: The ID of the advertiser this insertion order belongs
+//   to.
+// - insertionOrderId: The ID of the insertion order to fetch.
 func (r *AdvertisersInsertionOrdersService) Get(advertiserId int64, insertionOrderId int64) *AdvertisersInsertionOrdersGetCall {
 	c := &AdvertisersInsertionOrdersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -18109,7 +21161,7 @@ func (c *AdvertisersInsertionOrdersGetCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18224,6 +21276,9 @@ type AdvertisersInsertionOrdersListCall struct {
 // by the order_by parameter. If a filter by entity_status is not
 // specified, insertion orders with `ENTITY_STATUS_ARCHIVED` will not be
 // included in the results.
+//
+// - advertiserId: The ID of the advertiser to list insertion orders
+//   for.
 func (r *AdvertisersInsertionOrdersService) List(advertiserId int64) *AdvertisersInsertionOrdersListCall {
 	c := &AdvertisersInsertionOrdersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -18327,7 +21382,7 @@ func (c *AdvertisersInsertionOrdersListCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18473,6 +21528,11 @@ type AdvertisersInsertionOrdersPatchCall struct {
 
 // Patch: Updates an existing insertion order. Returns the updated
 // insertion order if successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the
+//   insertion order belongs to.
+// - insertionOrderId: Output only. The unique ID of the insertion
+//   order. Assigned by the system.
 func (r *AdvertisersInsertionOrdersService) Patch(advertiserId int64, insertionOrderId int64, insertionorder *InsertionOrder) *AdvertisersInsertionOrdersPatchCall {
 	c := &AdvertisersInsertionOrdersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -18515,7 +21575,7 @@ func (c *AdvertisersInsertionOrdersPatchCall) Header() http.Header {
 
 func (c *AdvertisersInsertionOrdersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18626,6 +21686,1042 @@ func (c *AdvertisersInsertionOrdersPatchCall) Do(opts ...googleapi.CallOption) (
 
 }
 
+// method id "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.get":
+
+type AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall struct {
+	s                         *Service
+	advertiserId              int64
+	insertionOrderId          int64
+	targetingType             string
+	assignedTargetingOptionId string
+	urlParams_                gensupport.URLParams
+	ifNoneMatch_              string
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Get: Gets a single targeting option assigned to an insertion order.
+//
+// - advertiserId: The ID of the advertiser the insertion order belongs
+//   to.
+// - assignedTargetingOptionId: An identifier unique to the targeting
+//   type in this insertion order that identifies the assigned targeting
+//   option being requested.
+// - insertionOrderId: The ID of the insertion order the assigned
+//   targeting option belongs to.
+// - targetingType: Identifies the type of this assigned targeting
+//   option.
+func (r *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, insertionOrderId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall {
+	c := &AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.insertionOrderId = insertionOrderId
+	c.targetingType = targetingType
+	c.assignedTargetingOptionId = assignedTargetingOptionId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall) Fields(s ...googleapi.Field) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall) IfNoneMatch(entityTag string) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall) Context(ctx context.Context) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":              strconv.FormatInt(c.advertiserId, 10),
+		"insertionOrderId":          strconv.FormatInt(c.insertionOrderId, 10),
+		"targetingType":             c.targetingType,
+		"assignedTargetingOptionId": c.assignedTargetingOptionId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.get" call.
+// Exactly one of *AssignedTargetingOption or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AssignedTargetingOption.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googleapi.CallOption) (*AssignedTargetingOption, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AssignedTargetingOption{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a single targeting option assigned to an insertion order.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/insertionOrders/{insertionOrdersId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.get",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "insertionOrderId",
+	//     "targetingType",
+	//     "assignedTargetingOptionId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the insertion order belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "assignedTargetingOptionId": {
+	//       "description": "Required. An identifier unique to the targeting type in this insertion order that identifies the assigned targeting option being requested.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "insertionOrderId": {
+	//       "description": "Required. The ID of the insertion order the assigned targeting option belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of this assigned targeting option.",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}/targetingTypes/{+targetingType}/assignedTargetingOptions/{+assignedTargetingOptionId}",
+	//   "response": {
+	//     "$ref": "AssignedTargetingOption"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.list":
+
+type AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall struct {
+	s                *Service
+	advertiserId     int64
+	insertionOrderId int64
+	targetingType    string
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// List: Lists the targeting options assigned to an insertion order.
+//
+// - advertiserId: The ID of the advertiser the insertion order belongs
+//   to.
+// - insertionOrderId: The ID of the insertion order to list assigned
+//   targeting options for.
+// - targetingType: Identifies the type of assigned targeting options to
+//   list.
+func (r *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, insertionOrderId int64, targetingType string) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall {
+	c := &AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.insertionOrderId = insertionOrderId
+	c.targetingType = targetingType
+	return c
+}
+
+// Filter sets the optional parameter "filter": Allows filtering by
+// assigned targeting option properties. Supported syntax: * Filter
+// expressions are made up of one or more restrictions. * Restrictions
+// can be combined by the logical operator `OR`. * A restriction has the
+// form of `{field} {operator} {value}`. * The operator must be `EQUALS
+// (=)`. * Supported fields: - `assignedTargetingOptionId` -
+// `inheritance` Examples: * AssignedTargetingOptions with ID 1 or 2
+// `assignedTargetingOptionId="1" OR assignedTargetingOptionId="2" *
+// AssignedTargetingOptions with inheritance status of NOT_INHERITED or
+// INHERITED_FROM_PARTNER `inheritance="NOT_INHERITED" OR
+// inheritance="INHERITED_FROM_PARTNER" The length of this field should
+// be no more than 500 characters.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall) Filter(filter string) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `assignedTargetingOptionId`
+// (default) The default sorting order is ascending. To specify
+// descending order for a field, a suffix "desc" should be added to the
+// field name. Example: `assignedTargetingOptionId desc`.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall) OrderBy(orderBy string) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `5000`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall) PageSize(pageSize int64) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListInsertionOrderAssignedTargetingOptions` method. If not
+// specified, the first page of results will be returned.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall) PageToken(pageToken string) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall) Fields(s ...googleapi.Field) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall) IfNoneMatch(entityTag string) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall) Context(ctx context.Context) *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}/targetingTypes/{+targetingType}/assignedTargetingOptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":     strconv.FormatInt(c.advertiserId, 10),
+		"insertionOrderId": strconv.FormatInt(c.insertionOrderId, 10),
+		"targetingType":    c.targetingType,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.list" call.
+// Exactly one of *ListInsertionOrderAssignedTargetingOptionsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListInsertionOrderAssignedTargetingOptionsResponse.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...googleapi.CallOption) (*ListInsertionOrderAssignedTargetingOptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListInsertionOrderAssignedTargetingOptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the targeting options assigned to an insertion order.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/insertionOrders/{insertionOrdersId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.insertionOrders.targetingTypes.assignedTargetingOptions.list",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "insertionOrderId",
+	//     "targetingType"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser the insertion order belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Allows filtering by assigned targeting option properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `OR`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `EQUALS (=)`. * Supported fields: - `assignedTargetingOptionId` - `inheritance` Examples: * AssignedTargetingOptions with ID 1 or 2 `assignedTargetingOptionId=\"1\" OR assignedTargetingOptionId=\"2\"` * AssignedTargetingOptions with inheritance status of NOT_INHERITED or INHERITED_FROM_PARTNER `inheritance=\"NOT_INHERITED\" OR inheritance=\"INHERITED_FROM_PARTNER\"` The length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "insertionOrderId": {
+	//       "description": "Required. The ID of the insertion order to list assigned targeting options for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field by which to sort the list. Acceptable values are: * `assignedTargetingOptionId` (default) The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `assignedTargetingOptionId desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `5000`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListInsertionOrderAssignedTargetingOptions` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "targetingType": {
+	//       "description": "Required. Identifies the type of assigned targeting options to list.",
+	//       "enum": [
+	//         "TARGETING_TYPE_UNSPECIFIED",
+	//         "TARGETING_TYPE_CHANNEL",
+	//         "TARGETING_TYPE_APP_CATEGORY",
+	//         "TARGETING_TYPE_APP",
+	//         "TARGETING_TYPE_URL",
+	//         "TARGETING_TYPE_DAY_AND_TIME",
+	//         "TARGETING_TYPE_AGE_RANGE",
+	//         "TARGETING_TYPE_REGIONAL_LOCATION_LIST",
+	//         "TARGETING_TYPE_PROXIMITY_LOCATION_LIST",
+	//         "TARGETING_TYPE_GENDER",
+	//         "TARGETING_TYPE_VIDEO_PLAYER_SIZE",
+	//         "TARGETING_TYPE_USER_REWARDED_CONTENT",
+	//         "TARGETING_TYPE_PARENTAL_STATUS",
+	//         "TARGETING_TYPE_CONTENT_INSTREAM_POSITION",
+	//         "TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION",
+	//         "TARGETING_TYPE_DEVICE_TYPE",
+	//         "TARGETING_TYPE_AUDIENCE_GROUP",
+	//         "TARGETING_TYPE_BROWSER",
+	//         "TARGETING_TYPE_HOUSEHOLD_INCOME",
+	//         "TARGETING_TYPE_ON_SCREEN_POSITION",
+	//         "TARGETING_TYPE_THIRD_PARTY_VERIFIER",
+	//         "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION",
+	//         "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION",
+	//         "TARGETING_TYPE_ENVIRONMENT",
+	//         "TARGETING_TYPE_CARRIER_AND_ISP",
+	//         "TARGETING_TYPE_OPERATING_SYSTEM",
+	//         "TARGETING_TYPE_DEVICE_MAKE_MODEL",
+	//         "TARGETING_TYPE_KEYWORD",
+	//         "TARGETING_TYPE_NEGATIVE_KEYWORD_LIST",
+	//         "TARGETING_TYPE_VIEWABILITY",
+	//         "TARGETING_TYPE_CATEGORY",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE",
+	//         "TARGETING_TYPE_LANGUAGE",
+	//         "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS",
+	//         "TARGETING_TYPE_GEO_REGION",
+	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
+	//         "TARGETING_TYPE_EXCHANGE",
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value when type is not specified or is unknown in this version.",
+	//         "Target a channel (a custom group of related websites or apps).",
+	//         "Target an app category (for example, education or puzzle games).",
+	//         "Target a specific app (for example, Angry Birds).",
+	//         "Target a specific url (for example, quora.com).",
+	//         "Target ads during a chosen time period on a specific day.",
+	//         "Target ads to a specific age range (for example, 18-24).",
+	//         "Target ads to the specified regions on a regional location list.",
+	//         "Target ads to the specified points of interest on a proximity location list.",
+	//         "Target ads to a specific gender (for example, female or male).",
+	//         "Target a specific video player size for video ads.",
+	//         "Target user rewarded content for video ads.",
+	//         "Target ads to a specific parental status (for example, parent or not a parent).",
+	//         "Target video or audio ads in a specific content instream position (for example, pre-roll, mid-roll, or post-roll).",
+	//         "Target ads in a specific content outstream position.",
+	//         "Target ads to a specific device type (for example, tablet or connected TV).",
+	//         "Target ads to an audience or groups of audiences. Singleton field, at most one can exist on a single Lineitem at a time.",
+	//         "Target ads to specific web browsers (for example, Chrome).",
+	//         "Target ads to a specific household income range (for example, top 10%).",
+	//         "Target ads in a specific on screen position.",
+	//         "Filter web sites through third party verification (for example, IAS or DoubleVerify).",
+	//         "Filter web sites by specific digital content label ratings (for example, DL-MA: suitable only for mature audiences).",
+	//         "Filter website content by sensitive categories (for example, adult).",
+	//         "Target ads to a specific environment (for example, web or app).",
+	//         "Target ads to a specific network carrier or internet service provider (ISP) (for example, Comcast or Orange).",
+	//         "Target ads to a specific operating system (for example, macOS).",
+	//         "Target ads to a specific device make or model (for example, Roku or Samsung).",
+	//         "Target ads to a specific keyword (for example, dog or retriever).",
+	//         "Target ads to a specific negative keyword list.",
+	//         "Target ads to a specific viewability (for example, 80% viewable).",
+	//         "Target ads to a specific content category (for example, arts \u0026 entertainment).",
+	//         "Purchase impressions from specific deals and auction packages.",
+	//         "Target ads to a specific language (for example, English or Japanese).",
+	//         "Target ads to ads.txt authorized sellers.",
+	//         "Target ads to a specific regional location (for example, a city or state).",
+	//         "Purchase impressions from a group of deals and auction packages.",
+	//         "Purchase impressions from specific exchanges.",
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
+	//       ],
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/insertionOrders/{+insertionOrderId}/targetingTypes/{+targetingType}/assignedTargetingOptions",
+	//   "response": {
+	//     "$ref": "ListInsertionOrderAssignedTargetingOptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersInsertionOrdersTargetingTypesAssignedTargetingOptionsListCall) Pages(ctx context.Context, f func(*ListInsertionOrderAssignedTargetingOptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.invoices.list":
+
+type AdvertisersInvoicesListCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists invoices posted for an advertiser in a given month.
+// Invoices generated by billing profiles with a "Partner" invoice level
+// are not retrievable through this method.
+//
+// - advertiserId: The ID of the advertiser to list invoices for.
+func (r *AdvertisersInvoicesService) List(advertiserId int64) *AdvertisersInvoicesListCall {
+	c := &AdvertisersInvoicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// IssueMonth sets the optional parameter "issueMonth": The month to
+// list the invoices for. If not set, the request will retrieve invoices
+// for the previous month. Must be in the format YYYYMM.
+func (c *AdvertisersInvoicesListCall) IssueMonth(issueMonth string) *AdvertisersInvoicesListCall {
+	c.urlParams_.Set("issueMonth", issueMonth)
+	return c
+}
+
+// LoiSapinInvoiceType sets the optional parameter
+// "loiSapinInvoiceType": Select type of invoice to retrieve for Loi
+// Sapin advertisers. Only applicable to Loi Sapin advertisers. Will be
+// ignored otherwise.
+//
+// Possible values:
+//   "LOI_SAPIN_INVOICE_TYPE_UNSPECIFIED" - Value is not specified.
+//   "LOI_SAPIN_INVOICE_TYPE_MEDIA" - Invoices with Media cost.
+//   "LOI_SAPIN_INVOICE_TYPE_PLATFORM" - Invoices with Platform fee.
+func (c *AdvertisersInvoicesListCall) LoiSapinInvoiceType(loiSapinInvoiceType string) *AdvertisersInvoicesListCall {
+	c.urlParams_.Set("loiSapinInvoiceType", loiSapinInvoiceType)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
+func (c *AdvertisersInvoicesListCall) PageSize(pageSize int64) *AdvertisersInvoicesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListInvoices` method. If not specified, the first page of results
+// will be returned.
+func (c *AdvertisersInvoicesListCall) PageToken(pageToken string) *AdvertisersInvoicesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersInvoicesListCall) Fields(s ...googleapi.Field) *AdvertisersInvoicesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersInvoicesListCall) IfNoneMatch(entityTag string) *AdvertisersInvoicesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersInvoicesListCall) Context(ctx context.Context) *AdvertisersInvoicesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersInvoicesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersInvoicesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/invoices")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.invoices.list" call.
+// Exactly one of *ListInvoicesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListInvoicesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersInvoicesListCall) Do(opts ...googleapi.CallOption) (*ListInvoicesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListInvoicesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists invoices posted for an advertiser in a given month. Invoices generated by billing profiles with a \"Partner\" invoice level are not retrievable through this method.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/invoices",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.invoices.list",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser to list invoices for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "issueMonth": {
+	//       "description": "The month to list the invoices for. If not set, the request will retrieve invoices for the previous month. Must be in the format YYYYMM.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "loiSapinInvoiceType": {
+	//       "description": "Select type of invoice to retrieve for Loi Sapin advertisers. Only applicable to Loi Sapin advertisers. Will be ignored otherwise.",
+	//       "enum": [
+	//         "LOI_SAPIN_INVOICE_TYPE_UNSPECIFIED",
+	//         "LOI_SAPIN_INVOICE_TYPE_MEDIA",
+	//         "LOI_SAPIN_INVOICE_TYPE_PLATFORM"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Value is not specified.",
+	//         "Invoices with Media cost.",
+	//         "Invoices with Platform fee."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListInvoices` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/invoices",
+	//   "response": {
+	//     "$ref": "ListInvoicesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video",
+	//     "https://www.googleapis.com/auth/display-video-mediaplanning"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertisersInvoicesListCall) Pages(ctx context.Context, f func(*ListInvoicesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "displayvideo.advertisers.invoices.lookupInvoiceCurrency":
+
+type AdvertisersInvoicesLookupInvoiceCurrencyCall struct {
+	s            *Service
+	advertiserId int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// LookupInvoiceCurrency: Retrieves the invoice currency used by an
+// advertiser in a given month.
+//
+// - advertiserId: The ID of the advertiser to lookup currency for.
+func (r *AdvertisersInvoicesService) LookupInvoiceCurrency(advertiserId int64) *AdvertisersInvoicesLookupInvoiceCurrencyCall {
+	c := &AdvertisersInvoicesLookupInvoiceCurrencyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	return c
+}
+
+// InvoiceMonth sets the optional parameter "invoiceMonth": Month for
+// which the currency is needed. If not set, the request will return
+// existing currency settings for the advertiser. Must be in the format
+// YYYYMM.
+func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) InvoiceMonth(invoiceMonth string) *AdvertisersInvoicesLookupInvoiceCurrencyCall {
+	c.urlParams_.Set("invoiceMonth", invoiceMonth)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) Fields(s ...googleapi.Field) *AdvertisersInvoicesLookupInvoiceCurrencyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) IfNoneMatch(entityTag string) *AdvertisersInvoicesLookupInvoiceCurrencyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) Context(ctx context.Context) *AdvertisersInvoicesLookupInvoiceCurrencyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/invoices:lookupInvoiceCurrency")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.invoices.lookupInvoiceCurrency" call.
+// Exactly one of *LookupInvoiceCurrencyResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *LookupInvoiceCurrencyResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersInvoicesLookupInvoiceCurrencyCall) Do(opts ...googleapi.CallOption) (*LookupInvoiceCurrencyResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LookupInvoiceCurrencyResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the invoice currency used by an advertiser in a given month.",
+	//   "flatPath": "v1/advertisers/{advertisersId}/invoices:lookupInvoiceCurrency",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.advertisers.invoices.lookupInvoiceCurrency",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser to lookup currency for.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "invoiceMonth": {
+	//       "description": "Month for which the currency is needed. If not set, the request will return existing currency settings for the advertiser. Must be in the format YYYYMM.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/invoices:lookupInvoiceCurrency",
+	//   "response": {
+	//     "$ref": "LookupInvoiceCurrencyResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video",
+	//     "https://www.googleapis.com/auth/display-video-mediaplanning"
+	//   ]
+	// }
+
+}
+
 // method id "displayvideo.advertisers.lineItems.bulkEditLineItemAssignedTargetingOptions":
 
 type AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall struct {
@@ -18644,6 +22740,10 @@ type AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall struct {
 // BulkEditLineItemAssignedTargetingOptionsRequest.delete_requests and
 // then create the assigned targeting options provided in
 // BulkEditLineItemAssignedTargetingOptionsRequest.create_requests .
+//
+// - advertiserId: The ID of the advertiser the line item belongs to.
+// - lineItemId: The ID of the line item the assigned targeting option
+//   will belong to.
 func (r *AdvertisersLineItemsService) BulkEditLineItemAssignedTargetingOptions(advertiserId int64, lineItemId int64, bulkeditlineitemassignedtargetingoptionsrequest *BulkEditLineItemAssignedTargetingOptionsRequest) *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall {
 	c := &AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -18679,7 +22779,7 @@ func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) Heade
 
 func (c *AdvertisersLineItemsBulkEditLineItemAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -18800,6 +22900,10 @@ type AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall struct {
 
 // BulkListLineItemAssignedTargetingOptions: Lists assigned targeting
 // options of a line item across targeting types.
+//
+// - advertiserId: The ID of the advertiser the line item belongs to.
+// - lineItemId: The ID of the line item to list assigned targeting
+//   options for.
 func (r *AdvertisersLineItemsService) BulkListLineItemAssignedTargetingOptions(advertiserId int64, lineItemId int64) *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall {
 	c := &AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -18891,7 +22995,7 @@ func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) Heade
 
 func (c *AdvertisersLineItemsBulkListLineItemAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19048,6 +23152,9 @@ type AdvertisersLineItemsCreateCall struct {
 
 // Create: Creates a new line item. Returns the newly created line item
 // if successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the line
+//   item belongs to.
 func (r *AdvertisersLineItemsService) Create(advertiserId int64, lineitem *LineItem) *AdvertisersLineItemsCreateCall {
 	c := &AdvertisersLineItemsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19082,7 +23189,7 @@ func (c *AdvertisersLineItemsCreateCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19192,6 +23299,9 @@ type AdvertisersLineItemsDeleteCall struct {
 // line item does not exist. The line item should be archived first,
 // i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to
 // delete it.
+//
+// - advertiserId: The ID of the advertiser this line item belongs to.
+// - lineItemId: The ID of the line item we need to fetch.
 func (r *AdvertisersLineItemsService) Delete(advertiserId int64, lineItemId int64) *AdvertisersLineItemsDeleteCall {
 	c := &AdvertisersLineItemsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19226,7 +23336,7 @@ func (c *AdvertisersLineItemsDeleteCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19323,6 +23433,154 @@ func (c *AdvertisersLineItemsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 
 }
 
+// method id "displayvideo.advertisers.lineItems.generateDefault":
+
+type AdvertisersLineItemsGenerateDefaultCall struct {
+	s                              *Service
+	advertiserId                   int64
+	generatedefaultlineitemrequest *GenerateDefaultLineItemRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// GenerateDefault: Creates a new line item with settings (including
+// targeting) inherited from the insertion order and an
+// `ENTITY_STATUS_DRAFT` entity_status. Returns the newly created line
+// item if successful. There are default values based on the three
+// fields: * The insertion order's insertion_order_type * The insertion
+// order's automation_type * The given line_item_type
+//
+// - advertiserId: The ID of the advertiser this line item belongs to.
+func (r *AdvertisersLineItemsService) GenerateDefault(advertiserId int64, generatedefaultlineitemrequest *GenerateDefaultLineItemRequest) *AdvertisersLineItemsGenerateDefaultCall {
+	c := &AdvertisersLineItemsGenerateDefaultCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.generatedefaultlineitemrequest = generatedefaultlineitemrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersLineItemsGenerateDefaultCall) Fields(s ...googleapi.Field) *AdvertisersLineItemsGenerateDefaultCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersLineItemsGenerateDefaultCall) Context(ctx context.Context) *AdvertisersLineItemsGenerateDefaultCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersLineItemsGenerateDefaultCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersLineItemsGenerateDefaultCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.generatedefaultlineitemrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{+advertiserId}/lineItems:generateDefault")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.lineItems.generateDefault" call.
+// Exactly one of *LineItem or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *LineItem.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertisersLineItemsGenerateDefaultCall) Do(opts ...googleapi.CallOption) (*LineItem, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LineItem{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new line item with settings (including targeting) inherited from the insertion order and an `ENTITY_STATUS_DRAFT` entity_status. Returns the newly created line item if successful. There are default values based on the three fields: * The insertion order's insertion_order_type * The insertion order's automation_type * The given line_item_type",
+	//   "flatPath": "v1/advertisers/{advertisersId}/lineItems:generateDefault",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.advertisers.lineItems.generateDefault",
+	//   "parameterOrder": [
+	//     "advertiserId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the advertiser this line item belongs to.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{+advertiserId}/lineItems:generateDefault",
+	//   "request": {
+	//     "$ref": "GenerateDefaultLineItemRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "LineItem"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
 // method id "displayvideo.advertisers.lineItems.get":
 
 type AdvertisersLineItemsGetCall struct {
@@ -19336,6 +23594,9 @@ type AdvertisersLineItemsGetCall struct {
 }
 
 // Get: Gets a line item.
+//
+// - advertiserId: The ID of the advertiser this line item belongs to.
+// - lineItemId: The ID of the line item to fetch.
 func (r *AdvertisersLineItemsService) Get(advertiserId int64, lineItemId int64) *AdvertisersLineItemsGetCall {
 	c := &AdvertisersLineItemsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19380,7 +23641,7 @@ func (c *AdvertisersLineItemsGetCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19495,6 +23756,8 @@ type AdvertisersLineItemsListCall struct {
 // order_by parameter. If a filter by entity_status is not specified,
 // line items with `ENTITY_STATUS_ARCHIVED` will not be included in the
 // results.
+//
+// - advertiserId: The ID of the advertiser to list line items for.
 func (r *AdvertisersLineItemsService) List(advertiserId int64) *AdvertisersLineItemsListCall {
 	c := &AdvertisersLineItemsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19510,16 +23773,16 @@ func (r *AdvertisersLineItemsService) List(advertiserId int64) *AdvertisersLineI
 // (<). * The operator used on `updateTime` must be `GREATER THAN OR
 // EQUAL TO (>=)` or `LESS THAN OR EQUAL TO (<=)`. * The operator used
 // on `warningMessages` must be `HAS (:)`. * The operators used on all
-// other fields must be `EQUALS (=)`. * Supported fields: - `campaignId`
-// - `displayName` - `insertionOrderId` - `entityStatus` - `lineItemId`
-// - `lineItemType` - `flight.dateRange.endDate` (input formatted as
-// YYYY-MM-DD) - `warningMessages` - `flight.triggerId` - `updateTime`
-// (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) * The operator
-// can be `NO LESS THAN (>=)` or `NO GREATER THAN (<=)`. - `updateTime`
-// (format of ISO 8601) Examples: * All line items under an insertion
-// order: `insertionOrderId="1234" * All `ENTITY_STATUS_ACTIVE` or
-// `ENTITY_STATUS_PAUSED` and `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line
-// items under an advertiser: `(entityStatus="ENTITY_STATUS_ACTIVE" OR
+// other fields must be `EQUALS (=)`. * Supported properties: -
+// `campaignId` - `displayName` - `insertionOrderId` - `entityStatus` -
+// `lineItemId` - `lineItemType` - `flight.dateRange.endDate` (input
+// formatted as YYYY-MM-DD) - `warningMessages` - `flight.triggerId` -
+// `updateTime` (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) -
+// `targetedChannelId` - `targetedNegativeKeywordListId` Examples: * All
+// line items under an insertion order: `insertionOrderId="1234" * All
+// `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` and
+// `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an advertiser:
+// `(entityStatus="ENTITY_STATUS_ACTIVE" OR
 // entityStatus="ENTITY_STATUS_PAUSED") AND
 // lineItemType="LINE_ITEM_TYPE_DISPLAY_DEFAULT" * All line items whose
 // flight dates end before March 28, 2019:
@@ -19529,8 +23792,11 @@ func (r *AdvertisersLineItemsService) List(advertiserId int64) *AdvertisersLineI
 // time less than or equal to `2020-11-04T18:54:47Z (format of ISO
 // 8601)`: `updateTime<="2020-11-04T18:54:47Z" * All line items with an
 // update time greater than or equal to `2020-11-04T18:54:47Z (format of
-// ISO 8601)`: `updateTime>="2020-11-04T18:54:47Z" The length of this
-// field should be no more than 500 characters.
+// ISO 8601)`: `updateTime>="2020-11-04T18:54:47Z" * All line items
+// that are using both the specified channel and specified negative
+// keyword list in their targeting: `targetedNegativeKeywordListId=789
+// AND targetedChannelId=12345` The length of this field should be no
+// more than 500 characters.
 func (c *AdvertisersLineItemsListCall) Filter(filter string) *AdvertisersLineItemsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -19603,7 +23869,7 @@ func (c *AdvertisersLineItemsListCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19682,7 +23948,7 @@ func (c *AdvertisersLineItemsListCall) Do(opts ...googleapi.CallOption) (*ListLi
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by line item properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator used on `flight.dateRange.endDate` must be LESS THAN (\u003c). * The operator used on `updateTime` must be `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)`. * The operator used on `warningMessages` must be `HAS (:)`. * The operators used on all other fields must be `EQUALS (=)`. * Supported fields: - `campaignId` - `displayName` - `insertionOrderId` - `entityStatus` - `lineItemId` - `lineItemType` - `flight.dateRange.endDate` (input formatted as YYYY-MM-DD) - `warningMessages` - `flight.triggerId` - `updateTime` (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) * The operator can be `NO LESS THAN (\u003e=)` or `NO GREATER THAN (\u003c=)`. - `updateTime` (format of ISO 8601) Examples: * All line items under an insertion order: `insertionOrderId=\"1234\"` * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` and `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\") AND lineItemType=\"LINE_ITEM_TYPE_DISPLAY_DEFAULT\"` * All line items whose flight dates end before March 28, 2019: `flight.dateRange.endDate\u003c\"2019-03-28\"` * All line items that have `NO_VALID_CREATIVE` in `warningMessages`: `warningMessages:\"NO_VALID_CREATIVE\"` * All line items with an update time less than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime\u003c=\"2020-11-04T18:54:47Z\"` * All line items with an update time greater than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime\u003e=\"2020-11-04T18:54:47Z\"` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by line item properties. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator used on `flight.dateRange.endDate` must be LESS THAN (\u003c). * The operator used on `updateTime` must be `GREATER THAN OR EQUAL TO (\u003e=)` or `LESS THAN OR EQUAL TO (\u003c=)`. * The operator used on `warningMessages` must be `HAS (:)`. * The operators used on all other fields must be `EQUALS (=)`. * Supported properties: - `campaignId` - `displayName` - `insertionOrderId` - `entityStatus` - `lineItemId` - `lineItemType` - `flight.dateRange.endDate` (input formatted as YYYY-MM-DD) - `warningMessages` - `flight.triggerId` - `updateTime` (input in ISO 8601 format, or YYYY-MM-DDTHH:MM:SSZ) - `targetedChannelId` - `targetedNegativeKeywordListId` Examples: * All line items under an insertion order: `insertionOrderId=\"1234\"` * All `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED` and `LINE_ITEM_TYPE_DISPLAY_DEFAULT` line items under an advertiser: `(entityStatus=\"ENTITY_STATUS_ACTIVE\" OR entityStatus=\"ENTITY_STATUS_PAUSED\") AND lineItemType=\"LINE_ITEM_TYPE_DISPLAY_DEFAULT\"` * All line items whose flight dates end before March 28, 2019: `flight.dateRange.endDate\u003c\"2019-03-28\"` * All line items that have `NO_VALID_CREATIVE` in `warningMessages`: `warningMessages:\"NO_VALID_CREATIVE\"` * All line items with an update time less than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime\u003c=\"2020-11-04T18:54:47Z\"` * All line items with an update time greater than or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime\u003e=\"2020-11-04T18:54:47Z\"` * All line items that are using both the specified channel and specified negative keyword list in their targeting: `targetedNegativeKeywordListId=789 AND targetedChannelId=12345` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19749,6 +24015,11 @@ type AdvertisersLineItemsPatchCall struct {
 
 // Patch: Updates an existing line item. Returns the updated line item
 // if successful.
+//
+// - advertiserId: Output only. The unique ID of the advertiser the line
+//   item belongs to.
+// - lineItemId: Output only. The unique ID of the line item. Assigned
+//   by the system.
 func (r *AdvertisersLineItemsService) Patch(advertiserId int64, lineItemId int64, lineitem *LineItem) *AdvertisersLineItemsPatchCall {
 	c := &AdvertisersLineItemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19791,7 +24062,7 @@ func (c *AdvertisersLineItemsPatchCall) Header() http.Header {
 
 func (c *AdvertisersLineItemsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -19917,6 +24188,12 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall struct
 
 // Create: Assigns a targeting option to a line item. Returns the
 // assigned targeting option if successful.
+//
+// - advertiserId: The ID of the advertiser the line item belongs to.
+// - lineItemId: The ID of the line item the assigned targeting option
+//   will belong to.
+// - targetingType: Identifies the type of this assigned targeting
+//   option.
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, lineItemId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -19953,7 +24230,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) H
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20085,7 +24362,11 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -20125,7 +24406,11 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -20161,6 +24446,14 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall struct
 }
 
 // Delete: Deletes an assigned targeting option from a line item.
+//
+// - advertiserId: The ID of the advertiser the line item belongs to.
+// - assignedTargetingOptionId: The ID of the assigned targeting option
+//   to delete.
+// - lineItemId: The ID of the line item the assigned targeting option
+//   belongs to.
+// - targetingType: Identifies the type of this assigned targeting
+//   option.
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Delete(advertiserId int64, lineItemId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall {
 	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -20197,7 +24490,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) H
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20333,7 +24626,11 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -20373,7 +24670,11 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -20407,6 +24708,15 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall struct {
 }
 
 // Get: Gets a single targeting option assigned to a line item.
+//
+// - advertiserId: The ID of the advertiser the line item belongs to.
+// - assignedTargetingOptionId: An identifier unique to the targeting
+//   type in this line item that identifies the assigned targeting
+//   option being requested.
+// - lineItemId: The ID of the line item the assigned targeting option
+//   belongs to.
+// - targetingType: Identifies the type of this assigned targeting
+//   option.
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, lineItemId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -20453,7 +24763,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Head
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20592,7 +24902,11 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -20632,7 +24946,11 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall) Do(o
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -20665,6 +24983,12 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall struct {
 }
 
 // List: Lists the targeting options assigned to a line item.
+//
+// - advertiserId: The ID of the advertiser the line item belongs to.
+// - lineItemId: The ID of the line item to list assigned targeting
+//   options for.
+// - targetingType: Identifies the type of assigned targeting options to
+//   list.
 func (r *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, lineItemId int64, targetingType string) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -20701,7 +25025,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Ord
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `5000`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) PageSize(pageSize int64) *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall {
@@ -20756,7 +25080,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Hea
 
 func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -20859,7 +25183,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `5000`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -20909,7 +25233,11 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -20949,7 +25277,11 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall) Do(
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -21002,6 +25334,9 @@ type AdvertisersLocationListsCreateCall struct {
 
 // Create: Creates a new location list. Returns the newly created
 // location list if successful.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the location
+//   list belongs.
 func (r *AdvertisersLocationListsService) Create(advertiserId int64, locationlist *LocationList) *AdvertisersLocationListsCreateCall {
 	c := &AdvertisersLocationListsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21036,7 +25371,7 @@ func (c *AdvertisersLocationListsCreateCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21144,6 +25479,10 @@ type AdvertisersLocationListsGetCall struct {
 }
 
 // Get: Gets a location list.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the fetched
+//   location list belongs.
+// - locationListId: The ID of the location list to fetch.
 func (r *AdvertisersLocationListsService) Get(advertiserId int64, locationListId int64) *AdvertisersLocationListsGetCall {
 	c := &AdvertisersLocationListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21188,7 +25527,7 @@ func (c *AdvertisersLocationListsGetCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21300,6 +25639,9 @@ type AdvertisersLocationListsListCall struct {
 }
 
 // List: Lists location lists based on a given advertiser id.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the fetched
+//   location lists belong.
 func (r *AdvertisersLocationListsService) List(advertiserId int64) *AdvertisersLocationListsListCall {
 	c := &AdvertisersLocationListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21385,7 +25727,7 @@ func (c *AdvertisersLocationListsListCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21531,6 +25873,11 @@ type AdvertisersLocationListsPatchCall struct {
 
 // Patch: Updates a location list. Returns the updated location list if
 // successful.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the location
+//   lists belongs.
+// - locationListId: Output only. The unique ID of the location list.
+//   Assigned by the system.
 func (r *AdvertisersLocationListsService) Patch(advertiserId int64, locationListId int64, locationlist *LocationList) *AdvertisersLocationListsPatchCall {
 	c := &AdvertisersLocationListsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21573,7 +25920,7 @@ func (c *AdvertisersLocationListsPatchCall) Header() http.Header {
 
 func (c *AdvertisersLocationListsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21701,6 +26048,11 @@ type AdvertisersLocationListsAssignedLocationsBulkEditCall struct {
 // BulkEditAssignedLocationsRequest.deleted_assigned_locations and then
 // create the assigned locations provided in
 // BulkEditAssignedLocationsRequest.created_assigned_locations.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the location
+//   list belongs.
+// - locationListId: The ID of the location list to which these
+//   assignments are assigned.
 func (r *AdvertisersLocationListsAssignedLocationsService) BulkEdit(advertiserId int64, locationListId int64, bulkeditassignedlocationsrequest *BulkEditAssignedLocationsRequest) *AdvertisersLocationListsAssignedLocationsBulkEditCall {
 	c := &AdvertisersLocationListsAssignedLocationsBulkEditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21736,7 +26088,7 @@ func (c *AdvertisersLocationListsAssignedLocationsBulkEditCall) Header() http.He
 
 func (c *AdvertisersLocationListsAssignedLocationsBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -21854,6 +26206,11 @@ type AdvertisersLocationListsAssignedLocationsCreateCall struct {
 }
 
 // Create: Creates an assignment between a location and a location list.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the location
+//   list belongs.
+// - locationListId: The ID of the location list for which the
+//   assignment will be created.
 func (r *AdvertisersLocationListsAssignedLocationsService) Create(advertiserId int64, locationListId int64, assignedlocation *AssignedLocation) *AdvertisersLocationListsAssignedLocationsCreateCall {
 	c := &AdvertisersLocationListsAssignedLocationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21889,7 +26246,7 @@ func (c *AdvertisersLocationListsAssignedLocationsCreateCall) Header() http.Head
 
 func (c *AdvertisersLocationListsAssignedLocationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22006,6 +26363,12 @@ type AdvertisersLocationListsAssignedLocationsDeleteCall struct {
 
 // Delete: Deletes the assignment between a location and a location
 // list.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the location
+//   list belongs.
+// - assignedLocationId: The ID of the assigned location to delete.
+// - locationListId: The ID of the location list to which this
+//   assignment is assigned.
 func (r *AdvertisersLocationListsAssignedLocationsService) Delete(advertiserId int64, locationListId int64, assignedLocationId int64) *AdvertisersLocationListsAssignedLocationsDeleteCall {
 	c := &AdvertisersLocationListsAssignedLocationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22041,7 +26404,7 @@ func (c *AdvertisersLocationListsAssignedLocationsDeleteCall) Header() http.Head
 
 func (c *AdvertisersLocationListsAssignedLocationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22159,6 +26522,11 @@ type AdvertisersLocationListsAssignedLocationsListCall struct {
 }
 
 // List: Lists locations assigned to a location list.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the location
+//   list belongs.
+// - locationListId: The ID of the location list to which these
+//   assignments are assigned.
 func (r *AdvertisersLocationListsAssignedLocationsService) List(advertiserId int64, locationListId int64) *AdvertisersLocationListsAssignedLocationsListCall {
 	c := &AdvertisersLocationListsAssignedLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22244,7 +26612,7 @@ func (c *AdvertisersLocationListsAssignedLocationsListCall) Header() http.Header
 
 func (c *AdvertisersLocationListsAssignedLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22399,6 +26767,10 @@ type AdvertisersManualTriggersActivateCall struct {
 // Activate: Activates a manual trigger. Each activation of the manual
 // trigger must be at least 5 minutes apart, otherwise an error will be
 // returned.
+//
+// - advertiserId: The ID of the advertiser that the manual trigger
+//   belongs.
+// - triggerId: The ID of the manual trigger to activate.
 func (r *AdvertisersManualTriggersService) Activate(advertiserId int64, triggerId int64, activatemanualtriggerrequest *ActivateManualTriggerRequest) *AdvertisersManualTriggersActivateCall {
 	c := &AdvertisersManualTriggersActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22434,7 +26806,7 @@ func (c *AdvertisersManualTriggersActivateCall) Header() http.Header {
 
 func (c *AdvertisersManualTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22552,6 +26924,9 @@ type AdvertisersManualTriggersCreateCall struct {
 
 // Create: Creates a new manual trigger. Returns the newly created
 // manual trigger if successful.
+//
+// - advertiserId: Immutable. The unique ID of the advertiser that the
+//   manual trigger belongs to.
 func (r *AdvertisersManualTriggersService) Create(advertiserId int64, manualtrigger *ManualTrigger) *AdvertisersManualTriggersCreateCall {
 	c := &AdvertisersManualTriggersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22586,7 +26961,7 @@ func (c *AdvertisersManualTriggersCreateCall) Header() http.Header {
 
 func (c *AdvertisersManualTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22694,6 +27069,10 @@ type AdvertisersManualTriggersDeactivateCall struct {
 }
 
 // Deactivate: Deactivates a manual trigger.
+//
+// - advertiserId: The ID of the advertiser that the manual trigger
+//   belongs.
+// - triggerId: The ID of the manual trigger to deactivate.
 func (r *AdvertisersManualTriggersService) Deactivate(advertiserId int64, triggerId int64, deactivatemanualtriggerrequest *DeactivateManualTriggerRequest) *AdvertisersManualTriggersDeactivateCall {
 	c := &AdvertisersManualTriggersDeactivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22729,7 +27108,7 @@ func (c *AdvertisersManualTriggersDeactivateCall) Header() http.Header {
 
 func (c *AdvertisersManualTriggersDeactivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -22847,6 +27226,10 @@ type AdvertisersManualTriggersGetCall struct {
 }
 
 // Get: Gets a manual trigger.
+//
+// - advertiserId: The ID of the advertiser this manual trigger belongs
+//   to.
+// - triggerId: The ID of the manual trigger to fetch.
 func (r *AdvertisersManualTriggersService) Get(advertiserId int64, triggerId int64) *AdvertisersManualTriggersGetCall {
 	c := &AdvertisersManualTriggersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22891,7 +27274,7 @@ func (c *AdvertisersManualTriggersGetCall) Header() http.Header {
 
 func (c *AdvertisersManualTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23005,6 +27388,9 @@ type AdvertisersManualTriggersListCall struct {
 // List: Lists manual triggers that are accessible to the current user
 // for a given advertiser ID. The order is defined by the order_by
 // parameter. A single advertiser_id is required.
+//
+// - advertiserId: The ID of the advertiser that the fetched manual
+//   triggers belong to.
 func (r *AdvertisersManualTriggersService) List(advertiserId int64) *AdvertisersManualTriggersListCall {
 	c := &AdvertisersManualTriggersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -23089,7 +27475,7 @@ func (c *AdvertisersManualTriggersListCall) Header() http.Header {
 
 func (c *AdvertisersManualTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23235,6 +27621,10 @@ type AdvertisersManualTriggersPatchCall struct {
 
 // Patch: Updates a manual trigger. Returns the updated manual trigger
 // if successful.
+//
+// - advertiserId: Immutable. The unique ID of the advertiser that the
+//   manual trigger belongs to.
+// - triggerId: Output only. The unique ID of the manual trigger.
 func (r *AdvertisersManualTriggersService) Patch(advertiserId int64, triggerId int64, manualtrigger *ManualTrigger) *AdvertisersManualTriggersPatchCall {
 	c := &AdvertisersManualTriggersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -23277,7 +27667,7 @@ func (c *AdvertisersManualTriggersPatchCall) Header() http.Header {
 
 func (c *AdvertisersManualTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23401,6 +27791,9 @@ type AdvertisersNegativeKeywordListsCreateCall struct {
 
 // Create: Creates a new negative keyword list. Returns the newly
 // created negative keyword list if successful.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the negative
+//   keyword list will belong.
 func (r *AdvertisersNegativeKeywordListsService) Create(advertiserId int64, negativekeywordlist *NegativeKeywordList) *AdvertisersNegativeKeywordListsCreateCall {
 	c := &AdvertisersNegativeKeywordListsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -23435,7 +27828,7 @@ func (c *AdvertisersNegativeKeywordListsCreateCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23543,6 +27936,11 @@ type AdvertisersNegativeKeywordListsDeleteCall struct {
 
 // Delete: Deletes a negative keyword list given an advertiser ID and a
 // negative keyword list ID.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the negative
+//   keyword list belongs.
+// - negativeKeywordListId: The ID of the negative keyword list to
+//   delete.
 func (r *AdvertisersNegativeKeywordListsService) Delete(advertiserId int64, negativeKeywordListId int64) *AdvertisersNegativeKeywordListsDeleteCall {
 	c := &AdvertisersNegativeKeywordListsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -23577,7 +27975,7 @@ func (c *AdvertisersNegativeKeywordListsDeleteCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23688,6 +28086,11 @@ type AdvertisersNegativeKeywordListsGetCall struct {
 
 // Get: Gets a negative keyword list given an advertiser ID and a
 // negative keyword list ID.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the fetched
+//   negative keyword list belongs.
+// - negativeKeywordListId: The ID of the negative keyword list to
+//   fetch.
 func (r *AdvertisersNegativeKeywordListsService) Get(advertiserId int64, negativeKeywordListId int64) *AdvertisersNegativeKeywordListsGetCall {
 	c := &AdvertisersNegativeKeywordListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -23732,7 +28135,7 @@ func (c *AdvertisersNegativeKeywordListsGetCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -23844,6 +28247,9 @@ type AdvertisersNegativeKeywordListsListCall struct {
 }
 
 // List: Lists negative keyword lists based on a given advertiser id.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the fetched
+//   negative keyword lists belong.
 func (r *AdvertisersNegativeKeywordListsService) List(advertiserId int64) *AdvertisersNegativeKeywordListsListCall {
 	c := &AdvertisersNegativeKeywordListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -23905,7 +28311,7 @@ func (c *AdvertisersNegativeKeywordListsListCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24041,6 +28447,11 @@ type AdvertisersNegativeKeywordListsPatchCall struct {
 
 // Patch: Updates a negative keyword list. Returns the updated negative
 // keyword list if successful.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the negative
+//   keyword list belongs.
+// - negativeKeywordListId: Output only. The unique ID of the negative
+//   keyword list. Assigned by the system.
 func (r *AdvertisersNegativeKeywordListsService) Patch(advertiserId int64, negativeKeywordListId int64, negativekeywordlist *NegativeKeywordList) *AdvertisersNegativeKeywordListsPatchCall {
 	c := &AdvertisersNegativeKeywordListsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -24083,7 +28494,7 @@ func (c *AdvertisersNegativeKeywordListsPatchCall) Header() http.Header {
 
 func (c *AdvertisersNegativeKeywordListsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24212,6 +28623,11 @@ type AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall struct {
 // BulkEditNegativeKeywordsRequest.created_negative_keywords. This
 // operation is guaranteed to be atomic and will never result in a
 // partial success or partial failure.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the parent
+//   negative keyword list belongs.
+// - negativeKeywordListId: The ID of the parent negative keyword list
+//   to which the negative keywords belong.
 func (r *AdvertisersNegativeKeywordListsNegativeKeywordsService) BulkEdit(advertiserId int64, negativeKeywordListId int64, bulkeditnegativekeywordsrequest *BulkEditNegativeKeywordsRequest) *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall {
 	c := &AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -24247,7 +28663,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall) Header() h
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24364,6 +28780,11 @@ type AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall struct {
 }
 
 // Create: Creates a negative keyword in a negative keyword list.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the parent
+//   negative keyword list belongs.
+// - negativeKeywordListId: The ID of the parent negative keyword list
+//   in which the negative keyword will be created.
 func (r *AdvertisersNegativeKeywordListsNegativeKeywordsService) Create(advertiserId int64, negativeKeywordListId int64, negativekeyword *NegativeKeyword) *AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall {
 	c := &AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -24399,7 +28820,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall) Header() htt
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24516,6 +28937,12 @@ type AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall struct {
 }
 
 // Delete: Deletes a negative keyword from a negative keyword list.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the parent
+//   negative keyword list belongs.
+// - keywordValue: The keyword value of the negative keyword to delete.
+// - negativeKeywordListId: The ID of the parent negative keyword list
+//   to which the negative keyword belongs.
 func (r *AdvertisersNegativeKeywordListsNegativeKeywordsService) Delete(advertiserId int64, negativeKeywordListId int64, keywordValue string) *AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall {
 	c := &AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -24551,7 +28978,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall) Header() htt
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24669,6 +29096,11 @@ type AdvertisersNegativeKeywordListsNegativeKeywordsListCall struct {
 }
 
 // List: Lists negative keywords in a negative keyword list.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the parent
+//   negative keyword list belongs.
+// - negativeKeywordListId: The ID of the parent negative keyword list
+//   to which the requested negative keywords belong.
 func (r *AdvertisersNegativeKeywordListsNegativeKeywordsService) List(advertiserId int64, negativeKeywordListId int64) *AdvertisersNegativeKeywordListsNegativeKeywordsListCall {
 	c := &AdvertisersNegativeKeywordListsNegativeKeywordsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -24699,7 +29131,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) OrderBy(orderB
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `1000`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) PageSize(pageSize int64) *AdvertisersNegativeKeywordListsNegativeKeywordsListCall {
@@ -24754,7 +29186,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) Header() http.
 
 func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -24853,7 +29285,7 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `1000`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -24896,6 +29328,166 @@ func (c *AdvertisersNegativeKeywordListsNegativeKeywordsListCall) Pages(ctx cont
 	}
 }
 
+// method id "displayvideo.advertisers.negativeKeywordLists.negativeKeywords.replace":
+
+type AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall struct {
+	s                              *Service
+	advertiserId                   int64
+	negativeKeywordListId          int64
+	replacenegativekeywordsrequest *ReplaceNegativeKeywordsRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Replace: Replaces all negative keywords in a single negative keyword
+// list. The operation will replace the keywords in a negative keyword
+// list with keywords provided in
+// ReplaceNegativeKeywordsRequest.new_negative_keywords.
+//
+// - advertiserId: The ID of the DV360 advertiser to which the parent
+//   negative keyword list belongs.
+// - negativeKeywordListId: The ID of the parent negative keyword list
+//   to which the negative keywords belong.
+func (r *AdvertisersNegativeKeywordListsNegativeKeywordsService) Replace(advertiserId int64, negativeKeywordListId int64, replacenegativekeywordsrequest *ReplaceNegativeKeywordsRequest) *AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall {
+	c := &AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.negativeKeywordListId = negativeKeywordListId
+	c.replacenegativekeywordsrequest = replacenegativekeywordsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall) Fields(s ...googleapi.Field) *AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall) Context(ctx context.Context) *AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.replacenegativekeywordsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/advertisers/{advertiserId}/negativeKeywordLists/{+negativeKeywordListId}/negativeKeywords:replace")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId":          strconv.FormatInt(c.advertiserId, 10),
+		"negativeKeywordListId": strconv.FormatInt(c.negativeKeywordListId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.negativeKeywordLists.negativeKeywords.replace" call.
+// Exactly one of *ReplaceNegativeKeywordsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ReplaceNegativeKeywordsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AdvertisersNegativeKeywordListsNegativeKeywordsReplaceCall) Do(opts ...googleapi.CallOption) (*ReplaceNegativeKeywordsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ReplaceNegativeKeywordsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Replaces all negative keywords in a single negative keyword list. The operation will replace the keywords in a negative keyword list with keywords provided in ReplaceNegativeKeywordsRequest.new_negative_keywords.",
+	//   "flatPath": "v1/advertisers/{advertiserId}/negativeKeywordLists/{negativeKeywordListsId}/negativeKeywords:replace",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.advertisers.negativeKeywordLists.negativeKeywords.replace",
+	//   "parameterOrder": [
+	//     "advertiserId",
+	//     "negativeKeywordListId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserId": {
+	//       "description": "Required. The ID of the DV360 advertiser to which the parent negative keyword list belongs.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "negativeKeywordListId": {
+	//       "description": "Required. The ID of the parent negative keyword list to which the negative keywords belong.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/advertisers/{advertiserId}/negativeKeywordLists/{+negativeKeywordListId}/negativeKeywords:replace",
+	//   "request": {
+	//     "$ref": "ReplaceNegativeKeywordsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ReplaceNegativeKeywordsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
 // method id "displayvideo.advertisers.targetingTypes.assignedTargetingOptions.create":
 
 type AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall struct {
@@ -24910,6 +29502,13 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall struct {
 
 // Create: Assigns a targeting option to an advertiser. Returns the
 // assigned targeting option if successful.
+//
+// - advertiserId: The ID of the advertiser.
+// - targetingType: Identifies the type of this assigned targeting
+//   option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
+//   `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//   `TARGETING_TYPE_OMID` *
+//   `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -24945,7 +29544,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Header() h
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25028,7 +29627,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -25067,7 +29666,11 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -25107,7 +29710,11 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -25142,6 +29749,15 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall struct {
 }
 
 // Delete: Deletes an assigned targeting option from an advertiser.
+//
+// - advertiserId: The ID of the advertiser.
+// - assignedTargetingOptionId: The ID of the assigned targeting option
+//   to delete.
+// - targetingType: Identifies the type of this assigned targeting
+//   option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
+//   `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//   `TARGETING_TYPE_OMID` *
+//   `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Delete(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -25177,7 +29793,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Header() h
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25264,7 +29880,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -25303,7 +29919,11 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -25343,7 +29963,11 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -25376,6 +30000,16 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsGetCall struct {
 }
 
 // Get: Gets a single targeting option assigned to an advertiser.
+//
+// - advertiserId: The ID of the advertiser.
+// - assignedTargetingOptionId: An identifier unique to the targeting
+//   type in this advertiser that identifies the assigned targeting
+//   option being requested.
+// - targetingType: Identifies the type of this assigned targeting
+//   option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
+//   `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//   `TARGETING_TYPE_OMID` *
+//   `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -25421,7 +30055,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Header() http
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25511,7 +30145,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -25550,7 +30184,11 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -25590,7 +30228,11 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...go
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -25622,6 +30264,13 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsListCall struct {
 }
 
 // List: Lists the targeting options assigned to an advertiser.
+//
+// - advertiserId: The ID of the advertiser.
+// - targetingType: Identifies the type of assigned targeting options to
+//   list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
+//   `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//   `TARGETING_TYPE_OMID` *
+//   `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, targetingType string) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -25654,7 +30303,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) OrderBy(orde
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
+// Must be between `1` and `5000`. If unspecified will default to `100`.
 // Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) PageSize(pageSize int64) *AdvertisersTargetingTypesAssignedTargetingOptionsListCall {
@@ -25709,7 +30358,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Header() htt
 
 func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -25802,7 +30451,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `5000`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -25813,7 +30462,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+	//       "description": "Required. Identifies the type of assigned targeting options to list. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -25852,7 +30501,11 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -25892,7 +30545,11 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...g
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -25944,6 +30601,8 @@ type CombinedAudiencesGetCall struct {
 }
 
 // Get: Gets a combined audience.
+//
+// - combinedAudienceId: The ID of the combined audience to fetch.
 func (r *CombinedAudiencesService) Get(combinedAudienceId int64) *CombinedAudiencesGetCall {
 	c := &CombinedAudiencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.combinedAudienceId = combinedAudienceId
@@ -26001,7 +30660,7 @@ func (c *CombinedAudiencesGetCall) Header() http.Header {
 
 func (c *CombinedAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26213,7 +30872,7 @@ func (c *CombinedAudiencesListCall) Header() http.Header {
 
 func (c *CombinedAudiencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26356,6 +31015,9 @@ type CustomBiddingAlgorithmsGetCall struct {
 }
 
 // Get: Gets a custom bidding algorithm.
+//
+// - customBiddingAlgorithmId: The ID of the custom bidding algorithm to
+//   fetch.
 func (r *CustomBiddingAlgorithmsService) Get(customBiddingAlgorithmId int64) *CustomBiddingAlgorithmsGetCall {
 	c := &CustomBiddingAlgorithmsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customBiddingAlgorithmId = customBiddingAlgorithmId
@@ -26413,7 +31075,7 @@ func (c *CustomBiddingAlgorithmsGetCall) Header() http.Header {
 
 func (c *CustomBiddingAlgorithmsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26548,16 +31210,20 @@ func (c *CustomBiddingAlgorithmsListCall) AdvertiserId(advertiserId int64) *Cust
 // {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. *
 // The operator must be `CONTAINS (:)` for the following field: -
 // `displayName` * The operator must be `EQUALS (=)` for the following
-// field: - `customBiddingAlgorithmType` * For `displayName`, the value
-// is a string. We return all custom bidding algorithms whose
-// display_name contains such string. * For
+// field: - `customBiddingAlgorithmType` - `customBiddingAlgorithmState`
+// * For `displayName`, the value is a string. We return all custom
+// bidding algorithms whose display_name contains such string. * For
 // `customBiddingAlgorithmType`, the value is a string. We return all
 // algorithms whose custom_bidding_algorithm_type is equal to the given
-// type. Examples: * All custom bidding algorithms for which the display
-// name contains "politics": `displayName:politics`. * All custom
-// bidding algorithms for which the type is "SCRIPT_BASED":
-// `customBiddingAlgorithmType=SCRIPT_BASED` The length of this field
-// should be no more than 500 characters.
+// type. * For `customBiddingAlgorithmState`, the value is a string. We
+// return all algorithms whose custom_bidding_algorithm_state is equal
+// to the given type. Examples: * All custom bidding algorithms for
+// which the display name contains "politics": `displayName:politics`. *
+// All custom bidding algorithms for which the type is "SCRIPT_BASED":
+// `customBiddingAlgorithmType=SCRIPT_BASED` * All custom bidding
+// algorithms for which the state is "ENABLED":
+// `customBiddingAlgorithmState=ENABLED` The length of this field should
+// be no more than 500 characters.
 func (c *CustomBiddingAlgorithmsListCall) Filter(filter string) *CustomBiddingAlgorithmsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -26636,7 +31302,7 @@ func (c *CustomBiddingAlgorithmsListCall) Header() http.Header {
 
 func (c *CustomBiddingAlgorithmsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -26709,7 +31375,7 @@ func (c *CustomBiddingAlgorithmsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Allows filtering by custom bidding algorithm fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND`. A sequence of restrictions * implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. * The operator must be `CONTAINS (:)` for the following field: - `displayName` * The operator must be `EQUALS (=)` for the following field: - `customBiddingAlgorithmType` * For `displayName`, the value is a string. We return all custom bidding algorithms whose display_name contains such string. * For `customBiddingAlgorithmType`, the value is a string. We return all algorithms whose custom_bidding_algorithm_type is equal to the given type. Examples: * All custom bidding algorithms for which the display name contains \"politics\": `displayName:politics`. * All custom bidding algorithms for which the type is \"SCRIPT_BASED\": `customBiddingAlgorithmType=SCRIPT_BASED` The length of this field should be no more than 500 characters.",
+	//       "description": "Allows filtering by custom bidding algorithm fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND`. A sequence of restrictions * implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * The operator must be `CONTAINS (:)` or `EQUALS (=)`. * The operator must be `CONTAINS (:)` for the following field: - `displayName` * The operator must be `EQUALS (=)` for the following field: - `customBiddingAlgorithmType` - `customBiddingAlgorithmState` * For `displayName`, the value is a string. We return all custom bidding algorithms whose display_name contains such string. * For `customBiddingAlgorithmType`, the value is a string. We return all algorithms whose custom_bidding_algorithm_type is equal to the given type. * For `customBiddingAlgorithmState`, the value is a string. We return all algorithms whose custom_bidding_algorithm_state is equal to the given type. Examples: * All custom bidding algorithms for which the display name contains \"politics\": `displayName:politics`. * All custom bidding algorithms for which the type is \"SCRIPT_BASED\": `customBiddingAlgorithmType=SCRIPT_BASED` * All custom bidding algorithms for which the state is \"ENABLED\": `customBiddingAlgorithmState=ENABLED` The length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -26780,6 +31446,8 @@ type CustomListsGetCall struct {
 }
 
 // Get: Gets a custom list.
+//
+// - customListId: The ID of the custom list to fetch.
 func (r *CustomListsService) Get(customListId int64) *CustomListsGetCall {
 	c := &CustomListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customListId = customListId
@@ -26830,7 +31498,7 @@ func (c *CustomListsGetCall) Header() http.Header {
 
 func (c *CustomListsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27029,7 +31697,7 @@ func (c *CustomListsListCall) Header() http.Header {
 
 func (c *CustomListsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27166,6 +31834,9 @@ type FirstAndThirdPartyAudiencesGetCall struct {
 }
 
 // Get: Gets a first and third party audience.
+//
+// - firstAndThirdPartyAudienceId: The ID of the first and third party
+//   audience to fetch.
 func (r *FirstAndThirdPartyAudiencesService) Get(firstAndThirdPartyAudienceId int64) *FirstAndThirdPartyAudiencesGetCall {
 	c := &FirstAndThirdPartyAudiencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.firstAndThirdPartyAudienceId = firstAndThirdPartyAudienceId
@@ -27225,7 +31896,7 @@ func (c *FirstAndThirdPartyAudiencesGetCall) Header() http.Header {
 
 func (c *FirstAndThirdPartyAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27440,7 +32111,7 @@ func (c *FirstAndThirdPartyAudiencesListCall) Header() http.Header {
 
 func (c *FirstAndThirdPartyAudiencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27584,6 +32255,8 @@ type FloodlightGroupsGetCall struct {
 }
 
 // Get: Gets a Floodlight group.
+//
+// - floodlightGroupId: The ID of the Floodlight group to fetch.
 func (r *FloodlightGroupsService) Get(floodlightGroupId int64) *FloodlightGroupsGetCall {
 	c := &FloodlightGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.floodlightGroupId = floodlightGroupId
@@ -27634,7 +32307,7 @@ func (c *FloodlightGroupsGetCall) Header() http.Header {
 
 func (c *FloodlightGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27743,6 +32416,9 @@ type FloodlightGroupsPatchCall struct {
 
 // Patch: Updates an existing Floodlight group. Returns the updated
 // Floodlight group if successful.
+//
+// - floodlightGroupId: Output only. The unique ID of the Floodlight
+//   group. Assigned by the system.
 func (r *FloodlightGroupsService) Patch(floodlightGroupId int64, floodlightgroup *FloodlightGroup) *FloodlightGroupsPatchCall {
 	c := &FloodlightGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.floodlightGroupId = floodlightGroupId
@@ -27791,7 +32467,7 @@ func (c *FloodlightGroupsPatchCall) Header() http.Header {
 
 func (c *FloodlightGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -27909,6 +32585,8 @@ type GoogleAudiencesGetCall struct {
 }
 
 // Get: Gets a Google audience.
+//
+// - googleAudienceId: The ID of the Google audience to fetch.
 func (r *GoogleAudiencesService) Get(googleAudienceId int64) *GoogleAudiencesGetCall {
 	c := &GoogleAudiencesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googleAudienceId = googleAudienceId
@@ -27966,7 +32644,7 @@ func (c *GoogleAudiencesGetCall) Header() http.Header {
 
 func (c *GoogleAudiencesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28178,7 +32856,7 @@ func (c *GoogleAudiencesListCall) Header() http.Header {
 
 func (c *GoogleAudiencesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28371,7 +33049,7 @@ func (c *InventorySourceGroupsCreateCall) Header() http.Header {
 
 func (c *InventorySourceGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28476,6 +33154,9 @@ type InventorySourceGroupsDeleteCall struct {
 }
 
 // Delete: Deletes an inventory source group.
+//
+// - inventorySourceGroupId: The ID of the inventory source group to
+//   delete.
 func (r *InventorySourceGroupsService) Delete(inventorySourceGroupId int64) *InventorySourceGroupsDeleteCall {
 	c := &InventorySourceGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -28525,7 +33206,7 @@ func (c *InventorySourceGroupsDeleteCall) Header() http.Header {
 
 func (c *InventorySourceGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28636,6 +33317,9 @@ type InventorySourceGroupsGetCall struct {
 }
 
 // Get: Gets an inventory source group.
+//
+// - inventorySourceGroupId: The ID of the inventory source group to
+//   fetch.
 func (r *InventorySourceGroupsService) Get(inventorySourceGroupId int64) *InventorySourceGroupsGetCall {
 	c := &InventorySourceGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -28696,7 +33380,7 @@ func (c *InventorySourceGroupsGetCall) Header() http.Header {
 
 func (c *InventorySourceGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -28908,7 +33592,7 @@ func (c *InventorySourceGroupsListCall) Header() http.Header {
 
 func (c *InventorySourceGroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29053,6 +33737,9 @@ type InventorySourceGroupsPatchCall struct {
 
 // Patch: Updates an inventory source group. Returns the updated
 // inventory source group if successful.
+//
+// - inventorySourceGroupId: Output only. The unique ID of the inventory
+//   source group. Assigned by the system.
 func (r *InventorySourceGroupsService) Patch(inventorySourceGroupId int64, inventorysourcegroup *InventorySourceGroup) *InventorySourceGroupsPatchCall {
 	c := &InventorySourceGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -29110,7 +33797,7 @@ func (c *InventorySourceGroupsPatchCall) Header() http.Header {
 
 func (c *InventorySourceGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29240,6 +33927,9 @@ type InventorySourceGroupsAssignedInventorySourcesBulkEditCall struct {
 // rces and then create the assigned inventory sources provided in
 // BulkEditAssignedInventorySourcesRequest.created_assigned_inventory_sou
 // rces.
+//
+// - inventorySourceGroupId: The ID of the inventory source group to
+//   which the assignments are assigned.
 func (r *InventorySourceGroupsAssignedInventorySourcesService) BulkEdit(inventorySourceGroupId int64, bulkeditassignedinventorysourcesrequest *BulkEditAssignedInventorySourcesRequest) *InventorySourceGroupsAssignedInventorySourcesBulkEditCall {
 	c := &InventorySourceGroupsAssignedInventorySourcesBulkEditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -29274,7 +33964,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesBulkEditCall) Header() htt
 
 func (c *InventorySourceGroupsAssignedInventorySourcesBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29384,6 +34074,9 @@ type InventorySourceGroupsAssignedInventorySourcesCreateCall struct {
 
 // Create: Creates an assignment between an inventory source and an
 // inventory source group.
+//
+// - inventorySourceGroupId: The ID of the inventory source group to
+//   which the assignment will be assigned.
 func (r *InventorySourceGroupsAssignedInventorySourcesService) Create(inventorySourceGroupId int64, assignedinventorysource *AssignedInventorySource) *InventorySourceGroupsAssignedInventorySourcesCreateCall {
 	c := &InventorySourceGroupsAssignedInventorySourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -29435,7 +34128,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) Header() http.
 
 func (c *InventorySourceGroupsAssignedInventorySourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29555,6 +34248,11 @@ type InventorySourceGroupsAssignedInventorySourcesDeleteCall struct {
 
 // Delete: Deletes the assignment between an inventory source and an
 // inventory source group.
+//
+// - assignedInventorySourceId: The ID of the assigned inventory source
+//   to delete.
+// - inventorySourceGroupId: The ID of the inventory source group to
+//   which this assignment is assigned.
 func (r *InventorySourceGroupsAssignedInventorySourcesService) Delete(inventorySourceGroupId int64, assignedInventorySourceId int64) *InventorySourceGroupsAssignedInventorySourcesDeleteCall {
 	c := &InventorySourceGroupsAssignedInventorySourcesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -29606,7 +34304,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) Header() http.
 
 func (c *InventorySourceGroupsAssignedInventorySourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29727,6 +34425,9 @@ type InventorySourceGroupsAssignedInventorySourcesListCall struct {
 }
 
 // List: Lists inventory sources assigned to an inventory source group.
+//
+// - inventorySourceGroupId: The ID of the inventory source group to
+//   which these assignments are assigned.
 func (r *InventorySourceGroupsAssignedInventorySourcesService) List(inventorySourceGroupId int64) *InventorySourceGroupsAssignedInventorySourcesListCall {
 	c := &InventorySourceGroupsAssignedInventorySourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceGroupId = inventorySourceGroupId
@@ -29830,7 +34531,7 @@ func (c *InventorySourceGroupsAssignedInventorySourcesListCall) Header() http.He
 
 func (c *InventorySourceGroupsAssignedInventorySourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -29987,6 +34688,8 @@ type InventorySourcesGetCall struct {
 }
 
 // Get: Gets an inventory source.
+//
+// - inventorySourceId: The ID of the inventory source to fetch.
 func (r *InventorySourcesService) Get(inventorySourceId int64) *InventorySourcesGetCall {
 	c := &InventorySourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.inventorySourceId = inventorySourceId
@@ -30038,7 +34741,7 @@ func (c *InventorySourcesGetCall) Header() http.Header {
 
 func (c *InventorySourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30250,7 +34953,7 @@ func (c *InventorySourcesListCall) Header() http.Header {
 
 func (c *InventorySourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30395,6 +35098,9 @@ type MediaDownloadCall struct {
 // Download: Downloads media. Download is supported on the URI
 // `/download/{resource_name=**}?alt=media.` **Note**: Download requests
 // will not be successful without including `alt=media` query string.
+//
+// - resourceName: Name of the media that is being downloaded. See
+//   ReadRequest.resource_name.
 func (r *MediaService) Download(resourceName string) *MediaDownloadCall {
 	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -30438,7 +35144,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30562,6 +35268,8 @@ type PartnersBulkEditPartnerAssignedTargetingOptionsCall struct {
 // BulkEditPartnerAssignedTargetingOptionsRequest.deleteRequests and
 // then create the assigned targeting options provided in
 // BulkEditPartnerAssignedTargetingOptionsRequest.createRequests .
+//
+// - partnerId: The ID of the partner.
 func (r *PartnersService) BulkEditPartnerAssignedTargetingOptions(partnerId int64, bulkeditpartnerassignedtargetingoptionsrequest *BulkEditPartnerAssignedTargetingOptionsRequest) *PartnersBulkEditPartnerAssignedTargetingOptionsCall {
 	c := &PartnersBulkEditPartnerAssignedTargetingOptionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -30596,7 +35304,7 @@ func (c *PartnersBulkEditPartnerAssignedTargetingOptionsCall) Header() http.Head
 
 func (c *PartnersBulkEditPartnerAssignedTargetingOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30705,6 +35413,8 @@ type PartnersGetCall struct {
 }
 
 // Get: Gets a partner.
+//
+// - partnerId: The ID of the partner to fetch.
 func (r *PartnersService) Get(partnerId int64) *PartnersGetCall {
 	c := &PartnersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -30748,7 +35458,7 @@ func (c *PartnersGetCall) Header() http.Header {
 
 func (c *PartnersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -30933,7 +35643,7 @@ func (c *PartnersListCall) Header() http.Header {
 
 func (c *PartnersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31065,6 +35775,8 @@ type PartnersChannelsCreateCall struct {
 
 // Create: Creates a new channel. Returns the newly created channel if
 // successful.
+//
+// - partnerId: The ID of the partner that owns the created channel.
 func (r *PartnersChannelsService) Create(partnerId int64, channel *Channel) *PartnersChannelsCreateCall {
 	c := &PartnersChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -31106,7 +35818,7 @@ func (c *PartnersChannelsCreateCall) Header() http.Header {
 
 func (c *PartnersChannelsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31220,6 +35932,9 @@ type PartnersChannelsGetCall struct {
 }
 
 // Get: Gets a channel for a partner or advertiser.
+//
+// - channelId: The ID of the channel to fetch.
+// - partnerId: The ID of the partner that owns the fetched channel.
 func (r *PartnersChannelsService) Get(partnerId int64, channelId int64) *PartnersChannelsGetCall {
 	c := &PartnersChannelsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -31271,7 +35986,7 @@ func (c *PartnersChannelsGetCall) Header() http.Header {
 
 func (c *PartnersChannelsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31389,6 +36104,8 @@ type PartnersChannelsListCall struct {
 }
 
 // List: Lists channels for a partner or advertiser.
+//
+// - partnerId: The ID of the partner that owns the channels.
 func (r *PartnersChannelsService) List(partnerId int64) *PartnersChannelsListCall {
 	c := &PartnersChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -31481,7 +36198,7 @@ func (c *PartnersChannelsListCall) Header() http.Header {
 
 func (c *PartnersChannelsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31632,6 +36349,10 @@ type PartnersChannelsPatchCall struct {
 }
 
 // Patch: Updates a channel. Returns the updated channel if successful.
+//
+// - channelId: Output only. The unique ID of the channel. Assigned by
+//   the system.
+// - partnerId: The ID of the partner that owns the created channel.
 func (r *PartnersChannelsService) Patch(partnerId int64, channelId int64, channel *Channel) *PartnersChannelsPatchCall {
 	c := &PartnersChannelsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -31681,7 +36402,7 @@ func (c *PartnersChannelsPatchCall) Header() http.Header {
 
 func (c *PartnersChannelsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31812,6 +36533,9 @@ type PartnersChannelsSitesBulkEditCall struct {
 // BulkEdit: Bulk edits sites under a single channel. The operation will
 // delete the sites provided in BulkEditSitesRequest.deleted_sites and
 // then create the sites provided in BulkEditSitesRequest.created_sites.
+//
+// - channelId: The ID of the parent channel to which the sites belong.
+// - partnerId: The ID of the partner that owns the parent channel.
 func (r *PartnersChannelsSitesService) BulkEdit(partnerId int64, channelId int64, bulkeditsitesrequest *BulkEditSitesRequest) *PartnersChannelsSitesBulkEditCall {
 	c := &PartnersChannelsSitesBulkEditCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -31847,7 +36571,7 @@ func (c *PartnersChannelsSitesBulkEditCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesBulkEditCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -31964,6 +36688,10 @@ type PartnersChannelsSitesCreateCall struct {
 }
 
 // Create: Creates a site in a channel.
+//
+// - channelId: The ID of the parent channel in which the site will be
+//   created.
+// - partnerId: The ID of the partner that owns the parent channel.
 func (r *PartnersChannelsSitesService) Create(partnerId int64, channelId int64, site *Site) *PartnersChannelsSitesCreateCall {
 	c := &PartnersChannelsSitesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -32006,7 +36734,7 @@ func (c *PartnersChannelsSitesCreateCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32129,6 +36857,10 @@ type PartnersChannelsSitesDeleteCall struct {
 }
 
 // Delete: Deletes a site from a channel.
+//
+// - channelId: The ID of the parent channel to which the site belongs.
+// - partnerId: The ID of the partner that owns the parent channel.
+// - urlOrAppId: The URL or app ID of the site to delete.
 func (r *PartnersChannelsSitesService) Delete(partnerId int64, channelId int64, urlOrAppId string) *PartnersChannelsSitesDeleteCall {
 	c := &PartnersChannelsSitesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -32171,7 +36903,7 @@ func (c *PartnersChannelsSitesDeleteCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32295,6 +37027,10 @@ type PartnersChannelsSitesListCall struct {
 }
 
 // List: Lists sites in a channel.
+//
+// - channelId: The ID of the parent channel to which the requested
+//   sites belong.
+// - partnerId: The ID of the partner that owns the parent channel.
 func (r *PartnersChannelsSitesService) List(partnerId int64, channelId int64) *PartnersChannelsSitesListCall {
 	c := &PartnersChannelsSitesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -32331,8 +37067,8 @@ func (c *PartnersChannelsSitesListCall) OrderBy(orderBy string) *PartnersChannel
 }
 
 // PageSize sets the optional parameter "pageSize": Requested page size.
-// Must be between `1` and `100`. If unspecified will default to `100`.
-// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// Must be between `1` and `10000`. If unspecified will default to
+// `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
 // specified.
 func (c *PartnersChannelsSitesListCall) PageSize(pageSize int64) *PartnersChannelsSitesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -32386,7 +37122,7 @@ func (c *PartnersChannelsSitesListCall) Header() http.Header {
 
 func (c *PartnersChannelsSitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32483,7 +37219,7 @@ func (c *PartnersChannelsSitesListCall) Do(opts ...googleapi.CallOption) (*ListS
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "description": "Requested page size. Must be between `1` and `10000`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -32534,6 +37270,164 @@ func (c *PartnersChannelsSitesListCall) Pages(ctx context.Context, f func(*ListS
 	}
 }
 
+// method id "displayvideo.partners.channels.sites.replace":
+
+type PartnersChannelsSitesReplaceCall struct {
+	s                   *Service
+	partnerId           int64
+	channelId           int64
+	replacesitesrequest *ReplaceSitesRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Replace: Replaces all of the sites under a single channel. The
+// operation will replace the sites under a channel with the sites
+// provided in ReplaceSitesRequest.new_sites.
+//
+// - channelId: The ID of the parent channel whose sites will be
+//   replaced.
+// - partnerId: The ID of the partner that owns the parent channel.
+func (r *PartnersChannelsSitesService) Replace(partnerId int64, channelId int64, replacesitesrequest *ReplaceSitesRequest) *PartnersChannelsSitesReplaceCall {
+	c := &PartnersChannelsSitesReplaceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.partnerId = partnerId
+	c.channelId = channelId
+	c.replacesitesrequest = replacesitesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PartnersChannelsSitesReplaceCall) Fields(s ...googleapi.Field) *PartnersChannelsSitesReplaceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PartnersChannelsSitesReplaceCall) Context(ctx context.Context) *PartnersChannelsSitesReplaceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PartnersChannelsSitesReplaceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PartnersChannelsSitesReplaceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.replacesitesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/partners/{partnerId}/channels/{+channelId}/sites:replace")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"partnerId": strconv.FormatInt(c.partnerId, 10),
+		"channelId": strconv.FormatInt(c.channelId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.partners.channels.sites.replace" call.
+// Exactly one of *ReplaceSitesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ReplaceSitesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PartnersChannelsSitesReplaceCall) Do(opts ...googleapi.CallOption) (*ReplaceSitesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ReplaceSitesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Replaces all of the sites under a single channel. The operation will replace the sites under a channel with the sites provided in ReplaceSitesRequest.new_sites.",
+	//   "flatPath": "v1/partners/{partnerId}/channels/{channelsId}/sites:replace",
+	//   "httpMethod": "POST",
+	//   "id": "displayvideo.partners.channels.sites.replace",
+	//   "parameterOrder": [
+	//     "partnerId",
+	//     "channelId"
+	//   ],
+	//   "parameters": {
+	//     "channelId": {
+	//       "description": "Required. The ID of the parent channel whose sites will be replaced.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "The ID of the partner that owns the parent channel.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/partners/{partnerId}/channels/{+channelId}/sites:replace",
+	//   "request": {
+	//     "$ref": "ReplaceSitesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ReplaceSitesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
 // method id "displayvideo.partners.targetingTypes.assignedTargetingOptions.create":
 
 type PartnersTargetingTypesAssignedTargetingOptionsCreateCall struct {
@@ -32548,6 +37442,10 @@ type PartnersTargetingTypesAssignedTargetingOptionsCreateCall struct {
 
 // Create: Assigns a targeting option to a partner. Returns the assigned
 // targeting option if successful.
+//
+// - partnerId: The ID of the partner.
+// - targetingType: Identifies the type of this assigned targeting
+//   option. Supported targeting types: * `TARGETING_TYPE_CHANNEL`.
 func (r *PartnersTargetingTypesAssignedTargetingOptionsService) Create(partnerId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *PartnersTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &PartnersTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -32583,7 +37481,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Header() http
 
 func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32705,7 +37603,11 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...go
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -32745,7 +37647,11 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ...go
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -32780,6 +37686,12 @@ type PartnersTargetingTypesAssignedTargetingOptionsDeleteCall struct {
 }
 
 // Delete: Deletes an assigned targeting option from a partner.
+//
+// - assignedTargetingOptionId: The ID of the assigned targeting option
+//   to delete.
+// - partnerId: The ID of the partner.
+// - targetingType: Identifies the type of this assigned targeting
+//   option. Supported targeting types: * `TARGETING_TYPE_CHANNEL`.
 func (r *PartnersTargetingTypesAssignedTargetingOptionsService) Delete(partnerId int64, targetingType string, assignedTargetingOptionId string) *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall {
 	c := &PartnersTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -32815,7 +37727,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Header() http
 
 func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -32941,7 +37853,11 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...go
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -32981,7 +37897,11 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ...go
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -33014,6 +37934,13 @@ type PartnersTargetingTypesAssignedTargetingOptionsGetCall struct {
 }
 
 // Get: Gets a single targeting option assigned to a partner.
+//
+// - assignedTargetingOptionId: An identifier unique to the targeting
+//   type in this partner that identifies the assigned targeting option
+//   being requested.
+// - partnerId: The ID of the partner.
+// - targetingType: Identifies the type of this assigned targeting
+//   option. Supported targeting types: * `TARGETING_TYPE_CHANNEL`.
 func (r *PartnersTargetingTypesAssignedTargetingOptionsService) Get(partnerId int64, targetingType string, assignedTargetingOptionId string) *PartnersTargetingTypesAssignedTargetingOptionsGetCall {
 	c := &PartnersTargetingTypesAssignedTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -33059,7 +37986,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Header() http.He
 
 func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33188,7 +38115,11 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googl
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -33228,7 +38159,11 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsGetCall) Do(opts ...googl
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -33260,6 +38195,10 @@ type PartnersTargetingTypesAssignedTargetingOptionsListCall struct {
 }
 
 // List: Lists the targeting options assigned to a partner.
+//
+// - partnerId: The ID of the partner.
+// - targetingType: Identifies the type of assigned targeting options to
+//   list. Supported targeting types: * `TARGETING_TYPE_CHANNEL`.
 func (r *PartnersTargetingTypesAssignedTargetingOptionsService) List(partnerId int64, targetingType string) *PartnersTargetingTypesAssignedTargetingOptionsListCall {
 	c := &PartnersTargetingTypesAssignedTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.partnerId = partnerId
@@ -33347,7 +38286,7 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Header() http.H
 
 func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33490,7 +38429,11 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -33530,7 +38473,11 @@ func (c *PartnersTargetingTypesAssignedTargetingOptionsListCall) Do(opts ...goog
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -33622,7 +38569,7 @@ func (c *SdfdownloadtasksCreateCall) Header() http.Header {
 
 func (c *SdfdownloadtasksCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33717,6 +38664,8 @@ type SdfdownloadtasksOperationsGetCall struct {
 // Get: Gets the latest state of an asynchronous SDF download task
 // operation. Clients should poll this method at intervals of 30
 // seconds.
+//
+// - name: The name of the operation resource.
 func (r *SdfdownloadtasksOperationsService) Get(name string) *SdfdownloadtasksOperationsGetCall {
 	c := &SdfdownloadtasksOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -33760,7 +38709,7 @@ func (c *SdfdownloadtasksOperationsGetCall) Header() http.Header {
 
 func (c *SdfdownloadtasksOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -33863,6 +38812,29 @@ type TargetingTypesTargetingOptionsGetCall struct {
 }
 
 // Get: Gets a single targeting option.
+//
+// - targetingOptionId: The ID of the of targeting option to retrieve.
+// - targetingType: The type of targeting option to retrieve. Accepted
+//   values are: * `TARGETING_TYPE_APP_CATEGORY` *
+//   `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_GENDER` *
+//   `TARGETING_TYPE_VIDEO_PLAYER_SIZE` *
+//   `TARGETING_TYPE_USER_REWARDED_CONTENT` *
+//   `TARGETING_TYPE_PARENTAL_STATUS` *
+//   `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+//   `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+//   `TARGETING_TYPE_DEVICE_TYPE` * `TARGETING_TYPE_BROWSER` *
+//   `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//   `TARGETING_TYPE_ON_SCREEN_POSITION` *
+//   `TARGETING_TYPE_CARRIER_AND_ISP` *
+//   `TARGETING_TYPE_OPERATING_SYSTEM` *
+//   `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_ENVIRONMENT` *
+//   `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_VIEWABILITY` *
+//   `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` *
+//   `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_GEO_REGION` *
+//   `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//   `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//   `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_SUB_EXCHANGE` *
+//   `TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `TARGETING_TYPE_OMID`.
 func (r *TargetingTypesTargetingOptionsService) Get(targetingType string, targetingOptionId string) *TargetingTypesTargetingOptionsGetCall {
 	c := &TargetingTypesTargetingOptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.targetingType = targetingType
@@ -33914,7 +38886,7 @@ func (c *TargetingTypesTargetingOptionsGetCall) Header() http.Header {
 
 func (c *TargetingTypesTargetingOptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34000,7 +38972,7 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. The type of targeting option to retrieve.",
+	//       "description": "Required. The type of targeting option to retrieve. Accepted values are: * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `TARGETING_TYPE_DEVICE_TYPE` * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_VIEWABILITY` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `TARGETING_TYPE_OMID`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -34039,7 +39011,11 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -34079,7 +39055,11 @@ func (c *TargetingTypesTargetingOptionsGetCall) Do(opts ...googleapi.CallOption)
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -34110,6 +39090,28 @@ type TargetingTypesTargetingOptionsListCall struct {
 }
 
 // List: Lists targeting options of a given type.
+//
+// - targetingType: The type of targeting option to be listed. Accepted
+//   values are: * `TARGETING_TYPE_APP_CATEGORY` *
+//   `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_GENDER` *
+//   `TARGETING_TYPE_VIDEO_PLAYER_SIZE` *
+//   `TARGETING_TYPE_USER_REWARDED_CONTENT` *
+//   `TARGETING_TYPE_PARENTAL_STATUS` *
+//   `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
+//   `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` *
+//   `TARGETING_TYPE_DEVICE_TYPE` * `TARGETING_TYPE_BROWSER` *
+//   `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//   `TARGETING_TYPE_ON_SCREEN_POSITION` *
+//   `TARGETING_TYPE_CARRIER_AND_ISP` *
+//   `TARGETING_TYPE_OPERATING_SYSTEM` *
+//   `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_ENVIRONMENT` *
+//   `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_VIEWABILITY` *
+//   `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` *
+//   `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_GEO_REGION` *
+//   `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
+//   `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//   `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_SUB_EXCHANGE` *
+//   `TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `TARGETING_TYPE_OMID`.
 func (r *TargetingTypesTargetingOptionsService) List(targetingType string) *TargetingTypesTargetingOptionsListCall {
 	c := &TargetingTypesTargetingOptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.targetingType = targetingType
@@ -34209,7 +39211,7 @@ func (c *TargetingTypesTargetingOptionsListCall) Header() http.Header {
 
 func (c *TargetingTypesTargetingOptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34307,7 +39309,7 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. The type of targeting option to be listed.",
+	//       "description": "Required. The type of targeting option to be listed. Accepted values are: * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `TARGETING_TYPE_DEVICE_TYPE` * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_OPERATING_SYSTEM` * `TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_VIEWABILITY` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_SUB_EXCHANGE` * `TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `TARGETING_TYPE_OMID`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -34346,7 +39348,11 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -34386,7 +39392,11 @@ func (c *TargetingTypesTargetingOptionsListCall) Do(opts ...googleapi.CallOption
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -34439,6 +39449,10 @@ type TargetingTypesTargetingOptionsSearchCall struct {
 
 // Search: Searches for targeting options of a given type based on the
 // given search terms.
+//
+// - targetingType: The type of targeting options to retrieve. Accepted
+//   values are: * `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_POI` *
+//   `TARGETING_TYPE_BUSINESS_CHAIN`.
 func (r *TargetingTypesTargetingOptionsService) Search(targetingType string, searchtargetingoptionsrequest *SearchTargetingOptionsRequest) *TargetingTypesTargetingOptionsSearchCall {
 	c := &TargetingTypesTargetingOptionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.targetingType = targetingType
@@ -34473,7 +39487,7 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Header() http.Header {
 
 func (c *TargetingTypesTargetingOptionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34546,7 +39560,7 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "targetingType": {
-	//       "description": "Required. The type of targeting options to retrieve. Accepted values are: * `TARGETING_TYPE_GEO_REGION`",
+	//       "description": "Required. The type of targeting options to retrieve. Accepted values are: * `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_POI` * `TARGETING_TYPE_BUSINESS_CHAIN`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -34585,7 +39599,11 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Do(opts ...googleapi.CallOpti
 	//         "TARGETING_TYPE_GEO_REGION",
 	//         "TARGETING_TYPE_INVENTORY_SOURCE_GROUP",
 	//         "TARGETING_TYPE_EXCHANGE",
-	//         "TARGETING_TYPE_SUB_EXCHANGE"
+	//         "TARGETING_TYPE_SUB_EXCHANGE",
+	//         "TARGETING_TYPE_POI",
+	//         "TARGETING_TYPE_BUSINESS_CHAIN",
+	//         "TARGETING_TYPE_NATIVE_CONTENT_POSITION",
+	//         "TARGETING_TYPE_OMID"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Default value when type is not specified or is unknown in this version.",
@@ -34625,7 +39643,11 @@ func (c *TargetingTypesTargetingOptionsSearchCall) Do(opts ...googleapi.CallOpti
 	//         "Target ads to a specific regional location (for example, a city or state).",
 	//         "Purchase impressions from a group of deals and auction packages.",
 	//         "Purchase impressions from specific exchanges.",
-	//         "Purchase impressions from specific sub-exchanges."
+	//         "Purchase impressions from specific sub-exchanges.",
+	//         "Target ads around a specific point of interest, such as a notable building, a street address, or latitude/longitude coordinates.",
+	//         "Target ads around locations of a business chain within a specific geo region.",
+	//         "Target ads to a specific native content position.",
+	//         "Target ads in an Open Measurement enabled inventory."
 	//       ],
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
@@ -34684,6 +39706,8 @@ type UsersBulkEditAssignedUserRolesCall struct {
 // BulkEditAssignedUserRolesRequest.deletedAssignedUserRoles and then
 // assign the user roles provided in
 // BulkEditAssignedUserRolesRequest.createdAssignedUserRoles.
+//
+// - userId: The ID of the user to which the assigned user roles belong.
 func (r *UsersService) BulkEditAssignedUserRoles(userId int64, bulkeditassigneduserrolesrequest *BulkEditAssignedUserRolesRequest) *UsersBulkEditAssignedUserRolesCall {
 	c := &UsersBulkEditAssignedUserRolesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -34718,7 +39742,7 @@ func (c *UsersBulkEditAssignedUserRolesCall) Header() http.Header {
 
 func (c *UsersBulkEditAssignedUserRolesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34859,7 +39883,7 @@ func (c *UsersCreateCall) Header() http.Header {
 
 func (c *UsersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -34951,6 +39975,8 @@ type UsersDeleteCall struct {
 }
 
 // Delete: Deletes a user.
+//
+// - userId: The ID of the user to delete.
 func (r *UsersService) Delete(userId int64) *UsersDeleteCall {
 	c := &UsersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -34984,7 +40010,7 @@ func (c *UsersDeleteCall) Header() http.Header {
 
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35083,6 +40109,8 @@ type UsersGetCall struct {
 }
 
 // Get: Gets a user.
+//
+// - userId: The ID of the user to fetch.
 func (r *UsersService) Get(userId int64) *UsersGetCall {
 	c := &UsersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -35126,7 +40154,7 @@ func (c *UsersGetCall) Header() http.Header {
 
 func (c *UsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35328,7 +40356,7 @@ func (c *UsersListCall) Header() http.Header {
 
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -35460,6 +40488,9 @@ type UsersPatchCall struct {
 
 // Patch: Updates an existing user. Returns the updated user if
 // successful.
+//
+// - userId: Output only. The unique ID of the user. Assigned by the
+//   system.
 func (r *UsersService) Patch(userId int64, user *User) *UsersPatchCall {
 	c := &UsersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -35501,7 +40532,7 @@ func (c *UsersPatchCall) Header() http.Header {
 
 func (c *UsersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

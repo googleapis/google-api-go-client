@@ -79,7 +79,8 @@ const mtlsBasePath = "https://clouderrorreporting.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -216,10 +217,10 @@ type ErrorContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "HttpRequest") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "HttpRequest") to include
@@ -257,10 +258,10 @@ type ErrorEvent struct {
 
 	// ForceSendFields is a list of field names (e.g. "Context") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Context") to include in
@@ -293,7 +294,8 @@ type ErrorGroup struct {
 	// resolution status will be interpreted as OPEN
 	//
 	// Possible values:
-	//   "RESOLUTION_STATUS_UNSPECIFIED" - Status is unknown.
+	//   "RESOLUTION_STATUS_UNSPECIFIED" - Status is unknown. When left
+	// unspecified in requests, it is treated like OPEN.
 	//   "OPEN" - The error group is not being addressed. This is the
 	// default for new groups. It is also used for errors re-occurring after
 	// marked RESOLVED.
@@ -314,10 +316,10 @@ type ErrorGroup struct {
 
 	// ForceSendFields is a list of field names (e.g. "GroupId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GroupId") to include in
@@ -393,10 +395,10 @@ type ErrorGroupStats struct {
 
 	// ForceSendFields is a list of field names (e.g. "AffectedServices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AffectedServices") to
@@ -443,10 +445,10 @@ type HttpRequestContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "Method") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Method") to include in API
@@ -484,10 +486,10 @@ type ListEventsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ErrorEvents") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ErrorEvents") to include
@@ -528,10 +530,10 @@ type ListGroupStatsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "ErrorGroupStats") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ErrorGroupStats") to
@@ -566,8 +568,11 @@ type ReportedErrorEvent struct {
 	Context *ErrorContext `json:"context,omitempty"`
 
 	// EventTime: Optional. Time when the event occurred. If not provided,
-	// the time when the event was received by the Error Reporting system
-	// will be used.
+	// the time when the event was received by the Error Reporting system is
+	// used. If provided, the time must not exceed the logs retention period
+	// (https://cloud.google.com/logging/quotas#logs_retention_periods) in
+	// the past, or be more than 24 hours in the future. If an invalid time
+	// is provided, then an error is returned.
 	EventTime string `json:"eventTime,omitempty"`
 
 	// Message: Required. The error message. If no `context.reportLocation`
@@ -599,10 +604,10 @@ type ReportedErrorEvent struct {
 
 	// ForceSendFields is a list of field names (e.g. "Context") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Context") to include in
@@ -646,10 +651,10 @@ type ServiceContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "ResourceType") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ResourceType") to include
@@ -687,10 +692,10 @@ type SourceLocation struct {
 
 	// ForceSendFields is a list of field names (e.g. "FilePath") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FilePath") to include in
@@ -721,10 +726,10 @@ type SourceReference struct {
 
 	// ForceSendFields is a list of field names (e.g. "Repository") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Repository") to include in
@@ -758,10 +763,10 @@ type TimedCount struct {
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Count") to include in API
@@ -788,10 +793,10 @@ type TrackingIssue struct {
 
 	// ForceSendFields is a list of field names (e.g. "Url") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Url") to include in API
@@ -820,6 +825,12 @@ type ProjectsDeleteEventsCall struct {
 }
 
 // DeleteEvents: Deletes all error events of a given project.
+//
+// - projectName: The resource name of the Google Cloud Platform
+//   project. Written as `projects/{projectID}`, where `{projectID}` is
+//   the Google Cloud Platform project ID
+//   (https://support.google.com/cloud/answer/6158840). Example:
+//   `projects/my-project-123`.
 func (r *ProjectsService) DeleteEvents(projectName string) *ProjectsDeleteEventsCall {
 	c := &ProjectsDeleteEventsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -853,7 +864,7 @@ func (c *ProjectsDeleteEventsCall) Header() http.Header {
 
 func (c *ProjectsDeleteEventsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -951,6 +962,12 @@ type ProjectsEventsListCall struct {
 }
 
 // List: Lists the specified events.
+//
+// - projectName: The resource name of the Google Cloud Platform
+//   project. Written as `projects/{projectID}`, where `{projectID}` is
+//   the Google Cloud Platform project ID
+//   (https://support.google.com/cloud/answer/6158840). Example:
+//   `projects/my-project-123`.
 func (r *ProjectsEventsService) List(projectName string) *ProjectsEventsListCall {
 	c := &ProjectsEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -1065,7 +1082,7 @@ func (c *ProjectsEventsListCall) Header() http.Header {
 
 func (c *ProjectsEventsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1238,12 +1255,24 @@ type ProjectsEventsReportCall struct {
 	header_            http.Header
 }
 
-// Report: Report an individual error event. This endpoint accepts
-// **either** an OAuth token, **or** an API key
-// (https://support.google.com/cloud/answer/6158862) for authentication.
-// To use an API key, append it to the URL as the value of a `key`
-// parameter. For example: `POST
+// Report: Report an individual error event and record the event to a
+// log. This endpoint accepts **either** an OAuth token, **or** an API
+// key (https://support.google.com/cloud/answer/6158862) for
+// authentication. To use an API key, append it to the URL as the value
+// of a `key` parameter. For example: `POST
 // https://clouderrorreporting.googleapis.com/v1beta1/{projectName}/events:report?key=123ABC456`
+// **Note:** [Error Reporting]
+// (https://cloud.google.com/error-reporting) is a global service built
+// on Cloud Logging and doesn't analyze logs stored in regional log
+// buckets or logs routed to other Google Cloud projects. For more
+// information, see [Using Error Reporting with regionalized logs]
+// (https://cloud.google.com/error-reporting/docs/regionalization).
+//
+// - projectName: The resource name of the Google Cloud Platform
+//   project. Written as `projects/{projectId}`, where `{projectId}` is
+//   the Google Cloud Platform project ID
+//   (https://support.google.com/cloud/answer/6158840). Example: //
+//   `projects/my-project-123`.
 func (r *ProjectsEventsService) Report(projectName string, reportederrorevent *ReportedErrorEvent) *ProjectsEventsReportCall {
 	c := &ProjectsEventsReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -1278,7 +1307,7 @@ func (c *ProjectsEventsReportCall) Header() http.Header {
 
 func (c *ProjectsEventsReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1342,7 +1371,7 @@ func (c *ProjectsEventsReportCall) Do(opts ...googleapi.CallOption) (*ReportErro
 	}
 	return ret, nil
 	// {
-	//   "description": "Report an individual error event. This endpoint accepts **either** an OAuth token, **or** an [API key](https://support.google.com/cloud/answer/6158862) for authentication. To use an API key, append it to the URL as the value of a `key` parameter. For example: `POST https://clouderrorreporting.googleapis.com/v1beta1/{projectName}/events:report?key=123ABC456`",
+	//   "description": "Report an individual error event and record the event to a log. This endpoint accepts **either** an OAuth token, **or** an [API key](https://support.google.com/cloud/answer/6158862) for authentication. To use an API key, append it to the URL as the value of a `key` parameter. For example: `POST https://clouderrorreporting.googleapis.com/v1beta1/{projectName}/events:report?key=123ABC456` **Note:** [Error Reporting] (https://cloud.google.com/error-reporting) is a global service built on Cloud Logging and doesn't analyze logs stored in regional log buckets or logs routed to other Google Cloud projects. For more information, see [Using Error Reporting with regionalized logs] (https://cloud.google.com/error-reporting/docs/regionalization).",
 	//   "flatPath": "v1beta1/projects/{projectsId}/events:report",
 	//   "httpMethod": "POST",
 	//   "id": "clouderrorreporting.projects.events.report",
@@ -1384,6 +1413,13 @@ type ProjectsGroupStatsListCall struct {
 }
 
 // List: Lists the specified groups.
+//
+// - projectName: The resource name of the Google Cloud Platform
+//   project. Written as `projects/{projectID}` or
+//   `projects/{projectNumber}`, where `{projectID}` and
+//   `{projectNumber}` can be found in the Google Cloud Console
+//   (https://support.google.com/cloud/answer/6158840). Examples:
+//   `projects/my-project-123`, `projects/5551234`.
 func (r *ProjectsGroupStatsService) List(projectName string) *ProjectsGroupStatsListCall {
 	c := &ProjectsGroupStatsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -1555,7 +1591,7 @@ func (c *ProjectsGroupStatsListCall) Header() http.Header {
 
 func (c *ProjectsGroupStatsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1683,7 +1719,7 @@ func (c *ProjectsGroupStatsListCall) Do(opts ...googleapi.CallOption) (*ListGrou
 	//       "type": "string"
 	//     },
 	//     "projectName": {
-	//       "description": "Required. The resource name of the Google Cloud Platform project. Written as `projects/{projectID}`, where `{projectID}` is the [Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840). Example: `projects/my-project-123`.",
+	//       "description": "Required. The resource name of the Google Cloud Platform project. Written as `projects/{projectID}` or `projects/{projectNumber}`, where `{projectID}` and `{projectNumber}` can be found in the [Google Cloud Console](https://support.google.com/cloud/answer/6158840). Examples: `projects/my-project-123`, `projects/5551234`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -1776,6 +1812,12 @@ type ProjectsGroupsGetCall struct {
 }
 
 // Get: Get the specified group.
+//
+// - groupName: The group resource name. Written as
+//   `projects/{projectID}/groups/{group_name}`. Call `groupStats.list`
+//   (https://cloud.google.com/error-reporting/reference/rest/v1beta1/projects.groupStats/list)
+//   to return a list of groups belonging to this project. Example:
+//   `projects/my-project-123/groups/my-group`.
 func (r *ProjectsGroupsService) Get(groupName string) *ProjectsGroupsGetCall {
 	c := &ProjectsGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.groupName = groupName
@@ -1819,7 +1861,7 @@ func (c *ProjectsGroupsGetCall) Header() http.Header {
 
 func (c *ProjectsGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1921,6 +1963,9 @@ type ProjectsGroupsUpdateCall struct {
 
 // Update: Replace the data for the specified group. Fails if the group
 // does not exist.
+//
+// - name: The group resource name. Example:
+//   projects/my-project-123/groups/CNSgkpnppqKCUw.
 func (r *ProjectsGroupsService) Update(name string, errorgroup *ErrorGroup) *ProjectsGroupsUpdateCall {
 	c := &ProjectsGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1955,7 +2000,7 @@ func (c *ProjectsGroupsUpdateCall) Header() http.Header {
 
 func (c *ProjectsGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

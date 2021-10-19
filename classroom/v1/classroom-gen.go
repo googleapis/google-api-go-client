@@ -89,13 +89,15 @@ const (
 	// View announcements in Google Classroom
 	ClassroomAnnouncementsReadonlyScope = "https://www.googleapis.com/auth/classroom.announcements.readonly"
 
-	// Manage your Google Classroom classes
+	// See, edit, create, and permanently delete your Google Classroom
+	// classes
 	ClassroomCoursesScope = "https://www.googleapis.com/auth/classroom.courses"
 
 	// View your Google Classroom classes
 	ClassroomCoursesReadonlyScope = "https://www.googleapis.com/auth/classroom.courses.readonly"
 
-	// Manage your course work and view your grades in Google Classroom
+	// See, create and edit coursework items including assignments,
+	// questions, and grades
 	ClassroomCourseworkMeScope = "https://www.googleapis.com/auth/classroom.coursework.me"
 
 	// View your course work and grades in Google Classroom
@@ -472,10 +474,10 @@ type Announcement struct {
 
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AlternateLink") to include
@@ -502,10 +504,10 @@ type Assignment struct {
 
 	// ForceSendFields is a list of field names (e.g. "StudentWorkFolder")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "StudentWorkFolder") to
@@ -537,10 +539,10 @@ type AssignmentSubmission struct {
 
 	// ForceSendFields is a list of field names (e.g. "Attachments") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Attachments") to include
@@ -575,10 +577,10 @@ type Attachment struct {
 
 	// ForceSendFields is a list of field names (e.g. "DriveFile") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DriveFile") to include in
@@ -607,10 +609,10 @@ type CloudPubsubTopic struct {
 
 	// ForceSendFields is a list of field names (e.g. "TopicName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TopicName") to include in
@@ -749,10 +751,10 @@ type Course struct {
 
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AlternateLink") to include
@@ -796,10 +798,10 @@ type CourseAlias struct {
 
 	// ForceSendFields is a list of field names (e.g. "Alias") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Alias") to include in API
@@ -834,10 +836,10 @@ type CourseMaterial struct {
 
 	// ForceSendFields is a list of field names (e.g. "DriveFile") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DriveFile") to include in
@@ -868,10 +870,10 @@ type CourseMaterialSet struct {
 
 	// ForceSendFields is a list of field names (e.g. "Materials") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Materials") to include in
@@ -898,10 +900,10 @@ type CourseRosterChangesInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "CourseId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CourseId") to include in
@@ -1057,10 +1059,10 @@ type CourseWork struct {
 
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AlternateLink") to include
@@ -1101,10 +1103,10 @@ type CourseWorkChangesInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "CourseId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CourseId") to include in
@@ -1211,10 +1213,10 @@ type CourseWorkMaterial struct {
 
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AlternateLink") to include
@@ -1257,10 +1259,10 @@ type Date struct {
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Day") to include in API
@@ -1295,10 +1297,10 @@ type DriveFile struct {
 
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AlternateLink") to include
@@ -1330,10 +1332,10 @@ type DriveFolder struct {
 
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AlternateLink") to include
@@ -1401,11 +1403,11 @@ type Feed struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "CourseRosterChangesInfo") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CourseRosterChangesInfo")
@@ -1442,10 +1444,10 @@ type Form struct {
 
 	// ForceSendFields is a list of field names (e.g. "FormUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FormUrl") to include in
@@ -1475,10 +1477,10 @@ type GlobalPermission struct {
 
 	// ForceSendFields is a list of field names (e.g. "Permission") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Permission") to include in
@@ -1527,10 +1529,10 @@ type GradeHistory struct {
 
 	// ForceSendFields is a list of field names (e.g. "ActorUserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ActorUserId") to include
@@ -1589,10 +1591,10 @@ type Guardian struct {
 
 	// ForceSendFields is a list of field names (e.g. "GuardianId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GuardianId") to include in
@@ -1641,10 +1643,10 @@ type GuardianInvitation struct {
 
 	// ForceSendFields is a list of field names (e.g. "CreationTime") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CreationTime") to include
@@ -1672,10 +1674,10 @@ type IndividualStudentsOptions struct {
 
 	// ForceSendFields is a list of field names (e.g. "StudentIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "StudentIds") to include in
@@ -1723,10 +1725,10 @@ type Invitation struct {
 
 	// ForceSendFields is a list of field names (e.g. "CourseId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CourseId") to include in
@@ -1758,10 +1760,10 @@ type Link struct {
 
 	// ForceSendFields is a list of field names (e.g. "ThumbnailUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ThumbnailUrl") to include
@@ -1794,10 +1796,10 @@ type ListAnnouncementsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Announcements") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Announcements") to include
@@ -1830,10 +1832,10 @@ type ListCourseAliasesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Aliases") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Aliases") to include in
@@ -1868,10 +1870,10 @@ type ListCourseWorkMaterialResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CourseWorkMaterial")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CourseWorkMaterial") to
@@ -1905,10 +1907,10 @@ type ListCourseWorkResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "CourseWork") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CourseWork") to include in
@@ -1941,10 +1943,10 @@ type ListCoursesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Courses") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Courses") to include in
@@ -1979,10 +1981,10 @@ type ListGuardianInvitationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "GuardianInvitations")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GuardianInvitations") to
@@ -2017,10 +2019,10 @@ type ListGuardiansResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Guardians") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Guardians") to include in
@@ -2053,10 +2055,10 @@ type ListInvitationsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Invitations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Invitations") to include
@@ -2090,10 +2092,10 @@ type ListStudentSubmissionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -2126,10 +2128,10 @@ type ListStudentsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -2162,10 +2164,10 @@ type ListTeachersResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -2198,10 +2200,10 @@ type ListTopicResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -2237,10 +2239,10 @@ type Material struct {
 
 	// ForceSendFields is a list of field names (e.g. "DriveFile") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DriveFile") to include in
@@ -2279,10 +2281,10 @@ type ModifyAnnouncementAssigneesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AssigneeMode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssigneeMode") to include
@@ -2309,10 +2311,10 @@ type ModifyAttachmentsRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AddAttachments") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AddAttachments") to
@@ -2352,10 +2354,10 @@ type ModifyCourseWorkAssigneesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AssigneeMode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AssigneeMode") to include
@@ -2387,10 +2389,10 @@ type ModifyIndividualStudentsOptions struct {
 
 	// ForceSendFields is a list of field names (e.g. "AddStudentIds") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AddStudentIds") to include
@@ -2416,10 +2418,10 @@ type MultipleChoiceQuestion struct {
 
 	// ForceSendFields is a list of field names (e.g. "Choices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Choices") to include in
@@ -2445,10 +2447,10 @@ type MultipleChoiceSubmission struct {
 
 	// ForceSendFields is a list of field names (e.g. "Answer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Answer") to include in API
@@ -2480,10 +2482,10 @@ type Name struct {
 
 	// ForceSendFields is a list of field names (e.g. "FamilyName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FamilyName") to include in
@@ -2531,10 +2533,10 @@ type Registration struct {
 
 	// ForceSendFields is a list of field names (e.g. "CloudPubsubTopic") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CloudPubsubTopic") to
@@ -2575,10 +2577,10 @@ type SharedDriveFile struct {
 
 	// ForceSendFields is a list of field names (e.g. "DriveFile") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DriveFile") to include in
@@ -2603,10 +2605,10 @@ type ShortAnswerSubmission struct {
 
 	// ForceSendFields is a list of field names (e.g. "Answer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Answer") to include in API
@@ -2652,10 +2654,10 @@ type StateHistory struct {
 
 	// ForceSendFields is a list of field names (e.g. "ActorUserId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ActorUserId") to include
@@ -2698,10 +2700,10 @@ type Student struct {
 
 	// ForceSendFields is a list of field names (e.g. "CourseId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CourseId") to include in
@@ -2818,10 +2820,10 @@ type StudentSubmission struct {
 
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AlternateLink") to include
@@ -2868,10 +2870,10 @@ type SubmissionHistory struct {
 
 	// ForceSendFields is a list of field names (e.g. "GradeHistory") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "GradeHistory") to include
@@ -2909,10 +2911,10 @@ type Teacher struct {
 
 	// ForceSendFields is a list of field names (e.g. "CourseId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CourseId") to include in
@@ -2953,10 +2955,10 @@ type TimeOfDay struct {
 
 	// ForceSendFields is a list of field names (e.g. "Hours") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Hours") to include in API
@@ -2999,10 +3001,10 @@ type Topic struct {
 
 	// ForceSendFields is a list of field names (e.g. "CourseId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CourseId") to include in
@@ -3054,10 +3056,10 @@ type UserProfile struct {
 
 	// ForceSendFields is a list of field names (e.g. "EmailAddress") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EmailAddress") to include
@@ -3093,10 +3095,10 @@ type YouTubeVideo struct {
 
 	// ForceSendFields is a list of field names (e.g. "AlternateLink") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AlternateLink") to include
@@ -3166,7 +3168,7 @@ func (c *CoursesCreateCall) Header() http.Header {
 
 func (c *CoursesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3261,6 +3263,9 @@ type CoursesDeleteCall struct {
 // codes: * `PERMISSION_DENIED` if the requesting user is not permitted
 // to delete the requested course or for access errors. * `NOT_FOUND` if
 // no course exists with the requested ID.
+//
+// - id: Identifier of the course to delete. This identifier can be
+//   either the Classroom-assigned identifier or an alias.
 func (r *CoursesService) Delete(id string) *CoursesDeleteCall {
 	c := &CoursesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -3294,7 +3299,7 @@ func (c *CoursesDeleteCall) Header() http.Header {
 
 func (c *CoursesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3394,6 +3399,9 @@ type CoursesGetCall struct {
 // * `PERMISSION_DENIED` if the requesting user is not permitted to
 // access the requested course or for access errors. * `NOT_FOUND` if no
 // course exists with the requested ID.
+//
+// - id: Identifier of the course to return. This identifier can be
+//   either the Classroom-assigned identifier or an alias.
 func (r *CoursesService) Get(id string) *CoursesGetCall {
 	c := &CoursesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -3437,7 +3445,7 @@ func (c *CoursesGetCall) Header() http.Header {
 
 func (c *CoursesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3652,7 +3660,7 @@ func (c *CoursesListCall) Header() http.Header {
 
 func (c *CoursesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3812,6 +3820,9 @@ type CoursesPatchCall struct {
 // `INVALID_ARGUMENT` if invalid fields are specified in the update mask
 // or if no update mask is supplied. * `FAILED_PRECONDITION` for the
 // following request errors: * CourseNotModifiable
+//
+// - id: Identifier of the course to update. This identifier can be
+//   either the Classroom-assigned identifier or an alias.
 func (r *CoursesService) Patch(id string, course *Course) *CoursesPatchCall {
 	c := &CoursesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -3860,7 +3871,7 @@ func (c *CoursesPatchCall) Header() http.Header {
 
 func (c *CoursesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3975,6 +3986,9 @@ type CoursesUpdateCall struct {
 // to modify the requested course or for access errors. * `NOT_FOUND` if
 // no course exists with the requested ID. * `FAILED_PRECONDITION` for
 // the following request errors: * CourseNotModifiable
+//
+// - id: Identifier of the course to update. This identifier can be
+//   either the Classroom-assigned identifier or an alias.
 func (r *CoursesService) Update(id string, course *Course) *CoursesUpdateCall {
 	c := &CoursesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -4009,7 +4023,7 @@ func (c *CoursesUpdateCall) Header() http.Header {
 
 func (c *CoursesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4120,6 +4134,9 @@ type CoursesAliasesCreateCall struct {
 // alias already exists. * `FAILED_PRECONDITION` if the alias requested
 // does not make sense for the requesting user or course (for example,
 // if a user not in a domain attempts to access a domain-scoped alias).
+//
+// - courseId: Identifier of the course to alias. This identifier can be
+//   either the Classroom-assigned identifier or an alias.
 func (r *CoursesAliasesService) Create(courseId string, coursealias *CourseAlias) *CoursesAliasesCreateCall {
 	c := &CoursesAliasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4154,7 +4171,7 @@ func (c *CoursesAliasesCreateCall) Header() http.Header {
 
 func (c *CoursesAliasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4265,6 +4282,12 @@ type CoursesAliasesDeleteCall struct {
 // the alias requested does not make sense for the requesting user or
 // course (for example, if a user not in a domain attempts to delete a
 // domain-scoped alias).
+//
+// - alias: Alias to delete. This may not be the Classroom-assigned
+//   identifier.
+// - courseId: Identifier of the course whose alias should be deleted.
+//   This identifier can be either the Classroom-assigned identifier or
+//   an alias.
 func (r *CoursesAliasesService) Delete(courseId string, aliasid string) *CoursesAliasesDeleteCall {
 	c := &CoursesAliasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4299,7 +4322,7 @@ func (c *CoursesAliasesDeleteCall) Header() http.Header {
 
 func (c *CoursesAliasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4407,6 +4430,9 @@ type CoursesAliasesListCall struct {
 // following error codes: * `PERMISSION_DENIED` if the requesting user
 // is not permitted to access the course or for access errors. *
 // `NOT_FOUND` if the course does not exist.
+//
+// - courseId: The identifier of the course. This identifier can be
+//   either the Classroom-assigned identifier or an alias.
 func (r *CoursesAliasesService) List(courseId string) *CoursesAliasesListCall {
 	c := &CoursesAliasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4468,7 +4494,7 @@ func (c *CoursesAliasesListCall) Header() http.Header {
 
 func (c *CoursesAliasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4607,6 +4633,9 @@ type CoursesAnnouncementsCreateCall struct {
 // `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
 // requested course does not exist. * `FAILED_PRECONDITION` for the
 // following request error: * AttachmentNotVisible
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesAnnouncementsService) Create(courseId string, announcement *Announcement) *CoursesAnnouncementsCreateCall {
 	c := &CoursesAnnouncementsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4641,7 +4670,7 @@ func (c *CoursesAnnouncementsCreateCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4755,6 +4784,11 @@ type CoursesAnnouncementsDeleteCall struct {
 // for access errors. * `FAILED_PRECONDITION` if the requested
 // announcement has already been deleted. * `NOT_FOUND` if no course
 // exists with the requested ID.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - id: Identifier of the announcement to delete. This identifier is a
+//   Classroom-assigned identifier.
 func (r *CoursesAnnouncementsService) Delete(courseId string, id string) *CoursesAnnouncementsDeleteCall {
 	c := &CoursesAnnouncementsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4789,7 +4823,7 @@ func (c *CoursesAnnouncementsDeleteCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4899,6 +4933,10 @@ type CoursesAnnouncementsGetCall struct {
 // to access the requested course or announcement, or for access errors.
 // * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
 // the requested course or announcement does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - id: Identifier of the announcement.
 func (r *CoursesAnnouncementsService) Get(courseId string, id string) *CoursesAnnouncementsGetCall {
 	c := &CoursesAnnouncementsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -4943,7 +4981,7 @@ func (c *CoursesAnnouncementsGetCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5058,6 +5096,9 @@ type CoursesAnnouncementsListCall struct {
 // if the requesting user is not permitted to access the requested
 // course or for access errors. * `INVALID_ARGUMENT` if the request is
 // malformed. * `NOT_FOUND` if the requested course does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesAnnouncementsService) List(courseId string) *CoursesAnnouncementsListCall {
 	c := &CoursesAnnouncementsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5151,7 +5192,7 @@ func (c *CoursesAnnouncementsListCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5314,6 +5355,10 @@ type CoursesAnnouncementsModifyAssigneesCall struct {
 // permitted to access the requested course or course work or for access
 // errors. * `INVALID_ARGUMENT` if the request is malformed. *
 // `NOT_FOUND` if the requested course or course work does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - id: Identifier of the announcement.
 func (r *CoursesAnnouncementsService) ModifyAssignees(courseId string, id string, modifyannouncementassigneesrequest *ModifyAnnouncementAssigneesRequest) *CoursesAnnouncementsModifyAssigneesCall {
 	c := &CoursesAnnouncementsModifyAssigneesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5349,7 +5394,7 @@ func (c *CoursesAnnouncementsModifyAssigneesCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsModifyAssigneesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5469,6 +5514,10 @@ type CoursesAnnouncementsPatchCall struct {
 // request is malformed. * `FAILED_PRECONDITION` if the requested
 // announcement has already been deleted. * `NOT_FOUND` if the requested
 // course or announcement does not exist
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - id: Identifier of the announcement.
 func (r *CoursesAnnouncementsService) Patch(courseId string, id string, announcement *Announcement) *CoursesAnnouncementsPatchCall {
 	c := &CoursesAnnouncementsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5518,7 +5567,7 @@ func (c *CoursesAnnouncementsPatchCall) Header() http.Header {
 
 func (c *CoursesAnnouncementsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5649,6 +5698,9 @@ type CoursesCourseWorkCreateCall struct {
 // `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
 // requested course does not exist. * `FAILED_PRECONDITION` for the
 // following request error: * AttachmentNotVisible
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkService) Create(courseId string, coursework *CourseWork) *CoursesCourseWorkCreateCall {
 	c := &CoursesCourseWorkCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5683,7 +5735,7 @@ func (c *CoursesCourseWorkCreateCall) Header() http.Header {
 
 func (c *CoursesCourseWorkCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5797,6 +5849,11 @@ type CoursesCourseWorkDeleteCall struct {
 // for access errors. * `FAILED_PRECONDITION` if the requested course
 // work has already been deleted. * `NOT_FOUND` if no course exists with
 // the requested ID.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - id: Identifier of the course work to delete. This identifier is a
+//   Classroom-assigned identifier.
 func (r *CoursesCourseWorkService) Delete(courseId string, id string) *CoursesCourseWorkDeleteCall {
 	c := &CoursesCourseWorkDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5831,7 +5888,7 @@ func (c *CoursesCourseWorkDeleteCall) Header() http.Header {
 
 func (c *CoursesCourseWorkDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5941,6 +5998,10 @@ type CoursesCourseWorkGetCall struct {
 // to access the requested course or course work, or for access errors.
 // * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
 // the requested course or course work does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - id: Identifier of the course work.
 func (r *CoursesCourseWorkService) Get(courseId string, id string) *CoursesCourseWorkGetCall {
 	c := &CoursesCourseWorkGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -5985,7 +6046,7 @@ func (c *CoursesCourseWorkGetCall) Header() http.Header {
 
 func (c *CoursesCourseWorkGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6102,6 +6163,9 @@ type CoursesCourseWorkListCall struct {
 // if the requesting user is not permitted to access the requested
 // course or for access errors. * `INVALID_ARGUMENT` if the request is
 // malformed. * `NOT_FOUND` if the requested course does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkService) List(courseId string) *CoursesCourseWorkListCall {
 	c := &CoursesCourseWorkListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -6194,7 +6258,7 @@ func (c *CoursesCourseWorkListCall) Header() http.Header {
 
 func (c *CoursesCourseWorkListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6359,6 +6423,10 @@ type CoursesCourseWorkModifyAssigneesCall struct {
 // the requested course or course work or for access errors. *
 // `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
 // requested course or course work does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - id: Identifier of the coursework.
 func (r *CoursesCourseWorkService) ModifyAssignees(courseId string, id string, modifycourseworkassigneesrequest *ModifyCourseWorkAssigneesRequest) *CoursesCourseWorkModifyAssigneesCall {
 	c := &CoursesCourseWorkModifyAssigneesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -6394,7 +6462,7 @@ func (c *CoursesCourseWorkModifyAssigneesCall) Header() http.Header {
 
 func (c *CoursesCourseWorkModifyAssigneesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6520,6 +6588,10 @@ type CoursesCourseWorkPatchCall struct {
 // is malformed. * `FAILED_PRECONDITION` if the requested course work
 // has already been deleted. * `NOT_FOUND` if the requested course,
 // course work, or student submission does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - id: Identifier of the course work.
 func (r *CoursesCourseWorkService) Patch(courseId string, id string, coursework *CourseWork) *CoursesCourseWorkPatchCall {
 	c := &CoursesCourseWorkPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -6571,7 +6643,7 @@ func (c *CoursesCourseWorkPatchCall) Header() http.Header {
 
 func (c *CoursesCourseWorkPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6696,6 +6768,11 @@ type CoursesCourseWorkStudentSubmissionsGetCall struct {
 // course work, or student submission or for access errors. *
 // `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
 // requested course, course work, or student submission does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - courseWorkId: Identifier of the course work.
+// - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Get(courseId string, courseWorkId string, id string) *CoursesCourseWorkStudentSubmissionsGetCall {
 	c := &CoursesCourseWorkStudentSubmissionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -6741,7 +6818,7 @@ func (c *CoursesCourseWorkStudentSubmissionsGetCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6872,6 +6949,12 @@ type CoursesCourseWorkStudentSubmissionsListCall struct {
 // to access the requested course or course work, or for access errors.
 // * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if
 // the requested course does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - courseWorkId: Identifier of the student work to request. This may
+//   be set to the string literal "-" to request student work for all
+//   course work in the specified course.
 func (r *CoursesCourseWorkStudentSubmissionsService) List(courseId string, courseWorkId string) *CoursesCourseWorkStudentSubmissionsListCall {
 	c := &CoursesCourseWorkStudentSubmissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -6978,7 +7061,7 @@ func (c *CoursesCourseWorkStudentSubmissionsListCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7178,6 +7261,11 @@ type CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall struct {
 // submission, or for access errors. * `INVALID_ARGUMENT` if the request
 // is malformed. * `NOT_FOUND` if the requested course, course work, or
 // student submission does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - courseWorkId: Identifier of the course work.
+// - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) ModifyAttachments(courseId string, courseWorkId string, id string, modifyattachmentsrequest *ModifyAttachmentsRequest) *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall {
 	c := &CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -7214,7 +7302,7 @@ func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) Header() http
 
 func (c *CoursesCourseWorkStudentSubmissionsModifyAttachmentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7349,6 +7437,11 @@ type CoursesCourseWorkStudentSubmissionsPatchCall struct {
 // submission, or for access errors. * `INVALID_ARGUMENT` if the request
 // is malformed. * `NOT_FOUND` if the requested course, course work, or
 // student submission does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - courseWorkId: Identifier of the course work.
+// - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Patch(courseId string, courseWorkId string, id string, studentsubmission *StudentSubmission) *CoursesCourseWorkStudentSubmissionsPatchCall {
 	c := &CoursesCourseWorkStudentSubmissionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -7395,7 +7488,7 @@ func (c *CoursesCourseWorkStudentSubmissionsPatchCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7539,6 +7632,11 @@ type CoursesCourseWorkStudentSubmissionsReclaimCall struct {
 // been turned in. * `INVALID_ARGUMENT` if the request is malformed. *
 // `NOT_FOUND` if the requested course, course work, or student
 // submission does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - courseWorkId: Identifier of the course work.
+// - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Reclaim(courseId string, courseWorkId string, id string, reclaimstudentsubmissionrequest *ReclaimStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsReclaimCall {
 	c := &CoursesCourseWorkStudentSubmissionsReclaimCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -7575,7 +7673,7 @@ func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7711,6 +7809,11 @@ type CoursesCourseWorkStudentSubmissionsReturnCall struct {
 // requested student submission, or for access errors. *
 // `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
 // requested course, course work, or student submission does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - courseWorkId: Identifier of the course work.
+// - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) Return(courseId string, courseWorkId string, id string, returnstudentsubmissionrequest *ReturnStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsReturnCall {
 	c := &CoursesCourseWorkStudentSubmissionsReturnCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -7747,7 +7850,7 @@ func (c *CoursesCourseWorkStudentSubmissionsReturnCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsReturnCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7881,6 +7984,11 @@ type CoursesCourseWorkStudentSubmissionsTurnInCall struct {
 // requested student submission, or for access errors. *
 // `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
 // requested course, course work, or student submission does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - courseWorkId: Identifier of the course work.
+// - id: Identifier of the student submission.
 func (r *CoursesCourseWorkStudentSubmissionsService) TurnIn(courseId string, courseWorkId string, id string, turninstudentsubmissionrequest *TurnInStudentSubmissionRequest) *CoursesCourseWorkStudentSubmissionsTurnInCall {
 	c := &CoursesCourseWorkStudentSubmissionsTurnInCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -7917,7 +8025,7 @@ func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) Header() http.Header {
 
 func (c *CoursesCourseWorkStudentSubmissionsTurnInCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8045,6 +8153,9 @@ type CoursesCourseWorkMaterialsCreateCall struct {
 // more than 20 * materials are provided. * `NOT_FOUND` if the requested
 // course does not exist. * `FAILED_PRECONDITION` for the following
 // request error: * AttachmentNotVisible
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkMaterialsService) Create(courseId string, courseworkmaterial *CourseWorkMaterial) *CoursesCourseWorkMaterialsCreateCall {
 	c := &CoursesCourseWorkMaterialsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8079,7 +8190,7 @@ func (c *CoursesCourseWorkMaterialsCreateCall) Header() http.Header {
 
 func (c *CoursesCourseWorkMaterialsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8193,6 +8304,11 @@ type CoursesCourseWorkMaterialsDeleteCall struct {
 // requested course or for access errors. * `FAILED_PRECONDITION` if the
 // requested course work material has already been deleted. *
 // `NOT_FOUND` if no course exists with the requested ID.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - id: Identifier of the course work material to delete. This
+//   identifier is a Classroom-assigned identifier.
 func (r *CoursesCourseWorkMaterialsService) Delete(courseId string, id string) *CoursesCourseWorkMaterialsDeleteCall {
 	c := &CoursesCourseWorkMaterialsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8227,7 +8343,7 @@ func (c *CoursesCourseWorkMaterialsDeleteCall) Header() http.Header {
 
 func (c *CoursesCourseWorkMaterialsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8338,6 +8454,10 @@ type CoursesCourseWorkMaterialsGetCall struct {
 // material, or for access errors. * `INVALID_ARGUMENT` if the request
 // is malformed. * `NOT_FOUND` if the requested course or course work
 // material does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - id: Identifier of the course work material.
 func (r *CoursesCourseWorkMaterialsService) Get(courseId string, id string) *CoursesCourseWorkMaterialsGetCall {
 	c := &CoursesCourseWorkMaterialsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8382,7 +8502,7 @@ func (c *CoursesCourseWorkMaterialsGetCall) Header() http.Header {
 
 func (c *CoursesCourseWorkMaterialsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8498,6 +8618,9 @@ type CoursesCourseWorkMaterialsListCall struct {
 // access the requested course or for access errors. *
 // `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
 // requested course does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesCourseWorkMaterialsService) List(courseId string) *CoursesCourseWorkMaterialsListCall {
 	c := &CoursesCourseWorkMaterialsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8610,7 +8733,7 @@ func (c *CoursesCourseWorkMaterialsListCall) Header() http.Header {
 
 func (c *CoursesCourseWorkMaterialsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8783,6 +8906,10 @@ type CoursesCourseWorkMaterialsPatchCall struct {
 // `FAILED_PRECONDITION` if the requested course work material has
 // already been deleted. * `NOT_FOUND` if the requested course or course
 // work material does not exist
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - id: Identifier of the course work material.
 func (r *CoursesCourseWorkMaterialsService) Patch(courseId string, id string, courseworkmaterial *CourseWorkMaterial) *CoursesCourseWorkMaterialsPatchCall {
 	c := &CoursesCourseWorkMaterialsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -8833,7 +8960,7 @@ func (c *CoursesCourseWorkMaterialsPatchCall) Header() http.Header {
 
 func (c *CoursesCourseWorkMaterialsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8960,6 +9087,10 @@ type CoursesStudentsCreateCall struct {
 // CourseNotModifiable * UserGroupsMembershipLimitReached *
 // `ALREADY_EXISTS` if the user is already a student or teacher in the
 // course.
+//
+// - courseId: Identifier of the course to create the student in. This
+//   identifier can be either the Classroom-assigned identifier or an
+//   alias.
 func (r *CoursesStudentsService) Create(courseId string, student *Student) *CoursesStudentsCreateCall {
 	c := &CoursesStudentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9004,7 +9135,7 @@ func (c *CoursesStudentsCreateCall) Header() http.Header {
 
 func (c *CoursesStudentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9120,6 +9251,13 @@ type CoursesStudentsDeleteCall struct {
 // is not permitted to delete students of this course or for access
 // errors. * `NOT_FOUND` if no student of this course has the requested
 // ID or if the course does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - userId: Identifier of the student to delete. The identifier can be
+//   one of the following: * the numeric identifier for the user * the
+//   email address of the user * the string literal "me", indicating
+//   the requesting user.
 func (r *CoursesStudentsService) Delete(courseId string, userId string) *CoursesStudentsDeleteCall {
 	c := &CoursesStudentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9154,7 +9292,7 @@ func (c *CoursesStudentsDeleteCall) Header() http.Header {
 
 func (c *CoursesStudentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9264,6 +9402,13 @@ type CoursesStudentsGetCall struct {
 // permitted to view students of this course or for access errors. *
 // `NOT_FOUND` if no student of this course has the requested ID or if
 // the course does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - userId: Identifier of the student to return. The identifier can be
+//   one of the following: * the numeric identifier for the user * the
+//   email address of the user * the string literal "me", indicating
+//   the requesting user.
 func (r *CoursesStudentsService) Get(courseId string, userId string) *CoursesStudentsGetCall {
 	c := &CoursesStudentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9308,7 +9453,7 @@ func (c *CoursesStudentsGetCall) Header() http.Header {
 
 func (c *CoursesStudentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9422,6 +9567,9 @@ type CoursesStudentsListCall struct {
 // permitted to view. This method returns the following error codes: *
 // `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for
 // access errors.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesStudentsService) List(courseId string) *CoursesStudentsListCall {
 	c := &CoursesStudentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9482,7 +9630,7 @@ func (c *CoursesStudentsListCall) Header() http.Header {
 
 func (c *CoursesStudentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9625,6 +9773,9 @@ type CoursesTeachersCreateCall struct {
 // CourseNotModifiable * CourseTeacherLimitReached *
 // UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is
 // already a teacher or student in the course.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesTeachersService) Create(courseId string, teacher *Teacher) *CoursesTeachersCreateCall {
 	c := &CoursesTeachersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9659,7 +9810,7 @@ func (c *CoursesTeachersCreateCall) Header() http.Header {
 
 func (c *CoursesTeachersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9770,7 +9921,17 @@ type CoursesTeachersDeleteCall struct {
 // is not permitted to delete teachers of this course or for access
 // errors. * `NOT_FOUND` if no teacher of this course has the requested
 // ID or if the course does not exist. * `FAILED_PRECONDITION` if the
-// requested ID belongs to the primary teacher of this course.
+// requested ID belongs to the primary teacher of this course. *
+// `FAILED_PRECONDITION` if the requested ID belongs to the owner of the
+// course Drive folder. * `FAILED_PRECONDITION` if the course no longer
+// has an active owner.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - userId: Identifier of the teacher to delete. The identifier can be
+//   one of the following: * the numeric identifier for the user * the
+//   email address of the user * the string literal "me", indicating
+//   the requesting user.
 func (r *CoursesTeachersService) Delete(courseId string, userId string) *CoursesTeachersDeleteCall {
 	c := &CoursesTeachersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9805,7 +9966,7 @@ func (c *CoursesTeachersDeleteCall) Header() http.Header {
 
 func (c *CoursesTeachersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9865,7 +10026,7 @@ func (c *CoursesTeachersDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete teachers of this course or for access errors. * `NOT_FOUND` if no teacher of this course has the requested ID or if the course does not exist. * `FAILED_PRECONDITION` if the requested ID belongs to the primary teacher of this course.",
+	//   "description": "Deletes a teacher of a course. This method returns the following error codes: * `PERMISSION_DENIED` if the requesting user is not permitted to delete teachers of this course or for access errors. * `NOT_FOUND` if no teacher of this course has the requested ID or if the course does not exist. * `FAILED_PRECONDITION` if the requested ID belongs to the primary teacher of this course. * `FAILED_PRECONDITION` if the requested ID belongs to the owner of the course Drive folder. * `FAILED_PRECONDITION` if the course no longer has an active owner.",
 	//   "flatPath": "v1/courses/{courseId}/teachers/{userId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "classroom.courses.teachers.delete",
@@ -9915,6 +10076,13 @@ type CoursesTeachersGetCall struct {
 // permitted to view teachers of this course or for access errors. *
 // `NOT_FOUND` if no teacher of this course has the requested ID or if
 // the course does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - userId: Identifier of the teacher to return. The identifier can be
+//   one of the following: * the numeric identifier for the user * the
+//   email address of the user * the string literal "me", indicating
+//   the requesting user.
 func (r *CoursesTeachersService) Get(courseId string, userId string) *CoursesTeachersGetCall {
 	c := &CoursesTeachersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -9959,7 +10127,7 @@ func (c *CoursesTeachersGetCall) Header() http.Header {
 
 func (c *CoursesTeachersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10073,6 +10241,9 @@ type CoursesTeachersListCall struct {
 // permitted to view. This method returns the following error codes: *
 // `NOT_FOUND` if the course does not exist. * `PERMISSION_DENIED` for
 // access errors.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesTeachersService) List(courseId string) *CoursesTeachersListCall {
 	c := &CoursesTeachersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10133,7 +10304,7 @@ func (c *CoursesTeachersListCall) Header() http.Header {
 
 func (c *CoursesTeachersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10272,6 +10443,9 @@ type CoursesTopicsCreateCall struct {
 // to access the requested course, create a topic in the requested
 // course, or for access errors. * `INVALID_ARGUMENT` if the request is
 // malformed. * `NOT_FOUND` if the requested course does not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesTopicsService) Create(courseId string, topic *Topic) *CoursesTopicsCreateCall {
 	c := &CoursesTopicsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10306,7 +10480,7 @@ func (c *CoursesTopicsCreateCall) Header() http.Header {
 
 func (c *CoursesTopicsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10416,6 +10590,10 @@ type CoursesTopicsDeleteCall struct {
 // `FAILED_PRECONDITION` if the requested topic has already been
 // deleted. * `NOT_FOUND` if no course or topic exists with the
 // requested ID.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - id: Identifier of the topic to delete.
 func (r *CoursesTopicsService) Delete(courseId string, id string) *CoursesTopicsDeleteCall {
 	c := &CoursesTopicsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10450,7 +10628,7 @@ func (c *CoursesTopicsDeleteCall) Header() http.Header {
 
 func (c *CoursesTopicsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10560,6 +10738,9 @@ type CoursesTopicsGetCall struct {
 // access the requested course or topic, or for access errors. *
 // `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if the
 // requested course or topic does not exist.
+//
+// - courseId: Identifier of the course.
+// - id: Identifier of the topic.
 func (r *CoursesTopicsService) Get(courseId string, id string) *CoursesTopicsGetCall {
 	c := &CoursesTopicsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10604,7 +10785,7 @@ func (c *CoursesTopicsGetCall) Header() http.Header {
 
 func (c *CoursesTopicsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10718,6 +10899,9 @@ type CoursesTopicsListCall struct {
 // the requested course or for access errors. * `INVALID_ARGUMENT` if
 // the request is malformed. * `NOT_FOUND` if the requested course does
 // not exist.
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
 func (r *CoursesTopicsService) List(courseId string) *CoursesTopicsListCall {
 	c := &CoursesTopicsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10779,7 +10963,7 @@ func (c *CoursesTopicsListCall) Header() http.Header {
 
 func (c *CoursesTopicsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10917,6 +11101,10 @@ type CoursesTopicsPatchCall struct {
 // developer project did not create the corresponding topic or for
 // access errors. * `INVALID_ARGUMENT` if the request is malformed. *
 // `NOT_FOUND` if the requested course or topic does not exist
+//
+// - courseId: Identifier of the course. This identifier can be either
+//   the Classroom-assigned identifier or an alias.
+// - id: Identifier of the topic.
 func (r *CoursesTopicsService) Patch(courseId string, id string, topic *Topic) *CoursesTopicsPatchCall {
 	c := &CoursesTopicsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.courseId = courseId
@@ -10965,7 +11153,7 @@ func (c *CoursesTopicsPatchCall) Header() http.Header {
 
 func (c *CoursesTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11091,6 +11279,8 @@ type InvitationsAcceptCall struct {
 // request errors: * CourseMemberLimitReached * CourseNotModifiable *
 // CourseTeacherLimitReached * UserGroupsMembershipLimitReached *
 // `NOT_FOUND` if no invitation exists with the requested ID.
+//
+// - id: Identifier of the invitation to accept.
 func (r *InvitationsService) Accept(id string) *InvitationsAcceptCall {
 	c := &InvitationsAcceptCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -11124,7 +11314,7 @@ func (c *InvitationsAcceptCall) Header() http.Header {
 
 func (c *InvitationsAcceptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11261,7 +11451,7 @@ func (c *InvitationsCreateCall) Header() http.Header {
 
 func (c *InvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11356,6 +11546,8 @@ type InvitationsDeleteCall struct {
 // error codes: * `PERMISSION_DENIED` if the requesting user is not
 // permitted to delete the requested invitation or for access errors. *
 // `NOT_FOUND` if no invitation exists with the requested ID.
+//
+// - id: Identifier of the invitation to delete.
 func (r *InvitationsService) Delete(id string) *InvitationsDeleteCall {
 	c := &InvitationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -11389,7 +11581,7 @@ func (c *InvitationsDeleteCall) Header() http.Header {
 
 func (c *InvitationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11489,6 +11681,8 @@ type InvitationsGetCall struct {
 // codes: * `PERMISSION_DENIED` if the requesting user is not permitted
 // to view the requested invitation or for access errors. * `NOT_FOUND`
 // if no invitation exists with the requested ID.
+//
+// - id: Identifier of the invitation to return.
 func (r *InvitationsService) Get(id string) *InvitationsGetCall {
 	c := &InvitationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.id = id
@@ -11532,7 +11726,7 @@ func (c *InvitationsGetCall) Header() http.Header {
 
 func (c *InvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11712,7 +11906,7 @@ func (c *InvitationsListCall) Header() http.Header {
 
 func (c *InvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11899,7 +12093,7 @@ func (c *RegistrationsCreateCall) Header() http.Header {
 
 func (c *RegistrationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11992,6 +12186,9 @@ type RegistrationsDeleteCall struct {
 
 // Delete: Deletes a `Registration`, causing Classroom to stop sending
 // notifications for that `Registration`.
+//
+// - registrationId: The `registration_id` of the `Registration` to be
+//   deleted.
 func (r *RegistrationsService) Delete(registrationId string) *RegistrationsDeleteCall {
 	c := &RegistrationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.registrationId = registrationId
@@ -12025,7 +12222,7 @@ func (c *RegistrationsDeleteCall) Header() http.Header {
 
 func (c *RegistrationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12125,6 +12322,11 @@ type UserProfilesGetCall struct {
 // codes: * `PERMISSION_DENIED` if the requesting user is not permitted
 // to access this user profile, if no profile exists with the requested
 // ID, or for access errors.
+//
+// - userId: Identifier of the profile to return. The identifier can be
+//   one of the following: * the numeric identifier for the user * the
+//   email address of the user * the string literal "me", indicating
+//   the requesting user.
 func (r *UserProfilesService) Get(userId string) *UserProfilesGetCall {
 	c := &UserProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -12168,7 +12370,7 @@ func (c *UserProfilesGetCall) Header() http.Header {
 
 func (c *UserProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12295,6 +12497,8 @@ type UserProfilesGuardianInvitationsCreateCall struct {
 // for the student and `invited_email_address` provided, or if the
 // provided `invited_email_address` matches the Google account of an
 // existing `Guardian` for this user.
+//
+// - studentId: ID of the student (in standard format).
 func (r *UserProfilesGuardianInvitationsService) Create(studentId string, guardianinvitation *GuardianInvitation) *UserProfilesGuardianInvitationsCreateCall {
 	c := &UserProfilesGuardianInvitationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -12329,7 +12533,7 @@ func (c *UserProfilesGuardianInvitationsCreateCall) Header() http.Header {
 
 func (c *UserProfilesGuardianInvitationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12445,6 +12649,11 @@ type UserProfilesGuardianInvitationsGetCall struct {
 // record of the given student or `invitation_id`. May also be returned
 // if the student exists, but the requesting user does not have access
 // to see that student.
+//
+// - invitationId: The `id` field of the `GuardianInvitation` being
+//   requested.
+// - studentId: The ID of the student whose guardian invitation is being
+//   requested.
 func (r *UserProfilesGuardianInvitationsService) Get(studentId string, invitationId string) *UserProfilesGuardianInvitationsGetCall {
 	c := &UserProfilesGuardianInvitationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -12489,7 +12698,7 @@ func (c *UserProfilesGuardianInvitationsGetCall) Header() http.Header {
 
 func (c *UserProfilesGuardianInvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12610,6 +12819,14 @@ type UserProfilesGuardianInvitationsListCall struct {
 // be returned if an invalid `page_token` or `state` is provided. *
 // `NOT_FOUND` if a `student_id` is specified, and its format can be
 // recognized, but Classroom has no record of that student.
+//
+// - studentId: The ID of the student whose guardian invitations are to
+//   be returned. The identifier can be one of the following: * the
+//   numeric identifier for the user * the email address of the user *
+//   the string literal "me", indicating the requesting user * the
+//   string literal "-", indicating that results should be returned
+//   for all students that the requesting user is permitted to view
+//   guardian invitations.
 func (r *UserProfilesGuardianInvitationsService) List(studentId string) *UserProfilesGuardianInvitationsListCall {
 	c := &UserProfilesGuardianInvitationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -12693,7 +12910,7 @@ func (c *UserProfilesGuardianInvitationsListCall) Header() http.Header {
 
 func (c *UserProfilesGuardianInvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12862,6 +13079,11 @@ type UserProfilesGuardianInvitationsPatchCall struct {
 // student ID, but Classroom has no record of that student, or if the
 // `id` field does not refer to a guardian invitation known to
 // Classroom.
+//
+// - invitationId: The `id` field of the `GuardianInvitation` to be
+//   modified.
+// - studentId: The ID of the student whose guardian invitation is to be
+//   modified.
 func (r *UserProfilesGuardianInvitationsService) Patch(studentId string, invitationId string, guardianinvitation *GuardianInvitation) *UserProfilesGuardianInvitationsPatchCall {
 	c := &UserProfilesGuardianInvitationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -12907,7 +13129,7 @@ func (c *UserProfilesGuardianInvitationsPatchCall) Header() http.Header {
 
 func (c *UserProfilesGuardianInvitationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13038,6 +13260,12 @@ type UserProfilesGuardiansDeleteCall struct {
 // if the requesting user is permitted to modify guardians for the
 // requested `student_id`, but no `Guardian` record exists for that
 // student with the provided `guardian_id`.
+//
+// - guardianId: The `id` field from a `Guardian`.
+// - studentId: The student whose guardian is to be deleted. One of the
+//   following: * the numeric identifier for the user * the email
+//   address of the user * the string literal "me", indicating the
+//   requesting user.
 func (r *UserProfilesGuardiansService) Delete(studentId string, guardianId string) *UserProfilesGuardiansDeleteCall {
 	c := &UserProfilesGuardiansDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -13072,7 +13300,7 @@ func (c *UserProfilesGuardiansDeleteCall) Header() http.Header {
 
 func (c *UserProfilesGuardiansDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13189,6 +13417,12 @@ type UserProfilesGuardiansGetCall struct {
 // requesting user is permitted to view guardians for the requested
 // `student_id`, but no `Guardian` record exists for that student that
 // matches the provided `guardian_id`.
+//
+// - guardianId: The `id` field from a `Guardian`.
+// - studentId: The student whose guardian is being requested. One of
+//   the following: * the numeric identifier for the user * the email
+//   address of the user * the string literal "me", indicating the
+//   requesting user.
 func (r *UserProfilesGuardiansService) Get(studentId string, guardianId string) *UserProfilesGuardiansGetCall {
 	c := &UserProfilesGuardiansGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -13233,7 +13467,7 @@ func (c *UserProfilesGuardiansGetCall) Header() http.Header {
 
 func (c *UserProfilesGuardiansGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13359,6 +13593,13 @@ type UserProfilesGuardiansListCall struct {
 // is provided. * `NOT_FOUND` if a `student_id` is specified, and its
 // format can be recognized, but Classroom has no record of that
 // student.
+//
+// - studentId: Filter results by the student who the guardian is linked
+//   to. The identifier can be one of the following: * the numeric
+//   identifier for the user * the email address of the user * the
+//   string literal "me", indicating the requesting user * the string
+//   literal "-", indicating that results should be returned for all
+//   students that the requesting user has access to view.
 func (r *UserProfilesGuardiansService) List(studentId string) *UserProfilesGuardiansListCall {
 	c := &UserProfilesGuardiansListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.studentId = studentId
@@ -13429,7 +13670,7 @@ func (c *UserProfilesGuardiansListCall) Header() http.Header {
 
 func (c *UserProfilesGuardiansListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

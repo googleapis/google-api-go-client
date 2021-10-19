@@ -83,7 +83,8 @@ const mtlsBasePath = "https://servicecontrol.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
+	// See, edit, configure, and delete your Google Cloud data and see the
+	// email address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// Manage your Google Service Control data
@@ -178,10 +179,10 @@ type Api struct {
 
 	// ForceSendFields is a list of field names (e.g. "Operation") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Operation") to include in
@@ -249,10 +250,10 @@ type AttributeContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "Api") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Api") to include in API
@@ -347,10 +348,10 @@ type AuditLog struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuthenticationInfo")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuthenticationInfo") to
@@ -423,10 +424,10 @@ type Auth struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccessLevels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccessLevels") to include
@@ -488,10 +489,10 @@ type AuthenticationInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "AuthoritySelector")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AuthoritySelector") to
@@ -519,9 +520,10 @@ type AuthorizationInfo struct {
 	// Permission: The required IAM permission.
 	Permission string `json:"permission,omitempty"`
 
-	// Resource: The resource being accessed, as a REST-style string. For
-	// example:
-	// bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
+	// Resource: The resource being accessed, as a REST-style or cloud
+	// resource string. For example:
+	// bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID or
+	// projects/PROJECTID/datasets/DATASETID
 	Resource string `json:"resource,omitempty"`
 
 	// ResourceAttributes: Resource attributes used in IAM condition
@@ -533,10 +535,10 @@ type AuthorizationInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "Granted") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Granted") to include in
@@ -560,6 +562,9 @@ type CheckRequest struct {
 	// by the service.
 	Attributes *AttributeContext `json:"attributes,omitempty"`
 
+	// Flags: Optional. Contains a comma-separated list of flags.
+	Flags string `json:"flags,omitempty"`
+
 	// Resources: Describes the resources and the policies applied to each
 	// resource.
 	Resources []*ResourceInfo `json:"resources,omitempty"`
@@ -571,10 +576,10 @@ type CheckRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Attributes") to include in
@@ -598,8 +603,8 @@ type CheckResponse struct {
 	// `CheckRequest`.
 	Headers map[string]string `json:"headers,omitempty"`
 
-	// Status: An 'OK' status allows the operation. Any other status
-	// indicates a denial; google.rpc.Status.details () would contain
+	// Status: Operation is allowed when this field is not set. Any non-'OK'
+	// status indicates a denial; google.rpc.Status.details () would contain
 	// additional details about the denial.
 	Status *Status `json:"status,omitempty"`
 
@@ -609,10 +614,10 @@ type CheckResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Headers") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Headers") to include in
@@ -641,10 +646,10 @@ type FirstPartyPrincipal struct {
 
 	// ForceSendFields is a list of field names (e.g. "PrincipalEmail") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "PrincipalEmail") to
@@ -690,10 +695,10 @@ type Peer struct {
 
 	// ForceSendFields is a list of field names (e.g. "Ip") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Ip") to include in API
@@ -725,10 +730,10 @@ type ReportRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "Operations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Operations") to include in
@@ -779,7 +784,7 @@ type Request struct {
 	// Method: The HTTP request method, such as `GET`, `POST`.
 	Method string `json:"method,omitempty"`
 
-	// Path: The HTTP URL path.
+	// Path: The HTTP URL path, excluding the query parameters.
 	Path string `json:"path,omitempty"`
 
 	// Protocol: The network protocol used with the request, such as
@@ -804,16 +809,16 @@ type Request struct {
 	// Size: The HTTP request size in bytes. If unknown, it must be -1.
 	Size int64 `json:"size,omitempty,string"`
 
-	// Time: The timestamp when the `destination` service receives the first
+	// Time: The timestamp when the `destination` service receives the last
 	// byte of the request.
 	Time string `json:"time,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Auth") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Auth") to include in API
@@ -880,10 +885,10 @@ type RequestMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "CallerIp") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CallerIp") to include in
@@ -980,10 +985,10 @@ type Resource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Annotations") to include
@@ -1003,6 +1008,19 @@ func (s *Resource) MarshalJSON() ([]byte, error) {
 
 // ResourceInfo: Describes a resource referenced in the request.
 type ResourceInfo struct {
+	// Container: Optional. The identifier of the container of this
+	// resource. For Google Cloud APIs, the resource container must be one
+	// of the following formats: - `projects/` - `folders/` -
+	// `organizations/` For the policy enforcement on the container level
+	// (VPCSC and Location Policy check), this field takes precedence on the
+	// container extracted from name when presents.
+	Container string `json:"container,omitempty"`
+
+	// Location: Optional. The location of the resource. The value must be a
+	// valid zone, region or multiregion. For example: "europe-west4" or
+	// "northamerica-northeast1-a"
+	Location string `json:"location,omitempty"`
+
 	// Name: The name of the resource referenced in the request.
 	Name string `json:"name,omitempty"`
 
@@ -1013,16 +1031,16 @@ type ResourceInfo struct {
 	// Type: The resource type in the format of "{service}/{kind}".
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "Container") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Container") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1054,10 +1072,10 @@ type ResourceLocation struct {
 
 	// ForceSendFields is a list of field names (e.g. "CurrentLocations") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrentLocations") to
@@ -1079,6 +1097,12 @@ func (s *ResourceLocation) MarshalJSON() ([]byte, error) {
 // Response: This message defines attributes for a typical network
 // response. It generally models semantics of an HTTP response.
 type Response struct {
+	// BackendLatency: The amount of time it takes the backend service to
+	// fully respond to a request. Measured from when the destination
+	// service starts to send the request to the backend until when the
+	// destination service receives the complete response from the backend.
+	BackendLatency string `json:"backendLatency,omitempty"`
+
 	// Code: The HTTP response status code, such as `200` and `404`.
 	Code int64 `json:"code,omitempty,string"`
 
@@ -1090,24 +1114,25 @@ type Response struct {
 	// Size: The HTTP response size in bytes. If unknown, it must be -1.
 	Size int64 `json:"size,omitempty,string"`
 
-	// Time: The timestamp when the `destination` service generates the
-	// first byte of the response.
+	// Time: The timestamp when the `destination` service sends the last
+	// byte of the response.
 	Time string `json:"time,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Code") to
+	// ForceSendFields is a list of field names (e.g. "BackendLatency") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BackendLatency") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1125,8 +1150,11 @@ type ServiceAccountDelegationInfo struct {
 	FirstPartyPrincipal *FirstPartyPrincipal `json:"firstPartyPrincipal,omitempty"`
 
 	// PrincipalSubject: A string representing the principal_subject
-	// associated with the identity. See go/3pical for more info on how
-	// principal_subject is formatted.
+	// associated with the identity. For most identities, the format will be
+	// `principal://iam.googleapis.com/{identity pool
+	// name}/subject/{subject)` except for some GKE identities
+	// (GKE_WORKLOAD, FREEFORM, GKE_HUB_WORKLOAD) that are still in the
+	// legacy format `serviceAccount:{identity pool name}[{subject}]`
 	PrincipalSubject string `json:"principalSubject,omitempty"`
 
 	// ThirdPartyPrincipal: Third party identity as the real authority.
@@ -1134,10 +1162,10 @@ type ServiceAccountDelegationInfo struct {
 
 	// ForceSendFields is a list of field names (e.g. "FirstPartyPrincipal")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FirstPartyPrincipal") to
@@ -1156,8 +1184,8 @@ func (s *ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SpanContext: The context of a span, attached to Exemplars in
-// Distribution values during aggregation. It contains the name of a
+// SpanContext: The context of a span. This is attached to an Exemplar
+// in Distribution values during aggregation. It contains the name of a
 // span with format:
 // projects/[PROJECT_ID_OR_NUMBER]/traces/[TRACE_ID]/spans/[SPAN_ID]
 type SpanContext struct {
@@ -1171,10 +1199,10 @@ type SpanContext struct {
 
 	// ForceSendFields is a list of field names (e.g. "SpanName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "SpanName") to include in
@@ -1215,10 +1243,10 @@ type Status struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -1243,10 +1271,10 @@ type ThirdPartyPrincipal struct {
 
 	// ForceSendFields is a list of field names (e.g. "ThirdPartyClaims") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ThirdPartyClaims") to
@@ -1291,6 +1319,12 @@ type ServicesCheckCall struct {
 // `servicemanagement.services.check` permission on the specified
 // service. For more information, see Service Control API Access Control
 // (https://cloud.google.com/service-infrastructure/docs/service-control/access-control).
+//
+// - serviceName: The service name as specified in its service
+//   configuration. For example, "pubsub.googleapis.com". See
+//   google.api.Service
+//   (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+//   for the definition of a service name.
 func (r *ServicesService) Check(serviceName string, checkrequest *CheckRequest) *ServicesCheckCall {
 	c := &ServicesCheckCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -1325,7 +1359,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1443,6 +1477,12 @@ type ServicesReportCall struct {
 // `servicemanagement.services.report` permission on the specified
 // service. For more information, see Service Control API Access Control
 // (https://cloud.google.com/service-infrastructure/docs/service-control/access-control).
+//
+// - serviceName: The service name as specified in its service
+//   configuration. For example, "pubsub.googleapis.com". See
+//   google.api.Service
+//   (https://cloud.google.com/service-management/reference/rpc/google.api#google.api.Service)
+//   for the definition of a service name.
 func (r *ServicesService) Report(serviceName string, reportrequest *ReportRequest) *ServicesReportCall {
 	c := &ServicesReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.serviceName = serviceName
@@ -1477,7 +1517,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -158,7 +158,7 @@ type DetailedLeadReportsService struct {
 
 // GoogleAdsHomeservicesLocalservicesV1AccountReport: An Account Report
 // of a GLS account identified by their account id containing aggregate
-// data gathered from a particular date range.
+// data gathered from a particular date range. Next ID: 18
 type GoogleAdsHomeservicesLocalservicesV1AccountReport struct {
 	// AccountId: Unique identifier of the GLS account.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -196,6 +196,10 @@ type GoogleAdsHomeservicesLocalservicesV1AccountReport struct {
 	// specified period in the account's specified currency.
 	CurrentPeriodTotalCost float64 `json:"currentPeriodTotalCost,omitempty"`
 
+	// ImpressionsLastTwoDays: Number of impressions that customers have had
+	// in the past 2 days.
+	ImpressionsLastTwoDays int64 `json:"impressionsLastTwoDays,omitempty,string"`
+
 	// PhoneLeadResponsiveness: Phone lead responsiveness of the account for
 	// the past 90 days from current date. This is computed by taking the
 	// total number of connected calls from charged phone leads and dividing
@@ -224,10 +228,10 @@ type GoogleAdsHomeservicesLocalservicesV1AccountReport struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -277,8 +281,8 @@ type GoogleAdsHomeservicesLocalservicesV1AggregatorInfo struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AggregatorProviderId") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -362,10 +366,10 @@ type GoogleAdsHomeservicesLocalservicesV1DetailedLeadReport struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountId") to include in
@@ -415,10 +419,10 @@ type GoogleAdsHomeservicesLocalservicesV1MessageLead struct {
 
 	// ForceSendFields is a list of field names (e.g. "ConsumerPhoneNumber")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ConsumerPhoneNumber") to
@@ -454,8 +458,8 @@ type GoogleAdsHomeservicesLocalservicesV1PhoneLead struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ChargedCallTimestamp") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -498,10 +502,10 @@ type GoogleAdsHomeservicesLocalservicesV1SearchAccountReportsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "AccountReports") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AccountReports") to
@@ -541,10 +545,10 @@ type GoogleAdsHomeservicesLocalservicesV1SearchDetailedLeadReportsResponse struc
 
 	// ForceSendFields is a list of field names (e.g. "DetailedLeadReports")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetailedLeadReports") to
@@ -575,10 +579,10 @@ type GoogleTypeTimeZone struct {
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Id") to include in API
@@ -730,7 +734,7 @@ func (c *AccountReportsSearchCall) Header() http.Header {
 
 func (c *AccountReportsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1018,7 +1022,7 @@ func (c *DetailedLeadReportsSearchCall) Header() http.Header {
 
 func (c *DetailedLeadReportsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -145,6 +145,8 @@ func (s *Service) userAgent() string {
 
 func NewAccountsService(s *Service) *AccountsService {
 	rs := &AccountsService{s: s}
+	rs.AdUnits = NewAccountsAdUnitsService(s)
+	rs.Apps = NewAccountsAppsService(s)
 	rs.MediationReport = NewAccountsMediationReportService(s)
 	rs.NetworkReport = NewAccountsNetworkReportService(s)
 	return rs
@@ -153,9 +155,31 @@ func NewAccountsService(s *Service) *AccountsService {
 type AccountsService struct {
 	s *Service
 
+	AdUnits *AccountsAdUnitsService
+
+	Apps *AccountsAppsService
+
 	MediationReport *AccountsMediationReportService
 
 	NetworkReport *AccountsNetworkReportService
+}
+
+func NewAccountsAdUnitsService(s *Service) *AccountsAdUnitsService {
+	rs := &AccountsAdUnitsService{s: s}
+	return rs
+}
+
+type AccountsAdUnitsService struct {
+	s *Service
+}
+
+func NewAccountsAppsService(s *Service) *AccountsAppsService {
+	rs := &AccountsAppsService{s: s}
+	return rs
+}
+
+type AccountsAppsService struct {
+	s *Service
 }
 
 func NewAccountsMediationReportService(s *Service) *AccountsMediationReportService {
@@ -174,6 +198,189 @@ func NewAccountsNetworkReportService(s *Service) *AccountsNetworkReportService {
 
 type AccountsNetworkReportService struct {
 	s *Service
+}
+
+// AdUnit: Describes an AdMob ad unit.
+type AdUnit struct {
+	// AdFormat: AdFormat of the ad unit. Possible values are as follows:
+	// "BANNER" - Banner ad format. "BANNER_INTERSTITIAL" - Legacy format
+	// that can be used as either banner or interstitial. This format can no
+	// longer be created but can be targeted by mediation groups.
+	// "INTERSTITIAL" - A full screen ad. Supported ad types are
+	// "RICH_MEDIA" and "VIDEO". "NATIVE" - Native ad format. "REWARDED" -
+	// An ad that, once viewed, gets a callback verifying the view so that a
+	// reward can be given to the user. Supported ad types are "RICH_MEDIA"
+	// (interactive) and video where video can not be excluded.
+	AdFormat string `json:"adFormat,omitempty"`
+
+	// AdTypes: Ad media type supported by this ad unit. Possible values as
+	// follows: "RICH_MEDIA" - Text, image, and other non-video media.
+	// "VIDEO" - Video media.
+	AdTypes []string `json:"adTypes,omitempty"`
+
+	// AdUnitId: The externally visible ID of the ad unit which can be used
+	// to integrate with the AdMob SDK. This is a read only property.
+	// Example: ca-app-pub-9876543210987654/0123456789
+	AdUnitId string `json:"adUnitId,omitempty"`
+
+	// AppId: The externally visible ID of the app this ad unit is
+	// associated with. Example: ca-app-pub-9876543210987654~0123456789
+	AppId string `json:"appId,omitempty"`
+
+	// DisplayName: The display name of the ad unit as shown in the AdMob
+	// UI, which is provided by the user. The maximum length allowed is 80
+	// characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: Resource name for this ad unit. Format is
+	// accounts/{publisher_id}/adUnits/{ad_unit_id_fragment} Example:
+	// accounts/pub-9876543210987654/adUnits/0123456789
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdFormat") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdFormat") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdUnit) MarshalJSON() ([]byte, error) {
+	type NoMethod AdUnit
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// App: Describes an AdMob app for a specific platform (For example:
+// Android or iOS).
+type App struct {
+	// AppId: The externally visible ID of the app which can be used to
+	// integrate with the AdMob SDK. This is a read only property. Example:
+	// ca-app-pub-9876543210987654~0123456789
+	AppId string `json:"appId,omitempty"`
+
+	// LinkedAppInfo: Immutable. The information for an app that is linked
+	// to an app store. This field is present if and only if the app is
+	// linked to an app store.
+	LinkedAppInfo *AppLinkedAppInfo `json:"linkedAppInfo,omitempty"`
+
+	// ManualAppInfo: The information for an app that is not linked to any
+	// app store. After an app is linked, this information is still
+	// retrivable. If no name is provided for the app upon creation, a
+	// placeholder name will be used.
+	ManualAppInfo *AppManualAppInfo `json:"manualAppInfo,omitempty"`
+
+	// Name: Resource name for this app. Format is
+	// accounts/{publisher_id}/apps/{app_id_fragment} Example:
+	// accounts/pub-9876543210987654/apps/0123456789
+	Name string `json:"name,omitempty"`
+
+	// Platform: Describes the platform of the app. Limited to "IOS" and
+	// "ANDROID".
+	Platform string `json:"platform,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *App) MarshalJSON() ([]byte, error) {
+	type NoMethod App
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppLinkedAppInfo: Information from the app store if the app is linked
+// to an app store.
+type AppLinkedAppInfo struct {
+	// AppStoreId: The app store ID of the app; present if and only if the
+	// app is linked to an app store. If the app is added to the Google Play
+	// store, it will be the application ID of the app. For example:
+	// "com.example.myapp". See
+	// https://developer.android.com/studio/build/application-id. If the app
+	// is added to the Apple App Store, it will be app store ID. For example
+	// "105169111". Note that setting the app store id is considered an
+	// irreversible action. Once an app is linked, it cannot be unlinked.
+	AppStoreId string `json:"appStoreId,omitempty"`
+
+	// DisplayName: Output only. Display name of the app as it appears in
+	// the app store. This is an output-only field, and may be empty if the
+	// app cannot be found in the store.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppStoreId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppStoreId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppLinkedAppInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AppLinkedAppInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppManualAppInfo: Information provided for manual apps which are not
+// linked to an application store (Example: Google Play, App Store).
+type AppManualAppInfo struct {
+	// DisplayName: The display name of the app as shown in the AdMob UI,
+	// which is provided by the user. The maximum length allowed is 80
+	// characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppManualAppInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AppManualAppInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a
@@ -201,10 +408,10 @@ type Date struct {
 
 	// ForceSendFields is a list of field names (e.g. "Day") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Day") to include in API
@@ -235,10 +442,10 @@ type DateRange struct {
 
 	// ForceSendFields is a list of field names (e.g. "EndDate") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "EndDate") to include in
@@ -264,10 +471,10 @@ type GenerateMediationReportRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ReportSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ReportSpec") to include in
@@ -315,10 +522,10 @@ type GenerateMediationReportResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Footer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Footer") to include in API
@@ -344,10 +551,10 @@ type GenerateNetworkReportRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "ReportSpec") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ReportSpec") to include in
@@ -394,10 +601,10 @@ type GenerateNetworkReportResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Footer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Footer") to include in API
@@ -411,6 +618,80 @@ type GenerateNetworkReportResponse struct {
 
 func (s *GenerateNetworkReportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateNetworkReportResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListAdUnitsResponse: Response for the ad units list request.
+type ListAdUnitsResponse struct {
+	// AdUnits: The resulting ad units for the requested account.
+	AdUnits []*AdUnit `json:"adUnits,omitempty"`
+
+	// NextPageToken: If not empty, indicates that there may be more ad
+	// units for the request; this value should be passed in a new
+	// `ListAdUnitsRequest`.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdUnits") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdUnits") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAdUnitsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAdUnitsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListAppsResponse: Response for the apps list request.
+type ListAppsResponse struct {
+	// Apps: The resulting apps for the requested account.
+	Apps []*App `json:"apps,omitempty"`
+
+	// NextPageToken: If not empty, indicates that there may be more apps
+	// for the request; this value should be passed in a new
+	// `ListAppsRequest`.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Apps") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Apps") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAppsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAppsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -432,10 +713,10 @@ type ListPublisherAccountsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Account") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Account") to include in
@@ -469,10 +750,10 @@ type LocalizationSettings struct {
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrencyCode") to include
@@ -494,7 +775,7 @@ func (s *LocalizationSettings) MarshalJSON() ([]byte, error) {
 // Mediation report. For example, the specification to get observed ECPM
 // sliced by ad source and app for the 'US' and 'CN' countries can look
 // like the following example: { "date_range": { "start_date": {"year":
-// 2018, "month": 9, "day": 1}, "end_date": {"year": 2018, "month": 9,
+// 2021, "month": 9, "day": 1}, "end_date": {"year": 2021, "month": 9,
 // "day": 30} }, "dimensions": ["AD_SOURCE", "APP", "COUNTRY"],
 // "metrics": ["OBSERVED_ECPM"], "dimension_filters": [ { "dimension":
 // "COUNTRY", "matches_any": {"values": [{"value": "US", "value":
@@ -503,7 +784,7 @@ func (s *LocalizationSettings) MarshalJSON() ([]byte, error) {
 // "language_code": "en-US" } } For a better understanding, you can
 // treat the preceding specification like the following pseudo SQL:
 // SELECT AD_SOURCE, APP, COUNTRY, OBSERVED_ECPM FROM MEDIATION_REPORT
-// WHERE DATE >= '2018-09-01' AND DATE <= '2018-09-30' AND COUNTRY IN
+// WHERE DATE >= '2021-09-01' AND DATE <= '2021-09-30' AND COUNTRY IN
 // ('US', 'CN') GROUP BY AD_SOURCE, APP, COUNTRY ORDER BY APP ASC;
 type MediationReportSpec struct {
 	// DateRange: The date range for which the report is generated.
@@ -521,18 +802,18 @@ type MediationReportSpec struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_SOURCE" - The [unique ID of the ad
 	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
 	// and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
-	// example, "ca-app-pub-1234#5678" and "AdMob (default)" as label
+	// example, "ca-app-pub-1234:asi:5678" and "AdMob (default)" as label
 	// value).
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
 	// "ca-app-pub-1234/8790"). If AD_UNIT dimension is specified, then APP
@@ -549,6 +830,24 @@ type MediationReportSpec struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1". **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	// **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString. **Warning:** The dimension is
+	// incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads"). **Warning:** The dimension is incompatible
+	// with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
+	// metric.
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// LocalizationSettings: Localization settings of the report.
@@ -611,10 +910,10 @@ type MediationReportSpec struct {
 
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DateRange") to include in
@@ -640,18 +939,18 @@ type MediationReportSpecDimensionFilter struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_SOURCE" - The [unique ID of the ad
 	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
 	// and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
-	// example, "ca-app-pub-1234#5678" and "AdMob (default)" as label
+	// example, "ca-app-pub-1234:asi:5678" and "AdMob (default)" as label
 	// value).
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
 	// "ca-app-pub-1234/8790"). If AD_UNIT dimension is specified, then APP
@@ -668,6 +967,24 @@ type MediationReportSpecDimensionFilter struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1". **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	// **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString. **Warning:** The dimension is
+	// incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads"). **Warning:** The dimension is incompatible
+	// with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
+	// metric.
 	Dimension string `json:"dimension,omitempty"`
 
 	// MatchesAny: Matches a row if its value for the specified dimension is
@@ -676,10 +993,10 @@ type MediationReportSpecDimensionFilter struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dimension") to include in
@@ -705,18 +1022,18 @@ type MediationReportSpecSortCondition struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_SOURCE" - The [unique ID of the ad
 	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
 	// and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
-	// example, "ca-app-pub-1234#5678" and "AdMob (default)" as label
+	// example, "ca-app-pub-1234:asi:5678" and "AdMob (default)" as label
 	// value).
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
 	// "ca-app-pub-1234/8790"). If AD_UNIT dimension is specified, then APP
@@ -733,6 +1050,24 @@ type MediationReportSpecSortCondition struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1". **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	// **Warning:** The dimension is incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString. **Warning:** The dimension is
+	// incompatible with
+	// [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS),
+	// [OBSERVED_ECPM](#Metric.ENUM_VALUES.OBSERVED_ECPM) metrics.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads"). **Warning:** The dimension is incompatible
+	// with [ESTIMATED_EARNINGS](#Metric.ENUM_VALUES.ESTIMATED_EARNINGS)
+	// metric.
 	Dimension string `json:"dimension,omitempty"`
 
 	// Metric: Sort by the specified metric.
@@ -783,10 +1118,10 @@ type MediationReportSpecSortCondition struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dimension") to include in
@@ -807,8 +1142,8 @@ func (s *MediationReportSpecSortCondition) MarshalJSON() ([]byte, error) {
 // NetworkReportSpec: The specification for generating an AdMob Network
 // report. For example, the specification to get clicks and estimated
 // earnings for only the 'US' and 'CN' countries can look like the
-// following example: { 'date_range': { 'start_date': {'year': 2018,
-// 'month': 9, 'day': 1}, 'end_date': {'year': 2018, 'month': 9, 'day':
+// following example: { 'date_range': { 'start_date': {'year': 2021,
+// 'month': 9, 'day': 1}, 'end_date': {'year': 2021, 'month': 9, 'day':
 // 30} }, 'dimensions': ['DATE', 'APP', 'COUNTRY'], 'metrics':
 // ['CLICKS', 'ESTIMATED_EARNINGS'], 'dimension_filters': [ {
 // 'dimension': 'COUNTRY', 'matches_any': {'values': [{'value': 'US',
@@ -818,7 +1153,7 @@ func (s *MediationReportSpecSortCondition) MarshalJSON() ([]byte, error) {
 // 'en-US' } } For a better understanding, you can treat the preceding
 // specification like the following pseudo SQL: SELECT DATE, APP,
 // COUNTRY, CLICKS, ESTIMATED_EARNINGS FROM NETWORK_REPORT WHERE DATE >=
-// '2018-09-01' AND DATE <= '2018-09-30' AND COUNTRY IN ('US', 'CN')
+// '2021-09-01' AND DATE <= '2021-09-30' AND COUNTRY IN ('US', 'CN')
 // GROUP BY DATE, APP, COUNTRY ORDER BY APP ASC, CLICKS DESC;
 type NetworkReportSpec struct {
 	// DateRange: The date range for which the report is generated.
@@ -836,13 +1171,13 @@ type NetworkReportSpec struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
 	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP
 	// is included automatically.
@@ -860,6 +1195,14 @@ type NetworkReportSpec struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1".
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads").
 	Dimensions []string `json:"dimensions,omitempty"`
 
 	// LocalizationSettings: Localization settings of the report.
@@ -922,10 +1265,10 @@ type NetworkReportSpec struct {
 
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DateRange") to include in
@@ -951,13 +1294,13 @@ type NetworkReportSpecDimensionFilter struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
 	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP
 	// is included automatically.
@@ -975,6 +1318,14 @@ type NetworkReportSpecDimensionFilter struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1".
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
 
 	// MatchesAny: Matches a row if its value for the specified dimension is
@@ -983,10 +1334,10 @@ type NetworkReportSpecDimensionFilter struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dimension") to include in
@@ -1012,13 +1363,13 @@ type NetworkReportSpecSortCondition struct {
 	// Possible values:
 	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
 	// use.
-	//   "DATE" - A date in the YYYY-MM-DD format (for example,
-	// "2018-12-21"). Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYY-MM format (for example, "2018-12").
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
 	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYY-MM-DD
-	// format (for example, "2018-12-21"). Requests can specify at most one
-	// time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
+	// Requests can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
+	// (for example, "20210701"). Requests can specify at most one time
+	// dimension.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
 	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP
 	// is included automatically.
@@ -1036,6 +1387,14 @@ type NetworkReportSpecSortCondition struct {
 	// an ad delivery dimension.
 	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
 	// or "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
+	// 13.5.1".
+	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found
+	// in versionName in PackageInfo. For iOS, the app version name can be
+	// found in CFBundleShortVersionString.
+	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
+	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
 
 	// Metric: Sort by the specified metric.
@@ -1086,10 +1445,10 @@ type NetworkReportSpecSortCondition struct {
 
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Dimension") to include in
@@ -1134,10 +1493,10 @@ type PublisherAccount struct {
 
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CurrencyCode") to include
@@ -1169,10 +1528,10 @@ type ReportFooter struct {
 
 	// ForceSendFields is a list of field names (e.g. "MatchingRowCount") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MatchingRowCount") to
@@ -1208,10 +1567,10 @@ type ReportHeader struct {
 
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DateRange") to include in
@@ -1242,10 +1601,10 @@ type ReportRow struct {
 
 	// ForceSendFields is a list of field names (e.g. "DimensionValues") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DimensionValues") to
@@ -1276,10 +1635,10 @@ type ReportRowDimensionValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayLabel") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayLabel") to include
@@ -1313,10 +1672,10 @@ type ReportRowMetricValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "DoubleValue") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DoubleValue") to include
@@ -1377,10 +1736,10 @@ type ReportWarning struct {
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Description") to include
@@ -1405,10 +1764,10 @@ type StringList struct {
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Values") to include in API
@@ -1438,6 +1797,9 @@ type AccountsGetCall struct {
 }
 
 // Get: Gets information about the specified AdMob publisher account.
+//
+// - name: Resource name of the publisher account to retrieve. Example:
+//   accounts/pub-9876543210987654.
 func (r *AccountsService) Get(name string) *AccountsGetCall {
 	c := &AccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1481,7 +1843,7 @@ func (c *AccountsGetCall) Header() http.Header {
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1582,9 +1944,9 @@ type AccountsListCall struct {
 	header_      http.Header
 }
 
-// List: List the AdMob publisher account accessible with the client
-// credential. Currently, all credentials have access to at most one
-// AdMob account.
+// List: Lists the AdMob publisher account that was most recently signed
+// in to from the AdMob UI. For more information, see
+// https://support.google.com/admob/answer/10243672.
 func (r *AccountsService) List() *AccountsListCall {
 	c := &AccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1643,7 +2005,7 @@ func (c *AccountsListCall) Header() http.Header {
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1702,7 +2064,7 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListPublisherAccou
 	}
 	return ret, nil
 	// {
-	//   "description": "List the AdMob publisher account accessible with the client credential. Currently, all credentials have access to at most one AdMob account.",
+	//   "description": "Lists the AdMob publisher account that was most recently signed in to from the AdMob UI. For more information, see https://support.google.com/admob/answer/10243672.",
 	//   "flatPath": "v1/accounts",
 	//   "httpMethod": "GET",
 	//   "id": "admob.accounts.list",
@@ -1754,6 +2116,402 @@ func (c *AccountsListCall) Pages(ctx context.Context, f func(*ListPublisherAccou
 	}
 }
 
+// method id "admob.accounts.adUnits.list":
+
+type AccountsAdUnitsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List the ad units under the specified AdMob account.
+//
+// - parent: Resource name of the account to list ad units for. Example:
+//   accounts/pub-9876543210987654.
+func (r *AccountsAdUnitsService) List(parent string) *AccountsAdUnitsListCall {
+	c := &AccountsAdUnitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of ad units to return. If unspecified or 0, at most 1000 ad units
+// will be returned. The maximum value is 10,000; values above 10,000
+// will be coerced to 10,000.
+func (c *AccountsAdUnitsListCall) PageSize(pageSize int64) *AccountsAdUnitsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListAdUnitsResponse`; indicates that this is a
+// continuation of a prior `ListAdUnits` call, and that the system
+// should return the next page of data.
+func (c *AccountsAdUnitsListCall) PageToken(pageToken string) *AccountsAdUnitsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsAdUnitsListCall) Fields(s ...googleapi.Field) *AccountsAdUnitsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsAdUnitsListCall) IfNoneMatch(entityTag string) *AccountsAdUnitsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsAdUnitsListCall) Context(ctx context.Context) *AccountsAdUnitsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsAdUnitsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAdUnitsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/adUnits")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admob.accounts.adUnits.list" call.
+// Exactly one of *ListAdUnitsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListAdUnitsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsAdUnitsListCall) Do(opts ...googleapi.CallOption) (*ListAdUnitsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListAdUnitsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List the ad units under the specified AdMob account.",
+	//   "flatPath": "v1/accounts/{accountsId}/adUnits",
+	//   "httpMethod": "GET",
+	//   "id": "admob.accounts.adUnits.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of ad units to return. If unspecified or 0, at most 1000 ad units will be returned. The maximum value is 10,000; values above 10,000 will be coerced to 10,000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListAdUnitsResponse`; indicates that this is a continuation of a prior `ListAdUnits` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Resource name of the account to list ad units for. Example: accounts/pub-9876543210987654",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/adUnits",
+	//   "response": {
+	//     "$ref": "ListAdUnitsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.readonly"
+	//   ],
+	//   "streamingType": "NONE"
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsAdUnitsListCall) Pages(ctx context.Context, f func(*ListAdUnitsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "admob.accounts.apps.list":
+
+type AccountsAppsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List the apps under the specified AdMob account.
+//
+// - parent: Resource name of the account to list apps for. Example:
+//   accounts/pub-9876543210987654.
+func (r *AccountsAppsService) List(parent string) *AccountsAppsListCall {
+	c := &AccountsAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of apps to return. If unspecified or 0, at most 1000 apps will be
+// returned. The maximum value is 10,000; values above 10,000 will be
+// coerced to 10,000.
+func (c *AccountsAppsListCall) PageSize(pageSize int64) *AccountsAppsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned
+// by the last `ListAppsResponse`; indicates that this is a continuation
+// of a prior `ListApps` call, and that the system should return the
+// next page of data.
+func (c *AccountsAppsListCall) PageToken(pageToken string) *AccountsAppsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsAppsListCall) Fields(s ...googleapi.Field) *AccountsAppsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsAppsListCall) IfNoneMatch(entityTag string) *AccountsAppsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsAppsListCall) Context(ctx context.Context) *AccountsAppsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsAppsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsAppsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/apps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "admob.accounts.apps.list" call.
+// Exactly one of *ListAppsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListAppsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsAppsListCall) Do(opts ...googleapi.CallOption) (*ListAppsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListAppsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List the apps under the specified AdMob account.",
+	//   "flatPath": "v1/accounts/{accountsId}/apps",
+	//   "httpMethod": "GET",
+	//   "id": "admob.accounts.apps.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of apps to return. If unspecified or 0, at most 1000 apps will be returned. The maximum value is 10,000; values above 10,000 will be coerced to 10,000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The value returned by the last `ListAppsResponse`; indicates that this is a continuation of a prior `ListApps` call, and that the system should return the next page of data.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Resource name of the account to list apps for. Example: accounts/pub-9876543210987654",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/apps",
+	//   "response": {
+	//     "$ref": "ListAppsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/admob.readonly"
+	//   ],
+	//   "streamingType": "NONE"
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsAppsListCall) Pages(ctx context.Context, f func(*ListAppsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "admob.accounts.mediationReport.generate":
 
 type AccountsMediationReportGenerateCall struct {
@@ -1768,6 +2526,9 @@ type AccountsMediationReportGenerateCall struct {
 // Generate: Generates an AdMob Mediation report based on the provided
 // report specification. Returns result of a server-side streaming RPC.
 // The result is returned in a sequence of responses.
+//
+// - parent: Resource name of the account to generate the report for.
+//   Example: accounts/pub-9876543210987654.
 func (r *AccountsMediationReportService) Generate(parent string, generatemediationreportrequest *GenerateMediationReportRequest) *AccountsMediationReportGenerateCall {
 	c := &AccountsMediationReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1802,7 +2563,7 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1912,6 +2673,9 @@ type AccountsNetworkReportGenerateCall struct {
 // Generate: Generates an AdMob Network report based on the provided
 // report specification. Returns result of a server-side streaming RPC.
 // The result is returned in a sequence of responses.
+//
+// - parent: Resource name of the account to generate the report for.
+//   Example: accounts/pub-9876543210987654.
 func (r *AccountsNetworkReportService) Generate(parent string, generatenetworkreportrequest *GenerateNetworkReportRequest) *AccountsNetworkReportGenerateCall {
 	c := &AccountsNetworkReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1946,7 +2710,7 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

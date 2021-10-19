@@ -176,7 +176,7 @@
                 "INCLUDE_DOWNLOAD_URL"
               ],
               "enumDescriptions": [
-                "Server reponses do not include the download URL for the photo bytes. The default value.",
+                "Server responses do not include the download URL for the photo bytes. The default value.",
                 "Server responses include the download URL for the photo bytes."
               ],
               "location": "query",
@@ -289,7 +289,7 @@
                 "INCLUDE_DOWNLOAD_URL"
               ],
               "enumDescriptions": [
-                "Server reponses do not include the download URL for the photo bytes. The default value.",
+                "Server responses do not include the download URL for the photo bytes. The default value.",
                 "Server responses include the download URL for the photo bytes."
               ],
               "location": "query",
@@ -330,7 +330,7 @@
           "parameterOrder": [],
           "parameters": {
             "filter": {
-              "description": "Required. The filter expression. For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`. The only filter supported at the moment is `placeId`.",
+              "description": "Optional. The filter expression. For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`. The only filter supported at the moment is `placeId`.",
               "location": "query",
               "type": "string"
             },
@@ -357,7 +357,7 @@
                 "INCLUDE_DOWNLOAD_URL"
               ],
               "enumDescriptions": [
-                "Server reponses do not include the download URL for the photo bytes. The default value.",
+                "Server responses do not include the download URL for the photo bytes. The default value.",
                 "Server responses include the download URL for the photo bytes."
               ],
               "location": "query",
@@ -375,7 +375,7 @@
       }
     }
   },
-  "revision": "20210114",
+  "revision": "20210910",
   "rootUrl": "https://streetviewpublish.googleapis.com/",
   "schemas": {
     "BatchDeletePhotosRequest": {
@@ -466,7 +466,7 @@
       "type": "object"
     },
     "LatLng": {
-      "description": "An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this must conform to the WGS84 standard. Values must be within normalized ranges.",
+      "description": "An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this object must conform to the WGS84 standard. Values must be within normalized ranges.",
       "id": "LatLng",
       "properties": {
         "latitude": {
@@ -635,6 +635,11 @@
         "uploadReference": {
           "$ref": "UploadRef",
           "description": "Required when creating a photo. Input only. The resource URL where the photo bytes are uploaded to."
+        },
+        "uploadTime": {
+          "description": "Time when the image was uploaded.",
+          "format": "google-datetime",
+          "type": "string"
         },
         "viewCount": {
           "description": "Output only. View count of the photo.",

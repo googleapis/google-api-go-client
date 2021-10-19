@@ -246,10 +246,10 @@ type ListLogServiceIndexesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "NextPageToken") to include
@@ -281,10 +281,10 @@ type ListLogServiceSinksResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Sinks") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Sinks") to include in API
@@ -321,10 +321,10 @@ type ListLogServicesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "LogServices") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "LogServices") to include
@@ -355,10 +355,10 @@ type ListLogSinksResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Sinks") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Sinks") to include in API
@@ -394,10 +394,10 @@ type ListLogsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Logs") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Logs") to include in API
@@ -431,10 +431,10 @@ type Log struct {
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DisplayName") to include
@@ -480,10 +480,10 @@ type LogEntry struct {
 
 	// ForceSendFields is a list of field names (e.g. "InsertId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "InsertId") to include in
@@ -559,10 +559,10 @@ type LogEntryMetadata struct {
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Labels") to include in API
@@ -597,10 +597,10 @@ type LogError struct {
 
 	// ForceSendFields is a list of field names (e.g. "Resource") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Resource") to include in
@@ -630,10 +630,10 @@ type LogService struct {
 
 	// ForceSendFields is a list of field names (e.g. "IndexKeys") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "IndexKeys") to include in
@@ -676,10 +676,10 @@ type LogSink struct {
 
 	// ForceSendFields is a list of field names (e.g. "Destination") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Destination") to include
@@ -715,10 +715,10 @@ type Status struct {
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Code") to include in API
@@ -749,10 +749,10 @@ type WriteLogEntriesRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "CommonLabels") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "CommonLabels") to include
@@ -790,6 +790,9 @@ type ProjectsLogServicesListCall struct {
 
 // List: Lists log services associated with log entries ingested for a
 // project.
+//
+// - projectsId: Part of `projectName`. The project resource whose
+//   services are to be listed.
 func (r *ProjectsLogServicesService) List(projectsId string) *ProjectsLogServicesListCall {
 	c := &ProjectsLogServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -995,6 +998,13 @@ type ProjectsLogServicesIndexesListCall struct {
 }
 
 // List: Lists log service indexes associated with a log service.
+//
+// - logServicesId: Part of `serviceName`. See documentation of
+//   `projectsId`.
+// - projectsId: Part of `serviceName`. A log service resource of the
+//   form `/projects/*/logServices/*`. The service indexes of the log
+//   service are returned. Example:
+//   "/projects/myProj/logServices/appengine.googleapis.com".
 func (r *ProjectsLogServicesIndexesService) List(projectsId string, logServicesId string) *ProjectsLogServicesIndexesListCall {
 	c := &ProjectsLogServicesIndexesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -1246,6 +1256,11 @@ type ProjectsLogServicesSinksCreateCall struct {
 }
 
 // Create: Creates the specified log service sink resource.
+//
+// - logServicesId: Part of `serviceName`. See documentation of
+//   `projectsId`.
+// - projectsId: Part of `serviceName`. The name of the service in which
+//   to create a sink.
 func (r *ProjectsLogServicesSinksService) Create(projectsId string, logServicesId string, logsink *LogSink) *ProjectsLogServicesSinksCreateCall {
 	c := &ProjectsLogServicesSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -1394,6 +1409,11 @@ type ProjectsLogServicesSinksDeleteCall struct {
 }
 
 // Delete: Deletes the specified log service sink.
+//
+// - logServicesId: Part of `sinkName`. See documentation of
+//   `projectsId`.
+// - projectsId: Part of `sinkName`. The name of the sink to delete.
+// - sinksId: Part of `sinkName`. See documentation of `projectsId`.
 func (r *ProjectsLogServicesSinksService) Delete(projectsId string, logServicesId string, sinksId string) *ProjectsLogServicesSinksDeleteCall {
 	c := &ProjectsLogServicesSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -1543,6 +1563,11 @@ type ProjectsLogServicesSinksGetCall struct {
 }
 
 // Get: Gets the specified log service sink resource.
+//
+// - logServicesId: Part of `sinkName`. See documentation of
+//   `projectsId`.
+// - projectsId: Part of `sinkName`. The name of the sink to return.
+// - sinksId: Part of `sinkName`. See documentation of `projectsId`.
 func (r *ProjectsLogServicesSinksService) Get(projectsId string, logServicesId string, sinksId string) *ProjectsLogServicesSinksGetCall {
 	c := &ProjectsLogServicesSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -1704,6 +1729,11 @@ type ProjectsLogServicesSinksListCall struct {
 }
 
 // List: Lists log service sinks associated with the specified service.
+//
+// - logServicesId: Part of `serviceName`. See documentation of
+//   `projectsId`.
+// - projectsId: Part of `serviceName`. The name of the service for
+//   which to list sinks.
 func (r *ProjectsLogServicesSinksService) List(projectsId string, logServicesId string) *ProjectsLogServicesSinksListCall {
 	c := &ProjectsLogServicesSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -1857,6 +1887,11 @@ type ProjectsLogServicesSinksUpdateCall struct {
 }
 
 // Update: Creates or update the specified log service sink resource.
+//
+// - logServicesId: Part of `sinkName`. See documentation of
+//   `projectsId`.
+// - projectsId: Part of `sinkName`. The name of the sink to update.
+// - sinksId: Part of `sinkName`. See documentation of `projectsId`.
 func (r *ProjectsLogServicesSinksService) Update(projectsId string, logServicesId string, sinksId string, logsink *LogSink) *ProjectsLogServicesSinksUpdateCall {
 	c := &ProjectsLogServicesSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -2014,6 +2049,9 @@ type ProjectsLogsDeleteCall struct {
 
 // Delete: Deletes the specified log resource and all log entries
 // contained in it.
+//
+// - logsId: Part of `logName`. See documentation of `projectsId`.
+// - projectsId: Part of `logName`. The log resource to delete.
 func (r *ProjectsLogsService) Delete(projectsId string, logsId string) *ProjectsLogsDeleteCall {
 	c := &ProjectsLogsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -2152,6 +2190,9 @@ type ProjectsLogsListCall struct {
 }
 
 // List: Lists log resources belonging to the specified project.
+//
+// - projectsId: Part of `projectName`. The project name for which to
+//   list the log resources.
 func (r *ProjectsLogsService) List(projectsId string) *ProjectsLogsListCall {
 	c := &ProjectsLogsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -2385,6 +2426,10 @@ type ProjectsLogsEntriesWriteCall struct {
 // that supplies default (key, value) data for the
 // `entries[].metadata.labels` maps, saving you the trouble of creating
 // identical copies for each entry.
+//
+// - logsId: Part of `logName`. See documentation of `projectsId`.
+// - projectsId: Part of `logName`. The name of the log resource into
+//   which to insert the log entries.
 func (r *ProjectsLogsEntriesService) Write(projectsId string, logsId string, writelogentriesrequest *WriteLogEntriesRequest) *ProjectsLogsEntriesWriteCall {
 	c := &ProjectsLogsEntriesWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -2533,6 +2578,10 @@ type ProjectsLogsSinksCreateCall struct {
 }
 
 // Create: Creates the specified log sink resource.
+//
+// - logsId: Part of `logName`. See documentation of `projectsId`.
+// - projectsId: Part of `logName`. The log in which to create a sink
+//   resource.
 func (r *ProjectsLogsSinksService) Create(projectsId string, logsId string, logsink *LogSink) *ProjectsLogsSinksCreateCall {
 	c := &ProjectsLogsSinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -2681,6 +2730,10 @@ type ProjectsLogsSinksDeleteCall struct {
 }
 
 // Delete: Deletes the specified log sink resource.
+//
+// - logsId: Part of `sinkName`. See documentation of `projectsId`.
+// - projectsId: Part of `sinkName`. The name of the sink to delete.
+// - sinksId: Part of `sinkName`. See documentation of `projectsId`.
 func (r *ProjectsLogsSinksService) Delete(projectsId string, logsId string, sinksId string) *ProjectsLogsSinksDeleteCall {
 	c := &ProjectsLogsSinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -2830,6 +2883,11 @@ type ProjectsLogsSinksGetCall struct {
 }
 
 // Get: Gets the specified log sink resource.
+//
+// - logsId: Part of `sinkName`. See documentation of `projectsId`.
+// - projectsId: Part of `sinkName`. The name of the sink resource to
+//   return.
+// - sinksId: Part of `sinkName`. See documentation of `projectsId`.
 func (r *ProjectsLogsSinksService) Get(projectsId string, logsId string, sinksId string) *ProjectsLogsSinksGetCall {
 	c := &ProjectsLogsSinksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -2991,6 +3049,9 @@ type ProjectsLogsSinksListCall struct {
 }
 
 // List: Lists log sinks associated with the specified log.
+//
+// - logsId: Part of `logName`. See documentation of `projectsId`.
+// - projectsId: Part of `logName`. The log for which to list sinks.
 func (r *ProjectsLogsSinksService) List(projectsId string, logsId string) *ProjectsLogsSinksListCall {
 	c := &ProjectsLogsSinksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId
@@ -3144,6 +3205,10 @@ type ProjectsLogsSinksUpdateCall struct {
 }
 
 // Update: Creates or updates the specified log sink resource.
+//
+// - logsId: Part of `sinkName`. See documentation of `projectsId`.
+// - projectsId: Part of `sinkName`. The name of the sink to update.
+// - sinksId: Part of `sinkName`. See documentation of `projectsId`.
 func (r *ProjectsLogsSinksService) Update(projectsId string, logsId string, sinksId string, logsink *LogSink) *ProjectsLogsSinksUpdateCall {
 	c := &ProjectsLogsSinksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectsId = projectsId

@@ -86,85 +86,81 @@ const (
 	// Use Google Fit to see and store your physical activity data
 	FitnessActivityReadScope = "https://www.googleapis.com/auth/fitness.activity.read"
 
-	// See and add to your Google Fit physical activity data
+	// Add to your Google Fit physical activity data
 	FitnessActivityWriteScope = "https://www.googleapis.com/auth/fitness.activity.write"
 
 	// See info about your blood glucose in Google Fit. I consent to Google
 	// sharing my blood glucose information with this app.
 	FitnessBloodGlucoseReadScope = "https://www.googleapis.com/auth/fitness.blood_glucose.read"
 
-	// See and add info about your blood glucose to Google Fit. I consent to
-	// Google sharing my blood glucose information with this app.
+	// Add info about your blood glucose to Google Fit. I consent to Google
+	// using my blood glucose information with this app.
 	FitnessBloodGlucoseWriteScope = "https://www.googleapis.com/auth/fitness.blood_glucose.write"
 
 	// See info about your blood pressure in Google Fit. I consent to Google
 	// sharing my blood pressure information with this app.
 	FitnessBloodPressureReadScope = "https://www.googleapis.com/auth/fitness.blood_pressure.read"
 
-	// See and add info about your blood pressure in Google Fit. I consent
-	// to Google sharing my blood pressure information with this app.
+	// Add info about your blood pressure in Google Fit. I consent to Google
+	// using my blood pressure information with this app.
 	FitnessBloodPressureWriteScope = "https://www.googleapis.com/auth/fitness.blood_pressure.write"
 
-	// See info about your body measurements and heart rate in Google Fit
+	// See info about your body measurements in Google Fit
 	FitnessBodyReadScope = "https://www.googleapis.com/auth/fitness.body.read"
 
-	// See and add info about your body measurements and heart rate to
-	// Google Fit
+	// Add info about your body measurements to Google Fit
 	FitnessBodyWriteScope = "https://www.googleapis.com/auth/fitness.body.write"
 
 	// See info about your body temperature in Google Fit. I consent to
 	// Google sharing my body temperature information with this app.
 	FitnessBodyTemperatureReadScope = "https://www.googleapis.com/auth/fitness.body_temperature.read"
 
-	// See and add to info about your body temperature in Google Fit. I
-	// consent to Google sharing my body temperature information with this
-	// app.
+	// Add to info about your body temperature in Google Fit. I consent to
+	// Google using my body temperature information with this app.
 	FitnessBodyTemperatureWriteScope = "https://www.googleapis.com/auth/fitness.body_temperature.write"
 
 	// See your heart rate data in Google Fit. I consent to Google sharing
 	// my heart rate information with this app.
 	FitnessHeartRateReadScope = "https://www.googleapis.com/auth/fitness.heart_rate.read"
 
-	// See and add to your heart rate data in Google Fit. I consent to
-	// Google sharing my heart rate information with this app.
+	// Add to your heart rate data in Google Fit. I consent to Google using
+	// my heart rate information with this app.
 	FitnessHeartRateWriteScope = "https://www.googleapis.com/auth/fitness.heart_rate.write"
 
 	// See your Google Fit speed and distance data
 	FitnessLocationReadScope = "https://www.googleapis.com/auth/fitness.location.read"
 
-	// See and add to your Google Fit location data
+	// Add to your Google Fit location data
 	FitnessLocationWriteScope = "https://www.googleapis.com/auth/fitness.location.write"
 
 	// See info about your nutrition in Google Fit
 	FitnessNutritionReadScope = "https://www.googleapis.com/auth/fitness.nutrition.read"
 
-	// See and add to info about your nutrition in Google Fit
+	// Add to info about your nutrition in Google Fit
 	FitnessNutritionWriteScope = "https://www.googleapis.com/auth/fitness.nutrition.write"
 
 	// See info about your oxygen saturation in Google Fit. I consent to
 	// Google sharing my oxygen saturation information with this app.
 	FitnessOxygenSaturationReadScope = "https://www.googleapis.com/auth/fitness.oxygen_saturation.read"
 
-	// See and add info about your oxygen saturation in Google Fit. I
-	// consent to Google sharing my oxygen saturation information with this
-	// app.
+	// Add info about your oxygen saturation in Google Fit. I consent to
+	// Google using my oxygen saturation information with this app.
 	FitnessOxygenSaturationWriteScope = "https://www.googleapis.com/auth/fitness.oxygen_saturation.write"
 
 	// See info about your reproductive health in Google Fit. I consent to
 	// Google sharing my reproductive health information with this app.
 	FitnessReproductiveHealthReadScope = "https://www.googleapis.com/auth/fitness.reproductive_health.read"
 
-	// See and add info about your reproductive health in Google Fit. I
-	// consent to Google sharing my reproductive health information with
-	// this app.
+	// Add info about your reproductive health in Google Fit. I consent to
+	// Google using my reproductive health information with this app.
 	FitnessReproductiveHealthWriteScope = "https://www.googleapis.com/auth/fitness.reproductive_health.write"
 
 	// See your sleep data in Google Fit. I consent to Google sharing my
 	// sleep information with this app.
 	FitnessSleepReadScope = "https://www.googleapis.com/auth/fitness.sleep.read"
 
-	// See and add to your sleep data in Google Fit. I consent to Google
-	// sharing my sleep information with this app.
+	// Add to your sleep data in Google Fit. I consent to Google using my
+	// sleep information with this app.
 	FitnessSleepWriteScope = "https://www.googleapis.com/auth/fitness.sleep.write"
 )
 
@@ -352,10 +348,10 @@ type AggregateBucket struct {
 
 	// ForceSendFields is a list of field names (e.g. "Activity") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Activity") to include in
@@ -396,10 +392,10 @@ type AggregateBy struct {
 
 	// ForceSendFields is a list of field names (e.g. "DataSourceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DataSourceId") to include
@@ -452,7 +448,9 @@ type AggregateRequest struct {
 
 	// EndTimeMillis: The end of a window of time. Data that intersects with
 	// this time window will be aggregated. The time is in milliseconds
-	// since epoch, inclusive.
+	// since epoch, inclusive. The maximum allowed difference between
+	// start_time_millis // and end_time_millis is 7776000000 (roughly 90
+	// days).
 	EndTimeMillis int64 `json:"endTimeMillis,omitempty,string"`
 
 	// FilteredDataQualityStandard: DO NOT POPULATE THIS FIELD. It is
@@ -478,10 +476,10 @@ type AggregateRequest struct {
 
 	// ForceSendFields is a list of field names (e.g. "AggregateBy") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "AggregateBy") to include
@@ -509,10 +507,10 @@ type AggregateResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "Bucket") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Bucket") to include in API
@@ -555,10 +553,10 @@ type Application struct {
 
 	// ForceSendFields is a list of field names (e.g. "DetailsUrl") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DetailsUrl") to include in
@@ -588,8 +586,8 @@ type BucketByActivity struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ActivityDataSourceId") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -619,10 +617,10 @@ type BucketBySession struct {
 
 	// ForceSendFields is a list of field names (e.g. "MinDurationMillis")
 	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "MinDurationMillis") to
@@ -651,10 +649,10 @@ type BucketByTime struct {
 
 	// ForceSendFields is a list of field names (e.g. "DurationMillis") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DurationMillis") to
@@ -687,10 +685,10 @@ type BucketByTimePeriod struct {
 
 	// ForceSendFields is a list of field names (e.g. "TimeZoneId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "TimeZoneId") to include in
@@ -760,8 +758,8 @@ type DataPoint struct {
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ComputationTimeMillis") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
@@ -880,10 +878,10 @@ type DataSource struct {
 
 	// ForceSendFields is a list of field names (e.g. "Application") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Application") to include
@@ -911,10 +909,10 @@ type DataType struct {
 
 	// ForceSendFields is a list of field names (e.g. "Field") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Field") to include in API
@@ -961,10 +959,10 @@ type DataTypeField struct {
 
 	// ForceSendFields is a list of field names (e.g. "Format") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Format") to include in API
@@ -1022,10 +1020,10 @@ type Dataset struct {
 
 	// ForceSendFields is a list of field names (e.g. "DataSourceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DataSourceId") to include
@@ -1087,10 +1085,10 @@ type Device struct {
 
 	// ForceSendFields is a list of field names (e.g. "Manufacturer") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Manufacturer") to include
@@ -1131,10 +1129,10 @@ type ListDataPointChangesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DataSourceId") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DataSourceId") to include
@@ -1162,10 +1160,10 @@ type ListDataSourcesResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DataSource") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DataSource") to include in
@@ -1209,10 +1207,10 @@ type ListSessionsResponse struct {
 
 	// ForceSendFields is a list of field names (e.g. "DeletedSession") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "DeletedSession") to
@@ -1240,10 +1238,10 @@ type MapValue struct {
 
 	// ForceSendFields is a list of field names (e.g. "FpVal") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FpVal") to include in API
@@ -1318,10 +1316,10 @@ type Session struct {
 
 	// ForceSendFields is a list of field names (e.g. "ActiveTimeMillis") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "ActiveTimeMillis") to
@@ -1366,10 +1364,10 @@ type Value struct {
 
 	// ForceSendFields is a list of field names (e.g. "FpVal") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "FpVal") to include in API
@@ -1408,10 +1406,10 @@ type ValueMapValEntry struct {
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
 	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g. "Key") to include in API
@@ -1468,6 +1466,9 @@ type UsersDataSourcesCreateCall struct {
 // when creating the data source is included. This developer project
 // number is obfuscated when read by any other developer reading public
 // data types.
+//
+// - userId: Create the data source for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesService) Create(userId string, datasource *DataSource) *UsersDataSourcesCreateCall {
 	c := &UsersDataSourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1502,7 +1503,7 @@ func (c *UsersDataSourcesCreateCall) Header() http.Header {
 
 func (c *UsersDataSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1618,6 +1619,10 @@ type UsersDataSourcesDeleteCall struct {
 
 // Delete: Deletes the specified data source. The request will fail if
 // the data source contains any data points.
+//
+// - dataSourceId: The data stream ID of the data source to delete.
+// - userId: Retrieve a data source for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesService) Delete(userId string, dataSourceId string) *UsersDataSourcesDeleteCall {
 	c := &UsersDataSourcesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1652,7 +1657,7 @@ func (c *UsersDataSourcesDeleteCall) Header() http.Header {
 
 func (c *UsersDataSourcesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1768,6 +1773,10 @@ type UsersDataSourcesGetCall struct {
 }
 
 // Get: Returns the specified data source.
+//
+// - dataSourceId: The data stream ID of the data source to retrieve.
+// - userId: Retrieve a data source for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesService) Get(userId string, dataSourceId string) *UsersDataSourcesGetCall {
 	c := &UsersDataSourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1812,7 +1821,7 @@ func (c *UsersDataSourcesGetCall) Header() http.Header {
 
 func (c *UsersDataSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1944,6 +1953,9 @@ type UsersDataSourcesListCall struct {
 // the OAuth scopes provided. The list is not exhaustive; the user may
 // have private data sources that are only visible to other developers,
 // or calls using other scopes.
+//
+// - userId: List data sources for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesService) List(userId string) *UsersDataSourcesListCall {
 	c := &UsersDataSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -1995,7 +2007,7 @@ func (c *UsersDataSourcesListCall) Header() http.Header {
 
 func (c *UsersDataSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2126,6 +2138,10 @@ type UsersDataSourcesUpdateCall struct {
 // dataType, type, dataStreamName, and device properties with the
 // exception of version, cannot be modified. Data sources are identified
 // by their dataStreamId.
+//
+// - dataSourceId: The data stream ID of the data source to update.
+// - userId: Update the data source for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesService) Update(userId string, dataSourceId string, datasource *DataSource) *UsersDataSourcesUpdateCall {
 	c := &UsersDataSourcesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2161,7 +2177,7 @@ func (c *UsersDataSourcesUpdateCall) Header() http.Header {
 
 func (c *UsersDataSourcesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2286,6 +2302,11 @@ type UsersDataSourcesDataPointChangesListCall struct {
 
 // List: Queries for user's data point changes for a particular data
 // source.
+//
+// - dataSourceId: The data stream ID of the data source that created
+//   the dataset.
+// - userId: List data points for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesDataPointChangesService) List(userId string, dataSourceId string) *UsersDataSourcesDataPointChangesListCall {
 	c := &UsersDataSourcesDataPointChangesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2346,7 +2367,7 @@ func (c *UsersDataSourcesDataPointChangesListCall) Header() http.Header {
 
 func (c *UsersDataSourcesDataPointChangesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2514,25 +2535,21 @@ type UsersDataSourcesDatasetsDeleteCall struct {
 // value (such as com.google.activity.segment), and a data point
 // straddles either end point of the dataset, only the overlapping
 // portion of the data point will be deleted.
+//
+// - dataSourceId: The data stream ID of the data source that created
+//   the dataset.
+// - datasetId: Dataset identifier that is a composite of the minimum
+//   data point start time and maximum data point end time represented
+//   as nanoseconds from the epoch. The ID is formatted like:
+//   "startTime-endTime" where startTime and endTime are 64 bit
+//   integers.
+// - userId: Delete a dataset for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesDatasetsService) Delete(userId string, dataSourceId string, datasetId string) *UsersDataSourcesDatasetsDeleteCall {
 	c := &UsersDataSourcesDatasetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
 	c.dataSourceId = dataSourceId
 	c.datasetId = datasetId
-	return c
-}
-
-// CurrentTimeMillis sets the optional parameter "currentTimeMillis":
-// The client's current time in milliseconds since epoch.
-func (c *UsersDataSourcesDatasetsDeleteCall) CurrentTimeMillis(currentTimeMillis int64) *UsersDataSourcesDatasetsDeleteCall {
-	c.urlParams_.Set("currentTimeMillis", fmt.Sprint(currentTimeMillis))
-	return c
-}
-
-// ModifiedTimeMillis sets the optional parameter "modifiedTimeMillis":
-// When the operation was performed on the client.
-func (c *UsersDataSourcesDatasetsDeleteCall) ModifiedTimeMillis(modifiedTimeMillis int64) *UsersDataSourcesDatasetsDeleteCall {
-	c.urlParams_.Set("modifiedTimeMillis", fmt.Sprint(modifiedTimeMillis))
 	return c
 }
 
@@ -2563,7 +2580,7 @@ func (c *UsersDataSourcesDatasetsDeleteCall) Header() http.Header {
 
 func (c *UsersDataSourcesDatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2609,12 +2626,6 @@ func (c *UsersDataSourcesDatasetsDeleteCall) Do(opts ...googleapi.CallOption) er
 	//     "datasetId"
 	//   ],
 	//   "parameters": {
-	//     "currentTimeMillis": {
-	//       "description": "The client's current time in milliseconds since epoch.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "dataSourceId": {
 	//       "description": "The data stream ID of the data source that created the dataset.",
 	//       "location": "path",
@@ -2625,12 +2636,6 @@ func (c *UsersDataSourcesDatasetsDeleteCall) Do(opts ...googleapi.CallOption) er
 	//       "description": "Dataset identifier that is a composite of the minimum data point start time and maximum data point end time represented as nanoseconds from the epoch. The ID is formatted like: \"startTime-endTime\" where startTime and endTime are 64 bit integers.",
 	//       "location": "path",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "modifiedTimeMillis": {
-	//       "description": "When the operation was performed on the client.",
-	//       "format": "int64",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "userId": {
@@ -2676,6 +2681,16 @@ type UsersDataSourcesDatasetsGetCall struct {
 // time and maximum end time. Specifically, any data point whose start
 // time is less than or equal to the dataset end time and whose end time
 // is greater than or equal to the dataset start time.
+//
+// - dataSourceId: The data stream ID of the data source that created
+//   the dataset.
+// - datasetId: Dataset identifier that is a composite of the minimum
+//   data point start time and maximum data point end time represented
+//   as nanoseconds from the epoch. The ID is formatted like:
+//   "startTime-endTime" where startTime and endTime are 64 bit
+//   integers.
+// - userId: Retrieve a dataset for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesDatasetsService) Get(userId string, dataSourceId string, datasetId string) *UsersDataSourcesDatasetsGetCall {
 	c := &UsersDataSourcesDatasetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2743,7 +2758,7 @@ func (c *UsersDataSourcesDatasetsGetCall) Header() http.Header {
 
 func (c *UsersDataSourcesDatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2919,21 +2934,18 @@ type UsersDataSourcesDatasetsPatchCall struct {
 // can belong to more than one dataset. This method does not use patch
 // semantics: the data points provided are merely inserted, with no
 // existing data replaced.
+//
+// - dataSourceId: The data stream ID of the data source that created
+//   the dataset.
+// - datasetId: This field is not used, and can be safely omitted.
+// - userId: Patch a dataset for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDataSourcesDatasetsService) Patch(userId string, dataSourceId string, datasetId string, dataset *Dataset) *UsersDataSourcesDatasetsPatchCall {
 	c := &UsersDataSourcesDatasetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
 	c.dataSourceId = dataSourceId
 	c.datasetId = datasetId
 	c.dataset = dataset
-	return c
-}
-
-// CurrentTimeMillis sets the optional parameter "currentTimeMillis":
-// The client's current time in milliseconds since epoch. Note that the
-// minStartTimeNs and maxEndTimeNs properties in the request body are in
-// nanoseconds instead of milliseconds.
-func (c *UsersDataSourcesDatasetsPatchCall) CurrentTimeMillis(currentTimeMillis int64) *UsersDataSourcesDatasetsPatchCall {
-	c.urlParams_.Set("currentTimeMillis", fmt.Sprint(currentTimeMillis))
 	return c
 }
 
@@ -2964,7 +2976,7 @@ func (c *UsersDataSourcesDatasetsPatchCall) Header() http.Header {
 
 func (c *UsersDataSourcesDatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3040,12 +3052,6 @@ func (c *UsersDataSourcesDatasetsPatchCall) Do(opts ...googleapi.CallOption) (*D
 	//     "datasetId"
 	//   ],
 	//   "parameters": {
-	//     "currentTimeMillis": {
-	//       "description": "The client's current time in milliseconds since epoch. Note that the minStartTimeNs and maxEndTimeNs properties in the request body are in nanoseconds instead of milliseconds.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "dataSourceId": {
 	//       "description": "The data stream ID of the data source that created the dataset.",
 	//       "location": "path",
@@ -3125,6 +3131,9 @@ type UsersDatasetAggregateCall struct {
 // divided by a given type of boundary. Multiple data sets of multiple
 // types and from multiple sources can be aggregated into exactly one
 // bucket type per request.
+//
+// - userId: Aggregate data for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersDatasetService) Aggregate(userId string, aggregaterequest *AggregateRequest) *UsersDatasetAggregateCall {
 	c := &UsersDatasetAggregateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3159,7 +3168,7 @@ func (c *UsersDatasetAggregateCall) Header() http.Header {
 
 func (c *UsersDatasetAggregateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3285,17 +3294,14 @@ type UsersSessionsDeleteCall struct {
 }
 
 // Delete: Deletes a session specified by the given session ID.
+//
+// - sessionId: The ID of the session to be deleted.
+// - userId: Delete a session for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersSessionsService) Delete(userId string, sessionId string) *UsersSessionsDeleteCall {
 	c := &UsersSessionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
 	c.sessionId = sessionId
-	return c
-}
-
-// CurrentTimeMillis sets the optional parameter "currentTimeMillis":
-// The client's current time in milliseconds since epoch.
-func (c *UsersSessionsDeleteCall) CurrentTimeMillis(currentTimeMillis int64) *UsersSessionsDeleteCall {
-	c.urlParams_.Set("currentTimeMillis", fmt.Sprint(currentTimeMillis))
 	return c
 }
 
@@ -3326,7 +3332,7 @@ func (c *UsersSessionsDeleteCall) Header() http.Header {
 
 func (c *UsersSessionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3370,12 +3376,6 @@ func (c *UsersSessionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     "sessionId"
 	//   ],
 	//   "parameters": {
-	//     "currentTimeMillis": {
-	//       "description": "The client's current time in milliseconds since epoch.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "sessionId": {
 	//       "description": "The ID of the session to be deleted.",
 	//       "location": "path",
@@ -3410,6 +3410,9 @@ type UsersSessionsListCall struct {
 }
 
 // List: Lists sessions previously created.
+//
+// - userId: List sessions for the person identified. Use me to indicate
+//   the authenticated user. Only me is supported at this time.
 func (r *UsersSessionsService) List(userId string) *UsersSessionsListCall {
 	c := &UsersSessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3504,7 +3507,7 @@ func (c *UsersSessionsListCall) Header() http.Header {
 
 func (c *UsersSessionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3674,18 +3677,15 @@ type UsersSessionsUpdateCall struct {
 }
 
 // Update: Updates or insert a given session.
+//
+// - sessionId: The ID of the session to be created.
+// - userId: Create sessions for the person identified. Use me to
+//   indicate the authenticated user. Only me is supported at this time.
 func (r *UsersSessionsService) Update(userId string, sessionId string, session *Session) *UsersSessionsUpdateCall {
 	c := &UsersSessionsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
 	c.sessionId = sessionId
 	c.session = session
-	return c
-}
-
-// CurrentTimeMillis sets the optional parameter "currentTimeMillis":
-// The client's current time in milliseconds since epoch.
-func (c *UsersSessionsUpdateCall) CurrentTimeMillis(currentTimeMillis int64) *UsersSessionsUpdateCall {
-	c.urlParams_.Set("currentTimeMillis", fmt.Sprint(currentTimeMillis))
 	return c
 }
 
@@ -3716,7 +3716,7 @@ func (c *UsersSessionsUpdateCall) Header() http.Header {
 
 func (c *UsersSessionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210131")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3790,12 +3790,6 @@ func (c *UsersSessionsUpdateCall) Do(opts ...googleapi.CallOption) (*Session, er
 	//     "sessionId"
 	//   ],
 	//   "parameters": {
-	//     "currentTimeMillis": {
-	//       "description": "The client's current time in milliseconds since epoch.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "sessionId": {
 	//       "description": "The ID of the session to be created.",
 	//       "location": "path",

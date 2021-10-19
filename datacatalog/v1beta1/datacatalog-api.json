@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
       }
     }
@@ -108,7 +108,7 @@
     "catalog": {
       "methods": {
         "search": {
-          "description": "Searches Data Catalog for multiple resources like entries, tags that match a query. This is a custom method (https://cloud.google.com/apis/design/custom_methods) and does not return the complete resource, only the resource identifier and high level fields. Clients can subsequentally call `Get` methods. Note that Data Catalog search queries do not guarantee full recall. Query results that match your query may not be returned, even in subsequent result pages. Also note that results returned (and not returned) can vary across repeated search queries. See [Data Catalog Search Syntax](https://cloud.google.com/data-catalog/docs/how-to/search-reference) for more information.",
+          "description": "Searches Data Catalog for multiple resources like entries, tags that match a query. This is a custom method (https://cloud.google.com/apis/design/custom_methods) and does not return the complete resource, only the resource identifier and high level fields. Clients can subsequently call `Get` methods. Note that Data Catalog search queries do not guarantee full recall. Query results that match your query may not be returned, even in subsequent result pages. Also note that results returned (and not returned) can vary across repeated search queries. See [Data Catalog Search Syntax](https://cloud.google.com/data-catalog/docs/how-to/search-reference) for more information.",
           "flatPath": "v1beta1/catalog:search",
           "httpMethod": "POST",
           "id": "datacatalog.catalog.search",
@@ -338,7 +338,7 @@
                       "type": "string"
                     },
                     "updateMask": {
-                      "description": "The fields to update on the entry group. If absent or empty, all modifiable fields are updated.",
+                      "description": "Names of fields whose values to overwrite on an entry group. If this parameter is absent or empty, all modifiable fields are overwritten. If such fields are non-required and omitted in the request body, their values are emptied.",
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
@@ -578,14 +578,14 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The Data Catalog resource name of the entry in URL format. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id} Note that this Entry and its child resources may not actually be stored in the location in this name.",
+                          "description": "Output only. The Data Catalog resource name of the entry in URL format. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id} Note that this Entry and its child resources may not actually be stored in the location in this name.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
                           "required": true,
                           "type": "string"
                         },
                         "updateMask": {
-                          "description": "The fields to update on the entry. If absent or empty, all modifiable fields are updated. The following fields are modifiable: * For entries with type `DATA_STREAM`: * `schema` * For entries with type `FILESET` * `schema` * `display_name` * `description` * `gcs_fileset_spec` * `gcs_fileset_spec.file_patterns` * For entries with `user_specified_type` * `schema` * `display_name` * `description` * user_specified_type * user_specified_system * linked_resource * source_system_timestamps",
+                          "description": "Names of fields whose values to overwrite on an entry. If this parameter is absent or empty, all modifiable fields are overwritten. If such fields are non-required and omitted in the request body, their values are emptied. The following fields are modifiable: * For entries with type `DATA_STREAM`: * `schema` * For entries with type `FILESET`: * `schema` * `display_name` * `description` * `gcs_fileset_spec` * `gcs_fileset_spec.file_patterns` * For entries with `user_specified_type`: * `schema` * `display_name` * `description` * `user_specified_type` * `user_specified_system` * `linked_resource` * `source_system_timestamps`",
                           "format": "google-fieldmask",
                           "location": "query",
                           "type": "string"
@@ -740,7 +740,7 @@
                               "type": "string"
                             },
                             "updateMask": {
-                              "description": "The fields to update on the Tag. If absent or empty, all modifiable fields are updated. Currently the only modifiable field is the field `fields`.",
+                              "description": "Note: Currently, this parameter can only take `\"fields\"` as value. Names of fields whose values to overwrite on a tag. Currently, a tag has the only modifiable field with the name `fields`. In general, if this parameter is absent or empty, all modifiable fields are overwritten. If such fields are non-required and omitted in the request body, their values are emptied.",
                               "format": "google-fieldmask",
                               "location": "query",
                               "type": "string"
@@ -869,7 +869,7 @@
                           "type": "string"
                         },
                         "updateMask": {
-                          "description": "The fields to update on the Tag. If absent or empty, all modifiable fields are updated. Currently the only modifiable field is the field `fields`.",
+                          "description": "Note: Currently, this parameter can only take `\"fields\"` as value. Names of fields whose values to overwrite on a tag. Currently, a tag has the only modifiable field with the name `fields`. In general, if this parameter is absent or empty, all modifiable fields are overwritten. If such fields are non-required and omitted in the request body, their values are emptied.",
                           "format": "google-fieldmask",
                           "location": "query",
                           "type": "string"
@@ -1025,7 +1025,7 @@
                       "type": "string"
                     },
                     "updateMask": {
-                      "description": "The field mask specifies the parts of the template to overwrite. Allowed fields: * `display_name` If absent or empty, all of the allowed fields above will be updated.",
+                      "description": "Names of fields whose values to overwrite on a tag template. Currently, only `display_name` can be overwritten. In general, if this parameter is absent or empty, all modifiable fields are overwritten. If such fields are non-required and omitted in the request body, their values are emptied.",
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
@@ -1182,7 +1182,7 @@
                           "type": "string"
                         },
                         "updateMask": {
-                          "description": "Optional. The field mask specifies the parts of the template to be updated. Allowed fields: * `display_name` * `type.enum_type` * `is_required` If `update_mask` is not set or empty, all of the allowed fields above will be updated. When updating an enum type, the provided values will be merged with the existing values. Therefore, enum values can only be added, existing enum values cannot be deleted nor renamed. Updating a template field from optional to required is NOT allowed.",
+                          "description": "Optional. Names of fields whose values to overwrite on an individual field of a tag template. The following fields are modifiable: * `display_name` * `type.enum_type` * `is_required` If this parameter is absent or empty, all modifiable fields are overwritten. If such fields are non-required and omitted in the request body, their values are emptied with one exception: when updating an enum type, the provided values are merged with the existing values. Therefore, enum values can only be added, existing enum values cannot be deleted or renamed. Additionally, updating a template field from optional to required is *not* allowed.",
                           "format": "google-fieldmask",
                           "location": "query",
                           "type": "string"
@@ -1808,7 +1808,7 @@
       }
     }
   },
-  "revision": "20201210",
+  "revision": "20210811",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -1999,14 +1999,12 @@
           "enum": [
             "INTEGRATED_SYSTEM_UNSPECIFIED",
             "BIGQUERY",
-            "CLOUD_PUBSUB",
-            "DPMS"
+            "CLOUD_PUBSUB"
           ],
           "enumDescriptions": [
             "Default unknown system.",
             "BigQuery.",
-            "Cloud Pub/Sub.",
-            "Dataproc Metastore - Managed Hive Metastore."
+            "Cloud Pub/Sub."
           ],
           "readOnly": true,
           "type": "string"
@@ -2016,7 +2014,8 @@
           "type": "string"
         },
         "name": {
-          "description": "The Data Catalog resource name of the entry in URL format. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id} Note that this Entry and its child resources may not actually be stored in the location in this name.",
+          "description": "Output only. The Data Catalog resource name of the entry in URL format. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id} Note that this Entry and its child resources may not actually be stored in the location in this name.",
+          "readOnly": true,
           "type": "string"
         },
         "schema": {
@@ -2045,6 +2044,11 @@
             "An entry type which is a set of files or objects. Example: Cloud Storage fileset."
           ],
           "type": "string"
+        },
+        "usageSignal": {
+          "$ref": "GoogleCloudDatacatalogV1beta1UsageSignal",
+          "description": "Output only. Statistics on the usage level of the resource.",
+          "readOnly": true
         },
         "userSpecifiedSystem": {
           "description": "This field indicates the entry's source system that Data Catalog does not integrate with. `user_specified_system` strings must begin with a letter or underscore and can only contain letters, numbers, and underscores; are case insensitive; must be at least 1 character and at most 64 characters long.",
@@ -2792,6 +2796,52 @@
       },
       "type": "object"
     },
+    "GoogleCloudDatacatalogV1beta1UsageSignal": {
+      "description": "The set of all usage signals that we store in Data Catalog.",
+      "id": "GoogleCloudDatacatalogV1beta1UsageSignal",
+      "properties": {
+        "updateTime": {
+          "description": "The timestamp of the end of the usage statistics duration.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "usageWithinTimeRange": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudDatacatalogV1beta1UsageStats"
+          },
+          "description": "Usage statistics over each of the pre-defined time ranges, supported strings for time ranges are {\"24H\", \"7D\", \"30D\"}.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1beta1UsageStats": {
+      "description": "Detailed counts on the entry's usage. Caveats: - Only BigQuery tables have usage stats - The usage stats only inlude BigQuery query jobs - The usage stats might be underestimated, e.g. wildcard table references are not yet counted in usage computation https://cloud.google.com/bigquery/docs/querying-wildcard-tables",
+      "id": "GoogleCloudDatacatalogV1beta1UsageStats",
+      "properties": {
+        "totalCancellations": {
+          "description": "The number of times that the underlying entry was attempted to be used but was cancelled by the user.",
+          "format": "float",
+          "type": "number"
+        },
+        "totalCompletions": {
+          "description": "The number of times that the underlying entry was successfully used.",
+          "format": "float",
+          "type": "number"
+        },
+        "totalExecutionTimeForCompletionsMillis": {
+          "description": "Total time spent (in milliseconds) during uses the resulted in completions.",
+          "format": "float",
+          "type": "number"
+        },
+        "totalFailures": {
+          "description": "The number of times that the underlying entry was attempted to be used but failed.",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDatacatalogV1beta1ViewSpec": {
       "description": "Table view specification.",
       "id": "GoogleCloudDatacatalogV1beta1ViewSpec",
@@ -2805,7 +2855,7 @@
       "type": "object"
     },
     "Policy": {
-      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
+      "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members` to a single `role`. Members can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } **YAML example:** bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
       "id": "Policy",
       "properties": {
         "bindings": {

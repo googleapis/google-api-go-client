@@ -379,7 +379,7 @@ type BackupConfiguration struct {
 	ReplicationLogArchivingEnabled bool `json:"replicationLogArchivingEnabled,omitempty"`
 
 	// StartTime: Start time for the daily backup configuration in UTC
-	// timezone in the 24 hour format - *HH:MM*.
+	// timezone in the 24 hour format - **HH:MM**.
 	StartTime string `json:"startTime,omitempty"`
 
 	// TransactionLogRetentionDays: The number of days of transaction logs
@@ -526,7 +526,7 @@ type BackupRun struct {
 	// Instance: Name of the database instance.
 	Instance string `json:"instance,omitempty"`
 
-	// Kind: This is always *sql#backupRun*.
+	// Kind: This is always **sql#backupRun**.
 	Kind string `json:"kind,omitempty"`
 
 	// Location: Location of the backups.
@@ -609,7 +609,7 @@ type BackupRunsListResponse struct {
 	// enqueued time.
 	Items []*BackupRun `json:"items,omitempty"`
 
-	// Kind: This is always *sql#backupRunsList*.
+	// Kind: This is always **sql#backupRunsList**.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The continuation token, used to page through large
@@ -652,7 +652,7 @@ type BinLogCoordinates struct {
 	// BinLogPosition: Position (offset) within the binary log file.
 	BinLogPosition int64 `json:"binLogPosition,omitempty,string"`
 
-	// Kind: This is always *sql#binLogCoordinates*.
+	// Kind: This is always **sql#binLogCoordinates**.
 	Kind string `json:"kind,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BinLogFileName") to
@@ -691,7 +691,7 @@ type CloneContext struct {
 	// as a clone.
 	DestinationInstanceName string `json:"destinationInstanceName,omitempty"`
 
-	// Kind: This is always *sql#cloneContext*.
+	// Kind: This is always **sql#cloneContext**.
 	Kind string `json:"kind,omitempty"`
 
 	// PitrTimestampMs: Reserved for future use.
@@ -883,7 +883,9 @@ type DatabaseFlags struct {
 	// Name: The name of the flag. These flags are passed at instance
 	// startup, so include both server options and system variables. Flags
 	// are specified with underscores, not hyphens. For more information,
-	// see Configuring Database Flags in the Cloud SQL documentation.
+	// see Configuring Database Flags
+	// (https://cloud.google.com/sql/docs/mysql/flags) in the Cloud SQL
+	// documentation.
 	Name string `json:"name,omitempty"`
 
 	// Value: The value of the flag. Booleans are set to **on** for true and
@@ -916,10 +918,10 @@ func (s *DatabaseFlags) MarshalJSON() ([]byte, error) {
 
 // DatabaseInstance: A Cloud SQL instance resource.
 type DatabaseInstance struct {
-	// BackendType:  *SECOND_GEN*: Cloud SQL database instance. *EXTERNAL*:
-	// A database server that is not managed by Google. This property is
-	// read-only; use the *tier* property in the *settings* object to
-	// determine the database type.
+	// BackendType: The backend type. **SECOND_GEN**: Cloud SQL database
+	// instance. **EXTERNAL**: A database server that is not managed by
+	// Google. This property is read-only; use the **tier** property in the
+	// **settings** object to determine the database type.
 	//
 	// Possible values:
 	//   "SQL_BACKEND_TYPE_UNSPECIFIED" - This is an unknown backend type
@@ -941,18 +943,20 @@ type DatabaseInstance struct {
 	// CurrentDiskSize: The current disk usage of the instance in bytes.
 	// This property has been deprecated. Use the
 	// "cloudsql.googleapis.com/database/disk/bytes_used" metric in Cloud
-	// Monitoring API instead. Please see this announcement for details.
+	// Monitoring API instead. Please see this announcement
+	// (https://groups.google.com/d/msg/google-cloud-sql-announce/I_7-F9EBhT0/BtvFtdFeAgAJ)
+	// for details.
 	CurrentDiskSize int64 `json:"currentDiskSize,omitempty,string"`
 
 	// DatabaseVersion: The database engine type and version. The
-	// *databaseVersion* field cannot be changed after instance creation.
-	// MySQL instances: *MYSQL_8_0*, *MYSQL_5_7* (default), or *MYSQL_5_6*.
-	// PostgreSQL instances: *POSTGRES_9_6*, *POSTGRES_10*, *POSTGRES_11*,
-	// *POSTGRES_12*, *POSTGRES_13* (default). SQL Server instances:
-	// *SQLSERVER_2019_STANDARD*, *SQLSERVER_2019_ENTERPRISE*,
-	// *SQLSERVER_2019_EXPRESS*, or *SQLSERVER_2019_WEB*,
-	// *SQLSERVER_2017_STANDARD* (default), *SQLSERVER_2017_ENTERPRISE*,
-	// *SQLSERVER_2017_EXPRESS*, or *SQLSERVER_2017_WEB*.
+	// **databaseVersion** field cannot be changed after instance creation.
+	// * **MySQL instances**: MYSQL_8_0, MYSQL_5_7 (default), or MYSQL_5_6.
+	// * **PostgreSQL instances**: POSTGRES_9_6, POSTGRES_10, POSTGRES_11,
+	// POSTGRES_12, POSTGRES_13 (default). * **SQL Server instances**:
+	// SQLSERVER_2019_STANDARD, SQLSERVER_2019_ENTERPRISE,
+	// SQLSERVER_2019_EXPRESS, or SQLSERVER_2019_WEB,
+	// SQLSERVER_2017_STANDARD (default), SQLSERVER_2017_ENTERPRISE,
+	// SQLSERVER_2017_EXPRESS, or SQLSERVER_2017_WEB.
 	//
 	// Possible values:
 	//   "SQL_DATABASE_VERSION_UNSPECIFIED" - This is an unknown database
@@ -991,7 +995,8 @@ type DatabaseInstance struct {
 	DiskEncryptionStatus *DiskEncryptionStatus `json:"diskEncryptionStatus,omitempty"`
 
 	// Etag: This field is deprecated and will be removed from a future
-	// version of the API. Use the *settings.settingsVersion* field instead.
+	// version of the API. Use the **settings.settingsVersion** field
+	// instead.
 	Etag string `json:"etag,omitempty"`
 
 	// FailoverReplica: The name and status of the failover replica.
@@ -1003,11 +1008,11 @@ type DatabaseInstance struct {
 	// over to its secondary zone.
 	GceZone string `json:"gceZone,omitempty"`
 
-	// InstanceType: The instance type. This can be one of the following.
-	// *CLOUD_SQL_INSTANCE*: A Cloud SQL instance that is not replicating
-	// from a primary instance. *ON_PREMISES_INSTANCE*: An instance running
-	// on the customer's premises. *READ_REPLICA_INSTANCE*: A Cloud SQL
-	// instance configured as a read-replica.
+	// InstanceType: The instance type. This can be one of the following: *
+	// **CLOUD_SQL_INSTANCE**: A Cloud SQL instance that is not replicating
+	// from a primary instance. * **ON_PREMISES_INSTANCE**: An instance
+	// running on the customer's premises. * **READ_REPLICA_INSTANCE**: A
+	// Cloud SQL instance configured as a read-replica.
 	//
 	// Possible values:
 	//   "SQL_INSTANCE_TYPE_UNSPECIFIED" - This is an unknown Cloud SQL
@@ -1026,7 +1031,7 @@ type DatabaseInstance struct {
 	// This property was applicable only to First Generation instances.
 	Ipv6Address string `json:"ipv6Address,omitempty"`
 
-	// Kind: This is always *sql#instance*.
+	// Kind: This is always **sql#instance**.
 	Kind string `json:"kind,omitempty"`
 
 	// MasterInstanceName: The name of the instance which will act as
@@ -1054,11 +1059,11 @@ type DatabaseInstance struct {
 	// instance. The Google apps domain is prefixed if applicable.
 	Project string `json:"project,omitempty"`
 
-	// Region: The geographical region. Can be *us-central* (*FIRST_GEN*
-	// instances only) *us-central1* (*SECOND_GEN* instances only)
-	// *asia-east1* or *europe-west1*. Defaults to *us-central* or
-	// *us-central1* depending on the instance type. The region cannot be
-	// changed after instance creation.
+	// Region: The geographical region. Can be: * **us-central**
+	// (**FIRST_GEN** instances only) * **us-central1** (**SECOND_GEN**
+	// instances only) * **asia-east1** or **europe-west1**. Defaults to
+	// **us-central** or **us-central1** depending on the instance type. The
+	// region cannot be changed after instance creation.
 	Region string `json:"region,omitempty"`
 
 	// ReplicaConfiguration: Configuration specific to failover replicas and
@@ -1100,13 +1105,14 @@ type DatabaseInstance struct {
 	Settings *Settings `json:"settings,omitempty"`
 
 	// State: The current serving state of the Cloud SQL instance. This can
-	// be one of the following. *SQL_INSTANCE_STATE_UNSPECIFIED*: The state
-	// of the instance is unknown. *RUNNABLE*: The instance is running, or
-	// has been stopped by owner. *SUSPENDED*: The instance is not
-	// available, for example due to problems with billing.
-	// *PENDING_DELETE*: The instance is being deleted. *PENDING_CREATE*:
-	// The instance is being created. *MAINTENANCE*: The instance is down
-	// for maintenance. *FAILED*: The instance creation failed.
+	// be one of the following: * **SQL_INSTANCE_STATE_UNSPECIFIED**: The
+	// state of the instance is unknown. * **RUNNABLE**: The instance is
+	// running, or has been stopped by owner. * **SUSPENDED**: The instance
+	// is not available, for example due to problems with billing. *
+	// **PENDING_DELETE**: The instance is being deleted. *
+	// **PENDING_CREATE**: The instance is being created. * **MAINTENANCE**:
+	// The instance is down for maintenance. * **FAILED**: The instance
+	// creation failed.
 	//
 	// Possible values:
 	//   "SQL_INSTANCE_STATE_UNSPECIFIED" - The state of the instance is
@@ -1208,7 +1214,7 @@ type DatabasesListResponse struct {
 	// Items: List of database resources in the instance.
 	Items []*Database `json:"items,omitempty"`
 
-	// Kind: This is always *sql#databasesList*.
+	// Kind: This is always **sql#databasesList**.
 	Kind string `json:"kind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1279,7 +1285,7 @@ func (s *DemoteMasterConfiguration) MarshalJSON() ([]byte, error) {
 // DemoteMasterContext: Database instance demote primary instance
 // context.
 type DemoteMasterContext struct {
-	// Kind: This is always *sql#demoteMasterContext*.
+	// Kind: This is always **sql#demoteMasterContext**.
 	Kind string `json:"kind,omitempty"`
 
 	// MasterInstanceName: The name of the instance which will act as
@@ -1511,7 +1517,7 @@ type ExportContext struct {
 	//   "BAK"
 	FileType string `json:"fileType,omitempty"`
 
-	// Kind: This is always *sql#exportContext*.
+	// Kind: This is always **sql#exportContext**.
 	Kind string `json:"kind,omitempty"`
 
 	// Offload: Option for export offload.
@@ -1672,7 +1678,7 @@ func (s *ExportContextSqlExportOptionsMysqlExportOptions) MarshalJSON() ([]byte,
 
 // FailoverContext: Database instance failover context.
 type FailoverContext struct {
-	// Kind: This is always *sql#failoverContext*.
+	// Kind: This is always **sql#failoverContext**.
 	Kind string `json:"kind,omitempty"`
 
 	// SettingsVersion: The current settings version of this instance.
@@ -1857,6 +1863,10 @@ type GenerateEphemeralCertRequest struct {
 	// freshness for performance.
 	ReadTime string `json:"readTime,omitempty"`
 
+	// ValidDuration: Optional. If set, it will contain the cert valid
+	// duration.
+	ValidDuration string `json:"validDuration,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AccessToken") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2015,8 +2025,8 @@ type ImportContextBakImportOptionsEncryptionOptions struct {
 	PvkPassword string `json:"pvkPassword,omitempty"`
 
 	// PvkPath: Path to the Certificate Private Key (.pvk) in Cloud Storage,
-	// in the form *gs://bucketName/fileName*. The instance must have write
-	// permissions to the bucket and read access to the file.
+	// in the form **gs://bucketName/fileName**. The instance must have
+	// write permissions to the bucket and read access to the file.
 	PvkPath string `json:"pvkPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CertPath") to
@@ -2326,7 +2336,7 @@ type InstancesListResponse struct {
 	// Items: List of database instance resources.
 	Items []*DatabaseInstance `json:"items,omitempty"`
 
-	// Kind: This is always *sql#instancesList*.
+	// Kind: This is always **sql#instancesList**.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The continuation token, used to page through large
@@ -2371,7 +2381,7 @@ type InstancesListServerCasResponse struct {
 	// Certs: List of server CA certificates for the instance.
 	Certs []*SslCert `json:"certs,omitempty"`
 
-	// Kind: This is always *sql#instancesListServerCas*.
+	// Kind: This is always **sql#instancesListServerCas**.
 	Kind string `json:"kind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2820,7 +2830,7 @@ type OnPremisesConfiguration struct {
 	// format
 	HostPort string `json:"hostPort,omitempty"`
 
-	// Kind: This is always *sql#onPremisesConfiguration*.
+	// Kind: This is always **sql#onPremisesConfiguration**.
 	Kind string `json:"kind,omitempty"`
 
 	// Password: The password for connecting to on-premises instance.
@@ -3073,7 +3083,7 @@ type OperationsListResponse struct {
 	// Items: List of operation resources.
 	Items []*Operation `json:"items,omitempty"`
 
-	// Kind: This is always *sql#operationsList*.
+	// Kind: This is always **sql#operationsList**.
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: The continuation token, used to page through large
@@ -3112,14 +3122,14 @@ func (s *OperationsListResponse) MarshalJSON() ([]byte, error) {
 // the primary instance.
 type ReplicaConfiguration struct {
 	// FailoverTarget: Specifies if the replica is the failover target. If
-	// the field is set to *true* the replica will be designated as a
+	// the field is set to **true** the replica will be designated as a
 	// failover replica. In case the primary instance fails, the replica
 	// instance will be promoted as the new primary instance. Only one
 	// replica can be specified as failover target, and the replica has to
 	// be in different zone with the primary instance.
 	FailoverTarget bool `json:"failoverTarget,omitempty"`
 
-	// Kind: This is always *sql#replicaConfiguration*.
+	// Kind: This is always **sql#replicaConfiguration**.
 	Kind string `json:"kind,omitempty"`
 
 	// MysqlReplicaConfiguration: MySQL specific configuration when
@@ -3207,7 +3217,7 @@ type RestoreBackupContext struct {
 	// InstanceId: The ID of the instance that the backup was taken from.
 	InstanceId string `json:"instanceId,omitempty"`
 
-	// Kind: This is always *sql#restoreBackupContext*.
+	// Kind: This is always **sql#restoreBackupContext**.
 	Kind string `json:"kind,omitempty"`
 
 	// Project: The full project ID of the source instance.
@@ -3238,7 +3248,7 @@ func (s *RestoreBackupContext) MarshalJSON() ([]byte, error) {
 
 // RotateServerCaContext: Instance rotate server CA context.
 type RotateServerCaContext struct {
-	// Kind: This is always *sql#rotateServerCaContext*.
+	// Kind: This is always **sql#rotateServerCaContext**.
 	Kind string `json:"kind,omitempty"`
 
 	// NextVersion: The fingerprint of the next version to be rotated to. If
@@ -3485,8 +3495,8 @@ type SqlExternalSyncSettingError struct {
 	// Detail: Additional information about the error encountered.
 	Detail string `json:"detail,omitempty"`
 
-	// Kind: Can be *sql#externalSyncSettingError* or
-	// *sql#externalSyncSettingWarning*.
+	// Kind: Can be **sql#externalSyncSettingError** or
+	// **sql#externalSyncSettingWarning**.
 	Kind string `json:"kind,omitempty"`
 
 	// Type: Identifies the specific error that occurred.
@@ -3533,6 +3543,10 @@ type SqlExternalSyncSettingError struct {
 	// match actual host name
 	//   "PRIMARY_ALREADY_SETUP" - The primary instance has been setup and
 	// will fail the setup.
+	//   "UNSUPPORTED_BINLOG_FORMAT" - The primary instance has unsupported
+	// binary log format.
+	//   "BINLOG_RETENTION_SETTING" - The primary instance's binary log
+	// retention setting.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to
@@ -3682,7 +3696,7 @@ type SqlInstancesVerifyExternalSyncSettingsResponse struct {
 	// Errors: List of migration violations.
 	Errors []*SqlExternalSyncSettingError `json:"errors,omitempty"`
 
-	// Kind: This is always *sql#migrationSettingErrorList*.
+	// Kind: This is always **sql#migrationSettingErrorList**.
 	Kind string `json:"kind,omitempty"`
 
 	// Warnings: List of migration warnings.
@@ -4055,7 +4069,7 @@ type SslCertsInsertResponse struct {
 	// ClientCert: The new client certificate and private key.
 	ClientCert *SslCertDetail `json:"clientCert,omitempty"`
 
-	// Kind: This is always *sql#sslCertsInsert*.
+	// Kind: This is always **sql#sslCertsInsert**.
 	Kind string `json:"kind,omitempty"`
 
 	// Operation: The operation to track the ssl certs insert request.
@@ -4098,7 +4112,7 @@ type SslCertsListResponse struct {
 	// Items: List of client certificates for the instance.
 	Items []*SslCert `json:"items,omitempty"`
 
-	// Kind: This is always *sql#sslCertsList*.
+	// Kind: This is always **sql#sslCertsList**.
 	Kind string `json:"kind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4239,11 +4253,11 @@ func (s *TiersListResponse) MarshalJSON() ([]byte, error) {
 
 // TruncateLogContext: Database Instance truncate log context.
 type TruncateLogContext struct {
-	// Kind: This is always *sql#truncateLogContext*.
+	// Kind: This is always **sql#truncateLogContext**.
 	Kind string `json:"kind,omitempty"`
 
 	// LogType: The type of log to truncate. Valid values are
-	// *MYSQL_GENERAL_TABLE* and *MYSQL_SLOW_TABLE*.
+	// **MYSQL_GENERAL_TABLE** and **MYSQL_SLOW_TABLE**.
 	LogType string `json:"logType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
@@ -4390,7 +4404,9 @@ type BackupRunsDeleteCall struct {
 // Delete: Deletes the backup taken by a backup run.
 //
 // - id: The ID of the backup run to delete. To find a backup run ID,
-//   use the list method.
+//   use the list
+//   (https://cloud.google.com/sql/docs/mysql/admin-api/rest/v1beta4/backupRuns/list)
+//   method.
 // - instance: Cloud SQL instance ID. This does not include the project
 //   ID.
 // - project: Project ID of the project that contains the instance.
@@ -4429,7 +4445,7 @@ func (c *BackupRunsDeleteCall) Header() http.Header {
 
 func (c *BackupRunsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4501,7 +4517,7 @@ func (c *BackupRunsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	//   ],
 	//   "parameters": {
 	//     "id": {
-	//       "description": "The ID of the backup run to delete. To find a backup run ID, use the list method.",
+	//       "description": "The ID of the backup run to delete. To find a backup run ID, use the [list](https://cloud.google.com/sql/docs/mysql/admin-api/rest/v1beta4/backupRuns/list) method.",
 	//       "format": "int64",
 	//       "location": "path",
 	//       "required": true,
@@ -4596,7 +4612,7 @@ func (c *BackupRunsGetCall) Header() http.Header {
 
 func (c *BackupRunsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4754,7 +4770,7 @@ func (c *BackupRunsInsertCall) Header() http.Header {
 
 func (c *BackupRunsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4934,7 +4950,7 @@ func (c *BackupRunsListCall) Header() http.Header {
 
 func (c *BackupRunsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5118,7 +5134,7 @@ func (c *ConnectGenerateEphemeralCertCall) Header() http.Header {
 
 func (c *ConnectGenerateEphemeralCertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5288,7 +5304,7 @@ func (c *ConnectGetCall) Header() http.Header {
 
 func (c *ConnectGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5444,7 +5460,7 @@ func (c *DatabasesDeleteCall) Header() http.Header {
 
 func (c *DatabasesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5611,7 +5627,7 @@ func (c *DatabasesGetCall) Header() http.Header {
 
 func (c *DatabasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5769,7 +5785,7 @@ func (c *DatabasesInsertCall) Header() http.Header {
 
 func (c *DatabasesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5932,7 +5948,7 @@ func (c *DatabasesListCall) Header() http.Header {
 
 func (c *DatabasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6086,7 +6102,7 @@ func (c *DatabasesPatchCall) Header() http.Header {
 
 func (c *DatabasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6252,7 +6268,7 @@ func (c *DatabasesUpdateCall) Header() http.Header {
 
 func (c *DatabasesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6423,7 +6439,7 @@ func (c *FlagsListCall) Header() http.Header {
 
 func (c *FlagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6560,7 +6576,7 @@ func (c *InstancesAddServerCaCall) Header() http.Header {
 
 func (c *InstancesAddServerCaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6708,7 +6724,7 @@ func (c *InstancesCloneCall) Header() http.Header {
 
 func (c *InstancesCloneCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6861,7 +6877,7 @@ func (c *InstancesDeleteCall) Header() http.Header {
 
 func (c *InstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7007,7 +7023,7 @@ func (c *InstancesDemoteMasterCall) Header() http.Header {
 
 func (c *InstancesDemoteMasterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7163,7 +7179,7 @@ func (c *InstancesExportCall) Header() http.Header {
 
 func (c *InstancesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7279,9 +7295,10 @@ type InstancesFailoverCall struct {
 // Failover: Initiates a manual failover of a high availability (HA)
 // primary instance to a standby instance, which becomes the primary
 // instance. Users are then rerouted to the new primary. For more
-// information, see the Overview of high availability page in the Cloud
-// SQL documentation. If using Legacy HA (MySQL only), this causes the
-// instance to failover to its failover replica instance.
+// information, see the Overview of high availability
+// (https://cloud.google.com/sql/docs/mysql/high-availability) page in
+// the Cloud SQL documentation. If using Legacy HA (MySQL only), this
+// causes the instance to failover to its failover replica instance.
 //
 // - instance: Cloud SQL instance ID. This does not include the project
 //   ID.
@@ -7321,7 +7338,7 @@ func (c *InstancesFailoverCall) Header() http.Header {
 
 func (c *InstancesFailoverCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7386,7 +7403,7 @@ func (c *InstancesFailoverCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Initiates a manual failover of a high availability (HA) primary instance to a standby instance, which becomes the primary instance. Users are then rerouted to the new primary. For more information, see the Overview of high availability page in the Cloud SQL documentation. If using Legacy HA (MySQL only), this causes the instance to failover to its failover replica instance.",
+	//   "description": "Initiates a manual failover of a high availability (HA) primary instance to a standby instance, which becomes the primary instance. Users are then rerouted to the new primary. For more information, see the [Overview of high availability](https://cloud.google.com/sql/docs/mysql/high-availability) page in the Cloud SQL documentation. If using Legacy HA (MySQL only), this causes the instance to failover to its failover replica instance.",
 	//   "flatPath": "sql/v1beta4/projects/{project}/instances/{instance}/failover",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.failover",
@@ -7485,7 +7502,7 @@ func (c *InstancesGetCall) Header() http.Header {
 
 func (c *InstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7635,7 +7652,7 @@ func (c *InstancesImportCall) Header() http.Header {
 
 func (c *InstancesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7785,7 +7802,7 @@ func (c *InstancesInsertCall) Header() http.Header {
 
 func (c *InstancesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7966,7 +7983,7 @@ func (c *InstancesListCall) Header() http.Header {
 
 func (c *InstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8157,7 +8174,7 @@ func (c *InstancesListServerCasCall) Header() http.Header {
 
 func (c *InstancesListServerCasCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8307,7 +8324,7 @@ func (c *InstancesPatchCall) Header() http.Header {
 
 func (c *InstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8460,7 +8477,7 @@ func (c *InstancesPromoteReplicaCall) Header() http.Header {
 
 func (c *InstancesPromoteReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8605,7 +8622,7 @@ func (c *InstancesResetSslConfigCall) Header() http.Header {
 
 func (c *InstancesResetSslConfigCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8750,7 +8767,7 @@ func (c *InstancesRestartCall) Header() http.Header {
 
 func (c *InstancesRestartCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8897,7 +8914,7 @@ func (c *InstancesRestoreBackupCall) Header() http.Header {
 
 func (c *InstancesRestoreBackupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9053,7 +9070,7 @@ func (c *InstancesRotateServerCaCall) Header() http.Header {
 
 func (c *InstancesRotateServerCaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9204,7 +9221,7 @@ func (c *InstancesStartReplicaCall) Header() http.Header {
 
 func (c *InstancesStartReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9347,7 +9364,7 @@ func (c *InstancesStopReplicaCall) Header() http.Header {
 
 func (c *InstancesStopReplicaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9494,7 +9511,7 @@ func (c *InstancesTruncateLogCall) Header() http.Header {
 
 func (c *InstancesTruncateLogCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9649,7 +9666,7 @@ func (c *InstancesUpdateCall) Header() http.Header {
 
 func (c *InstancesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9812,7 +9829,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9990,7 +10007,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10169,7 +10186,7 @@ func (c *ProjectsInstancesRescheduleMaintenanceCall) Header() http.Header {
 
 func (c *ProjectsInstancesRescheduleMaintenanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10323,7 +10340,7 @@ func (c *ProjectsInstancesStartExternalSyncCall) Header() http.Header {
 
 func (c *ProjectsInstancesStartExternalSyncCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10478,7 +10495,7 @@ func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) Header() http.Header {
 
 func (c *ProjectsInstancesVerifyExternalSyncSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10637,7 +10654,7 @@ func (c *SslCertsCreateEphemeralCall) Header() http.Header {
 
 func (c *SslCertsCreateEphemeralCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10793,7 +10810,7 @@ func (c *SslCertsDeleteCall) Header() http.Header {
 
 func (c *SslCertsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10961,7 +10978,7 @@ func (c *SslCertsGetCall) Header() http.Header {
 
 func (c *SslCertsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11120,7 +11137,7 @@ func (c *SslCertsInsertCall) Header() http.Header {
 
 func (c *SslCertsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11283,7 +11300,7 @@ func (c *SslCertsListCall) Header() http.Header {
 
 func (c *SslCertsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11438,7 +11455,7 @@ func (c *TiersListCall) Header() http.Header {
 
 func (c *TiersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11591,7 +11608,7 @@ func (c *UsersDeleteCall) Header() http.Header {
 
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11747,7 +11764,7 @@ func (c *UsersInsertCall) Header() http.Header {
 
 func (c *UsersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11910,7 +11927,7 @@ func (c *UsersListCall) Header() http.Header {
 
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12073,7 +12090,7 @@ func (c *UsersUpdateCall) Header() http.Header {
 
 func (c *UsersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

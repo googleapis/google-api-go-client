@@ -2042,11 +2042,8 @@ type QuotaOperation struct {
 	//   "CHECK_ONLY" - For AllocateQuota request, only checks if there is
 	// enough quota available and does not change the available quota. No
 	// lock is placed on the available quota either.
-	//   "QUERY_ONLY" - Unimplemented. When used in AllocateQuotaRequest,
-	// this returns the effective quota limit(s) in the response, and no
-	// quota check will be performed. Not supported for other requests, and
-	// even for AllocateQuotaRequest, this is currently supported only for
-	// allowlisted services.
+	//   "QUERY_ONLY" - Deprecated. Please use QueryLimits API to query
+	// quota limits.
 	//   "ADJUST_ONLY" - The operation allocates quota for the amount
 	// specified in the service configuration or specified using the quota
 	// metrics. If the requested amount is higher than the available quota,
@@ -2448,7 +2445,8 @@ type Resource struct {
 
 	// Type: The type of the resource. The syntax is platform-specific
 	// because different platforms define their resources differently. For
-	// Google APIs, the type format must be "{service}/{kind}".
+	// Google APIs, the type format must be "{service}/{kind}", such as
+	// "pubsub.googleapis.com/Topic".
 	Type string `json:"type,omitempty"`
 
 	// Uid: The unique identifier of the resource. UID is unique in the time
@@ -2924,7 +2922,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3082,7 +3080,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3238,7 +3236,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

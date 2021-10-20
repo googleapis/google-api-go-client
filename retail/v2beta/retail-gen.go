@@ -565,7 +565,7 @@ type GoogleCloudRetailV2AddFulfillmentPlacesMetadata struct {
 }
 
 // GoogleCloudRetailV2AddFulfillmentPlacesResponse: Response of the
-// RemoveFulfillmentPlacesRequest. Currently empty because there is no
+// AddFulfillmentPlacesRequest. Currently empty because there is no
 // meaningful response populated from the AddFulfillmentPlaces method.
 type GoogleCloudRetailV2AddFulfillmentPlacesResponse struct {
 }
@@ -910,15 +910,9 @@ type GoogleCloudRetailV2alphaAddFulfillmentPlacesMetadata struct {
 }
 
 // GoogleCloudRetailV2alphaAddFulfillmentPlacesResponse: Response of the
-// RemoveFulfillmentPlacesRequest. Currently empty because there is no
+// AddFulfillmentPlacesRequest. Currently empty because there is no
 // meaningful response populated from the AddFulfillmentPlaces method.
 type GoogleCloudRetailV2alphaAddFulfillmentPlacesResponse struct {
-}
-
-// GoogleCloudRetailV2alphaEnrollSolutionMetadata: Metadata related to
-// the EnrollSolution method. This will be returned by the
-// google.longrunning.Operation.metadata field.
-type GoogleCloudRetailV2alphaEnrollSolutionMetadata struct {
 }
 
 // GoogleCloudRetailV2alphaExportErrorsConfig: Configuration of
@@ -1411,8 +1405,7 @@ type GoogleCloudRetailV2betaAddFulfillmentPlacesRequest struct {
 	// AllowMissing: If set to true, and the Product is not found, the
 	// fulfillment information will still be processed and retained for at
 	// most 1 day and processed once the Product is created. If set to
-	// false, an INVALID_ARGUMENT error is returned if the Product is not
-	// found.
+	// false, a NOT_FOUND error is returned if the Product is not found.
 	AllowMissing bool `json:"allowMissing,omitempty"`
 
 	// PlaceIds: Required. The IDs for this type, such as the store IDs for
@@ -1460,7 +1453,7 @@ func (s *GoogleCloudRetailV2betaAddFulfillmentPlacesRequest) MarshalJSON() ([]by
 }
 
 // GoogleCloudRetailV2betaAddFulfillmentPlacesResponse: Response of the
-// RemoveFulfillmentPlacesRequest. Currently empty because there is no
+// AddFulfillmentPlacesRequest. Currently empty because there is no
 // meaningful response populated from the AddFulfillmentPlaces method.
 type GoogleCloudRetailV2betaAddFulfillmentPlacesResponse struct {
 }
@@ -3107,8 +3100,9 @@ type GoogleCloudRetailV2betaProduct struct {
 	// SearchService.Search. If it is set, the Product is not available for
 	// SearchService.Search after expire_time. However, the product can
 	// still be retrieved by ProductService.GetProduct and
-	// ProductService.ListProducts. Google Merchant Center property
-	// expiration_date
+	// ProductService.ListProducts. expire_time must be later than
+	// available_time and publish_time, otherwise an INVALID_ARGUMENT error
+	// is thrown. Google Merchant Center property expiration_date
 	// (https://support.google.com/merchants/answer/6324499).
 	ExpireTime string `json:"expireTime,omitempty"`
 
@@ -3832,8 +3826,7 @@ type GoogleCloudRetailV2betaRemoveFulfillmentPlacesRequest struct {
 	// AllowMissing: If set to true, and the Product is not found, the
 	// fulfillment information will still be processed and retained for at
 	// most 1 day and processed once the Product is created. If set to
-	// false, an INVALID_ARGUMENT error is returned if the Product is not
-	// found.
+	// false, a NOT_FOUND error is returned if the Product is not found.
 	AllowMissing bool `json:"allowMissing,omitempty"`
 
 	// PlaceIds: Required. The IDs for this type, such as the store IDs for
@@ -3895,7 +3888,12 @@ type GoogleCloudRetailV2betaRemoveFulfillmentPlacesResponse struct {
 type GoogleCloudRetailV2betaSearchRequest struct {
 	// BoostSpec: Boost specification to boost certain products. See more
 	// details at this user guide
-	// (https://cloud.google.com/retail/docs/boosting).
+	// (https://cloud.google.com/retail/docs/boosting). Notice that if both
+	// ServingConfig.boost_control_ids and [SearchRequest.boost_spec] are
+	// set, the boost conditions from both places are evaluated. If a search
+	// request matches multiple boost conditions, the final boost score is
+	// equal to the sum of the boost scores from all matched boost
+	// conditions.
 	BoostSpec *GoogleCloudRetailV2betaSearchRequestBoostSpec `json:"boostSpec,omitempty"`
 
 	// Branch: The branch resource name, such as
@@ -3992,14 +3990,14 @@ type GoogleCloudRetailV2betaSearchRequest struct {
 	// "fulfillmentType.fulfillmentId". E.g., in "pickupInStore.store123",
 	// "pickupInStore" is fulfillment type and "store123" is the store ID.
 	// Supported keys are: * colorFamilies * price * originalPrice *
-	// discount * attributes.key, where key is any key in the
-	// Product.attributes map. * pickupInStore.id, where id is any
-	// FulfillmentInfo.place_ids for FulfillmentInfo.type "pickup-in-store".
-	// * shipToStore.id, where id is any FulfillmentInfo.place_ids for
-	// FulfillmentInfo.type "ship-to-store". * sameDayDelivery.id, where id
+	// discount * inventory(place_id,price) * attributes.key, where key is
+	// any key in the Product.attributes map. * pickupInStore.id, where id
 	// is any FulfillmentInfo.place_ids for FulfillmentInfo.type
-	// "same-day-delivery". * nextDayDelivery.id, where id is any
-	// FulfillmentInfo.place_ids for FulfillmentInfo.type
+	// "pickup-in-store". * shipToStore.id, where id is any
+	// FulfillmentInfo.place_ids for FulfillmentInfo.type "ship-to-store". *
+	// sameDayDelivery.id, where id is any FulfillmentInfo.place_ids for
+	// FulfillmentInfo.type "same-day-delivery". * nextDayDelivery.id, where
+	// id is any FulfillmentInfo.place_ids for FulfillmentInfo.type
 	// "next-day-delivery". * customFulfillment1.id, where id is any
 	// FulfillmentInfo.place_ids for FulfillmentInfo.type "custom-type-1". *
 	// customFulfillment2.id, where id is any FulfillmentInfo.place_ids for
@@ -4273,7 +4271,7 @@ type GoogleCloudRetailV2betaSearchRequestFacetSpecFacetKey struct {
 	// "nextDayDelivery" * "customFulfillment1" * "customFulfillment2" *
 	// "customFulfillment3" * "customFulfillment4" * "customFulfillment5" *
 	// numerical_field = * "price" * "discount" * "rating" * "ratingCount" *
-	// "attributes.key"
+	// "attributes.key" * "inventory(place_id,price)"
 	Key string `json:"key,omitempty"`
 
 	// OrderBy: The order in which Facet.values are returned. Allowed values
@@ -4674,8 +4672,7 @@ type GoogleCloudRetailV2betaSetInventoryRequest struct {
 	// AllowMissing: If set to true, and the Product with name Product.name
 	// is not found, the inventory update will still be processed and
 	// retained for at most 1 day until the Product is created. If set to
-	// false, an INVALID_ARGUMENT error is returned if the Product is not
-	// found.
+	// false, a NOT_FOUND error is returned if the Product is not found.
 	AllowMissing bool `json:"allowMissing,omitempty"`
 
 	// Inventory: Required. The inventory information to update. The
@@ -5425,7 +5422,7 @@ func (c *ProjectsLocationsCatalogsCompleteQueryCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsCompleteQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5611,7 +5608,7 @@ func (c *ProjectsLocationsCatalogsGetDefaultBranchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsGetDefaultBranchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5782,7 +5779,7 @@ func (c *ProjectsLocationsCatalogsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5961,7 +5958,7 @@ func (c *ProjectsLocationsCatalogsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6133,7 +6130,7 @@ func (c *ProjectsLocationsCatalogsSetDefaultBranchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsSetDefaultBranchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6286,7 +6283,7 @@ func (c *ProjectsLocationsCatalogsBranchesOperationsGetCall) Header() http.Heade
 
 func (c *ProjectsLocationsCatalogsBranchesOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6436,7 +6433,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsAddFulfillmentPlacesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6593,7 +6590,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6747,7 +6744,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6895,7 +6892,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsCatalogsBranchesProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7039,7 +7036,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsImportCall) Header() http.Head
 
 func (c *ProjectsLocationsCatalogsBranchesProductsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7245,7 +7242,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsListCall) Header() http.Header
 
 func (c *ProjectsLocationsCatalogsBranchesProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7448,7 +7445,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsCatalogsBranchesProductsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7614,7 +7611,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) H
 
 func (c *ProjectsLocationsCatalogsBranchesProductsRemoveFulfillmentPlacesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7778,7 +7775,7 @@ func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) Header() htt
 
 func (c *ProjectsLocationsCatalogsBranchesProductsSetInventoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7925,7 +7922,7 @@ func (c *ProjectsLocationsCatalogsCompletionDataImportCall) Header() http.Header
 
 func (c *ProjectsLocationsCatalogsCompletionDataImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8078,7 +8075,7 @@ func (c *ProjectsLocationsCatalogsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8254,7 +8251,7 @@ func (c *ProjectsLocationsCatalogsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8436,7 +8433,7 @@ func (c *ProjectsLocationsCatalogsPlacementsPredictCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPlacementsPredictCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8550,9 +8547,9 @@ type ProjectsLocationsCatalogsPlacementsSearchCall struct {
 // - placement: The resource name of the search engine placement, such
 //   as
 //   `projects/*/locations/global/catalogs/default_catalog/placements/def
-//   ault_search`. This field is used to identify the set of models that
-//   will be used to make the search. We currently support one placement
-//   with the following ID: * `default_search`.
+//   ault_search`. This field is used to identify the serving
+//   configuration name and the set of models that will be used to make
+//   the search.
 func (r *ProjectsLocationsCatalogsPlacementsService) Search(placement string, googlecloudretailv2betasearchrequest *GoogleCloudRetailV2betaSearchRequest) *ProjectsLocationsCatalogsPlacementsSearchCall {
 	c := &ProjectsLocationsCatalogsPlacementsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.placement = placement
@@ -8587,7 +8584,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsPlacementsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8661,7 +8658,7 @@ func (c *ProjectsLocationsCatalogsPlacementsSearchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "placement": {
-	//       "description": "Required. The resource name of the search engine placement, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the set of models that will be used to make the search. We currently support one placement with the following ID: * `default_search`.",
+	//       "description": "Required. The resource name of the search engine placement, such as `projects/*/locations/global/catalogs/default_catalog/placements/default_search`. This field is used to identify the serving configuration name and the set of models that will be used to make the search.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/catalogs/[^/]+/placements/[^/]+$",
 	//       "required": true,
@@ -8788,7 +8785,7 @@ func (c *ProjectsLocationsCatalogsUserEventsCollectCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsCollectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8946,7 +8943,7 @@ func (c *ProjectsLocationsCatalogsUserEventsImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9093,7 +9090,7 @@ func (c *ProjectsLocationsCatalogsUserEventsPurgeCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsPurgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9243,7 +9240,7 @@ func (c *ProjectsLocationsCatalogsUserEventsRejoinCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsRejoinCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9386,7 +9383,7 @@ func (c *ProjectsLocationsCatalogsUserEventsWriteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCatalogsUserEventsWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9539,7 +9536,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9715,7 +9712,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210929")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

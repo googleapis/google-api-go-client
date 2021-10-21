@@ -455,11 +455,10 @@ type GoogleChromePolicyV1PolicySchema struct {
 	// for user consumption.
 	PolicyDescription string `json:"policyDescription,omitempty"`
 
-	// SchemaName: Output only. The full qualified name of the policy
+	// SchemaName: Output only. The fully qualified name of the policy
 	// schema. This value is used to fill the field `policy_schema` in
-	// PolicyValue when calling BatchInheritOrgUnitPolicies
-	// BatchModifyOrgUnitPolicies BatchModifyGroupPolicies or
-	// BatchDeleteGroupPolicies.
+	// PolicyValue when calling BatchInheritOrgUnitPolicies or
+	// BatchModifyOrgUnitPolicies
 	SchemaName string `json:"schemaName,omitempty"`
 
 	// SupportUri: Output only. URI to related support article for this
@@ -1260,7 +1259,7 @@ func (c *CustomersPoliciesResolveCall) Header() http.Header {
 
 func (c *CustomersPoliciesResolveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211019")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1432,7 +1431,7 @@ func (c *CustomersPoliciesOrgunitsBatchInheritCall) Header() http.Header {
 
 func (c *CustomersPoliciesOrgunitsBatchInheritCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211019")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1580,7 +1579,7 @@ func (c *CustomersPoliciesOrgunitsBatchModifyCall) Header() http.Header {
 
 func (c *CustomersPoliciesOrgunitsBatchModifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211019")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1732,7 +1731,7 @@ func (c *CustomersPolicySchemasGetCall) Header() http.Header {
 
 func (c *CustomersPolicySchemasGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211019")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1902,7 +1901,7 @@ func (c *CustomersPolicySchemasListCall) Header() http.Header {
 
 func (c *CustomersPolicySchemasListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211019")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2120,7 +2119,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211019")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

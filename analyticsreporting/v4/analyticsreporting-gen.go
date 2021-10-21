@@ -1627,6 +1627,10 @@ type ReportData struct {
 	// in the calculation of the report.
 	DataLastRefreshed string `json:"dataLastRefreshed,omitempty"`
 
+	// EmptyReason: If empty reason is specified, the report is empty for
+	// this reason.
+	EmptyReason string `json:"emptyReason,omitempty"`
+
 	// IsDataGolden: Indicates if response to this request is golden or not.
 	// Data is golden when the exact same request will not produce any new
 	// results if asked at a later point in time.
@@ -2683,7 +2687,7 @@ func (c *ReportsBatchGetCall) Header() http.Header {
 
 func (c *ReportsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211019")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2809,7 +2813,7 @@ func (c *UserActivitySearchCall) Header() http.Header {
 
 func (c *UserActivitySearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211019")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

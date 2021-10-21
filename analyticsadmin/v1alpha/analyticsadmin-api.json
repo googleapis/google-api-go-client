@@ -3180,7 +3180,7 @@
       }
     }
   },
-  "revision": "20211015",
+  "revision": "20211019",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccount": {
@@ -3907,7 +3907,7 @@
       "type": "object"
     },
     "GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal": {
-      "description": "A proposal for a link between an GA4 property and a Display \u0026 Video 360 advertiser. A proposal is converted to a DisplayVideo360AdvertiserLink once approved. Google Analytics admins approve inbound proposals while Display \u0026 Video 360 admins approve outbound proposals.",
+      "description": "A proposal for a link between a GA4 property and a Display \u0026 Video 360 advertiser. A proposal is converted to a DisplayVideo360AdvertiserLink once approved. Google Analytics admins approve inbound proposals while Display \u0026 Video 360 admins approve outbound proposals.",
       "id": "GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal",
       "properties": {
         "adsPersonalizationEnabled": {
@@ -4007,7 +4007,7 @@
       "type": "object"
     },
     "GoogleAnalyticsAdminV1alphaFirebaseLink": {
-      "description": "A link between an GA4 property and a Firebase project.",
+      "description": "A link between a GA4 property and a Firebase project.",
       "id": "GoogleAnalyticsAdminV1alphaFirebaseLink",
       "properties": {
         "createTime": {
@@ -4045,7 +4045,7 @@
       "type": "object"
     },
     "GoogleAnalyticsAdminV1alphaGoogleAdsLink": {
-      "description": "A link between an GA4 property and a Google Ads account.",
+      "description": "A link between a GA4 property and a Google Ads account.",
       "id": "GoogleAnalyticsAdminV1alphaGoogleAdsLink",
       "properties": {
         "adsPersonalizationEnabled": {
@@ -4639,7 +4639,7 @@
       "type": "object"
     },
     "GoogleAnalyticsAdminV1alphaPropertySummary": {
-      "description": "A virtual resource representing metadata for an GA4 property.",
+      "description": "A virtual resource representing metadata for a GA4 property.",
       "id": "GoogleAnalyticsAdminV1alphaPropertySummary",
       "properties": {
         "displayName": {

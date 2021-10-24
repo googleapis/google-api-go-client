@@ -348,19 +348,19 @@ func (s *Authority) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members` with a `role`.
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
 	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the members
-	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
+	// Members: Specifies the principals requesting access for a Cloud
 	// Platform resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
@@ -394,8 +394,8 @@ type Binding struct {
 	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`. For example,
-	// `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to the list of `members`, or principals.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -1573,6 +1573,38 @@ func (s *ConfigManagementSyncState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ConnectAgentResource: ConnectAgentResource represents a Kubernetes
+// resource manifest for Connect Agent deployment.
+type ConnectAgentResource struct {
+	// Manifest: YAML manifest of the resource.
+	Manifest string `json:"manifest,omitempty"`
+
+	// Type: Kubernetes type of the resource.
+	Type *TypeMeta `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Manifest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Manifest") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectAgentResource) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectAgentResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -1813,6 +1845,41 @@ type FeatureState struct {
 
 func (s *FeatureState) MarshalJSON() ([]byte, error) {
 	type NoMethod FeatureState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GenerateConnectManifestResponse: GenerateConnectManifestResponse
+// contains manifest information for installing/upgrading a Connect
+// agent.
+type GenerateConnectManifestResponse struct {
+	// Manifest: The ordered list of Kubernetes resources that need to be
+	// applied to the cluster for GKE Connect agent installation/upgrade.
+	Manifest []*ConnectAgentResource `json:"manifest,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Manifest") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Manifest") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenerateConnectManifestResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateConnectManifestResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2247,6 +2314,48 @@ func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListMembershipsResponse: Response message for the
+// `GkeHub.ListMemberships` method.
+type ListMembershipsResponse struct {
+	// NextPageToken: A token to request the next page of resources from the
+	// `ListMemberships` method. The value of an empty string means that
+	// there are no more resources to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Resources: The list of matching Memberships.
+	Resources []*Membership `json:"resources,omitempty"`
+
+	// Unreachable: List of locations that could not be reached while
+	// fetching this list.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListMembershipsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMembershipsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListOperationsResponse: The response message for
 // Operations.ListOperations.
 type ListOperationsResponse struct {
@@ -2394,6 +2503,10 @@ type Membership struct {
 	// UpdateTime: Output only. When the Membership was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
 	// ForceSendFields is a list of field names (e.g. "Authority") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2432,7 +2545,8 @@ type MembershipEndpoint struct {
 	MultiCloudCluster *MultiCloudCluster `json:"multiCloudCluster,omitempty"`
 
 	// OnPremCluster: Optional. Specific information for a GKE On-Prem
-	// cluster.
+	// cluster. An onprem user-cluster who has no resourceLink is not
+	// allowed to use this field, it should have a nil "type" instead.
 	OnPremCluster *OnPremCluster `json:"onPremCluster,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GkeCluster") to
@@ -2466,6 +2580,9 @@ type MembershipFeatureSpec struct {
 
 	// Identityservice: Identity Service-specific spec.
 	Identityservice *IdentityServiceMembershipSpec `json:"identityservice,omitempty"`
+
+	// Mesh: Anthos Service Mesh-specific spec
+	Mesh *ServiceMeshMembershipSpec `json:"mesh,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Configmanagement") to
 	// unconditionally include in API requests. By default, fields with
@@ -2857,17 +2974,17 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
-// collection of `bindings`. A `binding` binds one or more `members` to
-// a single `role`. Members can be user accounts, service accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of permissions; each `role` can be an IAM predefined role or a
-// user-created custom role. For some types of Google Cloud resources, a
-// `binding` can also specify a `condition`, which is a logical
-// expression that allows access to a resource only if the expression
-// evaluates to `true`. A condition can add constraints based on
-// attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the IAM
-// documentation
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 // **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
@@ -2894,9 +3011,15 @@ type Policy struct {
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a `condition` that determines how and when the `bindings` are
-	// applied. Each of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -3081,6 +3204,11 @@ func (s *ServiceMeshFeatureState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ServiceMeshMembershipSpec: **Service Mesh**: Spec for a single
+// Membership for the servicemesh feature
+type ServiceMeshMembershipSpec struct {
+}
+
 // ServiceMeshMembershipState: **Service Mesh**: State for a single
 // Membership, as analyzed by the Service Mesh Hub Controller.
 type ServiceMeshMembershipState struct {
@@ -3256,6 +3384,38 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TypeMeta: TypeMeta is the type information needed for content
+// unmarshalling of Kubernetes resources in the manifest.
+type TypeMeta struct {
+	// ApiVersion: APIVersion of the resource (e.g. v1).
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// Kind: Kind of the resource (e.g. Deployment).
+	Kind string `json:"kind,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TypeMeta) MarshalJSON() ([]byte, error) {
+	type NoMethod TypeMeta
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "gkehub.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
@@ -3313,7 +3473,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3485,7 +3645,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3684,7 +3844,7 @@ func (c *ProjectsLocationsFeaturesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3861,7 +4021,7 @@ func (c *ProjectsLocationsFeaturesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4015,7 +4175,7 @@ func (c *ProjectsLocationsFeaturesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4179,7 +4339,7 @@ func (c *ProjectsLocationsFeaturesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4368,7 +4528,7 @@ func (c *ProjectsLocationsFeaturesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4572,7 +4732,7 @@ func (c *ProjectsLocationsFeaturesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4729,7 +4889,7 @@ func (c *ProjectsLocationsFeaturesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4878,7 +5038,7 @@ func (c *ProjectsLocationsFeaturesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4972,6 +5132,729 @@ func (c *ProjectsLocationsFeaturesTestIamPermissionsCall) Do(opts ...googleapi.C
 
 }
 
+// method id "gkehub.projects.locations.memberships.create":
+
+type ProjectsLocationsMembershipsCreateCall struct {
+	s          *Service
+	parent     string
+	membership *Membership
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new Membership. **This is currently only supported
+// for GKE clusters on Google Cloud**. To register other clusters,
+// follow the instructions at
+// https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster.
+//
+// - parent: The parent (project and location) where the Memberships
+//   will be created. Specified in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsMembershipsService) Create(parent string, membership *Membership) *ProjectsLocationsMembershipsCreateCall {
+	c := &ProjectsLocationsMembershipsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.membership = membership
+	return c
+}
+
+// MembershipId sets the optional parameter "membershipId": Required.
+// Client chosen ID for the membership. `membership_id` must be a valid
+// RFC 1123 compliant DNS label: 1. At most 63 characters in length 2.
+// It must consist of lower case alphanumeric characters or `-` 3. It
+// must start and end with an alphanumeric character Which can be
+// expressed as the regex: `[a-z0-9]([-a-z0-9]*[a-z0-9])?`, with a
+// maximum length of 63 characters.
+func (c *ProjectsLocationsMembershipsCreateCall) MembershipId(membershipId string) *ProjectsLocationsMembershipsCreateCall {
+	c.urlParams_.Set("membershipId", membershipId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes after the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMembershipsCreateCall) RequestId(requestId string) *ProjectsLocationsMembershipsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMembershipsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMembershipsCreateCall) Context(ctx context.Context) *ProjectsLocationsMembershipsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMembershipsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.membership)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/memberships")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new Membership. **This is currently only supported for GKE clusters on Google Cloud**. To register other clusters, follow the instructions at https://cloud.google.com/anthos/multicluster-management/connect/registering-a-cluster.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/memberships",
+	//   "httpMethod": "POST",
+	//   "id": "gkehub.projects.locations.memberships.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "membershipId": {
+	//       "description": "Required. Client chosen ID for the membership. `membership_id` must be a valid RFC 1123 compliant DNS label: 1. At most 63 characters in length 2. It must consist of lower case alphanumeric characters or `-` 3. It must start and end with an alphanumeric character Which can be expressed as the regex: `[a-z0-9]([-a-z0-9]*[a-z0-9])?`, with a maximum length of 63 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent (project and location) where the Memberships will be created. Specified in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/memberships",
+	//   "request": {
+	//     "$ref": "Membership"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "gkehub.projects.locations.memberships.delete":
+
+type ProjectsLocationsMembershipsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Removes a Membership. **This is currently only supported for
+// GKE clusters on Google Cloud**. To unregister other clusters, follow
+// the instructions at
+// https://cloud.google.com/anthos/multicluster-management/connect/unregistering-a-cluster.
+//
+// - name: The Membership resource name in the format
+//   `projects/*/locations/*/memberships/*`.
+func (r *ProjectsLocationsMembershipsService) Delete(name string) *ProjectsLocationsMembershipsDeleteCall {
+	c := &ProjectsLocationsMembershipsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes after the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMembershipsDeleteCall) RequestId(requestId string) *ProjectsLocationsMembershipsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMembershipsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMembershipsDeleteCall) Context(ctx context.Context) *ProjectsLocationsMembershipsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMembershipsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Removes a Membership. **This is currently only supported for GKE clusters on Google Cloud**. To unregister other clusters, follow the instructions at https://cloud.google.com/anthos/multicluster-management/connect/unregistering-a-cluster.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/memberships/{membershipsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "gkehub.projects.locations.memberships.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The Membership resource name in the format `projects/*/locations/*/memberships/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/memberships/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "gkehub.projects.locations.memberships.generateConnectManifest":
+
+type ProjectsLocationsMembershipsGenerateConnectManifestCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GenerateConnectManifest: Generates the manifest for deployment of the
+// GKE connect agent. **This method is used internally by
+// Google-provided libraries.** Most clients should not need to call
+// this method directly.
+//
+// - name: The Membership resource name the Agent will associate with,
+//   in the format `projects/*/locations/*/memberships/*`.
+func (r *ProjectsLocationsMembershipsService) GenerateConnectManifest(name string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c := &ProjectsLocationsMembershipsGenerateConnectManifestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// ImagePullSecretContent sets the optional parameter
+// "imagePullSecretContent": The image pull secret content for the
+// registry, if not public.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) ImagePullSecretContent(imagePullSecretContent string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.urlParams_.Set("imagePullSecretContent", imagePullSecretContent)
+	return c
+}
+
+// IsUpgrade sets the optional parameter "isUpgrade": If true, generate
+// the resources for upgrade only. Some resources generated only for
+// installation (e.g. secrets) will be excluded.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) IsUpgrade(isUpgrade bool) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.urlParams_.Set("isUpgrade", fmt.Sprint(isUpgrade))
+	return c
+}
+
+// Namespace sets the optional parameter "namespace": Namespace for GKE
+// Connect agent resources. Defaults to `gke-connect`. The Connect Agent
+// is authorized automatically when run in the default namespace.
+// Otherwise, explicit authorization must be granted with an additional
+// IAM binding.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Namespace(namespace string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.urlParams_.Set("namespace", namespace)
+	return c
+}
+
+// Proxy sets the optional parameter "proxy": URI of a proxy if
+// connectivity from the agent to gkeconnect.googleapis.com requires the
+// use of a proxy. Format must be in the form
+// `http(s)://{proxy_address}`, depending on the HTTP/HTTPS protocol
+// supported by the proxy. This will direct the connect agent's outbound
+// traffic through a HTTP(S) proxy.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Proxy(proxy string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.urlParams_.Set("proxy", proxy)
+	return c
+}
+
+// Registry sets the optional parameter "registry": The registry to
+// fetch the connect agent image from. Defaults to gcr.io/gkeconnect.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Registry(registry string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.urlParams_.Set("registry", registry)
+	return c
+}
+
+// Version sets the optional parameter "version": The Connect agent
+// version to use. Defaults to the most current version.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Version(version string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.urlParams_.Set("version", version)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) IfNoneMatch(entityTag string) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Context(ctx context.Context) *ProjectsLocationsMembershipsGenerateConnectManifestCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:generateConnectManifest")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.generateConnectManifest" call.
+// Exactly one of *GenerateConnectManifestResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GenerateConnectManifestResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsGenerateConnectManifestCall) Do(opts ...googleapi.CallOption) (*GenerateConnectManifestResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GenerateConnectManifestResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generates the manifest for deployment of the GKE connect agent. **This method is used internally by Google-provided libraries.** Most clients should not need to call this method directly.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/memberships/{membershipsId}:generateConnectManifest",
+	//   "httpMethod": "GET",
+	//   "id": "gkehub.projects.locations.memberships.generateConnectManifest",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "imagePullSecretContent": {
+	//       "description": "Optional. The image pull secret content for the registry, if not public.",
+	//       "format": "byte",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "isUpgrade": {
+	//       "description": "Optional. If true, generate the resources for upgrade only. Some resources generated only for installation (e.g. secrets) will be excluded.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Required. The Membership resource name the Agent will associate with, in the format `projects/*/locations/*/memberships/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/memberships/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "namespace": {
+	//       "description": "Optional. Namespace for GKE Connect agent resources. Defaults to `gke-connect`. The Connect Agent is authorized automatically when run in the default namespace. Otherwise, explicit authorization must be granted with an additional IAM binding.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "proxy": {
+	//       "description": "Optional. URI of a proxy if connectivity from the agent to gkeconnect.googleapis.com requires the use of a proxy. Format must be in the form `http(s)://{proxy_address}`, depending on the HTTP/HTTPS protocol supported by the proxy. This will direct the connect agent's outbound traffic through a HTTP(S) proxy.",
+	//       "format": "byte",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "registry": {
+	//       "description": "Optional. The registry to fetch the connect agent image from. Defaults to gcr.io/gkeconnect.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "version": {
+	//       "description": "Optional. The Connect agent version to use. Defaults to the most current version.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}:generateConnectManifest",
+	//   "response": {
+	//     "$ref": "GenerateConnectManifestResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "gkehub.projects.locations.memberships.get":
+
+type ProjectsLocationsMembershipsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the details of a Membership.
+//
+// - name: The Membership resource name in the format
+//   `projects/*/locations/*/memberships/*`.
+func (r *ProjectsLocationsMembershipsService) Get(name string) *ProjectsLocationsMembershipsGetCall {
+	c := &ProjectsLocationsMembershipsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMembershipsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsMembershipsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsMembershipsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMembershipsGetCall) Context(ctx context.Context) *ProjectsLocationsMembershipsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMembershipsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.get" call.
+// Exactly one of *Membership or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Membership.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsGetCall) Do(opts ...googleapi.CallOption) (*Membership, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Membership{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the details of a Membership.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/memberships/{membershipsId}",
+	//   "httpMethod": "GET",
+	//   "id": "gkehub.projects.locations.memberships.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The Membership resource name in the format `projects/*/locations/*/memberships/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/memberships/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "Membership"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "gkehub.projects.locations.memberships.getIamPolicy":
 
 type ProjectsLocationsMembershipsGetIamPolicyCall struct {
@@ -5047,7 +5930,7 @@ func (c *ProjectsLocationsMembershipsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5142,6 +6025,232 @@ func (c *ProjectsLocationsMembershipsGetIamPolicyCall) Do(opts ...googleapi.Call
 
 }
 
+// method id "gkehub.projects.locations.memberships.list":
+
+type ProjectsLocationsMembershipsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Memberships in a given project and location.
+//
+// - parent: The parent (project and location) where the Memberships
+//   will be listed. Specified in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsMembershipsService) List(parent string) *ProjectsLocationsMembershipsListCall {
+	c := &ProjectsLocationsMembershipsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Lists Memberships that
+// match the filter expression, following the syntax outlined in
+// https://google.aip.dev/160. Examples: - Name is `bar` in project
+// `foo-proj` and location `global`: name =
+// "projects/foo-proj/locations/global/membership/bar" - Memberships
+// that have a label called `foo`: labels.foo:* - Memberships that have
+// a label called `foo` whose value is `bar`: labels.foo = bar -
+// Memberships in the CREATING state: state = CREATING
+func (c *ProjectsLocationsMembershipsListCall) Filter(filter string) *ProjectsLocationsMembershipsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": One or more fields to
+// compare and use to sort the output. See
+// https://google.aip.dev/132#ordering.
+func (c *ProjectsLocationsMembershipsListCall) OrderBy(orderBy string) *ProjectsLocationsMembershipsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": When requesting a
+// 'page' of resources, `page_size` specifies number of resources to
+// return. If unspecified or set to 0, all resources will be returned.
+func (c *ProjectsLocationsMembershipsListCall) PageSize(pageSize int64) *ProjectsLocationsMembershipsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned by
+// previous call to `ListMemberships` which specifies the position in
+// the list from where to continue listing the resources.
+func (c *ProjectsLocationsMembershipsListCall) PageToken(pageToken string) *ProjectsLocationsMembershipsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMembershipsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsMembershipsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsMembershipsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMembershipsListCall) Context(ctx context.Context) *ProjectsLocationsMembershipsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMembershipsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/memberships")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.list" call.
+// Exactly one of *ListMembershipsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListMembershipsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListMembershipsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListMembershipsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Memberships in a given project and location.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/memberships",
+	//   "httpMethod": "GET",
+	//   "id": "gkehub.projects.locations.memberships.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Lists Memberships that match the filter expression, following the syntax outlined in https://google.aip.dev/160. Examples: - Name is `bar` in project `foo-proj` and location `global`: name = \"projects/foo-proj/locations/global/membership/bar\" - Memberships that have a label called `foo`: labels.foo:* - Memberships that have a label called `foo` whose value is `bar`: labels.foo = bar - Memberships in the CREATING state: state = CREATING",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. One or more fields to compare and use to sort the output. See https://google.aip.dev/132#ordering.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. When requesting a 'page' of resources, `page_size` specifies number of resources to return. If unspecified or set to 0, all resources will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Token returned by previous call to `ListMemberships` which specifies the position in the list from where to continue listing the resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent (project and location) where the Memberships will be listed. Specified in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/memberships",
+	//   "response": {
+	//     "$ref": "ListMembershipsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsMembershipsListCall) Pages(ctx context.Context, f func(*ListMembershipsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "gkehub.projects.locations.memberships.listAdmin":
 
 type ProjectsLocationsMembershipsListAdminCall struct {
@@ -5233,7 +6342,7 @@ func (c *ProjectsLocationsMembershipsListAdminCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsListAdminCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5365,6 +6474,184 @@ func (c *ProjectsLocationsMembershipsListAdminCall) Pages(ctx context.Context, f
 	}
 }
 
+// method id "gkehub.projects.locations.memberships.patch":
+
+type ProjectsLocationsMembershipsPatchCall struct {
+	s          *Service
+	name       string
+	membership *Membership
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates an existing Membership.
+//
+// - name: The Membership resource name in the format
+//   `projects/*/locations/*/memberships/*`.
+func (r *ProjectsLocationsMembershipsService) Patch(name string, membership *Membership) *ProjectsLocationsMembershipsPatchCall {
+	c := &ProjectsLocationsMembershipsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.membership = membership
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes after the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsMembershipsPatchCall) RequestId(requestId string) *ProjectsLocationsMembershipsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Mask
+// of fields to update.
+func (c *ProjectsLocationsMembershipsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsMembershipsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsMembershipsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsMembershipsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsMembershipsPatchCall) Context(ctx context.Context) *ProjectsLocationsMembershipsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsMembershipsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMembershipsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.membership)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.memberships.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMembershipsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing Membership.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/memberships/{membershipsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "gkehub.projects.locations.memberships.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The Membership resource name in the format `projects/*/locations/*/memberships/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/memberships/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Mask of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "Membership"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "gkehub.projects.locations.memberships.setIamPolicy":
 
 type ProjectsLocationsMembershipsSetIamPolicyCall struct {
@@ -5417,7 +6704,7 @@ func (c *ProjectsLocationsMembershipsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5566,7 +6853,7 @@ func (c *ProjectsLocationsMembershipsTestIamPermissionsCall) Header() http.Heade
 
 func (c *ProjectsLocationsMembershipsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5717,7 +7004,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5860,7 +7147,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6005,7 +7292,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6181,7 +7468,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

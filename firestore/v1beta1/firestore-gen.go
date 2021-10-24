@@ -2130,7 +2130,7 @@ type Precondition struct {
 	Exists bool `json:"exists,omitempty"`
 
 	// UpdateTime: When set, the target document must exist and have been
-	// last updated at that time.
+	// last updated at that time. Timestamp must be microsecond aligned.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exists") to
@@ -3028,7 +3028,7 @@ func (c *ProjectsDatabasesExportDocumentsCall) Header() http.Header {
 
 func (c *ProjectsDatabasesExportDocumentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3177,7 +3177,7 @@ func (c *ProjectsDatabasesImportDocumentsCall) Header() http.Header {
 
 func (c *ProjectsDatabasesImportDocumentsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3323,7 +3323,7 @@ func (c *ProjectsDatabasesDocumentsBatchGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3472,7 +3472,7 @@ func (c *ProjectsDatabasesDocumentsBatchWriteCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsBatchWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3616,7 +3616,7 @@ func (c *ProjectsDatabasesDocumentsBeginTransactionCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsBeginTransactionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3760,7 +3760,7 @@ func (c *ProjectsDatabasesDocumentsCommitCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3926,7 +3926,7 @@ func (c *ProjectsDatabasesDocumentsCreateDocumentCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsCreateDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4071,7 +4071,8 @@ func (c *ProjectsDatabasesDocumentsDeleteCall) CurrentDocumentExists(currentDocu
 
 // CurrentDocumentUpdateTime sets the optional parameter
 // "currentDocument.updateTime": When set, the target document must
-// exist and have been last updated at that time.
+// exist and have been last updated at that time. Timestamp must be
+// microsecond aligned.
 func (c *ProjectsDatabasesDocumentsDeleteCall) CurrentDocumentUpdateTime(currentDocumentUpdateTime string) *ProjectsDatabasesDocumentsDeleteCall {
 	c.urlParams_.Set("currentDocument.updateTime", currentDocumentUpdateTime)
 	return c
@@ -4104,7 +4105,7 @@ func (c *ProjectsDatabasesDocumentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4177,7 +4178,7 @@ func (c *ProjectsDatabasesDocumentsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "boolean"
 	//     },
 	//     "currentDocument.updateTime": {
-	//       "description": "When set, the target document must exist and have been last updated at that time.",
+	//       "description": "When set, the target document must exist and have been last updated at that time. Timestamp must be microsecond aligned.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -4284,7 +4285,7 @@ func (c *ProjectsDatabasesDocumentsGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4514,7 +4515,7 @@ func (c *ProjectsDatabasesDocumentsListCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4725,7 +4726,7 @@ func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4890,7 +4891,7 @@ func (c *ProjectsDatabasesDocumentsListenCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsListenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5039,7 +5040,7 @@ func (c *ProjectsDatabasesDocumentsPartitionQueryCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsPartitionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5188,7 +5189,8 @@ func (c *ProjectsDatabasesDocumentsPatchCall) CurrentDocumentExists(currentDocum
 
 // CurrentDocumentUpdateTime sets the optional parameter
 // "currentDocument.updateTime": When set, the target document must
-// exist and have been last updated at that time.
+// exist and have been last updated at that time. Timestamp must be
+// microsecond aligned.
 func (c *ProjectsDatabasesDocumentsPatchCall) CurrentDocumentUpdateTime(currentDocumentUpdateTime string) *ProjectsDatabasesDocumentsPatchCall {
 	c.urlParams_.Set("currentDocument.updateTime", currentDocumentUpdateTime)
 	return c
@@ -5237,7 +5239,7 @@ func (c *ProjectsDatabasesDocumentsPatchCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5315,7 +5317,7 @@ func (c *ProjectsDatabasesDocumentsPatchCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "boolean"
 	//     },
 	//     "currentDocument.updateTime": {
-	//       "description": "When set, the target document must exist and have been last updated at that time.",
+	//       "description": "When set, the target document must exist and have been last updated at that time. Timestamp must be microsecond aligned.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -5404,7 +5406,7 @@ func (c *ProjectsDatabasesDocumentsRollbackCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsRollbackCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5553,7 +5555,7 @@ func (c *ProjectsDatabasesDocumentsRunQueryCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsRunQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5698,7 +5700,7 @@ func (c *ProjectsDatabasesDocumentsWriteCall) Header() http.Header {
 
 func (c *ProjectsDatabasesDocumentsWriteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5850,7 +5852,7 @@ func (c *ProjectsDatabasesIndexesCreateCall) Header() http.Header {
 
 func (c *ProjectsDatabasesIndexesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5992,7 +5994,7 @@ func (c *ProjectsDatabasesIndexesDeleteCall) Header() http.Header {
 
 func (c *ProjectsDatabasesIndexesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6137,7 +6139,7 @@ func (c *ProjectsDatabasesIndexesGetCall) Header() http.Header {
 
 func (c *ProjectsDatabasesIndexesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6305,7 +6307,7 @@ func (c *ProjectsDatabasesIndexesListCall) Header() http.Header {
 
 func (c *ProjectsDatabasesIndexesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211022")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

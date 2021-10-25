@@ -161,6 +161,15 @@ type CustomApp struct {
 	// LanguageCode: Default listing language in BCP 47 format.
 	LanguageCode string `json:"languageCode,omitempty"`
 
+	// Organizations: Organizations to which the custom app should be made
+	// available. If the request contains any organizations, then the app
+	// will be restricted to only these organizations. To support the
+	// organization linked to the developer account, the organization ID
+	// should be provided explicitly together with other organizations. If
+	// no organizations are provided, then the app is only available to the
+	// organization linked to the developer account.
+	Organizations []*Organization `json:"organizations,omitempty"`
+
 	// PackageName: Output only. Package name of the created Android app.
 	// Only present in the API response.
 	PackageName string `json:"packageName,omitempty"`
@@ -191,6 +200,40 @@ type CustomApp struct {
 
 func (s *CustomApp) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomApp
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Organization: Represents an organization that can access a custom
+// app.
+type Organization struct {
+	// OrganizationId: Required. ID of the organization.
+	OrganizationId string `json:"organizationId,omitempty"`
+
+	// OrganizationName: Optional. A human-readable name of the
+	// organization, to help recognize the organization.
+	OrganizationName string `json:"organizationName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OrganizationId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OrganizationId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Organization) MarshalJSON() ([]byte, error) {
+	type NoMethod Organization
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -283,7 +326,7 @@ func (c *AccountsCustomAppsCreateCall) Header() http.Header {
 
 func (c *AccountsCustomAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211023")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211024")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

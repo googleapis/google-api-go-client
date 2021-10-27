@@ -172,8 +172,8 @@ type ProjectsKeysService struct {
 // GoogleCloudRecaptchaenterpriseV1AndroidKeySettings: Settings specific
 // to keys that can be used by Android apps.
 type GoogleCloudRecaptchaenterpriseV1AndroidKeySettings struct {
-	// AllowAllPackageNames: If set to true, it means allowed_package_names
-	// will not be enforced.
+	// AllowAllPackageNames: If set to true, allowed_package_names are not
+	// enforced.
 	AllowAllPackageNames bool `json:"allowAllPackageNames,omitempty"`
 
 	// AllowedPackageNames: Android package names of apps allowed to use the
@@ -424,8 +424,8 @@ func (s *GoogleCloudRecaptchaenterpriseV1Event) MarshalJSON() ([]byte, error) {
 // GoogleCloudRecaptchaenterpriseV1IOSKeySettings: Settings specific to
 // keys that can be used by iOS apps.
 type GoogleCloudRecaptchaenterpriseV1IOSKeySettings struct {
-	// AllowAllBundleIds: If set to true, it means allowed_bundle_ids will
-	// not be enforced.
+	// AllowAllBundleIds: If set to true, allowed_bundle_ids are not
+	// enforced.
 	AllowAllBundleIds bool `json:"allowAllBundleIds,omitempty"`
 
 	// AllowedBundleIds: iOS bundle ids of apps allowed to use the key.
@@ -740,10 +740,10 @@ type GoogleCloudRecaptchaenterpriseV1TestingOptions struct {
 	//   "TESTING_CHALLENGE_UNSPECIFIED" - Perform the normal risk analysis
 	// and return either nocaptcha or a challenge depending on risk and
 	// trust factors.
-	//   "NOCAPTCHA" - Challenge requests for this key will always return a
+	//   "NOCAPTCHA" - Challenge requests for this key always return a
 	// nocaptcha, which does not require a solution.
-	//   "UNSOLVABLE_CHALLENGE" - Challenge requests for this key will
-	// always return an unsolvable challenge.
+	//   "UNSOLVABLE_CHALLENGE" - Challenge requests for this key always
+	// return an unsolvable challenge.
 	TestingChallenge string `json:"testingChallenge,omitempty"`
 
 	// TestingScore: All assessments for this Key will return this score.
@@ -852,8 +852,8 @@ type GoogleCloudRecaptchaenterpriseV1WebKeySettings struct {
 	// enforced.
 	AllowAllDomains bool `json:"allowAllDomains,omitempty"`
 
-	// AllowAmpTraffic: Required. Whether this key can be used on AMP
-	// (Accelerated Mobile Pages) websites. This can only be set for the
+	// AllowAmpTraffic: If set to true, the key can be used on AMP
+	// (Accelerated Mobile Pages) websites. This is supported only for the
 	// SCORE integration type.
 	AllowAmpTraffic bool `json:"allowAmpTraffic,omitempty"`
 
@@ -978,7 +978,7 @@ func (c *ProjectsAssessmentsAnnotateCall) Header() http.Header {
 
 func (c *ProjectsAssessmentsAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1125,7 +1125,7 @@ func (c *ProjectsAssessmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsAssessmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1270,7 +1270,7 @@ func (c *ProjectsKeysCreateCall) Header() http.Header {
 
 func (c *ProjectsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1412,7 +1412,7 @@ func (c *ProjectsKeysDeleteCall) Header() http.Header {
 
 func (c *ProjectsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1556,7 +1556,7 @@ func (c *ProjectsKeysGetCall) Header() http.Header {
 
 func (c *ProjectsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1705,7 +1705,7 @@ func (c *ProjectsKeysGetMetricsCall) Header() http.Header {
 
 func (c *ProjectsKeysGetMetricsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1868,7 +1868,7 @@ func (c *ProjectsKeysListCall) Header() http.Header {
 
 func (c *ProjectsKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2045,7 +2045,7 @@ func (c *ProjectsKeysMigrateCall) Header() http.Header {
 
 func (c *ProjectsKeysMigrateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2197,7 +2197,7 @@ func (c *ProjectsKeysPatchCall) Header() http.Header {
 
 func (c *ProjectsKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -276,6 +276,8 @@ type ApiDimensionFilter struct {
 	//   "NOT_EQUALS"
 	//   "CONTAINS"
 	//   "NOT_CONTAINS"
+	//   "INCLUDING_REGEX"
+	//   "EXCLUDING_REGEX"
 	Operator string `json:"operator,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
@@ -630,6 +632,8 @@ type SearchAnalyticsQueryRequest struct {
 	//   "IMAGE"
 	//   "VIDEO"
 	//   "NEWS" - News tab in search.
+	//   "DISCOVER" - Discover.
+	//   "GOOGLE_NEWS" - Google News (news.google.com or mobile app).
 	SearchType string `json:"searchType,omitempty"`
 
 	// StartDate:  [Required] Start date of the requested date range, in
@@ -640,6 +644,18 @@ type SearchAnalyticsQueryRequest struct {
 	// StartRow: [Optional; Default is 0] Zero-based index of the first row
 	// in the response. Must be a non-negative number.
 	StartRow int64 `json:"startRow,omitempty"`
+
+	// Type: Optional. [Optional; Default is \"web\"] Type of report: search
+	// type, or either Discover or Gnews.
+	//
+	// Possible values:
+	//   "WEB"
+	//   "IMAGE"
+	//   "VIDEO"
+	//   "NEWS" - News tab in search.
+	//   "DISCOVER" - Discover.
+	//   "GOOGLE_NEWS" - Google News (news.google.com or mobile app).
+	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AggregationType") to
 	// unconditionally include in API requests. By default, fields with
@@ -1044,7 +1060,7 @@ func (c *SearchanalyticsQueryCall) Header() http.Header {
 
 func (c *SearchanalyticsQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1189,7 +1205,7 @@ func (c *SitemapsDeleteCall) Header() http.Header {
 
 func (c *SitemapsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1316,7 +1332,7 @@ func (c *SitemapsGetCall) Header() http.Header {
 
 func (c *SitemapsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1481,7 +1497,7 @@ func (c *SitemapsListCall) Header() http.Header {
 
 func (c *SitemapsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1626,7 +1642,7 @@ func (c *SitemapsSubmitCall) Header() http.Header {
 
 func (c *SitemapsSubmitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1737,7 +1753,7 @@ func (c *SitesAddCall) Header() http.Header {
 
 func (c *SitesAddCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1842,7 +1858,7 @@ func (c *SitesDeleteCall) Header() http.Header {
 
 func (c *SitesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1957,7 +1973,7 @@ func (c *SitesGetCall) Header() http.Header {
 
 func (c *SitesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2099,7 +2115,7 @@ func (c *SitesListCall) Header() http.Header {
 
 func (c *SitesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2220,7 +2236,7 @@ func (c *UrlTestingToolsMobileFriendlyTestRunCall) Header() http.Header {
 
 func (c *UrlTestingToolsMobileFriendlyTestRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211025")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

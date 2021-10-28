@@ -312,8 +312,10 @@ type ActivityActor struct {
 	// identifier for robot accounts.
 	Key string `json:"key,omitempty"`
 
-	// ProfileId: The unique Google Workspace profile ID of the actor. May
-	// be absent if the actor is not a Google Workspace user.
+	// ProfileId: The unique Google Workspace profile ID of the actor. This
+	// value might be absent if the actor is not a Google Workspace user, or
+	// may be the number 105250506097979753968 which acts as a placeholder
+	// ID.
 	ProfileId string `json:"profileId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CallerType") to
@@ -1123,7 +1125,7 @@ func (c *ActivitiesListCall) Header() http.Header {
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1237,7 +1239,7 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//         "The Enterprise Groups activity reports return information about various Enterprise group activity events.",
 	//         "The Jamboard activity reports return information about various Jamboard activity events.",
 	//         "The Login application's activity reports return account information about different types of Login activity events.",
-	//         "The Meet Audit activity report return information about different types of Meet Audit activity events.",
+	//         "The Meet Audit activity report returns information about different types of Meet Audit activity events.",
 	//         "The Mobile Audit activity report return information about different types of Mobile Audit activity events.",
 	//         "The Rules activity report return information about different types of Rules activity events.",
 	//         "The SAML activity report return information about different types of SAML activity events.",
@@ -1552,7 +1554,7 @@ func (c *ActivitiesWatchCall) Header() http.Header {
 
 func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1668,7 +1670,7 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//         "The Enterprise Groups activity reports return information about various Enterprise group activity events.",
 	//         "The Jamboard activity reports return information about various Jamboard activity events.",
 	//         "The Login application's activity reports return account information about different types of Login activity events.",
-	//         "The Meet Audit activity report return information about different types of Meet Audit activity events.",
+	//         "The Meet Audit activity report returns information about different types of Meet Audit activity events.",
 	//         "The Mobile Audit activity report return information about different types of Mobile Audit activity events.",
 	//         "The Rules activity report return information about different types of Rules activity events.",
 	//         "The SAML activity report return information about different types of SAML activity events.",
@@ -1805,7 +1807,7 @@ func (c *ChannelsStopCall) Header() http.Header {
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1959,7 +1961,7 @@ func (c *CustomerUsageReportsGetCall) Header() http.Header {
 
 func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2226,7 +2228,7 @@ func (c *EntityUsageReportsGetCall) Header() http.Header {
 
 func (c *EntityUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2559,7 +2561,7 @@ func (c *UserUsageReportGetCall) Header() http.Header {
 
 func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -550,6 +550,58 @@ func (s *GoogleChromeManagementV1ChromeAppPermission) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1ChromeAppRequest: Details of an app
+// installation request.
+type GoogleChromeManagementV1ChromeAppRequest struct {
+	// AppDetails: Output only. Format:
+	// app_details=customers/{customer_id}/apps/chrome/{app_id}
+	AppDetails string `json:"appDetails,omitempty"`
+
+	// AppId: Output only. Unique store identifier for the app. Example:
+	// "gmbmikajjgmnabiglmofipeabaddhgne" for the Save to Google Drive
+	// Chrome extension.
+	AppId string `json:"appId,omitempty"`
+
+	// DetailUri: Output only. The uri for the detail page of the item.
+	DetailUri string `json:"detailUri,omitempty"`
+
+	// DisplayName: Output only. App's display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// IconUri: Output only. A link to an image that can be used as an icon
+	// for the product.
+	IconUri string `json:"iconUri,omitempty"`
+
+	// LatestRequestTime: Output only. The timestamp of the most recently
+	// made request for this app.
+	LatestRequestTime string `json:"latestRequestTime,omitempty"`
+
+	// RequestCount: Output only. Total count of requests for this app.
+	RequestCount int64 `json:"requestCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AppDetails") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppDetails") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1ChromeAppRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1ChromeAppRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1ChromeAppSiteAccess: Represent one host
 // permission.
 type GoogleChromeManagementV1ChromeAppSiteAccess struct {
@@ -576,6 +628,45 @@ type GoogleChromeManagementV1ChromeAppSiteAccess struct {
 
 func (s *GoogleChromeManagementV1ChromeAppSiteAccess) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1ChromeAppSiteAccess
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1CountChromeAppRequestsResponse: Response
+// containing summary of requested app installations.
+type GoogleChromeManagementV1CountChromeAppRequestsResponse struct {
+	// NextPageToken: Token to specify the next page in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// RequestedApps: Count of requested apps matching request.
+	RequestedApps []*GoogleChromeManagementV1ChromeAppRequest `json:"requestedApps,omitempty"`
+
+	// TotalSize: Total number of matching app requests.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1CountChromeAppRequestsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1CountChromeAppRequestsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -864,6 +955,228 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "chromemanagement.customers.apps.countChromeAppRequests":
+
+type CustomersAppsCountChromeAppRequestsCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// CountChromeAppRequests: Generate summary of app installation
+// requests.
+//
+// - customer: Customer id or "my_customer" to use the customer
+//   associated to the account making the request.
+func (r *CustomersAppsService) CountChromeAppRequests(customer string) *CustomersAppsCountChromeAppRequestsCall {
+	c := &CustomersAppsCountChromeAppRequestsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field used to order
+// results. Supported fields: * request_count * latest_request_time
+func (c *CustomersAppsCountChromeAppRequestsCall) OrderBy(orderBy string) *CustomersAppsCountChromeAppRequestsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// OrgUnitId sets the optional parameter "orgUnitId": The ID of the
+// organizational unit.
+func (c *CustomersAppsCountChromeAppRequestsCall) OrgUnitId(orgUnitId string) *CustomersAppsCountChromeAppRequestsCall {
+	c.urlParams_.Set("orgUnitId", orgUnitId)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// results to return. Maximum and default are 50, anything above will be
+// coerced to 50.
+func (c *CustomersAppsCountChromeAppRequestsCall) PageSize(pageSize int64) *CustomersAppsCountChromeAppRequestsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to specify
+// the page of the request to be returned.
+func (c *CustomersAppsCountChromeAppRequestsCall) PageToken(pageToken string) *CustomersAppsCountChromeAppRequestsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersAppsCountChromeAppRequestsCall) Fields(s ...googleapi.Field) *CustomersAppsCountChromeAppRequestsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersAppsCountChromeAppRequestsCall) IfNoneMatch(entityTag string) *CustomersAppsCountChromeAppRequestsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersAppsCountChromeAppRequestsCall) Context(ctx context.Context) *CustomersAppsCountChromeAppRequestsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersAppsCountChromeAppRequestsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersAppsCountChromeAppRequestsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211027")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/apps:countChromeAppRequests")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.apps.countChromeAppRequests" call.
+// Exactly one of
+// *GoogleChromeManagementV1CountChromeAppRequestsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleChromeManagementV1CountChromeAppRequestsResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersAppsCountChromeAppRequestsCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1CountChromeAppRequestsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleChromeManagementV1CountChromeAppRequestsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Generate summary of app installation requests.",
+	//   "flatPath": "v1/customers/{customersId}/apps:countChromeAppRequests",
+	//   "httpMethod": "GET",
+	//   "id": "chromemanagement.customers.apps.countChromeAppRequests",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. Customer id or \"my_customer\" to use the customer associated to the account making the request.",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field used to order results. Supported fields: * request_count * latest_request_time",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orgUnitId": {
+	//       "description": "The ID of the organizational unit.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of results to return. Maximum and default are 50, anything above will be coerced to 50.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token to specify the page of the request to be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+customer}/apps:countChromeAppRequests",
+	//   "response": {
+	//     "$ref": "GoogleChromeManagementV1CountChromeAppRequestsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.appdetails.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersAppsCountChromeAppRequestsCall) Pages(ctx context.Context, f func(*GoogleChromeManagementV1CountChromeAppRequestsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "chromemanagement.customers.apps.android.get":
 
 type CustomersAppsAndroidGetCall struct {
@@ -925,7 +1238,7 @@ func (c *CustomersAppsAndroidGetCall) Header() http.Header {
 
 func (c *CustomersAppsAndroidGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1076,7 +1389,7 @@ func (c *CustomersAppsChromeGetCall) Header() http.Header {
 
 func (c *CustomersAppsChromeGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1227,7 +1540,7 @@ func (c *CustomersAppsWebGetCall) Header() http.Header {
 
 func (c *CustomersAppsWebGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1405,7 +1718,7 @@ func (c *CustomersReportsCountChromeVersionsCall) Header() http.Header {
 
 func (c *CustomersReportsCountChromeVersionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1635,7 +1948,7 @@ func (c *CustomersReportsCountInstalledAppsCall) Header() http.Header {
 
 func (c *CustomersReportsCountInstalledAppsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1892,7 +2205,7 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) Header() http.Header {
 
 func (c *CustomersReportsFindInstalledAppDevicesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211027")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

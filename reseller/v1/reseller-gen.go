@@ -957,11 +957,12 @@ type CustomersGetCall struct {
 // see retrieving a customer account
 // (/admin-sdk/reseller/v1/how-tos/manage_customers#get_customer).
 //
-// - customerId: Either the customer's primary domain name or the
-//   customer's unique identifier. If using the domain name, we do not
-//   recommend using a `customerId` as a key for persistent data. If the
-//   domain name for a `customerId` is changed, the Google system
-//   automatically updates.
+// - customerId: This can be either the customer's primary domain name
+//   or the customer's unique identifier. If the domain name for a
+//   customer changes, the old domain name cannot be used to access the
+//   customer, but the customer's unique identifier (as returned by the
+//   API) can always be used. We recommend storing the unique identifier
+//   in your systems where applicable.
 func (r *CustomersService) Get(customerId string) *CustomersGetCall {
 	c := &CustomersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -1005,7 +1006,7 @@ func (c *CustomersGetCall) Header() http.Header {
 
 func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1076,7 +1077,7 @@ func (c *CustomersGetCall) Do(opts ...googleapi.CallOption) (*Customer, error) {
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
+	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1167,7 +1168,7 @@ func (c *CustomersInsertCall) Header() http.Header {
 
 func (c *CustomersInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1272,11 +1273,12 @@ type CustomersPatchCall struct {
 // domain to unlock Essentials features
 // (https://support.google.com/a/answer/9122284).
 //
-// - customerId: Either the customer's primary domain name or the
-//   customer's unique identifier. If using the domain name, we do not
-//   recommend using a `customerId` as a key for persistent data. If the
-//   domain name for a `customerId` is changed, the Google system
-//   automatically updates.
+// - customerId: This can be either the customer's primary domain name
+//   or the customer's unique identifier. If the domain name for a
+//   customer changes, the old domain name cannot be used to access the
+//   customer, but the customer's unique identifier (as returned by the
+//   API) can always be used. We recommend storing the unique identifier
+//   in your systems where applicable.
 func (r *CustomersService) Patch(customerId string, customer *Customer) *CustomersPatchCall {
 	c := &CustomersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -1311,7 +1313,7 @@ func (c *CustomersPatchCall) Header() http.Header {
 
 func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1384,7 +1386,7 @@ func (c *CustomersPatchCall) Do(opts ...googleapi.CallOption) (*Customer, error)
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
+	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1421,11 +1423,12 @@ type CustomersUpdateCall struct {
 // information, see update a customer's settings
 // (/admin-sdk/reseller/v1/how-tos/manage_customers#update_customer).
 //
-// - customerId: Either the customer's primary domain name or the
-//   customer's unique identifier. If using the domain name, we do not
-//   recommend using a `customerId` as a key for persistent data. If the
-//   domain name for a `customerId` is changed, the Google system
-//   automatically updates.
+// - customerId: This can be either the customer's primary domain name
+//   or the customer's unique identifier. If the domain name for a
+//   customer changes, the old domain name cannot be used to access the
+//   customer, but the customer's unique identifier (as returned by the
+//   API) can always be used. We recommend storing the unique identifier
+//   in your systems where applicable.
 func (r *CustomersService) Update(customerId string, customer *Customer) *CustomersUpdateCall {
 	c := &CustomersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -1460,7 +1463,7 @@ func (c *CustomersUpdateCall) Header() http.Header {
 
 func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1533,7 +1536,7 @@ func (c *CustomersUpdateCall) Do(opts ...googleapi.CallOption) (*Customer, error
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
+	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1607,7 +1610,7 @@ func (c *ResellernotifyGetwatchdetailsCall) Header() http.Header {
 
 func (c *ResellernotifyGetwatchdetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1735,7 +1738,7 @@ func (c *ResellernotifyRegisterCall) Header() http.Header {
 
 func (c *ResellernotifyRegisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1864,7 +1867,7 @@ func (c *ResellernotifyUnregisterCall) Header() http.Header {
 
 func (c *ResellernotifyUnregisterCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1959,11 +1962,12 @@ type SubscriptionsActivateCall struct {
 // suspended for any other reason, such as for abuse or a pending ToS
 // acceptance, this call will not reactivate the customer subscription.
 //
-// - customerId: Either the customer's primary domain name or the
-//   customer's unique identifier. If using the domain name, we do not
-//   recommend using a `customerId` as a key for persistent data. If the
-//   domain name for a `customerId` is changed, the Google system
-//   automatically updates.
+// - customerId: This can be either the customer's primary domain name
+//   or the customer's unique identifier. If the domain name for a
+//   customer changes, the old domain name cannot be used to access the
+//   customer, but the customer's unique identifier (as returned by the
+//   API) can always be used. We recommend storing the unique identifier
+//   in your systems where applicable.
 // - subscriptionId: This is a required property. The `subscriptionId`
 //   is the subscription identifier and is unique for each customer.
 //   Since a `subscriptionId` changes when a subscription is updated, we
@@ -2004,7 +2008,7 @@ func (c *SubscriptionsActivateCall) Header() http.Header {
 
 func (c *SubscriptionsActivateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2074,7 +2078,7 @@ func (c *SubscriptionsActivateCall) Do(opts ...googleapi.CallOption) (*Subscript
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
+	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2117,11 +2121,12 @@ type SubscriptionsChangePlanCall struct {
 // (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscripti
 // on_plan).
 //
-// - customerId: Either the customer's primary domain name or the
-//   customer's unique identifier. If using the domain name, we do not
-//   recommend using a `customerId` as a key for persistent data. If the
-//   domain name for a `customerId` is changed, the Google system
-//   automatically updates.
+// - customerId: This can be either the customer's primary domain name
+//   or the customer's unique identifier. If the domain name for a
+//   customer changes, the old domain name cannot be used to access the
+//   customer, but the customer's unique identifier (as returned by the
+//   API) can always be used. We recommend storing the unique identifier
+//   in your systems where applicable.
 // - subscriptionId: This is a required property. The `subscriptionId`
 //   is the subscription identifier and is unique for each customer.
 //   Since a `subscriptionId` changes when a subscription is updated, we
@@ -2163,7 +2168,7 @@ func (c *SubscriptionsChangePlanCall) Header() http.Header {
 
 func (c *SubscriptionsChangePlanCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2238,7 +2243,7 @@ func (c *SubscriptionsChangePlanCall) Do(opts ...googleapi.CallOption) (*Subscri
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
+	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2281,11 +2286,12 @@ type SubscriptionsChangeRenewalSettingsCall struct {
 // For more information, see the description in manage subscriptions
 // (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_renewal).
 //
-// - customerId: Either the customer's primary domain name or the
-//   customer's unique identifier. If using the domain name, we do not
-//   recommend using a `customerId` as a key for persistent data. If the
-//   domain name for a `customerId` is changed, the Google system
-//   automatically updates.
+// - customerId: This can be either the customer's primary domain name
+//   or the customer's unique identifier. If the domain name for a
+//   customer changes, the old domain name cannot be used to access the
+//   customer, but the customer's unique identifier (as returned by the
+//   API) can always be used. We recommend storing the unique identifier
+//   in your systems where applicable.
 // - subscriptionId: This is a required property. The `subscriptionId`
 //   is the subscription identifier and is unique for each customer.
 //   Since a `subscriptionId` changes when a subscription is updated, we
@@ -2327,7 +2333,7 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Header() http.Header {
 
 func (c *SubscriptionsChangeRenewalSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2402,7 +2408,7 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
+	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2446,11 +2452,12 @@ type SubscriptionsChangeSeatsCall struct {
 // (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscripti
 // on_seat).
 //
-// - customerId: Either the customer's primary domain name or the
-//   customer's unique identifier. If using the domain name, we do not
-//   recommend using a `customerId` as a key for persistent data. If the
-//   domain name for a `customerId` is changed, the Google system
-//   automatically updates.
+// - customerId: This can be either the customer's primary domain name
+//   or the customer's unique identifier. If the domain name for a
+//   customer changes, the old domain name cannot be used to access the
+//   customer, but the customer's unique identifier (as returned by the
+//   API) can always be used. We recommend storing the unique identifier
+//   in your systems where applicable.
 // - subscriptionId: This is a required property. The `subscriptionId`
 //   is the subscription identifier and is unique for each customer.
 //   Since a `subscriptionId` changes when a subscription is updated, we
@@ -2492,7 +2499,7 @@ func (c *SubscriptionsChangeSeatsCall) Header() http.Header {
 
 func (c *SubscriptionsChangeSeatsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2567,7 +2574,7 @@ func (c *SubscriptionsChangeSeatsCall) Do(opts ...googleapi.CallOption) (*Subscr
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
+	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2606,11 +2613,12 @@ type SubscriptionsDeleteCall struct {
 
 // Delete: Cancels, suspends, or transfers a subscription to direct.
 //
-// - customerId: Either the customer's primary domain name or the
-//   customer's unique identifier. If using the domain name, we do not
-//   recommend using a `customerId` as a key for persistent data. If the
-//   domain name for a `customerId` is changed, the Google system
-//   automatically updates.
+// - customerId: This can be either the customer's primary domain name
+//   or the customer's unique identifier. If the domain name for a
+//   customer changes, the old domain name cannot be used to access the
+//   customer, but the customer's unique identifier (as returned by the
+//   API) can always be used. We recommend storing the unique identifier
+//   in your systems where applicable.
 // - deletionType: The `deletionType` query string enables the
 //   cancellation, downgrade, or suspension of a subscription.
 // - subscriptionId: This is a required property. The `subscriptionId`
@@ -2654,7 +2662,7 @@ func (c *SubscriptionsDeleteCall) Header() http.Header {
 
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2700,7 +2708,7 @@ func (c *SubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
+	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2756,11 +2764,12 @@ type SubscriptionsGetCall struct {
 // (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#get_subscription)
 // .
 //
-// - customerId: Either the customer's primary domain name or the
-//   customer's unique identifier. If using the domain name, we do not
-//   recommend using a `customerId` as a key for persistent data. If the
-//   domain name for a `customerId` is changed, the Google system
-//   automatically updates.
+// - customerId: This can be either the customer's primary domain name
+//   or the customer's unique identifier. If the domain name for a
+//   customer changes, the old domain name cannot be used to access the
+//   customer, but the customer's unique identifier (as returned by the
+//   API) can always be used. We recommend storing the unique identifier
+//   in your systems where applicable.
 // - subscriptionId: This is a required property. The `subscriptionId`
 //   is the subscription identifier and is unique for each customer.
 //   Since a `subscriptionId` changes when a subscription is updated, we
@@ -2811,7 +2820,7 @@ func (c *SubscriptionsGetCall) Header() http.Header {
 
 func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2884,7 +2893,7 @@ func (c *SubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscription, 
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
+	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2936,11 +2945,12 @@ type SubscriptionsInsertCall struct {
 // (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#transfer_a_subscr
 // iption).
 //
-// - customerId: Either the customer's primary domain name or the
-//   customer's unique identifier. If using the domain name, we do not
-//   recommend using a `customerId` as a key for persistent data. If the
-//   domain name for a `customerId` is changed, the Google system
-//   automatically updates.
+// - customerId: This can be either the customer's primary domain name
+//   or the customer's unique identifier. If the domain name for a
+//   customer changes, the old domain name cannot be used to access the
+//   customer, but the customer's unique identifier (as returned by the
+//   API) can always be used. We recommend storing the unique identifier
+//   in your systems where applicable.
 func (r *SubscriptionsService) Insert(customerId string, subscription *Subscription) *SubscriptionsInsertCall {
 	c := &SubscriptionsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2987,7 +2997,7 @@ func (c *SubscriptionsInsertCall) Header() http.Header {
 
 func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3065,7 +3075,7 @@ func (c *SubscriptionsInsertCall) Do(opts ...googleapi.CallOption) (*Subscriptio
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
+	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3118,11 +3128,12 @@ func (c *SubscriptionsListCall) CustomerAuthToken(customerAuthToken string) *Sub
 	return c
 }
 
-// CustomerId sets the optional parameter "customerId": Either the
-// customer's primary domain name or the customer's unique identifier.
-// If using the domain name, we do not recommend using a `customerId` as
-// a key for persistent data. If the domain name for a `customerId` is
-// changed, the Google system automatically updates.
+// CustomerId sets the optional parameter "customerId": This can be
+// either the customer's primary domain name or the customer's unique
+// identifier. If the domain name for a customer changes, the old domain
+// name cannot be used to access the customer, but the customer's unique
+// identifier (as returned by the API) can always be used. We recommend
+// storing the unique identifier in your systems where applicable.
 func (c *SubscriptionsListCall) CustomerId(customerId string) *SubscriptionsListCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -3195,7 +3206,7 @@ func (c *SubscriptionsListCall) Header() http.Header {
 
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3266,7 +3277,7 @@ func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*Subscriptions
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
+	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3339,11 +3350,12 @@ type SubscriptionsStartPaidServiceCall struct {
 // subscription. For more information, see manage subscriptions
 // (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#paid_service).
 //
-// - customerId: Either the customer's primary domain name or the
-//   customer's unique identifier. If using the domain name, we do not
-//   recommend using a `customerId` as a key for persistent data. If the
-//   domain name for a `customerId` is changed, the Google system
-//   automatically updates.
+// - customerId: This can be either the customer's primary domain name
+//   or the customer's unique identifier. If the domain name for a
+//   customer changes, the old domain name cannot be used to access the
+//   customer, but the customer's unique identifier (as returned by the
+//   API) can always be used. We recommend storing the unique identifier
+//   in your systems where applicable.
 // - subscriptionId: This is a required property. The `subscriptionId`
 //   is the subscription identifier and is unique for each customer.
 //   Since a `subscriptionId` changes when a subscription is updated, we
@@ -3384,7 +3396,7 @@ func (c *SubscriptionsStartPaidServiceCall) Header() http.Header {
 
 func (c *SubscriptionsStartPaidServiceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3454,7 +3466,7 @@ func (c *SubscriptionsStartPaidServiceCall) Do(opts ...googleapi.CallOption) (*S
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
+	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -3500,11 +3512,12 @@ type SubscriptionsSuspendCall struct {
 // for short periods of time as suspensions over 60 days may result in
 // the subscription being cancelled.
 //
-// - customerId: Either the customer's primary domain name or the
-//   customer's unique identifier. If using the domain name, we do not
-//   recommend using a `customerId` as a key for persistent data. If the
-//   domain name for a `customerId` is changed, the Google system
-//   automatically updates.
+// - customerId: This can be either the customer's primary domain name
+//   or the customer's unique identifier. If the domain name for a
+//   customer changes, the old domain name cannot be used to access the
+//   customer, but the customer's unique identifier (as returned by the
+//   API) can always be used. We recommend storing the unique identifier
+//   in your systems where applicable.
 // - subscriptionId: This is a required property. The `subscriptionId`
 //   is the subscription identifier and is unique for each customer.
 //   Since a `subscriptionId` changes when a subscription is updated, we
@@ -3545,7 +3558,7 @@ func (c *SubscriptionsSuspendCall) Header() http.Header {
 
 func (c *SubscriptionsSuspendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3615,7 +3628,7 @@ func (c *SubscriptionsSuspendCall) Do(opts ...googleapi.CallOption) (*Subscripti
 	//   ],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Either the customer's primary domain name or the customer's unique identifier. If using the domain name, we do not recommend using a `customerId` as a key for persistent data. If the domain name for a `customerId` is changed, the Google system automatically updates.",
+	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

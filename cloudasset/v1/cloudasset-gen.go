@@ -718,19 +718,19 @@ func (s *BigQueryDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Binding: Associates `members` with a `role`.
+// Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
 	// condition evaluates to `true`, then this binding applies to the
 	// current request. If the condition evaluates to `false`, then this
 	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the members
-	// in this binding. To learn which resources support conditions in their
-	// IAM policies, see the IAM documentation
+	// role binding might grant the same role to one or more of the
+	// principals in this binding. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
 
-	// Members: Specifies the identities requesting access for a Cloud
+	// Members: Specifies the principals requesting access for a Cloud
 	// Platform resource. `members` can have the following values: *
 	// `allUsers`: A special identifier that represents anyone who is on the
 	// internet; with or without a Google account. *
@@ -764,8 +764,8 @@ type Binding struct {
 	// For example, `google.com` or `example.com`.
 	Members []string `json:"members,omitempty"`
 
-	// Role: Role that is assigned to `members`. For example,
-	// `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// Role: Role that is assigned to the list of `members`, or principals.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -3549,8 +3549,8 @@ func (s *IamPolicySearchResult) MarshalJSON() ([]byte, error) {
 // resource access, based on roles assigned either directly to them or
 // to the groups they belong to, directly or indirectly.
 type IdentitySelector struct {
-	// Identity: Required. The identity appear in the form of members in IAM
-	// policy binding
+	// Identity: Required. The identity appear in the form of principals in
+	// IAM policy binding
 	// (https://cloud.google.com/iam/reference/rest/v1/Binding). The
 	// examples of supported forms are: "user:mike@example.com",
 	// "group:admins@example.com", "domain:google.com",
@@ -3981,14 +3981,14 @@ type Options struct {
 	// and this flag is not allowed to set. Default is false.
 	ExpandRoles bool `json:"expandRoles,omitempty"`
 
-	// OutputGroupEdges: Optional. If true, the result will output group
-	// identity edges, starting from the binding's group members, to any
-	// expanded identities. Default is false.
+	// OutputGroupEdges: Optional. If true, the result will output the
+	// relevant membership relationships between groups and other groups,
+	// and between groups and principals. Default is false.
 	OutputGroupEdges bool `json:"outputGroupEdges,omitempty"`
 
-	// OutputResourceEdges: Optional. If true, the result will output
-	// resource edges, starting from the policy attached resource, to any
-	// expanded resources. Default is false.
+	// OutputResourceEdges: Optional. If true, the result will output the
+	// relevant parent/child relationships between resources. Default is
+	// false.
 	OutputResourceEdges bool `json:"outputResourceEdges,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -4175,17 +4175,17 @@ func (s *Permissions) MarshalJSON() ([]byte, error) {
 
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
-// collection of `bindings`. A `binding` binds one or more `members` to
-// a single `role`. Members can be user accounts, service accounts,
-// Google groups, and domains (such as G Suite). A `role` is a named
-// list of permissions; each `role` can be an IAM predefined role or a
-// user-created custom role. For some types of Google Cloud resources, a
-// `binding` can also specify a `condition`, which is a logical
-// expression that allows access to a resource only if the expression
-// evaluates to `true`. A condition can add constraints based on
-// attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the IAM
-// documentation
+// collection of `bindings`. A `binding` binds one or more `members`, or
+// principals, to a single `role`. Principals can be user accounts,
+// service accounts, Google groups, and domains (such as G Suite). A
+// `role` is a named list of permissions; each `role` can be an IAM
+// predefined role or a user-created custom role. For some types of
+// Google Cloud resources, a `binding` can also specify a `condition`,
+// which is a logical expression that allows access to a resource only
+// if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or
+// both. To learn which resources support conditions in their IAM
+// policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 // **JSON example:** { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
@@ -4212,9 +4212,15 @@ type Policy struct {
 	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
-	// Bindings: Associates a list of `members` to a `role`. Optionally, may
-	// specify a `condition` that determines how and when the `bindings` are
-	// applied. Each of the `bindings` must contain at least one member.
+	// Bindings: Associates a list of `members`, or principals, with a
+	// `role`. Optionally, may specify a `condition` that determines how and
+	// when the `bindings` are applied. Each of the `bindings` must contain
+	// at least one principal. The `bindings` in a `Policy` can refer to up
+	// to 1,500 principals; up to 250 of these principals can be Google
+	// groups. Each occurrence of a principal counts towards these limits.
+	// For example, if the `bindings` grant 50 different roles to
+	// `user:alice@example.com`, and not to any other principal, then you
+	// can add another 1,450 principals to the `bindings` in the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
 	// Etag: `etag` is used for optimistic concurrency control as a way to
@@ -5563,7 +5569,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5778,7 +5784,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5921,7 +5927,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6067,7 +6073,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6216,7 +6222,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6359,7 +6365,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6512,7 +6518,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6657,7 +6663,7 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryConditionContextAccessTime(analysi
 
 // AnalysisQueryIdentitySelectorIdentity sets the optional parameter
 // "analysisQuery.identitySelector.identity": Required. The identity
-// appear in the form of members in IAM policy binding
+// appear in the form of principals in IAM policy binding
 // (https://cloud.google.com/iam/reference/rest/v1/Binding). The
 // examples of supported forms are: "user:mike@example.com",
 // "group:admins@example.com", "domain:google.com",
@@ -6743,8 +6749,8 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsExpandRoles(analysisQueryOp
 
 // AnalysisQueryOptionsOutputGroupEdges sets the optional parameter
 // "analysisQuery.options.outputGroupEdges": If true, the result will
-// output group identity edges, starting from the binding's group
-// members, to any expanded identities. Default is false.
+// output the relevant membership relationships between groups and other
+// groups, and between groups and principals. Default is false.
 func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsOutputGroupEdges(analysisQueryOptionsOutputGroupEdges bool) *V1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.options.outputGroupEdges", fmt.Sprint(analysisQueryOptionsOutputGroupEdges))
 	return c
@@ -6752,8 +6758,8 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsOutputGroupEdges(analysisQu
 
 // AnalysisQueryOptionsOutputResourceEdges sets the optional parameter
 // "analysisQuery.options.outputResourceEdges": If true, the result will
-// output resource edges, starting from the policy attached resource, to
-// any expanded resources. Default is false.
+// output the relevant parent/child relationships between resources.
+// Default is false.
 func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsOutputResourceEdges(analysisQueryOptionsOutputResourceEdges bool) *V1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.options.outputResourceEdges", fmt.Sprint(analysisQueryOptionsOutputResourceEdges))
 	return c
@@ -6822,7 +6828,7 @@ func (c *V1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6911,7 +6917,7 @@ func (c *V1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*AnalyzeIamPo
 	//       "type": "string"
 	//     },
 	//     "analysisQuery.identitySelector.identity": {
-	//       "description": "Required. The identity appear in the form of members in [IAM policy binding](https://cloud.google.com/iam/reference/rest/v1/Binding). The examples of supported forms are: \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\". Notice that wildcard characters (such as * and ?) are not supported. You must give a specific identity.",
+	//       "description": "Required. The identity appear in the form of principals in [IAM policy binding](https://cloud.google.com/iam/reference/rest/v1/Binding). The examples of supported forms are: \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\". Notice that wildcard characters (such as * and ?) are not supported. You must give a specific identity.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6936,12 +6942,12 @@ func (c *V1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*AnalyzeIamPo
 	//       "type": "boolean"
 	//     },
 	//     "analysisQuery.options.outputGroupEdges": {
-	//       "description": "Optional. If true, the result will output group identity edges, starting from the binding's group members, to any expanded identities. Default is false.",
+	//       "description": "Optional. If true, the result will output the relevant membership relationships between groups and other groups, and between groups and principals. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "analysisQuery.options.outputResourceEdges": {
-	//       "description": "Optional. If true, the result will output resource edges, starting from the policy attached resource, to any expanded resources. Default is false.",
+	//       "description": "Optional. If true, the result will output the relevant parent/child relationships between resources. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7039,7 +7045,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyLongrunningCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7224,7 +7230,7 @@ func (c *V1AnalyzeMoveCall) Header() http.Header {
 
 func (c *V1AnalyzeMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7463,7 +7469,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7660,7 +7666,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7843,8 +7849,8 @@ func (c *V1SearchAllIamPoliciesCall) PageToken(pageToken string) *V1SearchAllIam
 // for more information. If not specified or empty, it will search all
 // the IAM policies within the specified `scope`. Note that the query
 // string is compared against each Cloud IAM policy binding, including
-// its members, roles, and Cloud IAM conditions. The returned Cloud IAM
-// policies will only contain the bindings that match your query. To
+// its principals, roles, and Cloud IAM conditions. The returned Cloud
+// IAM policies will only contain the bindings that match your query. To
 // learn more about the IAM policy structure, see IAM policy doc
 // (https://cloud.google.com/iam/docs/policies#structure). Examples: *
 // `policy:amy@gmail.com` to find IAM policy bindings that specify user
@@ -7872,7 +7878,7 @@ func (c *V1SearchAllIamPoliciesCall) PageToken(pageToken string) *V1SearchAllIam
 // "instance1" or "instance2" and also specify user "amy". *
 // `roles:roles/compute.admin` to find IAM policy bindings that specify
 // the Compute Admin role. * `memberTypes:user` to find IAM policy
-// bindings that contain the "user" member type.
+// bindings that contain the principal type "user".
 func (c *V1SearchAllIamPoliciesCall) Query(query string) *V1SearchAllIamPoliciesCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -7915,7 +7921,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8008,7 +8014,7 @@ func (c *V1SearchAllIamPoliciesCall) Do(opts ...googleapi.CallOption) (*SearchAl
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query) for more information. If not specified or empty, it will search all the IAM policies within the specified `scope`. Note that the query string is compared against each Cloud IAM policy binding, including its members, roles, and Cloud IAM conditions. The returned Cloud IAM policies will only contain the bindings that match your query. To learn more about the IAM policy structure, see [IAM policy doc](https://cloud.google.com/iam/docs/policies#structure). Examples: * `policy:amy@gmail.com` to find IAM policy bindings that specify user \"amy@gmail.com\". * `policy:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `policy:comp*` to find IAM policy bindings that contain \"comp\" as a prefix of any word in the binding. * `policy.role.permissions:storage.buckets.update` to find IAM policy bindings that specify a role containing \"storage.buckets.update\" permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `policy.role.permissions:upd*` to find IAM policy bindings that specify a role containing \"upd\" as a prefix of any word in the role permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `resource:organizations/123456` to find IAM policy bindings that are set on \"organizations/123456\". * `resource=//cloudresourcemanager.googleapis.com/projects/myproject` to find IAM policy bindings that are set on the project named \"myproject\". * `Important` to find IAM policy bindings that contain \"Important\" as a word in any of the searchable fields (except for the included permissions). * `resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are set on resources \"instance1\" or \"instance2\" and also specify user \"amy\". * `roles:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `memberTypes:user` to find IAM policy bindings that contain the \"user\" member type.",
+	//       "description": "Optional. The query statement. See [how to construct a query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query) for more information. If not specified or empty, it will search all the IAM policies within the specified `scope`. Note that the query string is compared against each Cloud IAM policy binding, including its principals, roles, and Cloud IAM conditions. The returned Cloud IAM policies will only contain the bindings that match your query. To learn more about the IAM policy structure, see [IAM policy doc](https://cloud.google.com/iam/docs/policies#structure). Examples: * `policy:amy@gmail.com` to find IAM policy bindings that specify user \"amy@gmail.com\". * `policy:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `policy:comp*` to find IAM policy bindings that contain \"comp\" as a prefix of any word in the binding. * `policy.role.permissions:storage.buckets.update` to find IAM policy bindings that specify a role containing \"storage.buckets.update\" permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `policy.role.permissions:upd*` to find IAM policy bindings that specify a role containing \"upd\" as a prefix of any word in the role permission. Note that if callers don't have `iam.roles.get` access to a role's included permissions, policy bindings that specify this role will be dropped from the search results. * `resource:organizations/123456` to find IAM policy bindings that are set on \"organizations/123456\". * `resource=//cloudresourcemanager.googleapis.com/projects/myproject` to find IAM policy bindings that are set on the project named \"myproject\". * `Important` to find IAM policy bindings that contain \"Important\" as a word in any of the searchable fields (except for the included permissions). * `resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are set on resources \"instance1\" or \"instance2\" and also specify user \"amy\". * `roles:roles/compute.admin` to find IAM policy bindings that specify the Compute Admin role. * `memberTypes:user` to find IAM policy bindings that contain the principal type \"user\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8228,7 +8234,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

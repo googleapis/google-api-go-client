@@ -266,6 +266,49 @@ func (s *AudioConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// CustomVoiceParams: Description of the custom voice to be synthesized.
+type CustomVoiceParams struct {
+	// Model: Required. The name of the AutoML model that synthesizes the
+	// custom voice.
+	Model string `json:"model,omitempty"`
+
+	// ReportedUsage: Optional. The usage of the synthesized audio to be
+	// reported.
+	//
+	// Possible values:
+	//   "REPORTED_USAGE_UNSPECIFIED" - Request with reported usage
+	// unspecified will be rejected.
+	//   "REALTIME" - For scenarios where the synthesized audio is not
+	// downloadable and can only be used once. For example, real-time
+	// request in IVR system.
+	//   "OFFLINE" - For scenarios where the synthesized audio is
+	// downloadable and can be reused. For example, the synthesized audio is
+	// downloaded, stored in customer service system and played repeatedly.
+	ReportedUsage string `json:"reportedUsage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Model") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Model") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomVoiceParams) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomVoiceParams
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListVoicesResponse: The message returned to the client by the
 // `ListVoices` method.
 type ListVoicesResponse struct {
@@ -529,6 +572,11 @@ func (s *Voice) MarshalJSON() ([]byte, error) {
 // VoiceSelectionParams: Description of which voice to use for a
 // synthesis request.
 type VoiceSelectionParams struct {
+	// CustomVoice: The configuration for a custom voice. If
+	// [CustomVoiceParams.model] is set, the service will choose the custom
+	// voice matching the specified configuration.
+	CustomVoice *CustomVoiceParams `json:"customVoice,omitempty"`
+
 	// LanguageCode: Required. The language (and potentially also the
 	// region) of the voice expressed as a BCP-47
 	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag, e.g.
@@ -567,7 +615,7 @@ type VoiceSelectionParams struct {
 	// supported.
 	SsmlGender string `json:"ssmlGender,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
+	// ForceSendFields is a list of field names (e.g. "CustomVoice") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -575,7 +623,7 @@ type VoiceSelectionParams struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// NullFields is a list of field names (e.g. "CustomVoice") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -635,7 +683,7 @@ func (c *TextSynthesizeCall) Header() http.Header {
 
 func (c *TextSynthesizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -783,7 +831,7 @@ func (c *VoicesListCall) Header() http.Header {
 
 func (c *VoicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

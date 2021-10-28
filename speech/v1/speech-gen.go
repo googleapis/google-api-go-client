@@ -430,6 +430,19 @@ func (s *RecognitionAudio) MarshalJSON() ([]byte, error) {
 // RecognitionConfig: Provides information to the recognizer that
 // specifies how to process the request.
 type RecognitionConfig struct {
+	// AlternativeLanguageCodes: A list of up to 3 additional BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tags, listing
+	// possible alternative languages of the supplied audio. See Language
+	// Support (https://cloud.google.com/speech-to-text/docs/languages) for
+	// a list of the currently supported language codes. If alternative
+	// languages are listed, recognition result will contain recognition in
+	// the most likely language detected including the main language_code.
+	// The recognition result will include the language tag of the language
+	// detected in the audio. Note: This feature is only supported for Voice
+	// Command and Voice Search use cases and performance may vary for other
+	// use cases (e.g., phone call transcription).
+	AlternativeLanguageCodes []string `json:"alternativeLanguageCodes,omitempty"`
+
 	// AudioChannelCount: The number of channels in the input audio data.
 	// ONLY set this for MULTI-CHANNEL recognition. Valid values for
 	// LINEAR16 and FLAC are `1`-`8`. Valid values for OGG_OPUS are
@@ -466,6 +479,11 @@ type RecognitionConfig struct {
 	// request is billed cumulatively for all channels recognized:
 	// `audio_channel_count` multiplied by the length of the audio.
 	EnableSeparateRecognitionPerChannel bool `json:"enableSeparateRecognitionPerChannel,omitempty"`
+
+	// EnableWordConfidence: If `true`, the top result includes a list of
+	// words and the confidence for those words. If `false`, no word-level
+	// confidence information is returned. The default is `false`.
+	EnableWordConfidence bool `json:"enableWordConfidence,omitempty"`
 
 	// EnableWordTimeOffsets: If `true`, the top result includes a list of
 	// words and the start and end time offsets (timestamps) for those
@@ -578,18 +596,19 @@ type RecognitionConfig struct {
 	// model.
 	UseEnhanced bool `json:"useEnhanced,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AudioChannelCount")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AlternativeLanguageCodes") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AudioChannelCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "AlternativeLanguageCodes")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
@@ -940,6 +959,12 @@ type SpeechRecognitionResult struct {
 	// from '1' to 'N'.
 	ChannelTag int64 `json:"channelTag,omitempty"`
 
+	// LanguageCode: Output only. The BCP-47
+	// (https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag of the
+	// language in this result. This language code was detected to have the
+	// most likelihood of being spoken in the audio.
+	LanguageCode string `json:"languageCode,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1040,6 +1065,15 @@ func (s *TranscriptOutputConfig) MarshalJSON() ([]byte, error) {
 
 // WordInfo: Word-specific information for recognized words.
 type WordInfo struct {
+	// Confidence: The confidence estimate between 0.0 and 1.0. A higher
+	// number indicates an estimated greater likelihood that the recognized
+	// words are correct. This field is set only for the top alternative of
+	// a non-streaming result or, of a streaming result where
+	// `is_final=true`. This field is not guaranteed to be accurate and
+	// users should not rely on it to be always provided. The default of 0.0
+	// is a sentinel value indicating `confidence` was not set.
+	Confidence float64 `json:"confidence,omitempty"`
+
 	// EndTime: Time offset relative to the beginning of the audio, and
 	// corresponding to the end of the spoken word. This field is only set
 	// if `enable_word_time_offsets=true` and only in the top hypothesis.
@@ -1064,7 +1098,7 @@ type WordInfo struct {
 	// Word: The word corresponding to this set of information.
 	Word string `json:"word,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1072,7 +1106,7 @@ type WordInfo struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// NullFields is a list of field names (e.g. "Confidence") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1085,6 +1119,20 @@ func (s *WordInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod WordInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *WordInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod WordInfo
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // method id "speech.operations.get":
@@ -1146,7 +1194,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1325,7 +1373,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1493,7 +1541,7 @@ func (c *SpeechLongrunningrecognizeCall) Header() http.Header {
 
 func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1619,7 +1667,7 @@ func (c *SpeechRecognizeCall) Header() http.Header {
 
 func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

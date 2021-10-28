@@ -152,6 +152,43 @@ type PropertiesService struct {
 	s *Service
 }
 
+// ActiveMetricRestriction: A metric actively restricted in creating the
+// report.
+type ActiveMetricRestriction struct {
+	// MetricName: The name of the restricted metric.
+	MetricName string `json:"metricName,omitempty"`
+
+	// RestrictedMetricTypes: The reason for this metric's restriction.
+	//
+	// Possible values:
+	//   "RESTRICTED_METRIC_TYPE_UNSPECIFIED" - Unspecified type.
+	//   "COST_DATA" - Cost metrics such as `adCost`.
+	//   "REVENUE_DATA" - Revenue metrics such as `purchaseRevenue`.
+	RestrictedMetricTypes []string `json:"restrictedMetricTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MetricName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MetricName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ActiveMetricRestriction) MarshalJSON() ([]byte, error) {
+	type NoMethod ActiveMetricRestriction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BatchRunPivotReportsRequest: The batch request containing multiple
 // pivot report requests.
 type BatchRunPivotReportsRequest struct {
@@ -1349,6 +1386,24 @@ type MetricMetadata struct {
 	// example, `eventCount`.
 	ApiName string `json:"apiName,omitempty"`
 
+	// BlockedReasons: If reasons are specified, your access is blocked to
+	// this metric for this property. API requests from you to this property
+	// for this metric will succeed; however, the report will contain only
+	// zeros for this metric. API requests with metric filters on blocked
+	// metrics will fail. If reasons are empty, you have access to this
+	// metric. To learn more, see Access and data-restriction management
+	// (https://support.google.com/analytics/answer/10851388).
+	//
+	// Possible values:
+	//   "BLOCKED_REASON_UNSPECIFIED" - Will never be specified in API
+	// response.
+	//   "NO_REVENUE_METRICS" - If present, your access is blocked to
+	// revenue related metrics for this property, and this metric is revenue
+	// related.
+	//   "NO_COST_METRICS" - If present, your access is blocked to cost
+	// related metrics for this property, and this metric is cost related.
+	BlockedReasons []string `json:"blockedReasons,omitempty"`
+
 	// Category: The display name of the category that this metrics belongs
 	// to. Similar dimensions and metrics are categorized together.
 	Category string `json:"category,omitempty"`
@@ -1968,6 +2023,16 @@ type ResponseMetaData struct {
 	// cardinality reports.
 	DataLossFromOtherRow bool `json:"dataLossFromOtherRow,omitempty"`
 
+	// EmptyReason: If empty reason is specified, the report is empty for
+	// this reason.
+	EmptyReason string `json:"emptyReason,omitempty"`
+
+	// SchemaRestrictionResponse: Describes the schema restrictions actively
+	// enforced in creating this report. To learn more, see Access and
+	// data-restriction management
+	// (https://support.google.com/analytics/answer/10851388).
+	SchemaRestrictionResponse *SchemaRestrictionResponse `json:"schemaRestrictionResponse,omitempty"`
+
 	// TimeZone: The property's current timezone. Intended to be used to
 	// interpret time-based dimensions like `hour` and `minute`. Formatted
 	// as strings from the IANA Time Zone database
@@ -2537,6 +2602,43 @@ func (s *RunReportResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SchemaRestrictionResponse: The schema restrictions actively enforced
+// in creating this report. To learn more, see Access and
+// data-restriction management
+// (https://support.google.com/analytics/answer/10851388).
+type SchemaRestrictionResponse struct {
+	// ActiveMetricRestrictions: All restrictions actively enforced in
+	// creating the report. For example, `purchaseRevenue` always has the
+	// restriction type `REVENUE_DATA`. However, this active response
+	// restriction is only populated if the user's custom role disallows
+	// access to `REVENUE_DATA`.
+	ActiveMetricRestrictions []*ActiveMetricRestriction `json:"activeMetricRestrictions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ActiveMetricRestrictions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActiveMetricRestrictions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SchemaRestrictionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SchemaRestrictionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StringFilter: The filter for string
 type StringFilter struct {
 	// CaseSensitive: If true, the string value is case sensitive.
@@ -2637,7 +2739,7 @@ func (c *PropertiesBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *PropertiesBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2787,7 +2889,7 @@ func (c *PropertiesBatchRunReportsCall) Header() http.Header {
 
 func (c *PropertiesBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2945,7 +3047,7 @@ func (c *PropertiesCheckCompatibilityCall) Header() http.Header {
 
 func (c *PropertiesCheckCompatibilityCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3113,7 +3215,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3261,7 +3363,7 @@ func (c *PropertiesRunPivotReportCall) Header() http.Header {
 
 func (c *PropertiesRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3410,7 +3512,7 @@ func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 
 func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3565,7 +3667,7 @@ func (c *PropertiesRunReportCall) Header() http.Header {
 
 func (c *PropertiesRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

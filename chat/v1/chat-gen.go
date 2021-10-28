@@ -2972,6 +2972,8 @@ type Message struct {
 	// field will be same as create_time.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
 
+	// Name: Resource name in the form `spaces/*/messages/*`. Example:
+	// `spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4`
 	Name string `json:"name,omitempty"`
 
 	// PreviewText: Text for generating preview chips. This text will not be
@@ -3197,7 +3199,7 @@ type Space struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Resource name of the space, in the form "spaces/*". Example:
-	// spaces/AAAAMpdlehYs
+	// spaces/AAAAAAAAAAAA
 	Name string `json:"name,omitempty"`
 
 	// SingleUserBotDm: Whether the space is a DM between a bot and a single
@@ -3214,7 +3216,8 @@ type Space struct {
 	//   "TYPE_UNSPECIFIED"
 	//   "ROOM" - Conversations between two or more humans.
 	//   "DM" - 1:1 Direct Message between a human and a Chat bot, where all
-	// messages are flat.
+	// messages are flat. Note that this does not include direct messages
+	// between two humans.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3564,6 +3567,15 @@ func (r *DmsService) Messages(parent string, message *Message) *DmsMessagesCall 
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *DmsMessagesCall) RequestId(requestId string) *DmsMessagesCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
 // identifier string that can be specified to group messages into a
 // single thread. If this is the first message with a given thread
@@ -3605,7 +3617,7 @@ func (c *DmsMessagesCall) Header() http.Header {
 
 func (c *DmsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3684,6 +3696,11 @@ func (c *DmsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
 	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
 	//       "location": "query",
@@ -3721,6 +3738,15 @@ func (r *DmsService) Webhooks(parent string, message *Message) *DmsWebhooksCall 
 	c := &DmsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *DmsWebhooksCall) RequestId(requestId string) *DmsWebhooksCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -3765,7 +3791,7 @@ func (c *DmsWebhooksCall) Header() http.Header {
 
 func (c *DmsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3844,6 +3870,11 @@ func (c *DmsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
 	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
 	//       "location": "query",
@@ -3881,6 +3912,15 @@ func (r *DmsConversationsService) Messages(parent string, message *Message) *Dms
 	c := &DmsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *DmsConversationsMessagesCall) RequestId(requestId string) *DmsConversationsMessagesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -3925,7 +3965,7 @@ func (c *DmsConversationsMessagesCall) Header() http.Header {
 
 func (c *DmsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4004,6 +4044,11 @@ func (c *DmsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Messag
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
 	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
 	//       "location": "query",
@@ -4080,7 +4125,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4206,6 +4251,15 @@ func (r *RoomsService) Messages(parent string, message *Message) *RoomsMessagesC
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *RoomsMessagesCall) RequestId(requestId string) *RoomsMessagesCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
 // identifier string that can be specified to group messages into a
 // single thread. If this is the first message with a given thread
@@ -4247,7 +4301,7 @@ func (c *RoomsMessagesCall) Header() http.Header {
 
 func (c *RoomsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4326,6 +4380,11 @@ func (c *RoomsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
 	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
 	//       "location": "query",
@@ -4363,6 +4422,15 @@ func (r *RoomsService) Webhooks(parent string, message *Message) *RoomsWebhooksC
 	c := &RoomsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *RoomsWebhooksCall) RequestId(requestId string) *RoomsWebhooksCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -4407,7 +4475,7 @@ func (c *RoomsWebhooksCall) Header() http.Header {
 
 func (c *RoomsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4486,6 +4554,11 @@ func (c *RoomsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
 	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
 	//       "location": "query",
@@ -4523,6 +4596,15 @@ func (r *RoomsConversationsService) Messages(parent string, message *Message) *R
 	c := &RoomsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.message = message
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *RoomsConversationsMessagesCall) RequestId(requestId string) *RoomsConversationsMessagesCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -4567,7 +4649,7 @@ func (c *RoomsConversationsMessagesCall) Header() http.Header {
 
 func (c *RoomsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4646,6 +4728,11 @@ func (c *RoomsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Mess
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
 	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
 	//       "location": "query",
@@ -4677,7 +4764,7 @@ type SpacesGetCall struct {
 // Get: Returns a space.
 //
 // - name: Resource name of the space, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAAA.
 func (r *SpacesService) Get(name string) *SpacesGetCall {
 	c := &SpacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4721,7 +4808,7 @@ func (c *SpacesGetCall) Header() http.Header {
 
 func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4792,7 +4879,7 @@ func (c *SpacesGetCall) Do(opts ...googleapi.CallOption) (*Space, error) {
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the space, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Resource name of the space, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
@@ -4875,7 +4962,7 @@ func (c *SpacesListCall) Header() http.Header {
 
 func (c *SpacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5004,6 +5091,15 @@ func (r *SpacesService) Webhooks(parent string, message *Message) *SpacesWebhook
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *SpacesWebhooksCall) RequestId(requestId string) *SpacesWebhooksCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
 // identifier string that can be specified to group messages into a
 // single thread. If this is the first message with a given thread
@@ -5045,7 +5141,7 @@ func (c *SpacesWebhooksCall) Header() http.Header {
 
 func (c *SpacesWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5124,6 +5220,11 @@ func (c *SpacesWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) 
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
 	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
 	//       "location": "query",
@@ -5200,7 +5301,7 @@ func (c *SpacesMembersGetCall) Header() http.Header {
 
 func (c *SpacesMembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5359,7 +5460,7 @@ func (c *SpacesMembersListCall) Header() http.Header {
 
 func (c *SpacesMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5499,6 +5600,15 @@ func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesM
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": A unique request
+// ID for this message. If a message has already been created in the
+// space with this request ID, the subsequent request will return the
+// existing message and no new message will be created.
+func (c *SpacesMessagesCreateCall) RequestId(requestId string) *SpacesMessagesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // ThreadKey sets the optional parameter "threadKey": Opaque thread
 // identifier string that can be specified to group messages into a
 // single thread. If this is the first message with a given thread
@@ -5540,7 +5650,7 @@ func (c *SpacesMessagesCreateCall) Header() http.Header {
 
 func (c *SpacesMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5619,6 +5729,11 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique request ID for this message. If a message has already been created in the space with this request ID, the subsequent request will return the existing message and no new message will be created.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "threadKey": {
 	//       "description": "Optional. Opaque thread identifier string that can be specified to group messages into a single thread. If this is the first message with a given thread identifier, a new thread is created. Subsequent messages with the same thread identifier will be posted into the same thread. This relieves bots and webhooks from having to store the Google Chat thread ID of a thread (created earlier by them) to post further updates to it. Has no effect if thread field, corresponding to an existing thread, is set in message.",
 	//       "location": "query",
@@ -5684,7 +5799,7 @@ func (c *SpacesMessagesDeleteCall) Header() http.Header {
 
 func (c *SpacesMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5826,7 +5941,7 @@ func (c *SpacesMessagesGetCall) Header() http.Header {
 
 func (c *SpacesMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5925,7 +6040,8 @@ type SpacesMessagesUpdateCall struct {
 
 // Update: Updates a message.
 //
-// - name: .
+// - name: Resource name in the form `spaces/*/messages/*`. Example:
+//   `spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4`.
 func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMessagesUpdateCall {
 	c := &SpacesMessagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5969,7 +6085,7 @@ func (c *SpacesMessagesUpdateCall) Header() http.Header {
 
 func (c *SpacesMessagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6042,6 +6158,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
+	//       "description": "Resource name in the form `spaces/*/messages/*`. Example: `spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4`",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
 	//       "required": true,
@@ -6124,7 +6241,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Header() http.Header {
 
 func (c *SpacesMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20210930")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211026")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

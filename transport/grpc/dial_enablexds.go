@@ -1,4 +1,4 @@
-// Copyright 2015 Google LLC.
+// Copyright 2021 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,6 +6,7 @@
 // This package is not intended for use by end developers. Use the
 // google.golang.org/api/option package to configure API clients.
 
+//go:build enablexds
 // +build enablexds
 
 package grpc

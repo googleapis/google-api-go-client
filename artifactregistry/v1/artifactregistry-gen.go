@@ -257,8 +257,8 @@ func (s *AptArtifact) MarshalJSON() ([]byte, error) {
 
 // DockerImage: DockerImage represents a docker artifact. The following
 // fields are returned as untyped metadata in the Version resource,
-// using camelcase keys (i.e. metadata.imageSizeBytes): - imageSizeBytes
-// - mediaType - buildTime
+// using camelcase keys (i.e. metadata.imageSizeBytes): * imageSizeBytes
+// * mediaType * buildTime
 type DockerImage struct {
 	// BuildTime: The time this image was built. This field is returned as
 	// the 'metadata.buildTime' field in the Version resource. The build
@@ -982,7 +982,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1129,7 +1129,7 @@ func (c *ProjectsLocationsRepositoriesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1291,7 +1291,7 @@ func (c *ProjectsLocationsRepositoriesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1485,7 +1485,7 @@ func (c *ProjectsLocationsRepositoriesDockerImagesListCall) Header() http.Header
 
 func (c *ProjectsLocationsRepositoriesDockerImagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -928,10 +928,10 @@ func (s *ConsumerInfo) MarshalJSON() ([]byte, error) {
 
 // Distribution: Distribution represents a frequency distribution of
 // double-valued sample points. It contains the size of the population
-// of sample points plus additional optional information: - the
-// arithmetic mean of the samples - the minimum and maximum of the
-// samples - the sum-squared-deviation of the samples, used to compute
-// variance - a histogram of the values of the sample points
+// of sample points plus additional optional information: * the
+// arithmetic mean of the samples * the minimum and maximum of the
+// samples * the sum-squared-deviation of the samples, used to compute
+// variance * a histogram of the values of the sample points
 type Distribution struct {
 	// BucketCounts: The number of samples in each histogram bucket.
 	// `bucket_counts` are optional. If present, they must sum to the
@@ -2922,7 +2922,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3080,7 +3080,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3236,7 +3236,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211028")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211029")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

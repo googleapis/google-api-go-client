@@ -600,7 +600,7 @@
       }
     }
   },
-  "revision": "20211018",
+  "revision": "20211028",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AgentPool": {
@@ -1479,6 +1479,10 @@
         "objectConditions": {
           "$ref": "ObjectConditions",
           "description": "Only objects that satisfy these object conditions are included in the set of data source and data sink objects. Object conditions based on objects' \"last modification time\" do not exclude objects in a data sink."
+        },
+        "posixDataSink": {
+          "$ref": "PosixFilesystem",
+          "description": "A POSIX Filesystem data sink."
         },
         "posixDataSource": {
           "$ref": "PosixFilesystem",

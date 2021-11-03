@@ -2888,7 +2888,7 @@ func (s *Media) MarshalJSON() ([]byte, error) {
 
 // Membership: Represents a membership relation in Google Chat.
 type Membership struct {
-	// CreateTime: The creation time of the membership a.k.a the time at
+	// CreateTime: The creation time of the membership a.k.a. the time at
 	// which the member joined the space, if applicable.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -3193,9 +3193,9 @@ func (s *SlashCommandMetadata) MarshalJSON() ([]byte, error) {
 // Space: A space in Google Chat. Spaces are conversations between two
 // or more users or 1:1 messages between a user and a Chat bot.
 type Space struct {
-	// DisplayName: Output only. The display name (only if the space is of
-	// type `ROOM`). Please note that this field might not be populated in
-	// direct messages between humans.
+	// DisplayName: The display name (only if the space is of type `ROOM`).
+	// Please note that this field might not be populated in direct messages
+	// between humans.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Resource name of the space, in the form "spaces/*". Example:
@@ -3617,7 +3617,7 @@ func (c *DmsMessagesCall) Header() http.Header {
 
 func (c *DmsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3791,7 +3791,7 @@ func (c *DmsWebhooksCall) Header() http.Header {
 
 func (c *DmsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3965,7 +3965,7 @@ func (c *DmsConversationsMessagesCall) Header() http.Header {
 
 func (c *DmsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4125,7 +4125,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4301,7 +4301,7 @@ func (c *RoomsMessagesCall) Header() http.Header {
 
 func (c *RoomsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4475,7 +4475,7 @@ func (c *RoomsWebhooksCall) Header() http.Header {
 
 func (c *RoomsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4649,7 +4649,7 @@ func (c *RoomsConversationsMessagesCall) Header() http.Header {
 
 func (c *RoomsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4808,7 +4808,7 @@ func (c *SpacesGetCall) Header() http.Header {
 
 func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4962,7 +4962,7 @@ func (c *SpacesListCall) Header() http.Header {
 
 func (c *SpacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5141,7 +5141,7 @@ func (c *SpacesWebhooksCall) Header() http.Header {
 
 func (c *SpacesWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5257,7 +5257,7 @@ type SpacesMembersGetCall struct {
 //
 // - name: Resource name of the membership to be retrieved, in the form
 //   "spaces/*/members/*". Example:
-//   spaces/AAAAMpdlehY/members/105115627578887013105.
+//   spaces/AAAAAAAAAAAA/members/111111111111111111111.
 func (r *SpacesMembersService) Get(name string) *SpacesMembersGetCall {
 	c := &SpacesMembersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5301,7 +5301,7 @@ func (c *SpacesMembersGetCall) Header() http.Header {
 
 func (c *SpacesMembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5372,7 +5372,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the membership to be retrieved, in the form \"spaces/*/members/*\". Example: spaces/AAAAMpdlehY/members/105115627578887013105",
+	//       "description": "Required. Resource name of the membership to be retrieved, in the form \"spaces/*/members/*\". Example: spaces/AAAAAAAAAAAA/members/111111111111111111111",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/members/[^/]+$",
 	//       "required": true,
@@ -5401,7 +5401,7 @@ type SpacesMembersListCall struct {
 // List: Lists human memberships in a space.
 //
 // - parent: The resource name of the space for which membership list is
-//   to be fetched, in the form "spaces/*". Example: spaces/AAAAMpdlehY.
+//   to be fetched, in the form "spaces/*". Example: spaces/AAAAAAAAAAAA.
 func (r *SpacesMembersService) List(parent string) *SpacesMembersListCall {
 	c := &SpacesMembersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5460,7 +5460,7 @@ func (c *SpacesMembersListCall) Header() http.Header {
 
 func (c *SpacesMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5542,7 +5542,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the space for which membership list is to be fetched, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. The resource name of the space for which membership list is to be fetched, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
@@ -5650,7 +5650,7 @@ func (c *SpacesMessagesCreateCall) Header() http.Header {
 
 func (c *SpacesMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5799,7 +5799,7 @@ func (c *SpacesMessagesDeleteCall) Header() http.Header {
 
 func (c *SpacesMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5941,7 +5941,7 @@ func (c *SpacesMessagesGetCall) Header() http.Header {
 
 func (c *SpacesMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6085,7 +6085,7 @@ func (c *SpacesMessagesUpdateCall) Header() http.Header {
 
 func (c *SpacesMessagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6241,7 +6241,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Header() http.Header {
 
 func (c *SpacesMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211101")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211102")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

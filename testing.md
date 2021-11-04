@@ -9,7 +9,7 @@ on the these libraries.
 ## Testing HTTP services using fakes
 
 *Note*: You can see the full
-[example code using a fake here](https://github.com/googleapis/google-api-go-client/tree/master/internal/examples/fake).
+[example code using a fake here](https://github.com/googleapis/google-api-go-client/tree/main/internal/examples/fake).
 
 The services found in `google.golang.org/api` are all HTTP based.
 Interactions with HTTP services can be faked by serving up your own in-memory
@@ -94,7 +94,7 @@ func TestTranslateText(t *testing.T) {
 ## Testing using mocks
 
 *Note*: You can see the full
-[example code using a mocks here](https://github.com/googleapis/google-api-go-client/tree/master/internal/examples/mock).
+[example code using a mocks here](https://github.com/googleapis/google-api-go-client/tree/main/internal/examples/mock).
 
 When mocking code you need to work with interfaces. Because the services in
 `google.golang.org/api` use the builder pattern to construct and execute

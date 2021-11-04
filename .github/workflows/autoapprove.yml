@@ -3,7 +3,7 @@ name: AutoApprove
 on:
   pull_request:
     branches:
-      - master
+      - main
     types:
       - opened
 

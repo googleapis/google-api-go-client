@@ -1347,6 +1347,55 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ProjectSettings: The Artifact Registry settings that apply to a
+// Project.
+type ProjectSettings struct {
+	// LegacyRedirectionState: The redirection state of the legacy
+	// repositories in this project.
+	//
+	// Possible values:
+	//   "REDIRECTION_STATE_UNSPECIFIED" - No redirection status has been
+	// set.
+	//   "REDIRECTION_FROM_GCR_IO_DISABLED" - Redirection is disabled.
+	//   "REDIRECTION_FROM_GCR_IO_ENABLED" - Redirection is enabled.
+	//   "REDIRECTION_FROM_GCR_IO_FINALIZED" - Redirection is enabled, and
+	// has been finalized so cannot be reverted.
+	LegacyRedirectionState string `json:"legacyRedirectionState,omitempty"`
+
+	// Name: The name of the project's settings. Always of the form:
+	// projects/{project-id}/projectSettings In update request: never set In
+	// response: always set
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "LegacyRedirectionState") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LegacyRedirectionState")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProjectSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ProjectSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Repository: A Repository for storing artifacts with a specific
 // format.
 type Repository struct {
@@ -1839,6 +1888,310 @@ func (s *YumArtifact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "artifactregistry.projects.getProjectSettings":
+
+type ProjectsGetProjectSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetProjectSettings: Retrieves the Settings for the Project
+//
+// - name: The name of the projectSettings resource.
+func (r *ProjectsService) GetProjectSettings(name string) *ProjectsGetProjectSettingsCall {
+	c := &ProjectsGetProjectSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsGetProjectSettingsCall) Fields(s ...googleapi.Field) *ProjectsGetProjectSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsGetProjectSettingsCall) IfNoneMatch(entityTag string) *ProjectsGetProjectSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsGetProjectSettingsCall) Context(ctx context.Context) *ProjectsGetProjectSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsGetProjectSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsGetProjectSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.getProjectSettings" call.
+// Exactly one of *ProjectSettings or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ProjectSettings.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsGetProjectSettingsCall) Do(opts ...googleapi.CallOption) (*ProjectSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ProjectSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the Settings for the Project",
+	//   "flatPath": "v1beta2/projects/{projectsId}/projectSettings",
+	//   "httpMethod": "GET",
+	//   "id": "artifactregistry.projects.getProjectSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the projectSettings resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/projectSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "response": {
+	//     "$ref": "ProjectSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
+// method id "artifactregistry.projects.updateProjectSettings":
+
+type ProjectsUpdateProjectSettingsCall struct {
+	s               *Service
+	name            string
+	projectsettings *ProjectSettings
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// UpdateProjectSettings: Retrieves the Settings for the Project
+//
+// - name: The name of the project's settings. Always of the form:
+//   projects/{project-id}/projectSettings In update request: never set
+//   In response: always set.
+func (r *ProjectsService) UpdateProjectSettings(name string, projectsettings *ProjectSettings) *ProjectsUpdateProjectSettingsCall {
+	c := &ProjectsUpdateProjectSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.projectsettings = projectsettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask to
+// support partial updates.
+func (c *ProjectsUpdateProjectSettingsCall) UpdateMask(updateMask string) *ProjectsUpdateProjectSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsUpdateProjectSettingsCall) Fields(s ...googleapi.Field) *ProjectsUpdateProjectSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsUpdateProjectSettingsCall) Context(ctx context.Context) *ProjectsUpdateProjectSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsUpdateProjectSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsUpdateProjectSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.projectsettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.updateProjectSettings" call.
+// Exactly one of *ProjectSettings or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ProjectSettings.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsUpdateProjectSettingsCall) Do(opts ...googleapi.CallOption) (*ProjectSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ProjectSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the Settings for the Project",
+	//   "flatPath": "v1beta2/projects/{projectsId}/projectSettings",
+	//   "httpMethod": "PATCH",
+	//   "id": "artifactregistry.projects.updateProjectSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the project's settings. Always of the form: projects/{project-id}/projectSettings In update request: never set In response: always set",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/projectSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Field mask to support partial updates.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}",
+	//   "request": {
+	//     "$ref": "ProjectSettings"
+	//   },
+	//   "response": {
+	//     "$ref": "ProjectSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "artifactregistry.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
@@ -1896,7 +2249,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2069,7 +2422,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2255,7 +2608,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2403,7 +2756,7 @@ func (c *ProjectsLocationsRepositoriesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2551,7 +2904,7 @@ func (c *ProjectsLocationsRepositoriesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2694,7 +3047,7 @@ func (c *ProjectsLocationsRepositoriesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2857,7 +3210,7 @@ func (c *ProjectsLocationsRepositoriesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3025,7 +3378,7 @@ func (c *ProjectsLocationsRepositoriesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3204,7 +3557,7 @@ func (c *ProjectsLocationsRepositoriesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3354,7 +3707,7 @@ func (c *ProjectsLocationsRepositoriesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3499,7 +3852,7 @@ func (c *ProjectsLocationsRepositoriesTestIamPermissionsCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3646,7 +3999,7 @@ func (c *ProjectsLocationsRepositoriesAptArtifactsImportCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesAptArtifactsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3832,7 +4185,7 @@ func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesAptartifactsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4023,7 +4376,7 @@ func (c *ProjectsLocationsRepositoriesFilesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesFilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4200,7 +4553,7 @@ func (c *ProjectsLocationsRepositoriesFilesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesFilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4374,7 +4727,7 @@ func (c *ProjectsLocationsRepositoriesPackagesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPackagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4517,7 +4870,7 @@ func (c *ProjectsLocationsRepositoriesPackagesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPackagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4679,7 +5032,7 @@ func (c *ProjectsLocationsRepositoriesPackagesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsRepositoriesPackagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4857,7 +5210,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5002,7 +5355,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5145,7 +5498,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5318,7 +5671,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) Header() http.Header
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5505,7 +5858,7 @@ func (c *ProjectsLocationsRepositoriesPackagesTagsPatchCall) Header() http.Heade
 
 func (c *ProjectsLocationsRepositoriesPackagesTagsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5660,7 +6013,7 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsDeleteCall) Header() http.
 
 func (c *ProjectsLocationsRepositoriesPackagesVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5822,7 +6175,7 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsGetCall) Header() http.Hea
 
 func (c *ProjectsLocationsRepositoriesPackagesVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6020,7 +6373,7 @@ func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) Header() http.He
 
 func (c *ProjectsLocationsRepositoriesPackagesVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6214,7 +6567,7 @@ func (c *ProjectsLocationsRepositoriesYumArtifactsImportCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesYumArtifactsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6400,7 +6753,7 @@ func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) Header() http.Head
 
 func (c *ProjectsLocationsRepositoriesYumartifactsUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

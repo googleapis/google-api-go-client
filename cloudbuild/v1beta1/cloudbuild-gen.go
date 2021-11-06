@@ -674,12 +674,13 @@ type BuildOptions struct {
 	//   "LOGGING_UNSPECIFIED" - The service determines the logging mode.
 	// The default is `LEGACY`. Do not rely on the default logging behavior
 	// as it may change in the future.
-	//   "LEGACY" - Cloud Logging and Cloud Storage logging are enabled.
-	//   "GCS_ONLY" - Only Cloud Storage logging is enabled.
+	//   "LEGACY" - Build logs are stored in Cloud Logging and Cloud
+	// Storage.
+	//   "GCS_ONLY" - Build logs are stored in Cloud Storage.
 	//   "STACKDRIVER_ONLY" - This option is the same as CLOUD_LOGGING_ONLY.
-	//   "CLOUD_LOGGING_ONLY" - Only Cloud Logging is enabled. Note that
-	// logs for both the Cloud Console UI and Cloud SDK are based on Cloud
-	// Storage logs, so neither will provide logs if this option is chosen.
+	//   "CLOUD_LOGGING_ONLY" - Build logs are stored in Cloud Logging.
+	// Selecting this option will not allow [logs
+	// streaming](https://cloud.google.com/sdk/gcloud/reference/builds/log).
 	//   "NONE" - Turn off all logging. No build logs will be captured.
 	Logging string `json:"logging,omitempty"`
 
@@ -2541,6 +2542,11 @@ func (s *WorkerConfig) MarshalJSON() ([]byte, error) {
 // worker pools, see Custom workers overview
 // (https://cloud.google.com/cloud-build/docs/custom-workers/custom-workers-overview).
 type WorkerPool struct {
+	// Annotations: User specified annotations. See
+	// https://google.aip.dev/128#annotations for more details such as
+	// format and size limitations.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
 	// CreateTime: Output only. Time at which the request to create the
 	// `WorkerPool` was received.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2548,6 +2554,15 @@ type WorkerPool struct {
 	// DeleteTime: Output only. Time at which the request to delete the
 	// `WorkerPool` was received.
 	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// DisplayName: A user-specified, human-readable name for the
+	// `WorkerPool`. If provided, this value must be 1-63 characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: Output only. Checksum computed by the server. May be sent on
+	// update and delete requests to ensure that the client has an
+	// up-to-date value before proceeding.
+	Etag string `json:"etag,omitempty"`
 
 	// Name: Output only. The resource name of the `WorkerPool`, with format
 	// `projects/{project}/locations/{location}/workerPools/{worker_pool}`.
@@ -2570,6 +2585,9 @@ type WorkerPool struct {
 	//   "DELETED" - `WorkerPool` is deleted.
 	State string `json:"state,omitempty"`
 
+	// Uid: Output only. A unique identifier for the `WorkerPool`.
+	Uid string `json:"uid,omitempty"`
+
 	// UpdateTime: Output only. Time at which the request to update the
 	// `WorkerPool` was received.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -2581,7 +2599,7 @@ type WorkerPool struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2589,10 +2607,10 @@ type WorkerPool struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2661,7 +2679,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2814,7 +2832,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2963,7 +2981,7 @@ func (c *ProjectsLocationsWorkerPoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkerPoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3084,6 +3102,14 @@ func (r *ProjectsLocationsWorkerPoolsService) Delete(name string) *ProjectsLocat
 	return c
 }
 
+// Etag sets the optional parameter "etag": If this is provided, it must
+// match the server's etag on the workerpool for the request to be
+// processed.
+func (c *ProjectsLocationsWorkerPoolsDeleteCall) Etag(etag string) *ProjectsLocationsWorkerPoolsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3111,7 +3137,7 @@ func (c *ProjectsLocationsWorkerPoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkerPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3178,6 +3204,11 @@ func (c *ProjectsLocationsWorkerPoolsDeleteCall) Do(opts ...googleapi.CallOption
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "etag": {
+	//       "description": "Optional. If this is provided, it must match the server's etag on the workerpool for the request to be processed.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. The name of the `WorkerPool` to delete. Format: `projects/{project}/locations/{workerPool}/workerPools/{workerPool}`.",
 	//       "location": "path",
@@ -3255,7 +3286,7 @@ func (c *ProjectsLocationsWorkerPoolsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkerPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3402,7 +3433,7 @@ func (c *ProjectsLocationsWorkerPoolsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkerPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3552,7 +3583,7 @@ func (c *ProjectsLocationsWorkerPoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkerPoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

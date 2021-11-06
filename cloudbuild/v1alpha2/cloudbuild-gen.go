@@ -674,12 +674,13 @@ type BuildOptions struct {
 	//   "LOGGING_UNSPECIFIED" - The service determines the logging mode.
 	// The default is `LEGACY`. Do not rely on the default logging behavior
 	// as it may change in the future.
-	//   "LEGACY" - Cloud Logging and Cloud Storage logging are enabled.
-	//   "GCS_ONLY" - Only Cloud Storage logging is enabled.
+	//   "LEGACY" - Build logs are stored in Cloud Logging and Cloud
+	// Storage.
+	//   "GCS_ONLY" - Build logs are stored in Cloud Storage.
 	//   "STACKDRIVER_ONLY" - This option is the same as CLOUD_LOGGING_ONLY.
-	//   "CLOUD_LOGGING_ONLY" - Only Cloud Logging is enabled. Note that
-	// logs for both the Cloud Console UI and Cloud SDK are based on Cloud
-	// Storage logs, so neither will provide logs if this option is chosen.
+	//   "CLOUD_LOGGING_ONLY" - Build logs are stored in Cloud Logging.
+	// Selecting this option will not allow [logs
+	// streaming](https://cloud.google.com/sdk/gcloud/reference/builds/log).
 	//   "NONE" - Turn off all logging. No build logs will be captured.
 	Logging string `json:"logging,omitempty"`
 
@@ -2651,7 +2652,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2804,7 +2805,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2952,7 +2953,7 @@ func (c *ProjectsWorkerPoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3098,7 +3099,7 @@ func (c *ProjectsWorkerPoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3242,7 +3243,7 @@ func (c *ProjectsWorkerPoolsGetCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3389,7 +3390,7 @@ func (c *ProjectsWorkerPoolsListCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3536,7 +3537,7 @@ func (c *ProjectsWorkerPoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

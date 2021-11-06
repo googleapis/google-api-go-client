@@ -608,6 +608,11 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 	// of the subscription when promotion_type is PROMOTION_TYPE_FREE_TRIAL
 	FreeTrialDuration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"freeTrialDuration,omitempty"`
 
+	// IntroductoryPricingDetails: Optional. Specifies the introductory
+	// pricing details when the promotion_type is
+	// PROMOTION_TYPE_INTRODUCTORY_PRICING.
+	IntroductoryPricingDetails *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails `json:"introductoryPricingDetails,omitempty"`
+
 	// Name: Output only. Response only. Resource name of the subscription
 	// promotion. It will have the format of
 	// "partners/{partner_id}/promotion/{promotion_id}"
@@ -619,6 +624,8 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 	// Possible values:
 	//   "PROMOTION_TYPE_UNSPECIFIED" - The promotion type is unspecified.
 	//   "PROMOTION_TYPE_FREE_TRIAL" - The promotion is a free trial.
+	//   "PROMOTION_TYPE_INTRODUCTORY_PRICING" - The promotion is a reduced
+	// introductory pricing.
 	PromotionType string `json:"promotionType,omitempty"`
 
 	// RegionCodes: Output only. 2-letter ISO region code where the
@@ -653,6 +660,69 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1Promotion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Promotion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingD
+// etails: The details of a introductory pricing promotion.
+type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails struct {
+	// IntroductoryPricingSpecs: Specifies the introductory pricing periods.
+	IntroductoryPricingSpecs []*GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec `json:"introductoryPricingSpecs,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "IntroductoryPricingSpecs") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IntroductoryPricingSpecs")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingD
+// etailsIntroductoryPricingSpec: The duration of an introductory
+// pricing promotion.
+type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec struct {
+	// RecurrenceCount: Output only. Output Only. The duration of an
+	// introductory offer in billing cycles.
+	RecurrenceCount int64 `json:"recurrenceCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RecurrenceCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RecurrenceCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1023,7 +1093,7 @@ func (c *PartnersProductsListCall) Header() http.Header {
 
 func (c *PartnersProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1233,7 +1303,7 @@ func (c *PartnersPromotionsListCall) Header() http.Header {
 
 func (c *PartnersPromotionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1412,7 +1482,7 @@ func (c *PartnersSubscriptionsCancelCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1568,7 +1638,7 @@ func (c *PartnersSubscriptionsCreateCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1719,7 +1789,7 @@ func (c *PartnersSubscriptionsEntitleCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsEntitleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1866,7 +1936,7 @@ func (c *PartnersSubscriptionsExtendCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsExtendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2020,7 +2090,7 @@ func (c *PartnersSubscriptionsGetCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2172,7 +2242,7 @@ func (c *PartnersSubscriptionsProvisionCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsProvisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2324,7 +2394,7 @@ func (c *PartnersSubscriptionsUndoCancelCall) Header() http.Header {
 
 func (c *PartnersSubscriptionsUndoCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211104")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211105")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

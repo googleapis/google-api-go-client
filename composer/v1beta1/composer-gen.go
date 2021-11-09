@@ -328,6 +328,38 @@ func (s *CheckUpgradeResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CidrBlock: CidrBlock contains an optional name and one CIDR block.
+type CidrBlock struct {
+	// CidrBlock: cidr_block must be specified in CIDR notation.
+	CidrBlock string `json:"cidrBlock,omitempty"`
+
+	// DisplayName: display_name is a field for users to identify CIDR
+	// blocks.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CidrBlock") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CidrBlock") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CidrBlock) MarshalJSON() ([]byte, error) {
+	type NoMethod CidrBlock
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DatabaseConfig: The configuration of Cloud SQL instance that is used
 // by the Apache Airflow software. Supported for Cloud Composer
 // environments in versions composer-1.*.*-airflow-*.*.*.
@@ -580,6 +612,13 @@ type EnvironmentConfig struct {
 	// omitted, Cloud Composer components may be subject to maintenance at
 	// any time.
 	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
+
+	// MasterAuthorizedNetworksConfig: Optional. The configuration options
+	// for GKE clusters master authorized networks. By default master
+	// authorized networks feature is: - in case of private environment:
+	// enabled with no external networks allowlisted. - in case of public
+	// environment: disabled.
+	MasterAuthorizedNetworksConfig *MasterAuthorizedNetworksConfig `json:"masterAuthorizedNetworksConfig,omitempty"`
 
 	// NodeConfig: The configuration used for the Kubernetes Engine cluster.
 	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
@@ -876,10 +915,11 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // MaintenanceWindow: The configuration settings for Cloud Composer
-// maintenance window. The following example: {
+// maintenance window. The following example: ``` {
 // "startTime":"2019-08-01T01:00:00Z" "endTime":"2019-08-01T07:00:00Z"
-// "recurrence":"FREQ=WEEKLY;BYDAY=TU,WE" } would define a maintenance
-// window between 01 and 07 hours UTC during each Tuesday and Wednesday.
+// "recurrence":"FREQ=WEEKLY;BYDAY=TU,WE" } ``` would define a
+// maintenance window between 01 and 07 hours UTC during each Tuesday
+// and Wednesday.
 type MaintenanceWindow struct {
 	// EndTime: Required. Maintenance window end time. It is used only to
 	// calculate the duration of the maintenance window. The value for
@@ -916,6 +956,42 @@ type MaintenanceWindow struct {
 
 func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MasterAuthorizedNetworksConfig: Configuration options for the master
+// authorized networks feature. Enabled master authorized networks will
+// disallow all external traffic to access Kubernetes master through
+// HTTPS except traffic from the given CIDR blocks, Google Compute
+// Engine Public IPs and Google Prod IPs.
+type MasterAuthorizedNetworksConfig struct {
+	// CidrBlocks: cidr_blocks define up to 50 external networks that could
+	// access Kubernetes master through HTTPS.
+	CidrBlocks []*CidrBlock `json:"cidrBlocks,omitempty"`
+
+	// Enabled: Whether or not master authorized networks is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CidrBlocks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CidrBlocks") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MasterAuthorizedNetworksConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MasterAuthorizedNetworksConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1773,7 +1849,7 @@ func (c *ProjectsLocationsEnvironmentsCheckUpgradeCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCheckUpgradeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1916,7 +1992,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2058,7 +2134,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2203,7 +2279,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2364,7 +2440,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2642,7 +2718,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2793,7 +2869,7 @@ func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) Header() http.Header
 
 func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2967,7 +3043,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3142,7 +3218,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3287,7 +3363,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3463,7 +3539,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

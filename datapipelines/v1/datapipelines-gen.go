@@ -6,7 +6,7 @@
 
 // Package datapipelines provides access to the Data pipelines API.
 //
-// For product documentation, see: https://developers.google.com/apis-explorer/#search/dataflow
+// For product documentation, see: https://cloud.google.com/dataflow/docs/guides/data-pipelines
 //
 // Creating a client
 //
@@ -658,6 +658,11 @@ type GoogleCloudDatapipelinesV1Pipeline struct {
 	// location.
 	Name string `json:"name,omitempty"`
 
+	// PipelineSources: Immutable. The sources of the pipeline (for example,
+	// Dataplex). The keys and values are set by the corresponding sources
+	// during pipeline creation.
+	PipelineSources map[string]string `json:"pipelineSources,omitempty"`
+
 	// ScheduleInfo: Internal scheduling information for a pipeline. If this
 	// information is provided, periodic jobs will be created per the
 	// schedule. If not, users are responsible for creating jobs externally.
@@ -1166,7 +1171,7 @@ func (c *ProjectsLocationsListPipelinesCall) Header() http.Header {
 
 func (c *ProjectsLocationsListPipelinesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1347,7 +1352,7 @@ func (c *ProjectsLocationsPipelinesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsPipelinesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1490,7 +1495,7 @@ func (c *ProjectsLocationsPipelinesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsPipelinesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1636,7 +1641,7 @@ func (c *ProjectsLocationsPipelinesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsPipelinesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1797,7 +1802,7 @@ func (c *ProjectsLocationsPipelinesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsPipelinesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1952,7 +1957,7 @@ func (c *ProjectsLocationsPipelinesRunCall) Header() http.Header {
 
 func (c *ProjectsLocationsPipelinesRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2100,7 +2105,7 @@ func (c *ProjectsLocationsPipelinesStopCall) Header() http.Header {
 
 func (c *ProjectsLocationsPipelinesStopCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

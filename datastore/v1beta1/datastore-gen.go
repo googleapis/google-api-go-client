@@ -221,6 +221,65 @@ func (s *GoogleDatastoreAdminV1CommonMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata: Metadata
+// for Datastore to Firestore migration operations. The
+// DatastoreFirestoreMigration operation is not started by the end-user
+// via an explicit "creation" method. This is an intentional deviation
+// from the LRO design pattern. This singleton resource can be accessed
+// at: "projects/{project_id}/datastore-firestore-migration"
+type GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata struct {
+	// MigrationState: The current state of migration from Cloud Datastore
+	// to Cloud Firestore in Datastore mode.
+	//
+	// Possible values:
+	//   "MIGRATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "RUNNING" - The migration is running.
+	//   "PAUSED" - The migration is paused.
+	//   "COMPLETE" - The migration is complete.
+	MigrationState string `json:"migrationState,omitempty"`
+
+	// MigrationStep: The current step of migration from Cloud Datastore to
+	// Cloud Firestore in Datastore mode.
+	//
+	// Possible values:
+	//   "MIGRATION_STEP_UNSPECIFIED" - Unspecified.
+	//   "PREPARE" - Pre-migration: the database is prepared for migration.
+	//   "START" - Start of migration.
+	//   "APPLY_WRITES_SYNCHRONOUSLY" - Writes are applied synchronously to
+	// at least one replica.
+	//   "COPY_AND_VERIFY" - Data is copied to Cloud Firestore and then
+	// verified to match the data in Cloud Datastore.
+	//   "REDIRECT_EVENTUALLY_CONSISTENT_READS" - Eventually-consistent
+	// reads are redirected to Cloud Firestore.
+	//   "REDIRECT_STRONGLY_CONSISTENT_READS" - Strongly-consistent reads
+	// are redirected to Cloud Firestore.
+	//   "REDIRECT_WRITES" - Writes are redirected to Cloud Firestore.
+	MigrationStep string `json:"migrationStep,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MigrationState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MigrationState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDatastoreAdminV1EntityFilter: Identifies a subset of entities
 // in a project. This is specified as combinations of kinds and
 // namespaces (either or both of which may be all, as described in the
@@ -982,7 +1041,7 @@ func (c *ProjectsExportCall) Header() http.Header {
 
 func (c *ProjectsExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1129,7 +1188,7 @@ func (c *ProjectsImportCall) Header() http.Header {
 
 func (c *ProjectsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211107")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

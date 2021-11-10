@@ -140,6 +140,8 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Assessments = NewProjectsAssessmentsService(s)
 	rs.Keys = NewProjectsKeysService(s)
+	rs.Relatedaccountgroupmemberships = NewProjectsRelatedaccountgroupmembershipsService(s)
+	rs.Relatedaccountgroups = NewProjectsRelatedaccountgroupsService(s)
 	return rs
 }
 
@@ -149,6 +151,10 @@ type ProjectsService struct {
 	Assessments *ProjectsAssessmentsService
 
 	Keys *ProjectsKeysService
+
+	Relatedaccountgroupmemberships *ProjectsRelatedaccountgroupmembershipsService
+
+	Relatedaccountgroups *ProjectsRelatedaccountgroupsService
 }
 
 func NewProjectsAssessmentsService(s *Service) *ProjectsAssessmentsService {
@@ -167,6 +173,79 @@ func NewProjectsKeysService(s *Service) *ProjectsKeysService {
 
 type ProjectsKeysService struct {
 	s *Service
+}
+
+func NewProjectsRelatedaccountgroupmembershipsService(s *Service) *ProjectsRelatedaccountgroupmembershipsService {
+	rs := &ProjectsRelatedaccountgroupmembershipsService{s: s}
+	return rs
+}
+
+type ProjectsRelatedaccountgroupmembershipsService struct {
+	s *Service
+}
+
+func NewProjectsRelatedaccountgroupsService(s *Service) *ProjectsRelatedaccountgroupsService {
+	rs := &ProjectsRelatedaccountgroupsService{s: s}
+	rs.Memberships = NewProjectsRelatedaccountgroupsMembershipsService(s)
+	return rs
+}
+
+type ProjectsRelatedaccountgroupsService struct {
+	s *Service
+
+	Memberships *ProjectsRelatedaccountgroupsMembershipsService
+}
+
+func NewProjectsRelatedaccountgroupsMembershipsService(s *Service) *ProjectsRelatedaccountgroupsMembershipsService {
+	rs := &ProjectsRelatedaccountgroupsMembershipsService{s: s}
+	return rs
+}
+
+type ProjectsRelatedaccountgroupsMembershipsService struct {
+	s *Service
+}
+
+// GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment: Account
+// Defender risk assessment.
+type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment struct {
+	// Labels: Labels for this request.
+	//
+	// Possible values:
+	//   "ACCOUNT_DEFENDER_LABEL_UNSPECIFIED" - Default unspecified type.
+	//   "PROFILE_MATCH" - The request matches a known good profile for the
+	// user.
+	//   "SUSPICIOUS_LOGIN_ACTIVITY" - The request is potentially a
+	// suspicious login event and should be further verified either via
+	// multi-factor authentication or another system.
+	//   "SUSPICIOUS_ACCOUNT_CREATION" - The request matched a profile that
+	// previously had suspicious account creation behavior. This could mean
+	// this is a fake account.
+	//   "RELATED_ACCOUNTS_NUMBER_HIGH" - The account in the request has a
+	// high number of related accounts. It does not necessarily imply that
+	// the account is bad but could require investigating.
+	Labels []string `json:"labels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1AndroidKeySettings: Settings specific
@@ -229,6 +308,14 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	// the reasons field instead.
 	Annotation string `json:"annotation,omitempty"`
 
+	// HashedAccountId: Optional. Optional unique stable hashed user
+	// identifier to apply to the assessment. This is an alternative to
+	// setting the hashed_account_id in CreateAssessment, for example when
+	// the account identifier is not yet known in the initial request. It is
+	// recommended that the identifier is hashed using hmac-sha256 with
+	// stable secret.
+	HashedAccountId string `json:"hashedAccountId,omitempty"`
+
 	// Reasons: Optional. Optional reasons for the annotation that will be
 	// assigned to the Event.
 	//
@@ -289,6 +376,10 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentResponse struct {
 // GoogleCloudRecaptchaenterpriseV1Assessment: A recaptcha assessment
 // resource.
 type GoogleCloudRecaptchaenterpriseV1Assessment struct {
+	// AccountDefenderAssessment: Assessment returned by Account Defender
+	// when a hashed_account_id is provided.
+	AccountDefenderAssessment *GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment `json:"accountDefenderAssessment,omitempty"`
+
 	// Event: The event being assessed.
 	Event *GoogleCloudRecaptchaenterpriseV1Event `json:"event,omitempty"`
 
@@ -307,20 +398,22 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Event") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AccountDefenderAssessment") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Event") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "AccountDefenderAssessment") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -551,6 +644,83 @@ func (s *GoogleCloudRecaptchaenterpriseV1ListKeysResponse) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupMembershipsResp
+// onse: The response to a `ListRelatedAccountGroupMemberships` call.
+type GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupMembershipsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// RelatedAccountGroupMemberships: The memberships listed by the query.
+	RelatedAccountGroupMemberships []*GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership `json:"relatedAccountGroupMemberships,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupMembershipsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupMembershipsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse: The
+// response to a `ListRelatedAccountGroups` call.
+type GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// RelatedAccountGroups: The groups of related accounts listed by the
+	// query.
+	RelatedAccountGroups []*GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup `json:"relatedAccountGroups,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecaptchaenterpriseV1Metrics: Metrics for a single Key.
 type GoogleCloudRecaptchaenterpriseV1Metrics struct {
 	// ChallengeMetrics: Metrics will be continuous and in order by dates,
@@ -601,6 +771,74 @@ func (s *GoogleCloudRecaptchaenterpriseV1Metrics) MarshalJSON() ([]byte, error) 
 // GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest: The migrate key
 // request message.
 type GoogleCloudRecaptchaenterpriseV1MigrateKeyRequest struct {
+}
+
+// GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup: A group of
+// related accounts.
+type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup struct {
+	// Name: Required. The resource name for the related account group in
+	// the format
+	// `projects/{project}/relatedaccountgroups/{related_account_group}`.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership: A
+// membership in a group of related accounts.
+type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership struct {
+	// HashedAccountId: The unique stable hashed user identifier of the
+	// member. The identifier corresponds to a `hashed_account_id` provided
+	// in a previous CreateAssessment or AnnotateAssessment call.
+	HashedAccountId string `json:"hashedAccountId,omitempty"`
+
+	// Name: Required. The resource name for this membership in the format
+	// `projects/{project}/relatedaccountgroups/{relatedaccountgroup}/members
+	// hips/{membership}`.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HashedAccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HashedAccountId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRecaptchaenterpriseV1RiskAnalysis: Risk analysis result
@@ -725,6 +963,92 @@ type GoogleCloudRecaptchaenterpriseV1ScoreMetrics struct {
 
 func (s *GoogleCloudRecaptchaenterpriseV1ScoreMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1ScoreMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRe
+// quest: The request message to search related account group
+// memberships.
+type GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest struct {
+	// HashedAccountId: Optional. The unique stable hashed user identifier
+	// we should search connections to. The identifier should correspond to
+	// a `hashed_account_id` provided in a previous CreateAssessment or
+	// AnnotateAssessment call.
+	HashedAccountId string `json:"hashedAccountId,omitempty"`
+
+	// PageSize: Optional. The maximum number of groups to return. The
+	// service may return fewer than this value. If unspecified, at most 50
+	// groups will be returned. The maximum value is 1000; values above 1000
+	// will be coerced to 1000.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: Optional. A page token, received from a previous
+	// `SearchRelatedAccountGroupMemberships` call. Provide this to retrieve
+	// the subsequent page. When paginating, all other parameters provided
+	// to `SearchRelatedAccountGroupMemberships` must match the call that
+	// provided the page token.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HashedAccountId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HashedAccountId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRe
+// sponse: The response to a `SearchRelatedAccountGroupMemberships`
+// call.
+type GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// RelatedAccountGroupMemberships: The queried memberships.
+	RelatedAccountGroupMemberships []*GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership `json:"relatedAccountGroupMemberships,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -978,7 +1302,7 @@ func (c *ProjectsAssessmentsAnnotateCall) Header() http.Header {
 
 func (c *ProjectsAssessmentsAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1125,7 +1449,7 @@ func (c *ProjectsAssessmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsAssessmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1270,7 +1594,7 @@ func (c *ProjectsKeysCreateCall) Header() http.Header {
 
 func (c *ProjectsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1412,7 +1736,7 @@ func (c *ProjectsKeysDeleteCall) Header() http.Header {
 
 func (c *ProjectsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1556,7 +1880,7 @@ func (c *ProjectsKeysGetCall) Header() http.Header {
 
 func (c *ProjectsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1705,7 +2029,7 @@ func (c *ProjectsKeysGetMetricsCall) Header() http.Header {
 
 func (c *ProjectsKeysGetMetricsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1868,7 +2192,7 @@ func (c *ProjectsKeysListCall) Header() http.Header {
 
 func (c *ProjectsKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2045,7 +2369,7 @@ func (c *ProjectsKeysMigrateCall) Header() http.Header {
 
 func (c *ProjectsKeysMigrateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2197,7 +2521,7 @@ func (c *ProjectsKeysPatchCall) Header() http.Header {
 
 func (c *ProjectsKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2296,4 +2620,576 @@ func (c *ProjectsKeysPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRe
 	//   ]
 	// }
 
+}
+
+// method id "recaptchaenterprise.projects.relatedaccountgroupmemberships.search":
+
+type ProjectsRelatedaccountgroupmembershipsSearchCall struct {
+	s                                                                           *Service
+	parent                                                                      string
+	googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest
+	urlParams_                                                                  gensupport.URLParams
+	ctx_                                                                        context.Context
+	header_                                                                     http.Header
+}
+
+// Search: Search group memberships related to a given account.
+//
+// - parent: The name of the project to search related account group
+//   memberships from, in the format "projects/{project}".
+func (r *ProjectsRelatedaccountgroupmembershipsService) Search(parent string, googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest) *ProjectsRelatedaccountgroupmembershipsSearchCall {
+	c := &ProjectsRelatedaccountgroupmembershipsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest = googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) Fields(s ...googleapi.Field) *ProjectsRelatedaccountgroupmembershipsSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) Context(ctx context.Context) *ProjectsRelatedaccountgroupmembershipsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/relatedaccountgroupmemberships:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recaptchaenterprise.projects.relatedaccountgroupmemberships.search" call.
+// Exactly one of
+// *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsR
+// esponse or error will be non-nil. Any non-2xx status code is an
+// error. Response headers are in either
+// *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsR
+// esponse.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Search group memberships related to a given account.",
+	//   "flatPath": "v1/projects/{projectsId}/relatedaccountgroupmemberships:search",
+	//   "httpMethod": "POST",
+	//   "id": "recaptchaenterprise.projects.relatedaccountgroupmemberships.search",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the project to search related account group memberships from, in the format \"projects/{project}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/relatedaccountgroupmemberships:search",
+	//   "request": {
+	//     "$ref": "GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) Pages(ctx context.Context, f func(*GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) {
+		c.googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest.PageToken = pt
+	}(c.googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest.PageToken = x.NextPageToken
+	}
+}
+
+// method id "recaptchaenterprise.projects.relatedaccountgroups.list":
+
+type ProjectsRelatedaccountgroupsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List groups of related accounts.
+//
+// - parent: The name of the project to list related account groups
+//   from, in the format "projects/{project}".
+func (r *ProjectsRelatedaccountgroupsService) List(parent string) *ProjectsRelatedaccountgroupsListCall {
+	c := &ProjectsRelatedaccountgroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of groups to return. The service may return fewer than this value. If
+// unspecified, at most 50 groups will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsRelatedaccountgroupsListCall) PageSize(pageSize int64) *ProjectsRelatedaccountgroupsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListRelatedAccountGroups` call. Provide
+// this to retrieve the subsequent page. When paginating, all other
+// parameters provided to `ListRelatedAccountGroups` must match the call
+// that provided the page token.
+func (c *ProjectsRelatedaccountgroupsListCall) PageToken(pageToken string) *ProjectsRelatedaccountgroupsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsRelatedaccountgroupsListCall) Fields(s ...googleapi.Field) *ProjectsRelatedaccountgroupsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsRelatedaccountgroupsListCall) IfNoneMatch(entityTag string) *ProjectsRelatedaccountgroupsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsRelatedaccountgroupsListCall) Context(ctx context.Context) *ProjectsRelatedaccountgroupsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRelatedaccountgroupsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRelatedaccountgroupsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/relatedaccountgroups")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recaptchaenterprise.projects.relatedaccountgroups.list" call.
+// Exactly one of
+// *GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse.Serv
+// erResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsRelatedaccountgroupsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List groups of related accounts.",
+	//   "flatPath": "v1/projects/{projectsId}/relatedaccountgroups",
+	//   "httpMethod": "GET",
+	//   "id": "recaptchaenterprise.projects.relatedaccountgroups.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of groups to return. The service may return fewer than this value. If unspecified, at most 50 groups will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListRelatedAccountGroups` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListRelatedAccountGroups` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The name of the project to list related account groups from, in the format \"projects/{project}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/relatedaccountgroups",
+	//   "response": {
+	//     "$ref": "GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsRelatedaccountgroupsListCall) Pages(ctx context.Context, f func(*GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "recaptchaenterprise.projects.relatedaccountgroups.memberships.list":
+
+type ProjectsRelatedaccountgroupsMembershipsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Get the memberships in a group of related accounts.
+//
+// - parent: The resource name for the related account group in the
+//   format
+//   `projects/{project}/relatedaccountgroups/{relatedaccountgroup}`.
+func (r *ProjectsRelatedaccountgroupsMembershipsService) List(parent string) *ProjectsRelatedaccountgroupsMembershipsListCall {
+	c := &ProjectsRelatedaccountgroupsMembershipsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of accounts to return. The service may return fewer than this value.
+// If unspecified, at most 50 accounts will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsRelatedaccountgroupsMembershipsListCall) PageSize(pageSize int64) *ProjectsRelatedaccountgroupsMembershipsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListRelatedAccountGroupMemberships` call.
+// When paginating, all other parameters provided to
+// `ListRelatedAccountGroupMemberships` must match the call that
+// provided the page token.
+func (c *ProjectsRelatedaccountgroupsMembershipsListCall) PageToken(pageToken string) *ProjectsRelatedaccountgroupsMembershipsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsRelatedaccountgroupsMembershipsListCall) Fields(s ...googleapi.Field) *ProjectsRelatedaccountgroupsMembershipsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsRelatedaccountgroupsMembershipsListCall) IfNoneMatch(entityTag string) *ProjectsRelatedaccountgroupsMembershipsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsRelatedaccountgroupsMembershipsListCall) Context(ctx context.Context) *ProjectsRelatedaccountgroupsMembershipsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsRelatedaccountgroupsMembershipsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRelatedaccountgroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/memberships")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recaptchaenterprise.projects.relatedaccountgroups.memberships.list" call.
+// Exactly one of
+// *GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupMembershipsRes
+// ponse or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupMembershipsRes
+// ponse.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsRelatedaccountgroupsMembershipsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupMembershipsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupMembershipsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get the memberships in a group of related accounts.",
+	//   "flatPath": "v1/projects/{projectsId}/relatedaccountgroups/{relatedaccountgroupsId}/memberships",
+	//   "httpMethod": "GET",
+	//   "id": "recaptchaenterprise.projects.relatedaccountgroups.memberships.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of accounts to return. The service may return fewer than this value. If unspecified, at most 50 accounts will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListRelatedAccountGroupMemberships` call. When paginating, all other parameters provided to `ListRelatedAccountGroupMemberships` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name for the related account group in the format `projects/{project}/relatedaccountgroups/{relatedaccountgroup}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/relatedaccountgroups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/memberships",
+	//   "response": {
+	//     "$ref": "GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupMembershipsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsRelatedaccountgroupsMembershipsListCall) Pages(ctx context.Context, f func(*GoogleCloudRecaptchaenterpriseV1ListRelatedAccountGroupMembershipsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

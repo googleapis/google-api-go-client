@@ -520,9 +520,8 @@ type CreateTagValueMetadata struct {
 type DeleteFolderMetadata struct {
 }
 
-// DeleteOrganizationMetadata: LINT.IfChange A status object which is
-// used as the `metadata` field for the operation returned by
-// DeleteOrganization.
+// DeleteOrganizationMetadata: A status object which is used as the
+// `metadata` field for the operation returned by DeleteOrganization.
 type DeleteOrganizationMetadata struct {
 }
 
@@ -795,13 +794,17 @@ func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
 type GetPolicyOptions struct {
-	// RequestedPolicyVersion: Optional. The policy format version to be
-	// returned. Valid values are 0, 1, and 3. Requests specifying an
-	// invalid value will be rejected. Requests for policies with any
-	// conditional bindings must specify version 3. Policies without any
-	// conditional bindings may specify any valid value or leave the field
-	// unset. To learn which resources support conditions in their IAM
-	// policies, see the IAM documentation
+	// RequestedPolicyVersion: Optional. The maximum policy version that
+	// will be used to format the policy. Valid values are 0, 1, and 3.
+	// Requests specifying an invalid value will be rejected. Requests for
+	// policies with any conditional role bindings must specify version 3.
+	// Policies with no conditional role bindings may specify any valid
+	// value or leave the field unset. The policy in the response might use
+	// the policy version that you specified, or it might use a lower policy
+	// version. For example, if you specify version 3, but the policy has no
+	// conditional role bindings, the response uses version 1. To learn
+	// which resources support conditions in their IAM policies, see the IAM
+	// documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
 
@@ -1396,9 +1399,8 @@ type UndeleteFolderMetadata struct {
 type UndeleteFolderRequest struct {
 }
 
-// UndeleteOrganizationMetadata: LINT.IfChange A status object which is
-// used as the `metadata` field for the Operation returned by
-// UndeleteOrganization.
+// UndeleteOrganizationMetadata: A status object which is used as the
+// `metadata` field for the Operation returned by UndeleteOrganization.
 type UndeleteOrganizationMetadata struct {
 }
 
@@ -1497,7 +1499,7 @@ func (c *FoldersCreateCall) Header() http.Header {
 
 func (c *FoldersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1636,7 +1638,7 @@ func (c *FoldersDeleteCall) Header() http.Header {
 
 func (c *FoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1783,7 +1785,7 @@ func (c *FoldersGetCall) Header() http.Header {
 
 func (c *FoldersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1928,7 +1930,7 @@ func (c *FoldersGetIamPolicyCall) Header() http.Header {
 
 func (c *FoldersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2117,7 +2119,7 @@ func (c *FoldersListCall) Header() http.Header {
 
 func (c *FoldersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2299,7 +2301,7 @@ func (c *FoldersMoveCall) Header() http.Header {
 
 func (c *FoldersMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2460,7 +2462,7 @@ func (c *FoldersPatchCall) Header() http.Header {
 
 func (c *FoldersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2608,7 +2610,7 @@ func (c *FoldersSearchCall) Header() http.Header {
 
 func (c *FoldersSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2765,7 +2767,7 @@ func (c *FoldersSetIamPolicyCall) Header() http.Header {
 
 func (c *FoldersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2912,7 +2914,7 @@ func (c *FoldersTestIamPermissionsCall) Header() http.Header {
 
 func (c *FoldersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3062,7 +3064,7 @@ func (c *FoldersUndeleteCall) Header() http.Header {
 
 func (c *FoldersUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3215,7 +3217,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -898,7 +898,7 @@ func (c *V1IntrospectCall) Header() http.Header {
 
 func (c *V1IntrospectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -989,12 +989,11 @@ type V1TokenCall struct {
 }
 
 // Token: Exchanges a credential for a Google OAuth 2.0 access token.
-// The token asserts an external identity within a workload identity
-// pool, or it applies a Credential Access Boundary to a Google access
-// token. When you call this method, do not send the `Authorization`
-// HTTP header in the request. This method does not require the
-// `Authorization` header, and using the header can cause the request to
-// fail.
+// The token asserts an external identity within an identity pool, or it
+// applies a Credential Access Boundary to a Google access token. When
+// you call this method, do not send the `Authorization` HTTP header in
+// the request. This method does not require the `Authorization` header,
+// and using the header can cause the request to fail.
 func (r *V1Service) Token(googleidentitystsv1exchangetokenrequest *GoogleIdentityStsV1ExchangeTokenRequest) *V1TokenCall {
 	c := &V1TokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googleidentitystsv1exchangetokenrequest = googleidentitystsv1exchangetokenrequest
@@ -1028,7 +1027,7 @@ func (c *V1TokenCall) Header() http.Header {
 
 func (c *V1TokenCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1091,7 +1090,7 @@ func (c *V1TokenCall) Do(opts ...googleapi.CallOption) (*GoogleIdentityStsV1Exch
 	}
 	return ret, nil
 	// {
-	//   "description": "Exchanges a credential for a Google OAuth 2.0 access token. The token asserts an external identity within a workload identity pool, or it applies a Credential Access Boundary to a Google access token. When you call this method, do not send the `Authorization` HTTP header in the request. This method does not require the `Authorization` header, and using the header can cause the request to fail.",
+	//   "description": "Exchanges a credential for a Google OAuth 2.0 access token. The token asserts an external identity within an identity pool, or it applies a Credential Access Boundary to a Google access token. When you call this method, do not send the `Authorization` HTTP header in the request. This method does not require the `Authorization` header, and using the header can cause the request to fail.",
 	//   "flatPath": "v1/token",
 	//   "httpMethod": "POST",
 	//   "id": "sts.token",

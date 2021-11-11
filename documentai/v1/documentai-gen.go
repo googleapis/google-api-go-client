@@ -314,6 +314,20 @@ type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata struct {
 	// CommonMetadata: The basic metadata of the long running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
+	// DestDatasetType: The destination dataset split type.
+	//
+	// Possible values:
+	//   "DATASET_SPLIT_TYPE_UNSPECIFIED" - Default value if the enum is not
+	// set. go/protodosdonts#do-include-an-unspecified-value-in-an-enum
+	//   "DATASET_SPLIT_TRAIN" - Identifies the train documents.
+	//   "DATASET_SPLIT_TEST" - Identifies the test documents.
+	//   "DATASET_SPLIT_UNASSIGNED" - Identifies the unassigned documents.
+	DestDatasetType string `json:"destDatasetType,omitempty"`
+
+	// IndividualBatchMoveStatuses: The list of response details of each
+	// document.
+	IndividualBatchMoveStatuses []*GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus `json:"individualBatchMoveStatuses,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -334,6 +348,39 @@ type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata struct {
 
 func (s *GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatc
+// hMoveStatus: The status of each individual document in the batch move
+// process.
+type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus struct {
+	// DocumentId: The document id of the document.
+	DocumentId *GoogleCloudDocumentaiUiv1beta3DocumentId `json:"documentId,omitempty"`
+
+	// Status: The status of moving the document.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DocumentId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -584,6 +631,73 @@ func (s *GoogleCloudDocumentaiUiv1beta3DisableProcessorMetadata) MarshalJSON() (
 type GoogleCloudDocumentaiUiv1beta3DisableProcessorResponse struct {
 }
 
+// GoogleCloudDocumentaiUiv1beta3DocumentId: Document Identifier.
+type GoogleCloudDocumentaiUiv1beta3DocumentId struct {
+	GcsManagedDocId *GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId `json:"gcsManagedDocId,omitempty"`
+
+	// RevisionReference: Points to a specific revision of the document if
+	// set.
+	RevisionReference *GoogleCloudDocumentaiUiv1beta3RevisionReference `json:"revisionReference,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsManagedDocId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsManagedDocId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3DocumentId) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3DocumentId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId:
+// Identifies a document uniquely within the scope of a dataset in the
+// GCS-based option.
+type GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId struct {
+	// CwDocId: Optional. Id of the document (indexed) managed by Content
+	// Warehouse.
+	CwDocId string `json:"cwDocId,omitempty"`
+
+	// GcsUri: Required. The Cloud Storage uri where the actual document is
+	// stored.
+	GcsUri string `json:"gcsUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CwDocId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CwDocId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata: The long
 // running operation metadata for enable processor method.
 type GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata struct {
@@ -746,6 +860,10 @@ type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata struct {
 	// CommonMetadata: The basic metadata of the long running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
+	// IndividualImportStatuses: The list of response details of each
+	// document.
+	IndividualImportStatuses []*GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus `json:"individualImportStatuses,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -770,9 +888,91 @@ func (s *GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportS
+// tatus: The status of each individual document in the import process.
+type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus struct {
+	// InputGcsSource: The source Cloud Storage URI of the document.
+	InputGcsSource string `json:"inputGcsSource,omitempty"`
+
+	// OutputGcsDestination: The output_gcs_destination of the processed
+	// document if it was successful, otherwise empty.
+	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
+
+	// Status: The status of the importing of the document.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InputGcsSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InputGcsSource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiUiv1beta3ImportDocumentsResponse: Response of
 // the import document operation.
 type GoogleCloudDocumentaiUiv1beta3ImportDocumentsResponse struct {
+}
+
+// GoogleCloudDocumentaiUiv1beta3RevisionReference: The revision
+// reference specifies which revision on the document to read.
+type GoogleCloudDocumentaiUiv1beta3RevisionReference struct {
+	// LatestProcessorVersion: Read the revision generated by the processor
+	// version, returns error if it does not exist.
+	LatestProcessorVersion string `json:"latestProcessorVersion,omitempty"`
+
+	// RevisionCase: Read the revision by the predefined case.
+	//
+	// Possible values:
+	//   "REVISION_CASE_UNSPECIFIED" - Unspecified case, fallback to read
+	// the first (OCR) revision.
+	//   "LATEST_HUMAN_REVIEW" - The latest revision made by a human.
+	//   "LATEST_TIMESTAMP" - The latest revision based on timestamp.
+	RevisionCase string `json:"revisionCase,omitempty"`
+
+	// RevisionId: Read the revision given by the id, returns error if it
+	// does not exist.
+	RevisionId string `json:"revisionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "LatestProcessorVersion") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LatestProcessorVersion")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3RevisionReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3RevisionReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata: The
@@ -3053,117 +3253,6 @@ type GoogleCloudDocumentaiV1EnableProcessorRequest struct {
 type GoogleCloudDocumentaiV1EnableProcessorResponse struct {
 }
 
-// GoogleCloudDocumentaiV1EvaluationMetrics: Evaluation metrics, either
-// in aggregate or about a specific entity.
-type GoogleCloudDocumentaiV1EvaluationMetrics struct {
-	// F1Score: The calculated f1 score.
-	F1Score float64 `json:"f1Score,omitempty"`
-
-	// FalseNegativesCount: The amount of false negatives.
-	FalseNegativesCount int64 `json:"falseNegativesCount,omitempty"`
-
-	// FalsePositivesCount: The amount of false positives.
-	FalsePositivesCount int64 `json:"falsePositivesCount,omitempty"`
-
-	// GroundTruthOccurrencesCount: The amount of occurrences in ground
-	// truth documents.
-	GroundTruthOccurrencesCount int64 `json:"groundTruthOccurrencesCount,omitempty"`
-
-	// Precision: The calculated precision.
-	Precision float64 `json:"precision,omitempty"`
-
-	// PredictedOccurrencesCount: The amount of occurrences in predicted
-	// documents.
-	PredictedOccurrencesCount int64 `json:"predictedOccurrencesCount,omitempty"`
-
-	// Recall: The calculated recall.
-	Recall float64 `json:"recall,omitempty"`
-
-	// TotalDocumentsCount: The amount of documents that had an occurrence
-	// of this label.
-	TotalDocumentsCount int64 `json:"totalDocumentsCount,omitempty"`
-
-	// TruePositivesCount: The amount of true positives.
-	TruePositivesCount int64 `json:"truePositivesCount,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "F1Score") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "F1Score") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1EvaluationMetrics) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1EvaluationMetrics
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleCloudDocumentaiV1EvaluationMetrics) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudDocumentaiV1EvaluationMetrics
-	var s1 struct {
-		F1Score   gensupport.JSONFloat64 `json:"f1Score"`
-		Precision gensupport.JSONFloat64 `json:"precision"`
-		Recall    gensupport.JSONFloat64 `json:"recall"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.F1Score = float64(s1.F1Score)
-	s.Precision = float64(s1.Precision)
-	s.Recall = float64(s1.Recall)
-	return nil
-}
-
-// GoogleCloudDocumentaiV1EvaluationReference: Gives a short summary of
-// an evaluation, and links to the evaluation itself.
-type GoogleCloudDocumentaiV1EvaluationReference struct {
-	// AggregateMetrics: An aggregate of the statistics for the evaluation.
-	AggregateMetrics *GoogleCloudDocumentaiV1EvaluationMetrics `json:"aggregateMetrics,omitempty"`
-
-	// Evaluation: The resource name of the evaluation.
-	Evaluation string `json:"evaluation,omitempty"`
-
-	// Operation: The resource name of the Long Running Operation for the
-	// evaluation.
-	Operation string `json:"operation,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AggregateMetrics") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AggregateMetrics") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1EvaluationReference) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1EvaluationReference
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDocumentaiV1FetchProcessorTypesResponse: Response message
 // for fetch processor types.
 type GoogleCloudDocumentaiV1FetchProcessorTypesResponse struct {
@@ -3762,17 +3851,10 @@ type GoogleCloudDocumentaiV1ProcessorVersion struct {
 	// DisplayName: The display name of the processor version.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// LatestEvaluation: The most recently invoked evaluation for the
-	// processor version.
-	LatestEvaluation *GoogleCloudDocumentaiV1EvaluationReference `json:"latestEvaluation,omitempty"`
-
 	// Name: The resource name of the processor version. Format:
 	// projects/{project}/locations/{location}/processors/{processor}/process
 	// orVersions/{processor_version}
 	Name string `json:"name,omitempty"`
-
-	// Schema: The schema of the processor version. Describes the output.
-	Schema *GoogleCloudDocumentaiV1Schema `json:"schema,omitempty"`
 
 	// State: The state of the processor version.
 	//
@@ -3952,134 +4034,6 @@ type GoogleCloudDocumentaiV1ReviewDocumentResponse struct {
 
 func (s *GoogleCloudDocumentaiV1ReviewDocumentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1ReviewDocumentResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDocumentaiV1Schema: The schema defines the output of the
-// processed document by a processor.
-type GoogleCloudDocumentaiV1Schema struct {
-	// Description: Description of the schema.
-	Description string `json:"description,omitempty"`
-
-	// DisplayName: Display name to show to users.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// EntityTypes: Entity types of the schema.
-	EntityTypes []*GoogleCloudDocumentaiV1SchemaEntityType `json:"entityTypes,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1Schema) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1Schema
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDocumentaiV1SchemaEntityType: EntityType is the wrapper of
-// a label of the corresponding model with detailed attributes and
-// limitations for entity-based processors. Multiple types can also
-// compose a dependency tree to represent nested types.
-type GoogleCloudDocumentaiV1SchemaEntityType struct {
-	// BaseType: Type of the entity. It must be one of the following:
-	// `document` - the entity represents a classification of a logical
-	// document. `object` - if the entity has properties it is likely an
-	// object (or or a document.) `datetime` - the entity is a date or time
-	// value. `money` - the entity represents a money value amount. `number`
-	// - the entity is a number - integer or floating point. `string` - the
-	// entity is a string value. `boolean` - the entity is a boolean value.
-	// `address` - the entity is a location address. `duration` - the entity
-	// is a duration.
-	BaseType string `json:"baseType,omitempty"`
-
-	// Description: Description of the entity type.
-	Description string `json:"description,omitempty"`
-
-	// EnumValues: If specified, lists all the possible values for this
-	// entity.
-	EnumValues []string `json:"enumValues,omitempty"`
-
-	// OccurrenceType: Occurrence type limits the number of times an entity
-	// type appears in the document.
-	//
-	// Possible values:
-	//   "OCCURRENCE_TYPE_UNSPECIFIED" - Unspecified occurrence type.
-	//   "OPTIONAL_ONCE" - The entity type will appear zero times or once.
-	//   "OPTIONAL_MULTIPLE" - The entity type will appear zero or multiple
-	// times.
-	//   "REQUIRED_ONCE" - The entity type will only appear exactly once.
-	//   "REQUIRED_MULTIPLE" - The entity type will appear once or more
-	// times.
-	OccurrenceType string `json:"occurrenceType,omitempty"`
-
-	// Properties: Describing the nested structure of an entity. An
-	// EntityType may consist of several other EntityTypes. For example, in
-	// a document there can be an EntityType 'ID', which consists of
-	// EntityType 'name' and 'address', with corresponding attributes, such
-	// as TEXT for both types and ONCE for occurrence types.
-	Properties []*GoogleCloudDocumentaiV1SchemaEntityType `json:"properties,omitempty"`
-
-	// Source: Source of this entity type.
-	//
-	// Possible values:
-	//   "SOURCE_UNSPECIFIED" - Unspecified source.
-	//   "PREDEFINED" - The entity type is in the predefined schema of a
-	// pretrained version of a processor.
-	//   "USER_INPUT" - The entity type is added by the users either: -
-	// during an uptraining of an existing processor, or - during the
-	// process of creating a customized processor.
-	Source string `json:"source,omitempty"`
-
-	// Type: Name of the type. It must satisfy the following constraints: 1.
-	// Must be unique within the set of same level types (with
-	// case-insensitive match). 2. Maximum 50 characters. 3. Must start with
-	// a letter. 4. Allowed characters: ASCII letters [a-zA-Z], ASCII digits
-	// [0-9], or one of the following punctuation characters: * underscore
-	// '_' (recommended) * hyphen '-' (allowed, not recommended) * colon ':'
-	// (allowed, not recommended) NOTE: Whitespace characters are not
-	// allowed. 5. Cannot end with a punctuation character. 6. Cannot
-	// contain the following restricted strings: "google", "DocumentAI"
-	// (case-insensitive match). 7. A slash character '/' is reserved as a
-	// separator in flattened representations of nested entity types (e.g.,
-	// "line_item/amount") in which case each part (e.g., "line_item",
-	// "amount") must comply with the rules defined above. We recommend
-	// using the snake case ("snake_case") in entity type names.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BaseType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BaseType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDocumentaiV1SchemaEntityType) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDocumentaiV1SchemaEntityType
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9299,7 +9253,7 @@ func (c *OperationsDeleteCall) Header() http.Header {
 
 func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9444,7 +9398,7 @@ func (c *ProjectsLocationsFetchProcessorTypesCall) Header() http.Header {
 
 func (c *ProjectsLocationsFetchProcessorTypesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9592,7 +9546,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9764,7 +9718,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9947,7 +9901,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10092,7 +10046,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10268,7 +10222,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10447,7 +10401,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10592,7 +10546,7 @@ func (c *ProjectsLocationsProcessorsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10734,7 +10688,7 @@ func (c *ProjectsLocationsProcessorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10868,7 +10822,7 @@ func (c *ProjectsLocationsProcessorsDisableCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11010,7 +10964,7 @@ func (c *ProjectsLocationsProcessorsEnableCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11161,7 +11115,7 @@ func (c *ProjectsLocationsProcessorsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11326,7 +11280,7 @@ func (c *ProjectsLocationsProcessorsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11502,7 +11456,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11648,7 +11602,7 @@ func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) Header() htt
 
 func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11792,7 +11746,7 @@ func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) Header(
 
 func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11938,7 +11892,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Header() 
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12079,7 +12033,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) Header() http.H
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12213,7 +12167,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) Header() http.H
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12364,7 +12318,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) Header() http.Head
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12530,7 +12484,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) Header() http.Hea
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12706,7 +12660,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Header() http.
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12849,7 +12803,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) Header() http
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13002,7 +12956,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13148,7 +13102,7 @@ func (c *Uiv1beta3ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13320,7 +13274,7 @@ func (c *Uiv1beta3ProjectsLocationsListCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13503,7 +13457,7 @@ func (c *Uiv1beta3ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13648,7 +13602,7 @@ func (c *Uiv1beta3ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13824,7 +13778,7 @@ func (c *Uiv1beta3ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *Uiv1beta3ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

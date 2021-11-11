@@ -242,6 +242,20 @@ type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata struct {
 	// CommonMetadata: The basic metadata of the long running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
+	// DestDatasetType: The destination dataset split type.
+	//
+	// Possible values:
+	//   "DATASET_SPLIT_TYPE_UNSPECIFIED" - Default value if the enum is not
+	// set. go/protodosdonts#do-include-an-unspecified-value-in-an-enum
+	//   "DATASET_SPLIT_TRAIN" - Identifies the train documents.
+	//   "DATASET_SPLIT_TEST" - Identifies the test documents.
+	//   "DATASET_SPLIT_UNASSIGNED" - Identifies the unassigned documents.
+	DestDatasetType string `json:"destDatasetType,omitempty"`
+
+	// IndividualBatchMoveStatuses: The list of response details of each
+	// document.
+	IndividualBatchMoveStatuses []*GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus `json:"individualBatchMoveStatuses,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -262,6 +276,39 @@ type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata struct {
 
 func (s *GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatc
+// hMoveStatus: The status of each individual document in the batch move
+// process.
+type GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus struct {
+	// DocumentId: The document id of the document.
+	DocumentId *GoogleCloudDocumentaiUiv1beta3DocumentId `json:"documentId,omitempty"`
+
+	// Status: The status of moving the document.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DocumentId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -512,6 +559,73 @@ func (s *GoogleCloudDocumentaiUiv1beta3DisableProcessorMetadata) MarshalJSON() (
 type GoogleCloudDocumentaiUiv1beta3DisableProcessorResponse struct {
 }
 
+// GoogleCloudDocumentaiUiv1beta3DocumentId: Document Identifier.
+type GoogleCloudDocumentaiUiv1beta3DocumentId struct {
+	GcsManagedDocId *GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId `json:"gcsManagedDocId,omitempty"`
+
+	// RevisionReference: Points to a specific revision of the document if
+	// set.
+	RevisionReference *GoogleCloudDocumentaiUiv1beta3RevisionReference `json:"revisionReference,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsManagedDocId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsManagedDocId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3DocumentId) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3DocumentId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId:
+// Identifies a document uniquely within the scope of a dataset in the
+// GCS-based option.
+type GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId struct {
+	// CwDocId: Optional. Id of the document (indexed) managed by Content
+	// Warehouse.
+	CwDocId string `json:"cwDocId,omitempty"`
+
+	// GcsUri: Required. The Cloud Storage uri where the actual document is
+	// stored.
+	GcsUri string `json:"gcsUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CwDocId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CwDocId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3DocumentIdGCSManagedDocumentId
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata: The long
 // running operation metadata for enable processor method.
 type GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata struct {
@@ -674,6 +788,10 @@ type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata struct {
 	// CommonMetadata: The basic metadata of the long running operation.
 	CommonMetadata *GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata `json:"commonMetadata,omitempty"`
 
+	// IndividualImportStatuses: The list of response details of each
+	// document.
+	IndividualImportStatuses []*GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus `json:"individualImportStatuses,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CommonMetadata") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -698,9 +816,91 @@ func (s *GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadata) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportS
+// tatus: The status of each individual document in the import process.
+type GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus struct {
+	// InputGcsSource: The source Cloud Storage URI of the document.
+	InputGcsSource string `json:"inputGcsSource,omitempty"`
+
+	// OutputGcsDestination: The output_gcs_destination of the processed
+	// document if it was successful, otherwise empty.
+	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
+
+	// Status: The status of the importing of the document.
+	Status *GoogleRpcStatus `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InputGcsSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InputGcsSource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiUiv1beta3ImportDocumentsResponse: Response of
 // the import document operation.
 type GoogleCloudDocumentaiUiv1beta3ImportDocumentsResponse struct {
+}
+
+// GoogleCloudDocumentaiUiv1beta3RevisionReference: The revision
+// reference specifies which revision on the document to read.
+type GoogleCloudDocumentaiUiv1beta3RevisionReference struct {
+	// LatestProcessorVersion: Read the revision generated by the processor
+	// version, returns error if it does not exist.
+	LatestProcessorVersion string `json:"latestProcessorVersion,omitempty"`
+
+	// RevisionCase: Read the revision by the predefined case.
+	//
+	// Possible values:
+	//   "REVISION_CASE_UNSPECIFIED" - Unspecified case, fallback to read
+	// the first (OCR) revision.
+	//   "LATEST_HUMAN_REVIEW" - The latest revision made by a human.
+	//   "LATEST_TIMESTAMP" - The latest revision based on timestamp.
+	RevisionCase string `json:"revisionCase,omitempty"`
+
+	// RevisionId: Read the revision given by the id, returns error if it
+	// does not exist.
+	RevisionId string `json:"revisionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "LatestProcessorVersion") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LatestProcessorVersion")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiUiv1beta3RevisionReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3RevisionReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDocumentaiUiv1beta3SetDefaultProcessorVersionMetadata: The
@@ -6784,7 +6984,7 @@ func (c *ProjectsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6929,7 +7129,7 @@ func (c *ProjectsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7075,7 +7275,7 @@ func (c *ProjectsLocationsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7220,7 +7420,7 @@ func (c *ProjectsLocationsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7374,7 +7574,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7522,7 +7722,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211109")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

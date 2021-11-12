@@ -5274,22 +5274,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "webmasters:v3",
-      "name": "webmasters",
-      "version": "v3",
-      "title": "Search Console API",
-      "description": "[Deprecated] View Google Search Console data for your verified sites.",
-      "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/webmasters/v3/rest",
-      "discoveryLink": "./apis/webmasters/v3/rest",
-      "icons": {
-        "x16": "https://www.google.com/images/icons/product/webmaster_tools-16.png",
-        "x32": "https://www.google.com/images/icons/product/webmaster_tools-32.png"
-      },
-      "documentationLink": "https://developers.google.com/webmaster-tools/",
-      "preferred": true
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "webrisk:v1",
       "name": "webrisk",
       "version": "v1",

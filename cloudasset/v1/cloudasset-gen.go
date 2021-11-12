@@ -120,6 +120,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Assets = NewAssetsService(s)
 	s.Feeds = NewFeedsService(s)
 	s.Operations = NewOperationsService(s)
+	s.SavedQueries = NewSavedQueriesService(s)
 	s.V1 = NewV1Service(s)
 	return s, nil
 }
@@ -134,6 +135,8 @@ type Service struct {
 	Feeds *FeedsService
 
 	Operations *OperationsService
+
+	SavedQueries *SavedQueriesService
 
 	V1 *V1Service
 }
@@ -169,6 +172,15 @@ func NewOperationsService(s *Service) *OperationsService {
 }
 
 type OperationsService struct {
+	s *Service
+}
+
+func NewSavedQueriesService(s *Service) *SavedQueriesService {
+	rs := &SavedQueriesService{s: s}
+	return rs
+}
+
+type SavedQueriesService struct {
 	s *Service
 }
 
@@ -254,6 +266,21 @@ type AnalyzeIamPolicyLongrunningRequest struct {
 	// OutputConfig: Required. Output configuration indicating where the
 	// results will be output to.
 	OutputConfig *IamPolicyAnalysisOutputConfig `json:"outputConfig,omitempty"`
+
+	// SavedAnalysisQuery: Optional. The name of a saved query, which must
+	// be in the format of: *
+	// projects/project_number/savedQueries/saved_query_id *
+	// folders/folder_number/savedQueries/saved_query_id *
+	// organizations/organization_number/savedQueries/saved_query_id If both
+	// `analysis_query` and `saved_analysis_query` are provided, they will
+	// be merged together with the `saved_analysis_query` as base and the
+	// `analysis_query` as overrides. For more details of the merge
+	// behavior, please refer to the MergeFrom
+	// (https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.message#Message.MergeFrom.details)
+	// doc. Note that you cannot override primitive fields with default
+	// value, such as 0 or empty string, etc., because we use proto3, which
+	// doesn't support field presence yet.
+	SavedAnalysisQuery string `json:"savedAnalysisQuery,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AnalysisQuery") to
 	// unconditionally include in API requests. By default, fields with
@@ -3763,6 +3790,43 @@ func (s *ListFeedsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListSavedQueriesResponse: Response of listing saved queries.
+type ListSavedQueriesResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SavedQueries: A list of savedQueries.
+	SavedQueries []*SavedQuery `json:"savedQueries,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSavedQueriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSavedQueriesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MoveAnalysis: A message to group the analysis information.
 type MoveAnalysis struct {
 	// Analysis: Analysis result of moving the target resource.
@@ -4308,6 +4372,38 @@ func (s *PubsubDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryContent: The query content.
+type QueryContent struct {
+	// IamPolicyAnalysisQuery: An IAM Policy Analysis query, which could be
+	// used in the AssetService.AnalyzeIamPolicy rpc or the
+	// AssetService.AnalyzeIamPolicyLongrunning rpc.
+	IamPolicyAnalysisQuery *IamPolicyAnalysisQuery `json:"iamPolicyAnalysisQuery,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "IamPolicyAnalysisQuery") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IamPolicyAnalysisQuery")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryContent) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryContent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RelatedAsset: An asset identifier in Google Cloud which contains its
 // name, type and ancestors. An asset can be any resource in the Google
 // Cloud resource hierarchy
@@ -4810,6 +4906,69 @@ type ResourceSelector struct {
 
 func (s *ResourceSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceSelector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SavedQuery: A saved query which can be shared with others or used
+// later.
+type SavedQuery struct {
+	// Content: The query content.
+	Content *QueryContent `json:"content,omitempty"`
+
+	// CreateTime: Output only. The create time of this saved query.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Creator: Output only. The account's email address who has created
+	// this saved query.
+	Creator string `json:"creator,omitempty"`
+
+	// Description: The description of this saved query. This value should
+	// be fewer than 255 characters.
+	Description string `json:"description,omitempty"`
+
+	// Labels: Labels applied on the resource. This value should not contain
+	// more than 10 entries. The key and value of each entry must be
+	// non-empty and fewer than 64 characters.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// LastUpdateTime: Output only. The last update time of this saved
+	// query.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
+	// LastUpdater: Output only. The account's email address who has updated
+	// this saved query most recently.
+	LastUpdater string `json:"lastUpdater,omitempty"`
+
+	// Name: The resource name of the saved query. The format must be: *
+	// projects/project_number/savedQueries/saved_query_id *
+	// folders/folder_number/savedQueries/saved_query_id *
+	// organizations/organization_number/savedQueries/saved_query_id
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SavedQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod SavedQuery
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5569,7 +5728,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5784,7 +5943,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5927,7 +6086,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6073,7 +6232,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6222,7 +6381,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6365,7 +6524,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6518,7 +6677,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6599,6 +6758,830 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudasset.savedQueries.create":
+
+type SavedQueriesCreateCall struct {
+	s          *Service
+	parent     string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a saved query in a parent
+// project/folder/organization.
+//
+// - parent: The name of the project/folder/organization where this
+//   saved_query should be created in. It can only be an organization
+//   number (such as "organizations/123"), a folder number (such as
+//   "folders/123"), a project ID (such as "projects/my-project-id")",
+//   or a project number (such as "projects/12345").
+func (r *SavedQueriesService) Create(parent string, savedquery *SavedQuery) *SavedQueriesCreateCall {
+	c := &SavedQueriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.savedquery = savedquery
+	return c
+}
+
+// SavedQueryId sets the optional parameter "savedQueryId": Required.
+// The ID to use for the saved query, which must be unique in the
+// specified parent. It will become the final component of the saved
+// query's resource name. This value should be 4-63 characters, and
+// valid characters are /a-z-/. Notice that this field is required in
+// the saved query creation, and the `name` field of the `saved_query`
+// will be ignored.
+func (c *SavedQueriesCreateCall) SavedQueryId(savedQueryId string) *SavedQueriesCreateCall {
+	c.urlParams_.Set("savedQueryId", savedQueryId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SavedQueriesCreateCall) Fields(s ...googleapi.Field) *SavedQueriesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SavedQueriesCreateCall) Context(ctx context.Context) *SavedQueriesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SavedQueriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SavedQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/savedQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.savedQueries.create" call.
+// Exactly one of *SavedQuery or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SavedQueriesCreateCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a saved query in a parent project/folder/organization.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}/savedQueries",
+	//   "httpMethod": "POST",
+	//   "id": "cloudasset.savedQueries.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the project/folder/organization where this saved_query should be created in. It can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\")\", or a project number (such as \"projects/12345\").",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "savedQueryId": {
+	//       "description": "Required. The ID to use for the saved query, which must be unique in the specified parent. It will become the final component of the saved query's resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Notice that this field is required in the saved query creation, and the `name` field of the `saved_query` will be ignored.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/savedQueries",
+	//   "request": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "response": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudasset.savedQueries.delete":
+
+type SavedQueriesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a saved query.
+//
+// - name: The name of the saved query to delete. It must be in the
+//   format of: * projects/project_number/savedQueries/saved_query_id *
+//   folders/folder_number/savedQueries/saved_query_id *
+//   organizations/organization_number/savedQueries/saved_query_id.
+func (r *SavedQueriesService) Delete(name string) *SavedQueriesDeleteCall {
+	c := &SavedQueriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SavedQueriesDeleteCall) Fields(s ...googleapi.Field) *SavedQueriesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SavedQueriesDeleteCall) Context(ctx context.Context) *SavedQueriesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SavedQueriesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SavedQueriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.savedQueries.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *SavedQueriesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a saved query.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}/savedQueries/{savedQueriesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "cloudasset.savedQueries.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the saved query to delete. It must be in the format of: * projects/project_number/savedQueries/saved_query_id * folders/folder_number/savedQueries/saved_query_id * organizations/organization_number/savedQueries/saved_query_id",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/savedQueries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudasset.savedQueries.get":
+
+type SavedQueriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details about a saved query.
+//
+// - name: The name of the saved query and it must be in the format of:
+//   * projects/project_number/savedQueries/saved_query_id *
+//   folders/folder_number/savedQueries/saved_query_id *
+//   organizations/organization_number/savedQueries/saved_query_id.
+func (r *SavedQueriesService) Get(name string) *SavedQueriesGetCall {
+	c := &SavedQueriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SavedQueriesGetCall) Fields(s ...googleapi.Field) *SavedQueriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SavedQueriesGetCall) IfNoneMatch(entityTag string) *SavedQueriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SavedQueriesGetCall) Context(ctx context.Context) *SavedQueriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SavedQueriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SavedQueriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.savedQueries.get" call.
+// Exactly one of *SavedQuery or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SavedQueriesGetCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details about a saved query.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}/savedQueries/{savedQueriesId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudasset.savedQueries.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the saved query and it must be in the format of: * projects/project_number/savedQueries/saved_query_id * folders/folder_number/savedQueries/saved_query_id * organizations/organization_number/savedQueries/saved_query_id",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/savedQueries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudasset.savedQueries.list":
+
+type SavedQueriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all saved queries in a parent
+// project/folder/organization.
+//
+// - parent: The parent project/folder/organization whose savedQueries
+//   are to be listed. It can only be using project/folder/organization
+//   number (such as "folders/12345")", or a project ID (such as
+//   "projects/my-project-id").
+func (r *SavedQueriesService) List(parent string) *SavedQueriesListCall {
+	c := &SavedQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The expression to filter
+// resources. The expression is a list of zero or more restrictions
+// combined via logical operators `AND` and `OR`. When `AND` and `OR`
+// are both used in the expression, parentheses must be appropriately
+// used to group the combinations. The expression may also contain
+// regular expressions. See https://google.aip.dev/160 for more
+// information on the grammar.
+func (c *SavedQueriesListCall) Filter(filter string) *SavedQueriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of saved queries to return per page. The service may return fewer
+// than this value. If unspecified, at most 50 will be returned. The
+// maximum value is 1000; values above 1000 will be coerced to 1000.
+func (c *SavedQueriesListCall) PageSize(pageSize int64) *SavedQueriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListSavedQueries` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListSavedQueries` must match the call that provided the
+// page token.
+func (c *SavedQueriesListCall) PageToken(pageToken string) *SavedQueriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SavedQueriesListCall) Fields(s ...googleapi.Field) *SavedQueriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SavedQueriesListCall) IfNoneMatch(entityTag string) *SavedQueriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SavedQueriesListCall) Context(ctx context.Context) *SavedQueriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SavedQueriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SavedQueriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/savedQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.savedQueries.list" call.
+// Exactly one of *ListSavedQueriesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListSavedQueriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SavedQueriesListCall) Do(opts ...googleapi.CallOption) (*ListSavedQueriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListSavedQueriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all saved queries in a parent project/folder/organization.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}/savedQueries",
+	//   "httpMethod": "GET",
+	//   "id": "cloudasset.savedQueries.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. The expression to filter resources. The expression is a list of zero or more restrictions combined via logical operators `AND` and `OR`. When `AND` and `OR` are both used in the expression, parentheses must be appropriately used to group the combinations. The expression may also contain regular expressions. See https://google.aip.dev/160 for more information on the grammar.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of saved queries to return per page. The service may return fewer than this value. If unspecified, at most 50 will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListSavedQueries` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSavedQueries` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent project/folder/organization whose savedQueries are to be listed. It can only be using project/folder/organization number (such as \"folders/12345\")\", or a project ID (such as \"projects/my-project-id\").",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/savedQueries",
+	//   "response": {
+	//     "$ref": "ListSavedQueriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *SavedQueriesListCall) Pages(ctx context.Context, f func(*ListSavedQueriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudasset.savedQueries.patch":
+
+type SavedQueriesPatchCall struct {
+	s          *Service
+	name       string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a saved query.
+//
+// - name: The resource name of the saved query. The format must be: *
+//   projects/project_number/savedQueries/saved_query_id *
+//   folders/folder_number/savedQueries/saved_query_id *
+//   organizations/organization_number/savedQueries/saved_query_id.
+func (r *SavedQueriesService) Patch(name string, savedquery *SavedQuery) *SavedQueriesPatchCall {
+	c := &SavedQueriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.savedquery = savedquery
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to update.
+func (c *SavedQueriesPatchCall) UpdateMask(updateMask string) *SavedQueriesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SavedQueriesPatchCall) Fields(s ...googleapi.Field) *SavedQueriesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SavedQueriesPatchCall) Context(ctx context.Context) *SavedQueriesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SavedQueriesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SavedQueriesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudasset.savedQueries.patch" call.
+// Exactly one of *SavedQuery or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SavedQueriesPatchCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a saved query.",
+	//   "flatPath": "v1/{v1Id}/{v1Id1}/savedQueries/{savedQueriesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "cloudasset.savedQueries.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the saved query. The format must be: * projects/project_number/savedQueries/saved_query_id * folders/folder_number/savedQueries/saved_query_id * organizations/organization_number/savedQueries/saved_query_id",
+	//       "location": "path",
+	//       "pattern": "^[^/]+/[^/]+/savedQueries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to update.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "response": {
+	//     "$ref": "SavedQuery"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -6791,6 +7774,24 @@ func (c *V1AnalyzeIamPolicyCall) ExecutionTimeout(executionTimeout string) *V1An
 	return c
 }
 
+// SavedAnalysisQuery sets the optional parameter "savedAnalysisQuery":
+// The name of a saved query, which must be in the format of: *
+// projects/project_number/savedQueries/saved_query_id *
+// folders/folder_number/savedQueries/saved_query_id *
+// organizations/organization_number/savedQueries/saved_query_id If both
+// `analysis_query` and `saved_analysis_query` are provided, they will
+// be merged together with the `saved_analysis_query` as base and the
+// `analysis_query` as overrides. For more details of the merge
+// behavior, please refer to the MergeFrom
+// (https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.message#Message.MergeFrom.details)
+// page. Note that you cannot override primitive fields with default
+// value, such as 0 or empty string, etc., because we use proto3, which
+// doesn't support field presence yet.
+func (c *V1AnalyzeIamPolicyCall) SavedAnalysisQuery(savedAnalysisQuery string) *V1AnalyzeIamPolicyCall {
+	c.urlParams_.Set("savedAnalysisQuery", savedAnalysisQuery)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6828,7 +7829,7 @@ func (c *V1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6962,6 +7963,11 @@ func (c *V1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*AnalyzeIamPo
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "savedAnalysisQuery": {
+	//       "description": "Optional. The name of a saved query, which must be in the format of: * projects/project_number/savedQueries/saved_query_id * folders/folder_number/savedQueries/saved_query_id * organizations/organization_number/savedQueries/saved_query_id If both `analysis_query` and `saved_analysis_query` are provided, they will be merged together with the `saved_analysis_query` as base and the `analysis_query` as overrides. For more details of the merge behavior, please refer to the [MergeFrom](https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.message#Message.MergeFrom.details) page. Note that you cannot override primitive fields with default value, such as 0 or empty string, etc., because we use proto3, which doesn't support field presence yet.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "scope": {
 	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the scope will be analyzed. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
 	//       "location": "path",
@@ -7045,7 +8051,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyLongrunningCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7230,7 +8236,7 @@ func (c *V1AnalyzeMoveCall) Header() http.Header {
 
 func (c *V1AnalyzeMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7469,7 +8475,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7666,7 +8672,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7921,7 +8927,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8234,7 +9240,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211110")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

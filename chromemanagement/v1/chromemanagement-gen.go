@@ -25,7 +25,7 @@
 //
 // By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
 //
-//   chromemanagementService, err := chromemanagement.NewService(ctx, option.WithScopes(chromemanagement.ChromeManagementReportsReadonlyScope))
+//   chromemanagementService, err := chromemanagement.NewService(ctx, option.WithScopes(chromemanagement.ChromeManagementTelemetryReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
 //
@@ -90,6 +90,10 @@ const (
 	// See reports about devices and Chrome browsers managed within your
 	// organization
 	ChromeManagementReportsReadonlyScope = "https://www.googleapis.com/auth/chrome.management.reports.readonly"
+
+	// See basic device and telemetry information collected from Chrome OS
+	// devices or users managed within your organization
+	ChromeManagementTelemetryReadonlyScope = "https://www.googleapis.com/auth/chrome.management.telemetry.readonly"
 )
 
 // NewService creates a new Service.
@@ -97,6 +101,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/chrome.management.appdetails.readonly",
 		"https://www.googleapis.com/auth/chrome.management.reports.readonly",
+		"https://www.googleapis.com/auth/chrome.management.telemetry.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -149,6 +154,7 @@ func NewCustomersService(s *Service) *CustomersService {
 	rs := &CustomersService{s: s}
 	rs.Apps = NewCustomersAppsService(s)
 	rs.Reports = NewCustomersReportsService(s)
+	rs.Telemetry = NewCustomersTelemetryService(s)
 	return rs
 }
 
@@ -158,6 +164,8 @@ type CustomersService struct {
 	Apps *CustomersAppsService
 
 	Reports *CustomersReportsService
+
+	Telemetry *CustomersTelemetryService
 }
 
 func NewCustomersAppsService(s *Service) *CustomersAppsService {
@@ -211,6 +219,27 @@ func NewCustomersReportsService(s *Service) *CustomersReportsService {
 }
 
 type CustomersReportsService struct {
+	s *Service
+}
+
+func NewCustomersTelemetryService(s *Service) *CustomersTelemetryService {
+	rs := &CustomersTelemetryService{s: s}
+	rs.Devices = NewCustomersTelemetryDevicesService(s)
+	return rs
+}
+
+type CustomersTelemetryService struct {
+	s *Service
+
+	Devices *CustomersTelemetryDevicesService
+}
+
+func NewCustomersTelemetryDevicesService(s *Service) *CustomersTelemetryDevicesService {
+	rs := &CustomersTelemetryDevicesService{s: s}
+	return rs
+}
+
+type CustomersTelemetryDevicesService struct {
 	s *Service
 }
 
@@ -392,6 +421,158 @@ func (s *GoogleChromeManagementV1AppDetails) UnmarshalJSON(data []byte) error {
 	}
 	s.ReviewRating = float64(s1.ReviewRating)
 	return nil
+}
+
+// GoogleChromeManagementV1BatteryInfo: Battery info
+type GoogleChromeManagementV1BatteryInfo struct {
+	// DesignCapacity: Output only. Design capacity (mAmpere-hours).
+	DesignCapacity int64 `json:"designCapacity,omitempty,string"`
+
+	// DesignMinVoltage: Output only. Designed minimum output voltage (mV)
+	DesignMinVoltage int64 `json:"designMinVoltage,omitempty"`
+
+	// ManufactureDate: Output only. The date the battery was manufactured.
+	ManufactureDate *GoogleTypeDate `json:"manufactureDate,omitempty"`
+
+	// Manufacturer: Output only. Battery manufacturer.
+	Manufacturer string `json:"manufacturer,omitempty"`
+
+	// SerialNumber: Output only. Battery serial number.
+	SerialNumber string `json:"serialNumber,omitempty"`
+
+	// Technology: Output only. Technology of the battery. Example: Li-ion
+	Technology string `json:"technology,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DesignCapacity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DesignCapacity") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1BatteryInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1BatteryInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1BatterySampleReport: Sampling data for
+// battery.
+type GoogleChromeManagementV1BatterySampleReport struct {
+	// ChargeRate: Output only. Battery charge percentage.
+	ChargeRate int64 `json:"chargeRate,omitempty"`
+
+	// Current: Output only. Battery current (mA).
+	Current int64 `json:"current,omitempty,string"`
+
+	// DischargeRate: Output only. The battery discharge rate measured in
+	// mW. Positive if the battery is being discharged, negative if it's
+	// being charged.
+	DischargeRate int64 `json:"dischargeRate,omitempty"`
+
+	// RemainingCapacity: Output only. Battery remaining capacity
+	// (mAmpere-hours).
+	RemainingCapacity int64 `json:"remainingCapacity,omitempty,string"`
+
+	// ReportTime: Output only. Timestamp of when the sample was collected
+	// on device
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// Status: Output only. Battery status read from sysfs. Example:
+	// Discharging
+	Status string `json:"status,omitempty"`
+
+	// Temperature: Output only. Temperature in Celsius degrees.
+	Temperature int64 `json:"temperature,omitempty"`
+
+	// Voltage: Output only. Battery voltage (millivolt).
+	Voltage int64 `json:"voltage,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ChargeRate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChargeRate") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1BatterySampleReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1BatterySampleReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1BatteryStatusReport: Status data for battery.
+type GoogleChromeManagementV1BatteryStatusReport struct {
+	// BatteryHealth: Output only. Battery health.
+	//
+	// Possible values:
+	//   "BATTERY_HEALTH_UNSPECIFIED" - Health unknown.
+	//   "BATTERY_HEALTH_NORMAL" - Battery is healthy.
+	//   "BATTERY_REPLACE_SOON" - Battery is moderately unhealthy and should
+	// be replaced soon.
+	//   "BATTERY_REPLACE_NOW" - Battery is unhealthy and should be
+	// replaced.
+	BatteryHealth string `json:"batteryHealth,omitempty"`
+
+	// CycleCount: Output only. Cycle count.
+	CycleCount int64 `json:"cycleCount,omitempty"`
+
+	// FullChargeCapacity: Output only. Full charge capacity
+	// (mAmpere-hours).
+	FullChargeCapacity int64 `json:"fullChargeCapacity,omitempty,string"`
+
+	// ReportTime: Output only. Timestamp of when the sample was collected
+	// on device
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// Sample: Output only. Sampling data for the battery.
+	Sample []*GoogleChromeManagementV1BatterySampleReport `json:"sample,omitempty"`
+
+	// SerialNumber: Output only. Battery serial number.
+	SerialNumber string `json:"serialNumber,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatteryHealth") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BatteryHealth") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1BatteryStatusReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1BatteryStatusReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleChromeManagementV1BrowserVersion: Describes a browser version
@@ -751,6 +932,119 @@ func (s *GoogleChromeManagementV1CountInstalledAppsResponse) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1CpuInfo: CPU specs for a CPU.
+type GoogleChromeManagementV1CpuInfo struct {
+	// Architecture: Output only. The CPU architecture.
+	//
+	// Possible values:
+	//   "ARCHITECTURE_UNSPECIFIED" - Architecture unknown.
+	//   "X64" - x64 architecture
+	Architecture string `json:"architecture,omitempty"`
+
+	// MaxClockSpeed: Output only. The max CPU clock speed in kHz.
+	MaxClockSpeed int64 `json:"maxClockSpeed,omitempty"`
+
+	// Model: Output only. The CPU model name. Example: Intel(R) Core(TM)
+	// i5-8250U CPU @ 1.60GHz
+	Model string `json:"model,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Architecture") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Architecture") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1CpuInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1CpuInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1CpuStatusReport: Contains samples of the cpu
+// status reports.
+type GoogleChromeManagementV1CpuStatusReport struct {
+	// CpuTemperatureInfo: Output only. CPU temperature sample info per CPU
+	// core in Celsius
+	CpuTemperatureInfo []*GoogleChromeManagementV1CpuTemperatureInfo `json:"cpuTemperatureInfo,omitempty"`
+
+	// CpuUtilizationPct: Output only. Sample of CPU utilization (0-100
+	// percent).
+	CpuUtilizationPct int64 `json:"cpuUtilizationPct,omitempty"`
+
+	// ReportTime: Output only. The timestamp in milliseconds representing
+	// time at which this report was sampled.
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// SampleFrequency: Output only. Frequency the report is sampled.
+	SampleFrequency string `json:"sampleFrequency,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CpuTemperatureInfo")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CpuTemperatureInfo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1CpuStatusReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1CpuStatusReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1CpuTemperatureInfo: CPU temperature of a
+// device. Sampled per CPU core in Celsius
+type GoogleChromeManagementV1CpuTemperatureInfo struct {
+	// Label: Output only. CPU label. Example: Core 0
+	Label string `json:"label,omitempty"`
+
+	// TemperatureCelsius: Output only. CPU temperature in Celsius.
+	TemperatureCelsius int64 `json:"temperatureCelsius,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Label") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Label") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1CpuTemperatureInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1CpuTemperatureInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1Device: Describes a device reporting Chrome
 // browser information.
 type GoogleChromeManagementV1Device struct {
@@ -781,6 +1075,121 @@ type GoogleChromeManagementV1Device struct {
 
 func (s *GoogleChromeManagementV1Device) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1Device
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1DiskInfo: Status of the single storage
+// device.
+type GoogleChromeManagementV1DiskInfo struct {
+	// BytesReadThisSession: Output only. Number of bytes read since last
+	// boot.
+	BytesReadThisSession int64 `json:"bytesReadThisSession,omitempty,string"`
+
+	// BytesWrittenThisSession: Output only. Number of bytes written since
+	// last boot.
+	BytesWrittenThisSession int64 `json:"bytesWrittenThisSession,omitempty,string"`
+
+	// DiscardTimeThisSession: Output only. Time spent discarding since last
+	// boot. Discarding is writing to clear blocks which are no longer in
+	// use. Supported on kernels 4.18+.
+	DiscardTimeThisSession string `json:"discardTimeThisSession,omitempty"`
+
+	// Health: Output only. Disk health.
+	Health string `json:"health,omitempty"`
+
+	// IoTimeThisSession: Output only. Counts the time the disk and queue
+	// were busy, so unlike the fields above, parallel requests are not
+	// counted multiple times.
+	IoTimeThisSession string `json:"ioTimeThisSession,omitempty"`
+
+	// Manufacturer: Output only. Disk manufacturer.
+	Manufacturer string `json:"manufacturer,omitempty"`
+
+	// Model: Output only. Disk model.
+	Model string `json:"model,omitempty"`
+
+	// ReadTimeThisSession: Output only. Time spent reading from disk since
+	// last boot.
+	ReadTimeThisSession string `json:"readTimeThisSession,omitempty"`
+
+	// SerialNumber: Output only. Disk serial number.
+	SerialNumber string `json:"serialNumber,omitempty"`
+
+	// SizeBytes: Output only. Disk size.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
+
+	// Type: Output only. Disk type: eMMC / NVMe / ATA / SCSI.
+	Type string `json:"type,omitempty"`
+
+	// VolumeIds: Output only. Disk volumes.
+	VolumeIds []string `json:"volumeIds,omitempty"`
+
+	// WriteTimeThisSession: Output only. Time spent writing to disk since
+	// last boot.
+	WriteTimeThisSession string `json:"writeTimeThisSession,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BytesReadThisSession") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BytesReadThisSession") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1DiskInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1DiskInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1DisplayInfo: Information for a display.
+type GoogleChromeManagementV1DisplayInfo struct {
+	// DeviceId: Output only. Represents the graphics card device id.
+	DeviceId int64 `json:"deviceId,omitempty,string"`
+
+	// IsInternal: Output only. Indicates if display is internal or not.
+	IsInternal bool `json:"isInternal,omitempty"`
+
+	// RefreshRate: Output only. Refresh rate in Hz.
+	RefreshRate int64 `json:"refreshRate,omitempty"`
+
+	// ResolutionHeight: Output only. Resolution height in pixels.
+	ResolutionHeight int64 `json:"resolutionHeight,omitempty"`
+
+	// ResolutionWidth: Output only. Resolution width in pixels.
+	ResolutionWidth int64 `json:"resolutionWidth,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1DisplayInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1DisplayInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -821,6 +1230,105 @@ type GoogleChromeManagementV1FindInstalledAppDevicesResponse struct {
 
 func (s *GoogleChromeManagementV1FindInstalledAppDevicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1FindInstalledAppDevicesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1GraphicsAdapterInfo: Information of a
+// graphics adapter (GPU).
+type GoogleChromeManagementV1GraphicsAdapterInfo struct {
+	// Adapter: Output only. Adapter name. Example: Mesa DRI Intel(R) UHD
+	// Graphics 620 (Kabylake GT2).
+	Adapter string `json:"adapter,omitempty"`
+
+	// DeviceId: Output only. Represents the graphics card device id.
+	DeviceId int64 `json:"deviceId,omitempty,string"`
+
+	// DriverVersion: Output only. Version of the GPU driver.
+	DriverVersion string `json:"driverVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Adapter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Adapter") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1GraphicsAdapterInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1GraphicsAdapterInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1GraphicsInfo: Information of the graphics
+// subsystem.
+type GoogleChromeManagementV1GraphicsInfo struct {
+	// AdapterInfo: Output only. Information about the graphics adapter
+	// (GPU).
+	AdapterInfo *GoogleChromeManagementV1GraphicsAdapterInfo `json:"adapterInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdapterInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdapterInfo") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1GraphicsInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1GraphicsInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1GraphicsStatusReport: Information of the
+// graphics subsystem.
+type GoogleChromeManagementV1GraphicsStatusReport struct {
+	// Displays: Output only. Information about the displays for the device.
+	Displays []*GoogleChromeManagementV1DisplayInfo `json:"displays,omitempty"`
+
+	// ReportTime: Output only. Time at which the graphics data was
+	// reported.
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Displays") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Displays") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1GraphicsStatusReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1GraphicsStatusReport
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -911,6 +1419,411 @@ func (s *GoogleChromeManagementV1InstalledApp) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type GoogleChromeManagementV1ListTelemetryDevicesResponse struct {
+	// Devices: Telemetry devices returned in the response.
+	Devices []*GoogleChromeManagementV1TelemetryDevice `json:"devices,omitempty"`
+
+	// NextPageToken: Token to specify next page in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Devices") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Devices") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1ListTelemetryDevicesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1ListTelemetryDevicesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1MemoryInfo: Memory information of a device.
+type GoogleChromeManagementV1MemoryInfo struct {
+	// AvailableRamBytes: Output only. Amount of available RAM in bytes.
+	AvailableRamBytes int64 `json:"availableRamBytes,omitempty,string"`
+
+	// TotalRamBytes: Output only. Total RAM in bytes.
+	TotalRamBytes int64 `json:"totalRamBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AvailableRamBytes")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AvailableRamBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1MemoryInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1MemoryInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1MemoryStatusReport: Contains samples of
+// memory status reports.
+type GoogleChromeManagementV1MemoryStatusReport struct {
+	// PageFaults: Output only. Number of page faults during this collection
+	PageFaults int64 `json:"pageFaults,omitempty"`
+
+	// ReportTime: Output only. The timestamp in milliseconds representing
+	// time at which this report was sampled.
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// SampleFrequency: Output only. Frequency the report is sampled.
+	SampleFrequency string `json:"sampleFrequency,omitempty"`
+
+	// SystemRamFreeBytes: Output only. Amount of free RAM in bytes
+	// (unreliable due to Garbage Collection).
+	SystemRamFreeBytes int64 `json:"systemRamFreeBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "PageFaults") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PageFaults") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1MemoryStatusReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1MemoryStatusReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1NetworkStatusReport: State of
+// visible/configured networks.
+type GoogleChromeManagementV1NetworkStatusReport struct {
+	// GatewayIpAddress: Output only. Gateway IP address.
+	GatewayIpAddress string `json:"gatewayIpAddress,omitempty"`
+
+	// LanIpAddress: Output only. LAN IP address.
+	LanIpAddress string `json:"lanIpAddress,omitempty"`
+
+	// ReportTime: Output only. Time at which the network state was
+	// reported.
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// SampleFrequency: Output only. Frequency the report is sampled.
+	SampleFrequency string `json:"sampleFrequency,omitempty"`
+
+	// SignalStrengthDbm: Output only. Signal strength for wireless networks
+	// measured in decibels.
+	SignalStrengthDbm int64 `json:"signalStrengthDbm,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GatewayIpAddress") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GatewayIpAddress") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1NetworkStatusReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1NetworkStatusReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1OsUpdateStatus: Contains information
+// regarding the current OS update status.
+type GoogleChromeManagementV1OsUpdateStatus struct {
+	// LastRebootTime: Output only. Timestamp of the last reboot.
+	LastRebootTime string `json:"lastRebootTime,omitempty"`
+
+	// LastUpdateCheckTime: Output only. Timestamp of the last update check.
+	LastUpdateCheckTime string `json:"lastUpdateCheckTime,omitempty"`
+
+	// LastUpdateTime: Output only. Timestamp of the last successful update.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
+	// NewPlatformVersion: Output only. New platform version of the os image
+	// being downloaded and applied. It is only set when update status is
+	// OS_IMAGE_DOWNLOAD_IN_PROGRESS or OS_UPDATE_NEED_REBOOT. Note this
+	// could be a dummy "0.0.0.0" for OS_UPDATE_NEED_REBOOT status for some
+	// edge cases, e.g. update engine is restarted without a reboot.
+	NewPlatformVersion string `json:"newPlatformVersion,omitempty"`
+
+	// NewRequestedPlatformVersion: Output only. New requested platform
+	// version from the pending updated kiosk app.
+	NewRequestedPlatformVersion string `json:"newRequestedPlatformVersion,omitempty"`
+
+	// UpdateState: Output only. Current state of the os update.
+	//
+	// Possible values:
+	//   "UPDATE_STATE_UNSPECIFIED" - State unspecified.
+	//   "OS_IMAGE_DOWNLOAD_NOT_STARTED" - OS has not started downloading.
+	//   "OS_IMAGE_DOWNLOAD_IN_PROGRESS" - OS has started download on
+	// device.
+	//   "OS_UPDATE_NEED_REBOOT" - Device needs reboot to finish upload.
+	UpdateState string `json:"updateState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LastRebootTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LastRebootTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1OsUpdateStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1OsUpdateStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1StorageInfo: Status data for storage.
+type GoogleChromeManagementV1StorageInfo struct {
+	// AvailableDiskBytes: The available space for user data storage in the
+	// device in bytes.
+	AvailableDiskBytes int64 `json:"availableDiskBytes,omitempty,string"`
+
+	// TotalDiskBytes: The total space for user data storage in the device
+	// in bytes.
+	TotalDiskBytes int64 `json:"totalDiskBytes,omitempty,string"`
+
+	// Volume: Information for disk volumes
+	Volume []*GoogleChromeManagementV1StorageInfoDiskVolume `json:"volume,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AvailableDiskBytes")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AvailableDiskBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1StorageInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1StorageInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1StorageInfoDiskVolume: Information for disk
+// volumes
+type GoogleChromeManagementV1StorageInfoDiskVolume struct {
+	// StorageFreeBytes: Free storage space in bytes.
+	StorageFreeBytes int64 `json:"storageFreeBytes,omitempty,string"`
+
+	// StorageTotalBytes: Total storage space in bytes.
+	StorageTotalBytes int64 `json:"storageTotalBytes,omitempty,string"`
+
+	// VolumeId: Disk volume id.
+	VolumeId string `json:"volumeId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "StorageFreeBytes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "StorageFreeBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1StorageInfoDiskVolume) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1StorageInfoDiskVolume
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1StorageStatusReport: Status data for storage.
+type GoogleChromeManagementV1StorageStatusReport struct {
+	// Disk: Output only. Reports on disk
+	Disk []*GoogleChromeManagementV1DiskInfo `json:"disk,omitempty"`
+
+	// ReportTime: Output only. Timestamp of when the sample was collected
+	// on device
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Disk") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Disk") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1StorageStatusReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1StorageStatusReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1TelemetryDevice: Telemetry data collected
+// from a managed device.
+type GoogleChromeManagementV1TelemetryDevice struct {
+	// BatteryInfo: Output only. Information on battery specs for the
+	// device.
+	BatteryInfo []*GoogleChromeManagementV1BatteryInfo `json:"batteryInfo,omitempty"`
+
+	// BatteryStatusReport: Output only. Battery reports collected
+	// periodically.
+	BatteryStatusReport []*GoogleChromeManagementV1BatteryStatusReport `json:"batteryStatusReport,omitempty"`
+
+	// CpuInfo: Output only. Information regarding CPU specs for the device.
+	CpuInfo []*GoogleChromeManagementV1CpuInfo `json:"cpuInfo,omitempty"`
+
+	// CpuStatusReport: Output only. CPU status reports collected
+	// periodically.
+	CpuStatusReport []*GoogleChromeManagementV1CpuStatusReport `json:"cpuStatusReport,omitempty"`
+
+	// Customer: Output only. Google Workspace Customer whose enterprise
+	// enrolled the device.
+	Customer string `json:"customer,omitempty"`
+
+	// DeviceId: Output only. The unique Directory API ID of the device.
+	// This value is the same as the Admin Console's Directory API ID in the
+	// Chrome OS Devices tab
+	DeviceId string `json:"deviceId,omitempty"`
+
+	// GraphicsInfo: Output only. Contains information regarding Graphic
+	// peripherals for the device.
+	GraphicsInfo *GoogleChromeManagementV1GraphicsInfo `json:"graphicsInfo,omitempty"`
+
+	// GraphicsStatusReport: Output only. Graphics reports collected
+	// periodically.
+	GraphicsStatusReport []*GoogleChromeManagementV1GraphicsStatusReport `json:"graphicsStatusReport,omitempty"`
+
+	// MemoryInfo: Output only. Information regarding memory specs for the
+	// device.
+	MemoryInfo *GoogleChromeManagementV1MemoryInfo `json:"memoryInfo,omitempty"`
+
+	// MemoryStatusReport: Output only. Memory status reports collected
+	// periodically.
+	MemoryStatusReport []*GoogleChromeManagementV1MemoryStatusReport `json:"memoryStatusReport,omitempty"`
+
+	// Name: Output only. Resource name of the device.
+	Name string `json:"name,omitempty"`
+
+	// NetworkStatusReport: Output only. Network specs collected
+	// periodically.
+	NetworkStatusReport []*GoogleChromeManagementV1NetworkStatusReport `json:"networkStatusReport,omitempty"`
+
+	// OrgUnitId: Output only. Organization unit ID of the device.
+	OrgUnitId string `json:"orgUnitId,omitempty"`
+
+	// OsUpdateStatus: Output only. Contains relevant information regarding
+	// ChromeOS update status.
+	OsUpdateStatus []*GoogleChromeManagementV1OsUpdateStatus `json:"osUpdateStatus,omitempty"`
+
+	// SerialNumber: Output only. Device serial number. This value is the
+	// same as the Admin Console's Serial Number in the Chrome OS Devices
+	// tab.
+	SerialNumber string `json:"serialNumber,omitempty"`
+
+	// StorageInfo: Output only. Information of storage specs for the
+	// device.
+	StorageInfo *GoogleChromeManagementV1StorageInfo `json:"storageInfo,omitempty"`
+
+	// StorageStatusReport: Output only. Storage reports collected
+	// periodically.
+	StorageStatusReport []*GoogleChromeManagementV1StorageStatusReport `json:"storageStatusReport,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatteryInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BatteryInfo") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1TelemetryDevice) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1TelemetryDevice
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleRpcStatus: The `Status` type defines a logical error model that
 // is suitable for different programming environments, including REST
 // APIs and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -951,6 +1864,52 @@ type GoogleRpcStatus struct {
 
 func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleTypeDate: Represents a whole or partial calendar date, such as
+// a birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values * A month and day value,
+// with a zero year, such as an anniversary * A year on its own, with
+// zero month and day values * A year and month value, with a zero day,
+// such as a credit card expiration date Related types are
+// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+type GoogleTypeDate struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
+	Day int64 `json:"day,omitempty"`
+
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
+	// without a month and day.
+	Month int64 `json:"month,omitempty"`
+
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeDate
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1043,7 +2002,7 @@ func (c *CustomersAppsCountChromeAppRequestsCall) Header() http.Header {
 
 func (c *CustomersAppsCountChromeAppRequestsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1238,7 +2197,7 @@ func (c *CustomersAppsAndroidGetCall) Header() http.Header {
 
 func (c *CustomersAppsAndroidGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1389,7 +2348,7 @@ func (c *CustomersAppsChromeGetCall) Header() http.Header {
 
 func (c *CustomersAppsChromeGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1540,7 +2499,7 @@ func (c *CustomersAppsWebGetCall) Header() http.Header {
 
 func (c *CustomersAppsWebGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1718,7 +2677,7 @@ func (c *CustomersReportsCountChromeVersionsCall) Header() http.Header {
 
 func (c *CustomersReportsCountChromeVersionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1948,7 +2907,7 @@ func (c *CustomersReportsCountInstalledAppsCall) Header() http.Header {
 
 func (c *CustomersReportsCountInstalledAppsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2205,7 +3164,7 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) Header() http.Header {
 
 func (c *CustomersReportsFindInstalledAppDevicesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2353,6 +3312,227 @@ func (c *CustomersReportsFindInstalledAppDevicesCall) Do(opts ...googleapi.CallO
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *CustomersReportsFindInstalledAppDevicesCall) Pages(ctx context.Context, f func(*GoogleChromeManagementV1FindInstalledAppDevicesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "chromemanagement.customers.telemetry.devices.list":
+
+type CustomersTelemetryDevicesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List all telemetry devices.
+//
+// - parent: Customer id or "my_customer" to use the customer associated
+//   to the account making the request.
+func (r *CustomersTelemetryDevicesService) List(parent string) *CustomersTelemetryDevicesListCall {
+	c := &CustomersTelemetryDevicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Only include resources
+// that match the filter. Supported filter fields: - org_unit_id -
+// serial_number
+func (c *CustomersTelemetryDevicesListCall) Filter(filter string) *CustomersTelemetryDevicesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// results to return. Maximum and default are 100.
+func (c *CustomersTelemetryDevicesListCall) PageSize(pageSize int64) *CustomersTelemetryDevicesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to specify
+// next page in the list.
+func (c *CustomersTelemetryDevicesListCall) PageToken(pageToken string) *CustomersTelemetryDevicesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReadMask sets the optional parameter "readMask": Required. Read mask
+// to specify which fields to return.
+func (c *CustomersTelemetryDevicesListCall) ReadMask(readMask string) *CustomersTelemetryDevicesListCall {
+	c.urlParams_.Set("readMask", readMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersTelemetryDevicesListCall) Fields(s ...googleapi.Field) *CustomersTelemetryDevicesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersTelemetryDevicesListCall) IfNoneMatch(entityTag string) *CustomersTelemetryDevicesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersTelemetryDevicesListCall) Context(ctx context.Context) *CustomersTelemetryDevicesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersTelemetryDevicesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersTelemetryDevicesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/telemetry/devices")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.telemetry.devices.list" call.
+// Exactly one of *GoogleChromeManagementV1ListTelemetryDevicesResponse
+// or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleChromeManagementV1ListTelemetryDevicesResponse.ServerResponse.H
+// eader or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersTelemetryDevicesListCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1ListTelemetryDevicesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleChromeManagementV1ListTelemetryDevicesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all telemetry devices.",
+	//   "flatPath": "v1/customers/{customersId}/telemetry/devices",
+	//   "httpMethod": "GET",
+	//   "id": "chromemanagement.customers.telemetry.devices.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Only include resources that match the filter. Supported filter fields: - org_unit_id - serial_number ",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of results to return. Maximum and default are 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token to specify next page in the list.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Customer id or \"my_customer\" to use the customer associated to the account making the request.",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "readMask": {
+	//       "description": "Required. Read mask to specify which fields to return.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/telemetry/devices",
+	//   "response": {
+	//     "$ref": "GoogleChromeManagementV1ListTelemetryDevicesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.telemetry.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersTelemetryDevicesListCall) Pages(ctx context.Context, f func(*GoogleChromeManagementV1ListTelemetryDevicesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

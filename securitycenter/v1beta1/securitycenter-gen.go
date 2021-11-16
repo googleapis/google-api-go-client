@@ -767,6 +767,11 @@ type Finding struct {
 	// than the current timestamp.
 	EventTime string `json:"eventTime,omitempty"`
 
+	// ExternalSystems: Output only. Third party SIEM/SOAR fields within
+	// SCC, contains external system information and external system finding
+	// fields.
+	ExternalSystems map[string]GoogleCloudSecuritycenterV1ExternalSystem `json:"externalSystems,omitempty"`
+
 	// ExternalUri: The URI that, if available, points to a web page outside
 	// of Security Command Center where additional information about the
 	// finding can be found. This field is guaranteed to be either empty or
@@ -794,6 +799,25 @@ type Finding struct {
 	// indicates a computer intrusion. Reference:
 	// https://en.wikipedia.org/wiki/Indicator_of_compromise
 	Indicator *Indicator `json:"indicator,omitempty"`
+
+	// Mute: Indicates the mute state of a finding (either unspecified,
+	// muted, unmuted or undefined).
+	//
+	// Possible values:
+	//   "MUTE_UNSPECIFIED" - Unspecified.
+	//   "MUTED" - Finding has been muted.
+	//   "UNMUTED" - Finding has been unmuted.
+	//   "UNDEFINED" - Finding has never been muted/unmuted.
+	Mute string `json:"mute,omitempty"`
+
+	// MuteInitiator: First known as mute_annotation. Records additional
+	// information about the mute operation e.g. mute config that muted the
+	// finding, user who muted the finding, etc.
+	MuteInitiator string `json:"muteInitiator,omitempty"`
+
+	// MuteUpdateTime: Output only. The most recent time this finding was
+	// muted or unmuted.
+	MuteUpdateTime string `json:"muteUpdateTime,omitempty"`
 
 	// Name: The relative resource name of this finding. See:
 	// https://cloud.google.com/apis/design/resource_names#relative_resource_name
@@ -1011,6 +1035,123 @@ type GetPolicyOptions struct {
 
 func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1ExternalSystem: Representation of third
+// party SIEM/SOAR fields within SCC.
+type GoogleCloudSecuritycenterV1ExternalSystem struct {
+	// Assignees: References primary/secondary etc assignees in the external
+	// system.
+	Assignees []string `json:"assignees,omitempty"`
+
+	// ExternalSystemUpdateTime: The most recent time when the corresponding
+	// finding's ticket/tracker was updated in the external system.
+	ExternalSystemUpdateTime string `json:"externalSystemUpdateTime,omitempty"`
+
+	// ExternalUid: Identifier that's used to track the given finding in the
+	// external system.
+	ExternalUid string `json:"externalUid,omitempty"`
+
+	// Name: External System Name e.g. jira, demisto, etc. e.g.:
+	// organizations/1234/sources/5678/findings/123456/externalSystems/jira
+	// folders/1234/sources/5678/findings/123456/externalSystems/jira
+	// projects/1234/sources/5678/findings/123456/externalSystems/jira
+	Name string `json:"name,omitempty"`
+
+	// Status: Most recent status of the corresponding finding's
+	// ticket/tracker in the external system.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Assignees") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Assignees") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1ExternalSystem) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1ExternalSystem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1MuteConfig: A mute config is a Cloud SCC
+// resource that contains the configuration to mute create/update events
+// of findings.
+type GoogleCloudSecuritycenterV1MuteConfig struct {
+	// CreateTime: Output only. The time at which the mute config was
+	// created. This field is set by the server and will be ignored if
+	// provided on config creation.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: A description of the mute config.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: The human readable name to be displayed for the mute
+	// config.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Filter: Required. An expression that defines the filter to apply
+	// across create/update events of findings. While creating a filter
+	// string, be mindful of the scope in which the mute configuration is
+	// being created. E.g., If a filter contains project = X but is created
+	// under the project = Y scope, it might not match any findings. The
+	// following field and operator combinations are supported: * severity:
+	// `=`, `:` * category: `=`, `:` * resource.name: `=`, `:` *
+	// resource.project_name: `=`, `:` * resource.project_display_name: `=`,
+	// `:` * resource.folders.resource_folder: `=`, `:` *
+	// resource.parent_name: `=`, `:` * resource.parent_display_name: `=`,
+	// `:` * resource.type: `=`, `:` * finding_class: `=`, `:` *
+	// indicator.ip_addresses: `=`, `:` * indicator.domains: `=`, `:`
+	Filter string `json:"filter,omitempty"`
+
+	// MostRecentEditor: Output only. Email address of the user who last
+	// edited the mute config. This field is set by the server and will be
+	// ignored if provided on config creation or update.
+	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
+
+	// Name: This field will be ignored if provided on config creation.
+	// Format "organizations/{organization}/muteConfigs/{mute_config}"
+	// "folders/{folder}/muteConfigs/{mute_config}"
+	// "projects/{project}/muteConfigs/{mute_config}"
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. The most recent time at which the mute
+	// config was updated. This field is set by the server and will be
+	// ignored if provided on config creation or update.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1MuteConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1MuteConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2862,7 +3003,7 @@ func (c *OrganizationsGetOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3008,7 +3149,7 @@ func (c *OrganizationsUpdateOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3158,7 +3299,7 @@ func (c *OrganizationsAssetsGroupCall) Header() http.Header {
 
 func (c *OrganizationsAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3424,7 +3565,7 @@ func (c *OrganizationsAssetsListCall) Header() http.Header {
 
 func (c *OrganizationsAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3625,7 +3766,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Header() http.Header {
 
 func (c *OrganizationsAssetsRunDiscoveryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3786,7 +3927,7 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3951,7 +4092,7 @@ func (c *OrganizationsOperationsCancelCall) Header() http.Header {
 
 func (c *OrganizationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4094,7 +4235,7 @@ func (c *OrganizationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4239,7 +4380,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4415,7 +4556,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4590,7 +4731,7 @@ func (c *OrganizationsSourcesCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4742,7 +4883,7 @@ func (c *OrganizationsSourcesGetCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4881,7 +5022,7 @@ func (c *OrganizationsSourcesGetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5050,7 +5191,7 @@ func (c *OrganizationsSourcesListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5228,7 +5369,7 @@ func (c *OrganizationsSourcesPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5378,7 +5519,7 @@ func (c *OrganizationsSourcesSetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5523,7 +5664,7 @@ func (c *OrganizationsSourcesTestIamPermissionsCall) Header() http.Header {
 
 func (c *OrganizationsSourcesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5676,7 +5817,7 @@ func (c *OrganizationsSourcesFindingsCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5830,7 +5971,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6074,7 +6215,7 @@ func (c *OrganizationsSourcesFindingsListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6278,7 +6419,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6431,7 +6572,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6593,7 +6734,7 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Header() http.Head
 
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1083,6 +1083,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "clouddeploy:v1",
+      "name": "clouddeploy",
+      "version": "v1",
+      "title": "Google Cloud Deploy API",
+      "description": "",
+      "discoveryRestUrl": "https://clouddeploy.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/deploy/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "clouderrorreporting:v1beta1",
       "name": "clouderrorreporting",
       "version": "v1beta1",
@@ -3688,7 +3703,7 @@
       "name": "orgpolicy",
       "version": "v2",
       "title": "Organization Policy API",
-      "description": "The Org Policy API allows users to configure governance ruleson their GCP resources across the Cloud Resource Hierarchy.",
+      "description": "The Org Policy API allows users to configure governance rules on their GCP resources across the Cloud Resource Hierarchy.",
       "discoveryRestUrl": "https://orgpolicy.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

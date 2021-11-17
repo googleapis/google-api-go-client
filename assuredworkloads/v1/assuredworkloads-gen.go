@@ -938,6 +938,437 @@ func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings) MarshalJSON
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssuredworkloadsVersioningV1mainCreateWorkloadOperationMeta
+// data: Operation metadata to give request details of CreateWorkload.
+type GoogleCloudAssuredworkloadsVersioningV1mainCreateWorkloadOperationMetadata struct {
+	// ComplianceRegime: Optional. Compliance controls that should be
+	// applied to the resources managed by the workload.
+	//
+	// Possible values:
+	//   "COMPLIANCE_REGIME_UNSPECIFIED" - Unknown compliance regime.
+	//   "IL4" - Information protection as per DoD IL4 requirements.
+	//   "CJIS" - Criminal Justice Information Services (CJIS) Security
+	// policies.
+	//   "FEDRAMP_HIGH" - FedRAMP High data protection controls
+	//   "FEDRAMP_MODERATE" - FedRAMP Moderate data protection controls
+	//   "US_REGIONAL_ACCESS" - Assured Workloads For US Regions data
+	// protection controls
+	//   "HIPAA" - Health Insurance Portability and Accountability Act
+	// controls
+	//   "HITRUST" - Health Information Trust Alliance controls
+	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and
+	// Support controls
+	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
+	// Support controls
+	ComplianceRegime string `json:"complianceRegime,omitempty"`
+
+	// CreateTime: Optional. Time when the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: Optional. The display name of the workload.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Parent: Optional. The parent of the workload.
+	Parent string `json:"parent,omitempty"`
+
+	// ResourceSettings: Optional. Resource properties in the input that are
+	// used for creating/customizing workload resources.
+	ResourceSettings []*GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceSettings `json:"resourceSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComplianceRegime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ComplianceRegime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsVersioningV1mainCreateWorkloadOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsVersioningV1mainCreateWorkloadOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsVersioningV1mainWorkload: An Workload
+// object for managing highly regulated workloads of cloud customers.
+type GoogleCloudAssuredworkloadsVersioningV1mainWorkload struct {
+	// BillingAccount: Input only. The billing account used for the
+	// resources which are direct children of workload. This billing account
+	// is initially associated with the resources created as part of
+	// Workload creation. After the initial creation of these resources, the
+	// customer can change the assigned billing account. The resource name
+	// has the form `billingAccounts/{billing_account_id}`. For example,
+	// `billingAccounts/012345-567890-ABCDEF`.
+	BillingAccount string `json:"billingAccount,omitempty"`
+
+	// CjisSettings: Required. Input only. Immutable. Settings specific to
+	// resources needed for CJIS.
+	CjisSettings *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings `json:"cjisSettings,omitempty"`
+
+	// ComplianceRegime: Required. Immutable. Compliance Regime associated
+	// with this workload.
+	//
+	// Possible values:
+	//   "COMPLIANCE_REGIME_UNSPECIFIED" - Unknown compliance regime.
+	//   "IL4" - Information protection as per DoD IL4 requirements.
+	//   "CJIS" - Criminal Justice Information Services (CJIS) Security
+	// policies.
+	//   "FEDRAMP_HIGH" - FedRAMP High data protection controls
+	//   "FEDRAMP_MODERATE" - FedRAMP Moderate data protection controls
+	//   "US_REGIONAL_ACCESS" - Assured Workloads For US Regions data
+	// protection controls
+	//   "HIPAA" - Health Insurance Portability and Accountability Act
+	// controls
+	//   "HITRUST" - Health Information Trust Alliance controls
+	//   "EU_REGIONS_AND_SUPPORT" - Assured Workloads For EU Regions and
+	// Support controls
+	//   "CA_REGIONS_AND_SUPPORT" - Assured Workloads For Canada Regions and
+	// Support controls
+	ComplianceRegime string `json:"complianceRegime,omitempty"`
+
+	// CreateTime: Output only. Immutable. The Workload creation timestamp.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: Required. The user-assigned display name of the
+	// Workload. When present it must be between 4 to 30 characters. Allowed
+	// characters are: lowercase and uppercase letters, numbers, hyphen, and
+	// spaces. Example: My Workload
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: Optional. ETag of the workload, it is calculated on the basis
+	// of the Workload contents. It will be used in Update & Delete
+	// operations.
+	Etag string `json:"etag,omitempty"`
+
+	// FedrampHighSettings: Required. Input only. Immutable. Settings
+	// specific to resources needed for FedRAMP High.
+	FedrampHighSettings *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampHighSettings `json:"fedrampHighSettings,omitempty"`
+
+	// FedrampModerateSettings: Required. Input only. Immutable. Settings
+	// specific to resources needed for FedRAMP Moderate.
+	FedrampModerateSettings *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampModerateSettings `json:"fedrampModerateSettings,omitempty"`
+
+	// Il4Settings: Required. Input only. Immutable. Settings specific to
+	// resources needed for IL4.
+	Il4Settings *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadIL4Settings `json:"il4Settings,omitempty"`
+
+	// KmsSettings: Input only. Settings used to create a CMEK crypto key.
+	// When set a project with a KMS CMEK key is provisioned. This field is
+	// mandatory for a subset of Compliance Regimes.
+	KmsSettings *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings `json:"kmsSettings,omitempty"`
+
+	// Labels: Optional. Labels applied to the workload.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Optional. The resource name of the workload. Format:
+	// organizations/{organization}/locations/{location}/workloads/{workload}
+	//  Read-only.
+	Name string `json:"name,omitempty"`
+
+	// ProvisionedResourcesParent: Input only. The parent resource for the
+	// resources managed by this Assured Workload. May be either empty or a
+	// folder resource which is a child of the Workload parent. If not
+	// specified all resources are created under the parent organization.
+	// Format: folders/{folder_id}
+	ProvisionedResourcesParent string `json:"provisionedResourcesParent,omitempty"`
+
+	// ResourceSettings: Input only. Resource properties that are used to
+	// customize workload resources. These properties (such as custom
+	// project id) will be used to create workload resources if possible.
+	// This field is optional.
+	ResourceSettings []*GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceSettings `json:"resourceSettings,omitempty"`
+
+	// Resources: Output only. The resources associated with this workload.
+	// These resources will be created when creating the workload. If any of
+	// the projects already exist, the workload creation will fail. Always
+	// read only.
+	Resources []*GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceInfo `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BillingAccount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BillingAccount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsVersioningV1mainWorkload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings:
+// Settings specific to resources needed for CJIS.
+type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings struct {
+	// KmsSettings: Required. Input only. Immutable. Settings used to create
+	// a CMEK crypto key.
+	KmsSettings *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings `json:"kmsSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsSettings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsSettings") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsVersioningV1mainWorkloadCJISSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampHighSettings
+// : Settings specific to resources needed for FedRAMP High.
+type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampHighSettings struct {
+	// KmsSettings: Required. Input only. Immutable. Settings used to create
+	// a CMEK crypto key.
+	KmsSettings *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings `json:"kmsSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsSettings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsSettings") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampHighSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampHighSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampModerateSett
+// ings: Settings specific to resources needed for FedRAMP Moderate.
+type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampModerateSettings struct {
+	// KmsSettings: Required. Input only. Immutable. Settings used to create
+	// a CMEK crypto key.
+	KmsSettings *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings `json:"kmsSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsSettings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsSettings") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampModerateSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsVersioningV1mainWorkloadFedrampModerateSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsVersioningV1mainWorkloadIL4Settings:
+// Settings specific to resources needed for IL4.
+type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadIL4Settings struct {
+	// KmsSettings: Required. Input only. Immutable. Settings used to create
+	// a CMEK crypto key.
+	KmsSettings *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings `json:"kmsSettings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KmsSettings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KmsSettings") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadIL4Settings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsVersioningV1mainWorkloadIL4Settings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings:
+// Settings specific to the Key Management Service.
+type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings struct {
+	// NextRotationTime: Required. Input only. Immutable. The time at which
+	// the Key Management Service will automatically create a new version of
+	// the crypto key and mark it as the primary.
+	NextRotationTime string `json:"nextRotationTime,omitempty"`
+
+	// RotationPeriod: Required. Input only. Immutable. [next_rotation_time]
+	// will be advanced by this period when the Key Management Service
+	// automatically rotates a key. Must be at least 24 hours and at most
+	// 876,000 hours.
+	RotationPeriod string `json:"rotationPeriod,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NextRotationTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextRotationTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsVersioningV1mainWorkloadKMSSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceInfo:
+// Represent the resources that are children of this Workload.
+type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceInfo struct {
+	// ResourceId: Resource identifier. For a project this represents
+	// project_number.
+	ResourceId int64 `json:"resourceId,omitempty,string"`
+
+	// ResourceType: Indicates the type of resource.
+	//
+	// Possible values:
+	//   "RESOURCE_TYPE_UNSPECIFIED" - Unknown resource type.
+	//   "CONSUMER_PROJECT" - Deprecated. Existing workloads will continue
+	// to support this, but new CreateWorkloadRequests should not specify
+	// this as an input value.
+	//   "CONSUMER_FOLDER" - Consumer Folder.
+	//   "ENCRYPTION_KEYS_PROJECT" - Consumer project containing encryption
+	// keys.
+	//   "KEYRING" - Keyring resource that hosts encryption keys.
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceSettings:
+// Represent the custom settings for the resources to be created.
+type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceSettings struct {
+	// DisplayName: User-assigned resource display name. If not empty it
+	// will be used to create a resource with the specified name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ResourceId: Resource identifier. For a project this represents
+	// project_id. If the project is already taken, the workload creation
+	// will fail.
+	ResourceId string `json:"resourceId,omitempty"`
+
+	// ResourceType: Indicates the type of resource. This field should be
+	// specified to correspond the id to the right project type
+	// (CONSUMER_PROJECT or ENCRYPTION_KEYS_PROJECT)
+	//
+	// Possible values:
+	//   "RESOURCE_TYPE_UNSPECIFIED" - Unknown resource type.
+	//   "CONSUMER_PROJECT" - Deprecated. Existing workloads will continue
+	// to support this, but new CreateWorkloadRequests should not specify
+	// this as an input value.
+	//   "CONSUMER_FOLDER" - Consumer Folder.
+	//   "ENCRYPTION_KEYS_PROJECT" - Consumer project containing encryption
+	// keys.
+	//   "KEYRING" - Keyring resource that hosts encryption keys.
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleLongrunningListOperationsResponse: The response message for
 // Operations.ListOperations.
 type GoogleLongrunningListOperationsResponse struct {
@@ -1152,7 +1583,7 @@ func (c *OrganizationsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1328,7 +1759,7 @@ func (c *OrganizationsLocationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1514,7 +1945,7 @@ func (c *OrganizationsLocationsWorkloadsCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1670,7 +2101,7 @@ func (c *OrganizationsLocationsWorkloadsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1822,7 +2253,7 @@ func (c *OrganizationsLocationsWorkloadsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1993,7 +2424,7 @@ func (c *OrganizationsLocationsWorkloadsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2181,7 +2612,7 @@ func (c *OrganizationsLocationsWorkloadsPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211115")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211116")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

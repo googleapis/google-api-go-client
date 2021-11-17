@@ -102,7 +102,9 @@ func newTransport(ctx context.Context, base http.RoundTripper, settings *interna
 func newSettings(opts []option.ClientOption) (*internal.DialSettings, error) {
 	var o internal.DialSettings
 	for _, opt := range opts {
-		opt.Apply(&o)
+		if opt != nil {
+			opt.Apply(&o)
+		}
 	}
 	if err := o.Validate(); err != nil {
 		return nil, err

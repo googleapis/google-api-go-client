@@ -150,14 +150,32 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.ConnectionProfiles = NewProjectsLocationsConnectionProfilesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.PrivateConnections = NewProjectsLocationsPrivateConnectionsService(s)
+	rs.Streams = NewProjectsLocationsStreamsService(s)
 	return rs
 }
 
 type ProjectsLocationsService struct {
 	s *Service
 
+	ConnectionProfiles *ProjectsLocationsConnectionProfilesService
+
 	Operations *ProjectsLocationsOperationsService
+
+	PrivateConnections *ProjectsLocationsPrivateConnectionsService
+
+	Streams *ProjectsLocationsStreamsService
+}
+
+func NewProjectsLocationsConnectionProfilesService(s *Service) *ProjectsLocationsConnectionProfilesService {
+	rs := &ProjectsLocationsConnectionProfilesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsConnectionProfilesService struct {
+	s *Service
 }
 
 func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
@@ -169,9 +187,339 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsPrivateConnectionsService(s *Service) *ProjectsLocationsPrivateConnectionsService {
+	rs := &ProjectsLocationsPrivateConnectionsService{s: s}
+	rs.Routes = NewProjectsLocationsPrivateConnectionsRoutesService(s)
+	return rs
+}
+
+type ProjectsLocationsPrivateConnectionsService struct {
+	s *Service
+
+	Routes *ProjectsLocationsPrivateConnectionsRoutesService
+}
+
+func NewProjectsLocationsPrivateConnectionsRoutesService(s *Service) *ProjectsLocationsPrivateConnectionsRoutesService {
+	rs := &ProjectsLocationsPrivateConnectionsRoutesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsPrivateConnectionsRoutesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsStreamsService(s *Service) *ProjectsLocationsStreamsService {
+	rs := &ProjectsLocationsStreamsService{s: s}
+	rs.Objects = NewProjectsLocationsStreamsObjectsService(s)
+	return rs
+}
+
+type ProjectsLocationsStreamsService struct {
+	s *Service
+
+	Objects *ProjectsLocationsStreamsObjectsService
+}
+
+func NewProjectsLocationsStreamsObjectsService(s *Service) *ProjectsLocationsStreamsObjectsService {
+	rs := &ProjectsLocationsStreamsObjectsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsStreamsObjectsService struct {
+	s *Service
+}
+
+// AvroFileFormat: AVRO file format configuration.
+type AvroFileFormat struct {
+}
+
+// BackfillAllStrategy: Backfill strategy to automatically backfill the
+// Stream's objects. Specific objects can be excluded.
+type BackfillAllStrategy struct {
+	// MysqlExcludedObjects: MySQL data source objects to avoid backfilling.
+	MysqlExcludedObjects *MysqlRdbms `json:"mysqlExcludedObjects,omitempty"`
+
+	// OracleExcludedObjects: Oracle data source objects to avoid
+	// backfilling.
+	OracleExcludedObjects *OracleRdbms `json:"oracleExcludedObjects,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MysqlExcludedObjects") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MysqlExcludedObjects") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BackfillAllStrategy) MarshalJSON() ([]byte, error) {
+	type NoMethod BackfillAllStrategy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BackfillJob: Represents a backfill job on a specific stream object.
+type BackfillJob struct {
+	// Errors: Output only. Errors which caused the backfill job to fail.
+	Errors []*Error `json:"errors,omitempty"`
+
+	// LastEndTime: Output only. Backfill job's end time.
+	LastEndTime string `json:"lastEndTime,omitempty"`
+
+	// LastStartTime: Output only. Backfill job's start time.
+	LastStartTime string `json:"lastStartTime,omitempty"`
+
+	// State: Backfill job state.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value.
+	//   "NOT_STARTED" - Backfill job was never started for the stream
+	// object (stream has backfill strategy defined as manual or object was
+	// explicitly excluded from automatic backfill).
+	//   "PENDING" - Backfill job will start pending available resources.
+	//   "ACTIVE" - Backfill job is running.
+	//   "STOPPED" - Backfill job stopped (next job run will start from
+	// beginning).
+	//   "FAILED" - Backfill job failed (due to an error).
+	//   "COMPLETED" - Backfill completed successfully.
+	//   "UNSUPPORTED" - Backfill job failed since the table structure is
+	// currently unsupported for backfill.
+	State string `json:"state,omitempty"`
+
+	// Trigger: Backfill job's triggering reason.
+	//
+	// Possible values:
+	//   "TRIGGER_UNSPECIFIED" - Default value.
+	//   "AUTOMATIC" - Object backfill job was triggered automatically
+	// according to the stream's backfill strategy.
+	//   "MANUAL" - Object backfill job was triggered manually using the
+	// dedicated API.
+	Trigger string `json:"trigger,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BackfillJob) MarshalJSON() ([]byte, error) {
+	type NoMethod BackfillJob
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BackfillNoneStrategy: Backfill strategy to disable automatic backfill
+// for the Stream's objects.
+type BackfillNoneStrategy struct {
+}
+
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// ConnectionProfile: A set of reusable connection configurations to be
+// used as a source or destination for a stream.
+type ConnectionProfile struct {
+	// CreateTime: Output only. The create time of the resource.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: Required. Display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// ForwardSshConnectivity: Forward SSH tunnel connectivity.
+	ForwardSshConnectivity *ForwardSshTunnelConnectivity `json:"forwardSshConnectivity,omitempty"`
+
+	// GcsProfile: Cloud Storage ConnectionProfile configuration.
+	GcsProfile *GcsProfile `json:"gcsProfile,omitempty"`
+
+	// Labels: Labels.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// MysqlProfile: MySQL ConnectionProfile configuration.
+	MysqlProfile *MysqlProfile `json:"mysqlProfile,omitempty"`
+
+	// Name: Output only. The resource's name.
+	Name string `json:"name,omitempty"`
+
+	// OracleProfile: Oracle ConnectionProfile configuration.
+	OracleProfile *OracleProfile `json:"oracleProfile,omitempty"`
+
+	// PrivateConnectivity: Private connectivity.
+	PrivateConnectivity *PrivateConnectivity `json:"privateConnectivity,omitempty"`
+
+	// StaticServiceIpConnectivity: Static Service IP connectivity.
+	StaticServiceIpConnectivity *StaticServiceIpConnectivity `json:"staticServiceIpConnectivity,omitempty"`
+
+	// UpdateTime: Output only. The update time of the resource.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectionProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectionProfile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DestinationConfig: The configuration of the stream destination.
+type DestinationConfig struct {
+	// DestinationConnectionProfile: Required. Destination connection
+	// profile resource. Format:
+	// `projects/{project}/locations/{location}/connectionProfiles/{name}`
+	DestinationConnectionProfile string `json:"destinationConnectionProfile,omitempty"`
+
+	// GcsDestinationConfig: A configuration for how data should be loaded
+	// to Cloud Storage.
+	GcsDestinationConfig *GcsDestinationConfig `json:"gcsDestinationConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DestinationConnectionProfile") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "DestinationConnectionProfile") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DestinationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DestinationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DiscoverConnectionProfileRequest: Request message for 'discover'
+// ConnectionProfile request.
+type DiscoverConnectionProfileRequest struct {
+	// ConnectionProfile: An ad-hoc connection profile configuration.
+	ConnectionProfile *ConnectionProfile `json:"connectionProfile,omitempty"`
+
+	// ConnectionProfileName: A reference to an existing connection profile.
+	ConnectionProfileName string `json:"connectionProfileName,omitempty"`
+
+	// FullHierarchy: Whether to retrieve the full hierarchy of data objects
+	// (TRUE) or only the current level (FALSE).
+	FullHierarchy bool `json:"fullHierarchy,omitempty"`
+
+	// HierarchyDepth: The number of hierarchy levels below the current
+	// level to be retrieved.
+	HierarchyDepth int64 `json:"hierarchyDepth,omitempty"`
+
+	// MysqlRdbms: MySQL RDBMS to enrich with child data objects and
+	// metadata.
+	MysqlRdbms *MysqlRdbms `json:"mysqlRdbms,omitempty"`
+
+	// OracleRdbms: Oracle RDBMS to enrich with child data objects and
+	// metadata.
+	OracleRdbms *OracleRdbms `json:"oracleRdbms,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectionProfile")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectionProfile") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DiscoverConnectionProfileRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DiscoverConnectionProfileRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DiscoverConnectionProfileResponse: Response from a discover request.
+type DiscoverConnectionProfileResponse struct {
+	// MysqlRdbms: Enriched MySQL RDBMS object.
+	MysqlRdbms *MysqlRdbms `json:"mysqlRdbms,omitempty"`
+
+	// OracleRdbms: Enriched Oracle RDBMS object.
+	OracleRdbms *OracleRdbms `json:"oracleRdbms,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "MysqlRdbms") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MysqlRdbms") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DiscoverConnectionProfileResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod DiscoverConnectionProfileResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -224,6 +572,240 @@ type Error struct {
 
 func (s *Error) MarshalJSON() ([]byte, error) {
 	type NoMethod Error
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FetchStaticIpsResponse: Response message for a 'FetchStaticIps'
+// response.
+type FetchStaticIpsResponse struct {
+	// NextPageToken: A token that can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// StaticIps: list of static ips by account
+	StaticIps []string `json:"staticIps,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FetchStaticIpsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchStaticIpsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ForwardSshTunnelConnectivity: Forward SSH Tunnel connectivity.
+type ForwardSshTunnelConnectivity struct {
+	// Hostname: Required. Hostname for the SSH tunnel.
+	Hostname string `json:"hostname,omitempty"`
+
+	// Password: Input only. SSH password.
+	Password string `json:"password,omitempty"`
+
+	// Port: Port for the SSH tunnel, default value is 22.
+	Port int64 `json:"port,omitempty"`
+
+	// PrivateKey: Input only. SSH private key.
+	PrivateKey string `json:"privateKey,omitempty"`
+
+	// Username: Required. Username for the SSH tunnel.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Hostname") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Hostname") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ForwardSshTunnelConnectivity) MarshalJSON() ([]byte, error) {
+	type NoMethod ForwardSshTunnelConnectivity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GcsDestinationConfig: Google Cloud Storage destination configuration
+type GcsDestinationConfig struct {
+	// AvroFileFormat: AVRO file format configuration.
+	AvroFileFormat *AvroFileFormat `json:"avroFileFormat,omitempty"`
+
+	// FileRotationInterval: The maximum duration for which new events are
+	// added before a file is closed and a new file is created.
+	FileRotationInterval string `json:"fileRotationInterval,omitempty"`
+
+	// FileRotationMb: The maximum file size to be saved in the bucket.
+	FileRotationMb int64 `json:"fileRotationMb,omitempty"`
+
+	// JsonFileFormat: JSON file format configuration.
+	JsonFileFormat *JsonFileFormat `json:"jsonFileFormat,omitempty"`
+
+	// Path: Path inside the Cloud Storage bucket to write data to.
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AvroFileFormat") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AvroFileFormat") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GcsDestinationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GcsDestinationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GcsProfile: Cloud Storage bucket profile.
+type GcsProfile struct {
+	// Bucket: Required. The Cloud Storage bucket name.
+	Bucket string `json:"bucket,omitempty"`
+
+	// RootPath: The root path inside the Cloud Storage bucket.
+	RootPath string `json:"rootPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GcsProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod GcsProfile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// JsonFileFormat: JSON file format configuration.
+type JsonFileFormat struct {
+	// Compression: Compression of the loaded JSON file.
+	//
+	// Possible values:
+	//   "JSON_COMPRESSION_UNSPECIFIED" - Unspecified json file compression.
+	//   "NO_COMPRESSION" - Do not compress JSON file.
+	//   "GZIP" - Gzip compression.
+	Compression string `json:"compression,omitempty"`
+
+	// SchemaFileFormat: The schema file format along JSON data files.
+	//
+	// Possible values:
+	//   "SCHEMA_FILE_FORMAT_UNSPECIFIED" - Unspecified schema file format.
+	//   "NO_SCHEMA_FILE" - Do not attach schema file.
+	//   "AVRO_SCHEMA_FILE" - Avro schema format.
+	SchemaFileFormat string `json:"schemaFileFormat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Compression") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Compression") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JsonFileFormat) MarshalJSON() ([]byte, error) {
+	type NoMethod JsonFileFormat
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListConnectionProfilesResponse: Response message for listing
+// connection profiles.
+type ListConnectionProfilesResponse struct {
+	// ConnectionProfiles: List of connection profiles.
+	ConnectionProfiles []*ConnectionProfile `json:"connectionProfiles,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectionProfiles")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectionProfiles") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListConnectionProfilesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListConnectionProfilesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -302,6 +884,164 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListPrivateConnectionsResponse: Response containing a list of private
+// connection configurations.
+type ListPrivateConnectionsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PrivateConnections: List of private connectivity configurations.
+	PrivateConnections []*PrivateConnection `json:"privateConnections,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPrivateConnectionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPrivateConnectionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListRoutesResponse: Route list response.
+type ListRoutesResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Routes: List of Routes.
+	Routes []*Route `json:"routes,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListRoutesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRoutesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListStreamObjectsResponse: Response containing the objects for a
+// stream.
+type ListStreamObjectsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// StreamObjects: List of stream objects.
+	StreamObjects []*StreamObject `json:"streamObjects,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListStreamObjectsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListStreamObjectsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListStreamsResponse: Response message for listing streams.
+type ListStreamsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Streams: List of streams
+	Streams []*Stream `json:"streams,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListStreamsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListStreamsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Location: A resource that represents Google Cloud Platform location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
@@ -348,6 +1088,332 @@ type Location struct {
 
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LookupStreamObjectRequest: Request for looking up a specific stream
+// object by its source object identifier.
+type LookupStreamObjectRequest struct {
+	// SourceObjectIdentifier: Required. The source object identifier which
+	// maps to the stream object.
+	SourceObjectIdentifier *SourceObjectIdentifier `json:"sourceObjectIdentifier,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SourceObjectIdentifier") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SourceObjectIdentifier")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LookupStreamObjectRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod LookupStreamObjectRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MysqlColumn: MySQL Column.
+type MysqlColumn struct {
+	// Collation: Column collation.
+	Collation string `json:"collation,omitempty"`
+
+	// Column: Column name.
+	Column string `json:"column,omitempty"`
+
+	// DataType: The MySQL data type. Full data types list can be found
+	// here: https://dev.mysql.com/doc/refman/8.0/en/data-types.html
+	DataType string `json:"dataType,omitempty"`
+
+	// Length: Column length.
+	Length int64 `json:"length,omitempty"`
+
+	// Nullable: Whether or not the column can accept a null value.
+	Nullable bool `json:"nullable,omitempty"`
+
+	// OrdinalPosition: The ordinal position of the column in the table.
+	OrdinalPosition int64 `json:"ordinalPosition,omitempty"`
+
+	// PrimaryKey: Whether or not the column represents a primary key.
+	PrimaryKey bool `json:"primaryKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Collation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Collation") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MysqlColumn) MarshalJSON() ([]byte, error) {
+	type NoMethod MysqlColumn
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MysqlDatabase: MySQL database.
+type MysqlDatabase struct {
+	// Database: Database name.
+	Database string `json:"database,omitempty"`
+
+	// MysqlTables: Tables in the database.
+	MysqlTables []*MysqlTable `json:"mysqlTables,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Database") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MysqlDatabase) MarshalJSON() ([]byte, error) {
+	type NoMethod MysqlDatabase
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MysqlObjectIdentifier: Mysql data source object identifier.
+type MysqlObjectIdentifier struct {
+	// Database: The database name.
+	Database string `json:"database,omitempty"`
+
+	// Table: The table name.
+	Table string `json:"table,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Database") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MysqlObjectIdentifier) MarshalJSON() ([]byte, error) {
+	type NoMethod MysqlObjectIdentifier
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MysqlProfile: MySQL database profile.
+type MysqlProfile struct {
+	// Hostname: Required. Hostname for the MySQL connection.
+	Hostname string `json:"hostname,omitempty"`
+
+	// Password: Required. Input only. Password for the MySQL connection.
+	Password string `json:"password,omitempty"`
+
+	// Port: Port for the MySQL connection, default value is 3306.
+	Port int64 `json:"port,omitempty"`
+
+	// SslConfig: SSL configuration for the MySQL connection.
+	SslConfig *MysqlSslConfig `json:"sslConfig,omitempty"`
+
+	// Username: Required. Username for the MySQL connection.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Hostname") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Hostname") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MysqlProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod MysqlProfile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MysqlRdbms: MySQL database structure
+type MysqlRdbms struct {
+	// MysqlDatabases: Mysql databases on the server
+	MysqlDatabases []*MysqlDatabase `json:"mysqlDatabases,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MysqlDatabases") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MysqlDatabases") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MysqlRdbms) MarshalJSON() ([]byte, error) {
+	type NoMethod MysqlRdbms
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MysqlSourceConfig: MySQL source configuration
+type MysqlSourceConfig struct {
+	// ExcludeObjects: MySQL objects to exclude from the stream.
+	ExcludeObjects *MysqlRdbms `json:"excludeObjects,omitempty"`
+
+	// IncludeObjects: MySQL objects to retrieve from the source.
+	IncludeObjects *MysqlRdbms `json:"includeObjects,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExcludeObjects") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MysqlSourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MysqlSourceConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MysqlSslConfig: MySQL SSL configuration information.
+type MysqlSslConfig struct {
+	// CaCertificate: Input only. PEM-encoded certificate of the CA that
+	// signed the source database server's certificate.
+	CaCertificate string `json:"caCertificate,omitempty"`
+
+	// CaCertificateSet: Output only. Indicates whether the ca_certificate
+	// field is set.
+	CaCertificateSet bool `json:"caCertificateSet,omitempty"`
+
+	// ClientCertificate: Input only. PEM-encoded certificate that will be
+	// used by the replica to authenticate against the source database
+	// server. If this field is used then the 'client_key' and the
+	// 'ca_certificate' fields are mandatory.
+	ClientCertificate string `json:"clientCertificate,omitempty"`
+
+	// ClientCertificateSet: Output only. Indicates whether the
+	// client_certificate field is set.
+	ClientCertificateSet bool `json:"clientCertificateSet,omitempty"`
+
+	// ClientKey: Input only. PEM-encoded private key associated with the
+	// Client Certificate. If this field is used then the
+	// 'client_certificate' and the 'ca_certificate' fields are mandatory.
+	ClientKey string `json:"clientKey,omitempty"`
+
+	// ClientKeySet: Output only. Indicates whether the client_key field is
+	// set.
+	ClientKeySet bool `json:"clientKeySet,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaCertificate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CaCertificate") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MysqlSslConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MysqlSslConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MysqlTable: MySQL table.
+type MysqlTable struct {
+	// MysqlColumns: MySQL columns in the database. When unspecified as part
+	// of include/exclude lists, includes/excludes everything.
+	MysqlColumns []*MysqlColumn `json:"mysqlColumns,omitempty"`
+
+	// Table: Table name.
+	Table string `json:"table,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MysqlColumns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MysqlColumns") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MysqlTable) MarshalJSON() ([]byte, error) {
+	type NoMethod MysqlTable
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -470,6 +1536,518 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OracleColumn: Oracle Column.
+type OracleColumn struct {
+	// Column: Column name.
+	Column string `json:"column,omitempty"`
+
+	// DataType: The Oracle data type.
+	DataType string `json:"dataType,omitempty"`
+
+	// Encoding: Column encoding.
+	Encoding string `json:"encoding,omitempty"`
+
+	// Length: Column length.
+	Length int64 `json:"length,omitempty"`
+
+	// Nullable: Whether or not the column can accept a null value.
+	Nullable bool `json:"nullable,omitempty"`
+
+	// OrdinalPosition: The ordinal position of the column in the table.
+	OrdinalPosition int64 `json:"ordinalPosition,omitempty"`
+
+	// Precision: Column precision.
+	Precision int64 `json:"precision,omitempty"`
+
+	// PrimaryKey: Whether or not the column represents a primary key.
+	PrimaryKey bool `json:"primaryKey,omitempty"`
+
+	// Scale: Column scale.
+	Scale int64 `json:"scale,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Column") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OracleColumn) MarshalJSON() ([]byte, error) {
+	type NoMethod OracleColumn
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OracleObjectIdentifier: Oracle data source object identifier.
+type OracleObjectIdentifier struct {
+	// Schema: The schema name.
+	Schema string `json:"schema,omitempty"`
+
+	// Table: The table name.
+	Table string `json:"table,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Schema") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Schema") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OracleObjectIdentifier) MarshalJSON() ([]byte, error) {
+	type NoMethod OracleObjectIdentifier
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OracleProfile: Oracle database profile.
+type OracleProfile struct {
+	// ConnectionAttributes: Connection string attributes
+	ConnectionAttributes map[string]string `json:"connectionAttributes,omitempty"`
+
+	// DatabaseService: Required. Database for the Oracle connection.
+	DatabaseService string `json:"databaseService,omitempty"`
+
+	// Hostname: Required. Hostname for the Oracle connection.
+	Hostname string `json:"hostname,omitempty"`
+
+	// Password: Required. Password for the Oracle connection.
+	Password string `json:"password,omitempty"`
+
+	// Port: Port for the Oracle connection, default value is 1521.
+	Port int64 `json:"port,omitempty"`
+
+	// Username: Required. Username for the Oracle connection.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConnectionAttributes") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectionAttributes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OracleProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod OracleProfile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OracleRdbms: Oracle database structure.
+type OracleRdbms struct {
+	// OracleSchemas: Oracle schemas/databases in the database server.
+	OracleSchemas []*OracleSchema `json:"oracleSchemas,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OracleSchemas") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OracleSchemas") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OracleRdbms) MarshalJSON() ([]byte, error) {
+	type NoMethod OracleRdbms
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OracleSchema: Oracle schema.
+type OracleSchema struct {
+	// OracleTables: Tables in the schema.
+	OracleTables []*OracleTable `json:"oracleTables,omitempty"`
+
+	// Schema: Schema name.
+	Schema string `json:"schema,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OracleTables") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OracleTables") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OracleSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod OracleSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OracleSourceConfig: Oracle data source configuration
+type OracleSourceConfig struct {
+	// ExcludeObjects: Oracle objects to exclude from the stream.
+	ExcludeObjects *OracleRdbms `json:"excludeObjects,omitempty"`
+
+	// IncludeObjects: Oracle objects to include in the stream.
+	IncludeObjects *OracleRdbms `json:"includeObjects,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExcludeObjects") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OracleSourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod OracleSourceConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OracleTable: Oracle table.
+type OracleTable struct {
+	// OracleColumns: Oracle columns in the schema. When unspecified as part
+	// of inclue/exclude lists, includes/excludes everything.
+	OracleColumns []*OracleColumn `json:"oracleColumns,omitempty"`
+
+	// Table: Table name.
+	Table string `json:"table,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OracleColumns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OracleColumns") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OracleTable) MarshalJSON() ([]byte, error) {
+	type NoMethod OracleTable
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrivateConnection: The PrivateConnection resource is used to
+// establish private connectivity between Datastream and a customer's
+// network.
+type PrivateConnection struct {
+	// CreateTime: Output only. The create time of the resource.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: Required. Display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Error: Output only. In case of error, the details of the error in a
+	// user-friendly format.
+	Error *Error `json:"error,omitempty"`
+
+	// Labels: Labels.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Output only. The resource's name.
+	Name string `json:"name,omitempty"`
+
+	// State: Output only. The state of the Private Connection.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "CREATING" - The private connection is in creation state - creating
+	// resources.
+	//   "CREATED" - The private connection has been created with all of its
+	// resources.
+	//   "FAILED" - The private connection creation has failed.
+	//   "DELETING" - The private connection is being deleted.
+	//   "FAILED_TO_DELETE" - Delete request has failed, resource is in
+	// invalid state.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Output only. The update time of the resource.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// VpcPeeringConfig: VPC Peering Config.
+	VpcPeeringConfig *VpcPeeringConfig `json:"vpcPeeringConfig,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrivateConnection) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivateConnection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrivateConnectivity: Private Connectivity
+type PrivateConnectivity struct {
+	// PrivateConnection: Required. A reference to a private connection
+	// resource. Format:
+	// `projects/{project}/locations/{location}/privateConnections/{name}`
+	PrivateConnection string `json:"privateConnection,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrivateConnection")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrivateConnection") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrivateConnectivity) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivateConnectivity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Route: The route resource is the child of the private connection
+// resource, used for defining a route for a private connection.
+type Route struct {
+	// CreateTime: Output only. The create time of the resource.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DestinationAddress: Required. Destination address for connection
+	DestinationAddress string `json:"destinationAddress,omitempty"`
+
+	// DestinationPort: Destination port for connection
+	DestinationPort int64 `json:"destinationPort,omitempty"`
+
+	// DisplayName: Required. Display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Labels: Labels.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Output only. The resource's name.
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. The update time of the resource.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Route) MarshalJSON() ([]byte, error) {
+	type NoMethod Route
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SourceConfig: The configuration of the stream source.
+type SourceConfig struct {
+	// MysqlSourceConfig: MySQL data source configuration
+	MysqlSourceConfig *MysqlSourceConfig `json:"mysqlSourceConfig,omitempty"`
+
+	// OracleSourceConfig: Oracle data source configuration
+	OracleSourceConfig *OracleSourceConfig `json:"oracleSourceConfig,omitempty"`
+
+	// SourceConnectionProfile: Required. Source connection profile
+	// resoource. Format:
+	// `projects/{project}/locations/{location}/connectionProfiles/{name}`
+	SourceConnectionProfile string `json:"sourceConnectionProfile,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MysqlSourceConfig")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MysqlSourceConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SourceConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SourceObjectIdentifier: Represents an identifier of an object in the
+// data source.
+type SourceObjectIdentifier struct {
+	// MysqlIdentifier: Mysql data source object identifier.
+	MysqlIdentifier *MysqlObjectIdentifier `json:"mysqlIdentifier,omitempty"`
+
+	// OracleIdentifier: Oracle data source object identifier.
+	OracleIdentifier *OracleObjectIdentifier `json:"oracleIdentifier,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MysqlIdentifier") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MysqlIdentifier") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SourceObjectIdentifier) MarshalJSON() ([]byte, error) {
+	type NoMethod SourceObjectIdentifier
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StartBackfillJobRequest: Request for manually initiating a backfill
+// job for a specific stream object.
+type StartBackfillJobRequest struct {
+}
+
+// StartBackfillJobResponse: Response for manually initiating a backfill
+// job for a specific stream object.
+type StartBackfillJobResponse struct {
+	// Object: The stream object resource a backfill job was started for.
+	Object *StreamObject `json:"object,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Object") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Object") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StartBackfillJobResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod StartBackfillJobResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StaticServiceIpConnectivity: Static IP address connectivity.
+type StaticServiceIpConnectivity struct {
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -510,6 +2088,182 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StopBackfillJobRequest: Request for manually stopping a running
+// backfill job for a specific stream object.
+type StopBackfillJobRequest struct {
+}
+
+// StopBackfillJobResponse: Response for manually stop a backfill job
+// for a specific stream object.
+type StopBackfillJobResponse struct {
+	// Object: The stream object resource the backfill job was stopped for.
+	Object *StreamObject `json:"object,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Object") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Object") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StopBackfillJobResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod StopBackfillJobResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Stream: A resource representing streaming data from a source to a
+// destination.
+type Stream struct {
+	// BackfillAll: Automatically backfill objects included in the stream
+	// source configuration. Specific objects can be excluded.
+	BackfillAll *BackfillAllStrategy `json:"backfillAll,omitempty"`
+
+	// BackfillNone: Do not automatically backfill any objects.
+	BackfillNone *BackfillNoneStrategy `json:"backfillNone,omitempty"`
+
+	// CreateTime: Output only. The creation time of the stream.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// CustomerManagedEncryptionKey: Immutable. A reference to a KMS
+	// encryption key. If provided, it will be used to encrypt the data. If
+	// left blank, data will be encrypted using an internal Stream-specific
+	// encryption key provisioned through KMS.
+	CustomerManagedEncryptionKey string `json:"customerManagedEncryptionKey,omitempty"`
+
+	// DestinationConfig: Required. Destination connection profile
+	// configuration.
+	DestinationConfig *DestinationConfig `json:"destinationConfig,omitempty"`
+
+	// DisplayName: Required. Display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Errors: Output only. Errors on the Stream.
+	Errors []*Error `json:"errors,omitempty"`
+
+	// Labels: Labels.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Output only. The stream's name.
+	Name string `json:"name,omitempty"`
+
+	// SourceConfig: Required. Source connection profile configuration.
+	SourceConfig *SourceConfig `json:"sourceConfig,omitempty"`
+
+	// State: The state of the stream.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified stream state.
+	//   "NOT_STARTED" - The stream has been created but has not yet started
+	// streaming data.
+	//   "RUNNING" - The stream is running.
+	//   "PAUSED" - The stream is paused.
+	//   "MAINTENANCE" - The stream is in maintenance mode. Updates are
+	// rejected on the resource in this state.
+	//   "FAILED" - The stream is experiencing an error that is preventing
+	// data from being streamed.
+	//   "FAILED_PERMANENTLY" - The stream has experienced a terminal
+	// failure.
+	//   "STARTING" - The stream is starting, but not yet running.
+	//   "DRAINING" - The Stream is no longer reading new events, but still
+	// writing events in the buffer.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Output only. The last update time of the stream.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BackfillAll") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackfillAll") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Stream) MarshalJSON() ([]byte, error) {
+	type NoMethod Stream
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StreamObject: A specific stream object (e.g a specific DB table).
+type StreamObject struct {
+	// BackfillJob: The latest backfill job that was initiated for the
+	// stream object.
+	BackfillJob *BackfillJob `json:"backfillJob,omitempty"`
+
+	// CreateTime: Output only. The creation time of the object.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: Required. Display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Errors: Output only. Active errors on the object.
+	Errors []*Error `json:"errors,omitempty"`
+
+	// Name: Output only. The object resource's name.
+	Name string `json:"name,omitempty"`
+
+	// SourceObject: The object identifier in the data source.
+	SourceObject *SourceObjectIdentifier `json:"sourceObject,omitempty"`
+
+	// UpdateTime: Output only. The last update time of the object.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BackfillJob") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackfillJob") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StreamObject) MarshalJSON() ([]byte, error) {
+	type NoMethod StreamObject
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -628,6 +2382,237 @@ func (s *ValidationResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VpcPeeringConfig: The VPC Peering configuration is used to create VPC
+// peering between Datastream and the consumer's VPC.
+type VpcPeeringConfig struct {
+	// Subnet: Required. A free subnet for peering. (CIDR of /29)
+	// TODO(b/172995841) add validators.
+	Subnet string `json:"subnet,omitempty"`
+
+	// Vpc: Required. Fully qualified name of the VPC that Datastream will
+	// peer to. Format: `projects/{project}/global/{networks}/{name}`
+	Vpc string `json:"vpc,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Subnet") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Subnet") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VpcPeeringConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod VpcPeeringConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "datastream.projects.locations.fetchStaticIps":
+
+type ProjectsLocationsFetchStaticIpsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchStaticIps: The FetchStaticIps API call exposes the static ips
+// used by Datastream. Typically, a request returns children data
+// objects under a parent data object that's optionally supplied in the
+// request.
+//
+// - name: The name resource of the Response type. Must be in the format
+//   `projects/*/locations/*`.
+func (r *ProjectsLocationsService) FetchStaticIps(name string) *ProjectsLocationsFetchStaticIpsCall {
+	c := &ProjectsLocationsFetchStaticIpsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// Ips to return, will likely not be specified.
+func (c *ProjectsLocationsFetchStaticIpsCall) PageSize(pageSize int64) *ProjectsLocationsFetchStaticIpsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListStaticIps` call. will likely not be
+// specified.
+func (c *ProjectsLocationsFetchStaticIpsCall) PageToken(pageToken string) *ProjectsLocationsFetchStaticIpsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFetchStaticIpsCall) Fields(s ...googleapi.Field) *ProjectsLocationsFetchStaticIpsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsFetchStaticIpsCall) IfNoneMatch(entityTag string) *ProjectsLocationsFetchStaticIpsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFetchStaticIpsCall) Context(ctx context.Context) *ProjectsLocationsFetchStaticIpsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFetchStaticIpsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFetchStaticIpsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetchStaticIps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.fetchStaticIps" call.
+// Exactly one of *FetchStaticIpsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *FetchStaticIpsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsFetchStaticIpsCall) Do(opts ...googleapi.CallOption) (*FetchStaticIpsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &FetchStaticIpsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "The FetchStaticIps API call exposes the static ips used by Datastream. Typically, a request returns children data objects under a parent data object that's optionally supplied in the request.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:fetchStaticIps",
+	//   "httpMethod": "GET",
+	//   "id": "datastream.projects.locations.fetchStaticIps",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name resource of the Response type. Must be in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of Ips to return, will likely not be specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListStaticIps` call. will likely not be specified.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:fetchStaticIps",
+	//   "response": {
+	//     "$ref": "FetchStaticIpsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsFetchStaticIpsCall) Pages(ctx context.Context, f func(*FetchStaticIpsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "datastream.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
@@ -685,7 +2670,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211116")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -857,7 +2842,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211116")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -983,6 +2968,1057 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
+// method id "datastream.projects.locations.connectionProfiles.create":
+
+type ProjectsLocationsConnectionProfilesCreateCall struct {
+	s                 *Service
+	parent            string
+	connectionprofile *ConnectionProfile
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Create: Use this method to create a connection profile in a project
+// and location.
+//
+// - parent: The parent that owns the collection of ConnectionProfiles.
+func (r *ProjectsLocationsConnectionProfilesService) Create(parent string, connectionprofile *ConnectionProfile) *ProjectsLocationsConnectionProfilesCreateCall {
+	c := &ProjectsLocationsConnectionProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.connectionprofile = connectionprofile
+	return c
+}
+
+// ConnectionProfileId sets the optional parameter
+// "connectionProfileId": Required. The connection profile identifier.
+func (c *ProjectsLocationsConnectionProfilesCreateCall) ConnectionProfileId(connectionProfileId string) *ProjectsLocationsConnectionProfilesCreateCall {
+	c.urlParams_.Set("connectionProfileId", connectionProfileId)
+	return c
+}
+
+// Force sets the optional parameter "force": Create the connection
+// profile without validating it.
+func (c *ProjectsLocationsConnectionProfilesCreateCall) Force(force bool) *ProjectsLocationsConnectionProfilesCreateCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes since the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsConnectionProfilesCreateCall) RequestId(requestId string) *ProjectsLocationsConnectionProfilesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionProfilesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionProfilesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionProfilesCreateCall) Context(ctx context.Context) *ProjectsLocationsConnectionProfilesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionProfilesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.connectionprofile)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/connectionProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.connectionProfiles.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionProfilesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to create a connection profile in a project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connectionProfiles",
+	//   "httpMethod": "POST",
+	//   "id": "datastream.projects.locations.connectionProfiles.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "connectionProfileId": {
+	//       "description": "Required. The connection profile identifier.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "force": {
+	//       "description": "Optional. Create the connection profile without validating it.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent that owns the collection of ConnectionProfiles.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/connectionProfiles",
+	//   "request": {
+	//     "$ref": "ConnectionProfile"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.connectionProfiles.delete":
+
+type ProjectsLocationsConnectionProfilesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Use this method to delete a connection profile..
+//
+// - name: The name of the connection profile resource to delete.
+func (r *ProjectsLocationsConnectionProfilesService) Delete(name string) *ProjectsLocationsConnectionProfilesDeleteCall {
+	c := &ProjectsLocationsConnectionProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes after the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsConnectionProfilesDeleteCall) RequestId(requestId string) *ProjectsLocationsConnectionProfilesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionProfilesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionProfilesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionProfilesDeleteCall) Context(ctx context.Context) *ProjectsLocationsConnectionProfilesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionProfilesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.connectionProfiles.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionProfilesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to delete a connection profile..",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connectionProfiles/{connectionProfilesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "datastream.projects.locations.connectionProfiles.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the connection profile resource to delete.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connectionProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.connectionProfiles.discover":
+
+type ProjectsLocationsConnectionProfilesDiscoverCall struct {
+	s                                *Service
+	parent                           string
+	discoverconnectionprofilerequest *DiscoverConnectionProfileRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Discover: Use this method to discover a connection profile. The
+// discover API call exposes the data objects and metadata belonging to
+// the profile. Typically, a request returns children data objects under
+// a parent data object that's optionally supplied in the request.
+//
+// - parent: The parent resource of the connection profile type. Must be
+//   in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsConnectionProfilesService) Discover(parent string, discoverconnectionprofilerequest *DiscoverConnectionProfileRequest) *ProjectsLocationsConnectionProfilesDiscoverCall {
+	c := &ProjectsLocationsConnectionProfilesDiscoverCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.discoverconnectionprofilerequest = discoverconnectionprofilerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionProfilesDiscoverCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionProfilesDiscoverCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionProfilesDiscoverCall) Context(ctx context.Context) *ProjectsLocationsConnectionProfilesDiscoverCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionProfilesDiscoverCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionProfilesDiscoverCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.discoverconnectionprofilerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/connectionProfiles:discover")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.connectionProfiles.discover" call.
+// Exactly one of *DiscoverConnectionProfileResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *DiscoverConnectionProfileResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConnectionProfilesDiscoverCall) Do(opts ...googleapi.CallOption) (*DiscoverConnectionProfileResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &DiscoverConnectionProfileResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to discover a connection profile. The discover API call exposes the data objects and metadata belonging to the profile. Typically, a request returns children data objects under a parent data object that's optionally supplied in the request.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connectionProfiles:discover",
+	//   "httpMethod": "POST",
+	//   "id": "datastream.projects.locations.connectionProfiles.discover",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource of the connection profile type. Must be in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/connectionProfiles:discover",
+	//   "request": {
+	//     "$ref": "DiscoverConnectionProfileRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "DiscoverConnectionProfileResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.connectionProfiles.get":
+
+type ProjectsLocationsConnectionProfilesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Use this method to get details about a connection profile.
+//
+// - name: The name of the connection profile resource to get.
+func (r *ProjectsLocationsConnectionProfilesService) Get(name string) *ProjectsLocationsConnectionProfilesGetCall {
+	c := &ProjectsLocationsConnectionProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionProfilesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionProfilesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConnectionProfilesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionProfilesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionProfilesGetCall) Context(ctx context.Context) *ProjectsLocationsConnectionProfilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionProfilesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionProfilesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.connectionProfiles.get" call.
+// Exactly one of *ConnectionProfile or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ConnectionProfile.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionProfilesGetCall) Do(opts ...googleapi.CallOption) (*ConnectionProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ConnectionProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to get details about a connection profile.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connectionProfiles/{connectionProfilesId}",
+	//   "httpMethod": "GET",
+	//   "id": "datastream.projects.locations.connectionProfiles.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the connection profile resource to get.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connectionProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ConnectionProfile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.connectionProfiles.list":
+
+type ProjectsLocationsConnectionProfilesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Use this method to list connection profiles created in a
+// project and location.
+//
+// - parent: The parent that owns the collection of connection profiles.
+func (r *ProjectsLocationsConnectionProfilesService) List(parent string) *ProjectsLocationsConnectionProfilesListCall {
+	c := &ProjectsLocationsConnectionProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter request.
+func (c *ProjectsLocationsConnectionProfilesListCall) Filter(filter string) *ProjectsLocationsConnectionProfilesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order by fields for
+// the result.
+func (c *ProjectsLocationsConnectionProfilesListCall) OrderBy(orderBy string) *ProjectsLocationsConnectionProfilesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// connection profiles to return. If unspecified, at most 50 connection
+// profiles will be returned. The maximum value is 1000; values above
+// 1000 will be coerced to 1000.
+func (c *ProjectsLocationsConnectionProfilesListCall) PageSize(pageSize int64) *ProjectsLocationsConnectionProfilesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token
+// received from a previous `ListConnectionProfiles` call. Provide this
+// to retrieve the subsequent page. When paginating, all other
+// parameters provided to `ListConnectionProfiles` must match the call
+// that provided the page token.
+func (c *ProjectsLocationsConnectionProfilesListCall) PageToken(pageToken string) *ProjectsLocationsConnectionProfilesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionProfilesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionProfilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConnectionProfilesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionProfilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionProfilesListCall) Context(ctx context.Context) *ProjectsLocationsConnectionProfilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionProfilesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionProfilesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/connectionProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.connectionProfiles.list" call.
+// Exactly one of *ListConnectionProfilesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListConnectionProfilesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionProfilesListCall) Do(opts ...googleapi.CallOption) (*ListConnectionProfilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListConnectionProfilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to list connection profiles created in a project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connectionProfiles",
+	//   "httpMethod": "GET",
+	//   "id": "datastream.projects.locations.connectionProfiles.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Filter request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Order by fields for the result.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of connection profiles to return. If unspecified, at most 50 connection profiles will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token received from a previous `ListConnectionProfiles` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListConnectionProfiles` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent that owns the collection of connection profiles.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/connectionProfiles",
+	//   "response": {
+	//     "$ref": "ListConnectionProfilesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConnectionProfilesListCall) Pages(ctx context.Context, f func(*ListConnectionProfilesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "datastream.projects.locations.connectionProfiles.patch":
+
+type ProjectsLocationsConnectionProfilesPatchCall struct {
+	s                 *Service
+	name              string
+	connectionprofile *ConnectionProfile
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Patch: Use this method to update the parameters of a connection
+// profile.
+//
+// - name: Output only. The resource's name.
+func (r *ProjectsLocationsConnectionProfilesService) Patch(name string, connectionprofile *ConnectionProfile) *ProjectsLocationsConnectionProfilesPatchCall {
+	c := &ProjectsLocationsConnectionProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.connectionprofile = connectionprofile
+	return c
+}
+
+// Force sets the optional parameter "force": Execute the update without
+// validating it.
+func (c *ProjectsLocationsConnectionProfilesPatchCall) Force(force bool) *ProjectsLocationsConnectionProfilesPatchCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes since the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsConnectionProfilesPatchCall) RequestId(requestId string) *ProjectsLocationsConnectionProfilesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is
+// used to specify the fields to be overwritten in the ConnectionProfile
+// resource by the update. The fields specified in the update_mask are
+// relative to the resource, not the full request. A field will be
+// overwritten if it is in the mask. If the user does not provide a mask
+// then all fields will be overwritten.
+func (c *ProjectsLocationsConnectionProfilesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsConnectionProfilesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionProfilesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionProfilesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionProfilesPatchCall) Context(ctx context.Context) *ProjectsLocationsConnectionProfilesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionProfilesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.connectionprofile)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.connectionProfiles.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionProfilesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to update the parameters of a connection profile.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connectionProfiles/{connectionProfilesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "datastream.projects.locations.connectionProfiles.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "force": {
+	//       "description": "Optional. Execute the update without validating it.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Output only. The resource's name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connectionProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. Field mask is used to specify the fields to be overwritten in the ConnectionProfile resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "ConnectionProfile"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "datastream.projects.locations.operations.cancel":
 
 type ProjectsLocationsOperationsCancelCall struct {
@@ -1040,7 +4076,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211116")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1183,7 +4219,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211116")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1328,7 +4364,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211116")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1504,7 +4540,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211116")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1628,4 +4664,3113 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "datastream.projects.locations.privateConnections.create":
+
+type ProjectsLocationsPrivateConnectionsCreateCall struct {
+	s                 *Service
+	parent            string
+	privateconnection *PrivateConnection
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Create: Use this method to create a private connectivity
+// configuration.
+//
+// - parent: The parent that owns the collection of PrivateConnections.
+func (r *ProjectsLocationsPrivateConnectionsService) Create(parent string, privateconnection *PrivateConnection) *ProjectsLocationsPrivateConnectionsCreateCall {
+	c := &ProjectsLocationsPrivateConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.privateconnection = privateconnection
+	return c
+}
+
+// PrivateConnectionId sets the optional parameter
+// "privateConnectionId": Required. The private connectivity identifier.
+func (c *ProjectsLocationsPrivateConnectionsCreateCall) PrivateConnectionId(privateConnectionId string) *ProjectsLocationsPrivateConnectionsCreateCall {
+	c.urlParams_.Set("privateConnectionId", privateConnectionId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes since the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsPrivateConnectionsCreateCall) RequestId(requestId string) *ProjectsLocationsPrivateConnectionsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateConnectionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateConnectionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateConnectionsCreateCall) Context(ctx context.Context) *ProjectsLocationsPrivateConnectionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateConnectionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.privateconnection)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/privateConnections")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.privateConnections.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateConnectionsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to create a private connectivity configuration.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateConnections",
+	//   "httpMethod": "POST",
+	//   "id": "datastream.projects.locations.privateConnections.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent that owns the collection of PrivateConnections.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "privateConnectionId": {
+	//       "description": "Required. The private connectivity identifier.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/privateConnections",
+	//   "request": {
+	//     "$ref": "PrivateConnection"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.privateConnections.delete":
+
+type ProjectsLocationsPrivateConnectionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Use this method to delete a private connectivity
+// configuration.
+//
+// - name: The name of the private connectivity configuration to delete.
+func (r *ProjectsLocationsPrivateConnectionsService) Delete(name string) *ProjectsLocationsPrivateConnectionsDeleteCall {
+	c := &ProjectsLocationsPrivateConnectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": If set to true, any child
+// routes that belong to this PrivateConnection will also be deleted.
+func (c *ProjectsLocationsPrivateConnectionsDeleteCall) Force(force bool) *ProjectsLocationsPrivateConnectionsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes after the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsPrivateConnectionsDeleteCall) RequestId(requestId string) *ProjectsLocationsPrivateConnectionsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateConnectionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateConnectionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateConnectionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsPrivateConnectionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateConnectionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateConnectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.privateConnections.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateConnectionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to delete a private connectivity configuration.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "datastream.projects.locations.privateConnections.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "force": {
+	//       "description": "Optional. If set to true, any child routes that belong to this PrivateConnection will also be deleted.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Required. The name of the private connectivity configuration to delete.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateConnections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.privateConnections.get":
+
+type ProjectsLocationsPrivateConnectionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Use this method to get details about a private connectivity
+// configuration.
+//
+// - name: The name of the private connectivity configuration to get.
+func (r *ProjectsLocationsPrivateConnectionsService) Get(name string) *ProjectsLocationsPrivateConnectionsGetCall {
+	c := &ProjectsLocationsPrivateConnectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateConnectionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateConnectionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsPrivateConnectionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsPrivateConnectionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateConnectionsGetCall) Context(ctx context.Context) *ProjectsLocationsPrivateConnectionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateConnectionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateConnectionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.privateConnections.get" call.
+// Exactly one of *PrivateConnection or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *PrivateConnection.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateConnectionsGetCall) Do(opts ...googleapi.CallOption) (*PrivateConnection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &PrivateConnection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to get details about a private connectivity configuration.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "datastream.projects.locations.privateConnections.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the private connectivity configuration to get.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateConnections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "PrivateConnection"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.privateConnections.list":
+
+type ProjectsLocationsPrivateConnectionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Use this method to list private connectivity configurations in
+// a project and location.
+//
+// - parent: The parent that owns the collection of private connectivity
+//   configurations.
+func (r *ProjectsLocationsPrivateConnectionsService) List(parent string) *ProjectsLocationsPrivateConnectionsListCall {
+	c := &ProjectsLocationsPrivateConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter request.
+func (c *ProjectsLocationsPrivateConnectionsListCall) Filter(filter string) *ProjectsLocationsPrivateConnectionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order by fields for
+// the result.
+func (c *ProjectsLocationsPrivateConnectionsListCall) OrderBy(orderBy string) *ProjectsLocationsPrivateConnectionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// private connectivity configurations to return. If unspecified, at
+// most 50 private connectivity configurations that will be returned.
+// The maximum value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsPrivateConnectionsListCall) PageSize(pageSize int64) *ProjectsLocationsPrivateConnectionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token
+// received from a previous `ListPrivateConnections` call. Provide this
+// to retrieve the subsequent page. When paginating, all other
+// parameters provided to `ListPrivateConnections` must match the call
+// that provided the page token.
+func (c *ProjectsLocationsPrivateConnectionsListCall) PageToken(pageToken string) *ProjectsLocationsPrivateConnectionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateConnectionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateConnectionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsPrivateConnectionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPrivateConnectionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateConnectionsListCall) Context(ctx context.Context) *ProjectsLocationsPrivateConnectionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateConnectionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateConnectionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/privateConnections")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.privateConnections.list" call.
+// Exactly one of *ListPrivateConnectionsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListPrivateConnectionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListPrivateConnectionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListPrivateConnectionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to list private connectivity configurations in a project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateConnections",
+	//   "httpMethod": "GET",
+	//   "id": "datastream.projects.locations.privateConnections.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Filter request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Order by fields for the result.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of private connectivity configurations to return. If unspecified, at most 50 private connectivity configurations that will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token received from a previous `ListPrivateConnections` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPrivateConnections` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent that owns the collection of private connectivity configurations.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/privateConnections",
+	//   "response": {
+	//     "$ref": "ListPrivateConnectionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsPrivateConnectionsListCall) Pages(ctx context.Context, f func(*ListPrivateConnectionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "datastream.projects.locations.privateConnections.routes.create":
+
+type ProjectsLocationsPrivateConnectionsRoutesCreateCall struct {
+	s          *Service
+	parent     string
+	route      *Route
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Use this method to create a route for a private connectivity
+// in a project and location.
+//
+// - parent: The parent that owns the collection of Routes.
+func (r *ProjectsLocationsPrivateConnectionsRoutesService) Create(parent string, route *Route) *ProjectsLocationsPrivateConnectionsRoutesCreateCall {
+	c := &ProjectsLocationsPrivateConnectionsRoutesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.route = route
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes since the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsPrivateConnectionsRoutesCreateCall) RequestId(requestId string) *ProjectsLocationsPrivateConnectionsRoutesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// RouteId sets the optional parameter "routeId": Required. The Route
+// identifier.
+func (c *ProjectsLocationsPrivateConnectionsRoutesCreateCall) RouteId(routeId string) *ProjectsLocationsPrivateConnectionsRoutesCreateCall {
+	c.urlParams_.Set("routeId", routeId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateConnectionsRoutesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateConnectionsRoutesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateConnectionsRoutesCreateCall) Context(ctx context.Context) *ProjectsLocationsPrivateConnectionsRoutesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateConnectionsRoutesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateConnectionsRoutesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.route)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/routes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.privateConnections.routes.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateConnectionsRoutesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to create a route for a private connectivity in a project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}/routes",
+	//   "httpMethod": "POST",
+	//   "id": "datastream.projects.locations.privateConnections.routes.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent that owns the collection of Routes.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateConnections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "routeId": {
+	//       "description": "Required. The Route identifier.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/routes",
+	//   "request": {
+	//     "$ref": "Route"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.privateConnections.routes.delete":
+
+type ProjectsLocationsPrivateConnectionsRoutesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Use this method to delete a route.
+//
+// - name: The name of the Route resource to delete.
+func (r *ProjectsLocationsPrivateConnectionsRoutesService) Delete(name string) *ProjectsLocationsPrivateConnectionsRoutesDeleteCall {
+	c := &ProjectsLocationsPrivateConnectionsRoutesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes after the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsPrivateConnectionsRoutesDeleteCall) RequestId(requestId string) *ProjectsLocationsPrivateConnectionsRoutesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateConnectionsRoutesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateConnectionsRoutesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateConnectionsRoutesDeleteCall) Context(ctx context.Context) *ProjectsLocationsPrivateConnectionsRoutesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateConnectionsRoutesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateConnectionsRoutesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.privateConnections.routes.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateConnectionsRoutesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to delete a route.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}/routes/{routesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "datastream.projects.locations.privateConnections.routes.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the Route resource to delete.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateConnections/[^/]+/routes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.privateConnections.routes.get":
+
+type ProjectsLocationsPrivateConnectionsRoutesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Use this method to get details about a route.
+//
+// - name: The name of the Route resource to get.
+func (r *ProjectsLocationsPrivateConnectionsRoutesService) Get(name string) *ProjectsLocationsPrivateConnectionsRoutesGetCall {
+	c := &ProjectsLocationsPrivateConnectionsRoutesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateConnectionsRoutesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateConnectionsRoutesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsPrivateConnectionsRoutesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsPrivateConnectionsRoutesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateConnectionsRoutesGetCall) Context(ctx context.Context) *ProjectsLocationsPrivateConnectionsRoutesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateConnectionsRoutesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateConnectionsRoutesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.privateConnections.routes.get" call.
+// Exactly one of *Route or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Route.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsPrivateConnectionsRoutesGetCall) Do(opts ...googleapi.CallOption) (*Route, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Route{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to get details about a route.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}/routes/{routesId}",
+	//   "httpMethod": "GET",
+	//   "id": "datastream.projects.locations.privateConnections.routes.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the Route resource to get.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateConnections/[^/]+/routes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Route"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.privateConnections.routes.list":
+
+type ProjectsLocationsPrivateConnectionsRoutesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Use this method to list routes created for a private
+// connectivity in a project and location.
+//
+// - parent: The parent that owns the collection of Routess.
+func (r *ProjectsLocationsPrivateConnectionsRoutesService) List(parent string) *ProjectsLocationsPrivateConnectionsRoutesListCall {
+	c := &ProjectsLocationsPrivateConnectionsRoutesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter request.
+func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) Filter(filter string) *ProjectsLocationsPrivateConnectionsRoutesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order by fields for
+// the result.
+func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) OrderBy(orderBy string) *ProjectsLocationsPrivateConnectionsRoutesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// Routes to return. The service may return fewer than this value. If
+// unspecified, at most 50 Routes will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) PageSize(pageSize int64) *ProjectsLocationsPrivateConnectionsRoutesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token
+// received from a previous `ListRoutes` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided
+// to `ListRoutes` must match the call that provided the page token.
+func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) PageToken(pageToken string) *ProjectsLocationsPrivateConnectionsRoutesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPrivateConnectionsRoutesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPrivateConnectionsRoutesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) Context(ctx context.Context) *ProjectsLocationsPrivateConnectionsRoutesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/routes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.privateConnections.routes.list" call.
+// Exactly one of *ListRoutesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListRoutesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) Do(opts ...googleapi.CallOption) (*ListRoutesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListRoutesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to list routes created for a private connectivity in a project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}/routes",
+	//   "httpMethod": "GET",
+	//   "id": "datastream.projects.locations.privateConnections.routes.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Filter request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Order by fields for the result.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of Routes to return. The service may return fewer than this value. If unspecified, at most 50 Routes will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token received from a previous `ListRoutes` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListRoutes` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent that owns the collection of Routess.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/privateConnections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/routes",
+	//   "response": {
+	//     "$ref": "ListRoutesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) Pages(ctx context.Context, f func(*ListRoutesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "datastream.projects.locations.streams.create":
+
+type ProjectsLocationsStreamsCreateCall struct {
+	s          *Service
+	parent     string
+	stream     *Stream
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Use this method to create a stream.
+//
+// - parent: The parent that owns the collection of streams.
+func (r *ProjectsLocationsStreamsService) Create(parent string, stream *Stream) *ProjectsLocationsStreamsCreateCall {
+	c := &ProjectsLocationsStreamsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.stream = stream
+	return c
+}
+
+// Force sets the optional parameter "force": Create the stream without
+// validating it.
+func (c *ProjectsLocationsStreamsCreateCall) Force(force bool) *ProjectsLocationsStreamsCreateCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes since the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsStreamsCreateCall) RequestId(requestId string) *ProjectsLocationsStreamsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// StreamId sets the optional parameter "streamId": Required. The stream
+// identifier.
+func (c *ProjectsLocationsStreamsCreateCall) StreamId(streamId string) *ProjectsLocationsStreamsCreateCall {
+	c.urlParams_.Set("streamId", streamId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Only
+// validate the stream, but do not create any resources. The default is
+// false.
+func (c *ProjectsLocationsStreamsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsStreamsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStreamsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsStreamsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStreamsCreateCall) Context(ctx context.Context) *ProjectsLocationsStreamsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStreamsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.stream)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/streams")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.streams.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsStreamsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to create a stream.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/streams",
+	//   "httpMethod": "POST",
+	//   "id": "datastream.projects.locations.streams.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "force": {
+	//       "description": "Optional. Create the stream without validating it.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent that owns the collection of streams.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "streamId": {
+	//       "description": "Required. The stream identifier.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. Only validate the stream, but do not create any resources. The default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/streams",
+	//   "request": {
+	//     "$ref": "Stream"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.streams.delete":
+
+type ProjectsLocationsStreamsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Use this method to delete a stream.
+//
+// - name: The name of the stream resource to delete.
+func (r *ProjectsLocationsStreamsService) Delete(name string) *ProjectsLocationsStreamsDeleteCall {
+	c := &ProjectsLocationsStreamsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes after the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsStreamsDeleteCall) RequestId(requestId string) *ProjectsLocationsStreamsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStreamsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsStreamsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStreamsDeleteCall) Context(ctx context.Context) *ProjectsLocationsStreamsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStreamsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.streams.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsStreamsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to delete a stream.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "datastream.projects.locations.streams.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the stream resource to delete.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/streams/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.streams.get":
+
+type ProjectsLocationsStreamsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Use this method to get details about a stream.
+//
+// - name: The name of the stream resource to get.
+func (r *ProjectsLocationsStreamsService) Get(name string) *ProjectsLocationsStreamsGetCall {
+	c := &ProjectsLocationsStreamsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStreamsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsStreamsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsStreamsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsStreamsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStreamsGetCall) Context(ctx context.Context) *ProjectsLocationsStreamsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStreamsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStreamsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.streams.get" call.
+// Exactly one of *Stream or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Stream.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsStreamsGetCall) Do(opts ...googleapi.CallOption) (*Stream, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Stream{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to get details about a stream.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}",
+	//   "httpMethod": "GET",
+	//   "id": "datastream.projects.locations.streams.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the stream resource to get.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/streams/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Stream"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.streams.list":
+
+type ProjectsLocationsStreamsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Use this method to list streams in a project and location.
+//
+// - parent: The parent that owns the collection of streams.
+func (r *ProjectsLocationsStreamsService) List(parent string) *ProjectsLocationsStreamsListCall {
+	c := &ProjectsLocationsStreamsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter request.
+func (c *ProjectsLocationsStreamsListCall) Filter(filter string) *ProjectsLocationsStreamsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Order by fields for
+// the result.
+func (c *ProjectsLocationsStreamsListCall) OrderBy(orderBy string) *ProjectsLocationsStreamsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// streams to return. If unspecified, at most 50 streams will be
+// returned. The maximum value is 1000; values above 1000 will be
+// coerced to 1000.
+func (c *ProjectsLocationsStreamsListCall) PageSize(pageSize int64) *ProjectsLocationsStreamsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token
+// received from a previous `ListStreams` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided
+// to `ListStreams` must match the call that provided the page token.
+func (c *ProjectsLocationsStreamsListCall) PageToken(pageToken string) *ProjectsLocationsStreamsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStreamsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsStreamsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsStreamsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsStreamsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStreamsListCall) Context(ctx context.Context) *ProjectsLocationsStreamsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStreamsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStreamsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/streams")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.streams.list" call.
+// Exactly one of *ListStreamsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListStreamsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsStreamsListCall) Do(opts ...googleapi.CallOption) (*ListStreamsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListStreamsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to list streams in a project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/streams",
+	//   "httpMethod": "GET",
+	//   "id": "datastream.projects.locations.streams.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Filter request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Order by fields for the result.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Maximum number of streams to return. If unspecified, at most 50 streams will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token received from a previous `ListStreams` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListStreams` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent that owns the collection of streams.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/streams",
+	//   "response": {
+	//     "$ref": "ListStreamsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsStreamsListCall) Pages(ctx context.Context, f func(*ListStreamsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "datastream.projects.locations.streams.patch":
+
+type ProjectsLocationsStreamsPatchCall struct {
+	s          *Service
+	name       string
+	stream     *Stream
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Use this method to update the configuration of a stream.
+//
+// - name: Output only. The stream's name.
+func (r *ProjectsLocationsStreamsService) Patch(name string, stream *Stream) *ProjectsLocationsStreamsPatchCall {
+	c := &ProjectsLocationsStreamsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.stream = stream
+	return c
+}
+
+// Force sets the optional parameter "force": Create the stream without
+// validating it.
+func (c *ProjectsLocationsStreamsPatchCall) Force(force bool) *ProjectsLocationsStreamsPatchCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes since the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsStreamsPatchCall) RequestId(requestId string) *ProjectsLocationsStreamsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is
+// used to specify the fields to be overwritten in the stream resource
+// by the update. The fields specified in the update_mask are relative
+// to the resource, not the full request. A field will be overwritten if
+// it is in the mask. If the user does not provide a mask then all
+// fields will be overwritten.
+func (c *ProjectsLocationsStreamsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsStreamsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": Only
+// validate the stream with the changes, without actually updating it.
+// The default is false.
+func (c *ProjectsLocationsStreamsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsStreamsPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStreamsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsStreamsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStreamsPatchCall) Context(ctx context.Context) *ProjectsLocationsStreamsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStreamsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.stream)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.streams.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsStreamsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to update the configuration of a stream.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "datastream.projects.locations.streams.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "force": {
+	//       "description": "Optional. Create the stream without validating it.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Output only. The stream's name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/streams/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. Field mask is used to specify the fields to be overwritten in the stream resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. Only validate the stream with the changes, without actually updating it. The default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "Stream"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.streams.objects.get":
+
+type ProjectsLocationsStreamsObjectsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Use this method to get details about a stream object.
+//
+// - name: The name of the stream object resource to get.
+func (r *ProjectsLocationsStreamsObjectsService) Get(name string) *ProjectsLocationsStreamsObjectsGetCall {
+	c := &ProjectsLocationsStreamsObjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStreamsObjectsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsStreamsObjectsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsStreamsObjectsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsStreamsObjectsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStreamsObjectsGetCall) Context(ctx context.Context) *ProjectsLocationsStreamsObjectsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStreamsObjectsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStreamsObjectsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.streams.objects.get" call.
+// Exactly one of *StreamObject or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StreamObject.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsStreamsObjectsGetCall) Do(opts ...googleapi.CallOption) (*StreamObject, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StreamObject{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to get details about a stream object.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}/objects/{objectsId}",
+	//   "httpMethod": "GET",
+	//   "id": "datastream.projects.locations.streams.objects.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the stream object resource to get.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/streams/[^/]+/objects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "StreamObject"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.streams.objects.list":
+
+type ProjectsLocationsStreamsObjectsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Use this method to list the objects of a specific stream.
+//
+// - parent: The parent stream that owns the collection of objects.
+func (r *ProjectsLocationsStreamsObjectsService) List(parent string) *ProjectsLocationsStreamsObjectsListCall {
+	c := &ProjectsLocationsStreamsObjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// objects to return. Default is 50. The maximum value is 1000; values
+// above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsStreamsObjectsListCall) PageSize(pageSize int64) *ProjectsLocationsStreamsObjectsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token
+// received from a previous `ListStreamObjectsRequest` call. Provide
+// this to retrieve the subsequent page. When paginating, all other
+// parameters provided to `ListStreamObjectsRequest` must match the call
+// that provided the page token.
+func (c *ProjectsLocationsStreamsObjectsListCall) PageToken(pageToken string) *ProjectsLocationsStreamsObjectsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStreamsObjectsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsStreamsObjectsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsStreamsObjectsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsStreamsObjectsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStreamsObjectsListCall) Context(ctx context.Context) *ProjectsLocationsStreamsObjectsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStreamsObjectsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStreamsObjectsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/objects")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.streams.objects.list" call.
+// Exactly one of *ListStreamObjectsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListStreamObjectsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsStreamsObjectsListCall) Do(opts ...googleapi.CallOption) (*ListStreamObjectsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListStreamObjectsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to list the objects of a specific stream.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}/objects",
+	//   "httpMethod": "GET",
+	//   "id": "datastream.projects.locations.streams.objects.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Maximum number of objects to return. Default is 50. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token received from a previous `ListStreamObjectsRequest` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListStreamObjectsRequest` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent stream that owns the collection of objects.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/streams/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/objects",
+	//   "response": {
+	//     "$ref": "ListStreamObjectsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsStreamsObjectsListCall) Pages(ctx context.Context, f func(*ListStreamObjectsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "datastream.projects.locations.streams.objects.lookup":
+
+type ProjectsLocationsStreamsObjectsLookupCall struct {
+	s                         *Service
+	parent                    string
+	lookupstreamobjectrequest *LookupStreamObjectRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Lookup: Use this method to look up a stream object by its source
+// object identifier.
+//
+// - parent: The parent stream that owns the collection of objects.
+func (r *ProjectsLocationsStreamsObjectsService) Lookup(parent string, lookupstreamobjectrequest *LookupStreamObjectRequest) *ProjectsLocationsStreamsObjectsLookupCall {
+	c := &ProjectsLocationsStreamsObjectsLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.lookupstreamobjectrequest = lookupstreamobjectrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStreamsObjectsLookupCall) Fields(s ...googleapi.Field) *ProjectsLocationsStreamsObjectsLookupCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStreamsObjectsLookupCall) Context(ctx context.Context) *ProjectsLocationsStreamsObjectsLookupCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStreamsObjectsLookupCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStreamsObjectsLookupCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.lookupstreamobjectrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/objects:lookup")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.streams.objects.lookup" call.
+// Exactly one of *StreamObject or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *StreamObject.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsStreamsObjectsLookupCall) Do(opts ...googleapi.CallOption) (*StreamObject, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StreamObject{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Use this method to look up a stream object by its source object identifier.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}/objects:lookup",
+	//   "httpMethod": "POST",
+	//   "id": "datastream.projects.locations.streams.objects.lookup",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent stream that owns the collection of objects.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/streams/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/objects:lookup",
+	//   "request": {
+	//     "$ref": "LookupStreamObjectRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "StreamObject"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.streams.objects.startBackfillJob":
+
+type ProjectsLocationsStreamsObjectsStartBackfillJobCall struct {
+	s                       *Service
+	object                  string
+	startbackfilljobrequest *StartBackfillJobRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// StartBackfillJob: Starts backfill job for the specified stream
+// object.
+//
+// - object: The name of the stream object resource to start a backfill
+//   job for.
+func (r *ProjectsLocationsStreamsObjectsService) StartBackfillJob(object string, startbackfilljobrequest *StartBackfillJobRequest) *ProjectsLocationsStreamsObjectsStartBackfillJobCall {
+	c := &ProjectsLocationsStreamsObjectsStartBackfillJobCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.object = object
+	c.startbackfilljobrequest = startbackfilljobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStreamsObjectsStartBackfillJobCall) Fields(s ...googleapi.Field) *ProjectsLocationsStreamsObjectsStartBackfillJobCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStreamsObjectsStartBackfillJobCall) Context(ctx context.Context) *ProjectsLocationsStreamsObjectsStartBackfillJobCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStreamsObjectsStartBackfillJobCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStreamsObjectsStartBackfillJobCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.startbackfilljobrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+object}:startBackfillJob")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"object": c.object,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.streams.objects.startBackfillJob" call.
+// Exactly one of *StartBackfillJobResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *StartBackfillJobResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsStreamsObjectsStartBackfillJobCall) Do(opts ...googleapi.CallOption) (*StartBackfillJobResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StartBackfillJobResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Starts backfill job for the specified stream object.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}/objects/{objectsId}:startBackfillJob",
+	//   "httpMethod": "POST",
+	//   "id": "datastream.projects.locations.streams.objects.startBackfillJob",
+	//   "parameterOrder": [
+	//     "object"
+	//   ],
+	//   "parameters": {
+	//     "object": {
+	//       "description": "Required. The name of the stream object resource to start a backfill job for.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/streams/[^/]+/objects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+object}:startBackfillJob",
+	//   "request": {
+	//     "$ref": "StartBackfillJobRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "StartBackfillJobResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "datastream.projects.locations.streams.objects.stopBackfillJob":
+
+type ProjectsLocationsStreamsObjectsStopBackfillJobCall struct {
+	s                      *Service
+	object                 string
+	stopbackfilljobrequest *StopBackfillJobRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// StopBackfillJob: Stops the backfill job for the specified stream
+// object.
+//
+// - object: The name of the stream object resource to stop the backfill
+//   job for.
+func (r *ProjectsLocationsStreamsObjectsService) StopBackfillJob(object string, stopbackfilljobrequest *StopBackfillJobRequest) *ProjectsLocationsStreamsObjectsStopBackfillJobCall {
+	c := &ProjectsLocationsStreamsObjectsStopBackfillJobCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.object = object
+	c.stopbackfilljobrequest = stopbackfilljobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsStreamsObjectsStopBackfillJobCall) Fields(s ...googleapi.Field) *ProjectsLocationsStreamsObjectsStopBackfillJobCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsStreamsObjectsStopBackfillJobCall) Context(ctx context.Context) *ProjectsLocationsStreamsObjectsStopBackfillJobCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsStreamsObjectsStopBackfillJobCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsStreamsObjectsStopBackfillJobCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.stopbackfilljobrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+object}:stopBackfillJob")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"object": c.object,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datastream.projects.locations.streams.objects.stopBackfillJob" call.
+// Exactly one of *StopBackfillJobResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *StopBackfillJobResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsStreamsObjectsStopBackfillJobCall) Do(opts ...googleapi.CallOption) (*StopBackfillJobResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &StopBackfillJobResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Stops the backfill job for the specified stream object.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}/objects/{objectsId}:stopBackfillJob",
+	//   "httpMethod": "POST",
+	//   "id": "datastream.projects.locations.streams.objects.stopBackfillJob",
+	//   "parameterOrder": [
+	//     "object"
+	//   ],
+	//   "parameters": {
+	//     "object": {
+	//       "description": "Required. The name of the stream object resource to stop the backfill job for.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/streams/[^/]+/objects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+object}:stopBackfillJob",
+	//   "request": {
+	//     "$ref": "StopBackfillJobRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "StopBackfillJobResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }

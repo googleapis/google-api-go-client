@@ -689,7 +689,7 @@ func (c *AssetlinksCheckCall) Header() http.Header {
 
 func (c *AssetlinksCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -934,7 +934,7 @@ func (c *StatementsListCall) Header() http.Header {
 
 func (c *StatementsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1678,11 +1678,11 @@ type ResourceRequirements struct {
 	Limits map[string]string `json:"limits,omitempty"`
 
 	// Requests: (Optional) Only memory and CPU are supported. Note: The
-	// only supported values for CPU are '1' and '2'. Requests describes the
-	// minimum amount of compute resources required. If Requests is omitted
-	// for a container, it defaults to Limits if that is explicitly
-	// specified, otherwise to an implementation-defined value. The values
-	// of the map is string form of the 'quantity' k8s type:
+	// only supported values for CPU are '1', '2', and '4'. Requests
+	// describes the minimum amount of compute resources required. If
+	// Requests is omitted for a container, it defaults to Limits if that is
+	// explicitly specified, otherwise to an implementation-defined value.
+	// The values of the map is string form of the 'quantity' k8s type:
 	// https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
 	Requests map[string]string `json:"requests,omitempty"`
 
@@ -2062,7 +2062,7 @@ func (c *NamespacesJobsCreateCall) Header() http.Header {
 
 func (c *NamespacesJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2227,7 +2227,7 @@ func (c *NamespacesJobsDeleteCall) Header() http.Header {
 
 func (c *NamespacesJobsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2386,7 +2386,7 @@ func (c *NamespacesJobsGetCall) Header() http.Header {
 
 func (c *NamespacesJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2587,7 +2587,7 @@ func (c *NamespacesJobsListCall) Header() http.Header {
 
 func (c *NamespacesJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211117")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211118")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

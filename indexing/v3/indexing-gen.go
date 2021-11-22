@@ -324,7 +324,7 @@ func (c *UrlNotificationsGetMetadataCall) Header() http.Header {
 
 func (c *UrlNotificationsGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -450,7 +450,7 @@ func (c *UrlNotificationsPublishCall) Header() http.Header {
 
 func (c *UrlNotificationsPublishCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211120")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211121")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

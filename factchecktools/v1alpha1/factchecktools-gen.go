@@ -730,7 +730,7 @@ func (c *ClaimsSearchCall) Header() http.Header {
 
 func (c *ClaimsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211126")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -910,7 +910,7 @@ func (c *PagesCreateCall) Header() http.Header {
 
 func (c *PagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211126")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1041,7 +1041,7 @@ func (c *PagesDeleteCall) Header() http.Header {
 
 func (c *PagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211126")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1185,7 +1185,7 @@ func (c *PagesGetCall) Header() http.Header {
 
 func (c *PagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211126")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1377,7 +1377,7 @@ func (c *PagesListCall) Header() http.Header {
 
 func (c *PagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211126")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1559,7 +1559,7 @@ func (c *PagesUpdateCall) Header() http.Header {
 
 func (c *PagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211126")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

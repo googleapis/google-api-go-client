@@ -75,41 +75,41 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = internaloption.WithDefaultEndpoint
 
-const apiId = "drive:v2"
-const apiName = "drive"
-const apiVersion = "v2"
-const basePath = "https://www.googleapis.com/drive/v2/"
+const apiId string = "drive:v2"
+const apiName string = "drive"
+const apiVersion string = "v2"
+const basePath string = "https://www.googleapis.com/drive/v2/"
 
 // OAuth2 scopes used by this API.
 const (
 	// See, edit, create, and delete all of your Google Drive files
-	DriveScope = "https://www.googleapis.com/auth/drive"
+	DriveScope string = "https://www.googleapis.com/auth/drive"
 
 	// See, create, and delete its own configuration data in your Google
 	// Drive
-	DriveAppdataScope = "https://www.googleapis.com/auth/drive.appdata"
+	DriveAppdataScope string = "https://www.googleapis.com/auth/drive.appdata"
 
 	// View your Google Drive apps
-	DriveAppsReadonlyScope = "https://www.googleapis.com/auth/drive.apps.readonly"
+	DriveAppsReadonlyScope string = "https://www.googleapis.com/auth/drive.apps.readonly"
 
 	// See, edit, create, and delete only the specific Google Drive files
 	// you use with this app
-	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
+	DriveFileScope string = "https://www.googleapis.com/auth/drive.file"
 
 	// View and manage metadata of files in your Google Drive
-	DriveMetadataScope = "https://www.googleapis.com/auth/drive.metadata"
+	DriveMetadataScope string = "https://www.googleapis.com/auth/drive.metadata"
 
 	// See information about your Google Drive files
-	DriveMetadataReadonlyScope = "https://www.googleapis.com/auth/drive.metadata.readonly"
+	DriveMetadataReadonlyScope string = "https://www.googleapis.com/auth/drive.metadata.readonly"
 
 	// View the photos, videos and albums in your Google Photos
-	DrivePhotosReadonlyScope = "https://www.googleapis.com/auth/drive.photos.readonly"
+	DrivePhotosReadonlyScope string = "https://www.googleapis.com/auth/drive.photos.readonly"
 
 	// See and download all your Google Drive files
-	DriveReadonlyScope = "https://www.googleapis.com/auth/drive.readonly"
+	DriveReadonlyScope string = "https://www.googleapis.com/auth/drive.readonly"
 
 	// Modify your Google Apps Script scripts' behavior
-	DriveScriptsScope = "https://www.googleapis.com/auth/drive.scripts"
+	DriveScriptsScope string= "https://www.googleapis.com/auth/drive.scripts"
 )
 
 // NewService creates a new Service.

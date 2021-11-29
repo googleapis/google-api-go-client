@@ -1111,7 +1111,7 @@ func (c *LocationsFetchVerificationOptionsCall) Header() http.Header {
 
 func (c *LocationsFetchVerificationOptionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1259,7 +1259,7 @@ func (c *LocationsGetVoiceOfMerchantStateCall) Header() http.Header {
 
 func (c *LocationsGetVoiceOfMerchantStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1393,7 +1393,7 @@ func (c *LocationsVerifyCall) Header() http.Header {
 
 func (c *LocationsVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1534,7 +1534,7 @@ func (c *LocationsVerificationsCompleteCall) Header() http.Header {
 
 func (c *LocationsVerificationsCompleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1698,7 +1698,7 @@ func (c *LocationsVerificationsListCall) Header() http.Header {
 
 func (c *LocationsVerificationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1864,7 +1864,7 @@ func (c *VerificationTokensGenerateCall) Header() http.Header {
 
 func (c *VerificationTokensGenerateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211127")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

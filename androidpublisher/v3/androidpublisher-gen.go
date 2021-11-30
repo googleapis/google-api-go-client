@@ -117,6 +117,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Edits = NewEditsService(s)
+	s.Generatedapks = NewGeneratedapksService(s)
 	s.Grants = NewGrantsService(s)
 	s.Inappproducts = NewInappproductsService(s)
 	s.Internalappsharingartifacts = NewInternalappsharingartifactsService(s)
@@ -135,6 +136,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Edits *EditsService
+
+	Generatedapks *GeneratedapksService
 
 	Grants *GrantsService
 
@@ -166,6 +169,7 @@ func NewEditsService(s *Service) *EditsService {
 	rs := &EditsService{s: s}
 	rs.Apks = NewEditsApksService(s)
 	rs.Bundles = NewEditsBundlesService(s)
+	rs.Countryavailability = NewEditsCountryavailabilityService(s)
 	rs.Deobfuscationfiles = NewEditsDeobfuscationfilesService(s)
 	rs.Details = NewEditsDetailsService(s)
 	rs.Expansionfiles = NewEditsExpansionfilesService(s)
@@ -182,6 +186,8 @@ type EditsService struct {
 	Apks *EditsApksService
 
 	Bundles *EditsBundlesService
+
+	Countryavailability *EditsCountryavailabilityService
 
 	Deobfuscationfiles *EditsDeobfuscationfilesService
 
@@ -213,6 +219,15 @@ func NewEditsBundlesService(s *Service) *EditsBundlesService {
 }
 
 type EditsBundlesService struct {
+	s *Service
+}
+
+func NewEditsCountryavailabilityService(s *Service) *EditsCountryavailabilityService {
+	rs := &EditsCountryavailabilityService{s: s}
+	return rs
+}
+
+type EditsCountryavailabilityService struct {
 	s *Service
 }
 
@@ -276,6 +291,15 @@ func NewEditsTracksService(s *Service) *EditsTracksService {
 }
 
 type EditsTracksService struct {
+	s *Service
+}
+
+func NewGeneratedapksService(s *Service) *GeneratedapksService {
+	rs := &GeneratedapksService{s: s}
+	return rs
+}
+
+type GeneratedapksService struct {
 	s *Service
 }
 
@@ -1285,6 +1309,226 @@ type ExternallyHostedApk struct {
 
 func (s *ExternallyHostedApk) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternallyHostedApk
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GeneratedApksListResponse: Response to list generated APKs.
+type GeneratedApksListResponse struct {
+	// GeneratedApks: All generated APKs, grouped by the APK signing key.
+	GeneratedApks []*GeneratedApksPerSigningKey `json:"generatedApks,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "GeneratedApks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GeneratedApks") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeneratedApksListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GeneratedApksListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GeneratedApksPerSigningKey: Download metadata for split, standalone
+// and universal APKs, as well as asset pack slices, signed with a given
+// key.
+type GeneratedApksPerSigningKey struct {
+	// CertificateSha256Hash: SHA256 hash of the APK signing public key
+	// certificate.
+	CertificateSha256Hash string `json:"certificateSha256Hash,omitempty"`
+
+	// GeneratedAssetPackSlices: List of asset pack slices which will be
+	// served for this app bundle, signed with a key corresponding to
+	// certificate_sha256_hash.
+	GeneratedAssetPackSlices []*GeneratedAssetPackSlice `json:"generatedAssetPackSlices,omitempty"`
+
+	// GeneratedSplitApks: List of generated split APKs, signed with a key
+	// corresponding to certificate_sha256_hash.
+	GeneratedSplitApks []*GeneratedSplitApk `json:"generatedSplitApks,omitempty"`
+
+	// GeneratedStandaloneApks: List of generated standalone APKs, signed
+	// with a key corresponding to certificate_sha256_hash.
+	GeneratedStandaloneApks []*GeneratedStandaloneApk `json:"generatedStandaloneApks,omitempty"`
+
+	// GeneratedUniversalApk: Generated universal APK, signed with a key
+	// corresponding to certificate_sha256_hash. This field is not set if no
+	// universal APK was generated for this signing key.
+	GeneratedUniversalApk *GeneratedUniversalApk `json:"generatedUniversalApk,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CertificateSha256Hash") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertificateSha256Hash") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeneratedApksPerSigningKey) MarshalJSON() ([]byte, error) {
+	type NoMethod GeneratedApksPerSigningKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GeneratedAssetPackSlice: Download metadata for an asset pack slice.
+type GeneratedAssetPackSlice struct {
+	// DownloadId: Download ID, which uniquely identifies the APK to
+	// download. Should be supplied to `generatedapks.download` method.
+	DownloadId string `json:"downloadId,omitempty"`
+
+	// ModuleName: Name of the module that this asset slice belongs to.
+	ModuleName string `json:"moduleName,omitempty"`
+
+	// SliceId: Asset slice ID.
+	SliceId string `json:"sliceId,omitempty"`
+
+	// Version: Asset module version.
+	Version int64 `json:"version,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DownloadId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DownloadId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeneratedAssetPackSlice) MarshalJSON() ([]byte, error) {
+	type NoMethod GeneratedAssetPackSlice
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GeneratedSplitApk: Download metadata for a split APK.
+type GeneratedSplitApk struct {
+	// DownloadId: Download ID, which uniquely identifies the APK to
+	// download. Should be supplied to `generatedapks.download` method.
+	DownloadId string `json:"downloadId,omitempty"`
+
+	// ModuleName: Name of the module that this APK belongs to.
+	ModuleName string `json:"moduleName,omitempty"`
+
+	// SplitId: Split ID. Empty for the main split of the base module.
+	SplitId string `json:"splitId,omitempty"`
+
+	// VariantId: ID of the generated variant.
+	VariantId int64 `json:"variantId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DownloadId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DownloadId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeneratedSplitApk) MarshalJSON() ([]byte, error) {
+	type NoMethod GeneratedSplitApk
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GeneratedStandaloneApk: Download metadata for a standalone APK.
+type GeneratedStandaloneApk struct {
+	// DownloadId: Download ID, which uniquely identifies the APK to
+	// download. Should be supplied to `generatedapks.download` method.
+	DownloadId string `json:"downloadId,omitempty"`
+
+	// VariantId: ID of the generated variant.
+	VariantId int64 `json:"variantId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DownloadId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DownloadId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeneratedStandaloneApk) MarshalJSON() ([]byte, error) {
+	type NoMethod GeneratedStandaloneApk
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GeneratedUniversalApk: Download metadata for a universal APK.
+type GeneratedUniversalApk struct {
+	// DownloadId: Download ID, which uniquely identifies the APK to
+	// download. Should be supplied to `generatedapks.download` method.
+	DownloadId string `json:"downloadId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DownloadId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DownloadId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeneratedUniversalApk) MarshalJSON() ([]byte, error) {
+	type NoMethod GeneratedUniversalApk
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3030,6 +3274,55 @@ func (s *Track) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TrackCountryAvailability: Resource for per-track country availability
+// information.
+type TrackCountryAvailability struct {
+	// Countries: A list of one or more countries where artifacts in this
+	// track are available. This list includes all countries that are
+	// targeted by the track, even if only specific carriers are targeted in
+	// that country.
+	Countries []*TrackTargetedCountry `json:"countries,omitempty"`
+
+	// RestOfWorld: Whether artifacts in this track are available to "rest
+	// of the world" countries.
+	RestOfWorld bool `json:"restOfWorld,omitempty"`
+
+	// SyncWithProduction: Whether this track's availability is synced with
+	// the default production track. See
+	// https://support.google.com/googleplay/android-developer/answer/7550024
+	// for more information on syncing country availability with production.
+	// Note that if this is true, the returned "countries" and
+	// "rest_of_world" fields will reflect the values for the default
+	// production track.
+	SyncWithProduction bool `json:"syncWithProduction,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Countries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Countries") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TrackCountryAvailability) MarshalJSON() ([]byte, error) {
+	type NoMethod TrackCountryAvailability
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TrackRelease: A release within a track.
 type TrackRelease struct {
 	// CountryTargeting: Restricts a release to a specific set of countries.
@@ -3110,6 +3403,35 @@ func (s *TrackRelease) UnmarshalJSON(data []byte) error {
 	}
 	s.UserFraction = float64(s1.UserFraction)
 	return nil
+}
+
+// TrackTargetedCountry: Representation of a single country where the
+// contents of a track are available.
+type TrackTargetedCountry struct {
+	// CountryCode: The country to target, as a two-letter CLDR code.
+	CountryCode string `json:"countryCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CountryCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CountryCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TrackTargetedCountry) MarshalJSON() ([]byte, error) {
+	type NoMethod TrackTargetedCountry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // TracksListResponse: Response listing all tracks.
@@ -3535,7 +3857,7 @@ func (c *EditsCommitCall) Header() http.Header {
 
 func (c *EditsCommitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3682,7 +4004,7 @@ func (c *EditsDeleteCall) Header() http.Header {
 
 func (c *EditsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3807,7 +4129,7 @@ func (c *EditsGetCall) Header() http.Header {
 
 func (c *EditsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3951,7 +4273,7 @@ func (c *EditsInsertCall) Header() http.Header {
 
 func (c *EditsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4093,7 +4415,7 @@ func (c *EditsValidateCall) Header() http.Header {
 
 func (c *EditsValidateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4241,7 +4563,7 @@ func (c *EditsApksAddexternallyhostedCall) Header() http.Header {
 
 func (c *EditsApksAddexternallyhostedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4402,7 +4724,7 @@ func (c *EditsApksListCall) Header() http.Header {
 
 func (c *EditsApksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4587,7 +4909,7 @@ func (c *EditsApksUploadCall) Header() http.Header {
 
 func (c *EditsApksUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4786,7 +5108,7 @@ func (c *EditsBundlesListCall) Header() http.Header {
 
 func (c *EditsBundlesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4985,7 +5307,7 @@ func (c *EditsBundlesUploadCall) Header() http.Header {
 
 func (c *EditsBundlesUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5128,6 +5450,173 @@ func (c *EditsBundlesUploadCall) Do(opts ...googleapi.CallOption) (*Bundle, erro
 
 }
 
+// method id "androidpublisher.edits.countryavailability.get":
+
+type EditsCountryavailabilityGetCall struct {
+	s            *Service
+	packageName  string
+	editId       string
+	track        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets country availability.
+//
+// - editId: Identifier of the edit.
+// - packageName: Package name of the app.
+// - track: The track to read from.
+func (r *EditsCountryavailabilityService) Get(packageName string, editId string, track string) *EditsCountryavailabilityGetCall {
+	c := &EditsCountryavailabilityGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.editId = editId
+	c.track = track
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EditsCountryavailabilityGetCall) Fields(s ...googleapi.Field) *EditsCountryavailabilityGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *EditsCountryavailabilityGetCall) IfNoneMatch(entityTag string) *EditsCountryavailabilityGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EditsCountryavailabilityGetCall) Context(ctx context.Context) *EditsCountryavailabilityGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EditsCountryavailabilityGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EditsCountryavailabilityGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/edits/{editId}/countryAvailability/{track}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"editId":      c.editId,
+		"track":       c.track,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.edits.countryavailability.get" call.
+// Exactly one of *TrackCountryAvailability or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TrackCountryAvailability.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *EditsCountryavailabilityGetCall) Do(opts ...googleapi.CallOption) (*TrackCountryAvailability, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TrackCountryAvailability{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets country availability.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/edits/{editId}/countryAvailability/{track}",
+	//   "httpMethod": "GET",
+	//   "id": "androidpublisher.edits.countryavailability.get",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "editId",
+	//     "track"
+	//   ],
+	//   "parameters": {
+	//     "editId": {
+	//       "description": "Identifier of the edit.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Package name of the app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "track": {
+	//       "description": "The track to read from.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/edits/{editId}/countryAvailability/{track}",
+	//   "response": {
+	//     "$ref": "TrackCountryAvailability"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
 // method id "androidpublisher.edits.deobfuscationfiles.upload":
 
 type EditsDeobfuscationfilesUploadCall struct {
@@ -5225,7 +5714,7 @@ func (c *EditsDeobfuscationfilesUploadCall) Header() http.Header {
 
 func (c *EditsDeobfuscationfilesUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5450,7 +5939,7 @@ func (c *EditsDetailsGetCall) Header() http.Header {
 
 func (c *EditsDetailsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5597,7 +6086,7 @@ func (c *EditsDetailsPatchCall) Header() http.Header {
 
 func (c *EditsDetailsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5749,7 +6238,7 @@ func (c *EditsDetailsUpdateCall) Header() http.Header {
 
 func (c *EditsDetailsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5918,7 +6407,7 @@ func (c *EditsExpansionfilesGetCall) Header() http.Header {
 
 func (c *EditsExpansionfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6102,7 +6591,7 @@ func (c *EditsExpansionfilesPatchCall) Header() http.Header {
 
 func (c *EditsExpansionfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6291,7 +6780,7 @@ func (c *EditsExpansionfilesUpdateCall) Header() http.Header {
 
 func (c *EditsExpansionfilesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6517,7 +7006,7 @@ func (c *EditsExpansionfilesUploadCall) Header() http.Header {
 
 func (c *EditsExpansionfilesUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6742,7 +7231,7 @@ func (c *EditsImagesDeleteCall) Header() http.Header {
 
 func (c *EditsImagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6912,7 +7401,7 @@ func (c *EditsImagesDeleteallCall) Header() http.Header {
 
 func (c *EditsImagesDeleteallCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7112,7 +7601,7 @@ func (c *EditsImagesListCall) Header() http.Header {
 
 func (c *EditsImagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7344,7 +7833,7 @@ func (c *EditsImagesUploadCall) Header() http.Header {
 
 func (c *EditsImagesUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7573,7 +8062,7 @@ func (c *EditsListingsDeleteCall) Header() http.Header {
 
 func (c *EditsListingsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7695,7 +8184,7 @@ func (c *EditsListingsDeleteallCall) Header() http.Header {
 
 func (c *EditsListingsDeleteallCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7824,7 +8313,7 @@ func (c *EditsListingsGetCall) Header() http.Header {
 
 func (c *EditsListingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7988,7 +8477,7 @@ func (c *EditsListingsListCall) Header() http.Header {
 
 func (c *EditsListingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8139,7 +8628,7 @@ func (c *EditsListingsPatchCall) Header() http.Header {
 
 func (c *EditsListingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8303,7 +8792,7 @@ func (c *EditsListingsUpdateCall) Header() http.Header {
 
 func (c *EditsListingsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8475,7 +8964,7 @@ func (c *EditsTestersGetCall) Header() http.Header {
 
 func (c *EditsTestersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8633,7 +9122,7 @@ func (c *EditsTestersPatchCall) Header() http.Header {
 
 func (c *EditsTestersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8796,7 +9285,7 @@ func (c *EditsTestersUpdateCall) Header() http.Header {
 
 func (c *EditsTestersUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8968,7 +9457,7 @@ func (c *EditsTracksGetCall) Header() http.Header {
 
 func (c *EditsTracksGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9132,7 +9621,7 @@ func (c *EditsTracksListCall) Header() http.Header {
 
 func (c *EditsTracksListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9282,7 +9771,7 @@ func (c *EditsTracksPatchCall) Header() http.Header {
 
 func (c *EditsTracksPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9445,7 +9934,7 @@ func (c *EditsTracksUpdateCall) Header() http.Header {
 
 func (c *EditsTracksUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9554,6 +10043,324 @@ func (c *EditsTracksUpdateCall) Do(opts ...googleapi.CallOption) (*Track, error)
 
 }
 
+// method id "androidpublisher.generatedapks.download":
+
+type GeneratedapksDownloadCall struct {
+	s            *Service
+	packageName  string
+	versionCode  int64
+	downloadId   string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Download: Downloads a single signed APK generated from an app bundle.
+//
+// - downloadId: Download ID, which uniquely identifies the APK to
+//   download. Can be obtained from the response of `generatedapks.list`
+//   method.
+// - packageName: Package name of the app.
+// - versionCode: Version code of the app bundle.
+func (r *GeneratedapksService) Download(packageName string, versionCode int64, downloadId string) *GeneratedapksDownloadCall {
+	c := &GeneratedapksDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.versionCode = versionCode
+	c.downloadId = downloadId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GeneratedapksDownloadCall) Fields(s ...googleapi.Field) *GeneratedapksDownloadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *GeneratedapksDownloadCall) IfNoneMatch(entityTag string) *GeneratedapksDownloadCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do and Download
+// methods. Any pending HTTP request will be aborted if the provided
+// context is canceled.
+func (c *GeneratedapksDownloadCall) Context(ctx context.Context) *GeneratedapksDownloadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GeneratedapksDownloadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *GeneratedapksDownloadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/generatedApks/{versionCode}/downloads/{downloadId}:download")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"versionCode": strconv.FormatInt(c.versionCode, 10),
+		"downloadId":  c.downloadId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Download fetches the API endpoint's "media" value, instead of the normal
+// API response value. If the returned error is nil, the Response is guaranteed to
+// have a 2xx status code. Callers must close the Response.Body as usual.
+func (c *GeneratedapksDownloadCall) Download(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("media")
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		res.Body.Close()
+		return nil, err
+	}
+	return res, nil
+}
+
+// Do executes the "androidpublisher.generatedapks.download" call.
+func (c *GeneratedapksDownloadCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Downloads a single signed APK generated from an app bundle.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/generatedApks/{versionCode}/downloads/{downloadId}:download",
+	//   "httpMethod": "GET",
+	//   "id": "androidpublisher.generatedapks.download",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "versionCode",
+	//     "downloadId"
+	//   ],
+	//   "parameters": {
+	//     "downloadId": {
+	//       "description": "Download ID, which uniquely identifies the APK to download. Can be obtained from the response of `generatedapks.list` method.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Package name of the app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "versionCode": {
+	//       "description": "Version code of the app bundle.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/generatedApks/{versionCode}/downloads/{downloadId}:download",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ],
+	//   "supportsMediaDownload": true,
+	//   "useMediaDownloadService": true
+	// }
+
+}
+
+// method id "androidpublisher.generatedapks.list":
+
+type GeneratedapksListCall struct {
+	s            *Service
+	packageName  string
+	versionCode  int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns download metadata for all APKs that were generated from
+// a given app bundle.
+//
+// - packageName: Package name of the app.
+// - versionCode: Version code of the app bundle.
+func (r *GeneratedapksService) List(packageName string, versionCode int64) *GeneratedapksListCall {
+	c := &GeneratedapksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.versionCode = versionCode
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GeneratedapksListCall) Fields(s ...googleapi.Field) *GeneratedapksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *GeneratedapksListCall) IfNoneMatch(entityTag string) *GeneratedapksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *GeneratedapksListCall) Context(ctx context.Context) *GeneratedapksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GeneratedapksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *GeneratedapksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/generatedApks/{versionCode}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"versionCode": strconv.FormatInt(c.versionCode, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.generatedapks.list" call.
+// Exactly one of *GeneratedApksListResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GeneratedApksListResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *GeneratedapksListCall) Do(opts ...googleapi.CallOption) (*GeneratedApksListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GeneratedApksListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns download metadata for all APKs that were generated from a given app bundle.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/generatedApks/{versionCode}",
+	//   "httpMethod": "GET",
+	//   "id": "androidpublisher.generatedapks.list",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "versionCode"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Package name of the app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "versionCode": {
+	//       "description": "Version code of the app bundle.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/generatedApks/{versionCode}",
+	//   "response": {
+	//     "$ref": "GeneratedApksListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
 // method id "androidpublisher.grants.create":
 
 type GrantsCreateCall struct {
@@ -9603,7 +10410,7 @@ func (c *GrantsCreateCall) Header() http.Header {
 
 func (c *GrantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9745,7 +10552,7 @@ func (c *GrantsDeleteCall) Header() http.Header {
 
 func (c *GrantsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9859,7 +10666,7 @@ func (c *GrantsPatchCall) Header() http.Header {
 
 func (c *GrantsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10009,7 +10816,7 @@ func (c *InappproductsDeleteCall) Header() http.Header {
 
 func (c *InappproductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10135,7 +10942,7 @@ func (c *InappproductsGetCall) Header() http.Header {
 
 func (c *InappproductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10290,7 +11097,7 @@ func (c *InappproductsInsertCall) Header() http.Header {
 
 func (c *InappproductsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10471,7 +11278,7 @@ func (c *InappproductsListCall) Header() http.Header {
 
 func (c *InappproductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10638,7 +11445,7 @@ func (c *InappproductsPatchCall) Header() http.Header {
 
 func (c *InappproductsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10814,7 +11621,7 @@ func (c *InappproductsUpdateCall) Header() http.Header {
 
 func (c *InappproductsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11016,7 +11823,7 @@ func (c *InternalappsharingartifactsUploadapkCall) Header() http.Header {
 
 func (c *InternalappsharingartifactsUploadapkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11238,7 +12045,7 @@ func (c *InternalappsharingartifactsUploadbundleCall) Header() http.Header {
 
 func (c *InternalappsharingartifactsUploadbundleCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11418,7 +12225,7 @@ func (c *MonetizationConvertRegionPricesCall) Header() http.Header {
 
 func (c *MonetizationConvertRegionPricesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11574,7 +12381,7 @@ func (c *OrdersRefundCall) Header() http.Header {
 
 func (c *OrdersRefundCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11701,7 +12508,7 @@ func (c *PurchasesProductsAcknowledgeCall) Header() http.Header {
 
 func (c *PurchasesProductsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11848,7 +12655,7 @@ func (c *PurchasesProductsGetCall) Header() http.Header {
 
 func (c *PurchasesProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12009,7 +12816,7 @@ func (c *PurchasesSubscriptionsAcknowledgeCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsAcknowledgeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12146,7 +12953,7 @@ func (c *PurchasesSubscriptionsCancelCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12277,7 +13084,7 @@ func (c *PurchasesSubscriptionsDeferCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsDeferCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12454,7 +13261,7 @@ func (c *PurchasesSubscriptionsGetCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12615,7 +13422,7 @@ func (c *PurchasesSubscriptionsRefundCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsRefundCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12745,7 +13552,7 @@ func (c *PurchasesSubscriptionsRevokeCall) Header() http.Header {
 
 func (c *PurchasesSubscriptionsRevokeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12940,7 +13747,7 @@ func (c *PurchasesVoidedpurchasesListCall) Header() http.Header {
 
 func (c *PurchasesVoidedpurchasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13130,7 +13937,7 @@ func (c *ReviewsGetCall) Header() http.Header {
 
 func (c *ReviewsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13316,7 +14123,7 @@ func (c *ReviewsListCall) Header() http.Header {
 
 func (c *ReviewsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13477,7 +14284,7 @@ func (c *ReviewsReplyCall) Header() http.Header {
 
 func (c *ReviewsReplyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13630,7 +14437,7 @@ func (c *SystemapksVariantsCreateCall) Header() http.Header {
 
 func (c *SystemapksVariantsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13796,7 +14603,7 @@ func (c *SystemapksVariantsDownloadCall) Header() http.Header {
 
 func (c *SystemapksVariantsDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -13955,7 +14762,7 @@ func (c *SystemapksVariantsGetCall) Header() http.Header {
 
 func (c *SystemapksVariantsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14121,7 +14928,7 @@ func (c *SystemapksVariantsListCall) Header() http.Header {
 
 func (c *SystemapksVariantsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14267,7 +15074,7 @@ func (c *UsersCreateCall) Header() http.Header {
 
 func (c *UsersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14409,7 +15216,7 @@ func (c *UsersDeleteCall) Header() http.Header {
 
 func (c *UsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14540,7 +15347,7 @@ func (c *UsersListCall) Header() http.Header {
 
 func (c *UsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -14717,7 +15524,7 @@ func (c *UsersPatchCall) Header() http.Header {
 
 func (c *UsersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211128")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

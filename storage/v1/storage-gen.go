@@ -55,6 +55,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/googleapis/gax-go/v2"
 	googleapi "google.golang.org/api/googleapi"
 	gensupport "google.golang.org/api/internal/gensupport"
 	option "google.golang.org/api/option"
@@ -10099,6 +10100,7 @@ type ObjectsInsertCall struct {
 	mediaInfo_ *gensupport.MediaInfo
 	ctx_       context.Context
 	header_    http.Header
+	retry      *gensupport.RetryConfig
 }
 
 // Insert: Stores a new object and metadata.
@@ -10265,6 +10267,29 @@ func (c *ObjectsInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *Objec
 	return c
 }
 
+// WithRetry causes the library to retry the initial request of the upload
+// (for resumable uploads) or the entire upload (for multipart uploads) if
+// a transient error occurs. This is contingent on ChunkSize being > 0 (so
+// that the input data may be buffered). The backoff argument will be used to
+// determine exponential backoff timing, and the errorFunc is used to determine
+// which errors are considered retryable. By default, exponetial backoff will be
+// applied using gax defaults, and the following errors are retried:
+//
+// - HTTP responses with codes 429, 502, 503, and 504.
+//
+// - Transient network errors such as connection reset and io.ErrUnexpectedEOF.
+//
+// - Errors which are considered transient using the Temporary() interface.
+//
+// - Wrapped versions of these errors.
+func (c *ObjectsInsertCall) WithRetry(bo *gax.Backoff, errorFunc func(err error) bool) *ObjectsInsertCall {
+	c.retry = &gensupport.RetryConfig{
+		Backoff:     bo,
+		ShouldRetry: errorFunc,
+	}
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -10328,7 +10353,11 @@ func (c *ObjectsInsertCall) doRequest(alt string) (*http.Response, error) {
 	googleapi.Expand(req.URL, map[string]string{
 		"bucket": c.bucket,
 	})
-	return gensupport.SendRequestWithRetry(c.ctx_, c.s.client, req)
+	if c.retry != nil {
+		return gensupport.SendRequestWithRetry(c.ctx_, c.s.client, req, c.retry)
+	} else {
+		return gensupport.SendRequest(c.ctx_, c.s.client, req)
+	}
 }
 
 // Do executes the "storage.objects.insert" call.

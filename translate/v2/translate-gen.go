@@ -565,7 +565,7 @@ func (c *DetectionsDetectCall) Header() http.Header {
 
 func (c *DetectionsDetectCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -706,7 +706,7 @@ func (c *DetectionsListCall) Header() http.Header {
 
 func (c *DetectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -862,7 +862,7 @@ func (c *LanguagesListCall) Header() http.Header {
 
 func (c *LanguagesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1052,7 +1052,7 @@ func (c *TranslationsListCall) Header() http.Header {
 
 func (c *TranslationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1220,7 +1220,7 @@ func (c *TranslationsTranslateCall) Header() http.Header {
 
 func (c *TranslationsTranslateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

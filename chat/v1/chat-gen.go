@@ -2926,8 +2926,8 @@ func (s *Media) MarshalJSON() ([]byte, error) {
 
 // Membership: Represents a membership relation in Google Chat.
 type Membership struct {
-	// CreateTime: The creation time of the membership a.k.a. the time at
-	// which the member joined the space, if applicable.
+	// CreateTime: Output only. The creation time of the membership a.k.a.
+	// the time at which the member joined the space, if applicable.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Member: A user in Google Chat.
@@ -2935,7 +2935,8 @@ type Membership struct {
 
 	Name string `json:"name,omitempty"`
 
-	// State: State of the membership.
+	// State: State of the membership. Required for `CreateMembership`.
+	// Read-only for other usage.
 	//
 	// Possible values:
 	//   "MEMBERSHIP_STATE_UNSPECIFIED" - Default, do not use.
@@ -3011,7 +3012,7 @@ type Message struct {
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
 
 	// Name: Resource name in the form `spaces/*/messages/*`. Example:
-	// `spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4`
+	// `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`
 	Name string `json:"name,omitempty"`
 
 	// PreviewText: Text for generating preview chips. This text will not be
@@ -3231,24 +3232,24 @@ func (s *SlashCommandMetadata) MarshalJSON() ([]byte, error) {
 // Space: A space in Google Chat. Spaces are conversations between two
 // or more users or 1:1 messages between a user and a Chat bot.
 type Space struct {
-	// DisplayName: The display name (only if the space is of type `ROOM`).
-	// Please note that this field might not be populated in direct messages
-	// between humans.
+	// DisplayName: The space's display name. For direct messages between
+	// humans, this field might be empty.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Resource name of the space, in the form "spaces/*". Example:
 	// spaces/AAAAAAAAAAAA
 	Name string `json:"name,omitempty"`
 
-	// SingleUserBotDm: Whether the space is a DM between a bot and a single
-	// human.
+	// SingleUserBotDm: Output only. Whether the space is a DM between a bot
+	// and a single human.
 	SingleUserBotDm bool `json:"singleUserBotDm,omitempty"`
 
-	// Threaded: Whether the messages are threaded in this space.
+	// Threaded: Output only. Whether the messages are threaded in this
+	// space.
 	Threaded bool `json:"threaded,omitempty"`
 
-	// Type: Output only. The type of a space. This is deprecated. Use
-	// `single_user_bot_dm` instead.
+	// Type: Deprecated. Use `single_user_bot_dm` instead. Output only. The
+	// type of a space.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED"
@@ -3419,7 +3420,7 @@ func (s *TextParagraph) MarshalJSON() ([]byte, error) {
 // Thread: A thread in Google Chat.
 type Thread struct {
 	// Name: Resource name, in the form "spaces/*/threads/*". Example:
-	// spaces/AAAAMpdlehY/threads/UMxbHmzDlr4
+	// spaces/AAAAAAAAAAA/threads/TTTTTTTTTTT
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -3641,7 +3642,7 @@ type DmsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *DmsService) Messages(parent string, message *Message) *DmsMessagesCall {
 	c := &DmsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3699,7 +3700,7 @@ func (c *DmsMessagesCall) Header() http.Header {
 
 func (c *DmsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3772,7 +3773,7 @@ func (c *DmsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^dms/[^/]+$",
 	//       "required": true,
@@ -3815,7 +3816,7 @@ type DmsWebhooksCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *DmsService) Webhooks(parent string, message *Message) *DmsWebhooksCall {
 	c := &DmsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3873,7 +3874,7 @@ func (c *DmsWebhooksCall) Header() http.Header {
 
 func (c *DmsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3946,7 +3947,7 @@ func (c *DmsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^dms/[^/]+$",
 	//       "required": true,
@@ -3989,7 +3990,7 @@ type DmsConversationsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *DmsConversationsService) Messages(parent string, message *Message) *DmsConversationsMessagesCall {
 	c := &DmsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4047,7 +4048,7 @@ func (c *DmsConversationsMessagesCall) Header() http.Header {
 
 func (c *DmsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4120,7 +4121,7 @@ func (c *DmsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Messag
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^dms/[^/]+/conversations/[^/]+$",
 	//       "required": true,
@@ -4207,7 +4208,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4325,7 +4326,7 @@ type RoomsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *RoomsService) Messages(parent string, message *Message) *RoomsMessagesCall {
 	c := &RoomsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4383,7 +4384,7 @@ func (c *RoomsMessagesCall) Header() http.Header {
 
 func (c *RoomsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4456,7 +4457,7 @@ func (c *RoomsMessagesCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^rooms/[^/]+$",
 	//       "required": true,
@@ -4499,7 +4500,7 @@ type RoomsWebhooksCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *RoomsService) Webhooks(parent string, message *Message) *RoomsWebhooksCall {
 	c := &RoomsWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4557,7 +4558,7 @@ func (c *RoomsWebhooksCall) Header() http.Header {
 
 func (c *RoomsWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4630,7 +4631,7 @@ func (c *RoomsWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) {
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^rooms/[^/]+$",
 	//       "required": true,
@@ -4673,7 +4674,7 @@ type RoomsConversationsMessagesCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *RoomsConversationsService) Messages(parent string, message *Message) *RoomsConversationsMessagesCall {
 	c := &RoomsConversationsMessagesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4731,7 +4732,7 @@ func (c *RoomsConversationsMessagesCall) Header() http.Header {
 
 func (c *RoomsConversationsMessagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4804,7 +4805,7 @@ func (c *RoomsConversationsMessagesCall) Do(opts ...googleapi.CallOption) (*Mess
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^rooms/[^/]+/conversations/[^/]+$",
 	//       "required": true,
@@ -4890,7 +4891,7 @@ func (c *SpacesGetCall) Header() http.Header {
 
 func (c *SpacesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5044,7 +5045,7 @@ func (c *SpacesListCall) Header() http.Header {
 
 func (c *SpacesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5165,7 +5166,7 @@ type SpacesWebhooksCall struct {
 // in a BadRequest response.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *SpacesService) Webhooks(parent string, message *Message) *SpacesWebhooksCall {
 	c := &SpacesWebhooksCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5223,7 +5224,7 @@ func (c *SpacesWebhooksCall) Header() http.Header {
 
 func (c *SpacesWebhooksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5296,7 +5297,7 @@ func (c *SpacesWebhooksCall) Do(opts ...googleapi.CallOption) (*Message, error) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
@@ -5383,7 +5384,7 @@ func (c *SpacesMembersGetCall) Header() http.Header {
 
 func (c *SpacesMembersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5542,7 +5543,7 @@ func (c *SpacesMembersListCall) Header() http.Header {
 
 func (c *SpacesMembersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5674,7 +5675,7 @@ type SpacesMessagesCreateCall struct {
 // Create: Creates a message.
 //
 // - parent: Space resource name, in the form "spaces/*". Example:
-//   spaces/AAAAMpdlehY.
+//   spaces/AAAAAAAAAAA.
 func (r *SpacesMessagesService) Create(parent string, message *Message) *SpacesMessagesCreateCall {
 	c := &SpacesMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5732,7 +5733,7 @@ func (c *SpacesMessagesCreateCall) Header() http.Header {
 
 func (c *SpacesMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5805,7 +5806,7 @@ func (c *SpacesMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+	//       "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,
@@ -5847,7 +5848,7 @@ type SpacesMessagesDeleteCall struct {
 //
 // - name: Resource name of the message to be deleted, in the form
 //   "spaces/*/messages/*" Example:
-//   spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4.
+//   spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB.
 func (r *SpacesMessagesService) Delete(name string) *SpacesMessagesDeleteCall {
 	c := &SpacesMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5881,7 +5882,7 @@ func (c *SpacesMessagesDeleteCall) Header() http.Header {
 
 func (c *SpacesMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5949,7 +5950,7 @@ func (c *SpacesMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the message to be deleted, in the form \"spaces/*/messages/*\" Example: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
+	//       "description": "Required. Resource name of the message to be deleted, in the form \"spaces/*/messages/*\" Example: spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
 	//       "required": true,
@@ -5979,7 +5980,7 @@ type SpacesMessagesGetCall struct {
 //
 // - name: Resource name of the message to be retrieved, in the form
 //   "spaces/*/messages/*". Example:
-//   spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4.
+//   spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB.
 func (r *SpacesMessagesService) Get(name string) *SpacesMessagesGetCall {
 	c := &SpacesMessagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6023,7 +6024,7 @@ func (c *SpacesMessagesGetCall) Header() http.Header {
 
 func (c *SpacesMessagesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6094,7 +6095,7 @@ func (c *SpacesMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the message to be retrieved, in the form \"spaces/*/messages/*\". Example: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
+	//       "description": "Required. Resource name of the message to be retrieved, in the form \"spaces/*/messages/*\". Example: spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
 	//       "required": true,
@@ -6123,7 +6124,7 @@ type SpacesMessagesUpdateCall struct {
 // Update: Updates a message.
 //
 // - name: Resource name in the form `spaces/*/messages/*`. Example:
-//   `spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4`.
+//   `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`.
 func (r *SpacesMessagesService) Update(name string, message *Message) *SpacesMessagesUpdateCall {
 	c := &SpacesMessagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6167,7 +6168,7 @@ func (c *SpacesMessagesUpdateCall) Header() http.Header {
 
 func (c *SpacesMessagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6240,7 +6241,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name in the form `spaces/*/messages/*`. Example: `spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4`",
+	//       "description": "Resource name in the form `spaces/*/messages/*`. Example: `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/messages/[^/]+$",
 	//       "required": true,
@@ -6323,7 +6324,7 @@ func (c *SpacesMessagesAttachmentsGetCall) Header() http.Header {
 
 func (c *SpacesMessagesAttachmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211129")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

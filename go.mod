@@ -14,5 +14,5 @@ require (
 	golang.org/x/sys v0.0.0-20211124211545-fe61309f8881
 	google.golang.org/appengine v1.6.7
 	google.golang.org/genproto v0.0.0-20211118181313-81c1377c94b1
-	google.golang.org/grpc v1.40.0
+	google.golang.org/grpc v1.40.1
 )

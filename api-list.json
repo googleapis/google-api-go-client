@@ -209,7 +209,7 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "http://code.google.com/apis/adsense/management/",
+      "documentationLink": "https://developers.google.com/adsense/management/",
       "preferred": true
     },
     {

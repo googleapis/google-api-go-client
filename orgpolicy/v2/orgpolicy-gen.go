@@ -178,6 +178,7 @@ type FoldersPoliciesService struct {
 func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs := &OrganizationsService{s: s}
 	rs.Constraints = NewOrganizationsConstraintsService(s)
+	rs.CustomConstraints = NewOrganizationsCustomConstraintsService(s)
 	rs.Policies = NewOrganizationsPoliciesService(s)
 	return rs
 }
@@ -186,6 +187,8 @@ type OrganizationsService struct {
 	s *Service
 
 	Constraints *OrganizationsConstraintsService
+
+	CustomConstraints *OrganizationsCustomConstraintsService
 
 	Policies *OrganizationsPoliciesService
 }
@@ -196,6 +199,15 @@ func NewOrganizationsConstraintsService(s *Service) *OrganizationsConstraintsSer
 }
 
 type OrganizationsConstraintsService struct {
+	s *Service
+}
+
+func NewOrganizationsCustomConstraintsService(s *Service) *OrganizationsCustomConstraintsService {
+	rs := &OrganizationsCustomConstraintsService{s: s}
+	return rs
+}
+
+type OrganizationsCustomConstraintsService struct {
 	s *Service
 }
 
@@ -357,6 +369,82 @@ type GoogleCloudOrgpolicyV2ConstraintListConstraint struct {
 
 func (s *GoogleCloudOrgpolicyV2ConstraintListConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2ConstraintListConstraint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudOrgpolicyV2CustomConstraint: A custom constraint defined
+// by customers which can *only* be applied to the given resource types
+// and organization. By creating a custom constraint, customers can
+// applied policies of this custom constraint. *Creating a custom
+// constraint itself does NOT apply any policy enforcement*.
+type GoogleCloudOrgpolicyV2CustomConstraint struct {
+	// ActionType: Allow or deny type.
+	//
+	// Possible values:
+	//   "ACTION_TYPE_UNSPECIFIED" - Unspecified. Will results in user
+	// error.
+	//   "ALLOW" - Allowed action type.
+	//   "DENY" - Deny action type.
+	ActionType string `json:"actionType,omitempty"`
+
+	// Condition: Org policy condition/expression. For example:
+	// `resource.instanceName.matches("[production|test]_.*_(\d)+")'` or,
+	// `resource.management.auto_upgrade == true`
+	Condition string `json:"condition,omitempty"`
+
+	// Description: Detailed information about this custom policy
+	// constraint.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: One line display name for the UI.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// MethodTypes: All the operations being applied for this constraint.
+	//
+	// Possible values:
+	//   "METHOD_TYPE_UNSPECIFIED" - Unspecified. Will results in user
+	// error.
+	//   "CREATE" - Constraint applied when creating the resource.
+	//   "UPDATE" - Constraint applied when updating the resource.
+	//   "DELETE" - Constraint applied when deleting the resource.
+	MethodTypes []string `json:"methodTypes,omitempty"`
+
+	// Name: Immutable. Name of the constraint. This is unique within the
+	// organization. Format of the name should be *
+	// `organizations/{organization_id}/customConstraints/{custom_constraint_
+	// id}` Example :
+	// "organizations/123/customConstraints/custom.createOnlyE2TypeVms"
+	Name string `json:"name,omitempty"`
+
+	// ResourceTypes: Immutable. The Resource Instance type on which this
+	// policy applies to. Format will be of the form : "/" Example: *
+	// `compute.googleapis.com/Instance`.
+	ResourceTypes []string `json:"resourceTypes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudOrgpolicyV2CustomConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudOrgpolicyV2CustomConstraint
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -798,7 +886,7 @@ func (c *FoldersConstraintsListCall) Header() http.Header {
 
 func (c *FoldersConstraintsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -975,7 +1063,7 @@ func (c *FoldersPoliciesCreateCall) Header() http.Header {
 
 func (c *FoldersPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1117,7 +1205,7 @@ func (c *FoldersPoliciesDeleteCall) Header() http.Header {
 
 func (c *FoldersPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1263,7 +1351,7 @@ func (c *FoldersPoliciesGetCall) Header() http.Header {
 
 func (c *FoldersPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1415,7 +1503,7 @@ func (c *FoldersPoliciesGetEffectivePolicyCall) Header() http.Header {
 
 func (c *FoldersPoliciesGetEffectivePolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1582,7 +1670,7 @@ func (c *FoldersPoliciesListCall) Header() http.Header {
 
 func (c *FoldersPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1767,7 +1855,7 @@ func (c *FoldersPoliciesPatchCall) Header() http.Header {
 
 func (c *FoldersPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1938,7 +2026,7 @@ func (c *OrganizationsConstraintsListCall) Header() http.Header {
 
 func (c *OrganizationsConstraintsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2061,6 +2149,156 @@ func (c *OrganizationsConstraintsListCall) Pages(ctx context.Context, f func(*Go
 	}
 }
 
+// method id "orgpolicy.organizations.customConstraints.patch":
+
+type OrganizationsCustomConstraintsPatchCall struct {
+	s                                      *Service
+	name                                   string
+	googlecloudorgpolicyv2customconstraint *GoogleCloudOrgpolicyV2CustomConstraint
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Patch: Updates a Custom Constraint. Returns a `google.rpc.Status`
+// with `google.rpc.Code.NOT_FOUND` if the constraint does not exist.
+// Note: the supplied policy will perform a full overwrite of all
+// fields.
+//
+// - name: Immutable. Name of the constraint. This is unique within the
+//   organization. Format of the name should be *
+//   `organizations/{organization_id}/customConstraints/{custom_constrain
+//   t_id}` Example :
+//   "organizations/123/customConstraints/custom.createOnlyE2TypeVms".
+func (r *OrganizationsCustomConstraintsService) Patch(name string, googlecloudorgpolicyv2customconstraint *GoogleCloudOrgpolicyV2CustomConstraint) *OrganizationsCustomConstraintsPatchCall {
+	c := &OrganizationsCustomConstraintsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudorgpolicyv2customconstraint = googlecloudorgpolicyv2customconstraint
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsCustomConstraintsPatchCall) Fields(s ...googleapi.Field) *OrganizationsCustomConstraintsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsCustomConstraintsPatchCall) Context(ctx context.Context) *OrganizationsCustomConstraintsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsCustomConstraintsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsCustomConstraintsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudorgpolicyv2customconstraint)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "orgpolicy.organizations.customConstraints.patch" call.
+// Exactly one of *GoogleCloudOrgpolicyV2CustomConstraint or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudOrgpolicyV2CustomConstraint.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsCustomConstraintsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2CustomConstraint, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudOrgpolicyV2CustomConstraint{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a Custom Constraint. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint does not exist. Note: the supplied policy will perform a full overwrite of all fields.",
+	//   "flatPath": "v2/organizations/{organizationsId}/customConstraints/{customConstraintsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "orgpolicy.organizations.customConstraints.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Immutable. Name of the constraint. This is unique within the organization. Format of the name should be * `organizations/{organization_id}/customConstraints/{custom_constraint_id}` Example : \"organizations/123/customConstraints/custom.createOnlyE2TypeVms\"",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/customConstraints/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudOrgpolicyV2CustomConstraint"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudOrgpolicyV2CustomConstraint"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "orgpolicy.organizations.policies.create":
 
 type OrganizationsPoliciesCreateCall struct {
@@ -2115,7 +2353,7 @@ func (c *OrganizationsPoliciesCreateCall) Header() http.Header {
 
 func (c *OrganizationsPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2257,7 +2495,7 @@ func (c *OrganizationsPoliciesDeleteCall) Header() http.Header {
 
 func (c *OrganizationsPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2403,7 +2641,7 @@ func (c *OrganizationsPoliciesGetCall) Header() http.Header {
 
 func (c *OrganizationsPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2555,7 +2793,7 @@ func (c *OrganizationsPoliciesGetEffectivePolicyCall) Header() http.Header {
 
 func (c *OrganizationsPoliciesGetEffectivePolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2722,7 +2960,7 @@ func (c *OrganizationsPoliciesListCall) Header() http.Header {
 
 func (c *OrganizationsPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2907,7 +3145,7 @@ func (c *OrganizationsPoliciesPatchCall) Header() http.Header {
 
 func (c *OrganizationsPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3078,7 +3316,7 @@ func (c *ProjectsConstraintsListCall) Header() http.Header {
 
 func (c *ProjectsConstraintsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3255,7 +3493,7 @@ func (c *ProjectsPoliciesCreateCall) Header() http.Header {
 
 func (c *ProjectsPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3397,7 +3635,7 @@ func (c *ProjectsPoliciesDeleteCall) Header() http.Header {
 
 func (c *ProjectsPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3543,7 +3781,7 @@ func (c *ProjectsPoliciesGetCall) Header() http.Header {
 
 func (c *ProjectsPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3695,7 +3933,7 @@ func (c *ProjectsPoliciesGetEffectivePolicyCall) Header() http.Header {
 
 func (c *ProjectsPoliciesGetEffectivePolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3862,7 +4100,7 @@ func (c *ProjectsPoliciesListCall) Header() http.Header {
 
 func (c *ProjectsPoliciesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4047,7 +4285,7 @@ func (c *ProjectsPoliciesPatchCall) Header() http.Header {
 
 func (c *ProjectsPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

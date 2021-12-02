@@ -347,7 +347,7 @@ type AndroidInstrumentationTest struct {
 	// OrchestratorOption: The option of whether running each test within
 	// its own invocation of instrumentation with Android Test Orchestrator
 	// or not. ** Orchestrator is only compatible with AndroidJUnitRunner
-	// version 1.0 or higher! ** Orchestrator offers the following benefits:
+	// version 1.1 or higher! ** Orchestrator offers the following benefits:
 	// - No shared state - Crashes are isolated - Logs are scoped per test
 	// See for more information about Android Test Orchestrator. If not set,
 	// the test will be run without the orchestrator.
@@ -359,7 +359,7 @@ type AndroidInstrumentationTest struct {
 	// with the orchestrator. Using the orchestrator is highly encouraged
 	// because of all the benefits it offers.
 	//   "USE_ORCHESTRATOR" - Run test using orchestrator. ** Only
-	// compatible with AndroidJUnitRunner version 1.0 or higher! **
+	// compatible with AndroidJUnitRunner version 1.1 or higher! **
 	// Recommended.
 	//   "DO_NOT_USE_ORCHESTRATOR" - Run test without using orchestrator.
 	OrchestratorOption string `json:"orchestratorOption,omitempty"`
@@ -2695,7 +2695,7 @@ type TestMatrix struct {
 	//   "INSTRUMENTATION_ORCHESTRATOR_INCOMPATIBLE" - The test runner class
 	// specified by user or in the test APK's manifest file is not
 	// compatible with Android Test Orchestrator. Orchestrator is only
-	// compatible with AndroidJUnitRunner version 1.0 or higher.
+	// compatible with AndroidJUnitRunner version 1.1 or higher.
 	// Orchestrator can be disabled by using DO_NOT_USE_ORCHESTRATOR
 	// OrchestratorOption.
 	//   "NO_TEST_RUNNER_CLASS" - The test APK does not contain the test
@@ -3294,7 +3294,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Header() http.Header {
 
 func (c *ApplicationDetailServiceGetApkDetailsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3430,7 +3430,7 @@ func (c *ProjectsTestMatricesCancelCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3586,7 +3586,7 @@ func (c *ProjectsTestMatricesCreateCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3748,7 +3748,7 @@ func (c *ProjectsTestMatricesGetCall) Header() http.Header {
 
 func (c *ProjectsTestMatricesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3912,7 +3912,7 @@ func (c *TestEnvironmentCatalogGetCall) Header() http.Header {
 
 func (c *TestEnvironmentCatalogGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211130")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211201")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

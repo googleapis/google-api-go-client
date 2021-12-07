@@ -3274,7 +3274,7 @@
       }
     }
   },
-  "revision": "20211201",
+  "revision": "20211203",
   "rootUrl": "https://analyticsadmin.googleapis.com/",
   "schemas": {
     "GoogleAnalyticsAdminV1alphaAccount": {
@@ -4912,7 +4912,9 @@
               "MEASUREMENT_PROTOCOL_SECRET",
               "CUSTOM_DIMENSION",
               "CUSTOM_METRIC",
-              "DATA_RETENTION_SETTINGS"
+              "DATA_RETENTION_SETTINGS",
+              "DISPLAY_VIDEO_360_ADVERTISER_LINK",
+              "DISPLAY_VIDEO_360_ADVERTISER_LINK_PROPOSAL"
             ],
             "enumDescriptions": [
               "Resource type unknown or not specified.",
@@ -4928,7 +4930,9 @@
               "MeasurementProtocolSecret resource",
               "CustomDimension resource",
               "CustomMetric resource",
-              "DataRetentionSettings resource"
+              "DataRetentionSettings resource",
+              "DisplayVideo360AdvertiserLink resource",
+              "DisplayVideo360AdvertiserLinkProposal resource"
             ],
             "type": "string"
           },

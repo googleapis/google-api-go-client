@@ -1102,20 +1102,24 @@ type ObjectConditions struct {
 	// of the day * `last_modified_before` to the end of the day
 	LastModifiedSince string `json:"lastModifiedSince,omitempty"`
 
-	// MaxTimeElapsedSinceLastModification: If specified, only objects with
-	// a "last modification time" on or after `NOW` -
-	// `max_time_elapsed_since_last_modification` and objects that don't
-	// have a "last modification time" are transferred. For each
-	// TransferOperation started by this TransferJob, `NOW` refers to the
-	// start_time of the `TransferOperation`.
+	// MaxTimeElapsedSinceLastModification: Ensures that objects are not
+	// transferred if a specific maximum time has elapsed since the "last
+	// modification time". When a TransferOperation begins, objects with a
+	// "last modification time" are transferred only if the elapsed time
+	// between the start_time of the `TransferOperation`and the "last
+	// modification time" of the object is less than the value of
+	// max_time_elapsed_since_last_modification`. Objects that do not have a
+	// "last modification time" are also transferred.
 	MaxTimeElapsedSinceLastModification string `json:"maxTimeElapsedSinceLastModification,omitempty"`
 
-	// MinTimeElapsedSinceLastModification: If specified, only objects with
-	// a "last modification time" before `NOW` -
-	// `min_time_elapsed_since_last_modification` and objects that don't
-	// have a "last modification time" are transferred. For each
-	// TransferOperation started by this TransferJob, `NOW` refers to the
-	// start_time of the `TransferOperation`.
+	// MinTimeElapsedSinceLastModification: Ensures that objects are not
+	// transferred until a specific minimum time has elapsed after the "last
+	// modification time". When a TransferOperation begins, objects with a
+	// "last modification time" are transferred only if the elapsed time
+	// between the start_time of the `TransferOperation` and the "last
+	// modification time" of the object is equal to or greater than the
+	// value of min_time_elapsed_since_last_modification`. Objects that do
+	// not have a "last modification time" are also transferred.
 	MinTimeElapsedSinceLastModification string `json:"minTimeElapsedSinceLastModification,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExcludePrefixes") to
@@ -1977,7 +1981,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2128,7 +2132,7 @@ func (c *ProjectsAgentPoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2273,7 +2277,7 @@ func (c *ProjectsAgentPoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2416,7 +2420,7 @@ func (c *ProjectsAgentPoolsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2587,7 +2591,7 @@ func (c *ProjectsAgentPoolsListCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2771,7 +2775,7 @@ func (c *ProjectsAgentPoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2915,7 +2919,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3055,7 +3059,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3228,7 +3232,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3396,7 +3400,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3541,7 +3545,7 @@ func (c *TransferJobsRunCall) Header() http.Header {
 
 func (c *TransferJobsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3701,7 +3705,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3854,7 +3858,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4027,7 +4031,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4203,7 +4207,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4345,7 +4349,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211206")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

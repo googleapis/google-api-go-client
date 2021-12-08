@@ -1,5 +1,13 @@
 # Changes
 
+## [0.62.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.61.0...v0.62.0) (2021-12-08)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1339](https://www.github.com/googleapis/google-api-go-client/issues/1339) [#1338](https://www.github.com/googleapis/google-api-go-client/issues/1338) [#1336](https://www.github.com/googleapis/google-api-go-client/issues/1336) [#1333](https://www.github.com/googleapis/google-api-go-client/issues/1333) [#1332](https://www.github.com/googleapis/google-api-go-client/issues/1332) [#1329](https://www.github.com/googleapis/google-api-go-client/issues/1329)
+* **transport:** pass call credentials to grpc-go for DirectPath ([#1297](https://www.github.com/googleapis/google-api-go-client/issues/1297)) ([c06faf5](https://www.github.com/googleapis/google-api-go-client/commit/c06faf5ee58f90117105fd1099e0d52816dede59))
+
 ## [0.61.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.60.0...v0.61.0) (2021-12-02)
 
 

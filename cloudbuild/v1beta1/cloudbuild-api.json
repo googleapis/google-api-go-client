@@ -322,7 +322,7 @@
       }
     }
   },
-  "revision": "20211029",
+  "revision": "20211201",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ApprovalConfig": {
@@ -431,6 +431,27 @@
         "objects": {
           "$ref": "ArtifactObjects",
           "description": "A list of objects to be uploaded to Cloud Storage upon successful completion of all build steps. Files in the workspace matching specified paths globs will be uploaded to the specified Cloud Storage location using the builder service account's credentials. The location and generation of the uploaded objects will be stored in the Build resource's results field. If any objects fail to be pushed, the build is marked FAILURE."
+        }
+      },
+      "type": "object"
+    },
+    "BatchCreateBitbucketServerConnectedRepositoriesResponseMetadata": {
+      "description": "Metadata for `BatchCreateBitbucketServerConnectedRepositories` operation.",
+      "id": "BatchCreateBitbucketServerConnectedRepositoriesResponseMetadata",
+      "properties": {
+        "completeTime": {
+          "description": "Time the operation was completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "config": {
+          "description": "The name of the `BitbucketServerConfig` that added connected repositories. Format: `projects/{project}/locations/{location}/bitbucketServerConfigs/{config}`",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Time the operation was created.",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"
@@ -941,6 +962,27 @@
       "properties": {},
       "type": "object"
     },
+    "CreateBitbucketServerConfigOperationMetadata": {
+      "description": "Metadata for `CreateBitbucketServerConfig` operation.",
+      "id": "CreateBitbucketServerConfigOperationMetadata",
+      "properties": {
+        "bitbucketServerConfig": {
+          "description": "The resource name of the BitbucketServerConfig to be created. Format: `projects/{project}/locations/{location}/bitbucketServerConfigs/{id}`.",
+          "type": "string"
+        },
+        "completeTime": {
+          "description": "Time the operation was completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Time the operation was created.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "CreateGitHubEnterpriseConfigOperationMetadata": {
       "description": "Metadata for `CreateGithubEnterpriseConfig` operation.",
       "id": "CreateGitHubEnterpriseConfigOperationMetadata",
@@ -978,6 +1020,27 @@
         },
         "workerPool": {
           "description": "The resource name of the `WorkerPool` to create. Format: `projects/{project}/locations/{location}/workerPools/{worker_pool}`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DeleteBitbucketServerConfigOperationMetadata": {
+      "description": "Metadata for `DeleteBitbucketServerConfig` operation.",
+      "id": "DeleteBitbucketServerConfigOperationMetadata",
+      "properties": {
+        "bitbucketServerConfig": {
+          "description": "The resource name of the BitbucketServerConfig to be deleted. Format: `projects/{project}/locations/{location}/bitbucketServerConfigs/{id}`.",
+          "type": "string"
+        },
+        "completeTime": {
+          "description": "Time the operation was completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Time the operation was created.",
+          "format": "google-datetime",
           "type": "string"
         }
       },
@@ -1735,6 +1798,27 @@
         },
         "startTime": {
           "description": "Start of time span.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UpdateBitbucketServerConfigOperationMetadata": {
+      "description": "Metadata for `UpdateBitbucketServerConfig` operation.",
+      "id": "UpdateBitbucketServerConfigOperationMetadata",
+      "properties": {
+        "bitbucketServerConfig": {
+          "description": "The resource name of the BitbucketServerConfig to be updated. Format: `projects/{project}/locations/{location}/bitbucketServerConfigs/{id}`.",
+          "type": "string"
+        },
+        "completeTime": {
+          "description": "Time the operation was completed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Time the operation was created.",
           "format": "google-datetime",
           "type": "string"
         }

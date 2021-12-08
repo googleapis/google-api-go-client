@@ -3820,7 +3820,7 @@
       }
     }
   },
-  "revision": "20211022",
+  "revision": "20211201",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AdvancedSettings": {
@@ -6502,6 +6502,10 @@
           "$ref": "GoogleCloudDialogflowCxV3ResponseMessagePlayAudio",
           "description": "Signal that the client should play an audio clip hosted at a client-specific URI. Dialogflow uses this to construct mixed_audio. However, Dialogflow itself does not try to read or process the URI in any way."
         },
+        "telephonyTransferCall": {
+          "$ref": "GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall",
+          "description": "A signal that the client should transfer the phone call connected to this agent to a third-party endpoint."
+        },
         "text": {
           "$ref": "GoogleCloudDialogflowCxV3ResponseMessageText",
           "description": "Returns a text response."
@@ -6611,6 +6615,17 @@
         },
         "audioUri": {
           "description": "Required. URI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall": {
+      "description": "Represents the signal that telles the client to transfer the phone call connected to the agent to a third-party endpoint.",
+      "id": "GoogleCloudDialogflowCxV3ResponseMessageTelephonyTransferCall",
+      "properties": {
+        "phoneNumber": {
+          "description": "Transfer the call to a phone number in [E.164 format](https://en.wikipedia.org/wiki/E.164).",
           "type": "string"
         }
       },
@@ -7627,6 +7642,14 @@
       "description": "Represents configuration for a generic web service.",
       "id": "GoogleCloudDialogflowCxV3WebhookGenericWebService",
       "properties": {
+        "allowedCaCerts": {
+          "description": "Optional. Specifies a list of allowed custom CA certificates (in DER format) for HTTPS verification. This overrides the default SSL trust store. If this is empty or unspecified, Dialogflow will use Google's default trust store to verify certificates. N.B. Make sure the HTTPS server certificates are signed with \"subject alt name\". For instance a certificate can be self-signed using the following command, openssl x509 -req -days 200 -in example.com.csr \\ -signkey example.com.key \\ -out example.com.crt \\ -extfile \u003c(printf \"\\nsubjectAltName='DNS:www.example.com'\")",
+          "items": {
+            "format": "byte",
+            "type": "string"
+          },
+          "type": "array"
+        },
         "password": {
           "description": "The password for HTTP Basic authentication.",
           "type": "string"
@@ -8916,6 +8939,10 @@
           "$ref": "GoogleCloudDialogflowCxV3beta1ResponseMessagePlayAudio",
           "description": "Signal that the client should play an audio clip hosted at a client-specific URI. Dialogflow uses this to construct mixed_audio. However, Dialogflow itself does not try to read or process the URI in any way."
         },
+        "telephonyTransferCall": {
+          "$ref": "GoogleCloudDialogflowCxV3beta1ResponseMessageTelephonyTransferCall",
+          "description": "A signal that the client should transfer the phone call connected to this agent to a third-party endpoint."
+        },
         "text": {
           "$ref": "GoogleCloudDialogflowCxV3beta1ResponseMessageText",
           "description": "Returns a text response."
@@ -9025,6 +9052,17 @@
         },
         "audioUri": {
           "description": "Required. URI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowCxV3beta1ResponseMessageTelephonyTransferCall": {
+      "description": "Represents the signal that telles the client to transfer the phone call connected to the agent to a third-party endpoint.",
+      "id": "GoogleCloudDialogflowCxV3beta1ResponseMessageTelephonyTransferCall",
+      "properties": {
+        "phoneNumber": {
+          "description": "Transfer the call to a phone number in [E.164 format](https://en.wikipedia.org/wiki/E.164).",
           "type": "string"
         }
       },

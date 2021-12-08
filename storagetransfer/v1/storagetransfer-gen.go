@@ -203,7 +203,7 @@ type AgentPool struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Required. Specifies a unique string that identifies the agent
-	// pool. Format: projects/{project_id}/agentPools/{agent_pool_id}
+	// pool. Format: `projects/{project_id}/agentPools/{agent_pool_id}`
 	Name string `json:"name,omitempty"`
 
 	// State: Output only. Specifies the state of the AgentPool.
@@ -425,11 +425,10 @@ func (s *AzureCredentials) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BandwidthLimit: Specifies the BandwidthLimit to describe the
-// non-negative bandwidth rate in mbps for the agent pool.
+// BandwidthLimit: Specifies a bandwidth limit for an agent pool.
 type BandwidthLimit struct {
-	// LimitMbps: Specifies bandwidth rate in mbps distributed across all
-	// the agents in the pool.
+	// LimitMbps: Bandwidth rate in megabytes per second, distributed across
+	// all the agents in the pool.
 	LimitMbps int64 `json:"limitMbps,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "LimitMbps") to
@@ -918,6 +917,32 @@ type LoggingConfig struct {
 	// for this transfer.
 	EnableOnpremGcsTransferLogs bool `json:"enableOnpremGcsTransferLogs,omitempty"`
 
+	// LogActionStates: States in which `log_actions` are logged. If empty,
+	// no logs are generated. This is not yet supported for transfers with
+	// PosixFilesystem data sources.
+	//
+	// Possible values:
+	//   "LOGGABLE_ACTION_STATE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "SUCCEEDED" - `LoggableAction` is completed successfully.
+	// `SUCCEEDED` actions are logged as INFO.
+	//   "FAILED" - `LoggableAction` is terminated in an error state.
+	// `FAILED` actions are logged as ERROR.
+	LogActionStates []string `json:"logActionStates,omitempty"`
+
+	// LogActions: Actions to be logged. If empty, no logs are generated.
+	// This is not yet supported for transfers with PosixFilesystem data
+	// sources.
+	//
+	// Possible values:
+	//   "LOGGABLE_ACTION_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "FIND" - Finding objects to transfer e.g. listing objects of the
+	// source bucket.
+	//   "DELETE" - Deleting objects at source or destination.
+	//   "COPY" - Copying objects from source to destination.
+	LogActions []string `json:"logActions,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "EnableOnpremGcsTransferLogs") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -1077,20 +1102,24 @@ type ObjectConditions struct {
 	// of the day * `last_modified_before` to the end of the day
 	LastModifiedSince string `json:"lastModifiedSince,omitempty"`
 
-	// MaxTimeElapsedSinceLastModification: If specified, only objects with
-	// a "last modification time" on or after `NOW` -
-	// `max_time_elapsed_since_last_modification` and objects that don't
-	// have a "last modification time" are transferred. For each
-	// TransferOperation started by this TransferJob, `NOW` refers to the
-	// start_time of the `TransferOperation`.
+	// MaxTimeElapsedSinceLastModification: Ensures that objects are not
+	// transferred if a specific maximum time has elapsed since the "last
+	// modification time". When a TransferOperation begins, objects with a
+	// "last modification time" are transferred only if the elapsed time
+	// between the start_time of the `TransferOperation`and the "last
+	// modification time" of the object is less than the value of
+	// max_time_elapsed_since_last_modification`. Objects that do not have a
+	// "last modification time" are also transferred.
 	MaxTimeElapsedSinceLastModification string `json:"maxTimeElapsedSinceLastModification,omitempty"`
 
-	// MinTimeElapsedSinceLastModification: If specified, only objects with
-	// a "last modification time" before `NOW` -
-	// `min_time_elapsed_since_last_modification` and objects that don't
-	// have a "last modification time" are transferred. For each
-	// TransferOperation started by this TransferJob, `NOW` refers to the
-	// start_time of the `TransferOperation`.
+	// MinTimeElapsedSinceLastModification: Ensures that objects are not
+	// transferred until a specific minimum time has elapsed after the "last
+	// modification time". When a TransferOperation begins, objects with a
+	// "last modification time" are transferred only if the elapsed time
+	// between the start_time of the `TransferOperation` and the "last
+	// modification time" of the object is equal to or greater than the
+	// value of min_time_elapsed_since_last_modification`. Objects that do
+	// not have a "last modification time" are also transferred.
 	MinTimeElapsedSinceLastModification string `json:"minTimeElapsedSinceLastModification,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExcludePrefixes") to
@@ -1214,8 +1243,8 @@ type ResumeTransferOperationRequest struct {
 
 // RunTransferJobRequest: Request passed to RunTransferJob.
 type RunTransferJobRequest struct {
-	// ProjectId: Required. The ID of the Google Cloud Platform Console
-	// project that owns the transfer job.
+	// ProjectId: Required. The ID of the Google Cloud project that owns the
+	// transfer job.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProjectId") to
@@ -1567,8 +1596,7 @@ type TransferJob struct {
 	// for transfers involving PosixFilesystem.
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
 
-	// ProjectId: The ID of the Google Cloud Platform Project that owns the
-	// job.
+	// ProjectId: The ID of the Google Cloud project that owns the job.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Schedule: Specifies schedule for the transfer job. This is an
@@ -1624,6 +1652,37 @@ func (s *TransferJob) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TransferManifest: Specifies where the manifest is located.
+type TransferManifest struct {
+	// Location: Specifies the path to the manifest in Cloud Storage. The
+	// Google-managed service account for the transfer must have
+	// `storage.objects.get` permission for this object. An example path is
+	// `gs://bucket_name/path/manifest.csv`.
+	Location string `json:"location,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Location") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TransferManifest) MarshalJSON() ([]byte, error) {
+	type NoMethod TransferManifest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TransferOperation: A description of the execution of a transfer.
 type TransferOperation struct {
 	// Counters: Information about the progress of the transfer operation.
@@ -1642,7 +1701,7 @@ type TransferOperation struct {
 	// NotificationConfig: Notification configuration.
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
 
-	// ProjectId: The ID of the Google Cloud Platform Project that owns the
+	// ProjectId: The ID of the Google Cloud project that owns the
 	// operation.
 	ProjectId string `json:"projectId,omitempty"`
 
@@ -1775,6 +1834,12 @@ type TransferSpec struct {
 	// the posix data source. When unspecified, the default name is used.
 	SourceAgentPoolName string `json:"sourceAgentPoolName,omitempty"`
 
+	// TransferManifest: A manifest file provides a list of objects to be
+	// transferred from the data source. This field points to the location
+	// of the manifest file. Otherwise, the entire source bucket is used.
+	// ObjectConditions still apply.
+	TransferManifest *TransferManifest `json:"transferManifest,omitempty"`
+
 	// TransferOptions: If the option delete_objects_unique_in_sink is
 	// `true` and time-based object conditions such as 'last modification
 	// time' are specified, the request fails with an INVALID_ARGUMENT
@@ -1807,8 +1872,8 @@ func (s *TransferSpec) MarshalJSON() ([]byte, error) {
 
 // UpdateTransferJobRequest: Request passed to UpdateTransferJob.
 type UpdateTransferJobRequest struct {
-	// ProjectId: Required. The ID of the Google Cloud Platform Console
-	// project that owns the job.
+	// ProjectId: Required. The ID of the Google Cloud project that owns the
+	// job.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// TransferJob: Required. The job to update. `transferJob` is expected
@@ -1865,14 +1930,14 @@ type GoogleServiceAccountsGetCall struct {
 // Get: Returns the Google service account that is used by Storage
 // Transfer Service to access buckets in the project where transfers run
 // or in other projects. Each Google service account is associated with
-// one Google Cloud Platform Console project. Users should add this
-// service account to the Google Cloud Storage bucket ACLs to grant
-// access to Storage Transfer Service. This service account is created
-// and owned by Storage Transfer Service and can only be used by Storage
-// Transfer Service.
+// one Google Cloud project. Users should add this service account to
+// the Google Cloud Storage bucket ACLs to grant access to Storage
+// Transfer Service. This service account is created and owned by
+// Storage Transfer Service and can only be used by Storage Transfer
+// Service.
 //
-// - projectId: The ID of the Google Cloud Platform Console project that
-//   the Google service account is associated with.
+// - projectId: The ID of the Google Cloud project that the Google
+//   service account is associated with.
 func (r *GoogleServiceAccountsService) Get(projectId string) *GoogleServiceAccountsGetCall {
 	c := &GoogleServiceAccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -1916,7 +1981,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1978,7 +2043,7 @@ func (c *GoogleServiceAccountsGetCall) Do(opts ...googleapi.CallOption) (*Google
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the Google service account that is used by Storage Transfer Service to access buckets in the project where transfers run or in other projects. Each Google service account is associated with one Google Cloud Platform Console project. Users should add this service account to the Google Cloud Storage bucket ACLs to grant access to Storage Transfer Service. This service account is created and owned by Storage Transfer Service and can only be used by Storage Transfer Service.",
+	//   "description": "Returns the Google service account that is used by Storage Transfer Service to access buckets in the project where transfers run or in other projects. Each Google service account is associated with one Google Cloud project. Users should add this service account to the Google Cloud Storage bucket ACLs to grant access to Storage Transfer Service. This service account is created and owned by Storage Transfer Service and can only be used by Storage Transfer Service.",
 	//   "flatPath": "v1/googleServiceAccounts/{projectId}",
 	//   "httpMethod": "GET",
 	//   "id": "storagetransfer.googleServiceAccounts.get",
@@ -1987,7 +2052,7 @@ func (c *GoogleServiceAccountsGetCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "Required. The ID of the Google Cloud Platform Console project that the Google service account is associated with.",
+	//       "description": "Required. The ID of the Google Cloud project that the Google service account is associated with.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2017,8 +2082,8 @@ type ProjectsAgentPoolsCreateCall struct {
 
 // Create: Creates an agent pool resource.
 //
-// - projectId: The ID of the Google Cloud Platform Console project that
-//   owns the agent pool.
+// - projectId: The ID of the Google Cloud project that owns the agent
+//   pool.
 func (r *ProjectsAgentPoolsService) Create(projectId string, agentpool *AgentPool) *ProjectsAgentPoolsCreateCall {
 	c := &ProjectsAgentPoolsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -2027,10 +2092,14 @@ func (r *ProjectsAgentPoolsService) Create(projectId string, agentpool *AgentPoo
 }
 
 // AgentPoolId sets the optional parameter "agentPoolId": Required. The
-// id of the agent pool to create. The agent_pool_id must be non-empty,
-// less than or equal to 128 characters, and satisfy the following
-// regex: "^a-z ([a-z0-9-._~]*[a-z0-9])?$". Also, agent pool names
-// cannot start with the string "goog".
+// ID of the agent pool to create. The `agent_pool_id` must meet the
+// following requirements: * Length of 128 characters or less. * Not
+// start with the string `goog`. * Start with a lowercase ASCII
+// character, followed by: * Zero or more: lowercase Latin alphabet
+// characters, numerals, hyphens (`-`), periods (`.`), underscores
+// (`_`), or tildes (`~`). * One or more numerals or lowercase ASCII
+// characters. As expressed by the regular expression: `^(?!goog)a-z
+// ([a-z0-9-._~]*[a-z0-9])?$`.
 func (c *ProjectsAgentPoolsCreateCall) AgentPoolId(agentPoolId string) *ProjectsAgentPoolsCreateCall {
 	c.urlParams_.Set("agentPoolId", agentPoolId)
 	return c
@@ -2063,7 +2132,7 @@ func (c *ProjectsAgentPoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2136,12 +2205,12 @@ func (c *ProjectsAgentPoolsCreateCall) Do(opts ...googleapi.CallOption) (*AgentP
 	//   ],
 	//   "parameters": {
 	//     "agentPoolId": {
-	//       "description": "Required. The id of the agent pool to create. The agent_pool_id must be non-empty, less than or equal to 128 characters, and satisfy the following regex: \"^[a-z]([a-z0-9-._~]*[a-z0-9])?$\". Also, agent pool names cannot start with the string \"goog\".",
+	//       "description": "Required. The ID of the agent pool to create. The `agent_pool_id` must meet the following requirements: * Length of 128 characters or less. * Not start with the string `goog`. * Start with a lowercase ASCII character, followed by: * Zero or more: lowercase Latin alphabet characters, numerals, hyphens (`-`), periods (`.`), underscores (`_`), or tildes (`~`). * One or more numerals or lowercase ASCII characters. As expressed by the regular expression: `^(?!goog)[a-z]([a-z0-9-._~]*[a-z0-9])?$`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. The ID of the Google Cloud Platform Console project that owns the agent pool.",
+	//       "description": "Required. The ID of the Google Cloud project that owns the agent pool.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -2174,7 +2243,7 @@ type ProjectsAgentPoolsDeleteCall struct {
 
 // Delete: Deletes an agent pool.
 //
-// - name: The agent pool name to delete.
+// - name: The name of the agent pool to delete.
 func (r *ProjectsAgentPoolsService) Delete(name string) *ProjectsAgentPoolsDeleteCall {
 	c := &ProjectsAgentPoolsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2208,7 +2277,7 @@ func (c *ProjectsAgentPoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2276,7 +2345,7 @@ func (c *ProjectsAgentPoolsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The agent pool name to delete.",
+	//       "description": "Required. The name of the agent pool to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agentPools/[^/]+$",
 	//       "required": true,
@@ -2307,7 +2376,7 @@ type ProjectsAgentPoolsGetCall struct {
 
 // Get: Gets an agent pool.
 //
-// - name: The agent pool to get.
+// - name: The name of the agent pool to get.
 func (r *ProjectsAgentPoolsService) Get(name string) *ProjectsAgentPoolsGetCall {
 	c := &ProjectsAgentPoolsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2351,7 +2420,7 @@ func (c *ProjectsAgentPoolsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2422,7 +2491,7 @@ func (c *ProjectsAgentPoolsGetCall) Do(opts ...googleapi.CallOption) (*AgentPool
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The agent pool to get.",
+	//       "description": "Required. The name of the agent pool to get.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agentPools/[^/]+$",
 	//       "required": true,
@@ -2453,28 +2522,26 @@ type ProjectsAgentPoolsListCall struct {
 
 // List: Lists agent pools.
 //
-// - projectId: The ID of the Google Cloud Platform Console project that
-//   owns the job.
+// - projectId: The ID of the Google Cloud project that owns the job.
 func (r *ProjectsAgentPoolsService) List(projectId string) *ProjectsAgentPoolsListCall {
 	c := &ProjectsAgentPoolsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	return c
 }
 
-// Filter sets the optional parameter "filter": A list of optional query
-// parameters specified as JSON text in the form of:
+// Filter sets the optional parameter "filter": An optional list of
+// query parameters specified as JSON text in the form of:
 // `{"agentPoolNames":["agentpool1","agentpool2",...]}` Since
 // `agentPoolNames` support multiple values, its values must be
-// specified with array notation. `agentPoolNames` is an optional field.
-// The list returns all agent pools for the project when the filter is
-// not provided or empty.
+// specified with array notation. When the filter is either empty or not
+// provided, the list returns all agent pools for the project.
 func (c *ProjectsAgentPoolsListCall) Filter(filter string) *ProjectsAgentPoolsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The list page size.
-// The max allowed value is 256.
+// The max allowed value is `256`.
 func (c *ProjectsAgentPoolsListCall) PageSize(pageSize int64) *ProjectsAgentPoolsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2524,7 +2591,7 @@ func (c *ProjectsAgentPoolsListCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2595,12 +2662,12 @@ func (c *ProjectsAgentPoolsListCall) Do(opts ...googleapi.CallOption) (*ListAgen
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A list of optional query parameters specified as JSON text in the form of: `{\"agentPoolNames\":[\"agentpool1\",\"agentpool2\",...]}` Since `agentPoolNames` support multiple values, its values must be specified with array notation. `agentPoolNames` is an optional field. The list returns all agent pools for the project when the filter is not provided or empty.",
+	//       "description": "An optional list of query parameters specified as JSON text in the form of: `{\"agentPoolNames\":[\"agentpool1\",\"agentpool2\",...]}` Since `agentPoolNames` support multiple values, its values must be specified with array notation. When the filter is either empty or not provided, the list returns all agent pools for the project.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The list page size. The max allowed value is 256.",
+	//       "description": "The list page size. The max allowed value is `256`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2611,7 +2678,7 @@ func (c *ProjectsAgentPoolsListCall) Do(opts ...googleapi.CallOption) (*ListAgen
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. The ID of the Google Cloud Platform Console project that owns the job.",
+	//       "description": "Required. The ID of the Google Cloud project that owns the job.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -2664,7 +2731,7 @@ type ProjectsAgentPoolsPatchCall struct {
 // Patch: Updates an existing agent pool resource.
 //
 // - name: Specifies a unique string that identifies the agent pool.
-//   Format: projects/{project_id}/agentPools/{agent_pool_id}.
+//   Format: `projects/{project_id}/agentPools/{agent_pool_id}`.
 func (r *ProjectsAgentPoolsService) Patch(name string, agentpool *AgentPool) *ProjectsAgentPoolsPatchCall {
 	c := &ProjectsAgentPoolsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2672,10 +2739,10 @@ func (r *ProjectsAgentPoolsService) Patch(name string, agentpool *AgentPool) *Pr
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The field mask
-// of the fields in `agentPool` that are to be updated in this request.
-// Fields in `agentPool` that can be updated are: display_name,
-// bandwidth_limit,
+// UpdateMask sets the optional parameter "updateMask": The [field mask]
+// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf)
+// of the fields in `agentPool` to update in this request. The following
+// `agentPool` fields can be updated: * display_name * bandwidth_limit
 func (c *ProjectsAgentPoolsPatchCall) UpdateMask(updateMask string) *ProjectsAgentPoolsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2708,7 +2775,7 @@ func (c *ProjectsAgentPoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2781,14 +2848,14 @@ func (c *ProjectsAgentPoolsPatchCall) Do(opts ...googleapi.CallOption) (*AgentPo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Specifies a unique string that identifies the agent pool. Format: projects/{project_id}/agentPools/{agent_pool_id}",
+	//       "description": "Required. Specifies a unique string that identifies the agent pool. Format: `projects/{project_id}/agentPools/{agent_pool_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agentPools/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The field mask of the fields in `agentPool` that are to be updated in this request. Fields in `agentPool` that can be updated are: display_name, bandwidth_limit,",
+	//       "description": "The [field mask] (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf) of the fields in `agentPool` to update in this request. The following `agentPool` fields can be updated: * display_name * bandwidth_limit",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -2852,7 +2919,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2947,8 +3014,7 @@ type TransferJobsGetCall struct {
 // Get: Gets a transfer job.
 //
 // - jobName: The job to get.
-// - projectId: The ID of the Google Cloud Platform Console project that
-//   owns the job.
+// - projectId: The ID of the Google Cloud project that owns the job.
 func (r *TransferJobsService) Get(jobName string, projectId string) *TransferJobsGetCall {
 	c := &TransferJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.jobName = jobName
@@ -2993,7 +3059,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3072,7 +3138,7 @@ func (c *TransferJobsGetCall) Do(opts ...googleapi.CallOption) (*TransferJob, er
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Required. The ID of the Google Cloud Platform Console project that owns the job.",
+	//       "description": "Required. The ID of the Google Cloud project that owns the job.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"
@@ -3166,7 +3232,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3334,7 +3400,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3479,7 +3545,7 @@ func (c *TransferJobsRunCall) Header() http.Header {
 
 func (c *TransferJobsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3639,7 +3705,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3792,7 +3858,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3965,7 +4031,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4141,7 +4207,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4283,7 +4349,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211114")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

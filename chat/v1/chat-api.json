@@ -108,7 +108,7 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
               "location": "path",
               "pattern": "^dms/[^/]+$",
               "required": true,
@@ -143,7 +143,7 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
               "location": "path",
               "pattern": "^dms/[^/]+$",
               "required": true,
@@ -182,7 +182,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+                  "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
                   "location": "path",
                   "pattern": "^dms/[^/]+/conversations/[^/]+$",
                   "required": true,
@@ -250,7 +250,7 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
               "location": "path",
               "pattern": "^rooms/[^/]+$",
               "required": true,
@@ -285,7 +285,7 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
               "location": "path",
               "pattern": "^rooms/[^/]+$",
               "required": true,
@@ -324,7 +324,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+                  "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
                   "location": "path",
                   "pattern": "^rooms/[^/]+/conversations/[^/]+$",
                   "required": true,
@@ -411,7 +411,7 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+              "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
               "location": "path",
               "pattern": "^spaces/[^/]+$",
               "required": true,
@@ -509,7 +509,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAMpdlehY",
+                  "description": "Required. Space resource name, in the form \"spaces/*\". Example: spaces/AAAAAAAAAAA",
                   "location": "path",
                   "pattern": "^spaces/[^/]+$",
                   "required": true,
@@ -544,7 +544,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the message to be deleted, in the form \"spaces/*/messages/*\" Example: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
+                  "description": "Required. Resource name of the message to be deleted, in the form \"spaces/*/messages/*\" Example: spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB",
                   "location": "path",
                   "pattern": "^spaces/[^/]+/messages/[^/]+$",
                   "required": true,
@@ -566,7 +566,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. Resource name of the message to be retrieved, in the form \"spaces/*/messages/*\". Example: spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4",
+                  "description": "Required. Resource name of the message to be retrieved, in the form \"spaces/*/messages/*\". Example: spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB",
                   "location": "path",
                   "pattern": "^spaces/[^/]+/messages/[^/]+$",
                   "required": true,
@@ -588,7 +588,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Resource name in the form `spaces/*/messages/*`. Example: `spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4`",
+                  "description": "Resource name in the form `spaces/*/messages/*`. Example: `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`",
                   "location": "path",
                   "pattern": "^spaces/[^/]+/messages/[^/]+$",
                   "required": true,
@@ -642,7 +642,7 @@
       }
     }
   },
-  "revision": "20211106",
+  "revision": "20211125",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -1182,6 +1182,25 @@
         "driveFileId": {
           "description": "The id for the drive file, for use with the Drive API.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamiteIntegrationLogEntry": {
+      "description": "JSON payload of error messages. If the Cloud Logging API is enabled, these error messages are logged to [Google Cloud Logging](https://cloud.google.com/logging/docs).",
+      "id": "DynamiteIntegrationLogEntry",
+      "properties": {
+        "deployment": {
+          "description": "The deployment that caused the error. For Chat bots built in Apps Script, this is the deployment ID defined by Apps Script.",
+          "type": "string"
+        },
+        "deploymentFunction": {
+          "description": "The unencrypted `callback_method` name that was running when the error was encountered.",
+          "type": "string"
+        },
+        "error": {
+          "$ref": "Status",
+          "description": "The error code and message."
         }
       },
       "type": "object"
@@ -2327,8 +2346,9 @@
       "id": "Membership",
       "properties": {
         "createTime": {
-          "description": "The creation time of the membership a.k.a. the time at which the member joined the space, if applicable.",
+          "description": "Output only. The creation time of the membership a.k.a. the time at which the member joined the space, if applicable.",
           "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         },
         "member": {
@@ -2339,7 +2359,7 @@
           "type": "string"
         },
         "state": {
-          "description": "State of the membership.",
+          "description": "State of the membership. Required for `CreateMembership`. Read-only for other usage.",
           "enum": [
             "MEMBERSHIP_STATE_UNSPECIFIED",
             "JOINED",
@@ -2407,7 +2427,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Resource name in the form `spaces/*/messages/*`. Example: `spaces/AAAAMpdlehY/messages/UMxbHmzDlr4.UMxbHmzDlr4`",
+          "description": "Resource name in the form `spaces/*/messages/*`. Example: `spaces/AAAAAAAAAAA/messages/BBBBBBBBBBB.BBBBBBBBBBB`",
           "type": "string"
         },
         "previewText": {
@@ -2536,7 +2556,7 @@
       "id": "Space",
       "properties": {
         "displayName": {
-          "description": "The display name (only if the space is of type `ROOM`). Please note that this field might not be populated in direct messages between humans.",
+          "description": "The space's display name. For direct messages between humans, this field might be empty.",
           "type": "string"
         },
         "name": {
@@ -2544,15 +2564,17 @@
           "type": "string"
         },
         "singleUserBotDm": {
-          "description": "Whether the space is a DM between a bot and a single human.",
+          "description": "Output only. Whether the space is a DM between a bot and a single human.",
+          "readOnly": true,
           "type": "boolean"
         },
         "threaded": {
-          "description": "Whether the messages are threaded in this space.",
+          "description": "Output only. Whether the messages are threaded in this space.",
+          "readOnly": true,
           "type": "boolean"
         },
         "type": {
-          "description": "Output only. The type of a space. This is deprecated. Use `single_user_bot_dm` instead.",
+          "description": "Deprecated. Use `single_user_bot_dm` instead. Output only. The type of a space.",
           "enum": [
             "TYPE_UNSPECIFIED",
             "ROOM",
@@ -2563,6 +2585,33 @@
             "Conversations between two or more humans.",
             "1:1 Direct Message between a human and a Chat bot, where all messages are flat. Note that this does not include direct messages between two humans."
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Status": {
+      "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
+      "id": "Status",
+      "properties": {
+        "code": {
+          "description": "The status code, which should be an enum value of google.rpc.Code.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "details": {
+          "description": "A list of messages that carry the error details. There is a common set of message types for APIs to use.",
+          "items": {
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL.",
+              "type": "any"
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "message": {
+          "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
           "type": "string"
         }
       },
@@ -2611,7 +2660,7 @@
       "id": "Thread",
       "properties": {
         "name": {
-          "description": "Resource name, in the form \"spaces/*/threads/*\". Example: spaces/AAAAMpdlehY/threads/UMxbHmzDlr4",
+          "description": "Resource name, in the form \"spaces/*/threads/*\". Example: spaces/AAAAAAAAAAA/threads/TTTTTTTTTTT",
           "type": "string"
         }
       },

@@ -1994,20 +1994,20 @@ func (meth *Method) generateCode() {
 
 	if meth.supportsMediaUpload() && meth.api.Name == "storage" {
 		comment := "WithRetry causes the library to retry the initial request of the upload" +
-		"(for resumable uploads) or the entire upload (for multipart uploads) if" +
-		"a transient error occurs. This is contingent on ChunkSize being > 0 (so" +
-		"that the input data may be buffered). The backoff argument will be used to" +
-		"determine exponential backoff timing, and the errorFunc is used to determine" +
-		"which errors are considered retryable. By default, exponetial backoff will be" +
-		"applied using gax defaults, and the following errors are retried:" +
-		"\n\n" +
-		"- HTTP responses with codes 429, 502, 503, and 504." +
-		"\n\n" +
-		"- Transient network errors such as connection reset and io.ErrUnexpectedEOF." +
-		"\n\n" +
-		"- Errors which are considered transient using the Temporary() interface." +
-		"\n\n" +
-		"- Wrapped versions of these errors."
+			"(for resumable uploads) or the entire upload (for multipart uploads) if" +
+			"a transient error occurs. This is contingent on ChunkSize being > 0 (so" +
+			"that the input data may be buffered). The backoff argument will be used to" +
+			"determine exponential backoff timing, and the errorFunc is used to determine" +
+			"which errors are considered retryable. By default, exponetial backoff will be" +
+			"applied using gax defaults, and the following errors are retried:" +
+			"\n\n" +
+			"- HTTP responses with codes 429, 502, 503, and 504." +
+			"\n\n" +
+			"- Transient network errors such as connection reset and io.ErrUnexpectedEOF." +
+			"\n\n" +
+			"- Errors which are considered transient using the Temporary() interface." +
+			"\n\n" +
+			"- Wrapped versions of these errors."
 		p("\n%s", asComment("", comment))
 		pn("func (c *%s) WithRetry(bo *gax.Backoff, errorFunc func(err error) bool) *%s {", callName, callName)
 		pn("	c.retry = &gensupport.RetryConfig{")

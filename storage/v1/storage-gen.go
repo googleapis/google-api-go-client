@@ -10390,6 +10390,7 @@ func (c *ObjectsInsertCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	if rx != nil {
 		rx.Client = c.s.client
 		rx.UserAgent = c.s.userAgent()
+		rx.Retry = c.retry
 		ctx := c.ctx_
 		if ctx == nil {
 			ctx = context.TODO()

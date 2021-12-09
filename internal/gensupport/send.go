@@ -12,7 +12,6 @@ import (
 	"time"
 
 	"github.com/googleapis/gax-go/v2"
-	"google.golang.org/api/googleapi"
 )
 
 // SendRequest sends a single HTTP request using the given client.
@@ -86,22 +85,7 @@ func sendAndRetry(ctx context.Context, client *http.Client, req *http.Request, r
 		bo = backoff()
 	}
 
-	var errorFunc = shouldRetry
-	if retry != nil && retry.ShouldRetry != nil {
-		errorFunc = func(status int, err error) bool {
-			// This is kind of hacky; it is necessary because ShouldRetry expects to
-			// handle HTTP errors via googleapi.Error, but the error has not yet been
-			// wrapped with a googleapi.Error at this layer, and the ErrorFunc type
-			// in the manual layer does not pass in a status explicitly as it does
-			// here. So, we must wrap error status codes in a googleapi.Error so that
-			// ShouldRetry can parse this correctly.
-			if status >= 400 {
-				return retry.ShouldRetry(&googleapi.Error{Code: status})
-			} else {
-				return retry.ShouldRetry(err)
-			}
-		}
-	}
+	var errorFunc = retry.errorFunc()
 
 	for {
 		select {
@@ -149,9 +133,4 @@ func DecodeResponse(target interface{}, res *http.Response) error {
 		return nil
 	}
 	return json.NewDecoder(res.Body).Decode(target)
-}
-
-type RetryConfig struct {
-	Backoff     *gax.Backoff
-	ShouldRetry func(err error) bool
 }

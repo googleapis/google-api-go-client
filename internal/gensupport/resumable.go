@@ -14,7 +14,6 @@ import (
 	"time"
 )
 
-
 // ResumableUpload is used by the generated APIs to provide resumable uploads.
 // It is not used by developers directly.
 type ResumableUpload struct {

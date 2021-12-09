@@ -5,6 +5,7 @@
 package gensupport
 
 import (
+	"io"
 	"time"
 
 	"github.com/googleapis/gax-go/v2"
@@ -19,11 +20,13 @@ type Backoff interface {
 
 // These are declared as global variables so that tests can overwrite them.
 var (
-	retryDeadline = 32 * time.Second // Per-chunk deadline for resumable uploads.
-	backoff       = func() Backoff {
+	// Per-chunk deadline for resumable uploads.
+	retryDeadline = 32 * time.Second
+	// Default backoff timer.
+	backoff = func() Backoff {
 		return &gax.Backoff{Initial: 100 * time.Millisecond}
 	}
-	// isRetryable is a platform-specific hook, specified in retryable_linux.go
+	// syscallRetryable is a platform-specific hook, specified in retryable_linux.go
 	syscallRetryable func(error) bool = func(err error) bool { return false }
 )
 
@@ -34,6 +37,37 @@ const (
 	// https://cloud.google.com/storage/docs/json_api/v1/status-codes#standardcodes
 	statusTooManyRequests = 429
 )
+
+// shouldRetry indicates whether an error is retryable for the purposes of this
+// package, unless a ShouldRetry func is specified by the RetryConfig instead.
+// It follows guidance from
+// https://cloud.google.com/storage/docs/exponential-backoff .
+func shouldRetry(status int, err error) bool {
+	if 500 <= status && status <= 599 {
+		return true
+	}
+	if status == statusTooManyRequests {
+		return true
+	}
+	if err == io.ErrUnexpectedEOF {
+		return true
+	}
+	// Transient network errors should be retried.
+	if syscallRetryable(err) {
+		return true
+	}
+	if err, ok := err.(interface{ Temporary() bool }); ok {
+		if err.Temporary() {
+			return true
+		}
+	}
+	// If Go 1.13 error unwrapping is available, use this to examine wrapped
+	// errors.
+	if err, ok := err.(interface{ Unwrap() error }); ok {
+		return shouldRetry(status, err.Unwrap())
+	}
+	return false
+}
 
 // RetryConfig allows configuration of backoff timing and retryable errors.
 type RetryConfig struct {

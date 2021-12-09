@@ -205,33 +205,3 @@ func (rx *ResumableUpload) Upload(ctx context.Context) (resp *http.Response, err
 		return prepareReturn(resp, err)
 	}
 }
-
-// shouldRetry indicates whether an error is retryable for the purposes of this
-// package, following guidance from
-// https://cloud.google.com/storage/docs/exponential-backoff .
-func shouldRetry(status int, err error) bool {
-	if 500 <= status && status <= 599 {
-		return true
-	}
-	if status == statusTooManyRequests {
-		return true
-	}
-	if err == io.ErrUnexpectedEOF {
-		return true
-	}
-	// Transient network errors should be retried.
-	if syscallRetryable(err) {
-		return true
-	}
-	if err, ok := err.(interface{ Temporary() bool }); ok {
-		if err.Temporary() {
-			return true
-		}
-	}
-	// If Go 1.13 error unwrapping is available, use this to examine wrapped
-	// errors.
-	if err, ok := err.(interface{ Unwrap() error }); ok {
-		return shouldRetry(status, err.Unwrap())
-	}
-	return false
-}

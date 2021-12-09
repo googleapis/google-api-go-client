@@ -193,6 +193,53 @@ type OrganizationsSourcesFindingsService struct {
 	s *Service
 }
 
+// Access: Represents an access event.
+type Access struct {
+	// CallerIp: Caller's IP address, such as "1.1.1.1".
+	CallerIp string `json:"callerIp,omitempty"`
+
+	// CallerIpGeo: The caller IP's geolocation, which identifies where the
+	// call came from.
+	CallerIpGeo *Geolocation `json:"callerIpGeo,omitempty"`
+
+	// MethodName: The method that the service account called, e.g.
+	// "SetIamPolicy".
+	MethodName string `json:"methodName,omitempty"`
+
+	// PrincipalEmail: Associated email, such as "foo@google.com".
+	PrincipalEmail string `json:"principalEmail,omitempty"`
+
+	// ServiceName: This is the API service that the service account made a
+	// call to, e.g. "iam.googleapis.com"
+	ServiceName string `json:"serviceName,omitempty"`
+
+	// UserAgentFamily: What kind of user agent is associated, e.g.
+	// operating system shells, embedded or stand-alone applications, etc.
+	UserAgentFamily string `json:"userAgentFamily,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CallerIp") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CallerIp") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Access) MarshalJSON() ([]byte, error) {
+	type NoMethod Access
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Asset: Security Command Center representation of a Google Cloud
 // resource. The Asset is a Security Command Center resource that
 // captures information about a single Google Cloud resource. All
@@ -740,6 +787,11 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // scripting (XSS) vulnerability in an App Engine application is a
 // finding.
 type Finding struct {
+	// Access: Access details associated to the Finding, such as more
+	// information on the caller, which method was accessed, from where,
+	// etc.
+	Access *Access `json:"access,omitempty"`
+
 	// CanonicalName: The canonical name of the finding. It's either
 	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
 	// _id}",
@@ -799,6 +851,10 @@ type Finding struct {
 	// indicates a computer intrusion. Reference:
 	// https://en.wikipedia.org/wiki/Indicator_of_compromise
 	Indicator *Indicator `json:"indicator,omitempty"`
+
+	// MitreAttack: MITRE ATT&CK tactics and techniques related to this
+	// finding. See: https://attack.mitre.org
+	MitreAttack *MitreAttack `json:"mitreAttack,omitempty"`
 
 	// Mute: Indicates the mute state of a finding (either unspecified,
 	// muted, unmuted or undefined).
@@ -911,7 +967,7 @@ type Finding struct {
 	// (https://cve.mitre.org/about/)
 	Vulnerability *Vulnerability `json:"vulnerability,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CanonicalName") to
+	// ForceSendFields is a list of field names (e.g. "Access") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -919,10 +975,10 @@ type Finding struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CanonicalName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Access") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -965,6 +1021,34 @@ type Folder struct {
 
 func (s *Folder) MarshalJSON() ([]byte, error) {
 	type NoMethod Folder
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Geolocation: Represents a geographical location for a given access.
+type Geolocation struct {
+	// RegionCode: A CLDR.
+	RegionCode string `json:"regionCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RegionCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RegionCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Geolocation) MarshalJSON() ([]byte, error) {
+	type NoMethod Geolocation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1037,6 +1121,11 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1BulkMuteFindingsResponse: The response to
+// a BulkMute request. Contains the LRO information.
+type GoogleCloudSecuritycenterV1BulkMuteFindingsResponse struct {
 }
 
 // GoogleCloudSecuritycenterV1ExternalSystem: Representation of third
@@ -2311,6 +2400,151 @@ func (s *ListSourcesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MitreAttack: MITRE ATT&CK tactics and techniques related to this
+// finding. See: https://attack.mitre.org
+type MitreAttack struct {
+	// AdditionalTactics: Additional MITRE ATT&CK tactics related to this
+	// finding, if any.
+	//
+	// Possible values:
+	//   "TACTIC_UNSPECIFIED" - Unspecified value.
+	//   "RECONNAISSANCE" - TA0043
+	//   "RESOURCE_DEVELOPMENT" - TA0042
+	//   "INITIAL_ACCESS" - TA0001
+	//   "EXECUTION" - TA0002
+	//   "PERSISTENCE" - TA0003
+	//   "PRIVILEGE_ESCALATION" - TA0004
+	//   "DEFENSE_EVASION" - TA0005
+	//   "CREDENTIAL_ACCESS" - TA0006
+	//   "DISCOVERY" - TA0007
+	//   "LATERAL_MOVEMENT" - TA0008
+	//   "COLLECTION" - TA0009
+	//   "COMMAND_AND_CONTROL" - TA0011
+	//   "EXFILTRATION" - TA0010
+	//   "IMPACT" - TA0040
+	AdditionalTactics []string `json:"additionalTactics,omitempty"`
+
+	// AdditionalTechniques: Additional MITRE ATT&CK techniques related to
+	// this finding, if any, along with any of their respective parent
+	// techniques.
+	//
+	// Possible values:
+	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
+	//   "ACTIVE_SCANNING" - T1595
+	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "INGRESS_TOOL_TRANSFER" - T1105
+	//   "NATIVE_API" - T1106
+	//   "SHARED_MODULES" - T1129
+	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
+	//   "UNIX_SHELL" - T1059.004
+	//   "RESOURCE_HIJACKING" - T1496
+	//   "PROXY" - T1090
+	//   "EXTERNAL_PROXY" - T1090.002
+	//   "MULTI_HOP_PROXY" - T1090.003
+	//   "DYNAMIC_RESOLUTION" - T1568
+	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "VALID_ACCOUNTS" - T1078
+	//   "LOCAL_ACCOUNTS" - T1078.003
+	//   "CLOUD_ACCOUNTS" - T1078.004
+	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
+	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
+	//   "CLOUD_GROUPS" - T1069.003
+	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
+	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
+	//   "ACCOUNT_MANIPULATION" - T1098
+	//   "SSH_AUTHORIZED_KEYS" - T1098.004
+	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "STEAL_WEB_SESSION_COOKIE" - T1539
+	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
+	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
+
+	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by
+	// this finding, if any.
+	//
+	// Possible values:
+	//   "TACTIC_UNSPECIFIED" - Unspecified value.
+	//   "RECONNAISSANCE" - TA0043
+	//   "RESOURCE_DEVELOPMENT" - TA0042
+	//   "INITIAL_ACCESS" - TA0001
+	//   "EXECUTION" - TA0002
+	//   "PERSISTENCE" - TA0003
+	//   "PRIVILEGE_ESCALATION" - TA0004
+	//   "DEFENSE_EVASION" - TA0005
+	//   "CREDENTIAL_ACCESS" - TA0006
+	//   "DISCOVERY" - TA0007
+	//   "LATERAL_MOVEMENT" - TA0008
+	//   "COLLECTION" - TA0009
+	//   "COMMAND_AND_CONTROL" - TA0011
+	//   "EXFILTRATION" - TA0010
+	//   "IMPACT" - TA0040
+	PrimaryTactic string `json:"primaryTactic,omitempty"`
+
+	// PrimaryTechniques: The MITRE ATT&CK technique most closely
+	// represented by this finding, if any. primary_techniques is a repeated
+	// field because there are multiple levels of MITRE ATT&CK techniques.
+	// If the technique most closely represented by this finding is a
+	// sub-technique (e.g. SCANNING_IP_BLOCKS), both the sub-technique and
+	// its parent technique(s) will be listed (e.g. SCANNING_IP_BLOCKS,
+	// ACTIVE_SCANNING).
+	//
+	// Possible values:
+	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
+	//   "ACTIVE_SCANNING" - T1595
+	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "INGRESS_TOOL_TRANSFER" - T1105
+	//   "NATIVE_API" - T1106
+	//   "SHARED_MODULES" - T1129
+	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
+	//   "UNIX_SHELL" - T1059.004
+	//   "RESOURCE_HIJACKING" - T1496
+	//   "PROXY" - T1090
+	//   "EXTERNAL_PROXY" - T1090.002
+	//   "MULTI_HOP_PROXY" - T1090.003
+	//   "DYNAMIC_RESOLUTION" - T1568
+	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "VALID_ACCOUNTS" - T1078
+	//   "LOCAL_ACCOUNTS" - T1078.003
+	//   "CLOUD_ACCOUNTS" - T1078.004
+	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
+	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
+	//   "CLOUD_GROUPS" - T1069.003
+	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
+	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
+	//   "ACCOUNT_MANIPULATION" - T1098
+	//   "SSH_AUTHORIZED_KEYS" - T1098.004
+	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "STEAL_WEB_SESSION_COOKIE" - T1539
+	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
+	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
+
+	// Version: The MITRE ATT&CK version referenced by the above fields.
+	// E.g. "8".
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalTactics")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalTactics") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MitreAttack) MarshalJSON() ([]byte, error) {
+	type NoMethod MitreAttack
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -3003,7 +3237,7 @@ func (c *OrganizationsGetOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3149,7 +3383,7 @@ func (c *OrganizationsUpdateOrganizationSettingsCall) Header() http.Header {
 
 func (c *OrganizationsUpdateOrganizationSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3299,7 +3533,7 @@ func (c *OrganizationsAssetsGroupCall) Header() http.Header {
 
 func (c *OrganizationsAssetsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3565,7 +3799,7 @@ func (c *OrganizationsAssetsListCall) Header() http.Header {
 
 func (c *OrganizationsAssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3766,7 +4000,7 @@ func (c *OrganizationsAssetsRunDiscoveryCall) Header() http.Header {
 
 func (c *OrganizationsAssetsRunDiscoveryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3927,7 +4161,7 @@ func (c *OrganizationsAssetsUpdateSecurityMarksCall) Header() http.Header {
 
 func (c *OrganizationsAssetsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4092,7 +4326,7 @@ func (c *OrganizationsOperationsCancelCall) Header() http.Header {
 
 func (c *OrganizationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4235,7 +4469,7 @@ func (c *OrganizationsOperationsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4380,7 +4614,7 @@ func (c *OrganizationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4556,7 +4790,7 @@ func (c *OrganizationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4731,7 +4965,7 @@ func (c *OrganizationsSourcesCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4883,7 +5117,7 @@ func (c *OrganizationsSourcesGetCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5022,7 +5256,7 @@ func (c *OrganizationsSourcesGetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5191,7 +5425,7 @@ func (c *OrganizationsSourcesListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5369,7 +5603,7 @@ func (c *OrganizationsSourcesPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5519,7 +5753,7 @@ func (c *OrganizationsSourcesSetIamPolicyCall) Header() http.Header {
 
 func (c *OrganizationsSourcesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5664,7 +5898,7 @@ func (c *OrganizationsSourcesTestIamPermissionsCall) Header() http.Header {
 
 func (c *OrganizationsSourcesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5817,7 +6051,7 @@ func (c *OrganizationsSourcesFindingsCreateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5971,7 +6205,7 @@ func (c *OrganizationsSourcesFindingsGroupCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsGroupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6215,7 +6449,7 @@ func (c *OrganizationsSourcesFindingsListCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6419,7 +6653,7 @@ func (c *OrganizationsSourcesFindingsPatchCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6572,7 +6806,7 @@ func (c *OrganizationsSourcesFindingsSetStateCall) Header() http.Header {
 
 func (c *OrganizationsSourcesFindingsSetStateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6734,7 +6968,7 @@ func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) Header() http.Head
 
 func (c *OrganizationsSourcesFindingsUpdateSecurityMarksCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

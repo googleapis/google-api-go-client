@@ -349,6 +349,53 @@ type ProjectsWebSecurityScannerSettingsService struct {
 	s *Service
 }
 
+// Access: Represents an access event.
+type Access struct {
+	// CallerIp: Caller's IP address, such as "1.1.1.1".
+	CallerIp string `json:"callerIp,omitempty"`
+
+	// CallerIpGeo: The caller IP's geolocation, which identifies where the
+	// call came from.
+	CallerIpGeo *Geolocation `json:"callerIpGeo,omitempty"`
+
+	// MethodName: The method that the service account called, e.g.
+	// "SetIamPolicy".
+	MethodName string `json:"methodName,omitempty"`
+
+	// PrincipalEmail: Associated email, such as "foo@google.com".
+	PrincipalEmail string `json:"principalEmail,omitempty"`
+
+	// ServiceName: This is the API service that the service account made a
+	// call to, e.g. "iam.googleapis.com"
+	ServiceName string `json:"serviceName,omitempty"`
+
+	// UserAgentFamily: What kind of user agent is associated, e.g.
+	// operating system shells, embedded or stand-alone applications, etc.
+	UserAgentFamily string `json:"userAgentFamily,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CallerIp") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CallerIp") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Access) MarshalJSON() ([]byte, error) {
+	type NoMethod Access
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Config: Configuration of a module.
 type Config struct {
 	// ModuleEnablementState: The state of enablement for the module at its
@@ -755,6 +802,11 @@ func (s *EventThreatDetectionSettings) MarshalJSON() ([]byte, error) {
 // scripting (XSS) vulnerability in an App Engine application is a
 // finding.
 type Finding struct {
+	// Access: Access details associated to the Finding, such as more
+	// information on the caller, which method was accessed, from where,
+	// etc.
+	Access *Access `json:"access,omitempty"`
+
 	// CanonicalName: The canonical name of the finding. It's either
 	// "organizations/{organization_id}/sources/{source_id}/findings/{finding
 	// _id}",
@@ -814,6 +866,10 @@ type Finding struct {
 	// indicates a computer intrusion. Reference:
 	// https://en.wikipedia.org/wiki/Indicator_of_compromise
 	Indicator *Indicator `json:"indicator,omitempty"`
+
+	// MitreAttack: MITRE ATT&CK tactics and techniques related to this
+	// finding. See: https://attack.mitre.org
+	MitreAttack *MitreAttack `json:"mitreAttack,omitempty"`
 
 	// Mute: Indicates the mute state of a finding (either unspecified,
 	// muted, unmuted or undefined).
@@ -926,7 +982,7 @@ type Finding struct {
 	// (https://cve.mitre.org/about/)
 	Vulnerability *Vulnerability `json:"vulnerability,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CanonicalName") to
+	// ForceSendFields is a list of field names (e.g. "Access") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -934,10 +990,10 @@ type Finding struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CanonicalName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Access") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -982,6 +1038,39 @@ func (s *Folder) MarshalJSON() ([]byte, error) {
 	type NoMethod Folder
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Geolocation: Represents a geographical location for a given access.
+type Geolocation struct {
+	// RegionCode: A CLDR.
+	RegionCode string `json:"regionCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RegionCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RegionCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Geolocation) MarshalJSON() ([]byte, error) {
+	type NoMethod Geolocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1BulkMuteFindingsResponse: The response to
+// a BulkMute request. Contains the LRO information.
+type GoogleCloudSecuritycenterV1BulkMuteFindingsResponse struct {
 }
 
 // GoogleCloudSecuritycenterV1ExternalSystem: Representation of third
@@ -1644,6 +1733,151 @@ func (s *Indicator) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MitreAttack: MITRE ATT&CK tactics and techniques related to this
+// finding. See: https://attack.mitre.org
+type MitreAttack struct {
+	// AdditionalTactics: Additional MITRE ATT&CK tactics related to this
+	// finding, if any.
+	//
+	// Possible values:
+	//   "TACTIC_UNSPECIFIED" - Unspecified value.
+	//   "RECONNAISSANCE" - TA0043
+	//   "RESOURCE_DEVELOPMENT" - TA0042
+	//   "INITIAL_ACCESS" - TA0001
+	//   "EXECUTION" - TA0002
+	//   "PERSISTENCE" - TA0003
+	//   "PRIVILEGE_ESCALATION" - TA0004
+	//   "DEFENSE_EVASION" - TA0005
+	//   "CREDENTIAL_ACCESS" - TA0006
+	//   "DISCOVERY" - TA0007
+	//   "LATERAL_MOVEMENT" - TA0008
+	//   "COLLECTION" - TA0009
+	//   "COMMAND_AND_CONTROL" - TA0011
+	//   "EXFILTRATION" - TA0010
+	//   "IMPACT" - TA0040
+	AdditionalTactics []string `json:"additionalTactics,omitempty"`
+
+	// AdditionalTechniques: Additional MITRE ATT&CK techniques related to
+	// this finding, if any, along with any of their respective parent
+	// techniques.
+	//
+	// Possible values:
+	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
+	//   "ACTIVE_SCANNING" - T1595
+	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "INGRESS_TOOL_TRANSFER" - T1105
+	//   "NATIVE_API" - T1106
+	//   "SHARED_MODULES" - T1129
+	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
+	//   "UNIX_SHELL" - T1059.004
+	//   "RESOURCE_HIJACKING" - T1496
+	//   "PROXY" - T1090
+	//   "EXTERNAL_PROXY" - T1090.002
+	//   "MULTI_HOP_PROXY" - T1090.003
+	//   "DYNAMIC_RESOLUTION" - T1568
+	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "VALID_ACCOUNTS" - T1078
+	//   "LOCAL_ACCOUNTS" - T1078.003
+	//   "CLOUD_ACCOUNTS" - T1078.004
+	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
+	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
+	//   "CLOUD_GROUPS" - T1069.003
+	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
+	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
+	//   "ACCOUNT_MANIPULATION" - T1098
+	//   "SSH_AUTHORIZED_KEYS" - T1098.004
+	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "STEAL_WEB_SESSION_COOKIE" - T1539
+	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
+	AdditionalTechniques []string `json:"additionalTechniques,omitempty"`
+
+	// PrimaryTactic: The MITRE ATT&CK tactic most closely represented by
+	// this finding, if any.
+	//
+	// Possible values:
+	//   "TACTIC_UNSPECIFIED" - Unspecified value.
+	//   "RECONNAISSANCE" - TA0043
+	//   "RESOURCE_DEVELOPMENT" - TA0042
+	//   "INITIAL_ACCESS" - TA0001
+	//   "EXECUTION" - TA0002
+	//   "PERSISTENCE" - TA0003
+	//   "PRIVILEGE_ESCALATION" - TA0004
+	//   "DEFENSE_EVASION" - TA0005
+	//   "CREDENTIAL_ACCESS" - TA0006
+	//   "DISCOVERY" - TA0007
+	//   "LATERAL_MOVEMENT" - TA0008
+	//   "COLLECTION" - TA0009
+	//   "COMMAND_AND_CONTROL" - TA0011
+	//   "EXFILTRATION" - TA0010
+	//   "IMPACT" - TA0040
+	PrimaryTactic string `json:"primaryTactic,omitempty"`
+
+	// PrimaryTechniques: The MITRE ATT&CK technique most closely
+	// represented by this finding, if any. primary_techniques is a repeated
+	// field because there are multiple levels of MITRE ATT&CK techniques.
+	// If the technique most closely represented by this finding is a
+	// sub-technique (e.g. SCANNING_IP_BLOCKS), both the sub-technique and
+	// its parent technique(s) will be listed (e.g. SCANNING_IP_BLOCKS,
+	// ACTIVE_SCANNING).
+	//
+	// Possible values:
+	//   "TECHNIQUE_UNSPECIFIED" - Unspecified value.
+	//   "ACTIVE_SCANNING" - T1595
+	//   "SCANNING_IP_BLOCKS" - T1595.001
+	//   "INGRESS_TOOL_TRANSFER" - T1105
+	//   "NATIVE_API" - T1106
+	//   "SHARED_MODULES" - T1129
+	//   "COMMAND_AND_SCRIPTING_INTERPRETER" - T1059
+	//   "UNIX_SHELL" - T1059.004
+	//   "RESOURCE_HIJACKING" - T1496
+	//   "PROXY" - T1090
+	//   "EXTERNAL_PROXY" - T1090.002
+	//   "MULTI_HOP_PROXY" - T1090.003
+	//   "DYNAMIC_RESOLUTION" - T1568
+	//   "UNSECURED_CREDENTIALS" - T1552
+	//   "VALID_ACCOUNTS" - T1078
+	//   "LOCAL_ACCOUNTS" - T1078.003
+	//   "CLOUD_ACCOUNTS" - T1078.004
+	//   "NETWORK_DENIAL_OF_SERVICE" - T1498
+	//   "PERMISSION_GROUPS_DISCOVERY" - T1069
+	//   "CLOUD_GROUPS" - T1069.003
+	//   "EXFILTRATION_OVER_WEB_SERVICE" - T1567
+	//   "EXFILTRATION_TO_CLOUD_STORAGE" - T1567.002
+	//   "ACCOUNT_MANIPULATION" - T1098
+	//   "SSH_AUTHORIZED_KEYS" - T1098.004
+	//   "CREATE_OR_MODIFY_SYSTEM_PROCESS" - T1543
+	//   "STEAL_WEB_SESSION_COOKIE" - T1539
+	//   "MODIFY_CLOUD_COMPUTE_INFRASTRUCTURE" - T1578
+	PrimaryTechniques []string `json:"primaryTechniques,omitempty"`
+
+	// Version: The MITRE ATT&CK version referenced by the above fields.
+	// E.g. "8".
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalTactics")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalTactics") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MitreAttack) MarshalJSON() ([]byte, error) {
+	type NoMethod MitreAttack
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Reference: Additional Links
 type Reference struct {
 	// Source: Source of the reference e.g. NVD
@@ -2038,7 +2272,7 @@ func (c *FoldersGetContainerThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *FoldersGetContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2189,7 +2423,7 @@ func (c *FoldersGetEventThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *FoldersGetEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2340,7 +2574,7 @@ func (c *FoldersGetSecurityHealthAnalyticsSettingsCall) Header() http.Header {
 
 func (c *FoldersGetSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2490,7 +2724,7 @@ func (c *FoldersGetWebSecurityScannerSettingsCall) Header() http.Header {
 
 func (c *FoldersGetWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2641,7 +2875,7 @@ func (c *FoldersUpdateContainerThreatDetectionSettingsCall) Header() http.Header
 
 func (c *FoldersUpdateContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2801,7 +3035,7 @@ func (c *FoldersUpdateEventThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *FoldersUpdateEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2961,7 +3195,7 @@ func (c *FoldersUpdateSecurityHealthAnalyticsSettingsCall) Header() http.Header 
 
 func (c *FoldersUpdateSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3120,7 +3354,7 @@ func (c *FoldersUpdateWebSecurityScannerSettingsCall) Header() http.Header {
 
 func (c *FoldersUpdateWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3284,7 +3518,7 @@ func (c *FoldersContainerThreatDetectionSettingsCalculateCall) Header() http.Hea
 
 func (c *FoldersContainerThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3435,7 +3669,7 @@ func (c *FoldersEventThreatDetectionSettingsCalculateCall) Header() http.Header 
 
 func (c *FoldersEventThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3586,7 +3820,7 @@ func (c *FoldersSecurityHealthAnalyticsSettingsCalculateCall) Header() http.Head
 
 func (c *FoldersSecurityHealthAnalyticsSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3736,7 +3970,7 @@ func (c *FoldersWebSecurityScannerSettingsCalculateCall) Header() http.Header {
 
 func (c *FoldersWebSecurityScannerSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3889,7 +4123,7 @@ func (c *OrganizationsGetContainerThreatDetectionSettingsCall) Header() http.Hea
 
 func (c *OrganizationsGetContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4040,7 +4274,7 @@ func (c *OrganizationsGetEventThreatDetectionSettingsCall) Header() http.Header 
 
 func (c *OrganizationsGetEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4187,7 +4421,7 @@ func (c *OrganizationsGetSecurityCenterSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetSecurityCenterSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4338,7 +4572,7 @@ func (c *OrganizationsGetSecurityHealthAnalyticsSettingsCall) Header() http.Head
 
 func (c *OrganizationsGetSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4485,7 +4719,7 @@ func (c *OrganizationsGetSubscriptionCall) Header() http.Header {
 
 func (c *OrganizationsGetSubscriptionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4635,7 +4869,7 @@ func (c *OrganizationsGetWebSecurityScannerSettingsCall) Header() http.Header {
 
 func (c *OrganizationsGetWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4786,7 +5020,7 @@ func (c *OrganizationsUpdateContainerThreatDetectionSettingsCall) Header() http.
 
 func (c *OrganizationsUpdateContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4946,7 +5180,7 @@ func (c *OrganizationsUpdateEventThreatDetectionSettingsCall) Header() http.Head
 
 func (c *OrganizationsUpdateEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5106,7 +5340,7 @@ func (c *OrganizationsUpdateSecurityHealthAnalyticsSettingsCall) Header() http.H
 
 func (c *OrganizationsUpdateSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5265,7 +5499,7 @@ func (c *OrganizationsUpdateWebSecurityScannerSettingsCall) Header() http.Header
 
 func (c *OrganizationsUpdateWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5429,7 +5663,7 @@ func (c *OrganizationsContainerThreatDetectionSettingsCalculateCall) Header() ht
 
 func (c *OrganizationsContainerThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5580,7 +5814,7 @@ func (c *OrganizationsEventThreatDetectionSettingsCalculateCall) Header() http.H
 
 func (c *OrganizationsEventThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5731,7 +5965,7 @@ func (c *OrganizationsSecurityHealthAnalyticsSettingsCalculateCall) Header() htt
 
 func (c *OrganizationsSecurityHealthAnalyticsSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5881,7 +6115,7 @@ func (c *OrganizationsWebSecurityScannerSettingsCalculateCall) Header() http.Hea
 
 func (c *OrganizationsWebSecurityScannerSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6034,7 +6268,7 @@ func (c *ProjectsGetContainerThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6185,7 +6419,7 @@ func (c *ProjectsGetEventThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6336,7 +6570,7 @@ func (c *ProjectsGetSecurityHealthAnalyticsSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6486,7 +6720,7 @@ func (c *ProjectsGetWebSecurityScannerSettingsCall) Header() http.Header {
 
 func (c *ProjectsGetWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6637,7 +6871,7 @@ func (c *ProjectsUpdateContainerThreatDetectionSettingsCall) Header() http.Heade
 
 func (c *ProjectsUpdateContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6797,7 +7031,7 @@ func (c *ProjectsUpdateEventThreatDetectionSettingsCall) Header() http.Header {
 
 func (c *ProjectsUpdateEventThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6957,7 +7191,7 @@ func (c *ProjectsUpdateSecurityHealthAnalyticsSettingsCall) Header() http.Header
 
 func (c *ProjectsUpdateSecurityHealthAnalyticsSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7116,7 +7350,7 @@ func (c *ProjectsUpdateWebSecurityScannerSettingsCall) Header() http.Header {
 
 func (c *ProjectsUpdateWebSecurityScannerSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7280,7 +7514,7 @@ func (c *ProjectsContainerThreatDetectionSettingsCalculateCall) Header() http.He
 
 func (c *ProjectsContainerThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7431,7 +7665,7 @@ func (c *ProjectsEventThreatDetectionSettingsCalculateCall) Header() http.Header
 
 func (c *ProjectsEventThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7584,7 +7818,7 @@ func (c *ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall) Heade
 
 func (c *ProjectsLocationsClustersGetContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7735,7 +7969,7 @@ func (c *ProjectsLocationsClustersUpdateContainerThreatDetectionSettingsCall) He
 
 func (c *ProjectsLocationsClustersUpdateContainerThreatDetectionSettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7899,7 +8133,7 @@ func (c *ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall)
 
 func (c *ProjectsLocationsClustersContainerThreatDetectionSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8050,7 +8284,7 @@ func (c *ProjectsSecurityHealthAnalyticsSettingsCalculateCall) Header() http.Hea
 
 func (c *ProjectsSecurityHealthAnalyticsSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8200,7 +8434,7 @@ func (c *ProjectsWebSecurityScannerSettingsCalculateCall) Header() http.Header {
 
 func (c *ProjectsWebSecurityScannerSettingsCalculateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211208")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

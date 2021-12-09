@@ -607,6 +607,34 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
+                    "star": {
+                      "description": "Marks an Entry as starred by the current user. Starring information is private to each user.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}:star",
+                      "httpMethod": "POST",
+                      "id": "datacatalog.projects.locations.entryGroups.entries.star",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The name of the entry to mark as starred.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:star",
+                      "request": {
+                        "$ref": "GoogleCloudDatacatalogV1StarEntryRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDatacatalogV1StarEntryResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "testIamPermissions": {
                       "description": "Gets your permissions on a resource. Returns an empty set of permissions if the resource doesn't exist. Supported resources are: - Tag templates - Entry groups Note: This method gets policies only within Data Catalog and can't be used to get policies from BigQuery, Pub/Sub, Dataproc Metastore, and any external Google Cloud Platform resources ingested into Data Catalog. No Google IAM permissions are required to call this method.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}:testIamPermissions",
@@ -630,6 +658,34 @@
                       },
                       "response": {
                         "$ref": "TestIamPermissionsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "unstar": {
+                      "description": "Marks an Entry as NOT starred by the current user. Starring information is private to each user.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}:unstar",
+                      "httpMethod": "POST",
+                      "id": "datacatalog.projects.locations.entryGroups.entries.unstar",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The name of the entry to mark as **not** starred.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:unstar",
+                      "request": {
+                        "$ref": "GoogleCloudDatacatalogV1UnstarEntryRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDatacatalogV1UnstarEntryResponse"
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform"
@@ -1841,7 +1897,7 @@
       }
     }
   },
-  "revision": "20211110",
+  "revision": "20211201",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -2220,6 +2276,11 @@
           "readOnly": true,
           "type": "string"
         },
+        "personalDetails": {
+          "$ref": "GoogleCloudDatacatalogV1PersonalDetails",
+          "description": "Output only. Additional information related to the entry. Private to the current user.",
+          "readOnly": true
+        },
         "routineSpec": {
           "$ref": "GoogleCloudDatacatalogV1RoutineSpec",
           "description": "Specification that applies to a user-defined function or procedure. Valid only for entries with the `ROUTINE` type."
@@ -2544,6 +2605,22 @@
       },
       "type": "object"
     },
+    "GoogleCloudDatacatalogV1PersonalDetails": {
+      "description": "Entry metadata relevant only to the user and private to them.",
+      "id": "GoogleCloudDatacatalogV1PersonalDetails",
+      "properties": {
+        "starTime": {
+          "description": "Set if the entry is starred; unset otherwise.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "starred": {
+          "description": "True if the entry is starred by the user; false otherwise.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDatacatalogV1PolicyTag": {
       "description": "Denotes one policy tag in a taxonomy, for example, SSN. Policy tags can be defined in a hierarchy. For example: ``` + Geolocation + LatLong + City + ZipCode ``` Where the \"Geolocation\" policy tag contains three children.",
       "id": "GoogleCloudDatacatalogV1PolicyTag",
@@ -2703,7 +2780,7 @@
       "id": "GoogleCloudDatacatalogV1SearchCatalogRequest",
       "properties": {
         "orderBy": {
-          "description": "Specifies the order of results. Currently supported case-sensitive values are: * `relevance` that can only be descending * `last_modified_timestamp [asc|desc]` with descending (`desc`) as default If this parameter is omitted, it defaults to the descending `relevance`.",
+          "description": "Specifies the order of results. Currently supported case-sensitive values are: * `relevance` that can only be descending * `last_modified_timestamp [asc|desc]` with descending (`desc`) as default * `default` that can only be descending If this parameter is omitted, it defaults to the descending `relevance`.",
           "type": "string"
         },
         "pageSize": {
@@ -2758,6 +2835,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "starredOnly": {
+          "description": "Optional. If `true`, search only among starred entries. By default, all results are returned, starred or not.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -2921,6 +3002,18 @@
           "type": "array"
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1StarEntryRequest": {
+      "description": "Request message for StarEntry.",
+      "id": "GoogleCloudDatacatalogV1StarEntryRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1StarEntryResponse": {
+      "description": "Response message for StarEntry. Empty for now",
+      "id": "GoogleCloudDatacatalogV1StarEntryResponse",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudDatacatalogV1SystemTimestamps": {
@@ -3147,6 +3240,18 @@
           "readOnly": true
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1UnstarEntryRequest": {
+      "description": "Request message for UnstarEntry.",
+      "id": "GoogleCloudDatacatalogV1UnstarEntryRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDatacatalogV1UnstarEntryResponse": {
+      "description": "Response message for UnstarEntry. Empty for now",
+      "id": "GoogleCloudDatacatalogV1UnstarEntryResponse",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudDatacatalogV1UsageSignal": {

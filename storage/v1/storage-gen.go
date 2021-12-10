@@ -10355,9 +10355,8 @@ func (c *ObjectsInsertCall) doRequest(alt string) (*http.Response, error) {
 	})
 	if c.retry != nil {
 		return gensupport.SendRequestWithRetry(c.ctx_, c.s.client, req, c.retry)
-	} else {
-		return gensupport.SendRequest(c.ctx_, c.s.client, req)
 	}
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
 // Do executes the "storage.objects.insert" call.

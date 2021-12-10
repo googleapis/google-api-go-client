@@ -502,9 +502,7 @@ type EnvironmentConfig struct {
 	DatabaseConfig *DatabaseConfig `json:"databaseConfig,omitempty"`
 
 	// EncryptionConfig: Optional. The encryption options for the Cloud
-	// Composer environment and its dependencies. Cannot be updated. This
-	// field is supported for Cloud Composer environments in versions
-	// composer-1.*.*-airflow-*.*.*.
+	// Composer environment and its dependencies. Cannot be updated.
 	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
 
 	// EnvironmentSize: Optional. The size of the Cloud Composer
@@ -522,6 +520,18 @@ type EnvironmentConfig struct {
 	// GkeCluster: Output only. The Kubernetes Engine cluster used to run
 	// this environment.
 	GkeCluster string `json:"gkeCluster,omitempty"`
+
+	// MaintenanceWindow: Optional. The maintenance window is the period
+	// when Cloud Composer components may undergo maintenance. It is defined
+	// so that maintenance is not executed during peak hours or critical
+	// time periods. The system will not be under maintenance for every
+	// occurrence of this window, but when maintenance is planned, it will
+	// be scheduled during the window. The maintenance window period must
+	// encompass at least 12 hours per week. This may be split into multiple
+	// chunks, each with a size of at least 4 hours. If this value is
+	// omitted, the default value for maintenance window will be applied.
+	// The default value is Saturday and Sunday 00-06 GMT.
+	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
 
 	// NodeConfig: The configuration used for the Kubernetes Engine cluster.
 	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
@@ -808,6 +818,52 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MaintenanceWindow: The configuration settings for Cloud Composer
+// maintenance window. The following example: ``` {
+// "startTime":"2019-08-01T01:00:00Z" "endTime":"2019-08-01T07:00:00Z"
+// "recurrence":"FREQ=WEEKLY;BYDAY=TU,WE" } ``` would define a
+// maintenance window between 01 and 07 hours UTC during each Tuesday
+// and Wednesday.
+type MaintenanceWindow struct {
+	// EndTime: Required. Maintenance window end time. It is used only to
+	// calculate the duration of the maintenance window. The value for
+	// end-time must be in the future, relative to `start_time`.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Recurrence: Required. Maintenance window recurrence. Format is a
+	// subset of RFC-5545 (https://tools.ietf.org/html/rfc5545) `RRULE`. The
+	// only allowed values for `FREQ` field are `FREQ=DAILY` and
+	// `FREQ=WEEKLY;BYDAY=...` Example values: `FREQ=WEEKLY;BYDAY=TU,WE`,
+	// `FREQ=DAILY`.
+	Recurrence string `json:"recurrence,omitempty"`
+
+	// StartTime: Required. Start time of the first recurrence of the
+	// maintenance window.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenanceWindow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // NodeConfig: The configuration information for the Kubernetes Engine
 // nodes running the Apache Airflow software.
 type NodeConfig struct {
@@ -1003,6 +1059,7 @@ type OperationMetadata struct {
 	//   "UPDATE" - A resource update operation.
 	//   "CHECK" - A resource check operation.
 	//   "STORE_STATE" - Stores the state of the resource operation.
+	//   "LOAD_STATE" - Loads the state of the resource operation.
 	OperationType string `json:"operationType,omitempty"`
 
 	// Resource: Output only. The resource being operated on, as a relative
@@ -1627,7 +1684,7 @@ func (c *ProjectsLocationsEnvironmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1769,7 +1826,7 @@ func (c *ProjectsLocationsEnvironmentsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1914,7 +1971,7 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2075,7 +2132,7 @@ func (c *ProjectsLocationsEnvironmentsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2346,7 +2403,7 @@ func (c *ProjectsLocationsEnvironmentsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2526,7 +2583,7 @@ func (c *ProjectsLocationsImageVersionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsImageVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2701,7 +2758,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2846,7 +2903,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3022,7 +3079,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

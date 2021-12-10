@@ -716,7 +716,12 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // to a string unique to all class resources and inline classes. Then
 // use the class' id wrapped in $`{...}` e.g. "${my-months}". To refer
 // to custom classes resources, use the class' id wrapped in `${}` (e.g.
-// `${my-months}`).
+// `${my-months}`). Speech-to-Text supports three locations: `global`,
+// `us` (US North America), and `eu` (Europe). If you are calling the
+// `speech.googleapis.com` endpoint, use the `global` location. To
+// specify a region, use a regional endpoint
+// (/speech-to-text/docs/endpoints) with matching `us` or `eu` location
+// value.
 type Phrase struct {
 	// Boost: Hint Boost. Overrides the boost set at the phrase set level.
 	// Positive value will increase the probability that a specific phrase
@@ -1795,7 +1800,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1974,7 +1979,7 @@ func (c *OperationsListCall) Header() http.Header {
 
 func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2108,7 +2113,13 @@ type ProjectsLocationsCustomClassesCreateCall struct {
 //
 // - parent: The parent resource where this custom class will be
 //   created. Format:
-//   {api_version}/projects/{project}/locations/{location}/customClasses.
+//   `projects/{project}/locations/{location}/customClasses`
+//   Speech-to-Text supports three locations: `global`, `us` (US North
+//   America), and `eu` (Europe). If you are calling the
+//   `speech.googleapis.com` endpoint, use the `global` location. To
+//   specify a region, use a regional endpoint
+//   (/speech-to-text/docs/endpoints) with matching `us` or `eu`
+//   location value.
 func (r *ProjectsLocationsCustomClassesService) Create(parent string, createcustomclassrequest *CreateCustomClassRequest) *ProjectsLocationsCustomClassesCreateCall {
 	c := &ProjectsLocationsCustomClassesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2143,7 +2154,7 @@ func (c *ProjectsLocationsCustomClassesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsCustomClassesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2216,7 +2227,7 @@ func (c *ProjectsLocationsCustomClassesCreateCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource where this custom class will be created. Format: {api_version}/projects/{project}/locations/{location}/customClasses",
+	//       "description": "Required. The parent resource where this custom class will be created. Format: `projects/{project}/locations/{location}/customClasses` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2250,8 +2261,13 @@ type ProjectsLocationsCustomClassesDeleteCall struct {
 // Delete: Delete a custom class.
 //
 // - name: The name of the custom class to delete. Format:
-//   {api_version}/projects/{project}/locations/{location}/customClasses/
-//   {custom_class}.
+//   `projects/{project}/locations/{location}/customClasses/{custom_class
+//   }` Speech-to-Text supports three locations: `global`, `us` (US
+//   North America), and `eu` (Europe). If you are calling the
+//   `speech.googleapis.com` endpoint, use the `global` location. To
+//   specify a region, use a regional endpoint
+//   (/speech-to-text/docs/endpoints) with matching `us` or `eu`
+//   location value.
 func (r *ProjectsLocationsCustomClassesService) Delete(name string) *ProjectsLocationsCustomClassesDeleteCall {
 	c := &ProjectsLocationsCustomClassesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2285,7 +2301,7 @@ func (c *ProjectsLocationsCustomClassesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsCustomClassesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2353,7 +2369,7 @@ func (c *ProjectsLocationsCustomClassesDeleteCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the custom class to delete. Format: {api_version}/projects/{project}/locations/{location}/customClasses/{custom_class}",
+	//       "description": "Required. The name of the custom class to delete. Format: `projects/{project}/locations/{location}/customClasses/{custom_class}` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/customClasses/[^/]+$",
 	//       "required": true,
@@ -2385,8 +2401,8 @@ type ProjectsLocationsCustomClassesGetCall struct {
 // Get: Get a custom class.
 //
 // - name: The name of the custom class to retrieve. Format:
-//   {api_version}/projects/{project}/locations/{location}/customClasses/
-//   {custom_class}.
+//   `projects/{project}/locations/{location}/customClasses/{custom_class
+//   }`.
 func (r *ProjectsLocationsCustomClassesService) Get(name string) *ProjectsLocationsCustomClassesGetCall {
 	c := &ProjectsLocationsCustomClassesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2430,7 +2446,7 @@ func (c *ProjectsLocationsCustomClassesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsCustomClassesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2501,7 +2517,7 @@ func (c *ProjectsLocationsCustomClassesGetCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the custom class to retrieve. Format: {api_version}/projects/{project}/locations/{location}/customClasses/{custom_class}",
+	//       "description": "Required. The name of the custom class to retrieve. Format: `projects/{project}/locations/{location}/customClasses/{custom_class}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/customClasses/[^/]+$",
 	//       "required": true,
@@ -2533,8 +2549,13 @@ type ProjectsLocationsCustomClassesListCall struct {
 // List: List custom classes.
 //
 // - parent: The parent, which owns this collection of custom classes.
-//   Format:
-//   {api_version}/projects/{project}/locations/{location}/customClasses.
+//   Format: `projects/{project}/locations/{location}/customClasses`
+//   Speech-to-Text supports three locations: `global`, `us` (US North
+//   America), and `eu` (Europe). If you are calling the
+//   `speech.googleapis.com` endpoint, use the `global` location. To
+//   specify a region, use a regional endpoint
+//   (/speech-to-text/docs/endpoints) with matching `us` or `eu`
+//   location value.
 func (r *ProjectsLocationsCustomClassesService) List(parent string) *ProjectsLocationsCustomClassesListCall {
 	c := &ProjectsLocationsCustomClassesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2597,7 +2618,7 @@ func (c *ProjectsLocationsCustomClassesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsCustomClassesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2679,7 +2700,7 @@ func (c *ProjectsLocationsCustomClassesListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of custom classes. Format: {api_version}/projects/{project}/locations/{location}/customClasses",
+	//       "description": "Required. The parent, which owns this collection of custom classes. Format: `projects/{project}/locations/{location}/customClasses` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2773,7 +2794,7 @@ func (c *ProjectsLocationsCustomClassesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsCustomClassesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2890,8 +2911,13 @@ type ProjectsLocationsPhraseSetsCreateCall struct {
 // the PhraseSet.
 //
 // - parent: The parent resource where this phrase set will be created.
-//   Format:
-//   {api_version}/projects/{project}/locations/{location}/phraseSets.
+//   Format: `projects/{project}/locations/{location}/phraseSets`
+//   Speech-to-Text supports three locations: `global`, `us` (US North
+//   America), and `eu` (Europe). If you are calling the
+//   `speech.googleapis.com` endpoint, use the `global` location. To
+//   specify a region, use a regional endpoint
+//   (/speech-to-text/docs/endpoints) with matching `us` or `eu`
+//   location value.
 func (r *ProjectsLocationsPhraseSetsService) Create(parent string, createphrasesetrequest *CreatePhraseSetRequest) *ProjectsLocationsPhraseSetsCreateCall {
 	c := &ProjectsLocationsPhraseSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2926,7 +2952,7 @@ func (c *ProjectsLocationsPhraseSetsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsPhraseSetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2999,7 +3025,7 @@ func (c *ProjectsLocationsPhraseSetsCreateCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent resource where this phrase set will be created. Format: {api_version}/projects/{project}/locations/{location}/phraseSets",
+	//       "description": "Required. The parent resource where this phrase set will be created. Format: `projects/{project}/locations/{location}/phraseSets` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3033,8 +3059,7 @@ type ProjectsLocationsPhraseSetsDeleteCall struct {
 // Delete: Delete a phrase set.
 //
 // - name: The name of the phrase set to delete. Format:
-//   {api_version}/projects/{project}/locations/{location}/phraseSets/{ph
-//   rase_set}.
+//   `projects/{project}/locations/{location}/phraseSets/{phrase_set}`.
 func (r *ProjectsLocationsPhraseSetsService) Delete(name string) *ProjectsLocationsPhraseSetsDeleteCall {
 	c := &ProjectsLocationsPhraseSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3068,7 +3093,7 @@ func (c *ProjectsLocationsPhraseSetsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsPhraseSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3136,7 +3161,7 @@ func (c *ProjectsLocationsPhraseSetsDeleteCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the phrase set to delete. Format: {api_version}/projects/{project}/locations/{location}/phraseSets/{phrase_set}",
+	//       "description": "Required. The name of the phrase set to delete. Format: `projects/{project}/locations/{location}/phraseSets/{phrase_set}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/phraseSets/[^/]+$",
 	//       "required": true,
@@ -3168,8 +3193,13 @@ type ProjectsLocationsPhraseSetsGetCall struct {
 // Get: Get a phrase set.
 //
 // - name: The name of the phrase set to retrieve. Format:
-//   {api_version}/projects/{project}/locations/{location}/phraseSets/{ph
-//   rase_set}.
+//   `projects/{project}/locations/{location}/phraseSets/{phrase_set}`
+//   Speech-to-Text supports three locations: `global`, `us` (US North
+//   America), and `eu` (Europe). If you are calling the
+//   `speech.googleapis.com` endpoint, use the `global` location. To
+//   specify a region, use a regional endpoint
+//   (/speech-to-text/docs/endpoints) with matching `us` or `eu`
+//   location value.
 func (r *ProjectsLocationsPhraseSetsService) Get(name string) *ProjectsLocationsPhraseSetsGetCall {
 	c := &ProjectsLocationsPhraseSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3213,7 +3243,7 @@ func (c *ProjectsLocationsPhraseSetsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsPhraseSetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3284,7 +3314,7 @@ func (c *ProjectsLocationsPhraseSetsGetCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the phrase set to retrieve. Format: {api_version}/projects/{project}/locations/{location}/phraseSets/{phrase_set}",
+	//       "description": "Required. The name of the phrase set to retrieve. Format: `projects/{project}/locations/{location}/phraseSets/{phrase_set}` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/phraseSets/[^/]+$",
 	//       "required": true,
@@ -3316,7 +3346,12 @@ type ProjectsLocationsPhraseSetsListCall struct {
 // List: List phrase sets.
 //
 // - parent: The parent, which owns this collection of phrase set.
-//   Format: projects/{project}/locations/{location}.
+//   Format: `projects/{project}/locations/{location}` Speech-to-Text
+//   supports three locations: `global`, `us` (US North America), and
+//   `eu` (Europe). If you are calling the `speech.googleapis.com`
+//   endpoint, use the `global` location. To specify a region, use a
+//   regional endpoint (/speech-to-text/docs/endpoints) with matching
+//   `us` or `eu` location value.
 func (r *ProjectsLocationsPhraseSetsService) List(parent string) *ProjectsLocationsPhraseSetsListCall {
 	c := &ProjectsLocationsPhraseSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3379,7 +3414,7 @@ func (c *ProjectsLocationsPhraseSetsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsPhraseSetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3461,7 +3496,7 @@ func (c *ProjectsLocationsPhraseSetsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of phrase set. Format: projects/{project}/locations/{location}",
+	//       "description": "Required. The parent, which owns this collection of phrase set. Format: `projects/{project}/locations/{location}` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](/speech-to-text/docs/endpoints) with matching `us` or `eu` location value.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -3555,7 +3590,7 @@ func (c *ProjectsLocationsPhraseSetsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsPhraseSetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3704,7 +3739,7 @@ func (c *SpeechLongrunningrecognizeCall) Header() http.Header {
 
 func (c *SpeechLongrunningrecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3830,7 +3865,7 @@ func (c *SpeechRecognizeCall) Header() http.Header {
 
 func (c *SpeechRecognizeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

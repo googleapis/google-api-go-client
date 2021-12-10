@@ -2853,13 +2853,14 @@ type GoogleCloudDocumentaiV1beta1DocumentProvenance struct {
 	// Type: The type of provenance operation.
 	//
 	// Possible values:
-	//   "OPERATION_TYPE_UNSPECIFIED" - Operation type unspecified.
-	//   "ADD" - Add an element. Implicit if no `parents` are set for the
-	// provenance.
-	//   "REMOVE" - The element is removed. No `parents` should be set.
-	//   "REPLACE" - Explicitly replaces the element(s) identified by
-	// `parents`.
-	//   "EVAL_REQUESTED" - Element is requested for human review.
+	//   "OPERATION_TYPE_UNSPECIFIED" - Operation type unspecified. If no
+	// operation is specified a provenance entry is simply used to match
+	// against a `parent`.
+	//   "ADD" - Add an element.
+	//   "REMOVE" - Remove an element identified by `parent`.
+	//   "REPLACE" - Replace an element identified by `parent`.
+	//   "EVAL_REQUESTED" - Request human review for the element identified
+	// by `parent`.
 	//   "EVAL_APPROVED" - Element is reviewed and approved at human review,
 	// confidence will be set to 1.0.
 	//   "EVAL_SKIPPED" - Element is skipped in the validation process.
@@ -2888,10 +2889,9 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentProvenance) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta1DocumentProvenanceParent: Structure for
-// referencing parent provenances. When an element replaces one of more
-// other elements parent references identify the elements that are
-// replaced.
+// GoogleCloudDocumentaiV1beta1DocumentProvenanceParent: The parent
+// element the current element is based on. Used for
+// referencing/aligning, removal and replacement operations.
 type GoogleCloudDocumentaiV1beta1DocumentProvenanceParent struct {
 	// Id: The id of the parent provenance.
 	Id int64 `json:"id,omitempty"`
@@ -2901,8 +2901,8 @@ type GoogleCloudDocumentaiV1beta1DocumentProvenanceParent struct {
 	// revision.
 	Index int64 `json:"index,omitempty"`
 
-	// Revision: The index of the [Document.revisions] identifying the
-	// parent revision.
+	// Revision: The index of the index into current revision's parent_ids
+	// list.
 	Revision int64 `json:"revision,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -2948,6 +2948,11 @@ type GoogleCloudDocumentaiV1beta1DocumentRevision struct {
 	// include one or more parent (when documents are merged.) This field
 	// represents the index into the `revisions` field.
 	Parent []int64 `json:"parent,omitempty"`
+
+	// ParentIds: The revisions that this revision is based on. Must include
+	// all the ids that have anything to do with this revision - eg. there
+	// are `provenance.parent.revision` fields that index into this field.
+	ParentIds []string `json:"parentIds,omitempty"`
 
 	// Processor: If the annotation was made by processor identify the
 	// processor by its resource name.
@@ -4782,13 +4787,14 @@ type GoogleCloudDocumentaiV1beta2DocumentProvenance struct {
 	// Type: The type of provenance operation.
 	//
 	// Possible values:
-	//   "OPERATION_TYPE_UNSPECIFIED" - Operation type unspecified.
-	//   "ADD" - Add an element. Implicit if no `parents` are set for the
-	// provenance.
-	//   "REMOVE" - The element is removed. No `parents` should be set.
-	//   "REPLACE" - Explicitly replaces the element(s) identified by
-	// `parents`.
-	//   "EVAL_REQUESTED" - Element is requested for human review.
+	//   "OPERATION_TYPE_UNSPECIFIED" - Operation type unspecified. If no
+	// operation is specified a provenance entry is simply used to match
+	// against a `parent`.
+	//   "ADD" - Add an element.
+	//   "REMOVE" - Remove an element identified by `parent`.
+	//   "REPLACE" - Replace an element identified by `parent`.
+	//   "EVAL_REQUESTED" - Request human review for the element identified
+	// by `parent`.
 	//   "EVAL_APPROVED" - Element is reviewed and approved at human review,
 	// confidence will be set to 1.0.
 	//   "EVAL_SKIPPED" - Element is skipped in the validation process.
@@ -4817,10 +4823,9 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentProvenance) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta2DocumentProvenanceParent: Structure for
-// referencing parent provenances. When an element replaces one of more
-// other elements parent references identify the elements that are
-// replaced.
+// GoogleCloudDocumentaiV1beta2DocumentProvenanceParent: The parent
+// element the current element is based on. Used for
+// referencing/aligning, removal and replacement operations.
 type GoogleCloudDocumentaiV1beta2DocumentProvenanceParent struct {
 	// Id: The id of the parent provenance.
 	Id int64 `json:"id,omitempty"`
@@ -4830,8 +4835,8 @@ type GoogleCloudDocumentaiV1beta2DocumentProvenanceParent struct {
 	// revision.
 	Index int64 `json:"index,omitempty"`
 
-	// Revision: The index of the [Document.revisions] identifying the
-	// parent revision.
+	// Revision: The index of the index into current revision's parent_ids
+	// list.
 	Revision int64 `json:"revision,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -4877,6 +4882,11 @@ type GoogleCloudDocumentaiV1beta2DocumentRevision struct {
 	// include one or more parent (when documents are merged.) This field
 	// represents the index into the `revisions` field.
 	Parent []int64 `json:"parent,omitempty"`
+
+	// ParentIds: The revisions that this revision is based on. Must include
+	// all the ids that have anything to do with this revision - eg. there
+	// are `provenance.parent.revision` fields that index into this field.
+	ParentIds []string `json:"parentIds,omitempty"`
 
 	// Processor: If the annotation was made by processor identify the
 	// processor by its resource name.
@@ -7137,13 +7147,14 @@ type GoogleCloudDocumentaiV1beta3DocumentProvenance struct {
 	// Type: The type of provenance operation.
 	//
 	// Possible values:
-	//   "OPERATION_TYPE_UNSPECIFIED" - Operation type unspecified.
-	//   "ADD" - Add an element. Implicit if no `parents` are set for the
-	// provenance.
-	//   "REMOVE" - The element is removed. No `parents` should be set.
-	//   "REPLACE" - Explicitly replaces the element(s) identified by
-	// `parents`.
-	//   "EVAL_REQUESTED" - Element is requested for human review.
+	//   "OPERATION_TYPE_UNSPECIFIED" - Operation type unspecified. If no
+	// operation is specified a provenance entry is simply used to match
+	// against a `parent`.
+	//   "ADD" - Add an element.
+	//   "REMOVE" - Remove an element identified by `parent`.
+	//   "REPLACE" - Replace an element identified by `parent`.
+	//   "EVAL_REQUESTED" - Request human review for the element identified
+	// by `parent`.
 	//   "EVAL_APPROVED" - Element is reviewed and approved at human review,
 	// confidence will be set to 1.0.
 	//   "EVAL_SKIPPED" - Element is skipped in the validation process.
@@ -7172,10 +7183,9 @@ func (s *GoogleCloudDocumentaiV1beta3DocumentProvenance) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta3DocumentProvenanceParent: Structure for
-// referencing parent provenances. When an element replaces one of more
-// other elements parent references identify the elements that are
-// replaced.
+// GoogleCloudDocumentaiV1beta3DocumentProvenanceParent: The parent
+// element the current element is based on. Used for
+// referencing/aligning, removal and replacement operations.
 type GoogleCloudDocumentaiV1beta3DocumentProvenanceParent struct {
 	// Id: The id of the parent provenance.
 	Id int64 `json:"id,omitempty"`
@@ -7185,8 +7195,8 @@ type GoogleCloudDocumentaiV1beta3DocumentProvenanceParent struct {
 	// revision.
 	Index int64 `json:"index,omitempty"`
 
-	// Revision: The index of the [Document.revisions] identifying the
-	// parent revision.
+	// Revision: The index of the index into current revision's parent_ids
+	// list.
 	Revision int64 `json:"revision,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -7232,6 +7242,11 @@ type GoogleCloudDocumentaiV1beta3DocumentRevision struct {
 	// include one or more parent (when documents are merged.) This field
 	// represents the index into the `revisions` field.
 	Parent []int64 `json:"parent,omitempty"`
+
+	// ParentIds: The revisions that this revision is based on. Must include
+	// all the ids that have anything to do with this revision - eg. there
+	// are `provenance.parent.revision` fields that index into this field.
+	ParentIds []string `json:"parentIds,omitempty"`
 
 	// Processor: If the annotation was made by processor identify the
 	// processor by its resource name.
@@ -9277,7 +9292,7 @@ func (c *ProjectsLocationsFetchProcessorTypesCall) Header() http.Header {
 
 func (c *ProjectsLocationsFetchProcessorTypesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9426,7 +9441,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9598,7 +9613,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9781,7 +9796,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9926,7 +9941,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10102,7 +10117,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10281,7 +10296,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10426,7 +10441,7 @@ func (c *ProjectsLocationsProcessorsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10569,7 +10584,7 @@ func (c *ProjectsLocationsProcessorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10703,7 +10718,7 @@ func (c *ProjectsLocationsProcessorsDisableCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10845,7 +10860,7 @@ func (c *ProjectsLocationsProcessorsEnableCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10996,7 +11011,7 @@ func (c *ProjectsLocationsProcessorsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11162,7 +11177,7 @@ func (c *ProjectsLocationsProcessorsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11338,7 +11353,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11485,7 +11500,7 @@ func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) Header() htt
 
 func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11629,7 +11644,7 @@ func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) Header(
 
 func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11775,7 +11790,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Header() 
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11916,7 +11931,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) Header() http.H
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12050,7 +12065,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) Header() http.H
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12201,7 +12216,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) Header() http.Head
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12368,7 +12383,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) Header() http.Hea
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12545,7 +12560,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Header() http.
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12689,7 +12704,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) Header() http
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

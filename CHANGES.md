@@ -1,5 +1,20 @@
 # Changes
 
+## [0.62.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.61.0...v0.62.0) (2021-12-08)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1339](https://www.github.com/googleapis/google-api-go-client/issues/1339) [#1338](https://www.github.com/googleapis/google-api-go-client/issues/1338) [#1336](https://www.github.com/googleapis/google-api-go-client/issues/1336) [#1333](https://www.github.com/googleapis/google-api-go-client/issues/1333) [#1332](https://www.github.com/googleapis/google-api-go-client/issues/1332) [#1329](https://www.github.com/googleapis/google-api-go-client/issues/1329)
+* **transport:** pass call credentials to grpc-go for DirectPath ([#1297](https://www.github.com/googleapis/google-api-go-client/issues/1297)) ([c06faf5](https://www.github.com/googleapis/google-api-go-client/commit/c06faf5ee58f90117105fd1099e0d52816dede59))
+
+## [0.61.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.60.0...v0.61.0) (2021-12-02)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1327](https://www.github.com/googleapis/google-api-go-client/issues/1327) [#1325](https://www.github.com/googleapis/google-api-go-client/issues/1325) [#1323](https://www.github.com/googleapis/google-api-go-client/issues/1323) [#1320](https://www.github.com/googleapis/google-api-go-client/issues/1320) [#1318](https://www.github.com/googleapis/google-api-go-client/issues/1318) [#1317](https://www.github.com/googleapis/google-api-go-client/issues/1317) [#1314](https://www.github.com/googleapis/google-api-go-client/issues/1314) [#1313](https://www.github.com/googleapis/google-api-go-client/issues/1313) [#1312](https://www.github.com/googleapis/google-api-go-client/issues/1312) [#1311](https://www.github.com/googleapis/google-api-go-client/issues/1311) [#1310](https://www.github.com/googleapis/google-api-go-client/issues/1310) [#1308](https://www.github.com/googleapis/google-api-go-client/issues/1308) [#1306](https://www.github.com/googleapis/google-api-go-client/issues/1306) [#1305](https://www.github.com/googleapis/google-api-go-client/issues/1305) [#1302](https://www.github.com/googleapis/google-api-go-client/issues/1302) [#1300](https://www.github.com/googleapis/google-api-go-client/issues/1300) [#1299](https://www.github.com/googleapis/google-api-go-client/issues/1299) [#1296](https://www.github.com/googleapis/google-api-go-client/issues/1296) [#1295](https://www.github.com/googleapis/google-api-go-client/issues/1295) [#1294](https://www.github.com/googleapis/google-api-go-client/issues/1294) [#1293](https://www.github.com/googleapis/google-api-go-client/issues/1293) [#1292](https://www.github.com/googleapis/google-api-go-client/issues/1292) [#1291](https://www.github.com/googleapis/google-api-go-client/issues/1291) [#1290](https://www.github.com/googleapis/google-api-go-client/issues/1290) [#1289](https://www.github.com/googleapis/google-api-go-client/issues/1289) [#1288](https://www.github.com/googleapis/google-api-go-client/issues/1288) [#1287](https://www.github.com/googleapis/google-api-go-client/issues/1287) [#1286](https://www.github.com/googleapis/google-api-go-client/issues/1286) [#1284](https://www.github.com/googleapis/google-api-go-client/issues/1284) [#1282](https://www.github.com/googleapis/google-api-go-client/issues/1282) [#1281](https://www.github.com/googleapis/google-api-go-client/issues/1281) [#1280](https://www.github.com/googleapis/google-api-go-client/issues/1280) [#1279](https://www.github.com/googleapis/google-api-go-client/issues/1279) [#1278](https://www.github.com/googleapis/google-api-go-client/issues/1278) [#1276](https://www.github.com/googleapis/google-api-go-client/issues/1276)
+
 ## [0.60.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.59.0...v0.60.0) (2021-10-28)
 
 

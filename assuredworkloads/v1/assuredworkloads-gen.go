@@ -317,10 +317,26 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	// spaces. Example: My Workload
 	DisplayName string `json:"displayName,omitempty"`
 
+	// EnableSovereignControls: Optional. Indicates the sovereignty status
+	// of the given workload. Currently meant to be used by Europe/Canada
+	// customers.
+	EnableSovereignControls bool `json:"enableSovereignControls,omitempty"`
+
 	// Etag: Optional. ETag of the workload, it is calculated on the basis
 	// of the Workload contents. It will be used in Update & Delete
 	// operations.
 	Etag string `json:"etag,omitempty"`
+
+	// KajEnrollmentState: Output only. Represents the KAJ enrollment state
+	// of the given workload.
+	//
+	// Possible values:
+	//   "KAJ_ENROLLMENT_STATE_UNSPECIFIED" - Default State for KAJ
+	// Enrollment.
+	//   "KAJ_ENROLLMENT_STATE_PENDING" - Pending State for KAJ Enrollment.
+	//   "KAJ_ENROLLMENT_STATE_COMPLETE" - Complete State for KAJ
+	// Enrollment.
+	KajEnrollmentState string `json:"kajEnrollmentState,omitempty"`
 
 	// KmsSettings: Input only. Settings used to create a CMEK crypto key.
 	// When set a project with a KMS CMEK key is provisioned. This field is
@@ -353,6 +369,12 @@ type GoogleCloudAssuredworkloadsV1Workload struct {
 	// the projects already exist, the workload creation will fail. Always
 	// read only.
 	Resources []*GoogleCloudAssuredworkloadsV1WorkloadResourceInfo `json:"resources,omitempty"`
+
+	// SaaEnrollmentResponse: Output only. Represents the SAA enrollment
+	// response of the given workload. SAA enrollment response is queried
+	// during GetWorkload call. In failure cases, user friendly error
+	// message is shown in SAA details page.
+	SaaEnrollmentResponse *GoogleCloudAssuredworkloadsV1WorkloadSaaEnrollmentResponse `json:"saaEnrollmentResponse,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -431,7 +453,11 @@ type GoogleCloudAssuredworkloadsV1WorkloadResourceInfo struct {
 	//
 	// Possible values:
 	//   "RESOURCE_TYPE_UNSPECIFIED" - Unknown resource type.
-	//   "CONSUMER_PROJECT" - Consumer project.
+	//   "CONSUMER_PROJECT" - Consumer project. AssuredWorkloads Projects
+	// are no longer supported. This field will be ignored only in
+	// CreateWorkload requests. ListWorkloads and GetWorkload will continue
+	// to provide projects information. Use CONSUMER_FOLDER instead.
+	//   "CONSUMER_FOLDER" - Consumer Folder.
 	//   "ENCRYPTION_KEYS_PROJECT" - Consumer project containing encryption
 	// keys.
 	//   "KEYRING" - Keyring resource that hosts encryption keys.
@@ -478,7 +504,11 @@ type GoogleCloudAssuredworkloadsV1WorkloadResourceSettings struct {
 	//
 	// Possible values:
 	//   "RESOURCE_TYPE_UNSPECIFIED" - Unknown resource type.
-	//   "CONSUMER_PROJECT" - Consumer project.
+	//   "CONSUMER_PROJECT" - Consumer project. AssuredWorkloads Projects
+	// are no longer supported. This field will be ignored only in
+	// CreateWorkload requests. ListWorkloads and GetWorkload will continue
+	// to provide projects information. Use CONSUMER_FOLDER instead.
+	//   "CONSUMER_FOLDER" - Consumer Folder.
 	//   "ENCRYPTION_KEYS_PROJECT" - Consumer project containing encryption
 	// keys.
 	//   "KEYRING" - Keyring resource that hosts encryption keys.
@@ -503,6 +533,55 @@ type GoogleCloudAssuredworkloadsV1WorkloadResourceSettings struct {
 
 func (s *GoogleCloudAssuredworkloadsV1WorkloadResourceSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1WorkloadResourceSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1WorkloadSaaEnrollmentResponse: Signed
+// Access Approvals (SAA) enrollment response.
+type GoogleCloudAssuredworkloadsV1WorkloadSaaEnrollmentResponse struct {
+	// SetupErrors: Indicates SAA enrollment setup error if any.
+	//
+	// Possible values:
+	//   "SETUP_ERROR_UNSPECIFIED" - Unspecified.
+	//   "ERROR_INVALID_BASE_SETUP" - Invalid states for all customers, to
+	// be redirected to AA UI for additional details.
+	//   "ERROR_MISSING_EXTERNAL_SIGNING_KEY" - Returned when there is not
+	// an EKM key configured.
+	//   "ERROR_NOT_ALL_SERVICES_ENROLLED" - Returned when there are no
+	// enrolled services or the customer is enrolled in CAA only for a
+	// subset of services.
+	//   "ERROR_SETUP_CHECK_FAILED" - Returned when exception was
+	// encountered during evaluation of other criteria.
+	SetupErrors []string `json:"setupErrors,omitempty"`
+
+	// SetupStatus: Indicates SAA enrollment status of a given workload.
+	//
+	// Possible values:
+	//   "SETUP_STATE_UNSPECIFIED" - Unspecified.
+	//   "STATUS_PENDING" - SAA enrollment pending.
+	//   "STATUS_COMPLETE" - SAA enrollment comopleted.
+	SetupStatus string `json:"setupStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SetupErrors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SetupErrors") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1WorkloadSaaEnrollmentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1WorkloadSaaEnrollmentResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -614,6 +693,11 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// spaces. Example: My Workload
 	DisplayName string `json:"displayName,omitempty"`
 
+	// EnableSovereignControls: Optional. Indicates the sovereignty status
+	// of the given workload. Currently meant to be used by Europe/Canada
+	// customers.
+	EnableSovereignControls bool `json:"enableSovereignControls,omitempty"`
+
 	// Etag: Optional. ETag of the workload, it is calculated on the basis
 	// of the Workload contents. It will be used in Update & Delete
 	// operations.
@@ -630,6 +714,17 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// Il4Settings: Required. Input only. Immutable. Settings specific to
 	// resources needed for IL4.
 	Il4Settings *GoogleCloudAssuredworkloadsV1beta1WorkloadIL4Settings `json:"il4Settings,omitempty"`
+
+	// KajEnrollmentState: Output only. Represents the KAJ enrollment state
+	// of the given workload.
+	//
+	// Possible values:
+	//   "KAJ_ENROLLMENT_STATE_UNSPECIFIED" - Default State for KAJ
+	// Enrollment.
+	//   "KAJ_ENROLLMENT_STATE_PENDING" - Pending State for KAJ Enrollment.
+	//   "KAJ_ENROLLMENT_STATE_COMPLETE" - Complete State for KAJ
+	// Enrollment.
+	KajEnrollmentState string `json:"kajEnrollmentState,omitempty"`
 
 	// KmsSettings: Input only. Settings used to create a CMEK crypto key.
 	// When set a project with a KMS CMEK key is provisioned. This field is
@@ -662,6 +757,12 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	// the projects already exist, the workload creation will fail. Always
 	// read only.
 	Resources []*GoogleCloudAssuredworkloadsV1beta1WorkloadResourceInfo `json:"resources,omitempty"`
+
+	// SaaEnrollmentResponse: Output only. Represents the SAA enrollment
+	// response of the given workload. SAA enrollment response is queried
+	// during GetWorkload call. In failure cases, user friendly error
+	// message is shown in SAA details page.
+	SaaEnrollmentResponse *GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse `json:"saaEnrollmentResponse,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BillingAccount") to
 	// unconditionally include in API requests. By default, fields with
@@ -938,6 +1039,55 @@ func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings) MarshalJSON
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse:
+// Signed Access Approvals (SAA) enrollment response.
+type GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse struct {
+	// SetupErrors: Indicates SAA enrollment setup error if any.
+	//
+	// Possible values:
+	//   "SETUP_ERROR_UNSPECIFIED" - Unspecified.
+	//   "ERROR_INVALID_BASE_SETUP" - Invalid states for all customers, to
+	// be redirected to AA UI for additional details.
+	//   "ERROR_MISSING_EXTERNAL_SIGNING_KEY" - Returned when there is not
+	// an EKM key configured.
+	//   "ERROR_NOT_ALL_SERVICES_ENROLLED" - Returned when there are no
+	// enrolled services or the customer is enrolled in CAA only for a
+	// subset of services.
+	//   "ERROR_SETUP_CHECK_FAILED" - Returned when exception was
+	// encountered during evaluation of other criteria.
+	SetupErrors []string `json:"setupErrors,omitempty"`
+
+	// SetupStatus: Indicates SAA enrollment status of a given workload.
+	//
+	// Possible values:
+	//   "SETUP_STATE_UNSPECIFIED" - Unspecified.
+	//   "STATUS_PENDING" - SAA enrollment pending.
+	//   "STATUS_COMPLETE" - SAA enrollment comopleted.
+	SetupStatus string `json:"setupStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SetupErrors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SetupErrors") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1beta1WorkloadSaaEnrollmentResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssuredworkloadsVersioningV1mainCreateWorkloadOperationMeta
 // data: Operation metadata to give request details of CreateWorkload.
 type GoogleCloudAssuredworkloadsVersioningV1mainCreateWorkloadOperationMetadata struct {
@@ -1045,6 +1195,11 @@ type GoogleCloudAssuredworkloadsVersioningV1mainWorkload struct {
 	// spaces. Example: My Workload
 	DisplayName string `json:"displayName,omitempty"`
 
+	// EnableSovereignControls: Optional. Indicates the sovereignty status
+	// of the given workload. Currently meant to be used by Europe/Canada
+	// customers.
+	EnableSovereignControls bool `json:"enableSovereignControls,omitempty"`
+
 	// Etag: Optional. ETag of the workload, it is calculated on the basis
 	// of the Workload contents. It will be used in Update & Delete
 	// operations.
@@ -1061,6 +1216,17 @@ type GoogleCloudAssuredworkloadsVersioningV1mainWorkload struct {
 	// Il4Settings: Required. Input only. Immutable. Settings specific to
 	// resources needed for IL4.
 	Il4Settings *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadIL4Settings `json:"il4Settings,omitempty"`
+
+	// KajEnrollmentState: Output only. Represents the KAJ enrollment state
+	// of the given workload.
+	//
+	// Possible values:
+	//   "KAJ_ENROLLMENT_STATE_UNSPECIFIED" - Default State for KAJ
+	// Enrollment.
+	//   "KAJ_ENROLLMENT_STATE_PENDING" - Pending State for KAJ Enrollment.
+	//   "KAJ_ENROLLMENT_STATE_COMPLETE" - Complete State for KAJ
+	// Enrollment.
+	KajEnrollmentState string `json:"kajEnrollmentState,omitempty"`
 
 	// KmsSettings: Input only. Settings used to create a CMEK crypto key.
 	// When set a project with a KMS CMEK key is provisioned. This field is
@@ -1093,6 +1259,12 @@ type GoogleCloudAssuredworkloadsVersioningV1mainWorkload struct {
 	// the projects already exist, the workload creation will fail. Always
 	// read only.
 	Resources []*GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceInfo `json:"resources,omitempty"`
+
+	// SaaEnrollmentResponse: Output only. Represents the SAA enrollment
+	// response of the given workload. SAA enrollment response is queried
+	// during GetWorkload call. In failure cases, user friendly error
+	// message is shown in SAA details page.
+	SaaEnrollmentResponse *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadSaaEnrollmentResponse `json:"saaEnrollmentResponse,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BillingAccount") to
 	// unconditionally include in API requests. By default, fields with
@@ -1369,6 +1541,55 @@ func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadResourceSettings) Ma
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssuredworkloadsVersioningV1mainWorkloadSaaEnrollmentRespon
+// se: Signed Access Approvals (SAA) enrollment response.
+type GoogleCloudAssuredworkloadsVersioningV1mainWorkloadSaaEnrollmentResponse struct {
+	// SetupErrors: Indicates SAA enrollment setup error if any.
+	//
+	// Possible values:
+	//   "SETUP_ERROR_UNSPECIFIED" - Unspecified.
+	//   "ERROR_INVALID_BASE_SETUP" - Invalid states for all customers, to
+	// be redirected to AA UI for additional details.
+	//   "ERROR_MISSING_EXTERNAL_SIGNING_KEY" - Returned when there is not
+	// an EKM key configured.
+	//   "ERROR_NOT_ALL_SERVICES_ENROLLED" - Returned when there are no
+	// enrolled services or the customer is enrolled in CAA only for a
+	// subset of services.
+	//   "ERROR_SETUP_CHECK_FAILED" - Returned when exception was
+	// encountered during evaluation of other criteria.
+	SetupErrors []string `json:"setupErrors,omitempty"`
+
+	// SetupStatus: Indicates SAA enrollment status of a given workload.
+	//
+	// Possible values:
+	//   "SETUP_STATE_UNSPECIFIED" - Unspecified.
+	//   "STATUS_PENDING" - SAA enrollment pending.
+	//   "STATUS_COMPLETE" - SAA enrollment comopleted.
+	SetupStatus string `json:"setupStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SetupErrors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SetupErrors") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudAssuredworkloadsVersioningV1mainWorkloadSaaEnrollmentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsVersioningV1mainWorkloadSaaEnrollmentResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleLongrunningListOperationsResponse: The response message for
 // Operations.ListOperations.
 type GoogleLongrunningListOperationsResponse struct {
@@ -1583,7 +1804,7 @@ func (c *OrganizationsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1759,7 +1980,7 @@ func (c *OrganizationsLocationsOperationsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1945,7 +2166,7 @@ func (c *OrganizationsLocationsWorkloadsCreateCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2101,7 +2322,7 @@ func (c *OrganizationsLocationsWorkloadsDeleteCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2253,7 +2474,7 @@ func (c *OrganizationsLocationsWorkloadsGetCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2424,7 +2645,7 @@ func (c *OrganizationsLocationsWorkloadsListCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2612,7 +2833,7 @@ func (c *OrganizationsLocationsWorkloadsPatchCall) Header() http.Header {
 
 func (c *OrganizationsLocationsWorkloadsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1130,6 +1130,21 @@ type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 	// `organizations/{organization_id}`
 	Parent string `json:"parent,omitempty"`
 
+	// Scopes: The scopes of a policy define which resources an ACM policy
+	// can restrict, and where ACM resources can be referenced. For example,
+	// a policy with scopes=["folders/123"] has the following behavior: -
+	// vpcsc perimeters can only restrict projects within folders/123 -
+	// access levels can only be referenced by resources within folders/123.
+	// If empty, there are no limitations on which resources can be
+	// restricted by an ACM policy, and there are no limitations on where
+	// ACM resources can be referenced. Only one policy can include a given
+	// scope (attempting to create a second policy which includes
+	// "folders/123" will result in an error). Currently, scopes cannot be
+	// modified after a policy is created. Currently, policies can only have
+	// a single scope. Format: list of `folders/{folder_number}` or
+	// `projects/{project_number}`
+	Scopes []string `json:"scopes,omitempty"`
+
 	// Title: Required. Human readable title. Does not affect behavior.
 	Title string `json:"title,omitempty"`
 
@@ -2352,7 +2367,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211123")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211209")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

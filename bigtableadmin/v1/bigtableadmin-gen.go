@@ -333,8 +333,8 @@ type Cluster struct {
 	// `projects/{project}/instances/{instance}/clusters/a-z*`.
 	Name string `json:"name,omitempty"`
 
-	// ServeNodes: Required. The number of nodes allocated to this cluster.
-	// More nodes enable higher throughput and more consistent performance.
+	// ServeNodes: The number of nodes allocated to this cluster. More nodes
+	// enable higher throughput and more consistent performance.
 	ServeNodes int64 `json:"serveNodes,omitempty"`
 
 	// State: Output only. The current state of the cluster.
@@ -414,11 +414,6 @@ func (s *ClusterAutoscalingConfig) MarshalJSON() ([]byte, error) {
 // ClusterConfig: Configuration for a cluster.
 type ClusterConfig struct {
 	// ClusterAutoscalingConfig: Autoscaling configuration for this cluster.
-	// Note that when creating or updating a cluster, exactly one of
-	// serve_nodes or cluster_autoscaling_config must be set. If serve_nodes
-	// is set, then serve_nodes is fixed and autoscaling is turned off. If
-	// cluster_autoscaling_config is set, then serve_nodes will be
-	// autoscaled.
 	ClusterAutoscalingConfig *ClusterAutoscalingConfig `json:"clusterAutoscalingConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -961,6 +956,7 @@ type PartialUpdateClusterMetadata struct {
 	// successfully.
 	FinishTime string `json:"finishTime,omitempty"`
 
+	// OriginalRequest: The original request for PartialUpdateCluster.
 	OriginalRequest *PartialUpdateClusterRequest `json:"originalRequest,omitempty"`
 
 	// RequestTime: The time at which the original request was received.
@@ -997,7 +993,7 @@ type PartialUpdateClusterRequest struct {
 	Cluster *Cluster `json:"cluster,omitempty"`
 
 	// UpdateMask: Required. The subset of Cluster fields which should be
-	// replaced. Must be explicitly set.
+	// replaced.
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Cluster") to
@@ -1195,6 +1191,42 @@ type TableProgress struct {
 
 func (s *TableProgress) MarshalJSON() ([]byte, error) {
 	type NoMethod TableProgress
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UndeleteTableMetadata: Metadata type for the operation returned by
+// google.bigtable.admin.v2.BigtableTableAdmin.UndeleteTable.
+type UndeleteTableMetadata struct {
+	// EndTime: If set, the time at which this operation finished or was
+	// cancelled.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Name: The name of the table being restored.
+	Name string `json:"name,omitempty"`
+
+	// StartTime: The time at which this operation started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UndeleteTableMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod UndeleteTableMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

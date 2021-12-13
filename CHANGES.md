@@ -1,5 +1,13 @@
 # Changes
 
+## [0.63.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.62.0...v0.63.0) (2021-12-13)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1348](https://www.github.com/googleapis/google-api-go-client/issues/1348) [#1345](https://www.github.com/googleapis/google-api-go-client/issues/1345) [#1344](https://www.github.com/googleapis/google-api-go-client/issues/1344) [#1343](https://www.github.com/googleapis/google-api-go-client/issues/1343) [#1341](https://www.github.com/googleapis/google-api-go-client/issues/1341)
+* **internal/gensupport:** add configurable retry ([#1324](https://www.github.com/googleapis/google-api-go-client/issues/1324)) ([8d2eca8](https://www.github.com/googleapis/google-api-go-client/commit/8d2eca842c7289b0b1d243f564af19645d2d6249))
+
 ## [0.62.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.61.0...v0.62.0) (2021-12-08)
 
 

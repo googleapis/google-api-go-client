@@ -1160,8 +1160,8 @@ type Location struct {
 	// a location, this field is ignored if the provided address geocodes
 	// successfully. This field is only returned on get requests if the
 	// user-provided `latlng` value was accepted during create, or the
-	// `latlng` value was updated through the Google My Business website.
-	// This field can only be updated by approved clients.
+	// `latlng` value was updated through the Google Business Profile
+	// website. This field can only be updated by approved clients.
 	Latlng *LatLng `json:"latlng,omitempty"`
 
 	// Metadata: Output only. Additional non-user-editable information.
@@ -2464,7 +2464,7 @@ func (c *AccountsLocationsCreateCall) Header() http.Header {
 
 func (c *AccountsLocationsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2673,7 +2673,7 @@ func (c *AccountsLocationsListCall) Header() http.Header {
 
 func (c *AccountsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2916,7 +2916,7 @@ func (c *AttributesListCall) Header() http.Header {
 
 func (c *AttributesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3140,7 +3140,7 @@ func (c *CategoriesBatchGetCall) Header() http.Header {
 
 func (c *CategoriesBatchGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3353,7 +3353,7 @@ func (c *CategoriesListCall) Header() http.Header {
 
 func (c *CategoriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3548,7 +3548,7 @@ func (c *ChainsGetCall) Header() http.Header {
 
 func (c *ChainsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3703,7 +3703,7 @@ func (c *ChainsSearchCall) Header() http.Header {
 
 func (c *ChainsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3833,7 +3833,7 @@ func (c *GoogleLocationsSearchCall) Header() http.Header {
 
 func (c *GoogleLocationsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3962,7 +3962,7 @@ func (c *LocationsAssociateCall) Header() http.Header {
 
 func (c *LocationsAssociateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4103,7 +4103,7 @@ func (c *LocationsClearLocationAssociationCall) Header() http.Header {
 
 func (c *LocationsClearLocationAssociationCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4207,7 +4207,8 @@ type LocationsDeleteCall struct {
 // Delete: Deletes a location. If this location cannot be deleted using
 // the API and it is marked so in the
 // `google.mybusiness.businessinformation.v1.LocationState`, use the
-// Google My Business (https://business.google.com/manage/) website.
+// Google Business Profile (https://business.google.com/manage/)
+// website.
 //
 // - name: The name of the location to delete.
 func (r *LocationsService) Delete(name string) *LocationsDeleteCall {
@@ -4243,7 +4244,7 @@ func (c *LocationsDeleteCall) Header() http.Header {
 
 func (c *LocationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4302,7 +4303,7 @@ func (c *LocationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a location. If this location cannot be deleted using the API and it is marked so in the `google.mybusiness.businessinformation.v1.LocationState`, use the [Google My Business](https://business.google.com/manage/) website.",
+	//   "description": "Deletes a location. If this location cannot be deleted using the API and it is marked so in the `google.mybusiness.businessinformation.v1.LocationState`, use the [Google Business Profile](https://business.google.com/manage/) website.",
 	//   "flatPath": "v1/locations/{locationsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "mybusinessbusinessinformation.locations.delete",
@@ -4390,7 +4391,7 @@ func (c *LocationsGetCall) Header() http.Header {
 
 func (c *LocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4540,7 +4541,7 @@ func (c *LocationsGetAttributesCall) Header() http.Header {
 
 func (c *LocationsGetAttributesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4691,7 +4692,7 @@ func (c *LocationsGetGoogleUpdatedCall) Header() http.Header {
 
 func (c *LocationsGetGoogleUpdatedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4848,7 +4849,7 @@ func (c *LocationsPatchCall) Header() http.Header {
 
 func (c *LocationsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5015,7 +5016,7 @@ func (c *LocationsUpdateAttributesCall) Header() http.Header {
 
 func (c *LocationsUpdateAttributesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5171,7 +5172,7 @@ func (c *LocationsAttributesGetGoogleUpdatedCall) Header() http.Header {
 
 func (c *LocationsAttributesGetGoogleUpdatedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

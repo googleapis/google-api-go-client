@@ -775,8 +775,8 @@ func (s *DateRange) MarshalJSON() ([]byte, error) {
 
 // Dimension: Dimensions are attributes of your data. For example, the
 // dimension city indicates the city from which an event originates.
-// Dimension values in report responses are strings; for example, city
-// could be "Paris" or "New York". Requests are allowed up to 9
+// Dimension values in report responses are strings; for example, the
+// city could be "Paris" or "New York". Requests are allowed up to 9
 // dimensions.
 type Dimension struct {
 	// DimensionExpression: One dimension can be the result of an expression
@@ -1104,8 +1104,8 @@ type FilterExpression struct {
 	// relationship.
 	AndGroup *FilterExpressionList `json:"andGroup,omitempty"`
 
-	// Filter: A primitive filter. All fields in filter in same
-	// FilterExpression needs to be either all dimensions or metrics.
+	// Filter: A primitive filter. In the same FilterExpression, all of the
+	// filter's field names need to be either all dimensions or all metrics.
 	Filter *Filter `json:"filter,omitempty"`
 
 	// NotExpression: The FilterExpression is NOT of not_expression.
@@ -2033,17 +2033,6 @@ type ResponseMetaData struct {
 	// (https://support.google.com/analytics/answer/10851388).
 	SchemaRestrictionResponse *SchemaRestrictionResponse `json:"schemaRestrictionResponse,omitempty"`
 
-	// ThresholdingApplied: If `thresholdingApplied` is true, this report
-	// has thresholding applied and only returns data that meets the minimum
-	// aggregation thresholds. This boolean only indicates if thresholding
-	// was applied. It is possible for thresholding to be applied and no
-	// data is absent from the report, and this happens when all data is
-	// above the thresholds. To learn more, see Data thresholds
-	// (https://support.google.com/analytics/answer/9383630) and About
-	// Demographics and Interests
-	// (https://support.google.com/analytics/answer/2799357).
-	ThresholdingApplied bool `json:"thresholdingApplied,omitempty"`
-
 	// TimeZone: The property's current timezone. Intended to be used to
 	// interpret time-based dimensions like `hour` and `minute`. Formatted
 	// as strings from the IANA Time Zone database
@@ -2483,8 +2472,8 @@ type RunReportRequest struct {
 	//   "COUNT" - Count operator.
 	MetricAggregations []string `json:"metricAggregations,omitempty"`
 
-	// MetricFilter: The filter clause of metrics. Applied at post
-	// aggregation phase, similar to SQL having-clause. Dimensions cannot be
+	// MetricFilter: The filter clause of metrics. Applied after aggregating
+	// the report's rows, similar to SQL having-clause. Dimensions cannot be
 	// used in this filter.
 	MetricFilter *FilterExpression `json:"metricFilter,omitempty"`
 
@@ -2663,10 +2652,10 @@ type StringFilter struct {
 	//   "BEGINS_WITH" - Begins with the string value.
 	//   "ENDS_WITH" - Ends with the string value.
 	//   "CONTAINS" - Contains the string value.
-	//   "FULL_REGEXP" - Full regular expression match with the string
-	// value.
-	//   "PARTIAL_REGEXP" - Partial regular expression match with the string
-	// value.
+	//   "FULL_REGEXP" - Full match for the regular expression with the
+	// string value.
+	//   "PARTIAL_REGEXP" - Partial match for the regular expression with
+	// the string value.
 	MatchType string `json:"matchType,omitempty"`
 
 	// Value: The string value used for the matching.
@@ -2750,7 +2739,7 @@ func (c *PropertiesBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *PropertiesBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2900,7 +2889,7 @@ func (c *PropertiesBatchRunReportsCall) Header() http.Header {
 
 func (c *PropertiesBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3058,7 +3047,7 @@ func (c *PropertiesCheckCompatibilityCall) Header() http.Header {
 
 func (c *PropertiesCheckCompatibilityCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3226,7 +3215,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3374,7 +3363,7 @@ func (c *PropertiesRunPivotReportCall) Header() http.Header {
 
 func (c *PropertiesRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3523,7 +3512,7 @@ func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 
 func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3678,7 +3667,7 @@ func (c *PropertiesRunReportCall) Header() http.Header {
 
 func (c *PropertiesRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

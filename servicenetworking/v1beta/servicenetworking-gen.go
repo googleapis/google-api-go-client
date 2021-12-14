@@ -1077,11 +1077,19 @@ func (s *ContextRule) MarshalJSON() ([]byte, error) {
 }
 
 // Control: Selects and configures the service controller used by the
-// service. The service controller handles features like abuse, quota,
-// billing, logging, monitoring, etc.
+// service. The service controller handles two things: - **What is
+// allowed:** for each API request, Chemist checks the project status,
+// activation status, abuse status, billing status, service status,
+// location restrictions, VPC Service Controls, SuperQuota, and other
+// policies. - **What has happened:** for each API response, Chemist
+// reports the telemetry data to analytics, auditing, billing, eventing,
+// logging, monitoring, sawmill, and tracing. Chemist also accepts
+// telemetry data not associated with API traffic, such as billing
+// metrics. Example: control: environment: servicecontrol.googleapis.com
 type Control struct {
-	// Environment: The service control environment to use. If empty, no
-	// control plane feature (like quota and billing) will be enabled.
+	// Environment: The service controller environment to use. If empty, no
+	// control plane feature (like quota and billing) will be enabled. The
+	// recommended value for most services is servicecontrol.googleapis.com
 	Environment string `json:"environment,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Environment") to
@@ -4155,7 +4163,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4309,7 +4317,7 @@ func (c *ServicesAddSubnetworkCall) Header() http.Header {
 
 func (c *ServicesAddSubnetworkCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4460,7 +4468,7 @@ func (c *ServicesSearchRangeCall) Header() http.Header {
 
 func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4623,7 +4631,7 @@ func (c *ServicesUpdateConnectionsCall) Header() http.Header {
 
 func (c *ServicesUpdateConnectionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4788,7 +4796,7 @@ func (c *ServicesConnectionsCreateCall) Header() http.Header {
 
 func (c *ServicesConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4958,7 +4966,7 @@ func (c *ServicesConnectionsListCall) Header() http.Header {
 
 func (c *ServicesConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211212")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

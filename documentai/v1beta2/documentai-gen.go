@@ -1245,7 +1245,7 @@ type GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus struct {
 	InputGcsSource string `json:"inputGcsSource,omitempty"`
 
 	// OutputGcsDestination: The output_gcs_destination (in the request as
-	// 'output_gcs_destination') of the processed document if it was
+	// `output_gcs_destination`) of the processed document if it was
 	// successful, otherwise empty.
 	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
 
@@ -1826,8 +1826,8 @@ func (s *GoogleCloudDocumentaiV1beta1Document) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentEntity: An entity that could be a
-// phrase in the text or a property belongs to the document. It is a
-// known entity type, such as a person, an organization, or location.
+// phrase in the text or a property that belongs to the document. It is
+// a known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
 	// 1].
@@ -1941,8 +1941,8 @@ type GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue struct {
 	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
 
 	// Text: Optional. An optional field to store a normalized string. For
-	// some entity types, one of respective 'structured_value' fields may
-	// also be populated. Also not all the types of 'structured_value' will
+	// some entity types, one of respective `structured_value` fields may
+	// also be populated. Also not all the types of `structured_value` will
 	// be normalized. For example, some processors may not generate float or
 	// int normalized text by default. Below are sample formats mapped to
 	// structured values. - Money/Currency type (`money_value`) is in the
@@ -2897,8 +2897,8 @@ type GoogleCloudDocumentaiV1beta1DocumentProvenanceParent struct {
 	Id int64 `json:"id,omitempty"`
 
 	// Index: The index of the parent item in the corresponding item list
-	// (eg. list of entities, properties within entities, etc.) on parent
-	// revision.
+	// (eg. list of entities, properties within entities, etc.) in the
+	// parent revision.
 	Index int64 `json:"index,omitempty"`
 
 	// Revision: The index of the index into current revision's parent_ids
@@ -3769,8 +3769,8 @@ func (s *GoogleCloudDocumentaiV1beta2Document) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentEntity: An entity that could be a
-// phrase in the text or a property belongs to the document. It is a
-// known entity type, such as a person, an organization, or location.
+// phrase in the text or a property that belongs to the document. It is
+// a known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
 	// 1].
@@ -3884,8 +3884,8 @@ type GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue struct {
 	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
 
 	// Text: Optional. An optional field to store a normalized string. For
-	// some entity types, one of respective 'structured_value' fields may
-	// also be populated. Also not all the types of 'structured_value' will
+	// some entity types, one of respective `structured_value` fields may
+	// also be populated. Also not all the types of `structured_value` will
 	// be normalized. For example, some processors may not generate float or
 	// int normalized text by default. Below are sample formats mapped to
 	// structured values. - Money/Currency type (`money_value`) is in the
@@ -4895,8 +4895,8 @@ type GoogleCloudDocumentaiV1beta2DocumentProvenanceParent struct {
 	Id int64 `json:"id,omitempty"`
 
 	// Index: The index of the parent item in the corresponding item list
-	// (eg. list of entities, properties within entities, etc.) on parent
-	// revision.
+	// (eg. list of entities, properties within entities, etc.) in the
+	// parent revision.
 	Index int64 `json:"index,omitempty"`
 
 	// Revision: The index of the index into current revision's parent_ids
@@ -5926,7 +5926,7 @@ type GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus str
 	InputGcsSource string `json:"inputGcsSource,omitempty"`
 
 	// OutputGcsDestination: The output_gcs_destination (in the request as
-	// 'output_gcs_destination') of the processed document if it was
+	// `output_gcs_destination`) of the processed document if it was
 	// successful, otherwise empty.
 	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
 
@@ -6994,7 +6994,7 @@ func (c *ProjectsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7139,7 +7139,7 @@ func (c *ProjectsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7285,7 +7285,7 @@ func (c *ProjectsLocationsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7430,7 +7430,7 @@ func (c *ProjectsLocationsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7584,7 +7584,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7732,7 +7732,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

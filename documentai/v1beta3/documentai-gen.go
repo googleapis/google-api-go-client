@@ -1245,7 +1245,7 @@ type GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus struct {
 	InputGcsSource string `json:"inputGcsSource,omitempty"`
 
 	// OutputGcsDestination: The output_gcs_destination (in the request as
-	// 'output_gcs_destination') of the processed document if it was
+	// `output_gcs_destination`) of the processed document if it was
 	// successful, otherwise empty.
 	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
 
@@ -1826,8 +1826,8 @@ func (s *GoogleCloudDocumentaiV1beta1Document) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentEntity: An entity that could be a
-// phrase in the text or a property belongs to the document. It is a
-// known entity type, such as a person, an organization, or location.
+// phrase in the text or a property that belongs to the document. It is
+// a known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
 	// 1].
@@ -1941,8 +1941,8 @@ type GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue struct {
 	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
 
 	// Text: Optional. An optional field to store a normalized string. For
-	// some entity types, one of respective 'structured_value' fields may
-	// also be populated. Also not all the types of 'structured_value' will
+	// some entity types, one of respective `structured_value` fields may
+	// also be populated. Also not all the types of `structured_value` will
 	// be normalized. For example, some processors may not generate float or
 	// int normalized text by default. Below are sample formats mapped to
 	// structured values. - Money/Currency type (`money_value`) is in the
@@ -2897,8 +2897,8 @@ type GoogleCloudDocumentaiV1beta1DocumentProvenanceParent struct {
 	Id int64 `json:"id,omitempty"`
 
 	// Index: The index of the parent item in the corresponding item list
-	// (eg. list of entities, properties within entities, etc.) on parent
-	// revision.
+	// (eg. list of entities, properties within entities, etc.) in the
+	// parent revision.
 	Index int64 `json:"index,omitempty"`
 
 	// Revision: The index of the index into current revision's parent_ids
@@ -3705,8 +3705,8 @@ func (s *GoogleCloudDocumentaiV1beta2Document) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentEntity: An entity that could be a
-// phrase in the text or a property belongs to the document. It is a
-// known entity type, such as a person, an organization, or location.
+// phrase in the text or a property that belongs to the document. It is
+// a known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
 	// 1].
@@ -3820,8 +3820,8 @@ type GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue struct {
 	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
 
 	// Text: Optional. An optional field to store a normalized string. For
-	// some entity types, one of respective 'structured_value' fields may
-	// also be populated. Also not all the types of 'structured_value' will
+	// some entity types, one of respective `structured_value` fields may
+	// also be populated. Also not all the types of `structured_value` will
 	// be normalized. For example, some processors may not generate float or
 	// int normalized text by default. Below are sample formats mapped to
 	// structured values. - Money/Currency type (`money_value`) is in the
@@ -4831,8 +4831,8 @@ type GoogleCloudDocumentaiV1beta2DocumentProvenanceParent struct {
 	Id int64 `json:"id,omitempty"`
 
 	// Index: The index of the parent item in the corresponding item list
-	// (eg. list of entities, properties within entities, etc.) on parent
-	// revision.
+	// (eg. list of entities, properties within entities, etc.) in the
+	// parent revision.
 	Index int64 `json:"index,omitempty"`
 
 	// Revision: The index of the index into current revision's parent_ids
@@ -5609,7 +5609,7 @@ type GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus str
 	InputGcsSource string `json:"inputGcsSource,omitempty"`
 
 	// OutputGcsDestination: The output_gcs_destination (in the request as
-	// 'output_gcs_destination') of the processed document if it was
+	// `output_gcs_destination`) of the processed document if it was
 	// successful, otherwise empty.
 	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
 
@@ -6060,8 +6060,8 @@ func (s *GoogleCloudDocumentaiV1beta3Document) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDocumentaiV1beta3DocumentEntity: An entity that could be a
-// phrase in the text or a property belongs to the document. It is a
-// known entity type, such as a person, an organization, or location.
+// phrase in the text or a property that belongs to the document. It is
+// a known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta3DocumentEntity struct {
 	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
 	// 1].
@@ -6175,8 +6175,8 @@ type GoogleCloudDocumentaiV1beta3DocumentEntityNormalizedValue struct {
 	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
 
 	// Text: Optional. An optional field to store a normalized string. For
-	// some entity types, one of respective 'structured_value' fields may
-	// also be populated. Also not all the types of 'structured_value' will
+	// some entity types, one of respective `structured_value` fields may
+	// also be populated. Also not all the types of `structured_value` will
 	// be normalized. For example, some processors may not generate float or
 	// int normalized text by default. Below are sample formats mapped to
 	// structured values. - Money/Currency type (`money_value`) is in the
@@ -7191,8 +7191,8 @@ type GoogleCloudDocumentaiV1beta3DocumentProvenanceParent struct {
 	Id int64 `json:"id,omitempty"`
 
 	// Index: The index of the parent item in the corresponding item list
-	// (eg. list of entities, properties within entities, etc.) on parent
-	// revision.
+	// (eg. list of entities, properties within entities, etc.) in the
+	// parent revision.
 	Index int64 `json:"index,omitempty"`
 
 	// Revision: The index of the index into current revision's parent_ids
@@ -7978,8 +7978,8 @@ func (s *GoogleCloudDocumentaiV1beta3ProcessResponse) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudDocumentaiV1beta3Processor: The first-class citizen for
-// DAI. Each processor defines how to extract structural information
-// from a document.
+// Document AI. Each processor defines how to extract structural
+// information from a document.
 type GoogleCloudDocumentaiV1beta3Processor struct {
 	// CreateTime: The time the processor was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -7996,7 +7996,7 @@ type GoogleCloudDocumentaiV1beta3Processor struct {
 
 	// Name: Output only. Immutable. The resource name of the processor.
 	// Format:
-	// projects/{project}/locations/{location}/processors/{processor}
+	// `projects/{project}/locations/{location}/processors/{processor}`
 	Name string `json:"name,omitempty"`
 
 	// ProcessEndpoint: Output only. Immutable. The http endpoint that can
@@ -8007,7 +8007,7 @@ type GoogleCloudDocumentaiV1beta3Processor struct {
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The processor is in an unspecified state.
-	//   "ENABLED" - The processor is enabled, i.e, has an enabled version
+	//   "ENABLED" - The processor is enabled, i.e., has an enabled version
 	// which can currently serve processing requests and all the feature
 	// dependencies have been successfully initialized.
 	//   "DISABLED" - The processor is disabled.
@@ -8060,27 +8060,11 @@ func (s *GoogleCloudDocumentaiV1beta3Processor) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudDocumentaiV1beta3ProcessorType: A processor type is
 // responsible for performing a certain document understanding task on a
-// certain type of document. All processor types are created by the
-// documentai service internally. User will only list all available
-// processor types via UI. For different users (projects), the available
-// processor types may be different since we'll expose the access of
-// some types via EAP whitelisting. We make the ProcessorType a resource
-// under location so we have a unified API and keep the possibility that
-// UI will load different available processor types from different
-// regions. But for alpha the behavior is that the user will always get
-// the union of all available processor types among all regions no
-// matter which regionalized endpoint is called, and then we use the
-// 'available_locations' field to show under which regions a processor
-// type is available. For example, users can call either the 'US' or
-// 'EU' endpoint to feach processor types. In the return, we will have
-// an 'invoice parsing' processor with 'available_locations' field only
-// containing 'US'. So the user can try to create an 'invoice parsing'
-// processor under the location 'US'. Such attempt of creating under the
-// location 'EU' will fail. Next ID: 9.
+// certain type of document.
 type GoogleCloudDocumentaiV1beta3ProcessorType struct {
-	// AllowCreation: Whether the processor type allows creation. If yes,
-	// user can create a processor of this processor type. Otherwise, user
-	// needs to request access.
+	// AllowCreation: Whether the processor type allows creation. If true,
+	// users can create a processor of this processor type. Otherwise, users
+	// need to request access.
 	AllowCreation bool `json:"allowCreation,omitempty"`
 
 	// AvailableLocations: The locations in which this processor is
@@ -8201,8 +8185,8 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: The resource name of the processor version. Format:
-	// projects/{project}/locations/{location}/processors/{processor}/process
-	// orVersions/{processor_version}
+	// `projects/{project}/locations/{location}/processors/{processor}/proces
+	// sorVersions/{processor_version}`
 	Name string `json:"name,omitempty"`
 
 	// State: The state of the processor version.
@@ -8335,7 +8319,7 @@ func (s *GoogleCloudDocumentaiV1beta3ReviewDocumentOperationMetadata) MarshalJSO
 }
 
 // GoogleCloudDocumentaiV1beta3ReviewDocumentRequest: Request message
-// for review document method. Next Id: 6.
+// for review document method.
 type GoogleCloudDocumentaiV1beta3ReviewDocumentRequest struct {
 	// Document: The document that needs human review.
 	Document *GoogleCloudDocumentaiV1beta3Document `json:"document,omitempty"`
@@ -9247,8 +9231,8 @@ type ProjectsLocationsFetchProcessorTypesCall struct {
 // FetchProcessorTypes: Fetches processor types.
 //
 // - parent: The project of processor type to list. The available
-//   processor types may depend on the whitelisting on projects. Format:
-//   projects/{project}/locations/{location}.
+//   processor types may depend on the allow-listing on projects.
+//   Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsService) FetchProcessorTypes(parent string) *ProjectsLocationsFetchProcessorTypesCall {
 	c := &ProjectsLocationsFetchProcessorTypesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9292,7 +9276,7 @@ func (c *ProjectsLocationsFetchProcessorTypesCall) Header() http.Header {
 
 func (c *ProjectsLocationsFetchProcessorTypesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9366,7 +9350,7 @@ func (c *ProjectsLocationsFetchProcessorTypesCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The project of processor type to list. The available processor types may depend on the whitelisting on projects. Format: projects/{project}/locations/{location}",
+	//       "description": "Required. The project of processor type to list. The available processor types may depend on the allow-listing on projects. Format: `projects/{project}/locations/{location}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -9441,7 +9425,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9613,7 +9597,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9796,7 +9780,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9941,7 +9925,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10117,7 +10101,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10259,9 +10243,10 @@ type ProjectsLocationsProcessorsBatchProcessCall struct {
 // output is written to Cloud Storage as JSON in the [Document] format.
 //
 // - name: The resource name of Processor or ProcessorVersion. Format:
-//   projects/{project}/locations/{location}/processors/{processor}, or
-//   projects/{project}/locations/{location}/processors/{processor}/proce
-//   ssorVersions/{processorVersion}.
+//   `projects/{project}/locations/{location}/processors/{processor}`,
+//   or
+//   `projects/{project}/locations/{location}/processors/{processor}/proc
+//   essorVersions/{processorVersion}`.
 func (r *ProjectsLocationsProcessorsService) BatchProcess(name string, googleclouddocumentaiv1beta3batchprocessrequest *GoogleCloudDocumentaiV1beta3BatchProcessRequest) *ProjectsLocationsProcessorsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10296,7 +10281,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10369,7 +10354,7 @@ func (c *ProjectsLocationsProcessorsBatchProcessCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of Processor or ProcessorVersion. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}",
+	//       "description": "Required. The resource name of Processor or ProcessorVersion. Format: `projects/{project}/locations/{location}/processors/{processor}`, or `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
 	//       "required": true,
@@ -10406,7 +10391,7 @@ type ProjectsLocationsProcessorsCreateCall struct {
 // creation.
 //
 // - parent: The parent (project and location) under which to create the
-//   processor. Format: projects/{project}/locations/{location}.
+//   processor. Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsProcessorsService) Create(parent string, googleclouddocumentaiv1beta3processor *GoogleCloudDocumentaiV1beta3Processor) *ProjectsLocationsProcessorsCreateCall {
 	c := &ProjectsLocationsProcessorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10441,7 +10426,7 @@ func (c *ProjectsLocationsProcessorsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10515,7 +10500,7 @@ func (c *ProjectsLocationsProcessorsCreateCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent (project and location) under which to create the processor. Format: projects/{project}/locations/{location}",
+	//       "description": "Required. The parent (project and location) under which to create the processor. Format: `projects/{project}/locations/{location}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -10584,7 +10569,7 @@ func (c *ProjectsLocationsProcessorsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10718,7 +10703,7 @@ func (c *ProjectsLocationsProcessorsDisableCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsDisableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10860,7 +10845,7 @@ func (c *ProjectsLocationsProcessorsEnableCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsEnableCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11011,7 +10996,7 @@ func (c *ProjectsLocationsProcessorsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11116,7 +11101,7 @@ type ProjectsLocationsProcessorsListCall struct {
 //
 // - parent: The parent (project and location) which owns this
 //   collection of Processors. Format:
-//   projects/{project}/locations/{location}.
+//   `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsProcessorsService) List(parent string) *ProjectsLocationsProcessorsListCall {
 	c := &ProjectsLocationsProcessorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11177,7 +11162,7 @@ func (c *ProjectsLocationsProcessorsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11261,7 +11246,7 @@ func (c *ProjectsLocationsProcessorsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent (project and location) which owns this collection of Processors. Format: projects/{project}/locations/{location}",
+	//       "description": "Required. The parent (project and location) which owns this collection of Processors. Format: `projects/{project}/locations/{location}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -11316,9 +11301,10 @@ type ProjectsLocationsProcessorsProcessCall struct {
 // - name: The resource name of the Processor or ProcessorVersion to use
 //   for processing. If a Processor is specified, the server will use
 //   its default version. Format:
-//   projects/{project}/locations/{location}/processors/{processor}, or
-//   projects/{project}/locations/{location}/processors/{processor}/proce
-//   ssorVersions/{processorVersion}.
+//   `projects/{project}/locations/{location}/processors/{processor}`,
+//   or
+//   `projects/{project}/locations/{location}/processors/{processor}/proc
+//   essorVersions/{processorVersion}`.
 func (r *ProjectsLocationsProcessorsService) Process(name string, googleclouddocumentaiv1beta3processrequest *GoogleCloudDocumentaiV1beta3ProcessRequest) *ProjectsLocationsProcessorsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11353,7 +11339,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsProcessorsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11428,7 +11414,7 @@ func (c *ProjectsLocationsProcessorsProcessCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Processor or ProcessorVersion to use for processing. If a Processor is specified, the server will use its default version. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}",
+	//       "description": "Required. The resource name of the Processor or ProcessorVersion to use for processing. If a Processor is specified, the server will use its default version. Format: `projects/{project}/locations/{location}/processors/{processor}`, or `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
 	//       "required": true,
@@ -11500,7 +11486,7 @@ func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) Header() htt
 
 func (c *ProjectsLocationsProcessorsSetDefaultProcessorVersionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11644,7 +11630,7 @@ func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) Header(
 
 func (c *ProjectsLocationsProcessorsHumanReviewConfigReviewDocumentCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11753,9 +11739,10 @@ type ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall struct {
 // output is written to Cloud Storage as JSON in the [Document] format.
 //
 // - name: The resource name of Processor or ProcessorVersion. Format:
-//   projects/{project}/locations/{location}/processors/{processor}, or
-//   projects/{project}/locations/{location}/processors/{processor}/proce
-//   ssorVersions/{processorVersion}.
+//   `projects/{project}/locations/{location}/processors/{processor}`,
+//   or
+//   `projects/{project}/locations/{location}/processors/{processor}/proc
+//   essorVersions/{processorVersion}`.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) BatchProcess(name string, googleclouddocumentaiv1beta3batchprocessrequest *GoogleCloudDocumentaiV1beta3BatchProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11790,7 +11777,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Header() 
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -11863,7 +11850,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsBatchProcessCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of Processor or ProcessorVersion. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}",
+	//       "description": "Required. The resource name of Processor or ProcessorVersion. Format: `projects/{project}/locations/{location}/processors/{processor}`, or `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
 	//       "required": true,
@@ -11931,7 +11918,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) Header() http.H
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12065,7 +12052,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) Header() http.H
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsDeployCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12216,7 +12203,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) Header() http.Head
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12322,7 +12309,7 @@ type ProjectsLocationsProcessorsProcessorVersionsListCall struct {
 //
 // - parent: The parent (project, location and processor) to list all
 //   versions. Format:
-//   projects/{project}/locations/{location}/processors/{processor}.
+//   `projects/{project}/locations/{location}/processors/{processor}`.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) List(parent string) *ProjectsLocationsProcessorsProcessorVersionsListCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12383,7 +12370,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) Header() http.Hea
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12468,7 +12455,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsListCall) Do(opts ...google
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent (project, location and processor) to list all versions. Format: projects/{project}/locations/{location}/processors/{processor}",
+	//       "description": "Required. The parent (project, location and processor) to list all versions. Format: `projects/{project}/locations/{location}/processors/{processor}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+$",
 	//       "required": true,
@@ -12523,9 +12510,10 @@ type ProjectsLocationsProcessorsProcessorVersionsProcessCall struct {
 // - name: The resource name of the Processor or ProcessorVersion to use
 //   for processing. If a Processor is specified, the server will use
 //   its default version. Format:
-//   projects/{project}/locations/{location}/processors/{processor}, or
-//   projects/{project}/locations/{location}/processors/{processor}/proce
-//   ssorVersions/{processorVersion}.
+//   `projects/{project}/locations/{location}/processors/{processor}`,
+//   or
+//   `projects/{project}/locations/{location}/processors/{processor}/proc
+//   essorVersions/{processorVersion}`.
 func (r *ProjectsLocationsProcessorsProcessorVersionsService) Process(name string, googleclouddocumentaiv1beta3processrequest *GoogleCloudDocumentaiV1beta3ProcessRequest) *ProjectsLocationsProcessorsProcessorVersionsProcessCall {
 	c := &ProjectsLocationsProcessorsProcessorVersionsProcessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12560,7 +12548,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Header() http.
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -12635,7 +12623,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsProcessCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the Processor or ProcessorVersion to use for processing. If a Processor is specified, the server will use its default version. Format: projects/{project}/locations/{location}/processors/{processor}, or projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}",
+	//       "description": "Required. The resource name of the Processor or ProcessorVersion to use for processing. If a Processor is specified, the server will use its default version. Format: `projects/{project}/locations/{location}/processors/{processor}`, or `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/processors/[^/]+/processorVersions/[^/]+$",
 	//       "required": true,
@@ -12704,7 +12692,7 @@ func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) Header() http
 
 func (c *ProjectsLocationsProcessorsProcessorVersionsUndeployCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211213")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211214")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

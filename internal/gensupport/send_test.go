@@ -6,9 +6,10 @@ package gensupport
 
 import (
 	"context"
-	"errors"
 	"net/http"
 	"testing"
+
+	"golang.org/x/xerrors"
 )
 
 func TestSendRequest(t *testing.T) {
@@ -34,7 +35,7 @@ func TestSendRequestWithRetry(t *testing.T) {
 type brokenRoundTripper struct{}
 
 func (t *brokenRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
-	return nil, errors.New("this should not happen")
+	return nil, xerrors.New("this should not happen")
 }
 
 func TestCanceledContextDoesNotPerformRequest(t *testing.T) {
@@ -45,8 +46,8 @@ func TestCanceledContextDoesNotPerformRequest(t *testing.T) {
 		req, _ := http.NewRequest("GET", "url", nil)
 		ctx, cancel := context.WithCancel(context.Background())
 		cancel()
-		_, err := SendRequestWithRetry(ctx, &client, req)
-		if !errors.Is(err, context.Canceled) {
+		_, err := SendRequestWithRetry(ctx, &client, req, nil)
+		if !xerrors.Is(err, context.Canceled) {
 			t.Fatalf("got %v, want %v", err, context.Canceled)
 		}
 	}

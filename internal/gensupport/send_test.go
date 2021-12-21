@@ -8,6 +8,8 @@ import (
 	"context"
 	"net/http"
 	"testing"
+
+	"golang.org/x/xerrors"
 )
 
 func TestSendRequest(t *testing.T) {
@@ -27,5 +29,26 @@ func TestSendRequestWithRetry(t *testing.T) {
 	_, err := SendRequestWithRetry(context.Background(), nil, req, nil)
 	if err == nil {
 		t.Error("got nil, want error")
+	}
+}
+
+type brokenRoundTripper struct{}
+
+func (t *brokenRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
+	return nil, xerrors.New("this should not happen")
+}
+
+func TestCanceledContextDoesNotPerformRequest(t *testing.T) {
+	client := http.Client{
+		Transport: &brokenRoundTripper{},
+	}
+	for i := 0; i < 1000; i++ {
+		req, _ := http.NewRequest("GET", "url", nil)
+		ctx, cancel := context.WithCancel(context.Background())
+		cancel()
+		_, err := SendRequestWithRetry(ctx, &client, req, nil)
+		if !xerrors.Is(err, context.Canceled) {
+			t.Fatalf("got %v, want %v", err, context.Canceled)
+		}
 	}
 }

@@ -1935,7 +1935,7 @@
           ]
         },
         "list": {
-          "description": "Retrieves a paginated list of all mobile devices for an account.",
+          "description": "Retrieves a paginated list of all user-owned mobile devices for an account. To retrieve a list that includes company-owned devices, use the Cloud Identity [Devices API](https://cloud.google.com/identity/docs/concepts/overview-devices) instead.",
           "flatPath": "admin/directory/v1/customer/{customerId}/devices/mobile",
           "httpMethod": "GET",
           "id": "directory.mobiledevices.list",
@@ -4402,7 +4402,7 @@
       }
     }
   },
-  "revision": "20211214",
+  "revision": "20211221",
   "rootUrl": "https://admin.googleapis.com/",
   "schemas": {
     "Alias": {

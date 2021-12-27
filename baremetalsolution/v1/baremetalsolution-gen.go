@@ -229,7 +229,7 @@ func (c *ProjectsLocationsInstancesResetInstanceCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesResetInstanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211225")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211226")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

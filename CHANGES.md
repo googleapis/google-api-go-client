@@ -1,5 +1,19 @@
 # Changes
 
+## [0.64.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.63.0...v0.64.0) (2022-01-06)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients , refs [#1384](https://www.github.com/googleapis/google-api-go-client/issues/1384) [#1382](https://www.github.com/googleapis/google-api-go-client/issues/1382) [#1381](https://www.github.com/googleapis/google-api-go-client/issues/1381) [#1379](https://www.github.com/googleapis/google-api-go-client/issues/1379) [#1378](https://www.github.com/googleapis/google-api-go-client/issues/1378) [#1377](https://www.github.com/googleapis/google-api-go-client/issues/1377) [#1376](https://www.github.com/googleapis/google-api-go-client/issues/1376) [#1375](https://www.github.com/googleapis/google-api-go-client/issues/1375) [#1374](https://www.github.com/googleapis/google-api-go-client/issues/1374) [#1372](https://www.github.com/googleapis/google-api-go-client/issues/1372) [#1370](https://www.github.com/googleapis/google-api-go-client/issues/1370) [#1368](https://www.github.com/googleapis/google-api-go-client/issues/1368) [#1366](https://www.github.com/googleapis/google-api-go-client/issues/1366) [#1365](https://www.github.com/googleapis/google-api-go-client/issues/1365) [#1362](https://www.github.com/googleapis/google-api-go-client/issues/1362) [#1360](https://www.github.com/googleapis/google-api-go-client/issues/1360) [#1356](https://www.github.com/googleapis/google-api-go-client/issues/1356) [#1354](https://www.github.com/googleapis/google-api-go-client/issues/1354) [#1353](https://www.github.com/googleapis/google-api-go-client/issues/1353) [#1352](https://www.github.com/googleapis/google-api-go-client/issues/1352) [#1351](https://www.github.com/googleapis/google-api-go-client/issues/1351) [#1349](https://www.github.com/googleapis/google-api-go-client/issues/1349)
+* **transport:** remove google-c2p dependence to DirectPath ([#1361](https://www.github.com/googleapis/google-api-go-client/issues/1361)) ([e84950f](https://www.github.com/googleapis/google-api-go-client/commit/e84950f3bcd523a61686c1ebc8b6b3690473e4b7)), refs [#1283](https://www.github.com/googleapis/google-api-go-client/issues/1283)
+
+
+### Bug Fixes
+
+* **internal/gensupport:** check ctx in chunk retry ([#1364](https://www.github.com/googleapis/google-api-go-client/issues/1364)) ([e10082d](https://www.github.com/googleapis/google-api-go-client/commit/e10082d2a7e24c66fbe83eb94f0b532882141698))
+* **internal/gensupport:** Make SendRequestWithRetry check for canceled contexts twice ([#1359](https://www.github.com/googleapis/google-api-go-client/issues/1359)) ([520b227](https://www.github.com/googleapis/google-api-go-client/commit/520b227a148907db521d8264e254dff1d22e0fc1)), refs [#1358](https://www.github.com/googleapis/google-api-go-client/issues/1358)
+
 ## [0.63.0](https://www.github.com/googleapis/google-api-go-client/compare/v0.62.0...v0.63.0) (2021-12-13)
 
 

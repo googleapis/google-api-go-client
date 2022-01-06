@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -493,7 +493,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220103")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -639,7 +639,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220103")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -807,7 +807,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220103")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1009,7 +1009,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211221")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220103")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

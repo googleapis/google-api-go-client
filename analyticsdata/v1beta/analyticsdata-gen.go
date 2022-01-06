@@ -2033,6 +2033,17 @@ type ResponseMetaData struct {
 	// (https://support.google.com/analytics/answer/10851388).
 	SchemaRestrictionResponse *SchemaRestrictionResponse `json:"schemaRestrictionResponse,omitempty"`
 
+	// SubjectToThresholding: If `subjectToThresholding` is true, this
+	// report is subject to thresholding and only returns data that meets
+	// the minimum aggregation thresholds. It is possible for a request to
+	// be subject to thresholding thresholding and no data is absent from
+	// the report, and this happens when all data is above the thresholds.
+	// To learn more, see Data thresholds
+	// (https://support.google.com/analytics/answer/9383630) and About
+	// Demographics and Interests
+	// (https://support.google.com/analytics/answer/2799357).
+	SubjectToThresholding bool `json:"subjectToThresholding,omitempty"`
+
 	// TimeZone: The property's current timezone. Intended to be used to
 	// interpret time-based dimensions like `hour` and `minute`. Formatted
 	// as strings from the IANA Time Zone database
@@ -2739,7 +2750,7 @@ func (c *PropertiesBatchRunPivotReportsCall) Header() http.Header {
 
 func (c *PropertiesBatchRunPivotReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2889,7 +2900,7 @@ func (c *PropertiesBatchRunReportsCall) Header() http.Header {
 
 func (c *PropertiesBatchRunReportsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3047,7 +3058,7 @@ func (c *PropertiesCheckCompatibilityCall) Header() http.Header {
 
 func (c *PropertiesCheckCompatibilityCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3215,7 +3226,7 @@ func (c *PropertiesGetMetadataCall) Header() http.Header {
 
 func (c *PropertiesGetMetadataCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3363,7 +3374,7 @@ func (c *PropertiesRunPivotReportCall) Header() http.Header {
 
 func (c *PropertiesRunPivotReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3512,7 +3523,7 @@ func (c *PropertiesRunRealtimeReportCall) Header() http.Header {
 
 func (c *PropertiesRunRealtimeReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3667,7 +3678,7 @@ func (c *PropertiesRunReportCall) Header() http.Header {
 
 func (c *PropertiesRunReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220103")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220104")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

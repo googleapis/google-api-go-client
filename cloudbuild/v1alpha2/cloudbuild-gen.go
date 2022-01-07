@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -383,6 +383,39 @@ func (s *Artifacts) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchCreateBitbucketServerConnectedRepositoriesResponse: Response of
+// BatchCreateBitbucketServerConnectedRepositories RPC method including
+// all successfully connected Bitbucket Server repositories.
+type BatchCreateBitbucketServerConnectedRepositoriesResponse struct {
+	// BitbucketServerConnectedRepositories: The connected Bitbucket Server
+	// repositories.
+	BitbucketServerConnectedRepositories []*BitbucketServerConnectedRepository `json:"bitbucketServerConnectedRepositories,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BitbucketServerConnectedRepositories") to unconditionally include in
+	// API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "BitbucketServerConnectedRepositories") to include in API requests
+	// with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. However, any field with an empty value
+	// appearing in NullFields will be sent to the server as null. It is an
+	// error if a field in this list has a non-empty value. This may be used
+	// to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreateBitbucketServerConnectedRepositoriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreateBitbucketServerConnectedRepositoriesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BatchCreateBitbucketServerConnectedRepositoriesResponseMetadata:
 // Metadata for `BatchCreateBitbucketServerConnectedRepositories`
 // operation.
@@ -418,6 +451,83 @@ type BatchCreateBitbucketServerConnectedRepositoriesResponseMetadata struct {
 
 func (s *BatchCreateBitbucketServerConnectedRepositoriesResponseMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateBitbucketServerConnectedRepositoriesResponseMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BitbucketServerConnectedRepository: /
+// BitbucketServerConnectedRepository represents a connected Bitbucket
+// Server / repository.
+type BitbucketServerConnectedRepository struct {
+	// Parent: The name of the `BitbucketServerConfig` that added connected
+	// repository. Format:
+	// `projects/{project}/locations/{location}/bitbucketServerConfigs/{confi
+	// g}`
+	Parent string `json:"parent,omitempty"`
+
+	// Repo: The Bitbucket Server repositories to connect.
+	Repo *BitbucketServerRepositoryId `json:"repo,omitempty"`
+
+	// Status: Output only. The status of the repo connection request.
+	Status *Status `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Parent") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BitbucketServerConnectedRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod BitbucketServerConnectedRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BitbucketServerRepositoryId: BitbucketServerRepositoryId identifies a
+// specific repository hosted on a Bitbucket Server.
+type BitbucketServerRepositoryId struct {
+	// ProjectKey: Required. Identifier for the project storing the
+	// repository.
+	ProjectKey string `json:"projectKey,omitempty"`
+
+	// RepoSlug: Required. Identifier for the repository.
+	RepoSlug string `json:"repoSlug,omitempty"`
+
+	// WebhookId: Output only. The ID of the webhook that was created for
+	// receiving events from this repo. We only create and manage a single
+	// webhook for each repo.
+	WebhookId int64 `json:"webhookId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProjectKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProjectKey") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BitbucketServerRepositoryId) MarshalJSON() ([]byte, error) {
+	type NoMethod BitbucketServerRepositoryId
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1050,6 +1160,42 @@ func (s *CreateGitHubEnterpriseConfigOperationMetadata) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CreateGitLabConfigOperationMetadata: Metadata for
+// `CreateGitLabConfig` operation.
+type CreateGitLabConfigOperationMetadata struct {
+	// CompleteTime: Time the operation was completed.
+	CompleteTime string `json:"completeTime,omitempty"`
+
+	// CreateTime: Time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// GitlabConfig: The resource name of the GitLabConfig to be created.
+	// Format: `projects/{project}/locations/{location}/gitlabConfigs/{id}`.
+	GitlabConfig string `json:"gitlabConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CompleteTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CompleteTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateGitLabConfigOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateGitLabConfigOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CreateWorkerPoolOperationMetadata: Metadata for the
 // `CreateWorkerPool` operation.
 type CreateWorkerPoolOperationMetadata struct {
@@ -1159,6 +1305,42 @@ type DeleteGitHubEnterpriseConfigOperationMetadata struct {
 
 func (s *DeleteGitHubEnterpriseConfigOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteGitHubEnterpriseConfigOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeleteGitLabConfigOperationMetadata: Metadata for
+// `DeleteGitLabConfig` operation.
+type DeleteGitLabConfigOperationMetadata struct {
+	// CompleteTime: Time the operation was completed.
+	CompleteTime string `json:"completeTime,omitempty"`
+
+	// CreateTime: Time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// GitlabConfig: The resource name of the GitLabConfig to be created.
+	// Format: `projects/{project}/locations/{location}/gitlabConfigs/{id}`.
+	GitlabConfig string `json:"gitlabConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CompleteTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CompleteTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeleteGitLabConfigOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteGitLabConfigOperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2524,6 +2706,42 @@ func (s *UpdateGitHubEnterpriseConfigOperationMetadata) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpdateGitLabConfigOperationMetadata: Metadata for
+// `UpdateGitLabConfig` operation.
+type UpdateGitLabConfigOperationMetadata struct {
+	// CompleteTime: Time the operation was completed.
+	CompleteTime string `json:"completeTime,omitempty"`
+
+	// CreateTime: Time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// GitlabConfig: The resource name of the GitLabConfig to be created.
+	// Format: `projects/{project}/locations/{location}/gitlabConfigs/{id}`.
+	GitlabConfig string `json:"gitlabConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CompleteTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CompleteTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateGitLabConfigOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateGitLabConfigOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UpdateWorkerPoolOperationMetadata: Metadata for the
 // `UpdateWorkerPool` operation.
 type UpdateWorkerPoolOperationMetadata struct {
@@ -2808,7 +3026,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2961,7 +3179,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3109,7 +3327,7 @@ func (c *ProjectsWorkerPoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3255,7 +3473,7 @@ func (c *ProjectsWorkerPoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3399,7 +3617,7 @@ func (c *ProjectsWorkerPoolsGetCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3546,7 +3764,7 @@ func (c *ProjectsWorkerPoolsListCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3693,7 +3911,7 @@ func (c *ProjectsWorkerPoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsWorkerPoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211207")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220106")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -386,7 +386,7 @@
                   ],
                   "parameters": {
                     "allowMissing": {
-                      "description": "/ If set to true, and if the Service does not exist, it will create a new one. Caller must have both create and update permissions for this call if this is set to true.",
+                      "description": "If set to true, and if the Service does not exist, it will create a new one. Caller must have both create and update permissions for this call if this is set to true.",
                       "location": "query",
                       "type": "boolean"
                     },
@@ -475,34 +475,113 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
-                },
-                "undelete": {
-                  "description": "Undeletes a Service.",
-                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:undelete",
-                  "httpMethod": "POST",
-                  "id": "run.projects.locations.services.undelete",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. The full name of the Service. Format: projects/{projectnumber}/locations/{location}/services/{service}",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-                      "required": true,
-                      "type": "string"
+                }
+              },
+              "resources": {
+                "revisions": {
+                  "methods": {
+                    "delete": {
+                      "description": "Delete a Revision.",
+                      "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/revisions/{revisionsId}",
+                      "httpMethod": "DELETE",
+                      "id": "run.projects.locations.services.revisions.delete",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "etag": {
+                          "description": "A system-generated fingerprint for this version of the resource. This may be used to detect modification conflict during updates.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "Required. The name of the Revision to delete. Format: projects/{project}/locations/{location}/services/{service}/revisions/{revision}",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/revisions/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "validateOnly": {
+                          "description": "Indicates that the request should be validated without actually deleting any resources.",
+                          "location": "query",
+                          "type": "boolean"
+                        }
+                      },
+                      "path": "v2/{+name}",
+                      "response": {
+                        "$ref": "GoogleLongrunningOperation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "get": {
+                      "description": "Gets information about a Revision.",
+                      "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/revisions/{revisionsId}",
+                      "httpMethod": "GET",
+                      "id": "run.projects.locations.services.revisions.get",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The full name of the Revision. Format: projects/{project}/locations/{location}/services/{service}/revisions/{revision}",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/revisions/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v2/{+name}",
+                      "response": {
+                        "$ref": "GoogleCloudRunOpV2Revision"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "list": {
+                      "description": "List Revisions from a given Service, or from a given location.",
+                      "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/revisions",
+                      "httpMethod": "GET",
+                      "id": "run.projects.locations.services.revisions.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "pageSize": {
+                          "description": "Maximum number of revisions to return in this call.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "A page token received from a previous call to ListRevisions. All other parameters must match.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. The Service from which the Revisions should be listed. To list all Revisions across Services, use \"-\" instead of Service name. Format: projects/{project}/locations/{location}/services/{service}",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "showDeleted": {
+                          "description": "If true, returns deleted (but unexpired) resources along with active ones.",
+                          "location": "query",
+                          "type": "boolean"
+                        }
+                      },
+                      "path": "v2/{+parent}/revisions",
+                      "response": {
+                        "$ref": "GoogleCloudRunOpV2ListRevisionsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
                     }
-                  },
-                  "path": "v2/{+name}:undelete",
-                  "request": {
-                    "$ref": "GoogleCloudRunOpV2UndeleteServiceRequest"
-                  },
-                  "response": {
-                    "$ref": "GoogleLongrunningOperation"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
+                  }
                 }
               }
             }
@@ -511,7 +590,7 @@
       }
     }
   },
-  "revision": "20211203",
+  "revision": "20220103",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "GoogleCloudRunOpV2BinaryAuthorization": {
@@ -795,6 +874,21 @@
       },
       "type": "object"
     },
+    "GoogleCloudRunOpV2ContainerStatus": {
+      "description": "ContainerStatus holds the information of container name and image digest value.",
+      "id": "GoogleCloudRunOpV2ContainerStatus",
+      "properties": {
+        "imageDigest": {
+          "description": "ImageDigest holds the resolved digest for the image specified, regardless of whether a tag or digest was originally specified in the Container object.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the container, if specified.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudRunOpV2EnvVar": {
       "description": "EnvVar represents an environment variable present in a Container.",
       "id": "GoogleCloudRunOpV2EnvVar",
@@ -821,6 +915,24 @@
         "secretKeyRef": {
           "$ref": "GoogleCloudRunOpV2SecretKeySelector",
           "description": "Selects a secret and a specific version from Cloud Secret Manager."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRunOpV2ListRevisionsResponse": {
+      "description": "Response message containing a list of Revisions.",
+      "id": "GoogleCloudRunOpV2ListRevisionsResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "A token indicating there are more items than page_size. Use it in the next ListRevisions request to continue.",
+          "type": "string"
+        },
+        "revisions": {
+          "description": "The resulting list of Revisions.",
+          "items": {
+            "$ref": "GoogleCloudRunOpV2Revision"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -857,6 +969,191 @@
           },
           "description": "Only memory and CPU are supported. Note: The only supported values for CPU are '1', '2', and '4'. Setting 4 CPU requires at least 2Gi of memory. The values of the map is string form of the 'quantity' k8s type: https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRunOpV2Revision": {
+      "description": "A Revision is an immutable snapshot of code and configuration. A Revision references a container image. Revisions are only created by updates to its parent Service.",
+      "id": "GoogleCloudRunOpV2Revision",
+      "properties": {
+        "annotations": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "KRM-style annotations for the resource.",
+          "type": "object"
+        },
+        "conditions": {
+          "description": "Output only. The Condition of this Revision, containing its readiness status, and detailed error information in case it did not reach a serving state.",
+          "items": {
+            "$ref": "GoogleCloudRunOpV2Condition"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "confidential": {
+          "description": "Indicates whether Confidential Cloud Run is enabled in this Revision.",
+          "type": "boolean"
+        },
+        "containerConcurrency": {
+          "description": "Sets the maximum number of requests that each serving instance can receive.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "containerStatuses": {
+          "description": "Output only. Status information for each of the containers specified.",
+          "items": {
+            "$ref": "GoogleCloudRunOpV2ContainerStatus"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "containers": {
+          "description": "Holds the single container that defines the unit of execution for this Revision.",
+          "items": {
+            "$ref": "GoogleCloudRunOpV2Container"
+          },
+          "type": "array"
+        },
+        "createTime": {
+          "description": "Output only. The creation time.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "deleteTime": {
+          "description": "Output only. For a deleted resource, the deletion time. It is only populated as a response to a Delete request.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "encryptionKey": {
+          "description": "A reference to a customer managed encryption key (CMEK) to use to encrypt this container image. For more information, go to https://cloud.google.com/run/docs/securing/using-cmek",
+          "type": "string"
+        },
+        "etag": {
+          "description": "Output only. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "executionEnvironment": {
+          "description": "The execution environment being used to host this Revision.",
+          "enum": [
+            "EXECUTION_ENVIRONMENT_UNSPECIFIED",
+            "EXECUTION_ENVIRONMENT_DEFAULT",
+            "EXECUTION_ENVIRONMENT_GEN2"
+          ],
+          "enumDescriptions": [
+            "Unspecified",
+            "Uses the Google-default environment.",
+            "Uses Second Generation environment."
+          ],
+          "type": "string"
+        },
+        "expireTime": {
+          "description": "Output only. For a deleted resource, the time after which it will be permamently deleted. It is only populated as a response to a Delete request.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "generation": {
+          "description": "Output only. A number that monotonically increases every time the user modifies the desired state.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "KRM-style labels for the resource. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels Cloud Run will populate some labels with 'run.googleapis.com' or 'serving.knative.dev' namespaces. Those labels are read-only, and user changes will not be preserved.",
+          "type": "object"
+        },
+        "launchStage": {
+          "description": "Set the launch stage to a preview stage on write to allow use of preview features in that stage. On read, describes whether the resource uses preview features. Launch Stages are defined at [Google Cloud Platform Launch Stages](http://cloud.google.com/terms/launch-stages).",
+          "enum": [
+            "LAUNCH_STAGE_UNSPECIFIED",
+            "UNIMPLEMENTED",
+            "PRELAUNCH",
+            "EARLY_ACCESS",
+            "ALPHA",
+            "BETA",
+            "GA",
+            "DEPRECATED"
+          ],
+          "enumDescriptions": [
+            "Do not use this default value.",
+            "The feature is not yet implemented. Users can not use it.",
+            "Prelaunch features are hidden from users and are only visible internally.",
+            "Early Access features are limited to a closed group of testers. To use these features, you must sign up in advance and sign a Trusted Tester agreement (which includes confidentiality provisions). These features may be unstable, changed in backward-incompatible ways, and are not guaranteed to be released.",
+            "Alpha is a limited availability test for releases before they are cleared for widespread use. By Alpha, all significant design issues are resolved and we are in the process of verifying functionality. Alpha customers need to apply for access, agree to applicable terms, and have their projects allowlisted. Alpha releases don’t have to be feature complete, no SLAs are provided, and there are no technical support obligations, but they will be far enough along that customers can actually use them in test environments or for limited-use tests -- just like they would in normal production cases.",
+            "Beta is the point at which we are ready to open a release for any customer to use. There are no SLA or technical support obligations in a Beta release. Products will be complete from a feature perspective, but may have some open outstanding issues. Beta releases are suitable for limited production use cases.",
+            "GA features are open to all developers and are considered stable and fully qualified for production use.",
+            "Deprecated features are scheduled to be shut down and removed. For more information, see the “Deprecation Policy” section of our [Terms of Service](https://cloud.google.com/terms/) and the [Google Cloud Platform Subject to the Deprecation Policy](https://cloud.google.com/terms/deprecation) documentation."
+          ],
+          "type": "string"
+        },
+        "logUri": {
+          "description": "Output only. The Google Console URI to obtain logs for the Revision.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. The unique name of this Revision.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "observedGeneration": {
+          "description": "Output only. The generation of this Revision currently serving traffic. See comments in `reconciling` for additional information on reconciliation process in Cloud Run.",
+          "format": "int64",
+          "readOnly": true,
+          "type": "string"
+        },
+        "reconciling": {
+          "description": "Output only. Indicates whether the resource's reconciliation is still in progress. See comments in `Service.reconciling` for additional information on reconciliation process in Cloud Run.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "scaling": {
+          "$ref": "GoogleCloudRunOpV2RevisionScaling",
+          "description": "Scaling settings for this revision."
+        },
+        "service": {
+          "description": "Output only. The name of the parent service.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "serviceAccount": {
+          "description": "Email address of the IAM service account associated with the revision of the service. The service account represents the identity of the running revision, and determines what permissions the revision has.",
+          "type": "string"
+        },
+        "timeout": {
+          "description": "Max allowed time for an instance to respond to a request.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "uid": {
+          "description": "Output only. Server assigned unique identifier for the Revision. The value is a UUID4 string and guaranteed to remain unchanged until the resource is deleted.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Output only. The last-modified time.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "volumes": {
+          "description": "A list of Volumes to make available to containers.",
+          "items": {
+            "$ref": "GoogleCloudRunOpV2Volume"
+          },
+          "type": "array"
+        },
+        "vpcAccess": {
+          "$ref": "GoogleCloudRunOpV2VpcAccess",
+          "description": "VPC Access configuration for this Revision. For more information, visit https://cloud.google.com/run/docs/configuring/connecting-vpc."
         }
       },
       "type": "object"
@@ -1256,21 +1553,6 @@
         "uri": {
           "description": "Displays the target URI.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudRunOpV2UndeleteServiceRequest": {
-      "description": "Request message to undelete a previously existing Service.",
-      "id": "GoogleCloudRunOpV2UndeleteServiceRequest",
-      "properties": {
-        "etag": {
-          "description": "A system-generated fingerprint for this version of the resource. This may be used to detect modification conflict during updates.",
-          "type": "string"
-        },
-        "validateOnly": {
-          "description": "Indicates that the request should be validated without actually undeleting any resources.",
-          "type": "boolean"
         }
       },
       "type": "object"

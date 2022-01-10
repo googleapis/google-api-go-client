@@ -150,6 +150,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.ChannelConnections = NewProjectsLocationsChannelConnectionsService(s)
 	rs.Channels = NewProjectsLocationsChannelsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Triggers = NewProjectsLocationsTriggersService(s)
@@ -159,11 +160,22 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	ChannelConnections *ProjectsLocationsChannelConnectionsService
+
 	Channels *ProjectsLocationsChannelsService
 
 	Operations *ProjectsLocationsOperationsService
 
 	Triggers *ProjectsLocationsTriggersService
+}
+
+func NewProjectsLocationsChannelConnectionsService(s *Service) *ProjectsLocationsChannelConnectionsService {
+	rs := &ProjectsLocationsChannelConnectionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsChannelConnectionsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsChannelsService(s *Service) *ProjectsLocationsChannelsService {
@@ -366,7 +378,7 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // CloudRun: Represents a Cloud Run destination.
 type CloudRun struct {
 	// Path: Optional. The relative path on the Cloud Run service the events
-	// should be sent to. The value must conform to the definition of URI
+	// should be sent to. The value must conform to the definition of a URI
 	// path segment (section 3.3 of RFC2396). Examples: "/route", "route",
 	// "route/subroute".
 	Path string `json:"path,omitempty"`
@@ -377,7 +389,7 @@ type CloudRun struct {
 	// Service: Required. The name of the Cloud Run service being addressed.
 	// See
 	// https://cloud.google.com/run/docs/reference/rest/v1/namespaces.services.
-	// Only services located in the same project of the trigger object can
+	// Only services located in the same project as the trigger object can
 	// be addressed.
 	Service string `json:"service,omitempty"`
 
@@ -411,7 +423,7 @@ type Destination struct {
 	CloudRun *CloudRun `json:"cloudRun,omitempty"`
 
 	// Gke: A GKE service capable of receiving events. The service should be
-	// running in the same project of the trigger.
+	// running in the same project as the trigger.
 	Gke *GKE `json:"gke,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CloudRun") to
@@ -551,16 +563,16 @@ type GKE struct {
 	Cluster string `json:"cluster,omitempty"`
 
 	// Location: Required. The name of the Google Compute Engine in which
-	// the cluster resides, which can either be compute zone (e.g.
-	// us-central1-a) for the zonal clusters or region (e.g. us-central1)
-	// for regional clusters.
+	// the cluster resides, which can either be compute zone (for example,
+	// us-central1-a) for the zonal clusters or region (for example,
+	// us-central1) for regional clusters.
 	Location string `json:"location,omitempty"`
 
 	// Namespace: Required. The namespace the GKE service is running in.
 	Namespace string `json:"namespace,omitempty"`
 
 	// Path: Optional. The relative path on the GKE service the events
-	// should be sent to. The value must conform to the definition of URI
+	// should be sent to. The value must conform to the definition of a URI
 	// path segment (section 3.3 of RFC2396). Examples: "/route", "route",
 	// "route/subroute".
 	Path string `json:"path,omitempty"`
@@ -1033,17 +1045,17 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // Pubsub: Represents a Pub/Sub transport.
 type Pubsub struct {
 	// Subscription: Output only. The name of the Pub/Sub subscription
-	// created and managed by Eventarc system as a transport for the event
+	// created and managed by Eventarc as a transport for the event
 	// delivery. Format:
 	// `projects/{PROJECT_ID}/subscriptions/{SUBSCRIPTION_NAME}`.
 	Subscription string `json:"subscription,omitempty"`
 
 	// Topic: Optional. The name of the Pub/Sub topic created and managed by
-	// Eventarc system as a transport for the event delivery. Format:
-	// `projects/{PROJECT_ID}/topics/{TOPIC_NAME}`. You may set an existing
+	// Eventarc as a transport for the event delivery. Format:
+	// `projects/{PROJECT_ID}/topics/{TOPIC_NAME}`. You can set an existing
 	// topic for triggers of the type
-	// `google.cloud.pubsub.topic.v1.messagePublished` only. The topic you
-	// provide here will not be deleted by Eventarc at trigger deletion.
+	// `google.cloud.pubsub.topic.v1.messagePublished`. The topic you
+	// provide here is not deleted by Eventarc at trigger deletion.
 	Topic string `json:"topic,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Subscription") to
@@ -1173,10 +1185,10 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Transport: Represents the transport intermediaries created for the
-// trigger in order to deliver events.
+// trigger to deliver events.
 type Transport struct {
-	// Pubsub: The Pub/Sub topic and subscription used by Eventarc as
-	// delivery intermediary.
+	// Pubsub: The Pub/Sub topic and subscription used by Eventarc as a
+	// transport intermediary.
 	Pubsub *Pubsub `json:"pubsub,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Pubsub") to
@@ -1212,13 +1224,13 @@ type Trigger struct {
 	Destination *Destination `json:"destination,omitempty"`
 
 	// Etag: Output only. This checksum is computed by the server based on
-	// the value of other fields, and may be sent only on create requests to
-	// ensure the client has an up-to-date value before proceeding.
+	// the value of other fields, and might be sent only on create requests
+	// to ensure that the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
 	// EventFilters: Required. null The list of filters that applies to
-	// event attributes. Only events that match all the provided filters
-	// will be sent to the destination.
+	// event attributes. Only events that match all the provided filters are
+	// sent to the destination.
 	EventFilters []*EventFilter `json:"eventFilters,omitempty"`
 
 	// Labels: Optional. User labels attached to the triggers that can be
@@ -1226,31 +1238,31 @@ type Trigger struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Required. The resource name of the trigger. Must be unique
-	// within the location on the project and must be in
+	// within the location of the project and must be in
 	// `projects/{project}/locations/{location}/triggers/{trigger}` format.
 	Name string `json:"name,omitempty"`
 
 	// ServiceAccount: Optional. The IAM service account email associated
 	// with the trigger. The service account represents the identity of the
-	// trigger. The principal who calls this API must have
+	// trigger. The principal who calls this API must have the
 	// `iam.serviceAccounts.actAs` permission in the service account. See
 	// https://cloud.google.com/iam/docs/understanding-service-accounts?hl=en#sa_common
 	// for more information. For Cloud Run destinations, this service
 	// account is used to generate identity tokens when invoking the
 	// service. See
 	// https://cloud.google.com/run/docs/triggering/pubsub-push#create-service-account
-	// for information on how to invoke authenticated Cloud Run services. In
-	// order to create Audit Log triggers, the service account should also
-	// have `roles/eventarc.eventReceiver` IAM role.
+	// for information on how to invoke authenticated Cloud Run services. To
+	// create Audit Log triggers, the service account should also have the
+	// `roles/eventarc.eventReceiver` IAM role.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
-	// Transport: Optional. In order to deliver messages, Eventarc may use
-	// other GCP products as transport intermediary. This field contains a
+	// Transport: Optional. To deliver messages, Eventarc might use other
+	// GCP products as a transport intermediary. This field contains a
 	// reference to that transport intermediary. This information can be
 	// used for debugging purposes.
 	Transport *Transport `json:"transport,omitempty"`
 
-	// Uid: Output only. Server assigned unique identifier for the trigger.
+	// Uid: Output only. Server-assigned unique identifier for the trigger.
 	// The value is a UUID4 string and guaranteed to remain unchanged until
 	// the resource is deleted.
 	Uid string `json:"uid,omitempty"`
@@ -1342,7 +1354,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1514,7 +1526,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1640,6 +1652,475 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
+// method id "eventarc.projects.locations.channelConnections.getIamPolicy":
+
+type ProjectsLocationsChannelConnectionsGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
+// set.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   requested. See the operation documentation for the appropriate
+//   value for this field.
+func (r *ProjectsLocationsChannelConnectionsService) GetIamPolicy(resource string) *ProjectsLocationsChannelConnectionsGetIamPolicyCall {
+	c := &ProjectsLocationsChannelConnectionsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsChannelConnectionsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsChannelConnectionsGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsChannelConnectionsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsChannelConnectionsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsChannelConnectionsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsChannelConnectionsGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsChannelConnectionsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsChannelConnectionsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsChannelConnectionsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsChannelConnectionsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "eventarc.projects.locations.channelConnections.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsChannelConnectionsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/channelConnections/{channelConnectionsId}:getIamPolicy",
+	//   "httpMethod": "GET",
+	//   "id": "eventarc.projects.locations.channelConnections.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "options.requestedPolicyVersion": {
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/channelConnections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "eventarc.projects.locations.channelConnections.setIamPolicy":
+
+type ProjectsLocationsChannelConnectionsSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+// - resource: REQUIRED: The resource for which the policy is being
+//   specified. See the operation documentation for the appropriate
+//   value for this field.
+func (r *ProjectsLocationsChannelConnectionsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsChannelConnectionsSetIamPolicyCall {
+	c := &ProjectsLocationsChannelConnectionsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsChannelConnectionsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsChannelConnectionsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsChannelConnectionsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsChannelConnectionsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsChannelConnectionsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsChannelConnectionsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "eventarc.projects.locations.channelConnections.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsChannelConnectionsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/channelConnections/{channelConnectionsId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "eventarc.projects.locations.channelConnections.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/channelConnections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "eventarc.projects.locations.channelConnections.testIamPermissions":
+
+type ProjectsLocationsChannelConnectionsTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource. If the resource does not exist, this will return
+// an empty set of permissions, not a `NOT_FOUND` error. Note: This
+// operation is designed to be used for building permission-aware UIs
+// and command-line tools, not for authorization checking. This
+// operation may "fail open" without warning.
+//
+// - resource: REQUIRED: The resource for which the policy detail is
+//   being requested. See the operation documentation for the
+//   appropriate value for this field.
+func (r *ProjectsLocationsChannelConnectionsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsChannelConnectionsTestIamPermissionsCall {
+	c := &ProjectsLocationsChannelConnectionsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsChannelConnectionsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsChannelConnectionsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsChannelConnectionsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsChannelConnectionsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsChannelConnectionsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsChannelConnectionsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "eventarc.projects.locations.channelConnections.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsChannelConnectionsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/channelConnections/{channelConnectionsId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "eventarc.projects.locations.channelConnections.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/channelConnections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "eventarc.projects.locations.channels.getIamPolicy":
 
 type ProjectsLocationsChannelsGetIamPolicyCall struct {
@@ -1719,7 +2200,7 @@ func (c *ProjectsLocationsChannelsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsChannelsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1866,7 +2347,7 @@ func (c *ProjectsLocationsChannelsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsChannelsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2015,7 +2496,7 @@ func (c *ProjectsLocationsChannelsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsChannelsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2166,7 +2647,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2309,7 +2790,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2454,7 +2935,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2630,7 +3111,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2820,7 +3301,7 @@ func (c *ProjectsLocationsTriggersCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2994,7 +3475,7 @@ func (c *ProjectsLocationsTriggersDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3152,7 +3633,7 @@ func (c *ProjectsLocationsTriggersGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3320,7 +3801,7 @@ func (c *ProjectsLocationsTriggersGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3499,7 +3980,7 @@ func (c *ProjectsLocationsTriggersListCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3639,7 +4120,7 @@ type ProjectsLocationsTriggersPatchCall struct {
 // Patch: Update a single trigger.
 //
 // - name: The resource name of the trigger. Must be unique within the
-//   location on the project and must be in
+//   location of the project and must be in
 //   `projects/{project}/locations/{location}/triggers/{trigger}`
 //   format.
 func (r *ProjectsLocationsTriggersService) Patch(name string, trigger *Trigger) *ProjectsLocationsTriggersPatchCall {
@@ -3701,7 +4182,7 @@ func (c *ProjectsLocationsTriggersPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3779,7 +4260,7 @@ func (c *ProjectsLocationsTriggersPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. The resource name of the trigger. Must be unique within the location on the project and must be in `projects/{project}/locations/{location}/triggers/{trigger}` format.",
+	//       "description": "Required. The resource name of the trigger. Must be unique within the location of the project and must be in `projects/{project}/locations/{location}/triggers/{trigger}` format.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
 	//       "required": true,
@@ -3863,7 +4344,7 @@ func (c *ProjectsLocationsTriggersSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4012,7 +4493,7 @@ func (c *ProjectsLocationsTriggersTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsTriggersTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220108")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220109")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

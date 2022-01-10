@@ -743,63 +743,6 @@ func (s *EncryptionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// FailureTrace: Added to the error payload.
-type FailureTrace struct {
-	Frames []*Frame `json:"frames,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Frames") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Frames") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *FailureTrace) MarshalJSON() ([]byte, error) {
-	type NoMethod FailureTrace
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type Frame struct {
-	TargetName string `json:"targetName,omitempty"`
-
-	WorkflowGuid string `json:"workflowGuid,omitempty"`
-
-	ZoneId string `json:"zoneId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "TargetName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TargetName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Frame) MarshalJSON() ([]byte, error) {
-	type NoMethod Frame
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Instance: A collection of Bigtable Tables and the resources that
 // serve them. All tables in an instance are served from all Clusters in
 // the instance.
@@ -1191,42 +1134,6 @@ type TableProgress struct {
 
 func (s *TableProgress) MarshalJSON() ([]byte, error) {
 	type NoMethod TableProgress
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UndeleteTableMetadata: Metadata type for the operation returned by
-// google.bigtable.admin.v2.BigtableTableAdmin.UndeleteTable.
-type UndeleteTableMetadata struct {
-	// EndTime: If set, the time at which this operation finished or was
-	// cancelled.
-	EndTime string `json:"endTime,omitempty"`
-
-	// Name: The name of the table being restored.
-	Name string `json:"name,omitempty"`
-
-	// StartTime: The time at which this operation started.
-	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UndeleteTableMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod UndeleteTableMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

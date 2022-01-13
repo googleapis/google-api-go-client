@@ -2001,7 +2001,7 @@ func (meth *Method) generateCode() {
 			"which errors are considered retryable. By default, exponetial backoff will be" +
 			"applied using gax defaults, and the following errors are retried:" +
 			"\n\n" +
-			"- HTTP responses with codes 429, 502, 503, and 504." +
+			"- HTTP responses with codes 408, 429, 502, 503, and 504." +
 			"\n\n" +
 			"- Transient network errors such as connection reset and io.ErrUnexpectedEOF." +
 			"\n\n" +

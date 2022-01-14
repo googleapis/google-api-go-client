@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -393,11 +393,8 @@ func (s *AzureBlobStorageData) MarshalJSON() ([]byte, error) {
 // retention policy for user credentials, see User credentials
 // (/storage-transfer/docs/data-retention#user-credentials).
 type AzureCredentials struct {
-	// SasToken: Required. Azure shared access signature (SAS).
-	// *Note:*Copying data from Azure Data Lake Storage (ADLS) Gen 2 is in
-	// Preview (/products/#product-launch-stages). During Preview, if you
-	// are copying data from ADLS Gen 2, you must use an account SAS. For
-	// more information about SAS, see Grant limited access to Azure Storage
+	// SasToken: Required. Azure shared access signature (SAS). For more
+	// information about SAS, see Grant limited access to Azure Storage
 	// resources using shared access signatures (SAS)
 	// (https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview).
 	SasToken string `json:"sasToken,omitempty"`
@@ -909,38 +906,45 @@ func (s *ListTransferJobsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// LoggingConfig: Logging configuration.
+// LoggingConfig: Specifies the logging behavior for transfer
+// operations. For cloud-to-cloud transfers, logs are sent to Cloud
+// Logging. See Read transfer logs
+// (https://cloud.google.com/storage-transfer/docs/read-transfer-logs)
+// for details. For transfers to or from a POSIX file system, logs are
+// stored in the Cloud Storage bucket that is the source or sink of the
+// transfer. See [Managing Transfer for on-premises jobs]
+// (https://cloud.google.com/storage-transfer/docs/managing-on-prem-jobs#viewing-logs)
+// for details.
 type LoggingConfig struct {
-	// EnableOnpremGcsTransferLogs: Enables the Cloud Storage transfer logs
-	// for this transfer. This is only supported for transfer jobs with
-	// PosixFilesystem sources. The default is that logs are not generated
-	// for this transfer.
+	// EnableOnpremGcsTransferLogs: For transfers with a PosixFilesystem
+	// source, this option enables the Cloud Storage transfer logs for this
+	// transfer.
 	EnableOnpremGcsTransferLogs bool `json:"enableOnpremGcsTransferLogs,omitempty"`
 
 	// LogActionStates: States in which `log_actions` are logged. If empty,
-	// no logs are generated. This is not yet supported for transfers with
-	// PosixFilesystem data sources.
+	// no logs are generated. Not supported for transfers with
+	// PosixFilesystem data sources; use enable_onprem_gcs_transfer_logs
+	// instead.
 	//
 	// Possible values:
 	//   "LOGGABLE_ACTION_STATE_UNSPECIFIED" - Default value. This value is
 	// unused.
-	//   "SUCCEEDED" - `LoggableAction` is completed successfully.
-	// `SUCCEEDED` actions are logged as INFO.
-	//   "FAILED" - `LoggableAction` is terminated in an error state.
-	// `FAILED` actions are logged as ERROR.
+	//   "SUCCEEDED" - `LoggableAction` completed successfully. `SUCCEEDED`
+	// actions are logged as INFO.
+	//   "FAILED" - `LoggableAction` terminated in an error state. `FAILED`
+	// actions are logged as ERROR.
 	LogActionStates []string `json:"logActionStates,omitempty"`
 
-	// LogActions: Actions to be logged. If empty, no logs are generated.
-	// This is not yet supported for transfers with PosixFilesystem data
-	// sources.
+	// LogActions: Specifies the actions to be logged. If empty, no logs are
+	// generated. Not supported for transfers with PosixFilesystem data
+	// sources; use enable_onprem_gcs_transfer_logs instead.
 	//
 	// Possible values:
 	//   "LOGGABLE_ACTION_UNSPECIFIED" - Default value. This value is
 	// unused.
-	//   "FIND" - Finding objects to transfer e.g. listing objects of the
-	// source bucket.
-	//   "DELETE" - Deleting objects at source or destination.
-	//   "COPY" - Copying objects from source to destination.
+	//   "FIND" - Listing objects in a bucket.
+	//   "DELETE" - Deleting objects at the source or the destination.
+	//   "COPY" - Copying objects to Google Cloud Storage.
 	LogActions []string `json:"logActions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -964,6 +968,73 @@ type LoggingConfig struct {
 
 func (s *LoggingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod LoggingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MetadataOptions: Specifies the metadata options for running a
+// transfer.
+type MetadataOptions struct {
+	// Gid: Specifies how each file's GID attribute should be handled by the
+	// transfer. If unspecified, the default behavior is the same as
+	// GID_SKIP when the source is a POSIX file system.
+	//
+	// Possible values:
+	//   "GID_UNSPECIFIED" - GID behavior is unspecified.
+	//   "GID_SKIP" - Skip GID during a transfer job.
+	//   "GID_NUMBER" - Preserve GID during a transfer job.
+	Gid string `json:"gid,omitempty"`
+
+	// Mode: Specifies how each file's mode attribute should be handled by
+	// the transfer. If unspecified, the default behavior is the same as
+	// MODE_SKIP when the source is a POSIX file system.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Mode behavior is unspecified.
+	//   "MODE_SKIP" - Skip mode during a transfer job.
+	//   "MODE_PRESERVE" - Preserve mode during a transfer job.
+	Mode string `json:"mode,omitempty"`
+
+	// Symlink: Specifies how symlinks should be handled by the transfer. If
+	// unspecified, the default behavior is the same as SYMLINK_SKIP when
+	// the source is a POSIX file system.
+	//
+	// Possible values:
+	//   "SYMLINK_UNSPECIFIED" - Symlink behavior is unspecified. The
+	// default behavior is to skip symlinks during a transfer job.
+	//   "SYMLINK_SKIP" - Skip symlinks during a transfer job.
+	//   "SYMLINK_PRESERVE" - Preserve symlinks during a transfer job.
+	Symlink string `json:"symlink,omitempty"`
+
+	// Uid: Specifies how each file's UID attribute should be handled by the
+	// transfer. If unspecified, the default behavior is the same as
+	// UID_SKIP when the source is a POSIX file system.
+	//
+	// Possible values:
+	//   "UID_UNSPECIFIED" - UID behavior is unspecified.
+	//   "UID_SKIP" - Skip UID during a transfer job.
+	//   "UID_NUMBER" - Preserve UID during a transfer job.
+	Uid string `json:"uid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Gid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Gid") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MetadataOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod MetadataOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1102,20 +1173,24 @@ type ObjectConditions struct {
 	// of the day * `last_modified_before` to the end of the day
 	LastModifiedSince string `json:"lastModifiedSince,omitempty"`
 
-	// MaxTimeElapsedSinceLastModification: If specified, only objects with
-	// a "last modification time" on or after `NOW` -
-	// `max_time_elapsed_since_last_modification` and objects that don't
-	// have a "last modification time" are transferred. For each
-	// TransferOperation started by this TransferJob, `NOW` refers to the
-	// start_time of the `TransferOperation`.
+	// MaxTimeElapsedSinceLastModification: Ensures that objects are not
+	// transferred if a specific maximum time has elapsed since the "last
+	// modification time". When a TransferOperation begins, objects with a
+	// "last modification time" are transferred only if the elapsed time
+	// between the start_time of the `TransferOperation`and the "last
+	// modification time" of the object is less than the value of
+	// max_time_elapsed_since_last_modification`. Objects that do not have a
+	// "last modification time" are also transferred.
 	MaxTimeElapsedSinceLastModification string `json:"maxTimeElapsedSinceLastModification,omitempty"`
 
-	// MinTimeElapsedSinceLastModification: If specified, only objects with
-	// a "last modification time" before `NOW` -
-	// `min_time_elapsed_since_last_modification` and objects that don't
-	// have a "last modification time" are transferred. For each
-	// TransferOperation started by this TransferJob, `NOW` refers to the
-	// start_time of the `TransferOperation`.
+	// MinTimeElapsedSinceLastModification: Ensures that objects are not
+	// transferred until a specific minimum time has elapsed after the "last
+	// modification time". When a TransferOperation begins, objects with a
+	// "last modification time" are transferred only if the elapsed time
+	// between the start_time of the `TransferOperation` and the "last
+	// modification time" of the object is equal to or greater than the
+	// value of min_time_elapsed_since_last_modification`. Objects that do
+	// not have a "last modification time" are also transferred.
 	MinTimeElapsedSinceLastModification string `json:"minTimeElapsedSinceLastModification,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExcludePrefixes") to
@@ -1761,6 +1836,10 @@ type TransferOptions struct {
 	// delete_objects_from_source_after_transfer are mutually exclusive.
 	DeleteObjectsUniqueInSink bool `json:"deleteObjectsUniqueInSink,omitempty"`
 
+	// MetadataOptions: Represents the selected metadata options for a
+	// transfer job.
+	MetadataOptions *MetadataOptions `json:"metadataOptions,omitempty"`
+
 	// OverwriteObjectsAlreadyExistingInSink: When to overwrite objects that
 	// already exist in the sink. The default is that only objects that are
 	// different from the source are ovewritten. If true, all objects in the
@@ -1806,6 +1885,10 @@ type TransferSpec struct {
 
 	// GcsDataSource: A Cloud Storage data source.
 	GcsDataSource *GcsData `json:"gcsDataSource,omitempty"`
+
+	// GcsIntermediateDataLocation: Cloud Storage intermediate data
+	// location.
+	GcsIntermediateDataLocation *GcsData `json:"gcsIntermediateDataLocation,omitempty"`
 
 	// HttpDataSource: An HTTP URL data source.
 	HttpDataSource *HttpData `json:"httpDataSource,omitempty"`
@@ -1873,20 +1956,20 @@ type UpdateTransferJobRequest struct {
 	ProjectId string `json:"projectId,omitempty"`
 
 	// TransferJob: Required. The job to update. `transferJob` is expected
-	// to specify only four fields: description, transfer_spec,
-	// notification_config, and status. An `UpdateTransferJobRequest` that
-	// specifies other fields are rejected with the error INVALID_ARGUMENT.
-	// Updating a job status to DELETED requires
-	// `storagetransfer.jobs.delete` permissions.
+	// to specify one or more of five fields: description, transfer_spec,
+	// notification_config, logging_config, and status. An
+	// `UpdateTransferJobRequest` that specifies other fields are rejected
+	// with the error INVALID_ARGUMENT. Updating a job status to DELETED
+	// requires `storagetransfer.jobs.delete` permissions.
 	TransferJob *TransferJob `json:"transferJob,omitempty"`
 
 	// UpdateTransferJobFieldMask: The field mask of the fields in
 	// `transferJob` that are to be updated in this request. Fields in
 	// `transferJob` that can be updated are: description, transfer_spec,
-	// notification_config, and status. To update the `transfer_spec` of the
-	// job, a complete transfer specification must be provided. An
-	// incomplete specification missing any required fields is rejected with
-	// the error INVALID_ARGUMENT.
+	// notification_config, logging_config, and status. To update the
+	// `transfer_spec` of the job, a complete transfer specification must be
+	// provided. An incomplete specification missing any required fields is
+	// rejected with the error INVALID_ARGUMENT.
 	UpdateTransferJobFieldMask string `json:"updateTransferJobFieldMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProjectId") to
@@ -1977,7 +2060,7 @@ func (c *GoogleServiceAccountsGetCall) Header() http.Header {
 
 func (c *GoogleServiceAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2128,7 +2211,7 @@ func (c *ProjectsAgentPoolsCreateCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2273,7 +2356,7 @@ func (c *ProjectsAgentPoolsDeleteCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2416,7 +2499,7 @@ func (c *ProjectsAgentPoolsGetCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2587,7 +2670,7 @@ func (c *ProjectsAgentPoolsListCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2771,7 +2854,7 @@ func (c *ProjectsAgentPoolsPatchCall) Header() http.Header {
 
 func (c *ProjectsAgentPoolsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2915,7 +2998,7 @@ func (c *TransferJobsCreateCall) Header() http.Header {
 
 func (c *TransferJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3055,7 +3138,7 @@ func (c *TransferJobsGetCall) Header() http.Header {
 
 func (c *TransferJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3228,7 +3311,7 @@ func (c *TransferJobsListCall) Header() http.Header {
 
 func (c *TransferJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3396,7 +3479,7 @@ func (c *TransferJobsPatchCall) Header() http.Header {
 
 func (c *TransferJobsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3541,7 +3624,7 @@ func (c *TransferJobsRunCall) Header() http.Header {
 
 func (c *TransferJobsRunCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3701,7 +3784,7 @@ func (c *TransferOperationsCancelCall) Header() http.Header {
 
 func (c *TransferOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3854,7 +3937,7 @@ func (c *TransferOperationsGetCall) Header() http.Header {
 
 func (c *TransferOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4027,7 +4110,7 @@ func (c *TransferOperationsListCall) Header() http.Header {
 
 func (c *TransferOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4203,7 +4286,7 @@ func (c *TransferOperationsPauseCall) Header() http.Header {
 
 func (c *TransferOperationsPauseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4345,7 +4428,7 @@ func (c *TransferOperationsResumeCall) Header() http.Header {
 
 func (c *TransferOperationsResumeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

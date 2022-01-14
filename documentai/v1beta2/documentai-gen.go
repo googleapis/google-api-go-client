@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1245,7 +1245,7 @@ type GoogleCloudDocumentaiV1BatchProcessMetadataIndividualProcessStatus struct {
 	InputGcsSource string `json:"inputGcsSource,omitempty"`
 
 	// OutputGcsDestination: The output_gcs_destination (in the request as
-	// 'output_gcs_destination') of the processed document if it was
+	// `output_gcs_destination`) of the processed document if it was
 	// successful, otherwise empty.
 	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
 
@@ -1826,8 +1826,8 @@ func (s *GoogleCloudDocumentaiV1beta1Document) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDocumentaiV1beta1DocumentEntity: An entity that could be a
-// phrase in the text or a property belongs to the document. It is a
-// known entity type, such as a person, an organization, or location.
+// phrase in the text or a property that belongs to the document. It is
+// a known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta1DocumentEntity struct {
 	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
 	// 1].
@@ -1941,8 +1941,8 @@ type GoogleCloudDocumentaiV1beta1DocumentEntityNormalizedValue struct {
 	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
 
 	// Text: Optional. An optional field to store a normalized string. For
-	// some entity types, one of respective 'structured_value' fields may
-	// also be populated. Also not all the types of 'structured_value' will
+	// some entity types, one of respective `structured_value` fields may
+	// also be populated. Also not all the types of `structured_value` will
 	// be normalized. For example, some processors may not generate float or
 	// int normalized text by default. Below are sample formats mapped to
 	// structured values. - Money/Currency type (`money_value`) is in the
@@ -2853,13 +2853,14 @@ type GoogleCloudDocumentaiV1beta1DocumentProvenance struct {
 	// Type: The type of provenance operation.
 	//
 	// Possible values:
-	//   "OPERATION_TYPE_UNSPECIFIED" - Operation type unspecified.
-	//   "ADD" - Add an element. Implicit if no `parents` are set for the
-	// provenance.
-	//   "REMOVE" - The element is removed. No `parents` should be set.
-	//   "REPLACE" - Explicitly replaces the element(s) identified by
-	// `parents`.
-	//   "EVAL_REQUESTED" - Element is requested for human review.
+	//   "OPERATION_TYPE_UNSPECIFIED" - Operation type unspecified. If no
+	// operation is specified a provenance entry is simply used to match
+	// against a `parent`.
+	//   "ADD" - Add an element.
+	//   "REMOVE" - Remove an element identified by `parent`.
+	//   "REPLACE" - Replace an element identified by `parent`.
+	//   "EVAL_REQUESTED" - Request human review for the element identified
+	// by `parent`.
 	//   "EVAL_APPROVED" - Element is reviewed and approved at human review,
 	// confidence will be set to 1.0.
 	//   "EVAL_SKIPPED" - Element is skipped in the validation process.
@@ -2888,21 +2889,20 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentProvenance) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta1DocumentProvenanceParent: Structure for
-// referencing parent provenances. When an element replaces one of more
-// other elements parent references identify the elements that are
-// replaced.
+// GoogleCloudDocumentaiV1beta1DocumentProvenanceParent: The parent
+// element the current element is based on. Used for
+// referencing/aligning, removal and replacement operations.
 type GoogleCloudDocumentaiV1beta1DocumentProvenanceParent struct {
 	// Id: The id of the parent provenance.
 	Id int64 `json:"id,omitempty"`
 
 	// Index: The index of the parent item in the corresponding item list
-	// (eg. list of entities, properties within entities, etc.) on parent
-	// revision.
+	// (eg. list of entities, properties within entities, etc.) in the
+	// parent revision.
 	Index int64 `json:"index,omitempty"`
 
-	// Revision: The index of the [Document.revisions] identifying the
-	// parent revision.
+	// Revision: The index of the index into current revision's parent_ids
+	// list.
 	Revision int64 `json:"revision,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -2948,6 +2948,11 @@ type GoogleCloudDocumentaiV1beta1DocumentRevision struct {
 	// include one or more parent (when documents are merged.) This field
 	// represents the index into the `revisions` field.
 	Parent []int64 `json:"parent,omitempty"`
+
+	// ParentIds: The revisions that this revision is based on. Must include
+	// all the ids that have anything to do with this revision - eg. there
+	// are `provenance.parent.revision` fields that index into this field.
+	ParentIds []string `json:"parentIds,omitempty"`
 
 	// Processor: If the annotation was made by processor identify the
 	// processor by its resource name.
@@ -3764,8 +3769,8 @@ func (s *GoogleCloudDocumentaiV1beta2Document) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudDocumentaiV1beta2DocumentEntity: An entity that could be a
-// phrase in the text or a property belongs to the document. It is a
-// known entity type, such as a person, an organization, or location.
+// phrase in the text or a property that belongs to the document. It is
+// a known entity type, such as a person, an organization, or location.
 type GoogleCloudDocumentaiV1beta2DocumentEntity struct {
 	// Confidence: Optional. Confidence of detected Schema entity. Range [0,
 	// 1].
@@ -3879,8 +3884,8 @@ type GoogleCloudDocumentaiV1beta2DocumentEntityNormalizedValue struct {
 	MoneyValue *GoogleTypeMoney `json:"moneyValue,omitempty"`
 
 	// Text: Optional. An optional field to store a normalized string. For
-	// some entity types, one of respective 'structured_value' fields may
-	// also be populated. Also not all the types of 'structured_value' will
+	// some entity types, one of respective `structured_value` fields may
+	// also be populated. Also not all the types of `structured_value` will
 	// be normalized. For example, some processors may not generate float or
 	// int normalized text by default. Below are sample formats mapped to
 	// structured values. - Money/Currency type (`money_value`) is in the
@@ -4846,13 +4851,14 @@ type GoogleCloudDocumentaiV1beta2DocumentProvenance struct {
 	// Type: The type of provenance operation.
 	//
 	// Possible values:
-	//   "OPERATION_TYPE_UNSPECIFIED" - Operation type unspecified.
-	//   "ADD" - Add an element. Implicit if no `parents` are set for the
-	// provenance.
-	//   "REMOVE" - The element is removed. No `parents` should be set.
-	//   "REPLACE" - Explicitly replaces the element(s) identified by
-	// `parents`.
-	//   "EVAL_REQUESTED" - Element is requested for human review.
+	//   "OPERATION_TYPE_UNSPECIFIED" - Operation type unspecified. If no
+	// operation is specified a provenance entry is simply used to match
+	// against a `parent`.
+	//   "ADD" - Add an element.
+	//   "REMOVE" - Remove an element identified by `parent`.
+	//   "REPLACE" - Replace an element identified by `parent`.
+	//   "EVAL_REQUESTED" - Request human review for the element identified
+	// by `parent`.
 	//   "EVAL_APPROVED" - Element is reviewed and approved at human review,
 	// confidence will be set to 1.0.
 	//   "EVAL_SKIPPED" - Element is skipped in the validation process.
@@ -4881,21 +4887,20 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentProvenance) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDocumentaiV1beta2DocumentProvenanceParent: Structure for
-// referencing parent provenances. When an element replaces one of more
-// other elements parent references identify the elements that are
-// replaced.
+// GoogleCloudDocumentaiV1beta2DocumentProvenanceParent: The parent
+// element the current element is based on. Used for
+// referencing/aligning, removal and replacement operations.
 type GoogleCloudDocumentaiV1beta2DocumentProvenanceParent struct {
 	// Id: The id of the parent provenance.
 	Id int64 `json:"id,omitempty"`
 
 	// Index: The index of the parent item in the corresponding item list
-	// (eg. list of entities, properties within entities, etc.) on parent
-	// revision.
+	// (eg. list of entities, properties within entities, etc.) in the
+	// parent revision.
 	Index int64 `json:"index,omitempty"`
 
-	// Revision: The index of the [Document.revisions] identifying the
-	// parent revision.
+	// Revision: The index of the index into current revision's parent_ids
+	// list.
 	Revision int64 `json:"revision,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -4941,6 +4946,11 @@ type GoogleCloudDocumentaiV1beta2DocumentRevision struct {
 	// include one or more parent (when documents are merged.) This field
 	// represents the index into the `revisions` field.
 	Parent []int64 `json:"parent,omitempty"`
+
+	// ParentIds: The revisions that this revision is based on. Must include
+	// all the ids that have anything to do with this revision - eg. there
+	// are `provenance.parent.revision` fields that index into this field.
+	ParentIds []string `json:"parentIds,omitempty"`
 
 	// Processor: If the annotation was made by processor identify the
 	// processor by its resource name.
@@ -5916,7 +5926,7 @@ type GoogleCloudDocumentaiV1beta3BatchProcessMetadataIndividualProcessStatus str
 	InputGcsSource string `json:"inputGcsSource,omitempty"`
 
 	// OutputGcsDestination: The output_gcs_destination (in the request as
-	// 'output_gcs_destination') of the processed document if it was
+	// `output_gcs_destination`) of the processed document if it was
 	// successful, otherwise empty.
 	OutputGcsDestination string `json:"outputGcsDestination,omitempty"`
 
@@ -6984,7 +6994,7 @@ func (c *ProjectsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7129,7 +7139,7 @@ func (c *ProjectsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7275,7 +7285,7 @@ func (c *ProjectsLocationsDocumentsBatchProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsBatchProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7420,7 +7430,7 @@ func (c *ProjectsLocationsDocumentsProcessCall) Header() http.Header {
 
 func (c *ProjectsLocationsDocumentsProcessCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7574,7 +7584,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7722,7 +7732,7 @@ func (c *ProjectsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -225,6 +225,16 @@ type GoogleCloudRecaptchaenterpriseV1AccountDefenderAssessment struct {
 	// the account is bad but could require investigating.
 	Labels []string `json:"labels,omitempty"`
 
+	// RecommendedAction: Recommended action after this request.
+	//
+	// Possible values:
+	//   "RECOMMENDED_ACTION_UNSPECIFIED" - Default unspecified type.
+	//   "REQUEST_2FA" - The customer should probably request 2FA to their
+	// user.
+	//   "SKIP_2FA" - This is likely an already seen and safe request. 2FA
+	// can be skipped.
+	RecommendedAction string `json:"recommendedAction,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -321,8 +331,16 @@ type GoogleCloudRecaptchaenterpriseV1AnnotateAssessmentRequest struct {
 	//
 	// Possible values:
 	//   "REASON_UNSPECIFIED" - Default unspecified reason.
-	//   "CHARGEBACK" - Indicates a chargeback for fraud was issued for the
-	// transaction associated with the assessment.
+	//   "CHARGEBACK" - Indicates a chargeback issued for the transaction
+	// with no other details. When possible, specify the type by using
+	// CHARGEBACK_FRAUD or CHARGEBACK_DISPUTE instead.
+	//   "CHARGEBACK_FRAUD" - Indicates a chargeback related to an alleged
+	// unauthorized transaction from the cardholder's perspective (for
+	// example, the card number was stolen).
+	//   "CHARGEBACK_DISPUTE" - Indicates a chargeback related to the
+	// cardholder having provided their card details but allegedly not being
+	// satisfied with the purchase (for example, misrepresentation,
+	// attempted cancellation).
 	//   "PAYMENT_HEURISTICS" - Indicates the transaction associated with
 	// the assessment is suspected of being fraudulent based on the payment
 	// method, billing details, shipping address or other transaction
@@ -474,6 +492,11 @@ type GoogleCloudRecaptchaenterpriseV1Event struct {
 	// client-side platforms already integrated with recaptcha enterprise.
 	ExpectedAction string `json:"expectedAction,omitempty"`
 
+	// HashedAccountId: Optional. Optional unique stable hashed user
+	// identifier for the request. The identifier should ideally be hashed
+	// using sha256 with stable secret.
+	HashedAccountId string `json:"hashedAccountId,omitempty"`
+
 	// SiteKey: Optional. The site key that was used to invoke reCAPTCHA on
 	// your site and generate the token.
 	SiteKey string `json:"siteKey,omitempty"`
@@ -575,6 +598,9 @@ type GoogleCloudRecaptchaenterpriseV1Key struct {
 
 	// TestingOptions: Options for user acceptance testing.
 	TestingOptions *GoogleCloudRecaptchaenterpriseV1TestingOptions `json:"testingOptions,omitempty"`
+
+	// WafSettings: Settings for WAF
+	WafSettings *GoogleCloudRecaptchaenterpriseV1WafSettings `json:"wafSettings,omitempty"`
 
 	// WebSettings: Settings for keys that can be used by websites.
 	WebSettings *GoogleCloudRecaptchaenterpriseV1WebKeySettings `json:"webSettings,omitempty"`
@@ -1169,6 +1195,50 @@ func (s *GoogleCloudRecaptchaenterpriseV1TokenProperties) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRecaptchaenterpriseV1WafSettings: Settings specific to
+// keys that can be used for WAF (Web Application Firewall).
+type GoogleCloudRecaptchaenterpriseV1WafSettings struct {
+	// WafFeature: Required. The WAF feature for which this key is enabled.
+	//
+	// Possible values:
+	//   "WAF_FEATURE_UNSPECIFIED" - Undefined feature.
+	//   "CHALLENGE_PAGE" - Redirects suspicious traffic to reCAPTCHA.
+	//   "SESSION_TOKEN" - Use reCAPTCHA session-tokens to protect the whole
+	// user session on the site's domain.
+	//   "ACTION_TOKEN" - Use reCAPTCHA action-tokens to protect user
+	// actions.
+	WafFeature string `json:"wafFeature,omitempty"`
+
+	// WafService: Required. The WAF service that uses this key.
+	//
+	// Possible values:
+	//   "WAF_SERVICE_UNSPECIFIED" - Undefined WAF
+	//   "CA" - Cloud Armor
+	WafService string `json:"wafService,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "WafFeature") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "WafFeature") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1WafSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1WafSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRecaptchaenterpriseV1WebKeySettings: Settings specific to
 // keys that can be used by websites.
 type GoogleCloudRecaptchaenterpriseV1WebKeySettings struct {
@@ -1302,7 +1372,7 @@ func (c *ProjectsAssessmentsAnnotateCall) Header() http.Header {
 
 func (c *ProjectsAssessmentsAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1449,7 +1519,7 @@ func (c *ProjectsAssessmentsCreateCall) Header() http.Header {
 
 func (c *ProjectsAssessmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1594,7 +1664,7 @@ func (c *ProjectsKeysCreateCall) Header() http.Header {
 
 func (c *ProjectsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1736,7 +1806,7 @@ func (c *ProjectsKeysDeleteCall) Header() http.Header {
 
 func (c *ProjectsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1880,7 +1950,7 @@ func (c *ProjectsKeysGetCall) Header() http.Header {
 
 func (c *ProjectsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2029,7 +2099,7 @@ func (c *ProjectsKeysGetMetricsCall) Header() http.Header {
 
 func (c *ProjectsKeysGetMetricsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2192,7 +2262,7 @@ func (c *ProjectsKeysListCall) Header() http.Header {
 
 func (c *ProjectsKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2369,7 +2439,7 @@ func (c *ProjectsKeysMigrateCall) Header() http.Header {
 
 func (c *ProjectsKeysMigrateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2521,7 +2591,7 @@ func (c *ProjectsKeysPatchCall) Header() http.Header {
 
 func (c *ProjectsKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2626,7 +2696,7 @@ func (c *ProjectsKeysPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRe
 
 type ProjectsRelatedaccountgroupmembershipsSearchCall struct {
 	s                                                                           *Service
-	parent                                                                      string
+	project                                                                     string
 	googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest
 	urlParams_                                                                  gensupport.URLParams
 	ctx_                                                                        context.Context
@@ -2635,11 +2705,11 @@ type ProjectsRelatedaccountgroupmembershipsSearchCall struct {
 
 // Search: Search group memberships related to a given account.
 //
-// - parent: The name of the project to search related account group
+// - project: The name of the project to search related account group
 //   memberships from, in the format "projects/{project}".
-func (r *ProjectsRelatedaccountgroupmembershipsService) Search(parent string, googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest) *ProjectsRelatedaccountgroupmembershipsSearchCall {
+func (r *ProjectsRelatedaccountgroupmembershipsService) Search(project string, googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest *GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest) *ProjectsRelatedaccountgroupmembershipsSearchCall {
 	c := &ProjectsRelatedaccountgroupmembershipsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
+	c.project = project
 	c.googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest = googlecloudrecaptchaenterprisev1searchrelatedaccountgroupmembershipsrequest
 	return c
 }
@@ -2671,7 +2741,7 @@ func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) Header() http.Header 
 
 func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2684,7 +2754,7 @@ func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) doRequest(alt string)
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/relatedaccountgroupmemberships:search")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+project}/relatedaccountgroupmemberships:search")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -2692,7 +2762,7 @@ func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) doRequest(alt string)
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
+		"project": c.project,
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
@@ -2743,10 +2813,10 @@ func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) Do(opts ...googleapi.
 	//   "httpMethod": "POST",
 	//   "id": "recaptchaenterprise.projects.relatedaccountgroupmemberships.search",
 	//   "parameterOrder": [
-	//     "parent"
+	//     "project"
 	//   ],
 	//   "parameters": {
-	//     "parent": {
+	//     "project": {
 	//       "description": "Required. The name of the project to search related account group memberships from, in the format \"projects/{project}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
@@ -2754,7 +2824,7 @@ func (c *ProjectsRelatedaccountgroupmembershipsSearchCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/{+parent}/relatedaccountgroupmemberships:search",
+	//   "path": "v1/{+project}/relatedaccountgroupmemberships:search",
 	//   "request": {
 	//     "$ref": "GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest"
 	//   },
@@ -2868,7 +2938,7 @@ func (c *ProjectsRelatedaccountgroupsListCall) Header() http.Header {
 
 func (c *ProjectsRelatedaccountgroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3070,7 +3140,7 @@ func (c *ProjectsRelatedaccountgroupsMembershipsListCall) Header() http.Header {
 
 func (c *ProjectsRelatedaccountgroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

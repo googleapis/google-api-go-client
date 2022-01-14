@@ -96,7 +96,7 @@
   },
   "protocol": "rest",
   "resources": {},
-  "revision": "20211104",
+  "revision": "20211218",
   "rootUrl": "https://bigtableadmin.googleapis.com/",
   "schemas": {
     "AutoscalingLimits": {
@@ -250,7 +250,7 @@
           "type": "string"
         },
         "serveNodes": {
-          "description": "Required. The number of nodes allocated to this cluster. More nodes enable higher throughput and more consistent performance.",
+          "description": "The number of nodes allocated to this cluster. More nodes enable higher throughput and more consistent performance.",
           "format": "int32",
           "type": "integer"
         },
@@ -297,7 +297,7 @@
       "properties": {
         "clusterAutoscalingConfig": {
           "$ref": "ClusterAutoscalingConfig",
-          "description": "Autoscaling configuration for this cluster. Note that when creating or updating a cluster, exactly one of serve_nodes or cluster_autoscaling_config must be set. If serve_nodes is set, then serve_nodes is fixed and autoscaling is turned off. If cluster_autoscaling_config is set, then serve_nodes will be autoscaled."
+          "description": "Autoscaling configuration for this cluster."
         }
       },
       "type": "object"
@@ -464,34 +464,6 @@
       },
       "type": "object"
     },
-    "FailureTrace": {
-      "description": "Added to the error payload.",
-      "id": "FailureTrace",
-      "properties": {
-        "frames": {
-          "items": {
-            "$ref": "Frame"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "Frame": {
-      "id": "Frame",
-      "properties": {
-        "targetName": {
-          "type": "string"
-        },
-        "workflowGuid": {
-          "type": "string"
-        },
-        "zoneId": {
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "Instance": {
       "description": "A collection of Bigtable Tables and the resources that serve them. All tables in an instance are served from all Clusters in the instance.",
       "id": "Instance",
@@ -596,7 +568,8 @@
           "type": "string"
         },
         "originalRequest": {
-          "$ref": "PartialUpdateClusterRequest"
+          "$ref": "PartialUpdateClusterRequest",
+          "description": "The original request for PartialUpdateCluster."
         },
         "requestTime": {
           "description": "The time at which the original request was received.",
@@ -615,7 +588,7 @@
           "description": "Required. The Cluster which contains the partial updates to be applied, subject to the update_mask."
         },
         "updateMask": {
-          "description": "Required. The subset of Cluster fields which should be replaced. Must be explicitly set.",
+          "description": "Required. The subset of Cluster fields which should be replaced.",
           "format": "google-fieldmask",
           "type": "string"
         }

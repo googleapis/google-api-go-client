@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC.
+// Copyright 2022 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -787,6 +787,734 @@ func (s *ElectoralDistrict) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FeatureIdProto: A globally unique identifier associated with each
+// feature. We use 128-bit identifiers so that we have lots of bits
+// available to distinguish between features. The feature id currently
+// consists of a 64-bit "cell id" that **sometimes** corresponds to the
+// approximate centroid of the feature, plus a 64-bit fingerprint of
+// other identifying information. See more on each respective field in
+// its comments. Feature ids are first assigned when the data is created
+// in MapFacts. After initial creation of the feature, they are
+// immutable. This means that the only properties that you should rely
+// on are that they are unique, and that cell_ids often - but not always
+// - preserve spatial locality. The degree of locality varies as the
+// feature undergoes geometry changes, and should not in general be
+// considered a firm guarantee of the location of any particular
+// feature. In fact, some locationless features have randomized cell
+// IDs! Consumers of FeatureProtos from Mapfacts are guaranteed that
+// fprints in the id field of features will be globally unique. Using
+// the fprint allows consumers who don't need the spatial benefit of
+// cell ids to uniquely identify features in a 64-bit address space.
+// This property is not guaranteed for other sources of FeatureProtos.
+type FeatureIdProto struct {
+	// CellId: The S2CellId corresponding to the approximate location of
+	// this feature as of when it was first created. This can be of variable
+	// accuracy, ranging from the exact centroid of the feature at creation,
+	// a very large S2 Cell, or even being completely randomized for
+	// locationless features. Cell ids have the nice property that they
+	// follow a space-filling curve over the surface of the earth. (See
+	// s2cellid.h for details.) WARNING: Clients should only use cell IDs to
+	// perform spatial locality optimizations. There is no strict guarantee
+	// that the cell ID of a feature is related to the current geometry of
+	// the feature in any way.
+	CellId uint64 `json:"cellId,omitempty,string"`
+
+	// Fprint: A 64-bit fingerprint used to identify features. Most clients
+	// should rely on MapFacts or OneRing to choose fingerprints. If
+	// creating new fprints, the strategy should be chosen so that the
+	// chance of collision is remote or non-existent, and the distribution
+	// should be reasonably uniform. For example, if the source data assigns
+	// unique ids to features, then a fingerprint of the provider name,
+	// version, and source id is sufficient.
+	Fprint uint64 `json:"fprint,omitempty,string"`
+
+	// TemporaryData: A place for clients to attach arbitrary data to a
+	// feature ID. Never set in MapFacts.
+	TemporaryData *MessageSet `json:"temporaryData,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CellId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CellId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FeatureIdProto) MarshalJSON() ([]byte, error) {
+	type NoMethod FeatureIdProto
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GeocodingSummary: Detailed summary of the result from geocoding an
+// address
+type GeocodingSummary struct {
+	// AddressUnderstood: Represents the best estimate of whether or not the
+	// input address was fully understood and the address is correctly
+	// componentized. Mirrors the same-name field in
+	// geostore.staging.AddressLinkupScoringProto.
+	AddressUnderstood bool `json:"addressUnderstood,omitempty"`
+
+	// FeatureId: The ID of the FeatureProto returned by the geocoder
+	FeatureId *FeatureIdProto `json:"featureId,omitempty"`
+
+	// FeatureType: The feature type for the FeatureProto returned by the
+	// geocoder
+	//
+	// Possible values:
+	//   "typeAny" - ABSTRACT
+	//   "typeTransportation" - ABSTRACT
+	//   "typeRoute" - A route is any section of road (or rails, etc.) that
+	// has a name. This includes city streets as well as highways. Road
+	// segments can belong to multiple routes (e.g. El Camino, CA-82).
+	//   "typeDeprecatedHighwayDoNotUse" - DEPRECATED
+	//   "typeHighway" - ABSTRACT
+	//   "typeHighway1"
+	//   "typeHighway2"
+	//   "typeHighway3"
+	//   "typeHighway4"
+	//   "typeHighway5"
+	//   "typeHighway6"
+	//   "typeHighway7"
+	//   "typeHighway8"
+	//   "typeHighway9"
+	//   "typeBicycleRoute" - A designated bicycle route, whose segments may
+	// consist of any combination of bicycle paths, bicycle lanes, or city
+	// streets.
+	//   "typeTrail" - A designated trail, which may consist of paved
+	// walkways, dirt paths, fire road, streets or highways, etc.
+	//   "typeSegment" - ABSTRACT
+	//   "typeRoad"
+	//   "typeRailway" - Railroads use several different incompatible track
+	// types.
+	//   "typeStandardTrack"
+	//   "typeJrTrack"
+	//   "typeNarrowTrack"
+	//   "typeMonorailTrack"
+	//   "typeSubwayTrack"
+	//   "typeLightRailTrack"
+	//   "typeBroadTrack"
+	//   "typeHighSpeedRail"
+	//   "typeTrolleyTrack" - Tracks for streetcars, cable-cars, etc.
+	// Ferries are services that are part of the road network but are not
+	// roads. They typically involve fares and scheduled departure times.
+	//   "typeFerry" - ABSTRACT
+	//   "typeFerryBoat" - The vast majority of ferries are ferry boats.
+	//   "typeFerryTrain" - Also called a "car transport", a ferry train is
+	// a rail service that carries passengers and their vehicles across
+	// undrivable terrain. The Channel Tunnel ("Chunnel") is the most famous
+	// example, but they are also common in the Alps where they connect
+	// neighboring valleys otherwise separated by impassable mountains.
+	//   "typeVirtualSegment" - Any plausible 1-dimensional path through a
+	// 2+ dimensional space, for the purposes of making graph-search-based
+	// routing possible. Such segments can be used to model paths through
+	// parking lots, squares, floors of buildings and other areas.
+	//   "typeIntersection" - An intersection consists of a collection of
+	// segments that terminate at the same location. This is topological
+	// definition: it may not match what a typical user would think of as an
+	// "intersection". See TYPE_INTERSECTION_GROUP, below, for more
+	// information. Each segment terminating at an intersection has an
+	// "endpoint type" that specifies how that segment is terminated: stop
+	// sign, yield sign, three-way light, etc.
+	//   "typeTransit" - ABSTRACT
+	//   "typeTransitStation" - DEPRECATED
+	//   "typeBusStation" - DEPRECATED
+	//   "typeTramwayStation" - DEPRECATED
+	//   "typeTrainStation" - DEPRECATED
+	//   "typeSubwayStation" - DEPRECATED
+	//   "typeFerryTerminal" - DEPRECATED
+	//   "typeAirport" - DEPRECATED
+	//   "typeAirportCivil" - DEPRECATED
+	//   "typeAirportMilitary" - DEPRECATED
+	//   "typeAirportMixed" - DEPRECATED
+	//   "typeHeliport" - DEPRECATED
+	//   "typeSeaplaneBase" - DEPRECATED
+	//   "typeAirstrip" - DEPRECATED
+	//   "typeCableCarStation" - DEPRECATED
+	//   "typeGondolaLiftStation" - DEPRECATED
+	//   "typeFunicularStation" - DEPRECATED
+	//   "typeSpecialStation" - DEPRECATED
+	//   "typeHorseCarriageStation" - DEPRECATED
+	//   "typeMonorailStation" - DEPRECATED
+	//   "typeSeaport" - DEPRECATED
+	//   "typeTransitStop" - DEPRECATED
+	//   "typeTransitTrip" - DEPRECATED
+	//   "typeTransitDeparture" - DEPRECATED
+	//   "typeTransitLeg" - DEPRECATED
+	//   "typeTransitLine" - A transit line is a collection of transit legs,
+	// associated with some invariant properties of the trips that run over
+	// the legs. See also transitline.proto
+	//   "typeTransitAgency" - A transit agency operates a number of lines,
+	// typically all in the same city, region or country. See also
+	// transitagency.proto
+	//   "typeTransitTransfer" - DEPRECATED
+	//   "typeSegmentPath" - ABSTRACT
+	//   "typeRoadSign" - Road sign features have names, point geometry,
+	// etc. They also have segment_path data (see below) which lists the
+	// segments that refer to the sign. See segment.proto for the reference
+	// from the segment to the road sign.
+	//   "typeIntersectionGroup" - Our TYPE_INTERSECTION feature, above,
+	// models the point where one or more segments terminate. This is
+	// topological definition: it may not match what a typical user would
+	// think of as an "intersection". Consider the intersections where
+	// Hayes, Market, Larkin, and 9th Street meet near (37.77765,
+	// -122.41638) in San Francisco. Most people would probably consider
+	// this a single feature, even though we model it as four separate
+	// TYPE_INTERSECTION features. This TYPE_INTERSECTION_GROUP is used to
+	// model the user's concept of a complex intersection.
+	//   "typePathway" - RESERVED
+	//   "typeRestrictionGroup" - A restriction group describes a set of
+	// segment restrictions that belong together and have a name or an
+	// associated event. See also restriction_group.proto
+	//   "typeTollCluster" - A toll cluster is either a single point on a
+	// segment (represented as a point at the end of the segment that has
+	// ENDPOINT_TOLL_BOOTH set) or a group of points on various road
+	// segments in MapFacts that represents one or more lanes passing
+	// through a toll fixture that all go to the same routing destination.
+	// Each toll cluster should have at most a single price per payment
+	// method. E.g. {CASH = $5, PASS = $1}. Note: If a toll fixture has
+	// different prices for multiple routing destinations, drivers need to
+	// be in the correct lane before passing through the toll fixture and
+	// hence such a fixture is represented by multiple toll clusters. A toll
+	// cluster does not necessarily represent a real-world entity, e.g. a
+	// particular plaza/structure as perceived by humans. This is because a
+	// plaza can be represented by more than one toll cluster. We require
+	// toll clusters to have names, but they might be non-unique. For
+	// example, a plaza might be represented by multiple toll clusters that
+	// may have the same plaza name. For further details, please see
+	// go/toll-cluster-schema.
+	//   "typePolitical" - ABSTRACT
+	//   "typeCountry"
+	//   "typeAdministrativeArea" - ABSTRACT
+	//   "typeAdministrativeArea1"
+	//   "typeUsState" - DEPRECATED
+	//   "typeGbCountry" - DEPRECATED
+	//   "typeJpTodoufuken" - DEPRECATED
+	//   "typeAdministrativeArea2"
+	//   "typeGbFormerPostalCounty" - DEPRECATED
+	//   "typeGbTraditionalCounty" - DEPRECATED
+	//   "typeAdministrativeArea3"
+	//   "typeAdministrativeArea4"
+	//   "typeAdministrativeArea5"
+	//   "typeAdministrativeArea6"
+	//   "typeAdministrativeArea7"
+	//   "typeAdministrativeArea8"
+	//   "typeAdministrativeArea9"
+	//   "typeColloquialArea" - e.g. Silicon Valley
+	//   "typeReservation" - A reservation is a region collectively held or
+	// governed by indigenous people and officially recognized by the
+	// country’s government at the federal or state level. A reservation
+	// may be fully contained within an administrative feature or partially
+	// contained within two or more. These regions are referred to by
+	// different categorical names depending on country and even by state,
+	// including but not limited to: “Indian Reservations”, “Indian
+	// Reserves”, “Land Claim Settlement Lands”, “Indian Lands”,
+	// “Treaty Lands”, “Indigenous Territories”, etc. A reservation
+	// is not a historic indigenous territory boundary or a region which has
+	// applied for land rights but has not yet received official
+	// recognition.
+	//   "typeLocality"
+	//   "typeGbPostTown" - DEPRECATED
+	//   "typeJpGun" - DEPRECATED
+	//   "typeJpShikuchouson" - DEPRECATED
+	//   "typeJpSubShikuchouson" - DEPRECATED
+	//   "typeColloquialCity" - An entity widely considered to be a city,
+	// that may itself be made up of smaller political entities, some of
+	// which are cities/towns/villages themselves. For example, the
+	// colloquial view of Sydney, Australia actually comprises many smaller
+	// cities, but is regarded as a city itself. This type is not suitable
+	// for modeling official metro-/micropolitan or other statistical areas.
+	//   "typeSublocality" - ABSTRACT
+	//   "typeUsBorough" - DEPRECATED
+	//   "typeGbDependentLocality" - DEPRECATED
+	//   "typeJpOoaza" - DEPRECATED
+	//   "typeJpKoaza" - DEPRECATED
+	//   "typeJpGaiku" - DEPRECATED
+	//   "typeGbDoubleDependentLocality" - DEPRECATED
+	//   "typeJpChiban" - DEPRECATED
+	//   "typeJpEdaban" - DEPRECATED
+	//   "typeSublocality1"
+	//   "typeSublocality2"
+	//   "typeSublocality3"
+	//   "typeSublocality4"
+	//   "typeSublocality5"
+	//   "typeNeighborhood"
+	//   "typeConstituency"
+	//   "typeDesignatedMarketArea" - Designated Market Areas (or DMAs) are
+	// used by marketing and ratings companies (such as the Nielsen Media
+	// Research company) to describe geographical regions (such as the
+	// greater New York metropolitan area) that are covered by a set of
+	// television stations. (See http://www.schooldata.com/pdfs/DMA.pdf) In
+	// the United States, DMAs should have a DMA numeric ID name, tagged
+	// with the FLAG_DESIGNATED_MARKET_AREA_ID flag.
+	//   "typeSchoolDistrict"
+	//   "typeLandParcel"
+	//   "typeDisputedArea" - Eventually we'll have more data for disputed
+	// areas (e.g., who makes claims on the area, who has de facto control,
+	// etc.). For the moment, we just define a type so we can simply mark
+	// areas as disputed.
+	//   "typePoliceJurisdiction" - Boundaries representing the jurisdiction
+	// of a particular police station.
+	//   "typeStatisticalArea" - An area used for aggregating statistical
+	// data, eg, a census region. Note that TYPE_STATISTICAL_AREA has a
+	// third nibble so we can add an abstract parent above it later if need
+	// be at 0x2E1 (and rename TYPE_STATISTICAL_AREA as
+	// TYPE_STATISTICAL_AREA1).
+	//   "typeConstituencyFuture" - RESERVED
+	//   "typePark" - DEPRECATED
+	//   "typeGolfCourse" - DEPRECATED
+	//   "typeLocalPark" - DEPRECATED
+	//   "typeNationalPark" - DEPRECATED
+	//   "typeUsNationalPark" - DEPRECATED
+	//   "typeUsNationalMonument" - DEPRECATED
+	//   "typeNationalForest" - DEPRECATED
+	//   "typeProvincialPark" - DEPRECATED
+	//   "typeProvincialForest" - DEPRECATED
+	//   "typeCampgrounds" - DEPRECATED
+	//   "typeHikingArea" - DEPRECATED
+	//   "typeBusiness" - DEPRECATED
+	//   "typeGovernment" - DEPRECATED
+	//   "typeBorderCrossing" - DEPRECATED
+	//   "typeCityHall" - DEPRECATED
+	//   "typeCourthouse" - DEPRECATED
+	//   "typeEmbassy" - DEPRECATED
+	//   "typeLibrary" - DEPRECATED
+	//   "typeSchool" - DEPRECATED
+	//   "typeUniversity" - DEPRECATED
+	//   "typeEmergency" - DEPRECATED
+	//   "typeHospital" - DEPRECATED
+	//   "typePharmacy" - DEPRECATED
+	//   "typePolice" - DEPRECATED
+	//   "typeFire" - DEPRECATED
+	//   "typeDoctor" - DEPRECATED
+	//   "typeDentist" - DEPRECATED
+	//   "typeVeterinarian" - DEPRECATED
+	//   "typeTravelService" - DEPRECATED
+	//   "typeLodging" - DEPRECATED
+	//   "typeRestaurant" - DEPRECATED
+	//   "typeGasStation" - DEPRECATED
+	//   "typeParking" - DEPRECATED
+	//   "typePostOffice" - DEPRECATED
+	//   "typeRestArea" - DEPRECATED
+	//   "typeCashMachine" - DEPRECATED
+	//   "typeCarRental" - DEPRECATED
+	//   "typeCarRepair" - DEPRECATED
+	//   "typeShopping" - DEPRECATED
+	//   "typeGrocery" - DEPRECATED
+	//   "typeTouristDestination" - DEPRECATED
+	//   "typeEcoTouristDestination" - DEPRECATED
+	//   "typeBirdWatching" - DEPRECATED
+	//   "typeFishing" - DEPRECATED
+	//   "typeHunting" - DEPRECATED
+	//   "typeNatureReserve" - DEPRECATED
+	//   "typeTemple" - DEPRECATED
+	//   "typeChurch" - DEPRECATED
+	//   "typeGurudwara" - DEPRECATED
+	//   "typeHinduTemple" - DEPRECATED
+	//   "typeMosque" - DEPRECATED
+	//   "typeSynagogue" - DEPRECATED
+	//   "typeStadium" - DEPRECATED
+	//   "typeBar" - DEPRECATED
+	//   "typeMovieRental" - DEPRECATED
+	//   "typeCoffee" - DEPRECATED
+	//   "typeGolf" - DEPRECATED
+	//   "typeBank" - DEPRECATED
+	//   "typeDoodle" - DEPRECATED
+	//   "typeGrounds" - DEPRECATED
+	//   "typeAirportGrounds" - DEPRECATED
+	//   "typeBuildingGrounds" - DEPRECATED
+	//   "typeCemetery" - DEPRECATED
+	//   "typeHospitalGrounds" - DEPRECATED
+	//   "typeIndustrial" - DEPRECATED
+	//   "typeMilitary" - DEPRECATED
+	//   "typeShoppingCenter" - DEPRECATED
+	//   "typeSportsComplex" - DEPRECATED
+	//   "typeUniversityGrounds" - DEPRECATED
+	//   "typeDeprecatedTarmac" - DEPRECATED
+	//   "typeEnclosedTrafficArea" - DEPRECATED
+	//   "typeParkingLot" - DEPRECATED
+	//   "typeParkingGarage" - DEPRECATED
+	//   "typeOffRoadArea" - DEPRECATED
+	//   "typeBorder" - A line representing the boundary between two
+	// features. See border.proto for details.
+	//   "typeBuilding" - DEPRECATED
+	//   "typeGeocodedAddress" - An association of a point with an address,
+	// with no other information.
+	//   "typeNaturalFeature" - ABSTRACT
+	//   "typeTerrain" - Expanses of land that share common surface
+	// attributes. These areas would look more or less uniform from a high
+	// altitude.
+	//   "typeSand"
+	//   "typeBeach"
+	//   "typeDune"
+	//   "typeRocky"
+	//   "typeIce"
+	//   "typeGlacier"
+	//   "typeBuiltUpArea" - Terrain that looks populated.
+	//   "typeVegetation" - Terrain that is covered in vegetation.
+	//   "typeShrubbery"
+	//   "typeWoods"
+	//   "typeAgricultural"
+	//   "typeGrassland"
+	//   "typeTundra"
+	//   "typeDesert"
+	//   "typeSaltFlat" - A flat expanse of salt left by the evaporation of
+	// a body of salt water.
+	//   "typeWater" - Features can be TYPE_WATER if we don't have enough
+	// information to properly type the body of water. TYPE_WATER is also
+	// used as the type for child features that compose a TYPE_RIVER
+	// feature.
+	//   "typeOcean" - One of the large salt-water bodies that covers most
+	// of the globe.
+	//   "typeBay" - An ocean subdivision formed by a coastal indentation.
+	// Includes coves and gulfs.
+	//   "typeBight" - An open body of water formed by a slight coastal
+	// indentation.
+	//   "typeLagoon"
+	//   "typeSea" - An ocean subdivision more or less confined by land and
+	// islands.
+	//   "typeStrait" - A long narrow ocean subdivision. Includes sounds.
+	//   "typeInlet"
+	//   "typeFjord"
+	//   "typeLake" - An inland body of standing water.
+	//   "typeSeasonalLake" - A lake that dries up part of the year.
+	//   "typeReservoir" - An artificial body of water, possibly created by
+	// a dam, often used for irrigation or house use.
+	//   "typePond"
+	//   "typeRiver" - An inland body of moving water, or parts associated
+	// with it in which there is little or no current (backwater).
+	//   "typeRapids"
+	//   "typeDistributary" - A branch which flows away from the main river.
+	// Includes deltas.
+	//   "typeConfluence" - A place where two or more rivers join.
+	//   "typeWaterfall"
+	//   "typeSpring" - A place where ground water flows naturally out of
+	// the ground.
+	//   "typeGeyser"
+	//   "typeHotSpring"
+	//   "typeSeasonalRiver" - A river that dries up part of the year.
+	//   "typeWadi" - A dry riverbed that occasionally receives flashfloods.
+	//   "typeEstuary" - A place at the end of a river where fresh and salt
+	// water mix. Includes tidal creeks and limans.
+	//   "typeWetland" - Land that is usually flooded. Includes bogs,
+	// marshes, flats, moors, and swamps.
+	//   "typeWaterNavigation"
+	//   "typeFord" - A shallow place where water may be waded through.
+	//   "typeCanal" - A narrow passage used by boats. Normally artificial.
+	//   "typeHarbor" - A deep place near a shore where ships commonly drop
+	// anchor.
+	//   "typeChannel" - A deep part in a body of water that is suitable for
+	// navigation. Includes narrows.
+	//   "typeReef" - Rocks, coral, sandbars, or other features beneath the
+	// surface of the water that pose a hazard to passing ships. Includes
+	// shoals.
+	//   "typeReefFlat" - A relatively shallow zone of the back reef located
+	// closest to the shore, that may be exposed at low tide.
+	//   "typeReefGrowth" - A small section of rocks, coral, sandbars, or
+	// other features beneath the surface of the water that forms part of a
+	// reef.
+	//   "typeReefExtent" - The full extent of the reef complex.
+	//   "typeReefRockSubmerged" - A submerged rock in the water.
+	//   "typeIrrigation" - Man-made (and sometimes natural) channels used
+	// to move water. This type was used for both dam structures and water
+	// that is hold back by dams. We should use TYPE_COMPOUND_BUILDING for
+	// dam structures and TYPE_RESERVOIR for water.
+	//   "typeDam" - DEPRECATED
+	//   "typeDrinkingWater"
+	//   "typeCurrent" - Includes overfalls.
+	//   "typeWateringHole" - A natural depression filled with water where
+	// animals come to drink.
+	//   "typeTectonic" - ABSTRACT This type is incorrectly under
+	// TYPE_TECTONIC instead of TYPE_WATER. This was a mistake and is now
+	// fixed. See TYPE_WATERING_HOLE for the replacement.
+	//   "typeWateringHoleDeprecated" - DEPRECATED
+	//   "typeVolcano"
+	//   "typeLavaField"
+	//   "typeFissure"
+	//   "typeFault"
+	//   "typeLandMass"
+	//   "typeContinent"
+	//   "typeIsland"
+	//   "typeAtoll"
+	//   "typeOceanRockExposed" - An exposed rock in the water.
+	//   "typeCay" - A small, low-elevation, sandy island formed on the
+	// surface of coral reefs
+	//   "typePeninsula" - A stretch of land projecting into water. Includes
+	// capes and spits.
+	//   "typeIsthmus" - A strip of land connecting two larger land masses,
+	// such as continents.
+	//   "typeElevated" - Features that are notable for being high (or low),
+	// or for having sudden changes in elevation. These features might have
+	// an "elevation" extension to specify the actual elevation. See
+	// ElevationProto for more information.
+	//   "typePeak" - Elevations that have a distinctive peak.
+	//   "typeNunatak" - A peak or ridge of a mountain that extends through
+	// a glacier.
+	//   "typeSpur" - A subsidiary peak of a mountain.
+	//   "typePass" - A route over an otherwise difficult to traverse
+	// feature. Includes saddle.
+	//   "typePlateau" - Elevations that are flat on top. Includes mesas and
+	// buttes.
+	//   "typeRidge" - A ridge is a geographical feature consisting of a
+	// chain of mountains or hills that form a continuous elevated crest
+	// with a single ridgeline for some distance.
+	//   "typeRavine" - Steep declines usually carved by erosion. Includes
+	// valleys, canyons, ditches, and gorges.
+	//   "typeCrater" - Depressions causes by impact, explosion, and
+	// sometimes sink-holes.
+	//   "typeKarst" - Topography formed on limestone and gypsum by
+	// dissolution with sinkholes, caves, etc.
+	//   "typeCliff" - A vertical or nearly vertical slope. Includes
+	// escarpments.
+	//   "typeVista" - An elevated place that is notable for having a good
+	// view. Raster digital elevation data. This is not a type to be used by
+	// providers or consumed by clients.
+	//   "typeDigitalElevationModel" - RESERVED
+	//   "typeUpland" - Land along streams higher than the alluvial plain or
+	// stream terrace.
+	//   "typeTerrace"
+	//   "typeSlope" - Land not so steep as a cliff, but changing elevation.
+	// Includes slides.
+	//   "typeContourLine" - All the points on the polygon are at the same
+	// elevation.
+	//   "typePan" - A near-level shallow, natural depression or basin,
+	// usually containing an intermittent lake, pond, or pool.
+	//   "typeUnstableHillside"
+	//   "typeMountainRange" - A series of mountains or hills ranged in a
+	// line and connected by high ground. Mountain ranges usually consist of
+	// many smaller ridges. For example, the Himalayas, the Andes. the Alps,
+	// etc.
+	//   "typeUndersea" - Features that are notable for being high (or low),
+	// or for having sudden changes in elevation. These features might have
+	// an "elevation" extension to specify the actual elevation. See
+	// ElevationProto for more information.
+	//   "typeSubmarineSeamount" - includes peaks, ranges, and spurs
+	//   "typeSubmarineRidge"
+	//   "typeSubmarineGap" - includes saddles
+	//   "typeSubmarinePlateau"
+	//   "typeSubmarineDeep"
+	//   "typeSubmarineValley" - includes trenches and troughs
+	//   "typeSubmarineBasin"
+	//   "typeSubmarineSlope"
+	//   "typeSubmarineCliff"
+	//   "typeSubmarinePlain"
+	//   "typeSubmarineFractureZone"
+	//   "typeCave" - Don't use 0xA7. Use 8 bits for additional types under
+	// TYPE_NATURAL_FEATURE, so we don't run out of space. The following are
+	// miscellaneous natural features that don't fit any of the categories
+	// above.
+	//   "typeRock"
+	//   "typeArchipelago" - A feature representing a group or chain of
+	// islands.
+	//   "typePostal" - ABSTRACT
+	//   "typePostalCode" - This is the type for postal codes which are
+	// complete and independent enough that there should be a feature for
+	// them (e.g. US 5-digit ZIP codes). For even more detailed suffixes
+	// that further subdivide a postal code (such as the +4 component in US
+	// ZIP codes), store the information in a TYPE_POSTAL_CODE_SUFFIX
+	// address component. When a range or set of postal codes share the same
+	// geographical area, e.g. because a precise subdivision does not exist
+	// or this subdivision is unknown, this type is used for each individual
+	// postal code.
+	//   "typePostalCodePrefix" - A prefix portion of a postal code which
+	// does not meet the requirements for TYPE_POSTAL_CODE, but which is
+	// useful to search for, for example UK outcodes.
+	//   "typePremise" - DEPRECATED
+	//   "typeSubPremise" - DEPRECATED This is deprecated and we want to use
+	// TYPE_COMPOUND_SECTION instead.
+	//   "typeSuite" - DEPRECATED
+	//   "typePostTown" - The term "post town" is used for a
+	// locality-like-entity that is only used for postal addresses.
+	//   "typePostalRound" - DEPRECATED
+	//   "typeMetaFeature" - ABSTRACT
+	//   "typeDataSource" - Every data source used in constructing a data
+	// repository has a corresponding feature that provides more information
+	// about that data source. The extra information is stored in the
+	// optional data_source field below.
+	//   "typeLocale" - A locale feature provides region specific
+	// conventions such as preferred language and formatting details for
+	// time, date, and currency values. Locales aren't necessary defined by
+	// physical geographic features, so they are classified as
+	// meta-features.
+	//   "typeTimezone" - A timezone feature is used to specify the region
+	// covering an international timezone. When a point is covered by
+	// multiple timezone features, the most specific one can be used to
+	// compute the local time at this point. Most specific implies a much
+	// smaller region or the one that is closer to the center. A feature's
+	// timezone can be specified in the repeated related_timezone field.
+	//   "typeBusinessChain" - A business chain feature is used to represent
+	// a chain, e.g. Starbucks, McDonald's, etc. Other features representing
+	// specific stores/franchises of this chain may refer to one such
+	// feature via RELATION_MEMBER_OF_CHAIN. This is not strictly reserved
+	// to commercial chains but can also be used to model organizations such
+	// as the Red Cross or the United Nations.
+	//   "typePhoneNumberPrefix" - A phone number prefix feature is used to
+	// specify the region where phone numbers (typically fixed-line numbers)
+	// must begin with a certain prefix. Any phone number prefix down to any
+	// level of granularity could be represented by this type.
+	//   "typePhoneNumberAreaCode" - A phone number area code is a prefix
+	// which also coincides with the area code, or national destination
+	// code, of a particular region.
+	//   "typeBusinessCorridor" - A Business Corridor is a dense cluster of
+	// semantically similar establishments. TYPE_BUSINESS_CORRIDOR features
+	// are distinguished from TYPE_COLLOQUIAL_AREA features because the
+	// corridors are not under the political hierarchy, are allowed to be
+	// nameless, and may not correspond to well-known real world locations.
+	// For more details, see go/geo-corridors-schema.
+	//   "typeAddressTemplate" - An address template feature provides
+	// region-specific conventions for structuring addresses. These features
+	// aren't necessarily defined by physical geographic features, so they
+	// are classified as meta-features.
+	//   "typeEvent" - DEPRECATED
+	//   "typeEarthquake" - DEPRECATED
+	//   "typeHurricane" - DEPRECATED
+	//   "typeWeatherCondition" - DEPRECATED
+	//   "typeTransient" - RESERVED
+	//   "typeEntrance" - A portal of entry or exit to another feature.
+	// Examples: - Subway station entrance. - Parking lot entrance.
+	//   "typeCartographic" - Cartographic features are used to capture
+	// real-world objects for which there is no current desire to model any
+	// specific attributes. These are only useful to make the map tiles look
+	// pretty.
+	//   "typeHighTension" - DEPRECATED
+	//   "typeSkiTrail" - Also see skitrail.proto
+	//   "typeSkiLift" - Also see skilift.proto
+	//   "typeSkiBoundary" - Also see skiboundary.proto
+	//   "typeWatershedBoundary"
+	//   "typeTarmac" - Starting with TYPE_TARMAC, we use longer IDs, so
+	// that we can expand the number of feature types under
+	// TYPE_CARTOGRAPHIC.
+	//   "typeWall" - Use TYPE_COMPOUND_GROUND and appropriate gcids for the
+	// next two.
+	//   "typePicnicArea" - DEPRECATED
+	//   "typePlayGround" - DEPRECATED
+	//   "typeTrailHead"
+	//   "typeGolfTeeingGround" - Sub-types within a golf course.
+	//   "typeGolfPuttingGreen"
+	//   "typeGolfRough"
+	//   "typeGolfSandBunker"
+	//   "typeGolfFairway"
+	//   "typeGolfHole" - Use TYPE_ESTABLISHMENT_POI and gcid:golf_shop for
+	// golf shops instead.
+	//   "typeDeprecatedGolfShop" - DEPRECATED
+	//   "typeCampingSite" - DEPRECATED
+	//   "typeDesignatedBarbecuePit"
+	//   "typeDesignatedCookingArea"
+	//   "typeCampfirePit"
+	//   "typeWaterFountain"
+	//   "typeLitterReceptacle"
+	//   "typeLockerArea"
+	//   "typeAnimalEnclosure" - Subtype within a zoo - a cage or fenced-off
+	// or otherwise delineated area containing animals.
+	//   "typeCartographicLine" - A line for a cartographic detail. For
+	// example the international date line. Such features should have
+	// polyline geometry.
+	//   "typeEstablishment" - ABSTRACT This type is being replaced by
+	// TYPE_COMPOUND_GROUNDS. For further details, see go/compounds-v2
+	//   "typeEstablishmentGrounds" - DEPRECATED This type has been replaced
+	// by TYPE_COMPOUND_BUILDING. For further details, see
+	// go/oyster-compounds
+	//   "typeEstablishmentBuilding" - DEPRECATED
+	//   "typeEstablishmentPoi" - Establishment POIs can be referenced by
+	// TYPE_COMPOUND features using the RELATION_PRIMARILY_OCCUPIED_BY. This
+	// is the reciprocal relation of the RELATION_OCCUPIES.
+	//   "typeEstablishmentService" - Represents service-only establishments
+	// (those without a storefront location). NOTE(tcain): Using value
+	// 0xD441, since we could find ourselves with a need to differentiate
+	// service areas from online-only at this level in the future, but still
+	// benefit from being able to group those under a common parent,
+	// disjoint from TYPE_ESTABLISHMENT_POI.
+	//   "typeCelestial" - The root of types of features that are in the
+	// sky, rather than on the earth. There will eventually be a hierarchy
+	// of types here.
+	//   "typeRoadMonitor" - Features responsible for monitoring traffic on
+	// roads (usually for speed). Includes cameras at particular points as
+	// well as monitors that cover larger spans. Features of this type
+	// should have a corresponding gcid that specifies the correct subtype
+	// (e.g. gcid:road_camera or gcid:speed_camera_zone). This type was
+	// originally named as TYPE_ROAD_CAMERA.
+	//   "typePublicSpacesAndMonuments" - ABSTRACT
+	//   "typeStatue" - Note that this type does not distinguish the nature
+	// of the statue (religious, historical, memorial, tourist, ...).
+	//   "typeTownSquare" - Open space used for events, gathering, or as
+	// market-place.
+	//   "typeLevel" - A feature used to represent a logical level, e.g.
+	// floor.
+	//   "typeCompound" - ABSTRACT
+	//   "typeCompoundGrounds" - e.g. campus, compound, parcel.
+	//   "typeCompoundBuilding" - e.g. single family dwelling, office
+	// building.
+	//   "typeCompoundSection" - e.g. suite, room, hallway, cubicle.
+	//   "typeTerminalPoint" - A terminal point represents a good location
+	// for a user to meet a taxi, ridesharing vehicle, or general driver.
+	//   "typeRegulatedArea" - An area controlled in some way by an
+	// authoritative source, such as a government-designated COVID
+	// containment zone. Features of this type should have one or more gcids
+	// corresponding to their specific regulation.
+	//   "typeDoNotUseReservedToCatchGeneratedFiles" - DEPRECATED
+	//   "typeUnknown" - A feature of completely unknown type. This should
+	// only be used when absolutely necessary. One example in which this
+	// type is useful is in the Chinese importer, which must heuristically
+	// segment addresses into components - it often does not know what types
+	// to make those components. Please note that the Oyster address
+	// formatter does not currently support address components of
+	// TYPE_UNKNOWN well.
+	FeatureType string `json:"featureType,omitempty"`
+
+	// PositionPrecisionMeters: Precision of the center point (lat/long) of
+	// the geocoded FeatureProto
+	PositionPrecisionMeters float64 `json:"positionPrecisionMeters,omitempty"`
+
+	// QueryString: The query sent to the geocoder
+	QueryString string `json:"queryString,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AddressUnderstood")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AddressUnderstood") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeocodingSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GeocodingSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GeocodingSummary) UnmarshalJSON(data []byte) error {
+	type NoMethod GeocodingSummary
+	var s1 struct {
+		PositionPrecisionMeters gensupport.JSONFloat64 `json:"positionPrecisionMeters"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.PositionPrecisionMeters = float64(s1.PositionPrecisionMeters)
+	return nil
+}
+
 // GeographicDivision: Describes a political geography.
 type GeographicDivision struct {
 	// AlsoKnownAs: Any other valid OCD IDs that refer to the same
@@ -830,6 +1558,10 @@ func (s *GeographicDivision) MarshalJSON() ([]byte, error) {
 	type NoMethod GeographicDivision
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MessageSet: This is proto2's version of MessageSet.
+type MessageSet struct {
 }
 
 // Office: Information about an Office held by one or more Officials.
@@ -921,6 +1653,10 @@ type Official struct {
 
 	// Emails: The direct email addresses for the official.
 	Emails []string `json:"emails,omitempty"`
+
+	// GeocodingSummaries: Detailed summary about the official's address's
+	// geocoding
+	GeocodingSummaries []*GeocodingSummary `json:"geocodingSummaries,omitempty"`
 
 	// Name: The official's name.
 	Name string `json:"name,omitempty"`
@@ -1357,7 +2093,7 @@ func (c *DivisionsSearchCall) Header() http.Header {
 
 func (c *DivisionsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1489,7 +2225,7 @@ func (c *ElectionsElectionQueryCall) Header() http.Header {
 
 func (c *ElectionsElectionQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1647,7 +2383,7 @@ func (c *ElectionsVoterInfoQueryCall) Header() http.Header {
 
 func (c *ElectionsVoterInfoQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1860,7 +2596,7 @@ func (c *RepresentativesRepresentativeInfoByAddressCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByAddressCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2119,7 +2855,7 @@ func (c *RepresentativesRepresentativeInfoByDivisionCall) Header() http.Header {
 
 func (c *RepresentativesRepresentativeInfoByDivisionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20211205")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

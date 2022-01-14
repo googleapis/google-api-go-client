@@ -142,7 +142,7 @@
               "type": "string"
             },
             "sqlResource": {
-              "description": "The SQL name of the entry. SQL names are case-sensitive. Examples: * `pubsub.project_id.topic_id` * ``pubsub.project_id.`topic.id.with.dots` `` * `bigquery.table.project_id.dataset_id.table_id` * `bigquery.dataset.project_id.dataset_id` * `datacatalog.entry.project_id.location_id.entry_group_id.entry_id` `*_id`s shoud satisfy the standard SQL rules for identifiers. https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.",
+              "description": "The SQL name of the entry. SQL names are case-sensitive. Examples: * `pubsub.project_id.topic_id` * ``pubsub.project_id.`topic.id.with.dots` `` * `bigquery.table.project_id.dataset_id.table_id` * `bigquery.dataset.project_id.dataset_id` * `datacatalog.entry.project_id.location_id.entry_group_id.entry_id` `*_id`s should satisfy the standard SQL rules for identifiers. https://cloud.google.com/bigquery/docs/reference/standard-sql/lexical.",
               "location": "query",
               "type": "string"
             }
@@ -688,7 +688,7 @@
                           ]
                         },
                         "list": {
-                          "description": "Lists the tags on an Entry.",
+                          "description": "Lists tags assigned to an Entry. The columns in the response are lowercased.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/entries/{entriesId}/tags",
                           "httpMethod": "GET",
                           "id": "datacatalog.projects.locations.entryGroups.entries.tags.list",
@@ -817,7 +817,7 @@
                       ]
                     },
                     "list": {
-                      "description": "Lists the tags on an Entry.",
+                      "description": "Lists tags assigned to an Entry. The columns in the response are lowercased.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/entryGroups/{entryGroupsId}/tags",
                       "httpMethod": "GET",
                       "id": "datacatalog.projects.locations.entryGroups.tags.list",
@@ -1808,7 +1808,7 @@
       }
     }
   },
-  "revision": "20211110",
+  "revision": "20211230",
   "rootUrl": "https://datacatalog.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -2395,7 +2395,7 @@
       "id": "GoogleCloudDatacatalogV1beta1SearchCatalogRequest",
       "properties": {
         "orderBy": {
-          "description": "Specifies the ordering of results, currently supported case-sensitive choices are: * `relevance`, only supports descending * `last_modified_timestamp [asc|desc]`, defaults to descending if not specified If not specified, defaults to `relevance` descending.",
+          "description": "Specifies the ordering of results, currently supported case-sensitive choices are: * `relevance`, only supports descending * `last_modified_timestamp [asc|desc]`, defaults to descending if not specified * `default` that can only be descending If not specified, defaults to `relevance` descending.",
           "type": "string"
         },
         "pageSize": {
@@ -2816,7 +2816,7 @@
       "type": "object"
     },
     "GoogleCloudDatacatalogV1beta1UsageStats": {
-      "description": "Detailed counts on the entry's usage. Caveats: - Only BigQuery tables have usage stats - The usage stats only inlude BigQuery query jobs - The usage stats might be underestimated, e.g. wildcard table references are not yet counted in usage computation https://cloud.google.com/bigquery/docs/querying-wildcard-tables",
+      "description": "Detailed counts on the entry's usage. Caveats: - Only BigQuery tables have usage stats - The usage stats only include BigQuery query jobs - The usage stats might be underestimated, e.g. wildcard table references are not yet counted in usage computation https://cloud.google.com/bigquery/docs/querying-wildcard-tables",
       "id": "GoogleCloudDatacatalogV1beta1UsageStats",
       "properties": {
         "totalCancellations": {

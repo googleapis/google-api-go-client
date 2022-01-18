@@ -10276,7 +10276,7 @@ func (c *ObjectsInsertCall) ProgressUpdater(pu googleapi.ProgressUpdater) *Objec
 // By default, exponetial backoff will beapplied using gax defaults, and
 // the following errors are retried:
 //
-// - HTTP responses with codes 429, 502, 503, and 504.
+// - HTTP responses with codes 408, 429, 502, 503, and 504.
 //
 // - Transient network errors such as connection reset and
 // io.ErrUnexpectedEOF.

@@ -9,7 +9,7 @@ import (
 	"log"
 	"net/http"
 
-	"google.golang.org/api/customsearch/v1"
+	customsearch "google.golang.org/api/customsearch/v1"
 	"google.golang.org/api/googleapi/transport"
 )
 

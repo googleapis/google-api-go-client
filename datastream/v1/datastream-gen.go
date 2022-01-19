@@ -1204,10 +1204,10 @@ func (s *MysqlDatabase) MarshalJSON() ([]byte, error) {
 
 // MysqlObjectIdentifier: Mysql data source object identifier.
 type MysqlObjectIdentifier struct {
-	// Database: The database name.
+	// Database: Required. The database name.
 	Database string `json:"database,omitempty"`
 
-	// Table: The table name.
+	// Table: Required. The table name.
 	Table string `json:"table,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Database") to
@@ -1590,10 +1590,10 @@ func (s *OracleColumn) MarshalJSON() ([]byte, error) {
 
 // OracleObjectIdentifier: Oracle data source object identifier.
 type OracleObjectIdentifier struct {
-	// Schema: The schema name.
+	// Schema: Required. The schema name.
 	Schema string `json:"schema,omitempty"`
 
-	// Table: The table name.
+	// Table: Required. The table name.
 	Table string `json:"table,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Schema") to
@@ -2427,13 +2427,11 @@ type ProjectsLocationsFetchStaticIpsCall struct {
 	header_      http.Header
 }
 
-// FetchStaticIps: The FetchStaticIps API call exposes the static ips
-// used by Datastream. Typically, a request returns children data
-// objects under a parent data object that's optionally supplied in the
-// request.
+// FetchStaticIps: The FetchStaticIps API call exposes the static IP
+// addresses used by Datastream.
 //
-// - name: The name resource of the Response type. Must be in the format
-//   `projects/*/locations/*`.
+// - name: The resource name for the location for which static IPs
+//   should be returned. Must be in the format `projects/*/locations/*`.
 func (r *ProjectsLocationsService) FetchStaticIps(name string) *ProjectsLocationsFetchStaticIpsCall {
 	c := &ProjectsLocationsFetchStaticIpsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2492,7 +2490,7 @@ func (c *ProjectsLocationsFetchStaticIpsCall) Header() http.Header {
 
 func (c *ProjectsLocationsFetchStaticIpsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2554,7 +2552,7 @@ func (c *ProjectsLocationsFetchStaticIpsCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "The FetchStaticIps API call exposes the static ips used by Datastream. Typically, a request returns children data objects under a parent data object that's optionally supplied in the request.",
+	//   "description": "The FetchStaticIps API call exposes the static IP addresses used by Datastream.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:fetchStaticIps",
 	//   "httpMethod": "GET",
 	//   "id": "datastream.projects.locations.fetchStaticIps",
@@ -2563,7 +2561,7 @@ func (c *ProjectsLocationsFetchStaticIpsCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name resource of the Response type. Must be in the format `projects/*/locations/*`.",
+	//       "description": "Required. The resource name for the location for which static IPs should be returned. Must be in the format `projects/*/locations/*`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2670,7 +2668,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2842,7 +2840,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3021,6 +3019,14 @@ func (c *ProjectsLocationsConnectionProfilesCreateCall) RequestId(requestId stri
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": Only
+// validate the connection profile, but don't create any resources. The
+// default is false.
+func (c *ProjectsLocationsConnectionProfilesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsConnectionProfilesCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3048,7 +3054,7 @@ func (c *ProjectsLocationsConnectionProfilesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3141,6 +3147,11 @@ func (c *ProjectsLocationsConnectionProfilesCreateCall) Do(opts ...googleapi.Cal
 	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. Only validate the connection profile, but don't create any resources. The default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1/{+parent}/connectionProfiles",
@@ -3167,7 +3178,7 @@ type ProjectsLocationsConnectionProfilesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Use this method to delete a connection profile..
+// Delete: Use this method to delete a connection profile.
 //
 // - name: The name of the connection profile resource to delete.
 func (r *ProjectsLocationsConnectionProfilesService) Delete(name string) *ProjectsLocationsConnectionProfilesDeleteCall {
@@ -3220,7 +3231,7 @@ func (c *ProjectsLocationsConnectionProfilesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3279,7 +3290,7 @@ func (c *ProjectsLocationsConnectionProfilesDeleteCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Use this method to delete a connection profile..",
+	//   "description": "Use this method to delete a connection profile.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connectionProfiles/{connectionProfilesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "datastream.projects.locations.connectionProfiles.delete",
@@ -3324,8 +3335,8 @@ type ProjectsLocationsConnectionProfilesDiscoverCall struct {
 
 // Discover: Use this method to discover a connection profile. The
 // discover API call exposes the data objects and metadata belonging to
-// the profile. Typically, a request returns children data objects under
-// a parent data object that's optionally supplied in the request.
+// the profile. Typically, a request returns children data objects of a
+// parent data object that's optionally supplied in the request.
 //
 // - parent: The parent resource of the connection profile type. Must be
 //   in the format `projects/*/locations/*`.
@@ -3363,7 +3374,7 @@ func (c *ProjectsLocationsConnectionProfilesDiscoverCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionProfilesDiscoverCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3428,7 +3439,7 @@ func (c *ProjectsLocationsConnectionProfilesDiscoverCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Use this method to discover a connection profile. The discover API call exposes the data objects and metadata belonging to the profile. Typically, a request returns children data objects under a parent data object that's optionally supplied in the request.",
+	//   "description": "Use this method to discover a connection profile. The discover API call exposes the data objects and metadata belonging to the profile. Typically, a request returns children data objects of a parent data object that's optionally supplied in the request.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connectionProfiles:discover",
 	//   "httpMethod": "POST",
 	//   "id": "datastream.projects.locations.connectionProfiles.discover",
@@ -3515,7 +3526,7 @@ func (c *ProjectsLocationsConnectionProfilesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionProfilesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3694,7 +3705,7 @@ func (c *ProjectsLocationsConnectionProfilesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionProfilesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3847,8 +3858,8 @@ func (r *ProjectsLocationsConnectionProfilesService) Patch(name string, connecti
 	return c
 }
 
-// Force sets the optional parameter "force": Execute the update without
-// validating it.
+// Force sets the optional parameter "force": Update the connection
+// profile without validating it.
 func (c *ProjectsLocationsConnectionProfilesPatchCall) Force(force bool) *ProjectsLocationsConnectionProfilesPatchCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
@@ -3882,6 +3893,14 @@ func (c *ProjectsLocationsConnectionProfilesPatchCall) UpdateMask(updateMask str
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": Only
+// validate the connection profile, but don't update any resources. The
+// default is false.
+func (c *ProjectsLocationsConnectionProfilesPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsConnectionProfilesPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3909,7 +3928,7 @@ func (c *ProjectsLocationsConnectionProfilesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsConnectionProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3982,7 +4001,7 @@ func (c *ProjectsLocationsConnectionProfilesPatchCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "force": {
-	//       "description": "Optional. Execute the update without validating it.",
+	//       "description": "Optional. Update the connection profile without validating it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4003,6 +4022,11 @@ func (c *ProjectsLocationsConnectionProfilesPatchCall) Do(opts ...googleapi.Call
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. Only validate the connection profile, but don't update any resources. The default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v1/{+name}",
@@ -4076,7 +4100,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4219,7 +4243,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4364,7 +4388,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4540,7 +4564,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4739,7 +4763,7 @@ func (c *ProjectsLocationsPrivateConnectionsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsPrivateConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4914,7 +4938,7 @@ func (c *ProjectsLocationsPrivateConnectionsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsPrivateConnectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5068,7 +5092,7 @@ func (c *ProjectsLocationsPrivateConnectionsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsPrivateConnectionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5248,7 +5272,7 @@ func (c *ProjectsLocationsPrivateConnectionsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsPrivateConnectionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5391,7 +5415,7 @@ type ProjectsLocationsPrivateConnectionsRoutesCreateCall struct {
 }
 
 // Create: Use this method to create a route for a private connectivity
-// in a project and location.
+// configuration in a project and location.
 //
 // - parent: The parent that owns the collection of Routes.
 func (r *ProjectsLocationsPrivateConnectionsRoutesService) Create(parent string, route *Route) *ProjectsLocationsPrivateConnectionsRoutesCreateCall {
@@ -5452,7 +5476,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesCreateCall) Header() http.Head
 
 func (c *ProjectsLocationsPrivateConnectionsRoutesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5516,7 +5540,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesCreateCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Use this method to create a route for a private connectivity in a project and location.",
+	//   "description": "Use this method to create a route for a private connectivity configuration in a project and location.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}/routes",
 	//   "httpMethod": "POST",
 	//   "id": "datastream.projects.locations.privateConnections.routes.create",
@@ -5619,7 +5643,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesDeleteCall) Header() http.Head
 
 func (c *ProjectsLocationsPrivateConnectionsRoutesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5767,7 +5791,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesGetCall) Header() http.Header 
 
 func (c *ProjectsLocationsPrivateConnectionsRoutesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5868,7 +5892,7 @@ type ProjectsLocationsPrivateConnectionsRoutesListCall struct {
 }
 
 // List: Use this method to list routes created for a private
-// connectivity in a project and location.
+// connectivity configuration in a project and location.
 //
 // - parent: The parent that owns the collection of Routess.
 func (r *ProjectsLocationsPrivateConnectionsRoutesService) List(parent string) *ProjectsLocationsPrivateConnectionsRoutesListCall {
@@ -5945,7 +5969,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) Header() http.Header
 
 func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6007,7 +6031,7 @@ func (c *ProjectsLocationsPrivateConnectionsRoutesListCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Use this method to list routes created for a private connectivity in a project and location.",
+	//   "description": "Use this method to list routes created for a private connectivity configuration in a project and location.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/privateConnections/{privateConnectionsId}/routes",
 	//   "httpMethod": "GET",
 	//   "id": "datastream.projects.locations.privateConnections.routes.list",
@@ -6129,7 +6153,7 @@ func (c *ProjectsLocationsStreamsCreateCall) StreamId(streamId string) *Projects
 }
 
 // ValidateOnly sets the optional parameter "validateOnly": Only
-// validate the stream, but do not create any resources. The default is
+// validate the stream, but don't create any resources. The default is
 // false.
 func (c *ProjectsLocationsStreamsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsStreamsCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
@@ -6163,7 +6187,7 @@ func (c *ProjectsLocationsStreamsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsStreamsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6258,7 +6282,7 @@ func (c *ProjectsLocationsStreamsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {
-	//       "description": "Optional. Only validate the stream, but do not create any resources. The default is false.",
+	//       "description": "Optional. Only validate the stream, but don't create any resources. The default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6340,7 +6364,7 @@ func (c *ProjectsLocationsStreamsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsStreamsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6488,7 +6512,7 @@ func (c *ProjectsLocationsStreamsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStreamsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6665,7 +6689,7 @@ func (c *ProjectsLocationsStreamsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStreamsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6817,7 +6841,7 @@ func (r *ProjectsLocationsStreamsService) Patch(name string, stream *Stream) *Pr
 	return c
 }
 
-// Force sets the optional parameter "force": Create the stream without
+// Force sets the optional parameter "force": Update the stream without
 // validating it.
 func (c *ProjectsLocationsStreamsPatchCall) Force(force bool) *ProjectsLocationsStreamsPatchCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
@@ -6887,7 +6911,7 @@ func (c *ProjectsLocationsStreamsPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsStreamsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6960,7 +6984,7 @@ func (c *ProjectsLocationsStreamsPatchCall) Do(opts ...googleapi.CallOption) (*O
 	//   ],
 	//   "parameters": {
 	//     "force": {
-	//       "description": "Optional. Create the stream without validating it.",
+	//       "description": "Optional. Update the stream without validating it.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7059,7 +7083,7 @@ func (c *ProjectsLocationsStreamsObjectsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsStreamsObjectsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7223,7 +7247,7 @@ func (c *ProjectsLocationsStreamsObjectsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsStreamsObjectsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7393,7 +7417,7 @@ func (c *ProjectsLocationsStreamsObjectsLookupCall) Header() http.Header {
 
 func (c *ProjectsLocationsStreamsObjectsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7498,8 +7522,8 @@ type ProjectsLocationsStreamsObjectsStartBackfillJobCall struct {
 	header_                 http.Header
 }
 
-// StartBackfillJob: Starts backfill job for the specified stream
-// object.
+// StartBackfillJob: Use this method to start a backfill job for the
+// specified stream object.
 //
 // - object: The name of the stream object resource to start a backfill
 //   job for.
@@ -7537,7 +7561,7 @@ func (c *ProjectsLocationsStreamsObjectsStartBackfillJobCall) Header() http.Head
 
 func (c *ProjectsLocationsStreamsObjectsStartBackfillJobCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7601,7 +7625,7 @@ func (c *ProjectsLocationsStreamsObjectsStartBackfillJobCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts backfill job for the specified stream object.",
+	//   "description": "Use this method to start a backfill job for the specified stream object.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}/objects/{objectsId}:startBackfillJob",
 	//   "httpMethod": "POST",
 	//   "id": "datastream.projects.locations.streams.objects.startBackfillJob",
@@ -7642,8 +7666,8 @@ type ProjectsLocationsStreamsObjectsStopBackfillJobCall struct {
 	header_                http.Header
 }
 
-// StopBackfillJob: Stops the backfill job for the specified stream
-// object.
+// StopBackfillJob: Use this method to stop a backfill job for the
+// specified stream object.
 //
 // - object: The name of the stream object resource to stop the backfill
 //   job for.
@@ -7681,7 +7705,7 @@ func (c *ProjectsLocationsStreamsObjectsStopBackfillJobCall) Header() http.Heade
 
 func (c *ProjectsLocationsStreamsObjectsStopBackfillJobCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7745,7 +7769,7 @@ func (c *ProjectsLocationsStreamsObjectsStopBackfillJobCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "Stops the backfill job for the specified stream object.",
+	//   "description": "Use this method to stop a backfill job for the specified stream object.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/streams/{streamsId}/objects/{objectsId}:stopBackfillJob",
 	//   "httpMethod": "POST",
 	//   "id": "datastream.projects.locations.streams.objects.stopBackfillJob",

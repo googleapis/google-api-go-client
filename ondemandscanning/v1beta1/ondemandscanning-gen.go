@@ -1045,6 +1045,10 @@ type DiscoveryOccurrence struct {
 	// LocalizedMessage is output only and populated by the API.
 	AnalysisStatusError *Status `json:"analysisStatusError,omitempty"`
 
+	// ArchiveTime: Output only. The time occurrences related to this
+	// discovery occurrence were archived.
+	ArchiveTime string `json:"archiveTime,omitempty"`
+
 	// ContinuousAnalysis: Whether the resource is continuously analyzed.
 	//
 	// Possible values:
@@ -1449,10 +1453,10 @@ func (s *InTotoProvenance) MarshalJSON() ([]byte, error) {
 // serialized InTotoStatement will be stored as Envelope.payload.
 // Envelope.payloadType is always "application/vnd.in-toto+json".
 type InTotoStatement struct {
-	// Type: Always "https://in-toto.io/Statement/v0.1".
+	// Type: Always `https://in-toto.io/Statement/v0.1`.
 	Type string `json:"_type,omitempty"`
 
-	// PredicateType: "https://slsa.dev/provenance/v0.1" for SlsaProvenance.
+	// PredicateType: `https://slsa.dev/provenance/v0.1` for SlsaProvenance.
 	PredicateType string `json:"predicateType,omitempty"`
 
 	Provenance *InTotoProvenance `json:"provenance,omitempty"`
@@ -1735,15 +1739,14 @@ func (s *Metadata) MarshalJSON() ([]byte, error) {
 }
 
 // NonCompliantFile: Details about files that caused a compliance check
-// to fail.
+// to fail. display_command is a single command that can be used to
+// display a list of non compliant files. When there is no such command,
+// we can also iterate a list of non compliant file using 'path'.
 type NonCompliantFile struct {
 	// DisplayCommand: Command to display the non-compliant files.
 	DisplayCommand string `json:"displayCommand,omitempty"`
 
-	// Path: display_command is a single command that can be used to display
-	// a list of non compliant files. When there is no such command, we can
-	// also iterate a list of non compliant file using 'path'. Empty if
-	// `display_command` is set.
+	// Path: Empty if `display_command` is set.
 	Path string `json:"path,omitempty"`
 
 	// Reason: Explains why a file is non compliant for a CIS check.
@@ -3065,7 +3068,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3200,7 +3203,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3345,7 +3348,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3521,7 +3524,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3711,7 +3714,7 @@ func (c *ProjectsLocationsOperationsWaitCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsWaitCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3852,7 +3855,7 @@ func (c *ProjectsLocationsScansAnalyzePackagesCall) Header() http.Header {
 
 func (c *ProjectsLocationsScansAnalyzePackagesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4020,7 +4023,7 @@ func (c *ProjectsLocationsScansVulnerabilitiesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsScansVulnerabilitiesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220112")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

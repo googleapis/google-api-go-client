@@ -931,7 +931,7 @@
       }
     }
   },
-  "revision": "20211028",
+  "revision": "20211207",
   "rootUrl": "https://baremetalsolution.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -1411,6 +1411,18 @@
       },
       "type": "object"
     },
+    "QosPolicy": {
+      "description": "QOS policy parameters.",
+      "id": "QosPolicy",
+      "properties": {
+        "bandwidthGbps": {
+          "description": "The bandwidth permitted by the QOS policy, in gbps.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "ResetInstanceRequest": {
       "description": "Message requesting to reset a server.",
       "id": "ResetInstanceRequest",
@@ -1484,13 +1496,6 @@
             "$ref": "Schedule"
           },
           "type": "array"
-        },
-        "volumes": {
-          "description": "The names of the volumes associated with this policy.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -1526,22 +1531,13 @@
       "description": "A network VRF.",
       "id": "VRF",
       "properties": {
-        "autonomousSystemNumber": {
-          "description": "The autonomous system number of the VRF.",
-          "type": "string"
-        },
-        "juniperAlias": {
-          "description": "The Juniper alias of the VRF.",
-          "type": "string"
-        },
         "name": {
           "description": "The name of the VRF.",
           "type": "string"
         },
-        "routeTarget": {
-          "description": "The route target of the VRF.",
-          "format": "int64",
-          "type": "string"
+        "qosPolicy": {
+          "$ref": "QosPolicy",
+          "description": "The QOS policy applied to this VRF."
         },
         "state": {
           "description": "The possible state of VRF.",
@@ -1555,6 +1551,33 @@
             "The vrf is being provisioning.",
             "The vrf is being provisioning."
           ],
+          "type": "string"
+        },
+        "vlanAttachments": {
+          "description": "The list of VLAN attachments for the VRF.",
+          "items": {
+            "$ref": "VlanAttachment"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "VlanAttachment": {
+      "description": "VLAN attachment details.",
+      "id": "VlanAttachment",
+      "properties": {
+        "peerIp": {
+          "description": "The peer IP of the attachment.",
+          "type": "string"
+        },
+        "peerVlanId": {
+          "description": "The peer vlan ID of the attachment.",
+          "format": "int64",
+          "type": "string"
+        },
+        "routerIp": {
+          "description": "The router IP of the attachment.",
           "type": "string"
         }
       },

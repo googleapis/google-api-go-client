@@ -1,3 +1,7 @@
+// Copyright 2022 The Go Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package main
 
 import (
@@ -63,7 +67,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	if err := makePR(ctx, *githubAccessToken, *githubUsername, *discoDir); err != nil {
+	if err := makePR(ctx, *githubAccessToken, *discoDir); err != nil {
 		log.Fatalf("unable to make regen PR: %v", err)
 	}
 }
@@ -98,7 +102,7 @@ func isPROpen(ctx context.Context, accessToken, username string) (bool, error) {
 		ListOptions: github.ListOptions{PerPage: 50},
 		State:       "open",
 	}
-	prs, _, err := githubClient.PullRequests.List(ctx, "googleapis", repo, opt)
+	prs, _, err := githubClient.PullRequests.List(ctx, owner, repo, opt)
 	if err != nil {
 		return false, err
 	}
@@ -116,9 +120,9 @@ func isPROpen(ctx context.Context, accessToken, username string) (bool, error) {
 
 // generate regenerates the whole project.
 func generate(dir string) error {
-	path := filepath.Join(dir, "google-api-go-generator")
+	fp := filepath.Join(dir, "google-api-go-generator")
 	cmd := exec.Command("make", "all")
-	cmd.Dir = path
+	cmd.Dir = fp
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
 	return cmd.Run()
@@ -133,7 +137,7 @@ func hasChanges(dir string) (bool, error) {
 }
 
 // makePR commits local changes and makes a regen PR.
-func makePR(ctx context.Context, accessToken, username, dir string) error {
+func makePR(ctx context.Context, accessToken, dir string) error {
 	c := exec.Command("/bin/bash", "-c", `
 	set -ex
 	
@@ -148,8 +152,6 @@ func makePR(ctx context.Context, accessToken, username, dir string) error {
 	git push origin $BRANCH_NAME
 	`)
 	c.Env = []string{
-		fmt.Sprintf("PATH=%s", os.Getenv("PATH")), // TODO(deklerk): Why do we need to do this? Doesn't seem to be necessary in other exec.Commands.
-		fmt.Sprintf("HOME=%s", os.Getenv("HOME")), // TODO(deklerk): Why do we need to do this? Doesn't seem to be necessary in other exec.Commands.
 		fmt.Sprintf("COMMIT_TITLE=%s", commitTitle),
 		fmt.Sprintf("BRANCH_NAME=%s", branchName),
 	}
@@ -163,10 +165,10 @@ func makePR(ctx context.Context, accessToken, username, dir string) error {
 	)
 	tc := oauth2.NewClient(ctx, ts)
 	githubClient := github.NewClient(tc)
-	head := "googleapis:" + branchName
+	head := owner + ":" + branchName
 	base := "main"
 	t := commitTitle
-	_, _, err := githubClient.PullRequests.Create(ctx, "googleapis", "google-api-go-client", &github.NewPullRequest{
+	_, _, err := githubClient.PullRequests.Create(ctx, owner, repo, &github.NewPullRequest{
 		Title: &t,
 		Head:  &head,
 		Base:  &base,

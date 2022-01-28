@@ -4036,7 +4036,8 @@ type Options struct {
 	// will expand any Google groups appearing in an IAM policy binding. If
 	// IamPolicyAnalysisQuery.identity_selector is specified, the identity
 	// in the result will be determined by the selector, and this flag is
-	// not allowed to set. Default is false.
+	// not allowed to set. If true, the default max expansion per group is
+	// 1000 for AssetService.AnalyzeIamPolicy][]. Default is false.
 	ExpandGroups bool `json:"expandGroups,omitempty"`
 
 	// ExpandResources: Optional. If true and
@@ -4053,8 +4054,10 @@ type Options struct {
 	// organization resource cannot be used together with this option. For
 	// example, if the request analyzes for which users have permission P on
 	// a GCP project with this option enabled, the results will include all
-	// users who have permission P on that project or any lower resource.
-	// Default is false.
+	// users who have permission P on that project or any lower resource. If
+	// true, the default max expansion per resource is 1000 for
+	// AssetService.AnalyzeIamPolicy][] and 100000 for
+	// AssetService.AnalyzeIamPolicyLongrunning][]. Default is false.
 	ExpandResources bool `json:"expandResources,omitempty"`
 
 	// ExpandRoles: Optional. If true, the access section of result will
@@ -5748,7 +5751,7 @@ func (c *AssetsListCall) Header() http.Header {
 
 func (c *AssetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5963,7 +5966,7 @@ func (c *FeedsCreateCall) Header() http.Header {
 
 func (c *FeedsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6106,7 +6109,7 @@ func (c *FeedsDeleteCall) Header() http.Header {
 
 func (c *FeedsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6252,7 +6255,7 @@ func (c *FeedsGetCall) Header() http.Header {
 
 func (c *FeedsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6401,7 +6404,7 @@ func (c *FeedsListCall) Header() http.Header {
 
 func (c *FeedsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6544,7 +6547,7 @@ func (c *FeedsPatchCall) Header() http.Header {
 
 func (c *FeedsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6697,7 +6700,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6851,7 +6854,7 @@ func (c *SavedQueriesCreateCall) Header() http.Header {
 
 func (c *SavedQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6999,7 +7002,7 @@ func (c *SavedQueriesDeleteCall) Header() http.Header {
 
 func (c *SavedQueriesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7145,7 +7148,7 @@ func (c *SavedQueriesGetCall) Header() http.Header {
 
 func (c *SavedQueriesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7326,7 +7329,7 @@ func (c *SavedQueriesListCall) Header() http.Header {
 
 func (c *SavedQueriesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7510,7 +7513,7 @@ func (c *SavedQueriesPatchCall) Header() http.Header {
 
 func (c *SavedQueriesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7715,7 +7718,9 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsAnalyzeServiceAccountImpers
 // of the result will expand any Google groups appearing in an IAM
 // policy binding. If IamPolicyAnalysisQuery.identity_selector is
 // specified, the identity in the result will be determined by the
-// selector, and this flag is not allowed to set. Default is false.
+// selector, and this flag is not allowed to set. If true, the default
+// max expansion per group is 1000 for AssetService.AnalyzeIamPolicy][].
+// Default is false.
 func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsExpandGroups(analysisQueryOptionsExpandGroups bool) *V1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.options.expandGroups", fmt.Sprint(analysisQueryOptionsExpandGroups))
 	return c
@@ -7736,8 +7741,10 @@ func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsExpandGroups(analysisQueryO
 // organization resource cannot be used together with this option. For
 // example, if the request analyzes for which users have permission P on
 // a GCP project with this option enabled, the results will include all
-// users who have permission P on that project or any lower resource.
-// Default is false.
+// users who have permission P on that project or any lower resource. If
+// true, the default max expansion per resource is 1000 for
+// AssetService.AnalyzeIamPolicy][] and 100000 for
+// AssetService.AnalyzeIamPolicyLongrunning][]. Default is false.
 func (c *V1AnalyzeIamPolicyCall) AnalysisQueryOptionsExpandResources(analysisQueryOptionsExpandResources bool) *V1AnalyzeIamPolicyCall {
 	c.urlParams_.Set("analysisQuery.options.expandResources", fmt.Sprint(analysisQueryOptionsExpandResources))
 	return c
@@ -7853,7 +7860,7 @@ func (c *V1AnalyzeIamPolicyCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7952,12 +7959,12 @@ func (c *V1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*AnalyzeIamPo
 	//       "type": "boolean"
 	//     },
 	//     "analysisQuery.options.expandGroups": {
-	//       "description": "Optional. If true, the identities section of the result will expand any Google groups appearing in an IAM policy binding. If IamPolicyAnalysisQuery.identity_selector is specified, the identity in the result will be determined by the selector, and this flag is not allowed to set. Default is false.",
+	//       "description": "Optional. If true, the identities section of the result will expand any Google groups appearing in an IAM policy binding. If IamPolicyAnalysisQuery.identity_selector is specified, the identity in the result will be determined by the selector, and this flag is not allowed to set. If true, the default max expansion per group is 1000 for AssetService.AnalyzeIamPolicy][]. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "analysisQuery.options.expandResources": {
-	//       "description": "Optional. If true and IamPolicyAnalysisQuery.resource_selector is not specified, the resource section of the result will expand any resource attached to an IAM policy to include resources lower in the resource hierarchy. For example, if the request analyzes for which resources user A has permission P, and the results include an IAM policy with P on a GCP folder, the results will also include resources in that folder with permission P. If true and IamPolicyAnalysisQuery.resource_selector is specified, the resource section of the result will expand the specified resource to include resources lower in the resource hierarchy. Only project or lower resources are supported. Folder and organization resource cannot be used together with this option. For example, if the request analyzes for which users have permission P on a GCP project with this option enabled, the results will include all users who have permission P on that project or any lower resource. Default is false.",
+	//       "description": "Optional. If true and IamPolicyAnalysisQuery.resource_selector is not specified, the resource section of the result will expand any resource attached to an IAM policy to include resources lower in the resource hierarchy. For example, if the request analyzes for which resources user A has permission P, and the results include an IAM policy with P on a GCP folder, the results will also include resources in that folder with permission P. If true and IamPolicyAnalysisQuery.resource_selector is specified, the resource section of the result will expand the specified resource to include resources lower in the resource hierarchy. Only project or lower resources are supported. Folder and organization resource cannot be used together with this option. For example, if the request analyzes for which users have permission P on a GCP project with this option enabled, the results will include all users who have permission P on that project or any lower resource. If true, the default max expansion per resource is 1000 for AssetService.AnalyzeIamPolicy][] and 100000 for AssetService.AnalyzeIamPolicyLongrunning][]. Default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8075,7 +8082,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Header() http.Header {
 
 func (c *V1AnalyzeIamPolicyLongrunningCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8260,7 +8267,7 @@ func (c *V1AnalyzeMoveCall) Header() http.Header {
 
 func (c *V1AnalyzeMoveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8499,7 +8506,7 @@ func (c *V1BatchGetAssetsHistoryCall) Header() http.Header {
 
 func (c *V1BatchGetAssetsHistoryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8696,7 +8703,7 @@ func (c *V1ExportAssetsCall) Header() http.Header {
 
 func (c *V1ExportAssetsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8951,7 +8958,7 @@ func (c *V1SearchAllIamPoliciesCall) Header() http.Header {
 
 func (c *V1SearchAllIamPoliciesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9264,7 +9271,7 @@ func (c *V1SearchAllResourcesCall) Header() http.Header {
 
 func (c *V1SearchAllResourcesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220121")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -827,7 +827,7 @@ func (c *KeysLookupKeyCall) Header() http.Header {
 
 func (c *KeysLookupKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220119")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -969,7 +969,7 @@ func (c *OperationsGetCall) Header() http.Header {
 
 func (c *OperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220119")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1070,8 +1070,11 @@ type ProjectsLocationsKeysCloneCall struct {
 	header_           http.Header
 }
 
-// Clone: Clones the existing key's restriction and display name to a
-// new API key. The service account must have the `apikeys.keys.get` and
+// Clone: DEPRECATED: API customers can call `GetKey` and then
+// `CreateKey` methods to create a copy of an existing key. Retire
+// `CloneKey` method to eliminate the unnessary method from API Keys
+// API. Clones the existing key's restriction and display name to a new
+// API key. The service account must have the `apikeys.keys.get` and
 // `apikeys.keys.create` permissions in the project. NOTE: Key is a
 // global resource; hence the only supported value for location is
 // `global`.
@@ -1112,7 +1115,7 @@ func (c *ProjectsLocationsKeysCloneCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeysCloneCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220119")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1176,7 +1179,7 @@ func (c *ProjectsLocationsKeysCloneCall) Do(opts ...googleapi.CallOption) (*Oper
 	}
 	return ret, nil
 	// {
-	//   "description": "Clones the existing key's restriction and display name to a new API key. The service account must have the `apikeys.keys.get` and `apikeys.keys.create` permissions in the project. NOTE: Key is a global resource; hence the only supported value for location is `global`.",
+	//   "description": "DEPRECATED: API customers can call `GetKey` and then `CreateKey` methods to create a copy of an existing key. Retire `CloneKey` method to eliminate the unnessary method from API Keys API. Clones the existing key's restriction and display name to a new API key. The service account must have the `apikeys.keys.get` and `apikeys.keys.create` permissions in the project. NOTE: Key is a global resource; hence the only supported value for location is `global`.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/keys/{keysId}:clone",
 	//   "httpMethod": "POST",
 	//   "id": "apikeys.projects.locations.keys.clone",
@@ -1267,7 +1270,7 @@ func (c *ProjectsLocationsKeysCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220119")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1423,7 +1426,7 @@ func (c *ProjectsLocationsKeysDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeysDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220119")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1573,7 +1576,7 @@ func (c *ProjectsLocationsKeysGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220119")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1722,7 +1725,7 @@ func (c *ProjectsLocationsKeysGetKeyStringCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeysGetKeyStringCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220119")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1834,10 +1837,10 @@ func (r *ProjectsLocationsKeysService) List(parent string) *ProjectsLocationsKey
 	return c
 }
 
-// Filter sets the optional parameter "filter": Only list keys that
-// conform to the specified filter. The allowed filter strings are
-// `state:ACTIVE` and `state:DELETED`. By default, ListKeys returns only
-// active keys.
+// Filter sets the optional parameter "filter": Deprecated: Use
+// `show_deleted` instead. Only list keys that conform to the specified
+// filter. The allowed filter strings are `state:ACTIVE` and
+// `state:DELETED`. By default, ListKeys returns only active keys.
 func (c *ProjectsLocationsKeysListCall) Filter(filter string) *ProjectsLocationsKeysListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1854,6 +1857,14 @@ func (c *ProjectsLocationsKeysListCall) PageSize(pageSize int64) *ProjectsLocati
 // specific page of results.
 func (c *ProjectsLocationsKeysListCall) PageToken(pageToken string) *ProjectsLocationsKeysListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ShowDeleted sets the optional parameter "showDeleted": Indicate that
+// keys are marked as deleted within 30 days should also be returned.
+// Normally only active keys are returned.
+func (c *ProjectsLocationsKeysListCall) ShowDeleted(showDeleted bool) *ProjectsLocationsKeysListCall {
+	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
@@ -1894,7 +1905,7 @@ func (c *ProjectsLocationsKeysListCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220119")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1965,7 +1976,7 @@ func (c *ProjectsLocationsKeysListCall) Do(opts ...googleapi.CallOption) (*V2Lis
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Only list keys that conform to the specified filter. The allowed filter strings are `state:ACTIVE` and `state:DELETED`. By default, ListKeys returns only active keys.",
+	//       "description": "Optional. Deprecated: Use `show_deleted` instead. Only list keys that conform to the specified filter. The allowed filter strings are `state:ACTIVE` and `state:DELETED`. By default, ListKeys returns only active keys.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1986,6 +1997,11 @@ func (c *ProjectsLocationsKeysListCall) Do(opts ...googleapi.CallOption) (*V2Lis
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "showDeleted": {
+	//       "description": "Optional. Indicate that keys are marked as deleted within 30 days should also be returned. Normally only active keys are returned.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v2/{+parent}/keys",
@@ -2087,7 +2103,7 @@ func (c *ProjectsLocationsKeysPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220119")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2237,7 +2253,7 @@ func (c *ProjectsLocationsKeysUndeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeysUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220111")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220119")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

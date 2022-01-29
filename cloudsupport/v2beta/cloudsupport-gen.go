@@ -375,7 +375,26 @@ type Case struct {
 	// Name: The resource name for the case.
 	Name string `json:"name,omitempty"`
 
-	// Severity: The severity of this case.
+	// Priority: The priority of this case. If this is set, do not set
+	// severity.
+	//
+	// Possible values:
+	//   "PRIORITY_UNSPECIFIED" - Severity is undefined or has not been set
+	// yet.
+	//   "P0" - Extreme impact on a production service. Service is hard
+	// down.
+	//   "P1" - Critical impact on a production service. Service is
+	// currently unusable.
+	//   "P2" - Severe impact on a production service. Service is usable but
+	// greatly impaired.
+	//   "P3" - Medium impact on a production service. Service is available,
+	// but moderately impaired.
+	//   "P4" - General questions or minor issues. Production service is
+	// fully available.
+	Priority string `json:"priority,omitempty"`
+
+	// Severity: The severity of this case. Deprecated. Use priority
+	// instead.
 	//
 	// Possible values:
 	//   "SEVERITY_UNSPECIFIED" - Severity is undefined or has not been set
@@ -1460,7 +1479,7 @@ func (c *AttachmentsCreateCall) Header() http.Header {
 
 func (c *AttachmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1634,7 +1653,7 @@ func (c *CaseClassificationsSearchCall) Header() http.Header {
 
 func (c *CaseClassificationsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1797,7 +1816,7 @@ func (c *CasesCloseCall) Header() http.Header {
 
 func (c *CasesCloseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1941,7 +1960,7 @@ func (c *CasesCreateCall) Header() http.Header {
 
 func (c *CasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2089,7 +2108,7 @@ func (c *CasesEscalateCall) Header() http.Header {
 
 func (c *CasesEscalateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2240,7 +2259,7 @@ func (c *CasesGetCall) Header() http.Header {
 
 func (c *CasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2364,16 +2383,6 @@ func (c *CasesListCall) Filter(filter string) *CasesListCall {
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": A comma separated list
-// of fields to order by, followed by `asc` or `desc` postfix. This list
-// is case-insensitive, default sorting order is ascending, redundant
-// space characters are insignificant. Example: `name asc,update_time,
-// create_time desc`
-func (c *CasesListCall) OrderBy(orderBy string) *CasesListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of cases fetched with each request. Defaults to 10.
 func (c *CasesListCall) PageSize(pageSize int64) *CasesListCall {
@@ -2426,7 +2435,7 @@ func (c *CasesListCall) Header() http.Header {
 
 func (c *CasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2498,11 +2507,6 @@ func (c *CasesListCall) Do(opts ...googleapi.CallOption) (*ListCasesResponse, er
 	//   "parameters": {
 	//     "filter": {
 	//       "description": "An expression written in the Cloud filter language. If non-empty, then only cases whose fields match the filter are returned. If empty, then no messages are filtered out. Filter strings can use the following fields: - status (Accepted values: OPEN or CLOSED) - severity (Accepted values: S0, S1, S2, S3, or S4) - creator.email with the operators equals (=) and AND. Additionally, a global restriction (with no operator) can be used to search across displayName, description, and comments (e.g. \"my search\").",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "A comma separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case-insensitive, default sorting order is ascending, redundant space characters are insignificant. Example: `name asc,update_time, create_time desc`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2622,7 +2626,7 @@ func (c *CasesPatchCall) Header() http.Header {
 
 func (c *CasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2805,7 +2809,7 @@ func (c *CasesSearchCall) Header() http.Header {
 
 func (c *CasesSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2993,7 +2997,7 @@ func (c *CasesAttachmentsListCall) Header() http.Header {
 
 func (c *CasesAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3163,7 +3167,7 @@ func (c *CasesCommentsCreateCall) Header() http.Header {
 
 func (c *CasesCommentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3330,7 +3334,7 @@ func (c *CasesCommentsListCall) Header() http.Header {
 
 func (c *CasesCommentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3509,7 +3513,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3705,7 +3709,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

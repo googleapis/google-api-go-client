@@ -305,6 +305,8 @@ type AsymmetricDecryptResponse struct {
 	// Module.
 	//   "EXTERNAL" - Crypto operations are performed by an external key
 	// manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 
 	// VerifiedCiphertextCrc32c: Integrity verification field. A flag
@@ -428,6 +430,8 @@ type AsymmetricSignResponse struct {
 	// Module.
 	//   "EXTERNAL" - Crypto operations are performed by an external key
 	// manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 
 	// Signature: The created signature.
@@ -664,6 +668,66 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Certificate: A Certificate represents an X.509 certificate used to
+// authenticate HTTPS connections to EKM replicas.
+type Certificate struct {
+	// Issuer: Output only. The issuer distinguished name in RFC 2253
+	// format. Only present if parsed is true.
+	Issuer string `json:"issuer,omitempty"`
+
+	// NotAfterTime: Output only. The certificate is not valid after this
+	// time. Only present if parsed is true.
+	NotAfterTime string `json:"notAfterTime,omitempty"`
+
+	// NotBeforeTime: Output only. The certificate is not valid before this
+	// time. Only present if parsed is true.
+	NotBeforeTime string `json:"notBeforeTime,omitempty"`
+
+	// Parsed: Output only. True if the certificate was parsed successfully.
+	Parsed bool `json:"parsed,omitempty"`
+
+	// RawDer: Required. The raw certificate bytes in DER format.
+	RawDer string `json:"rawDer,omitempty"`
+
+	// SerialNumber: Output only. The certificate serial number as a hex
+	// string. Only present if parsed is true.
+	SerialNumber string `json:"serialNumber,omitempty"`
+
+	// Sha256Fingerprint: Output only. The SHA-256 certificate fingerprint
+	// as a hex string. Only present if parsed is true.
+	Sha256Fingerprint string `json:"sha256Fingerprint,omitempty"`
+
+	// Subject: Output only. The subject distinguished name in RFC 2253
+	// format. Only present if parsed is true.
+	Subject string `json:"subject,omitempty"`
+
+	// SubjectAlternativeDnsNames: Output only. The subject Alternative DNS
+	// names. Only present if parsed is true.
+	SubjectAlternativeDnsNames []string `json:"subjectAlternativeDnsNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Issuer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Issuer") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Certificate) MarshalJSON() ([]byte, error) {
+	type NoMethod Certificate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CertificateChains: Certificate chains needed to verify the
 // attestation. Certificates in chains are PEM-encoded and are ordered
 // based on https://tools.ietf.org/html/rfc5246#section-7.4.2.
@@ -711,6 +775,17 @@ type CryptoKey struct {
 	// CreateTime: Output only. The time at which this CryptoKey was
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// CryptoKeyBackend: Immutable. The resource name of the backend
+	// environment where the key material for all CryptoKeyVersions
+	// associated with this CryptoKey reside and where all related
+	// cryptographic operations are performed. Only applicable if
+	// CryptoKeyVersions have a ProtectionLevel of EXTERNAL_VPC, with the
+	// resource name in the format
+	// `projects/*/locations/*/ekmConnections/*`. Note, this list is
+	// non-exhaustive and may apply to additional ProtectionLevels in the
+	// future.
+	CryptoKeyBackend string `json:"cryptoKeyBackend,omitempty"`
 
 	// DestroyScheduledDuration: Immutable. The period of time that versions
 	// of this key spend in the DESTROY_SCHEDULED state before transitioning
@@ -881,7 +956,8 @@ type CryptoKeyVersion struct {
 
 	// ExternalProtectionLevelOptions: ExternalProtectionLevelOptions stores
 	// a group of additional fields for configuring a CryptoKeyVersion that
-	// are specific to the EXTERNAL protection level.
+	// are specific to the EXTERNAL protection level and EXTERNAL_VPC
+	// protection levels.
 	ExternalProtectionLevelOptions *ExternalProtectionLevelOptions `json:"externalProtectionLevelOptions,omitempty"`
 
 	// GenerateTime: Output only. The time this CryptoKeyVersion's key
@@ -916,6 +992,8 @@ type CryptoKeyVersion struct {
 	// Module.
 	//   "EXTERNAL" - Crypto operations are performed by an external key
 	// manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 
 	// ReimportEligible: Output only. Whether or not this key version is
@@ -1051,6 +1129,8 @@ type CryptoKeyVersionTemplate struct {
 	// Module.
 	//   "EXTERNAL" - Crypto operations are performed by an external key
 	// manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Algorithm") to
@@ -1175,6 +1255,8 @@ type DecryptResponse struct {
 	// Module.
 	//   "EXTERNAL" - Crypto operations are performed by an external key
 	// manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 
 	// UsedPrimary: Whether the Decryption was performed using the primary
@@ -1243,6 +1325,57 @@ type Digest struct {
 
 func (s *Digest) MarshalJSON() ([]byte, error) {
 	type NoMethod Digest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EkmConnection: An EkmConnection represents an individual EKM
+// connection. It can be used for creating CryptoKeys and
+// CryptoKeyVersions with a ProtectionLevel of EXTERNAL_VPC, as well as
+// performing cryptographic operations using keys created within the
+// EkmConnection.
+type EkmConnection struct {
+	// CreateTime: Output only. The time at which the EkmConnection was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Etag: This checksum is computed by the server based on the value of
+	// other fields, and may be sent on update requests to ensure the client
+	// has an up-to-date value before proceeding.
+	Etag string `json:"etag,omitempty"`
+
+	// Name: Output only. The resource name for the EkmConnection in the
+	// format `projects/*/locations/*/ekmConnections/*`.
+	Name string `json:"name,omitempty"`
+
+	// ServiceResolvers: A list of ServiceResolvers where the EKM can be
+	// reached. There should be one ServiceResolver per EKM replica.
+	// Currently, only a single ServiceResolver is supported.
+	ServiceResolvers []*ServiceResolver `json:"serviceResolvers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EkmConnection) MarshalJSON() ([]byte, error) {
+	type NoMethod EkmConnection
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1355,6 +1488,8 @@ type EncryptResponse struct {
 	// Module.
 	//   "EXTERNAL" - Crypto operations are performed by an external key
 	// manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 
 	// VerifiedAdditionalAuthenticatedDataCrc32c: Integrity verification
@@ -1468,21 +1603,28 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 
 // ExternalProtectionLevelOptions: ExternalProtectionLevelOptions stores
 // a group of additional fields for configuring a CryptoKeyVersion that
-// are specific to the EXTERNAL protection level.
+// are specific to the EXTERNAL protection level and EXTERNAL_VPC
+// protection levels.
 type ExternalProtectionLevelOptions struct {
+	// EkmConnectionKeyPath: The path to the external key material on the
+	// EKM when using EkmConnection e.g., "v0/my/key". Set this field
+	// instead of external_key_uri when using an EkmConnection.
+	EkmConnectionKeyPath string `json:"ekmConnectionKeyPath,omitempty"`
+
 	// ExternalKeyUri: The URI for an external resource that this
 	// CryptoKeyVersion represents.
 	ExternalKeyUri string `json:"externalKeyUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ExternalKeyUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "EkmConnectionKeyPath") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ExternalKeyUri") to
+	// NullFields is a list of field names (e.g. "EkmConnectionKeyPath") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1515,6 +1657,8 @@ type GenerateRandomBytesRequest struct {
 	// Module.
 	//   "EXTERNAL" - Crypto operations are performed by an external key
 	// manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LengthBytes") to
@@ -1778,6 +1922,8 @@ type ImportJob struct {
 	// Module.
 	//   "EXTERNAL" - Crypto operations are performed by an external key
 	// manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 
 	// PublicKey: Output only. The public key with which to wrap key
@@ -1987,6 +2133,48 @@ type ListCryptoKeysResponse struct {
 
 func (s *ListCryptoKeysResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListCryptoKeysResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListEkmConnectionsResponse: Response message for
+// KeyManagementService.ListEkmConnections.
+type ListEkmConnectionsResponse struct {
+	// EkmConnections: The list of EkmConnections.
+	EkmConnections []*EkmConnection `json:"ekmConnections,omitempty"`
+
+	// NextPageToken: A token to retrieve next page of results. Pass this
+	// value in ListEkmConnectionsRequest.page_token to retrieve the next
+	// page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalSize: The total number of EkmConnections that matched the query.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EkmConnections") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EkmConnections") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListEkmConnectionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEkmConnectionsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2271,6 +2459,8 @@ type MacSignResponse struct {
 	// Module.
 	//   "EXTERNAL" - Crypto operations are performed by an external key
 	// manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 
 	// VerifiedDataCrc32c: Integrity verification field. A flag indicating
@@ -2390,6 +2580,8 @@ type MacVerifyResponse struct {
 	// Module.
 	//   "EXTERNAL" - Crypto operations are performed by an external key
 	// manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 
 	// Success: This field indicates whether or not the verification
@@ -2651,6 +2843,8 @@ type PublicKey struct {
 	// Module.
 	//   "EXTERNAL" - Crypto operations are performed by an external key
 	// manager.
+	//   "EXTERNAL_VPC" - Crypto operations are performed in an EKM-over-VPC
+	// backend.
 	ProtectionLevel string `json:"protectionLevel,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2683,6 +2877,53 @@ func (s *PublicKey) MarshalJSON() ([]byte, error) {
 // RestoreCryptoKeyVersionRequest: Request message for
 // KeyManagementService.RestoreCryptoKeyVersion.
 type RestoreCryptoKeyVersionRequest struct {
+}
+
+// ServiceResolver: A ServiceResolver represents an EKM replica that can
+// be reached within an EkmConnection.
+type ServiceResolver struct {
+	// EndpointFilter: Optional. The filter applied to the endpoints of the
+	// resolved service. If no filter is specified, all endpoints will be
+	// considered. An endpoint will be chosen arbitrarily from the filtered
+	// list for each request. For endpoint filter syntax and examples, see
+	// https://cloud.google.com/service-directory/docs/reference/rpc/google.cloud.servicedirectory.v1#resolveservicerequest.
+	EndpointFilter string `json:"endpointFilter,omitempty"`
+
+	// Hostname: Required. The hostname of the EKM replica used at TLS and
+	// HTTP layers.
+	Hostname string `json:"hostname,omitempty"`
+
+	// ServerCertificates: Required. A list of leaf server certificates used
+	// to authenticate HTTPS connections to the EKM replica.
+	ServerCertificates []*Certificate `json:"serverCertificates,omitempty"`
+
+	// ServiceDirectoryService: Required. The resource name of the Service
+	// Directory service pointing to an EKM replica, in the format
+	// `projects/*/locations/*/namespaces/*/services/*`.
+	ServiceDirectoryService string `json:"serviceDirectoryService,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndpointFilter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndpointFilter") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceResolver) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceResolver
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -2904,7 +3145,7 @@ func (c *ProjectsLocationsGenerateRandomBytesCall) Header() http.Header {
 
 func (c *ProjectsLocationsGenerateRandomBytesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3056,7 +3297,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3229,7 +3470,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3356,6 +3597,310 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
+// method id "cloudkms.projects.locations.ekmConnections.create":
+
+type ProjectsLocationsEkmConnectionsCreateCall struct {
+	s             *Service
+	parent        string
+	ekmconnection *EkmConnection
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Create: Creates a new EkmConnection in a given Project and Location.
+//
+// - parent: The resource name of the location associated with the
+//   EkmConnection, in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsEkmConnectionsService) Create(parent string, ekmconnection *EkmConnection) *ProjectsLocationsEkmConnectionsCreateCall {
+	c := &ProjectsLocationsEkmConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.ekmconnection = ekmconnection
+	return c
+}
+
+// EkmConnectionId sets the optional parameter "ekmConnectionId":
+// Required. It must be unique within a location and match the regular
+// expression `[a-zA-Z0-9_-]{1,63}`.
+func (c *ProjectsLocationsEkmConnectionsCreateCall) EkmConnectionId(ekmConnectionId string) *ProjectsLocationsEkmConnectionsCreateCall {
+	c.urlParams_.Set("ekmConnectionId", ekmConnectionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEkmConnectionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsEkmConnectionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEkmConnectionsCreateCall) Context(ctx context.Context) *ProjectsLocationsEkmConnectionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEkmConnectionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEkmConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ekmconnection)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/ekmConnections")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.ekmConnections.create" call.
+// Exactly one of *EkmConnection or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *EkmConnection.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEkmConnectionsCreateCall) Do(opts ...googleapi.CallOption) (*EkmConnection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &EkmConnection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new EkmConnection in a given Project and Location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/ekmConnections",
+	//   "httpMethod": "POST",
+	//   "id": "cloudkms.projects.locations.ekmConnections.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "ekmConnectionId": {
+	//       "description": "Required. It must be unique within a location and match the regular expression `[a-zA-Z0-9_-]{1,63}`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the location associated with the EkmConnection, in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/ekmConnections",
+	//   "request": {
+	//     "$ref": "EkmConnection"
+	//   },
+	//   "response": {
+	//     "$ref": "EkmConnection"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudkms"
+	//   ]
+	// }
+
+}
+
+// method id "cloudkms.projects.locations.ekmConnections.get":
+
+type ProjectsLocationsEkmConnectionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns metadata for a given EkmConnection.
+//
+// - name: The name of the EkmConnection to get.
+func (r *ProjectsLocationsEkmConnectionsService) Get(name string) *ProjectsLocationsEkmConnectionsGetCall {
+	c := &ProjectsLocationsEkmConnectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEkmConnectionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsEkmConnectionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsEkmConnectionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsEkmConnectionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEkmConnectionsGetCall) Context(ctx context.Context) *ProjectsLocationsEkmConnectionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEkmConnectionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEkmConnectionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.ekmConnections.get" call.
+// Exactly one of *EkmConnection or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *EkmConnection.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEkmConnectionsGetCall) Do(opts ...googleapi.CallOption) (*EkmConnection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &EkmConnection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns metadata for a given EkmConnection.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/ekmConnections/{ekmConnectionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudkms.projects.locations.ekmConnections.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the EkmConnection to get.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/ekmConnections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "EkmConnection"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudkms"
+	//   ]
+	// }
+
+}
+
 // method id "cloudkms.projects.locations.ekmConnections.getIamPolicy":
 
 type ProjectsLocationsEkmConnectionsGetIamPolicyCall struct {
@@ -3435,7 +3980,7 @@ func (c *ProjectsLocationsEkmConnectionsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsEkmConnectionsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3531,6 +4076,390 @@ func (c *ProjectsLocationsEkmConnectionsGetIamPolicyCall) Do(opts ...googleapi.C
 
 }
 
+// method id "cloudkms.projects.locations.ekmConnections.list":
+
+type ProjectsLocationsEkmConnectionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists EkmConnections.
+//
+// - parent: The resource name of the location associated with the
+//   EkmConnections to list, in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsEkmConnectionsService) List(parent string) *ProjectsLocationsEkmConnectionsListCall {
+	c := &ProjectsLocationsEkmConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Only include resources
+// that match the filter in the response. For more information, see
+// Sorting and filtering list results
+// (https://cloud.google.com/kms/docs/sorting-and-filtering).
+func (c *ProjectsLocationsEkmConnectionsListCall) Filter(filter string) *ProjectsLocationsEkmConnectionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Specify how the
+// results should be sorted. If not specified, the results will be
+// sorted in the default order. For more information, see Sorting and
+// filtering list results
+// (https://cloud.google.com/kms/docs/sorting-and-filtering).
+func (c *ProjectsLocationsEkmConnectionsListCall) OrderBy(orderBy string) *ProjectsLocationsEkmConnectionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Optional limit on
+// the number of EkmConnections to include in the response. Further
+// EkmConnections can subsequently be obtained by including the
+// ListEkmConnectionsResponse.next_page_token in a subsequent request.
+// If unspecified, the server will pick an appropriate default.
+func (c *ProjectsLocationsEkmConnectionsListCall) PageSize(pageSize int64) *ProjectsLocationsEkmConnectionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Optional
+// pagination token, returned earlier via
+// ListEkmConnectionsResponse.next_page_token.
+func (c *ProjectsLocationsEkmConnectionsListCall) PageToken(pageToken string) *ProjectsLocationsEkmConnectionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEkmConnectionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsEkmConnectionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsEkmConnectionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsEkmConnectionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEkmConnectionsListCall) Context(ctx context.Context) *ProjectsLocationsEkmConnectionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEkmConnectionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEkmConnectionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/ekmConnections")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.ekmConnections.list" call.
+// Exactly one of *ListEkmConnectionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListEkmConnectionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEkmConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListEkmConnectionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListEkmConnectionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists EkmConnections.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/ekmConnections",
+	//   "httpMethod": "GET",
+	//   "id": "cloudkms.projects.locations.ekmConnections.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Only include resources that match the filter in the response. For more information, see [Sorting and filtering list results](https://cloud.google.com/kms/docs/sorting-and-filtering).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Specify how the results should be sorted. If not specified, the results will be sorted in the default order. For more information, see [Sorting and filtering list results](https://cloud.google.com/kms/docs/sorting-and-filtering).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Optional limit on the number of EkmConnections to include in the response. Further EkmConnections can subsequently be obtained by including the ListEkmConnectionsResponse.next_page_token in a subsequent request. If unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Optional pagination token, returned earlier via ListEkmConnectionsResponse.next_page_token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the location associated with the EkmConnections to list, in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/ekmConnections",
+	//   "response": {
+	//     "$ref": "ListEkmConnectionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudkms"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsEkmConnectionsListCall) Pages(ctx context.Context, f func(*ListEkmConnectionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudkms.projects.locations.ekmConnections.patch":
+
+type ProjectsLocationsEkmConnectionsPatchCall struct {
+	s             *Service
+	name          string
+	ekmconnection *EkmConnection
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Patch: Updates an EkmConnection's metadata.
+//
+// - name: Output only. The resource name for the EkmConnection in the
+//   format `projects/*/locations/*/ekmConnections/*`.
+func (r *ProjectsLocationsEkmConnectionsService) Patch(name string, ekmconnection *EkmConnection) *ProjectsLocationsEkmConnectionsPatchCall {
+	c := &ProjectsLocationsEkmConnectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.ekmconnection = ekmconnection
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. List
+// of fields to be updated in this request.
+func (c *ProjectsLocationsEkmConnectionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsEkmConnectionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEkmConnectionsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsEkmConnectionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEkmConnectionsPatchCall) Context(ctx context.Context) *ProjectsLocationsEkmConnectionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEkmConnectionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEkmConnectionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ekmconnection)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudkms.projects.locations.ekmConnections.patch" call.
+// Exactly one of *EkmConnection or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *EkmConnection.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEkmConnectionsPatchCall) Do(opts ...googleapi.CallOption) (*EkmConnection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &EkmConnection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an EkmConnection's metadata.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/ekmConnections/{ekmConnectionsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "cloudkms.projects.locations.ekmConnections.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. The resource name for the EkmConnection in the format `projects/*/locations/*/ekmConnections/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/ekmConnections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. List of fields to be updated in this request.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "EkmConnection"
+	//   },
+	//   "response": {
+	//     "$ref": "EkmConnection"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudkms"
+	//   ]
+	// }
+
+}
+
 // method id "cloudkms.projects.locations.ekmConnections.setIamPolicy":
 
 type ProjectsLocationsEkmConnectionsSetIamPolicyCall struct {
@@ -3583,7 +4512,7 @@ func (c *ProjectsLocationsEkmConnectionsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsEkmConnectionsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3733,7 +4662,7 @@ func (c *ProjectsLocationsEkmConnectionsTestIamPermissionsCall) Header() http.He
 
 func (c *ProjectsLocationsEkmConnectionsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3885,7 +4814,7 @@ func (c *ProjectsLocationsKeyRingsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4042,7 +4971,7 @@ func (c *ProjectsLocationsKeyRingsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4211,7 +5140,7 @@ func (c *ProjectsLocationsKeyRingsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4402,7 +5331,7 @@ func (c *ProjectsLocationsKeyRingsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4586,7 +5515,7 @@ func (c *ProjectsLocationsKeyRingsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4736,7 +5665,7 @@ func (c *ProjectsLocationsKeyRingsTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4898,7 +5827,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5053,7 +5982,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysDecryptCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysDecryptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5199,7 +6128,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysEncryptCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysEncryptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5352,7 +6281,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5521,7 +6450,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5725,7 +6654,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysListCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5926,7 +6855,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6079,7 +7008,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6229,7 +7158,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6374,7 +7303,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysUpdatePrimaryVersionCall) Header() h
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysUpdatePrimaryVersionCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6520,7 +7449,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCa
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricDecryptCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6665,7 +7594,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricSignCall)
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsAsymmetricSignCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6811,7 +7740,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall) Header(
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6960,7 +7889,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall) Header
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsDestroyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7112,7 +8041,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetCall) Header() h
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7260,7 +8189,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall) H
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsGetPublicKeyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7405,7 +8334,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall) Header(
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7608,7 +8537,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall) Header() 
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7803,7 +8732,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsMacSignCall) Header
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsMacSignCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7949,7 +8878,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsMacVerifyCall) Head
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsMacVerifyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8105,7 +9034,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall) Header()
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8256,7 +9185,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRestoreCall) Header
 
 func (c *ProjectsLocationsKeyRingsCryptoKeysCryptoKeyVersionsRestoreCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8408,7 +9337,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsImportJobsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8565,7 +9494,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsImportJobsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8734,7 +9663,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsKeyRingsImportJobsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8925,7 +9854,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsKeyRingsImportJobsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9109,7 +10038,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall) Header() http.Head
 
 func (c *ProjectsLocationsKeyRingsImportJobsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9259,7 +10188,7 @@ func (c *ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall) Header() htt
 
 func (c *ProjectsLocationsKeyRingsImportJobsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

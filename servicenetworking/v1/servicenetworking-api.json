@@ -860,7 +860,7 @@
       }
     }
   },
-  "revision": "20211222",
+  "revision": "20220127",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddDnsRecordSetMetadata": {
@@ -970,6 +970,10 @@
       "description": "Request to create a subnetwork in a previously peered service network.",
       "id": "AddSubnetworkRequest",
       "properties": {
+        "checkServiceNetworkingUsePermission": {
+          "description": "Optional. The IAM permission check determines whether the consumer project has 'servicenetworking.services.use' permission or not.",
+          "type": "boolean"
+        },
         "consumer": {
           "description": "Required. A resource that represents the service consumer, such as `projects/123456`. The project number can be different from the value in the consumer network parameter. For example, the network might be part of a Shared VPC network. In those cases, Service Networking validates that this resource belongs to that Shared VPC.",
           "type": "string"

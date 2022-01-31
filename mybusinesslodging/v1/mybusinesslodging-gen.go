@@ -5388,8 +5388,8 @@ type SustainableSourcing struct {
 	VeganMealsException string `json:"veganMealsException,omitempty"`
 
 	// VegetarianMeals: Vegetarian meals. The property provides vegetarian
-	// menu options for guests. Vegetarian food does not contain animal
-	// products.
+	// menu options for guests. Vegetarian food does not contain meat,
+	// poultry, fish, or seafood.
 	VegetarianMeals bool `json:"vegetarianMeals,omitempty"`
 
 	// VegetarianMealsException: Vegetarian meals exception.
@@ -6597,7 +6597,7 @@ func (c *LocationsGetLodgingCall) Header() http.Header {
 
 func (c *LocationsGetLodgingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6747,7 +6747,7 @@ func (c *LocationsUpdateLodgingCall) Header() http.Header {
 
 func (c *LocationsUpdateLodgingCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6911,7 +6911,7 @@ func (c *LocationsLodgingGetGoogleUpdatedCall) Header() http.Header {
 
 func (c *LocationsLodgingGetGoogleUpdatedCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

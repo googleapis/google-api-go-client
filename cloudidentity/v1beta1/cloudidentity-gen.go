@@ -138,6 +138,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Customers = NewCustomersService(s)
 	s.Devices = NewDevicesService(s)
 	s.Groups = NewGroupsService(s)
+	s.OrgUnits = NewOrgUnitsService(s)
 	return s, nil
 }
 
@@ -151,6 +152,8 @@ type Service struct {
 	Devices *DevicesService
 
 	Groups *GroupsService
+
+	OrgUnits *OrgUnitsService
 }
 
 func (s *Service) userAgent() string {
@@ -232,6 +235,27 @@ func NewGroupsMembershipsService(s *Service) *GroupsMembershipsService {
 }
 
 type GroupsMembershipsService struct {
+	s *Service
+}
+
+func NewOrgUnitsService(s *Service) *OrgUnitsService {
+	rs := &OrgUnitsService{s: s}
+	rs.Memberships = NewOrgUnitsMembershipsService(s)
+	return rs
+}
+
+type OrgUnitsService struct {
+	s *Service
+
+	Memberships *OrgUnitsMembershipsService
+}
+
+func NewOrgUnitsMembershipsService(s *Service) *OrgUnitsMembershipsService {
+	rs := &OrgUnitsMembershipsService{s: s}
+	return rs
+}
+
+type OrgUnitsMembershipsService struct {
 	s *Service
 }
 
@@ -2061,7 +2085,7 @@ type Group struct {
 	// and status.
 	DynamicGroupMetadata *DynamicGroupMetadata `json:"dynamicGroupMetadata,omitempty"`
 
-	// GroupKey: Required. Immutable. The `EntityKey` of the `Group`.
+	// GroupKey: Required. The `EntityKey` of the `Group`.
 	GroupKey *EntityKey `json:"groupKey,omitempty"`
 
 	// Labels: Required. One or more label entries that apply to the Group.
@@ -2390,6 +2414,43 @@ type ListMembershipsResponse struct {
 
 func (s *ListMembershipsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMembershipsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListOrgMembershipsResponse: The response message for
+// OrgMembershipsService.ListOrgMemberships.
+type ListOrgMembershipsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is empty, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// OrgMemberships: The non-vacuous membership in an orgUnit.
+	OrgMemberships []*OrgMembership `json:"orgMemberships,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListOrgMembershipsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListOrgMembershipsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2911,6 +2972,47 @@ func (s *ModifyMembershipRolesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MoveOrgMembershipRequest: The request message for
+// OrgMembershipsService.MoveOrgMembership.
+type MoveOrgMembershipRequest struct {
+	// Customer: Required. Immutable. Customer on whose membership change is
+	// made. All authorization will happen on the role assignments of this
+	// customer. Format: customers/{$customerId} where `$customerId` is the
+	// `id` from the Admin SDK `Customer` resource
+	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers).
+	// You may also use `customers/my_customer` to specify your own
+	// organization.
+	Customer string `json:"customer,omitempty"`
+
+	// DestinationOrgUnit: Required. Immutable. OrgUnit where the membership
+	// will be moved to. Format: orgUnits/{$orgUnitId} where `$orgUnitId` is
+	// the `orgUnitId` from the Admin SDK `OrgUnit` resource
+	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/orgunits).
+	DestinationOrgUnit string `json:"destinationOrgUnit,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Customer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Customer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MoveOrgMembershipRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod MoveOrgMembershipRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -2969,6 +3071,67 @@ type Operation struct {
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OrgMembership: A membership in an OrgUnit. An `OrgMembership` defines
+// a relationship between an `OrgUnit` and an entity belonging to that
+// `OrgUnit`, referred to as a "member".
+type OrgMembership struct {
+	// Member: Immutable. Org member id as full resource name. Format for
+	// shared drive resource: //drive.googleapis.com/drives/{$memberId}
+	// where `$memberId` is the `id` from Drive API (V3) `Drive` resource
+	// (https://developers.google.com/drive/api/v3/reference/drives#resource).
+	Member string `json:"member,omitempty"`
+
+	// MemberUri: Uri with which you can read the member. This follows
+	// https://aip.dev/122 Format for shared drive resource:
+	// https://drive.googleapis.com/drive/v3/drives/{$memberId} where
+	// `$memberId` is the `id` from Drive API (V3) `Drive` resource
+	// (https://developers.google.com/drive/api/v3/reference/drives#resource).
+	MemberUri string `json:"memberUri,omitempty"`
+
+	// Name: Required. Immutable. The resource name
+	// (https://cloud.google.com/apis/design/resource_names) of the
+	// OrgMembership. Format:
+	// orgUnits/{$orgUnitId}/memberships/{$membership} The `$orgUnitId` is
+	// the `orgUnitId` from the Admin SDK `OrgUnit` resource
+	// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/orgunits).
+	// The `$membership` shall be of the form `{$entityType};{$memberId}`,
+	// where `$entityType` is the enum value of [OrgMembership.EntityType],
+	// and `memberId` is the `id` from Drive API (V3) `Drive` resource
+	// (https://developers.google.com/drive/api/v3/reference/drives#resource)
+	// for OrgMembership.EntityType.SHARED_DRIVE.
+	Name string `json:"name,omitempty"`
+
+	// Type: Immutable. Entity type for the org member.
+	//
+	// Possible values:
+	//   "ENTITY_TYPE_UNSPECIFIED" - Equivalent to no resource type
+	// mentioned
+	//   "SHARED_DRIVE" - Shared drive as resource type
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Member") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Member") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OrgMembership) MarshalJSON() ([]byte, error) {
+	type NoMethod OrgMembership
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3576,7 +3739,7 @@ func (c *CustomersUserinvitationsCancelCall) Header() http.Header {
 
 func (c *CustomersUserinvitationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3728,7 +3891,7 @@ func (c *CustomersUserinvitationsGetCall) Header() http.Header {
 
 func (c *CustomersUserinvitationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3879,7 +4042,7 @@ func (c *CustomersUserinvitationsIsInvitableUserCall) Header() http.Header {
 
 func (c *CustomersUserinvitationsIsInvitableUserCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4065,7 +4228,7 @@ func (c *CustomersUserinvitationsListCall) Header() http.Header {
 
 func (c *CustomersUserinvitationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4248,7 +4411,7 @@ func (c *CustomersUserinvitationsSendCall) Header() http.Header {
 
 func (c *CustomersUserinvitationsSendCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4392,7 +4555,7 @@ func (c *DevicesCancelWipeCall) Header() http.Header {
 
 func (c *DevicesCancelWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4530,7 +4693,7 @@ func (c *DevicesCreateCall) Header() http.Header {
 
 func (c *DevicesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4657,7 +4820,7 @@ func (c *DevicesDeleteCall) Header() http.Header {
 
 func (c *DevicesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4800,7 +4963,7 @@ func (c *DevicesGetCall) Header() http.Header {
 
 func (c *DevicesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4995,7 +5158,7 @@ func (c *DevicesListCall) Header() http.Header {
 
 func (c *DevicesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5178,7 +5341,7 @@ func (c *DevicesWipeCall) Header() http.Header {
 
 func (c *DevicesWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5321,7 +5484,7 @@ func (c *DevicesDeviceUsersApproveCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersApproveCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5464,7 +5627,7 @@ func (c *DevicesDeviceUsersBlockCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersBlockCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5609,7 +5772,7 @@ func (c *DevicesDeviceUsersCancelWipeCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersCancelWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5751,7 +5914,7 @@ func (c *DevicesDeviceUsersDeleteCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5895,7 +6058,7 @@ func (c *DevicesDeviceUsersGetCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6076,7 +6239,7 @@ func (c *DevicesDeviceUsersListCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6321,7 +6484,7 @@ func (c *DevicesDeviceUsersLookupCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6509,7 +6672,7 @@ func (c *DevicesDeviceUsersWipeCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersWipeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6684,7 +6847,7 @@ func (c *DevicesDeviceUsersClientStatesGetCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -6850,7 +7013,7 @@ func (c *DevicesDeviceUsersClientStatesPatchCall) Header() http.Header {
 
 func (c *DevicesDeviceUsersClientStatesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7010,7 +7173,7 @@ func (c *GroupsCreateCall) Header() http.Header {
 
 func (c *GroupsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7156,7 +7319,7 @@ func (c *GroupsDeleteCall) Header() http.Header {
 
 func (c *GroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7302,7 +7465,7 @@ func (c *GroupsGetCall) Header() http.Header {
 
 func (c *GroupsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7460,7 +7623,7 @@ func (c *GroupsGetSecuritySettingsCall) Header() http.Header {
 
 func (c *GroupsGetSecuritySettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7654,7 +7817,7 @@ func (c *GroupsListCall) Header() http.Header {
 
 func (c *GroupsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -7862,7 +8025,7 @@ func (c *GroupsLookupCall) Header() http.Header {
 
 func (c *GroupsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8010,7 +8173,7 @@ func (c *GroupsPatchCall) Header() http.Header {
 
 func (c *GroupsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8208,7 +8371,7 @@ func (c *GroupsSearchCall) Header() http.Header {
 
 func (c *GroupsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8394,7 +8557,7 @@ func (c *GroupsUpdateSecuritySettingsCall) Header() http.Header {
 
 func (c *GroupsUpdateSecuritySettingsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8574,7 +8737,7 @@ func (c *GroupsMembershipsCheckTransitiveMembershipCall) Header() http.Header {
 
 func (c *GroupsMembershipsCheckTransitiveMembershipCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8720,7 +8883,7 @@ func (c *GroupsMembershipsCreateCall) Header() http.Header {
 
 func (c *GroupsMembershipsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -8864,7 +9027,7 @@ func (c *GroupsMembershipsDeleteCall) Header() http.Header {
 
 func (c *GroupsMembershipsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9011,7 +9174,7 @@ func (c *GroupsMembershipsGetCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9184,7 +9347,7 @@ func (c *GroupsMembershipsGetMembershipGraphCall) Header() http.Header {
 
 func (c *GroupsMembershipsGetMembershipGraphCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9370,7 +9533,7 @@ func (c *GroupsMembershipsListCall) Header() http.Header {
 
 func (c *GroupsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9588,7 +9751,7 @@ func (c *GroupsMembershipsLookupCall) Header() http.Header {
 
 func (c *GroupsMembershipsLookupCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9741,7 +9904,7 @@ func (c *GroupsMembershipsModifyMembershipRolesCall) Header() http.Header {
 
 func (c *GroupsMembershipsModifyMembershipRolesCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -9929,7 +10092,7 @@ func (c *GroupsMembershipsSearchTransitiveGroupsCall) Header() http.Header {
 
 func (c *GroupsMembershipsSearchTransitiveGroupsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10136,7 +10299,7 @@ func (c *GroupsMembershipsSearchTransitiveMembershipsCall) Header() http.Header 
 
 func (c *GroupsMembershipsSearchTransitiveMembershipsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -10258,4 +10421,390 @@ func (c *GroupsMembershipsSearchTransitiveMembershipsCall) Pages(ctx context.Con
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "cloudidentity.orgUnits.memberships.list":
+
+type OrgUnitsMembershipsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List OrgMembership resources in an OrgUnit treated as 'parent'.
+// Parent format: orgUnits/{$orgUnitId} where `$orgUnitId` is the
+// `orgUnitId` from the Admin SDK `OrgUnit` resource
+// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/orgunits)
+//
+// - parent: Immutable. OrgUnit which is queried for a list of
+//   memberships. Format: orgUnits/{$orgUnitId} where `$orgUnitId` is
+//   the `orgUnitId` from the Admin SDK `OrgUnit` resource
+//   (https://developers.google.com/admin-sdk/directory/reference/rest/v1/orgunits).
+func (r *OrgUnitsMembershipsService) List(parent string) *OrgUnitsMembershipsListCall {
+	c := &OrgUnitsMembershipsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Customer sets the optional parameter "customer": Required. Immutable.
+// Customer that this OrgMembership belongs to. All authorization will
+// happen on the role assignments of this customer. Format:
+// customers/{$customerId} where `$customerId` is the `id` from the
+// Admin SDK `Customer` resource
+// (https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers).
+// You may also use `customers/my_customer` to specify your own
+// organization.
+func (c *OrgUnitsMembershipsListCall) Customer(customer string) *OrgUnitsMembershipsListCall {
+	c.urlParams_.Set("customer", customer)
+	return c
+}
+
+// Filter sets the optional parameter "filter": The search query. Must
+// be specified in Common Expression Language
+// (https://opensource.google/projects/cel). May only contain equality
+// operators on the `type` (e.g., `type == 'shared_drive'`).
+func (c *OrgUnitsMembershipsListCall) Filter(filter string) *OrgUnitsMembershipsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return. The service may return fewer than this value.
+// If omitted (or defaulted to zero) the server will default to 50. The
+// maximum allowed value is 100, though requests with page_size greater
+// than that will be silently interpreted as 100.
+func (c *OrgUnitsMembershipsListCall) PageSize(pageSize int64) *OrgUnitsMembershipsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `OrgMembershipsService.ListOrgMemberships`
+// call. Provide this to retrieve the subsequent page. When paginating,
+// all other parameters provided to `ListOrgMembershipsRequest` must
+// match the call that provided the page token.
+func (c *OrgUnitsMembershipsListCall) PageToken(pageToken string) *OrgUnitsMembershipsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrgUnitsMembershipsListCall) Fields(s ...googleapi.Field) *OrgUnitsMembershipsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrgUnitsMembershipsListCall) IfNoneMatch(entityTag string) *OrgUnitsMembershipsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrgUnitsMembershipsListCall) Context(ctx context.Context) *OrgUnitsMembershipsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrgUnitsMembershipsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrgUnitsMembershipsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/memberships")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.orgUnits.memberships.list" call.
+// Exactly one of *ListOrgMembershipsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListOrgMembershipsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrgUnitsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListOrgMembershipsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListOrgMembershipsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List OrgMembership resources in an OrgUnit treated as 'parent'. Parent format: orgUnits/{$orgUnitId} where `$orgUnitId` is the `orgUnitId` from the [Admin SDK `OrgUnit` resource](https://developers.google.com/admin-sdk/directory/reference/rest/v1/orgunits)",
+	//   "flatPath": "v1beta1/orgUnits/{orgUnitsId}/memberships",
+	//   "httpMethod": "GET",
+	//   "id": "cloudidentity.orgUnits.memberships.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. Immutable. Customer that this OrgMembership belongs to. All authorization will happen on the role assignments of this customer. Format: customers/{$customerId} where `$customerId` is the `id` from the [Admin SDK `Customer` resource](https://developers.google.com/admin-sdk/directory/reference/rest/v1/customers). You may also use `customers/my_customer` to specify your own organization.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "The search query. Must be specified in [Common Expression Language](https://opensource.google/projects/cel). May only contain equality operators on the `type` (e.g., `type == 'shared_drive'`).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The maximum number of results to return. The service may return fewer than this value. If omitted (or defaulted to zero) the server will default to 50. The maximum allowed value is 100, though requests with page_size greater than that will be silently interpreted as 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `OrgMembershipsService.ListOrgMemberships` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListOrgMembershipsRequest` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Immutable. OrgUnit which is queried for a list of memberships. Format: orgUnits/{$orgUnitId} where `$orgUnitId` is the `orgUnitId` from the [Admin SDK `OrgUnit` resource](https://developers.google.com/admin-sdk/directory/reference/rest/v1/orgunits).",
+	//       "location": "path",
+	//       "pattern": "^orgUnits/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/memberships",
+	//   "response": {
+	//     "$ref": "ListOrgMembershipsResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrgUnitsMembershipsListCall) Pages(ctx context.Context, f func(*ListOrgMembershipsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudidentity.orgUnits.memberships.move":
+
+type OrgUnitsMembershipsMoveCall struct {
+	s                        *Service
+	name                     string
+	moveorgmembershiprequest *MoveOrgMembershipRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Move: Move an OrgMembership to a new OrgUnit. NOTE: This is an atomic
+// copy-and-delete. The resource will have a new copy under the
+// destination OrgUnit and be deleted from the source OrgUnit. The
+// resource can only be searched under the destination OrgUnit
+// afterwards.
+//
+// - name: Immutable. The resource name
+//   (https://cloud.google.com/apis/design/resource_names) of the
+//   OrgMembership. Format:
+//   orgUnits/{$orgUnitId}/memberships/{$membership} The `$orgUnitId` is
+//   the `orgUnitId` from the Admin SDK `OrgUnit` resource
+//   (https://developers.google.com/admin-sdk/directory/reference/rest/v1/orgunits),
+//   The `$membership` shall be of the form `{$entityType};{$memberId}`,
+//   where `$entityType` is the enum value of OrgMembership.EntityType,
+//   and `memberId` is the `id` from Drive API (V3) `Drive` resource
+//   (https://developers.google.com/drive/api/v3/reference/drives#resource)
+//   for OrgMembership.EntityType.SHARED_DRIVE.
+func (r *OrgUnitsMembershipsService) Move(name string, moveorgmembershiprequest *MoveOrgMembershipRequest) *OrgUnitsMembershipsMoveCall {
+	c := &OrgUnitsMembershipsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.moveorgmembershiprequest = moveorgmembershiprequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrgUnitsMembershipsMoveCall) Fields(s ...googleapi.Field) *OrgUnitsMembershipsMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrgUnitsMembershipsMoveCall) Context(ctx context.Context) *OrgUnitsMembershipsMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrgUnitsMembershipsMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrgUnitsMembershipsMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.moveorgmembershiprequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:move")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudidentity.orgUnits.memberships.move" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrgUnitsMembershipsMoveCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Move an OrgMembership to a new OrgUnit. NOTE: This is an atomic copy-and-delete. The resource will have a new copy under the destination OrgUnit and be deleted from the source OrgUnit. The resource can only be searched under the destination OrgUnit afterwards.",
+	//   "flatPath": "v1beta1/orgUnits/{orgUnitsId}/memberships/{membershipsId}:move",
+	//   "httpMethod": "POST",
+	//   "id": "cloudidentity.orgUnits.memberships.move",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Immutable. The [resource name](https://cloud.google.com/apis/design/resource_names) of the OrgMembership. Format: orgUnits/{$orgUnitId}/memberships/{$membership} The `$orgUnitId` is the `orgUnitId` from the [Admin SDK `OrgUnit` resource](https://developers.google.com/admin-sdk/directory/reference/rest/v1/orgunits), The `$membership` shall be of the form `{$entityType};{$memberId}`, where `$entityType` is the enum value of OrgMembership.EntityType, and `memberId` is the `id` from [Drive API (V3) `Drive` resource](https://developers.google.com/drive/api/v3/reference/drives#resource) for OrgMembership.EntityType.SHARED_DRIVE.",
+	//       "location": "path",
+	//       "pattern": "^orgUnits/[^/]+/memberships/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:move",
+	//   "request": {
+	//     "$ref": "MoveOrgMembershipRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   }
+	// }
+
 }

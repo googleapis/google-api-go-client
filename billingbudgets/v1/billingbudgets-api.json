@@ -270,7 +270,7 @@
       }
     }
   },
-  "revision": "20210813",
+  "revision": "20220122",
   "rootUrl": "https://billingbudgets.googleapis.com/",
   "schemas": {
     "GoogleCloudBillingBudgetsV1Budget": {
@@ -355,7 +355,7 @@
             "YEAR"
           ],
           "enumDescriptions": [
-            "",
+            "Calendar period is unset. This is the default if the budget is for a custom time period (CustomPeriod).",
             "A month. Month starts on the first day of each month, such as January 1, February 1, March 1, and so on.",
             "A quarter. Quarters start on dates January 1, April 1, July 1, and October 1 of each year.",
             "A year. Year starts on January 1."

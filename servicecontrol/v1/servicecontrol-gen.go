@@ -2000,14 +2000,14 @@ type QuotaOperation struct {
 	// google.example.library.v1.LibraryService.CreateShelf
 	MethodName string `json:"methodName,omitempty"`
 
-	// OperationId: Identity of the operation. This is expected to be unique
-	// within the scope of the service that generated the operation, and
-	// guarantees idempotency in case of retries. In order to ensure best
-	// performance and latency in the Quota backends, operation_ids are
-	// optimally associated with time, so that related operations can be
-	// accessed fast in storage. For this reason, the recommended token for
-	// services that intend to operate at a high QPS is Unix time in nanos +
-	// UUID
+	// OperationId: Identity of the operation. For Allocation Quota, this is
+	// expected to be unique within the scope of the service that generated
+	// the operation, and guarantees idempotency in case of retries. In
+	// order to ensure best performance and latency in the Quota backends,
+	// operation_ids are optimally associated with time, so that related
+	// operations can be accessed fast in storage. For this reason, the
+	// recommended token for services that intend to operate at a high QPS
+	// is Unix time in nanos + UUID
 	OperationId string `json:"operationId,omitempty"`
 
 	// QuotaMetrics: Represents information about this operation. Each
@@ -2922,7 +2922,7 @@ func (c *ServicesAllocateQuotaCall) Header() http.Header {
 
 func (c *ServicesAllocateQuotaCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3080,7 +3080,7 @@ func (c *ServicesCheckCall) Header() http.Header {
 
 func (c *ServicesCheckCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3236,7 +3236,7 @@ func (c *ServicesReportCall) Header() http.Header {
 
 func (c *ServicesReportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

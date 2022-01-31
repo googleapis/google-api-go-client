@@ -413,7 +413,8 @@ type GoogleCloudBillingBudgetsV1beta1Filter struct {
 	// July, August, September, so on.
 	//
 	// Possible values:
-	//   "CALENDAR_PERIOD_UNSPECIFIED"
+	//   "CALENDAR_PERIOD_UNSPECIFIED" - Calendar period is unset. This is
+	// the default if the budget is for a custom time period (CustomPeriod).
 	//   "MONTH" - A month. Month starts on the first day of each month,
 	// such as January 1, February 1, March 1, and so on.
 	//   "QUARTER" - A quarter. Quarters start on dates January 1, April 1,
@@ -813,7 +814,7 @@ func (c *BillingAccountsBudgetsCreateCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -956,7 +957,7 @@ func (c *BillingAccountsBudgetsDeleteCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1104,7 +1105,7 @@ func (c *BillingAccountsBudgetsGetCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1273,7 +1274,7 @@ func (c *BillingAccountsBudgetsListCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1450,7 +1451,7 @@ func (c *BillingAccountsBudgetsPatchCall) Header() http.Header {
 
 func (c *BillingAccountsBudgetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220122")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

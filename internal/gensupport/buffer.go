@@ -28,6 +28,18 @@ func NewMediaBuffer(media io.Reader, chunkSize int) *MediaBuffer {
 	return &MediaBuffer{media: media, chunk: make([]byte, 0, chunkSize)}
 }
 
+// NewMediaBuffer initializes a MediaBuffer.
+func NewMediaBufferWithBuffer(media io.Reader, chunkSize int, buffer []byte) *MediaBuffer {
+	// If buffer isn't long enough, allocate new one.
+	if cap(buffer) < chunkSize {
+		return NewMediaBuffer(media, chunkSize)
+	}
+
+	// Implementation expects buffer of zero length.
+	buffer = buffer[:0]
+	return &MediaBuffer{media: media, chunk: buffer}
+}
+
 // Chunk returns the current buffered chunk, the offset in the underlying media
 // from which the chunk is drawn, and the size of the chunk.
 // Successive calls to Chunk return the same chunk between calls to Next.

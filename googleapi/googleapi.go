@@ -211,6 +211,31 @@ type MediaOption interface {
 	setOptions(o *MediaOptions)
 }
 
+type noopOption struct{}
+
+func (bp noopOption) setOptions(o *MediaOptions) {
+}
+
+type bufferOption []byte
+
+func (bp bufferOption) setOptions(o *MediaOptions) {
+	o.Buffer = bp
+}
+
+// WithBuffer returns MediaOption which sets buffer used for media uploads.
+// Buffer capacity needs to be at least MinUploadChunkSize, if it's not
+// this option is a no op.
+// If used together with ChunkSize, buffer needs to have at least ChunkSize capacity.
+// If not set, each upload will allocate its own memory.
+// Buffer can be reused only after request complete. Using the same buffer
+// in concurrent calls will lead to data race.
+func WithBuffer(buffer []byte) MediaOption {
+	if cap(buffer) < MinUploadChunkSize {
+		return noopOption{}
+	}
+	return bufferOption(buffer)
+}
+
 type contentTypeOption string
 
 func (ct contentTypeOption) setOptions(o *MediaOptions) {
@@ -251,6 +276,8 @@ type MediaOptions struct {
 	ForceEmptyContentType bool
 
 	ChunkSize int
+
+	Buffer []byte
 }
 
 // ProcessMediaOptions stores options from opts in a MediaOptions.

@@ -268,8 +268,8 @@ func ChunkRetryDeadline(deadline time.Duration) MediaOption {
 type MediaOptions struct {
 	ContentType           string
 	ForceEmptyContentType bool
-	ChunkSize int
-	ChunkRetryDeadline time.Duration
+	ChunkSize             int
+	ChunkRetryDeadline    time.Duration
 }
 
 // ProcessMediaOptions stores options from opts in a MediaOptions.

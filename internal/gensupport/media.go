@@ -218,12 +218,12 @@ func PrepareUpload(media io.Reader, chunkSize int) (r io.Reader, mb *MediaBuffer
 // code only.
 type MediaInfo struct {
 	// At most one of Media and MediaBuffer will be set.
-	media           io.Reader
-	buffer          *MediaBuffer
-	singleChunk     bool
-	mType           string
-	size            int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
-	progressUpdater googleapi.ProgressUpdater
+	media              io.Reader
+	buffer             *MediaBuffer
+	singleChunk        bool
+	mType              string
+	size               int64 // mediaSize, if known.  Used only for calls to progressUpdater_.
+	progressUpdater    googleapi.ProgressUpdater
 	chunkRetryDeadline time.Duration
 }
 

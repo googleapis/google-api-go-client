@@ -156,7 +156,7 @@ func TestNewInfoFromMedia(t *testing.T) {
 		opts                                   []googleapi.MediaOption
 		wantType                               string
 		wantMedia, wantBuffer, wantSingleChunk bool
-		wantDeadline													 time.Duration
+		wantDeadline                           time.Duration
 	}{
 		{
 			desc:            "an empty reader results in a MediaBuffer with a single, empty chunk",
@@ -175,11 +175,11 @@ func TestNewInfoFromMedia(t *testing.T) {
 			wantSingleChunk: true,
 		},
 		{
-			desc: "ChunkRetryDeadline is observed",
+			desc:            "ChunkRetryDeadline is observed",
 			r:               new(bytes.Buffer),
 			opts:            []googleapi.MediaOption{googleapi.ChunkRetryDeadline(time.Second)},
 			wantType:        textType,
-			wantBuffer:       true,
+			wantBuffer:      true,
 			wantSingleChunk: true,
 			wantDeadline:    time.Second,
 		},
@@ -355,7 +355,7 @@ func TestResumableUpload(t *testing.T) {
 		chunkSize           int
 		wantUploadType      string
 		wantResumableUpload bool
-		chunkRetryDeadline time.Duration
+		chunkRetryDeadline  time.Duration
 	}{
 		{
 			desc:                "chunk size of zero: don't use a MediaBuffer; upload as a single chunk",
@@ -393,7 +393,7 @@ func TestResumableUpload(t *testing.T) {
 			chunkSize:           1,
 			wantUploadType:      "resumable",
 			wantResumableUpload: true,
-			chunkRetryDeadline: 1 * time.Second,
+			chunkRetryDeadline:  1 * time.Second,
 		},
 	} {
 		opts := []googleapi.MediaOption{googleapi.ChunkSize(test.chunkSize)}

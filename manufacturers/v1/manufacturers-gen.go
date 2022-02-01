@@ -194,7 +194,10 @@ type Attributes struct {
 	// https://support.google.com/manufacturers/answer/6124116#disclosure.
 	DisclosureDate string `json:"disclosureDate,omitempty"`
 
-	// ExcludedDestination: A list of excluded destinations.
+	// ExcludedDestination: A list of excluded destinations such as
+	// "ClientExport", "ClientShoppingCatalog" or "PartnerShoppingCatalog".
+	// For more information, see
+	// https://support.google.com/manufacturers/answer/7443550
 	ExcludedDestination []string `json:"excludedDestination,omitempty"`
 
 	// FeatureDescription: The rich format description of the product. For
@@ -223,7 +226,10 @@ type Attributes struct {
 	// https://support.google.com/manufacturers/answer/6124116#image.
 	ImageLink *Image `json:"imageLink,omitempty"`
 
-	// IncludedDestination: A list of included destinations.
+	// IncludedDestination: A list of included destinations such as
+	// "ClientExport", "ClientShoppingCatalog" or "PartnerShoppingCatalog".
+	// For more information, see
+	// https://support.google.com/manufacturers/answer/7443550
 	IncludedDestination []string `json:"includedDestination,omitempty"`
 
 	// ItemGroupId: The item group id of the product. For more information,
@@ -302,7 +308,8 @@ type Attributes struct {
 	SuggestedRetailPrice *Price `json:"suggestedRetailPrice,omitempty"`
 
 	// TargetClientId: The target client id. Should only be used in the
-	// accounts of the data partners.
+	// accounts of the data partners. For more information, see
+	// https://support.google.com/manufacturers/answer/10857344
 	TargetClientId string `json:"targetClientId,omitempty"`
 
 	// Theme: The theme of the product. For more information, see
@@ -852,7 +859,7 @@ func (c *AccountsProductsDeleteCall) Header() http.Header {
 
 func (c *AccountsProductsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1033,7 +1040,7 @@ func (c *AccountsProductsGetCall) Header() http.Header {
 
 func (c *AccountsProductsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1235,7 +1242,7 @@ func (c *AccountsProductsListCall) Header() http.Header {
 
 func (c *AccountsProductsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1445,7 +1452,7 @@ func (c *AccountsProductsUpdateCall) Header() http.Header {
 
 func (c *AccountsProductsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

@@ -2134,13 +2134,16 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // MembershipFeatureSpec: MembershipFeatureSpec contains configuration
 // information for a single Membership.
 type MembershipFeatureSpec struct {
+	// Cloudbuild: Cloud Build-specific spec
+	Cloudbuild *MembershipSpec `json:"cloudbuild,omitempty"`
+
 	// Configmanagement: Config Management-specific spec.
 	Configmanagement *ConfigManagementMembershipSpec `json:"configmanagement,omitempty"`
 
 	// Identityservice: Identity Service-specific spec.
 	Identityservice *IdentityServiceMembershipSpec `json:"identityservice,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Configmanagement") to
+	// ForceSendFields is a list of field names (e.g. "Cloudbuild") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2148,13 +2151,12 @@ type MembershipFeatureSpec struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Configmanagement") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Cloudbuild") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2179,6 +2181,9 @@ type MembershipFeatureState struct {
 	// Metering: Metering-specific spec.
 	Metering *MeteringMembershipState `json:"metering,omitempty"`
 
+	// Policycontroller: Policycontroller-specific state.
+	Policycontroller *PolicyControllerMembershipState `json:"policycontroller,omitempty"`
+
 	// State: The high-level state of this Feature for a single membership.
 	State *FeatureState `json:"state,omitempty"`
 
@@ -2202,6 +2207,45 @@ type MembershipFeatureState struct {
 
 func (s *MembershipFeatureState) MarshalJSON() ([]byte, error) {
 	type NoMethod MembershipFeatureState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MembershipSpec: **Cloud Build**: Configurations for each Cloud Build
+// enabled cluster.
+type MembershipSpec struct {
+	// SecurityPolicy: Whether it is allowed to run the privileged builds on
+	// the cluster or not.
+	//
+	// Possible values:
+	//   "SECURITY_POLICY_UNSPECIFIED" - Unspecified policy
+	//   "NON_PRIVILEGED" - Privileged build pods are disallowed
+	//   "PRIVILEGED" - Privileged build pods are allowed
+	SecurityPolicy string `json:"securityPolicy,omitempty"`
+
+	// Version: Version of the cloud build software on the cluster.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SecurityPolicy") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SecurityPolicy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MembershipSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod MembershipSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2518,6 +2562,283 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PolicyControllerMembershipSpec: **Policy Controller**: Configuration
+// for a single cluster. Intended to parallel the PolicyController CR.
+type PolicyControllerMembershipSpec struct {
+	// PolicyControllerHubConfig: Policy Controller configuration for the
+	// cluster.
+	PolicyControllerHubConfig *PolicyControllerPolicyControllerHubConfig `json:"policyControllerHubConfig,omitempty"`
+
+	// Version: Version of Policy Controller installed.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PolicyControllerHubConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "PolicyControllerHubConfig") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyControllerMembershipSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerMembershipSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerMembershipState: **Policy Controller**: State for a
+// single cluster.
+type PolicyControllerMembershipState struct {
+	// ClusterName: The user-defined name for the cluster used by
+	// ClusterSelectors to group clusters together. This should match
+	// Membership's membership_name, unless the user installed PC on the
+	// cluster manually prior to enabling the PC hub feature. Unique within
+	// a Policy Controller installation.
+	ClusterName string `json:"clusterName,omitempty"`
+
+	// MembershipSpec: Membership configuration in the cluster. This
+	// represents the actual state in the cluster, while the MembershipSpec
+	// in the FeatureSpec represents the intended state
+	MembershipSpec *PolicyControllerMembershipSpec `json:"membershipSpec,omitempty"`
+
+	// PolicyControllerHubState: Policy Controller state observed by the
+	// Policy Controller Hub
+	PolicyControllerHubState *PolicyControllerPolicyControllerHubState `json:"policyControllerHubState,omitempty"`
+
+	// State: The lifecycle state Policy Controller is in.
+	//
+	// Possible values:
+	//   "LIFECYCLE_STATE_UNSPECIFIED" - The lifecycle state is unspecified.
+	//   "NOT_INSTALLED" - The PC does not exist on the given cluster, and
+	// no k8s resources of any type that are associated with the PC should
+	// exist there. The cluster does not possess a membership with the PCH.
+	//   "INSTALLING" - The PCH possesses a Membership, however the PC is
+	// not fully installed on the cluster. In this state the hub can be
+	// expected to be taking actions to install the PC on the cluster.
+	//   "ACTIVE" - The PC is fully installed on the cluster and in an
+	// operational mode. In this state PCH will be reconciling state with
+	// the PC, and the PC will be performing it’s operational tasks per
+	// that software. Entering a READY state requires that the hub has
+	// confirmed the PC is installed and its pods are operational with the
+	// version of the PC the PCH expects.
+	//   "UPDATING" - The PC is fully installed, but in the process of
+	// changing the configuration (including changing the version of PC
+	// either up and down, or modifying the manifests of PC) of the
+	// resources running on the cluster. The PCH has a Membership, is aware
+	// of the version the cluster should be running in, but has not
+	// confirmed for itself that the PC is running with that version.
+	//   "DECOMISSIONING" - The PC may have resources on the cluster, but
+	// the PCH wishes to remove the Membership. The Membership still exists.
+	//   "CLUSTER_ERROR" - The PC is not operational, and the PCH is unable
+	// to act to make it operational. Entering a CLUSTER_ERROR state happens
+	// automatically when the PCH determines that a PC installed on the
+	// cluster is non-operative or that the cluster does not meet
+	// requirements set for the PCH to administer the cluster but has
+	// nevertheless been given an instruction to do so (such as
+	// ‘install’).
+	//   "HUB_ERROR" - In this state, the PC may still be operational, and
+	// only the PCH is unable to act. The hub should not issue instructions
+	// to change the PC state, or otherwise interfere with the on-cluster
+	// resources. Entering a HUB_ERROR state happens automatically when the
+	// PCH determines the hub is in an unhealthy state and it wishes to
+	// ‘take hands off’ to avoid corrupting the PC or other data.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyControllerMembershipState) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerMembershipState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerPolicyControllerHubConfig: Configuration for Policy
+// Controller
+type PolicyControllerPolicyControllerHubConfig struct {
+	// AuditIntervalSeconds: Sets the interval for Policy Controller Audit
+	// Scans (in seconds). When set to 0, this disables audit functionality
+	// altogether.
+	AuditIntervalSeconds int64 `json:"auditIntervalSeconds,omitempty,string"`
+
+	// ExemptableNamespaces: The set of namespaces that are excluded from
+	// Policy Controller checks. Namespaces do not need to currently exist
+	// on the cluster.
+	ExemptableNamespaces []string `json:"exemptableNamespaces,omitempty"`
+
+	// InstallSpec: The install_spec represents the intended state specified
+	// by the latest request that mutated install_spec in the feature spec,
+	// not the lifecycle state of the feature observed by the Hub feature
+	// controller that is reported in the feature state.
+	//
+	// Possible values:
+	//   "INSTALL_SPEC_UNSPECIFIED" - Spec is unknown.
+	//   "INSTALL_SPEC_NOT_INSTALLED" - Request to uninstall Policy
+	// Controller.
+	//   "INSTALL_SPEC_ENABLED" - Request to install and enable Policy
+	// Controller.
+	//   "INSTALL_SPEC_DISABLED" - Request to disable Policy Controller. If
+	// Policy Controller is not installed, it will be installed but
+	// disabled.
+	InstallSpec string `json:"installSpec,omitempty"`
+
+	// LogDeniesEnabled: Logs all denies and dry run failures.
+	LogDeniesEnabled bool `json:"logDeniesEnabled,omitempty"`
+
+	// ReferentialRulesEnabled: Enables the ability to use Constraint
+	// Templates that reference to objects other than the object currently
+	// being evaluated.
+	ReferentialRulesEnabled bool `json:"referentialRulesEnabled,omitempty"`
+
+	// TemplateLibraryConfig: Configures the library templates to install
+	// along with Policy Controller.
+	TemplateLibraryConfig *PolicyControllerTemplateLibraryConfig `json:"templateLibraryConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuditIntervalSeconds") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuditIntervalSeconds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyControllerPolicyControllerHubConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerPolicyControllerHubConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerPolicyControllerHubState: State of the Policy
+// Controller.
+type PolicyControllerPolicyControllerHubState struct {
+	// DeploymentStates: Map from deployment name to deployment state.
+	// Example deployments are gatekeeper-controller-manager,
+	// gatekeeper-audit deployment, and gatekeeper-mutation.
+	DeploymentStates map[string]string `json:"deploymentStates,omitempty"`
+
+	// Version: The version of Gatekeeper Policy Controller deployed.
+	Version *PolicyControllerPolicyControllerHubVersion `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeploymentStates") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeploymentStates") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyControllerPolicyControllerHubState) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerPolicyControllerHubState
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerPolicyControllerHubVersion: The build version of
+// Gatekeeper that Policy Controller is using.
+type PolicyControllerPolicyControllerHubVersion struct {
+	// Version: The gatekeeper image tag that is composed of ACM version,
+	// git tag, build number.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Version") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Version") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyControllerPolicyControllerHubVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerPolicyControllerHubVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyControllerTemplateLibraryConfig: The config specifying which
+// default library templates to install.
+type PolicyControllerTemplateLibraryConfig struct {
+	// Included: Whether the standard template library should be installed
+	// or not.
+	Included bool `json:"included,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Included") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Included") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyControllerTemplateLibraryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyControllerTemplateLibraryConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
 	// Policy: REQUIRED: The complete policy to be applied to the
@@ -2721,7 +3042,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2893,7 +3214,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3092,7 +3413,7 @@ func (c *ProjectsLocationsFeaturesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3269,7 +3590,7 @@ func (c *ProjectsLocationsFeaturesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3423,7 +3744,7 @@ func (c *ProjectsLocationsFeaturesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3591,7 +3912,7 @@ func (c *ProjectsLocationsFeaturesGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3780,7 +4101,7 @@ func (c *ProjectsLocationsFeaturesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3984,7 +4305,7 @@ func (c *ProjectsLocationsFeaturesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4141,7 +4462,7 @@ func (c *ProjectsLocationsFeaturesSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4290,7 +4611,7 @@ func (c *ProjectsLocationsFeaturesTestIamPermissionsCall) Header() http.Header {
 
 func (c *ProjectsLocationsFeaturesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4463,7 +4784,7 @@ func (c *ProjectsLocationsMembershipsGetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4610,7 +4931,7 @@ func (c *ProjectsLocationsMembershipsSetIamPolicyCall) Header() http.Header {
 
 func (c *ProjectsLocationsMembershipsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4759,7 +5080,7 @@ func (c *ProjectsLocationsMembershipsTestIamPermissionsCall) Header() http.Heade
 
 func (c *ProjectsLocationsMembershipsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4910,7 +5231,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5053,7 +5374,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5198,7 +5519,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -5374,7 +5695,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

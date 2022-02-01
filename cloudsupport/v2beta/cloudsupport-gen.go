@@ -1479,7 +1479,7 @@ func (c *AttachmentsCreateCall) Header() http.Header {
 
 func (c *AttachmentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1653,7 +1653,7 @@ func (c *CaseClassificationsSearchCall) Header() http.Header {
 
 func (c *CaseClassificationsSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1816,7 +1816,7 @@ func (c *CasesCloseCall) Header() http.Header {
 
 func (c *CasesCloseCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1960,7 +1960,7 @@ func (c *CasesCreateCall) Header() http.Header {
 
 func (c *CasesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2108,7 +2108,7 @@ func (c *CasesEscalateCall) Header() http.Header {
 
 func (c *CasesEscalateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2259,7 +2259,7 @@ func (c *CasesGetCall) Header() http.Header {
 
 func (c *CasesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2435,7 +2435,7 @@ func (c *CasesListCall) Header() http.Header {
 
 func (c *CasesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2574,8 +2574,8 @@ type CasesPatchCall struct {
 
 // Patch: Update the specified case. Only a subset of fields
 // (display_name, description, time_zone, subscriber_email_addresses,
-// related_resources, severity, primary_contact, and labels) can be
-// updated.
+// related_resources, severity, priority, primary_contact, and labels)
+// can be updated.
 //
 // - name: The resource name for the case.
 func (r *CasesService) Patch(name string, case_ *Case) *CasesPatchCall {
@@ -2626,7 +2626,7 @@ func (c *CasesPatchCall) Header() http.Header {
 
 func (c *CasesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2690,7 +2690,7 @@ func (c *CasesPatchCall) Do(opts ...googleapi.CallOption) (*Case, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the specified case. Only a subset of fields (display_name, description, time_zone, subscriber_email_addresses, related_resources, severity, primary_contact, and labels) can be updated.",
+	//   "description": "Update the specified case. Only a subset of fields (display_name, description, time_zone, subscriber_email_addresses, related_resources, severity, priority, primary_contact, and labels) can be updated.",
 	//   "flatPath": "v2beta/{v2betaId}/{v2betaId1}/cases/{casesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudsupport.cases.patch",
@@ -2809,7 +2809,7 @@ func (c *CasesSearchCall) Header() http.Header {
 
 func (c *CasesSearchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2997,7 +2997,7 @@ func (c *CasesAttachmentsListCall) Header() http.Header {
 
 func (c *CasesAttachmentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3167,7 +3167,7 @@ func (c *CasesCommentsCreateCall) Header() http.Header {
 
 func (c *CasesCommentsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3334,7 +3334,7 @@ func (c *CasesCommentsListCall) Header() http.Header {
 
 func (c *CasesCommentsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3513,7 +3513,7 @@ func (c *MediaDownloadCall) Header() http.Header {
 
 func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3709,7 +3709,7 @@ func (c *MediaUploadCall) Header() http.Header {
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220125")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220129")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

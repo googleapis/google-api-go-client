@@ -14,6 +14,7 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+	"time"
 
 	"google.golang.org/api/googleapi"
 )
@@ -155,6 +156,7 @@ func TestNewInfoFromMedia(t *testing.T) {
 		opts                                   []googleapi.MediaOption
 		wantType                               string
 		wantMedia, wantBuffer, wantSingleChunk bool
+		wantDeadline													 time.Duration
 	}{
 		{
 			desc:            "an empty reader results in a MediaBuffer with a single, empty chunk",
@@ -171,6 +173,15 @@ func TestNewInfoFromMedia(t *testing.T) {
 			wantType:        "xyz",
 			wantBuffer:      true,
 			wantSingleChunk: true,
+		},
+		{
+			desc: "ChunkRetryDeadline is observed",
+			r:               new(bytes.Buffer),
+			opts:            []googleapi.MediaOption{googleapi.ChunkRetryDeadline(time.Second)},
+			wantType:        textType,
+			wantBuffer:       true,
+			wantSingleChunk: true,
+			wantDeadline:    time.Second,
 		},
 		{
 			desc:            "chunk size of zero: don't use a MediaBuffer; upload as a single chunk",
@@ -219,6 +230,9 @@ func TestNewInfoFromMedia(t *testing.T) {
 		}
 		if got, want := mi.singleChunk, test.wantSingleChunk; got != want {
 			t.Errorf("%s: singleChunk: got %t, want %t", test.desc, got, want)
+		}
+		if got, want := mi.chunkRetryDeadline, test.wantDeadline; got != want {
+			t.Errorf("%s: chunkRetryDeadline: got %v, want %v", test.desc, got, want)
 		}
 	}
 }
@@ -341,6 +355,7 @@ func TestResumableUpload(t *testing.T) {
 		chunkSize           int
 		wantUploadType      string
 		wantResumableUpload bool
+		chunkRetryDeadline time.Duration
 	}{
 		{
 			desc:                "chunk size of zero: don't use a MediaBuffer; upload as a single chunk",
@@ -372,13 +387,34 @@ func TestResumableUpload(t *testing.T) {
 			wantUploadType:      "resumable",
 			wantResumableUpload: true,
 		},
+		{
+			desc:                "confirm that ChunkRetryDeadline is carried to ResumableUpload",
+			r:                   &nullReader{2 * googleapi.MinUploadChunkSize},
+			chunkSize:           1,
+			wantUploadType:      "resumable",
+			wantResumableUpload: true,
+			chunkRetryDeadline: 1 * time.Second,
+		},
 	} {
-		mi := NewInfoFromMedia(test.r, []googleapi.MediaOption{googleapi.ChunkSize(test.chunkSize)})
+		opts := []googleapi.MediaOption{googleapi.ChunkSize(test.chunkSize)}
+		if test.chunkRetryDeadline != 0 {
+			opts = append(opts, googleapi.ChunkRetryDeadline(test.chunkRetryDeadline))
+		}
+		mi := NewInfoFromMedia(test.r, opts)
 		if got, want := mi.UploadType(), test.wantUploadType; got != want {
 			t.Errorf("%s: upload type: got %q, want %q", test.desc, got, want)
 		}
 		if got, want := mi.ResumableUpload("") != nil, test.wantResumableUpload; got != want {
 			t.Errorf("%s: resumable upload non-nil: got %t, want %t", test.desc, got, want)
+		}
+		if test.chunkRetryDeadline != 0 {
+			if got := mi.ResumableUpload(""); got != nil {
+				if got.ChunkRetryDeadline != test.chunkRetryDeadline {
+					t.Errorf("%s: ChunkRetryDeadline: got %v, want %v", test.desc, got.ChunkRetryDeadline, test.chunkRetryDeadline)
+				}
+			} else {
+				t.Errorf("%s: test case invalid; resumable upload is nil", test.desc)
+			}
 		}
 	}
 }

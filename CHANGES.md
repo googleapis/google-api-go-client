@@ -1,5 +1,13 @@
 # Changes
 
+## [0.67.0](https://github.com/googleapis/google-api-go-client/compare/v0.66.0...v0.67.0) (2022-02-03)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1416](https://github.com/googleapis/google-api-go-client/issues/1416) [#1415](https://github.com/googleapis/google-api-go-client/issues/1415) [#1410](https://github.com/googleapis/google-api-go-client/issues/1410)
+* **gensupport:** per-chunk deadline configs ([#1414](https://github.com/googleapis/google-api-go-client/issues/1414)) ([c987a5b](https://github.com/googleapis/google-api-go-client/commit/c987a5bccb53c29eb344aad2b37f6209a8b256fd)), refs [#685](https://github.com/googleapis/google-api-go-client/issues/685)
+
 ## [0.66.0](https://github.com/googleapis/google-api-go-client/compare/v0.65.0...v0.66.0) (2022-01-28)
 
 

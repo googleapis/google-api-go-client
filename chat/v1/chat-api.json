@@ -642,7 +642,7 @@
       }
     }
   },
-  "revision": "20220125",
+  "revision": "20220126",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -2372,7 +2372,7 @@
           "type": "string"
         },
         "state": {
-          "description": "State of the membership. Output only.",
+          "description": "Output only. State of the membership.",
           "enum": [
             "MEMBERSHIP_STATE_UNSPECIFIED",
             "JOINED",
@@ -2385,6 +2385,7 @@
             "The user has been invited, is able to join the space, but currently has not joined.",
             "The user is not a member of the space, has not been invited and is not able to join the space."
           ],
+          "readOnly": true,
           "type": "string"
         }
       },

@@ -400,7 +400,7 @@
       }
     }
   },
-  "revision": "20220128",
+  "revision": "20220201",
   "rootUrl": "https://searchconsole.googleapis.com/",
   "schemas": {
     "AmpInspectionResult": {
@@ -420,8 +420,8 @@
             "Unknown verdict.",
             "Equivalent to \"Valid\" for the page or item in Search Console.",
             "Equivalent to \"Valid with warnings\" for the page or item in Search Console.",
-            "Equivalent to Error or Invalid for the page or item in Search Console.",
-            "Equivalent to \"Neutral\" for the page or item in Search Console."
+            "Equivalent to \"Error\" or \"Invalid\" for the page or item in Search Console.",
+            "Equivalent to \"Excluded\" for the page or item in Search Console."
           ],
           "type": "string"
         },
@@ -516,8 +516,8 @@
             "Unknown verdict.",
             "Equivalent to \"Valid\" for the page or item in Search Console.",
             "Equivalent to \"Valid with warnings\" for the page or item in Search Console.",
-            "Equivalent to Error or Invalid for the page or item in Search Console.",
-            "Equivalent to \"Neutral\" for the page or item in Search Console."
+            "Equivalent to \"Error\" or \"Invalid\" for the page or item in Search Console.",
+            "Equivalent to \"Excluded\" for the page or item in Search Console."
           ],
           "type": "string"
         }
@@ -816,8 +816,8 @@
             "Unknown verdict.",
             "Equivalent to \"Valid\" for the page or item in Search Console.",
             "Equivalent to \"Valid with warnings\" for the page or item in Search Console.",
-            "Equivalent to Error or Invalid for the page or item in Search Console.",
-            "Equivalent to \"Neutral\" for the page or item in Search Console."
+            "Equivalent to \"Error\" or \"Invalid\" for the page or item in Search Console.",
+            "Equivalent to \"Excluded\" for the page or item in Search Console."
           ],
           "type": "string"
         }
@@ -925,8 +925,8 @@
             "Unknown verdict.",
             "Equivalent to \"Valid\" for the page or item in Search Console.",
             "Equivalent to \"Valid with warnings\" for the page or item in Search Console.",
-            "Equivalent to Error or Invalid for the page or item in Search Console.",
-            "Equivalent to \"Neutral\" for the page or item in Search Console."
+            "Equivalent to \"Error\" or \"Invalid\" for the page or item in Search Console.",
+            "Equivalent to \"Excluded\" for the page or item in Search Console."
           ],
           "type": "string"
         }
@@ -1015,8 +1015,8 @@
             "Unknown verdict.",
             "Equivalent to \"Valid\" for the page or item in Search Console.",
             "Equivalent to \"Valid with warnings\" for the page or item in Search Console.",
-            "Equivalent to Error or Invalid for the page or item in Search Console.",
-            "Equivalent to \"Neutral\" for the page or item in Search Console."
+            "Equivalent to \"Error\" or \"Invalid\" for the page or item in Search Console.",
+            "Equivalent to \"Excluded\" for the page or item in Search Console."
           ],
           "type": "string"
         }

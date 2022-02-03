@@ -1443,7 +1443,7 @@
       }
     }
   },
-  "revision": "20220121",
+  "revision": "20220127",
   "rootUrl": "https://retail.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -2429,7 +2429,7 @@
           "enumDescriptions": [
             "Defaults to INCREMENTAL.",
             "Inserts new products or updates existing products.",
-            "Calculates diff and replaces the entire product dataset. Existing products may be deleted if they are not present in the source location. Can only be while using BigQuerySource. Add the IAM permission \"BigQuery Data Viewer\" for cloud-retail-customer-data-access@system.gserviceaccount.com before using this feature otherwise an error is thrown. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search."
+            "Calculates diff and replaces the entire product dataset. Existing products may be deleted if they are not present in the source location. Can only be set while using BigQuerySource. And the BigQuery dataset must be created in the data location \"us (multiple regions in United States)\", otherwise a PERMISSION_DENIED error is thrown. Add the IAM permission \"BigQuery Data Viewer\" for cloud-retail-customer-data-access@system.gserviceaccount.com before using this feature otherwise an error is thrown. This feature is only available for users who have Retail Search enabled. Please submit a form [here](https://cloud.google.com/contact) to contact cloud sales if you are interested in using Retail Search."
           ],
           "type": "string"
         },
@@ -2953,7 +2953,7 @@
           "type": "string"
         },
         "promotions": {
-          "description": "The promotions applied to the product. A maximum of 10 values are allowed per Product.",
+          "description": "The promotions applied to the product. A maximum of 10 values are allowed per Product. Only Promotion.promotion_id will be used, other fields will be ignored if set.",
           "items": {
             "$ref": "GoogleCloudRetailV2alphaPromotion"
           },
@@ -3096,7 +3096,7 @@
       "id": "GoogleCloudRetailV2alphaPromotion",
       "properties": {
         "promotionId": {
-          "description": "ID of the promotion. For example, \"free gift\". The value value must be a UTF-8 encoded string with a length limit of 128 characters, and match the pattern: `a-zA-Z*`. For example, id0LikeThis or ID_1_LIKE_THIS. Otherwise, an INVALID_ARGUMENT error is returned. Google Merchant Center property [promotion](https://support.google.com/merchants/answer/7050148).",
+          "description": "ID of the promotion. For example, \"free gift\". The value must be a UTF-8 encoded string with a length limit of 128 characters, and match the pattern: `a-zA-Z*`. For example, id0LikeThis or ID_1_LIKE_THIS. Otherwise, an INVALID_ARGUMENT error is returned. Google Merchant Center property [promotion](https://support.google.com/merchants/answer/7050148).",
           "type": "string"
         }
       },
@@ -3557,6 +3557,10 @@
           "description": "A page token SearchResponse.next_page_token, received from a previous SearchService.Search call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to SearchService.Search must match the call that provided the page token. Otherwise, an INVALID_ARGUMENT error is returned.",
           "type": "string"
         },
+        "personalizationSpec": {
+          "$ref": "GoogleCloudRetailV2alphaSearchRequestPersonalizationSpec",
+          "description": "The specification for personalization."
+        },
         "query": {
           "description": "Raw search query.",
           "type": "string"
@@ -3736,6 +3740,27 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRetailV2alphaSearchRequestPersonalizationSpec": {
+      "description": "The specification for personalization.",
+      "id": "GoogleCloudRetailV2alphaSearchRequestPersonalizationSpec",
+      "properties": {
+        "mode": {
+          "description": "Defaults to Mode.AUTO.",
+          "enum": [
+            "MODE_UNSPECIFIED",
+            "AUTO",
+            "DISABLED"
+          ],
+          "enumDescriptions": [
+            "Default value. Defaults to Mode.AUTO.",
+            "Let CRS decide whether to use personalization.",
+            "Disable personalization."
+          ],
+          "type": "string"
         }
       },
       "type": "object"

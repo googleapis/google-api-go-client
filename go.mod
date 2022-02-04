@@ -3,7 +3,7 @@ module google.golang.org/api
 go 1.11
 
 require (
-	cloud.google.com/go/compute v0.1.0
+	cloud.google.com/go/compute v1.1.0
 	github.com/google/go-cmp v0.5.7
 	github.com/googleapis/gax-go/v2 v2.1.1
 	go.opencensus.io v0.23.0

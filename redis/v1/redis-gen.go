@@ -183,131 +183,6 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
-// Cluster: A cluster instance.
-type Cluster struct {
-	// ClusterUid: Output only. UID of the cluster for use by Pantheon for
-	// analytics.
-	ClusterUid string `json:"clusterUid,omitempty"`
-
-	// CreateTime: Output only. The timestamp associated with the cluster
-	// creation request.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// CustomerManagedKey: Input only. The KMS key reference that the
-	// customer provides when trying to create the instance.
-	CustomerManagedKey string `json:"customerManagedKey,omitempty"`
-
-	// DefaultReplicaCount: Optional. The number of replica nodes per shard.
-	// Valid range is [1-2] and defaults to 1.
-	DefaultReplicaCount int64 `json:"defaultReplicaCount,omitempty"`
-
-	// DisplayName: Optional. An arbitrary and optional user-provided name
-	// for the cluster.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Endpoints: Output only. Hostname or IP address and port pairs used to
-	// connect to the cluster.
-	Endpoints []*Endpoint `json:"endpoints,omitempty"`
-
-	// Name: Required. Unique name of the resource in this scope including
-	// project and location using the form:
-	// `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`
-	Name string `json:"name,omitempty"`
-
-	// PrivateServiceConnect: Optional. Populate to use private service
-	// connect network option.
-	PrivateServiceConnect *PrivateServiceConnect `json:"privateServiceConnect,omitempty"`
-
-	// RedisConfigs: Optional. Redis configuration parameters, according to
-	// http://redis.io/topics/config. Currently, the only supported
-	// parameters are: Redis version 6.x and newer: * lfu-decay-time *
-	// lfu-log-factor * maxmemory-policy
-	RedisConfigs map[string]string `json:"redisConfigs,omitempty"`
-
-	// Slots: Output only. The slots making up the cluster. Read-only. In
-	// future versions this will be writable to allow for heterogeneous
-	// clusters.
-	Slots []*ClusterSlots `json:"slots,omitempty"`
-
-	// State: Output only. The current state of this cluster. Can be
-	// CREATING, READY, UPDATING, DELETING and SUSPENDED
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Not set.
-	//   "CREATING" - Redis cluster is being created.
-	//   "ACTIVE" - Redis cluster has been created and is fully usable.
-	//   "UPDATING" - Redis cluster configuration is being updated.
-	//   "DELETING" - Redis cluster is being deleted.
-	State string `json:"state,omitempty"`
-
-	// TotalMemorySizeGb: Optional. Redis memory size in GiB for the entire
-	// cluster. Defaults to 32.
-	TotalMemorySizeGb int64 `json:"totalMemorySizeGb,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ClusterUid") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClusterUid") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Cluster) MarshalJSON() ([]byte, error) {
-	type NoMethod Cluster
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ClusterSlots: A series of slots belonging to a cluster.
-type ClusterSlots struct {
-	// EndSlotsExclusive: Output only. The end of the slots that make up
-	// this series.
-	EndSlotsExclusive int64 `json:"endSlotsExclusive,omitempty"`
-
-	// MemorySizeGb: Output only. The total size of keyspace this series
-	// has.
-	MemorySizeGb int64 `json:"memorySizeGb,omitempty"`
-
-	// ReplicaCount: Output only. The number of replicas this series has.
-	ReplicaCount int64 `json:"replicaCount,omitempty"`
-
-	// StartSlotsInclusive: Output only. The start of the slots that make up
-	// this series.
-	StartSlotsInclusive int64 `json:"startSlotsInclusive,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndSlotsExclusive")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndSlotsExclusive") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ClusterSlots) MarshalJSON() ([]byte, error) {
-	type NoMethod ClusterSlots
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -318,40 +193,6 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
-}
-
-// Endpoint: An endpoint exposed by a cluster. In the future we will add
-// an enum to identify whether this endpoint is read/write or read-only
-// when the feature is ready.
-type Endpoint struct {
-	// Host: Output only. Hostname or IP address of the exposed Redis
-	// endpoint used by clients to connect to the service.
-	Host string `json:"host,omitempty"`
-
-	// Port: Output only. The port number of the exposed Redis endpoint.
-	Port int64 `json:"port,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Host") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Host") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Endpoint) MarshalJSON() ([]byte, error) {
-	type NoMethod Endpoint
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ExportInstanceRequest: Request for Export.
@@ -1340,42 +1181,6 @@ func (s *PersistenceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PrivateServiceConnect: Contains private service connect specific
-// options.
-type PrivateServiceConnect struct {
-	// PscService: Output only. The address of the Private Service Connect
-	// (PSC) service that the customer can use to connect this instance to
-	// their local network.
-	PscService string `json:"pscService,omitempty"`
-
-	// PscServiceRoute: Optional. The service route to connect using Private
-	// Service Connect. On Instance creation, this will automatically
-	// connect this route to this instance.
-	PscServiceRoute string `json:"pscServiceRoute,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "PscService") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PscService") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PrivateServiceConnect) MarshalJSON() ([]byte, error) {
-	type NoMethod PrivateServiceConnect
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // RescheduleMaintenanceRequest: Request for RescheduleMaintenance.
 type RescheduleMaintenanceRequest struct {
 	// RescheduleType: Required. If reschedule type is SPECIFIC_TIME, must
@@ -1685,7 +1490,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -1857,7 +1662,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2052,7 +1857,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2200,7 +2005,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2339,7 +2144,7 @@ func (c *ProjectsLocationsInstancesExportCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesExportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2485,7 +2290,7 @@ func (c *ProjectsLocationsInstancesFailoverCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesFailoverCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2638,7 +2443,7 @@ func (c *ProjectsLocationsInstancesGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2788,7 +2593,7 @@ func (c *ProjectsLocationsInstancesGetAuthStringCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesGetAuthStringCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -2932,7 +2737,7 @@ func (c *ProjectsLocationsInstancesImportCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesImportCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3109,7 +2914,7 @@ func (c *ProjectsLocationsInstancesListCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3299,7 +3104,7 @@ func (c *ProjectsLocationsInstancesPatchCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3450,7 +3255,7 @@ func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) Header() http.Head
 
 func (c *ProjectsLocationsInstancesRescheduleMaintenanceCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3595,7 +3400,7 @@ func (c *ProjectsLocationsInstancesUpgradeCall) Header() http.Header {
 
 func (c *ProjectsLocationsInstancesUpgradeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3744,7 +3549,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -3879,7 +3684,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4024,7 +3829,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
@@ -4200,7 +4005,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220201")
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/20220203")
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}

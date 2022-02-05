@@ -1067,7 +1067,7 @@
       }
     }
   },
-  "revision": "20220122",
+  "revision": "20220128",
   "rootUrl": "https://gkehub.googleapis.com/",
   "schemas": {
     "AnthosObservabilityMembershipSpec": {
@@ -1258,6 +1258,10 @@
         "multiclusteringress": {
           "$ref": "MultiClusterIngressFeatureSpec",
           "description": "Multicluster Ingress-specific spec."
+        },
+        "workloadcertificate": {
+          "$ref": "FeatureSpec",
+          "description": "Workload Certificate spec."
         }
       },
       "type": "object"
@@ -2153,6 +2157,31 @@
       },
       "type": "object"
     },
+    "FeatureSpec": {
+      "description": "**Workload Certificate**: The Hub-wide input for the WorkloadCertificate feature.",
+      "id": "FeatureSpec",
+      "properties": {
+        "defaultConfig": {
+          "$ref": "MembershipSpec",
+          "description": "Specifies default membership spec. Users can override the default in the member_configs for each member."
+        },
+        "provisionGoogleCa": {
+          "description": "Immutable. Specifies CA configuration.",
+          "enum": [
+            "GOOGLE_CA_PROVISIONING_UNSPECIFIED",
+            "DISABLED",
+            "ENABLED"
+          ],
+          "enumDescriptions": [
+            "Disable default Google managed CA.",
+            "Disable default Google managed CA.",
+            "Use default Google managed CA."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "FeatureState": {
       "description": "FeatureState describes the high-level state of a Feature. It may be used to describe a Feature's state at the environ-level, or per-membershop, depending on the context.",
       "id": "FeatureState",
@@ -2741,6 +2770,10 @@
         "policycontroller": {
           "$ref": "PolicycontrollerMembershipSpec",
           "description": "Policy Controller spec."
+        },
+        "workloadcertificate": {
+          "$ref": "MembershipSpec",
+          "description": "Workload Certificate spec."
         }
       },
       "type": "object"
@@ -2776,6 +2809,27 @@
         "state": {
           "$ref": "FeatureState",
           "description": "The high-level state of this Feature for a single membership."
+        }
+      },
+      "type": "object"
+    },
+    "MembershipSpec": {
+      "description": "**Workload Certificate**: The membership-specific input for WorkloadCertificate feature.",
+      "id": "MembershipSpec",
+      "properties": {
+        "certificateManagement": {
+          "description": "Specifies workload certificate management.",
+          "enum": [
+            "CERTIFICATE_MANAGEMENT_UNSPECIFIED",
+            "DISABLED",
+            "ENABLED"
+          ],
+          "enumDescriptions": [
+            "Disable workload certificate feature.",
+            "Disable workload certificate feature.",
+            "Enable workload certificate feature."
+          ],
+          "type": "string"
         }
       },
       "type": "object"

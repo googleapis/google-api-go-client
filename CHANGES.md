@@ -1,5 +1,18 @@
 # Changes
 
+## [0.68.0](https://github.com/googleapis/google-api-go-client/compare/v0.67.0...v0.68.0) (2022-02-08)
+
+
+### Features
+
+* **all:** auto-regenerate discovery clients, refs [#1422](https://github.com/googleapis/google-api-go-client/issues/1422) [#1419](https://github.com/googleapis/google-api-go-client/issues/1419)
+
+
+### Bug Fixes
+
+* **googleapi:** fill response headers in Error ([#1418](https://github.com/googleapis/google-api-go-client/issues/1418)) ([9eaba81](https://github.com/googleapis/google-api-go-client/commit/9eaba8162c40393aa8b1f6a2e45caa876fd8fa78))
+* start reporting a meaningful version in headers ([#1426](https://github.com/googleapis/google-api-go-client/issues/1426)) ([f025530](https://github.com/googleapis/google-api-go-client/commit/f025530e20e2388dd726b99619236a8330b7169b))
+
 ## [0.67.0](https://github.com/googleapis/google-api-go-client/compare/v0.66.0...v0.67.0) (2022-02-03)
 
 
